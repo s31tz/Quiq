@@ -1,0 +1,2065 @@
+=encoding utf8
+
+=head1 Sdoc Handbuch
+
+=head1 1. Allgemeines
+
+=head2 1.1. Kommentare
+
+In den Quelltext des Dokuments können Kommentarzeilen eingebettet
+werden. Diese werden nicht mit gesetzt. Eine Kommentarzeile beginnt
+mit einem C<#> am I<Zeilenanfang>, eine Einrückung ist nicht erlaubt!
+
+    # Dies ist ein Kommentar, der nicht im Zieldokument erscheint
+
+=head2 1.2. Zeilenfortsetzungen
+
+Ist das letzte Zeichen einer Zeile ein Backslash C<\>, wird die nächste
+Zeile als eine Fortsetzung dieser Zeile angesehen und mit dieser
+zusammengefasst.
+
+    Hier ist ein URL, der sich in der Quelle über
+    zwei Zeilen erstreckt: http://fseitz.de/\
+      index.cgi
+
+produziert
+
+    Hier ist ein URL, der sich in der Quelle über
+    zwei Zeilen erstreckt: http:\\seitz.de/index.cgi
+
+Leerraum am Anfang der Folgezeile wird entfernt. Soll Leerraum
+zwischen Zeile und Fortsetzungszeile erhalten bleiben, muss dieser I<vor>
+dem Backslash stehen.
+
+Eine Zeilenfortsetzung kann unterdrückt werden, indem der Backslash am
+Ende der Zeile durch einen vorangestellten Backslash maskiert wird.
+Der maskierende Backslash wird entfernt.
+
+=head2 1.3. Leerzeilen
+
+Leerzeilen können zur besseren optischen Gliederung zwischen
+aufeinanderfolgenden Elementen eingestreut werden, sind aber
+optional. Es macht keinen Unterschied, ob zum Beispiel zwischen
+einem Abschnittstitel und dem darauf folgenden Paragraph eine
+Leerzeile steht oder nicht. Dasselbe gilt für alle anderen
+Kombinationen von Elementen. Einzige Ausnahme: Zwischen Paragraphen
+ist eine Leerzeile notwendig, um sie voneinander abzugrenzen.
+
+=head1 2. Dokument
+
+Information über das Dokument wird in einem - optionalen -
+Document-Bock spezifiziert:
+
+    %Document:
+      generateAnchors=BOOL
+      language=STRING
+      minLnWidth=INT
+      sectionNumbers=BOOL
+      tableAndFigureNumbers=BOOL
+      centerTableAndFigures=BOOL
+      styleSheet=FILE-LIST
+      title=STRING
+      utf8=BOOL
+
+Der Document-Block steht, falls vorhanden, am Anfang des Dokuments.
+
+Ist das Attribut C<title> angegeben, wird ein Dokument-Vorspann
+generiert, mit dem Wert von C<title> als Dokument-Überschrift.
+Für die Dokument-Überschrift wird I<kein> Anker generiert,
+da diese am Anfang des Dokuments steht - ein Link referenziert
+das Dokument ohne Anker.
+
+Enthält das Dokument keinen Document-Block, wird kein
+Dokument-Vorspann generiert und alle sonstigen Eigenschaften
+(C<language>, C<sectionNumbers>, C<styleSheet> usw.) erhalten ihre
+Defaultwerte (s. L</Dokument/Eigenschaften>).
+
+=head2 2.1. Eigenschaften
+
+=over 4
+
+=item deeperSections=INT (Default: 0)
+
+Stufe Abschnitte $n Schritte tiefer ein.
+
+=item generateAnchors=BOOL (Default: 1)
+
+Wenn wahr, werden automatisch Titel-Anker generiert (s. Abschnitt
+L</Anker>). Wenn falsch, unterbleibt dies.
+
+=item language=STRING (Default: "german")
+
+Gibt die Sprache an, in der das Dokument verfasst ist. Zeichenketten,
+die von Sdoc in das Zieldokument eingesetzt werden (wie "Inhalt",
+"Abbildung", "Tabelle" usw.) werden in der betreffenden
+Spache generiert. Zulässige Werte sind: C<german>, C<english>.
+
+=item minLnWidth=INT (Default: 2)
+
+Minimale Breite der Zeilennummern-Spalte bei Code-Blocks, wenn
+für diese Zeilennummerierung (ln=1) definiert ist. Nicht genutzte
+führende Stellen werden mit Leerzeichen aufgefüllt.
+
+=item sectionNumbers=BOOL (Default: "no")
+
+Boolscher Wert, der angibt, ob den Abschnittsüberschriften
+Nummern à la C<1.3.2> vorangestellt werden.
+
+=item tableAndFigureNumbers=BOOL (Default: "no")
+
+Boolscher Wert, der angibt, ob den Tabellen- und Abbildungstiteln
+"Tabelle N:" bzw. "Abbildung N:" vorangestellt wird.
+
+=item centerTablesAndFigures=BOOL (Default: "yes")
+
+Boolscher Wert, der angibt, ob im gesamten Text Tabellen und Abbildungen
+zentriert plaziert werden sollen.
+
+=item styleSheet=PATH (Default: "sdoc.css")
+
+Pfad und Name der Stylesheet-Datei oder -Dateien,
+die in die HTML-Seite eingebunden werden. Mehrere Dateien werden
+mit Komma und/oder Whitespace getrennt.
+
+Beginnt der Dateiname mit "inline:" wird die Datei eingelesen
+und ihr Inhalt in den Header eingebettet.
+
+=item title=STRING (Default: keiner)
+
+Titel des Dokuments.
+
+=item utf8=BOOL (Default: "no")
+
+Boolscher Wert, der angibt, ob die Quelle UTF-8 encoded ist.
+Die Zieldokumente sind dann ebenfalls UTF-8 encoded.
+
+=back
+
+=head2 2.2. HTML-Struktur
+
+    <body id="PREFIX-body">
+      <h1 class="PREFIX-doc-h1">TITEL+ANKER</h1>
+      ...
+    </body>
+
+=head2 2.3. CSS
+
+    #PREFIX-body|<body>-Tag
+    .PREFIX-doc-h1|Dokument-Überschrift, Attribut C{title}
+
+=head1 3. Inhaltsverzeichnis
+
+Das Inhaltsverzeichnis wird an der Stelle plaziert, wo der
+TableOfContents-Block steht:
+
+    %TableOfContents:
+      maxDepth=N
+      title=STRING
+
+Ist kein Titel definiert, d.h. das Attribut C<title> ist nicht
+angegeben, wird der sprachspezifische Default genommen (s.
+L</Inhaltsverzeichnis/Eigenschaften>):
+
+    %TableOfContents:
+
+Soll kein Titel erscheinen, wird ein leerer Titel definiert:
+
+    %TableOfContents:
+      title=""
+
+Als Anker ist fest die Zeichenkette "toc" definiert.
+
+=head2 3.1. Eigenschaften
+
+=over 4
+
+=item title=STRING (Default: sprachabhängig)
+
+Überschrift, die über das Inhaltsverzeichnis gesetzt wird.
+Sprachabhängiger Default: "Inhalt" (german), "Contents" (english).
+
+=item maxDepth=N (Default: alle Ebenen)
+
+Beschränkung des Inhaltsverzeichnisses auf höchstens N Ebenen.
+Sollen Dokumentteile unterschiedlich tief im Inhaltsverzeichnis
+erscheinen, kann dies mit ! beim Abschnitt definiert werden
+(siehe L</"Unterabschnitte von Inhaltsverzeichnis ausschließen">).
+
+=back
+
+=head2 3.2. HTML-Struktur
+
+    <div id="PREFIX-toc">
+      <a id="toc">
+      <h1 class="PREFIX-toc-h1">TITEL</h1>
+      <ul class="PREFIX-toc-ul">
+        <li class="PREFIX-toc-li">
+          <a class="PREFIX-toc-a" href="section_1">ABSCHNITTSTITEL_1</a>
+          <ul class="PREFIX-toc-ul">
+            <li class="PREFIX-toc-li"><a class="PREFIX-toc-a" href="#section_1_1">ABSCHNITTSTITEL_1_1</a></li>
+            ...
+          </ul>
+        </li>
+        ...
+      </ul>
+    </div>
+
+=head2 3.3. CSS
+
+    #PREFIX-toc|<div> um Inhaltsverzeichnis
+    .PREFIX-toc-h1|Inhaltsverzeichnis-Überschrift, Attribut C{title}
+    .PREFIX-toc-ul|Liste
+    .PREFIX-toc-li|Listenelement
+    .PREFIX-toc-a|Link im Listenelement
+
+=head1 4. Abschnitt
+
+Ein Abschnitt beginnt mit einem oder mehreren =, gefolgt von
+mindestens einem Leerraum-Zeichen, gefolgt von dem
+Abschnittstitel. Die Zahl der = gibt die Ebene des Abschnitts an. Die
+Zahl der Ebenen wird von Sdoc nicht begrenzt (HTML kennt die Ebenen 1
+bis 6, POD die Ebenen 1 bis 4). Der Titel endet mit dem Ende der
+Zeile. Längere Titel können per Zeilenfortsetzung geschrieben werden.
+
+    = Dies ist ein Abschnitt der Ebene 1
+    
+    == Dies ist ein Abschnitt der Ebene 2
+    
+    === Dies ist ein Abschnitt der Ebene 3
+
+Abschnitte werden mit 1. 1.1. 1.2. ... 2. 2.1. usw. durchnummeriert.
+
+=head2 4.1. Unterabschnitte von Inhaltsverzeichnis ausschließen
+
+Sollen die Unterabschnitte eines Abschnitts nicht im
+Inhaltsverzeichnis erscheinen, wird an die = des Abschnitts ein !
+angehängt. Mit dem Abschnitt endet der betreffende Teilbaum im
+Inhaltsverzeichnis. Die unterdrückten Unterabschnitte werden nicht
+qualifiziert.
+
+    = Abschnitt A (erscheint in Inhaltsverzeichnis)
+    
+    ==! Abschnitt AB (erscheint in Inhaltsverzeichnis)
+    
+    === Abschnitt ABC (erscheint nicht in Inhaltsverzeichnis)
+    
+    ==== Abschnitt ABCD (erscheint nicht in Inhaltsverzeichnis)
+
+Im Unterschied zu dem %TableOfContents-Attribut maxDepth können
+Dokument-Teile auf diesem Weg unerschiedlich tief ins
+Inhaltsverzeichnis gebracht werden. Das Attribut maxDepth, sofern
+angegeben, hat Priorität, d.h. ab Tiefe maxDepth wird auf jedem Fall
+abgeschnitten.
+
+=head2 4.2. Abschnittsüberschrift anders (kleiner) darstellen
+
+Soll die Abschnittsüberschrift kleiner dargestellt werden, als es
+ihrer Hierarchiebene entspricht, wird an die = des Abschnitts ein C<v>
+angehängt. An den CSS-Klassennamen wird bei der Wandlung nach
+HTML entsprechend die Zeichenkette C<-small> angehängt.
+
+=head2 4.3. Appendix
+
+Appendizes beginnen ab dem ersten Abschnitt der Ebene 1, bei
+dem auf die = ein + folgt:
+
+    =+ Mit diesem Abschnitt beginnen die Appendizes
+
+Alle folgenden Abschnitte und Unterabschnitte werden als Appendizes
+angesehen (unabhängig davon, ob mit + ausgezeichnet oder nicht) und
+entsprechend mit A. A.1. A.2 ... B. B.1. usw.  nummeriert. Sonst wird
+keine Unterscheidung zwischen Abschnitten und Appendizes gemacht.
+
+=head2 4.4. HTML-Struktur
+
+    <hX class="sdoc-sec-hX">TITEL+ANKER</hX>
+
+bzw. bei abweichender (kleinerer) Darstellung
+
+    <hX class="sdoc-sec-hX-small">TITEL+ANKER</hX>
+
+X ist die Abschnittsebene (1 ... 6)
+
+=head2 4.5. CSS-Klassen
+
+    sdoc-sec-h1|Überschrift Ebene 1
+    sdoc-sec-h2|Überschrift Ebene 2
+    sdoc-sec-h3|Überschrift Ebene 3
+    sdoc-sec-h4|Überschrift Ebene 4
+    sdoc-sec-h5|Überschrift Ebene 5
+    sdoc-sec-h6|Überschrift Ebene 6
+
+=head1 5. Zwischenüberschrift
+
+Eine Zwischenüberschrift erscheint im Dokument wie ein
+Abschnittstitel, hat jedoch keinen Eintrag im Inhaltsverzeichnis und
+keinen Einfluss auf die Dokumentstruktur.
+
+Eine Zwischenüberschrift wird wie ein L</Abschnitt> vereinbart,
+nur dass auf die = ein ? folgt:
+
+    =? Zwischenüberschrift Stufe 1
+    
+    ==? Zwischenüberschrift Stufe 2
+    
+    ===? Zwischenüberschrift Stufe 3
+    
+    ====? Zwischenüberschrift Stufe 4
+
+produziert
+
+=head1 Zwischenüberschrift Stufe 1
+
+=head2 Zwischenüberschrift Stufe 2
+
+=head3 Zwischenüberschrift Stufe 3
+
+=head4 Zwischenüberschrift Stufe 4
+
+Für Zwischenüberschriften wird kein Anker erzeugt.
+
+=head2 5.1. HTML-Struktur
+
+    <hX class="sdoc-bhead-hX">TITEL</hX>
+
+X ist die Stufe (1 ... 6). Nur die Stufen 1 ... 4 sind portabel.
+
+=head2 5.2. CSS-Klassen
+
+    sdoc-bhead-h1|Zwischenüberschrift Stufe 1
+    sdoc-bhead-h2|Zwischenüberschrift Stufe 2
+    sdoc-bhead-h3|Zwischenüberschrift Stufe 3
+    sdoc-bhead-h4|Zwischenüberschrift Stufe 4
+    sdoc-bhead-h5|Zwischenüberschrift Stufe 5
+    sdoc-bhead-h6|Zwischenüberschrift Stufe 6
+
+=head1 6. Seitenumbruch
+
+Ein Seitenumbruch in der gedruckten Version der HTML-Seite wird
+erzeugt, wo eine Zeile mit drei oder mehr Tilden (~~~) am Zeilenanfang
+im Dokuement vorkommt:
+
+    Dies ist ein
+    Pragraph.
+    
+    ~~~
+    
+    Dieser Paragraph beginnt in
+    der gedruckten Version des Dokuments
+    auf einer neuen Seite.
+
+=head1 7. Paragraph
+
+Ein Paragraph ist ein Textblock ohne Einrückung, der mit einer
+Leerzeile oder mit dem Beginn eines anderen Elements (Liste, Code,
+Tabelle etc.) endet.
+
+    = Dies ist ein Titel
+    
+    Dies ist ein Paragraph auf Abschnittsebene,
+    der sich über insgesamt drei
+    Zeilen erstreckt.
+    
+    o Dies ist ebenfalls ein Paragraph,
+      allerdings auf Listenebene.
+    o Dies ist der zweite Punkt derselben
+      Liste.
+
+=head2 7.1. HTML-Struktur
+
+    <p class="sdoc-para-p">
+      CONTENT
+    </p>
+
+=head2 7.2. CSS-Klassen
+
+    sdoc-para-p|Paragraph
+
+=head1 8. Code
+
+Es gibt drei Möglichkeiten, einen literalen Textblock anzugeben.
+Ein literaler Textblock wird exakt so wiedergegeben,
+wie er dort steht.
+
+=head2 8.1. Einrückung mit Leerraum
+
+Der Code-Abschnitt wird mit ein oder mehr Leerzeichen eingerückt.
+
+    open(my $fh, 'ls -l |') or die "open failed ($!)\n";
+    while (<$fh>) {
+        s/\r?\n/<BR>/;
+        print;
+    }
+    close($fh) or die "close failed ($!)\n";
+
+=head2 8.2. Pipe als erstes Zeichen
+
+Alternativ kann an den Anfang der Zeile ein | gefolgt von einem
+oder mehreren Leerraum-Zeichen gesetzt werden:
+
+    | Dies ist verbatim
+    | Text
+
+produziert
+
+    Dies ist verbatim
+    Text
+
+=head2 8.3. Als Block
+
+Alternativ kann der Code-Abschnitt als Block definiert werden.  Der
+Block beginnt mit "%Code:" und endet mit der Stop-Zeichenkette "."
+(einem einzelnen Punkt auf einer Zeile). Eine Einrückung des
+Konstrukts mit Leerzeichen ist erlaubt.
+
+    %Code:
+    Dies ist ein
+    Code-Block
+    .
+
+produziert
+
+    Dies ist ein
+    Code-Block
+
+=head3 8.3.1. CSS-Klasse
+
+Einem Code-Block kann eine bestimmte CSS-Klasse zugewiesen werden, um
+die Darstellung in HTML zu bestimmen. Dies geschieht durch eine
+Zuweisung an das Attribut C<class="...">.
+
+    %Code: class="code-pre-border"
+    Dies ist ein
+    Code-Block
+    .
+
+produziert
+
+    Dies ist ein
+    Code-Block
+
+Dem Klassennamen wird intern der CSS-Präfix vorangestellt. Die
+tatsächlich genutzte CSS-Klasse lautet hier:
+C<ctd-content-code-pre-border>.
+
+=head3 8.3.2. Tiefere Anfangs-Einrückung
+
+Hat die erste Zeile eine tiefere Einrückung, hilft ebenfalls ein
+%Code-Block:
+
+    %Code:
+        Dies ist ein
+    Code-Block mit tieferer
+    Anfangs-Einrückung
+    .
+
+produziert
+
+        Dies ist ein
+    Code-Block mit tieferer
+    Anfangs-Einrückung
+
+Die erste Zeile darf allerdings nicht mit KEY=... beginnen, da
+die Zeile sonst als %Code-Attributzeile interpretiert wird.
+
+=head3 8.3.3. Abweichende Stop-Zeichenkette
+
+    %Code: stop="__END__"
+    Eine andere
+    Stop-Zeichenkette
+    __END__
+
+produziert
+
+    Eine andere
+    Stop-Zeichenkette
+
+Die Anführungsstriche können auch weggelassen werden, wenn
+die Stop-Zeichenkette kein Leerzeichen enthält:
+
+    stop=__END__
+
+=head3 8.3.4. Syntax-Highlighting
+
+Die Lesbarkeit von Quelltexten kann mit dem Attribut
+C<highlight=LANGUAGE> erhöht werden. Aktuell beeinflusst dies nur die
+Darstellung in HTML. Als Sprachen C<LANGUAGE> werden aktuell
+unterstützt: Perl, JavaScript, HTML, XML. (Diese Liste kann durch
+Hinzufügen weiterer Brushes erweitert werden). Per Default ist ist die
+Numerierung auf zwei Zeichen Breite 0 .. 99 eingestellt. Dies kann
+mit dem Dokumentenattribut C<minLnWidth> geändert werden.
+
+    %Code: highlight=Perl
+    rowCallback => sub {
+        my ($row,$i,$columnA) = @_;
+    
+        my @arr;
+        for my $col (@$columnA) {
+            my $name = $col->name;
+            push @arr,$name? $row->get($name): undef;
+        }
+    
+        return (undef,@arr);
+    };
+    .
+
+produziert
+
+    rowCallback => sub {
+        my ($row,$i,$columnA) = @_;
+    
+        my @arr;
+        for my $col (@$columnA) {
+            my $name = $col->name;
+            push @arr,$name? $row->get($name): undef;
+        }
+    
+        return (undef,@arr);
+    };
+
+=head3 8.3.5. Zeilennummern
+
+Mit der Option C<ln=N> (C<N> != 0) werden die Zeilen durchnummeriert,
+beginnend mit Zeilennummer N. In HTML wird die Zeilennummer von einem
+C<< <span> >> der CSS-Klasse C<sdoc-code-ln> eingefasst bzw.
+von einem C<td> der CSS-Klasse C<sdoc-code-table-ln>.
+
+    %Code: ln=1
+    Zeile 1
+    Zeile 2
+    .
+
+produziert
+
+    1: Zeile 1
+    2: Zeile 2
+
+=head3 8.3.6. Hintergrund
+
+Mit der Option C<bg=2> werden die Zeilen wechselweise
+hell und dunkel hinterlegt.
+
+    %Code: bg=2
+    Zeile 1
+    Zeile 2
+    Zeile 3
+    .
+
+produziert
+
+    Zeile 1
+    Zeile 2
+    Zeile 3
+
+Mit der Option C<bg=1> wird der Hintergrund einfarbig hinterlegt
+(noch nicht implementiert).
+
+Mit der Option C<bg=0> wird der Hintergrund nicht geändert.
+
+=head3 8.3.7. Listing
+
+Die Option C<listing=N> (C<N> != 0) ist dasselbe wie C<ln=N bg=2>.
+
+    %Code: listing=23
+    Zeile 23
+    Zeile 24
+    Zeile 25
+    .
+
+produziert
+
+    23: Zeile 23
+    24: Zeile 24
+    25: Zeile 25
+
+=head3 8.3.8. Listing für eine bestimmte Sprache
+
+Die zu C<listing=N> ergänzende Option C<language=LANG> ermöglich
+die Erzeugung eines Listings mit sprachspezifischen Auszeichnungen.
+
+Aktuell werden Doku-Abschnitte und Kommentare speziell ausgezeichnet.
+Die betreffenden CSS-Klassen lauten I<CLASS>C<-doc> und I<CLASS>C<-comment>.
+Die CSS-Klasse I<CLASS> kann mittels des Attributs C<class=>I<CLASS>
+eingestellt werden.
+
+Bislang ist eine sprachspezifishe Auszeichnung nur für Sprache C<Perl>
+implementiert.
+
+    %Code: listing=1 language=Perl
+    #!/usr/bin/perl
+    
+    =encoding utf8
+    
+    Nur ein Demo-Programm.
+    
+    =cut
+    
+    print "Hello world!\n";
+    
+    # eof
+    .
+
+produziert
+
+     1: #!/usr/bin/perl
+     2: 
+     3: =encoding utf8
+     4: 
+     5: Nur ein Demo-Programm.
+     6: 
+     7: =cut
+     8: 
+     9: print "Hello world!\n";
+    10: 
+    11: # eof
+
+=head3 8.3.9. Inhalt aus Datei
+
+Mit option C<file=PATH> wird der Inhalt aus der Datei PATH
+gelesen.
+
+    %Code: file="/etc/passwd"
+
+produziert
+
+    root:x:0:0:root:/root:/bin/bash
+    daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+    bin:x:2:2:bin:/bin:/usr/sbin/nologin
+    sys:x:3:3:sys:/dev:/usr/sbin/nologin
+    sync:x:4:65534:sync:/bin:/bin/sync
+    games:x:5:60:games:/usr/games:/usr/sbin/nologin
+    man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+    lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+    mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+    news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+    uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+    proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+    www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+    backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+    list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+    irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+    gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+    nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+    systemd-timesync:x:100:103:systemd Time Synchronization,,,:/run/systemd:/bin/false
+    systemd-network:x:101:104:systemd Network Management,,,:/run/systemd/netif:/bin/false
+    systemd-resolve:x:102:105:systemd Resolver,,,:/run/systemd/resolve:/bin/false
+    rdnssd:x:104:65534::/var/run/rdnssd:/bin/false
+    messagebus:x:105:111::/var/run/dbus:/bin/false
+    avahi:x:106:112:Avahi mDNS daemon,,,:/var/run/avahi-daemon:/bin/false
+    Debian-exim:x:107:113::/var/spool/exim4:/bin/false
+    statd:x:108:65534::/var/lib/nfs:/bin/false
+    colord:x:109:117:colord colour management daemon,,,:/var/lib/colord:/bin/false
+    speech-dispatcher:x:110:29:Speech Dispatcher,,,:/var/run/speech-dispatcher:/bin/false
+    sshd:x:111:65534::/var/run/sshd:/usr/sbin/nologin
+    pulse:x:112:119:PulseAudio daemon,,,:/var/run/pulse:/bin/false
+    rtkit:x:113:121:RealtimeKit,,,:/proc:/bin/false
+    saned:x:114:122::/var/lib/saned:/bin/false
+    usbmux:x:115:46:usbmux daemon,,,:/var/lib/usbmux:/bin/false
+    lightdm:x:116:123:Light Display Manager:/var/lib/lightdm:/bin/false
+    hplip:x:117:7:HPLIP system user,,,:/var/run/hplip:/bin/false
+    fs:x:1000:1000:Frank Seitz,,,:/home/fs:/bin/bash
+    dnsmasq:x:118:65534:dnsmasq,,,:/var/lib/misc:/bin/false
+    uuidd:x:119:124::/run/uuidd:/bin/false
+    geoclue:x:120:125::/var/lib/geoclue:/bin/false
+    postgres:x:121:126:PostgreSQL administrator,,,:/var/lib/postgresql:/bin/bash
+    mongodb:x:122:65534::/var/lib/mongodb:/bin/false
+    mldonkey:x:123:130::/var/lib/mldonkey:/bin/false
+    _apt:x:124:65534::/nonexistent:/bin/false
+    mysql:x:125:131:MySQL Server,,,:/nonexistent:/bin/false
+    developer6:x:1005:1005:Dedicom Entwickler,,,:/home/developer6:/bin/bash
+    seitzf:x:1001:1001:EOS Entwickler,,,:/home/seitzf:/bin/bash
+    devel:x:1002:1002:Entwickler,,,:/home/devel:/bin/bash
+    fs2:x:1003:1003:Frank Seitz,,,:/home/fs2:/bin/bash
+    jenkins:x:103:106:Jenkins,,,:/var/lib/jenkins:/bin/bash
+    puppet:x:126:134:Puppet configuration management daemon,,,:/var/lib/puppet:/usr/sbin/nologin
+    systemd-coredump:x:996:996:systemd Core Dumper:/:/sbin/nologin
+    _rpc:x:127:65534::/run/rpcbind:/usr/sbin/nologin
+
+Der Code-Block hat in dem Fall keinen Inhalt und endet mit der
+darauffolgenden Leerzeile.
+
+=head3 8.3.10. Inhalt von Programmaufruf
+
+Mit option C<exec=COMMAND> wird der Inhalt von Kommando COMMAND
+geliefert und zwar von dessen Ausgabe auf stdout.
+
+    %Code: exec="date --date=010101"
+
+produziert
+
+    Mon Jan  1 00:00:00 CET 2001
+
+Der Code-Block hat in dem Fall keinen Inhalt und endet mit der
+darauffolgenden Leerzeile.
+
+=head3 8.3.11. Inhalt extrahieren
+
+Kommt der Inhalt aus einer Datei oder von einem Programmaufruf,
+möchte man u.U. nur einen Teil davon im Text darstellen.
+
+Mittels der Direktive C<extract> ist es möglich, einen Teil aus dem
+Gesamtinhalt zu extrahieren. Der Wert der Direktive ist ein Regulärer
+Ausdruck mit einem eingebetteten Klammerausdruck C<(...)>, der den
+gewünschten Teil "captured".
+
+Der Reguläre Ausdruck hat Perl-Mächtigkeit und wird unter den
+Modifiern C<s> (C<.> matcht Zeilenumbrüche) und C<m> (C<^> und C<$>
+matchen Zeilenanfänge) interpretiert.
+
+In einem längeren Codeabschnitt kann der interessante Teil zum
+Beispiel mit Markern wie "# begin" und "# end" gekennzeichnet werden:
+
+    %Code: extract="# begin\s+(.*)# end"
+    #!/usr/bin/perl
+    
+    use strict;
+    use warnings;
+    use 5.010;
+    
+    # begin
+    my $max = '-inf';
+    for my $n (-100,-50,-10) {
+        $max = $n if $n > $max;
+    }
+    # end
+    say $max;
+    __END__
+    -10
+    .
+
+produziert
+
+    my $max = '-inf';
+    for my $n (-100,-50,-10) {
+        $max = $n if $n > $max;
+    }
+
+=head3 8.3.12. Filter
+
+Der Inhalt des Code-Abschnitts kann vor der Einsetzung durch
+einen Filter geschickt werden. Ein Filter ist ein externes
+Programm, das seine Eingabe von stdin empfängt und seine Ausgabe
+nach stdout schreibt. Parameter sind beliebig. Taucht in
+der Aufrufzeile die Zeichenkette "%FORMAT%" auf, wird
+diese durch das gewünschte Ausgabeformat (html, ehtml, pod,
+debug, ...) ersetzt. Der Filter kann dann entscheiden,
+für welches Zielformat er generieren muss.
+
+    %Code: listing=1 filter="Blob/sdoc_reference/sdoc-highlight perl %FORMAT%"
+    open(my $fh, 'ls -l |') or die "open failed ($!)\n";
+    while (<$fh>) {
+        s/\r?\n/<BR>/;
+        print;
+    }
+    close($fh) or die "close failed ($!)\n";
+    .
+
+produziert
+
+    1: open(my $fh, 'ls -l |') or die "open failed ($!)\n";
+    2: while (<$fh>) {
+    3:     s/\r?\n/<BR>/;
+    4:     print;
+    5: }
+    6: close($fh) or die "close failed ($!)\n";
+
+Der Filter muss das Ergebnis so liefern, dass es ohne Änderungen
+in das Zieldokument eingesetzt werden kann. Insbesondere
+ist er dafür verantwortlich zu escapen, was in HTML u.a. heißt,
+"<" durch "&lt;" und "&" durch "&amp;" zu ersetzen.
+
+=head2 8.4. HTML-Struktur
+
+C<ln=0>, C<bg=0>
+
+    <div class="sdoc-code-div">
+      <pre class="sdoc-code-pre">CONTENT</pre>
+    </div>
+
+C<ln=N>, C<bg=0>
+
+    <div class="sdoc-code-div">
+      <pre class="sdoc-code-pre">
+        <span class="sdoc-code-ln"> N</span> LINE_N
+        <span class="sdoc-code-ln"> N+1</span> LINE_N+1
+        ...
+      </pre>
+    </div>
+
+C<ln=0>, C<bg=2>
+
+    <table class="sdoc-code-table" cellspacing="0" cellpadding="0">
+    <tr class="sdoc-code-tr-odd">
+      <td class="sdoc-code-td-line">LINE1</td>
+    </tr>
+    <tr class="sdoc-code-tr-even">
+      <td class="sdoc-code-td-line">LINE2</td>
+    </tr>
+    ...
+    </table>
+
+C<ln=N>, C<bg=2> bzw. C<listing=N>
+
+    <table class="sdoc-code-table" cellspacing="0" cellpadding="0">
+    <tr class="sdoc-code-tr-odd">
+      <td class="sdoc-code-td-ln"> N</td>
+      <td class="sdoc-code-td-line">LINE_N</td>
+    </tr>
+    <tr class="sdoc-code-tr-even">
+      <td class="sdoc-code-td-ln"> N+1</td>
+      <td class="sdoc-code-td-line">LINE_N+1</td>
+    </tr>
+    ...
+    </table>
+
+=head2 8.5. CSS-Klassen
+
+=head3 8.5.1. Normal
+
+    sdoc-code-div|Container für die Umrandung
+    sdoc-code-pre|Code-Abschnitt
+    sdoc-code-ln|Span um Zeilennummern
+
+=head3 8.5.2. Mit Zeilennummern
+
+    sdoc-code-table|Tabelle für Listings
+    sdoc-code-tr-odd|Ungerade Zeile
+    sdoc-code-tr-even|Gerade Zeile
+    sdoc-code-td-ln|Zelle für Zeilennummer
+    sdoc-code-td-line|Zelle für Zeileninhalt
+    sdoc-code-doc|Kennzeichnung Doku (bei Perl POD)
+    sdoc-code-comment|Kennzeichnung Kommentar
+
+=head1 9. Punktliste
+
+=head2 9.1. Symbol *
+
+    * Dies ist der erste Punkt
+    * Dies ist der zweite Punkt
+    * Dies ist der dritte
+      Punkt.
+
+produziert
+
+=over 2
+
+=item *
+
+Dies ist der erste Punkt
+
+=item *
+
+Dies ist der zweite Punkt
+
+=item *
+
+Dies ist der dritte
+Punkt.
+
+=back
+
+=head2 9.2. Symbol o
+
+    o Dies ist der erste Punkt
+    o Dies ist der zweite Punkt
+    o Dies ist der dritte
+      Punkt.
+
+produziert
+
+=over 2
+
+=item o
+
+Dies ist der erste Punkt
+
+=item o
+
+Dies ist der zweite Punkt
+
+=item o
+
+Dies ist der dritte
+Punkt.
+
+=back
+
+=head2 9.3. Symbol +
+
+    + Dies ist der erste Punkt
+    + Dies ist der zweite Punkt
+    + Dies ist der dritte
+      Punkt.
+
+produziert
+
+=over 2
+
+=item +
+
+Dies ist der erste Punkt
+
+=item +
+
+Dies ist der zweite Punkt
+
+=item +
+
+Dies ist der dritte
+Punkt.
+
+=back
+
+=head2 9.4. HTML-Struktur
+
+    <ul class="sdoc-list-ul">
+      <li class="sdoc-list-li-point" style="list-style-type:SYMBOL">
+        CONTENT
+      </li>
+      ...
+    </ul>
+
+Bestehen die Listenelemente alle aus einzeiligem Text,
+wird der Text nicht in einen Paragraphen <p> eingefasst.
+Dies hat den Vorteil, dass keine zu großen Abstände zwischen
+den Punkten entstehen, die per CSS korrigiert werden müssten.
+
+=head2 9.5. CSS-Klassen
+
+    sdoc-list-ul|Liste
+    sdoc-list-li-point|Listenelement
+
+Punktliste ohne Abstand zwischen den Punkten (hierzu wird der Abstand
+über und unter den untergeordneten Paragraphen auf 0 gesetzt):
+
+    .sdoc-list-ul p {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+=head1 10. Numerierungsliste
+
+    1. Erster Punkt
+    2. Zweiter Punkt
+    3. Dritter Punkt
+
+produziert
+
+=over 4
+
+=item 1.
+
+Erster Punkt
+
+=item 2.
+
+Zweiter Punkt
+
+=item 3.
+
+Dritter Punkt
+
+=back
+
+=head2 10.1. HTML-Struktur
+
+    <ol class="sdoc-list-ol">
+      <li class="sdoc-list-li-num">
+        CONTENT
+      </li>
+      ...
+    </ol>
+
+=head2 10.2. CSS-Klassen
+
+    sdoc-list-ol|Liste
+    sdoc-list-li-num|Listenelement
+
+Numerierungsliste ohne Abstand zwischen den Punkten: siehe
+L</Punktliste/CSS-Klassen>
+
+=head1 11. Definitionsliste
+
+    [Rot]: Rot ist eine Farbe.
+    {Grün}: Grün ist auch eine Farbe.
+    <Blau>: Blau ist eine dritte Farbe.
+    :Gelb: Gelb ist die vierte Farbe.
+
+produziert
+
+=over 4
+
+=item Rot
+
+Rot ist eine Farbe.
+
+=item Grün
+
+Grün ist auch eine Farbe.
+
+=item Blau
+
+Blau ist eine dritte Farbe.
+
+=item Gelb
+
+Gelb ist die vierte Farbe.
+
+=back
+
+Soll am Ende eines Definitionseintrags ein Doppelpunkt erscheinen,
+wird der Doppelpunkt nach innen verlegt bzw. am Ende verdoppelt.
+
+    [Rot:] Rot ist eine Farbe.
+    {Grün:} Grün ist auch eine Farbe.
+    <Blau:> Blau ist eine dritte Farbe.
+    :Gelb:: Gelb ist die vierte Farbe.
+
+produziert
+
+=over 4
+
+=item Rot:
+
+Rot ist eine Farbe.
+
+=item Grün:
+
+Grün ist auch eine Farbe.
+
+=item Blau:
+
+Blau ist eine dritte Farbe.
+
+=item Gelb:
+
+Gelb ist die vierte Farbe.
+
+=back
+
+=head2 11.1. HTML-Struktur
+
+    <dl class="sdoc-list-dl">
+      <dt class="sdoc-list-dt">TERMINUS</dt>
+      <dd class="sdoc-list-dd">
+        DEFINITION
+      </dd>
+      ...
+    </dl>
+
+=head2 11.2. CSS-Klassen
+
+    sdoc-list-dl|Liste
+    sdoc-list-dt|Terminus
+    sdoc-list-dd|Definition
+
+Definitionsliste ohne Abstand zwischen den Punkten: siehe
+L</Punktliste/CSS-Klassen>
+
+=head1 12. Abbildung
+
+Eine Abbildung ist ein freistehendes Bild im Text mit einer
+optionalen Bildunterschrift.
+
+    %Figure:
+      file="/media/data/src/Revolution/SeitzF/sdoc_reference/sdoc_referenz.png"
+      title="Test-Bild"
+      width=249
+      height=249
+      style="border: 1px solid"
+      center=1
+
+produziert
+
+=begin html
+
+<p class="sdoc-fig-p" style="text-align: center">
+  <img class="sdoc-fig-img" style="display: block; margin-left: auto; margin-right: auto; border: 1px solid" src="/media/data/src/Revolution/SeitzF/sdoc_reference/sdoc_referenz.png" width="249" height="249" alt="" />Test-Bild
+</p>
+
+=end html
+
+Für Grafiken, die im Textfluss erscheinen sollen, siehe Segment L</G>.
+
+=head2 12.1. Eigenschaften
+
+=over 4
+
+=item file=STRING (Default: keiner)
+
+(Pflichtangabe) Pfad/Name der Bilddatei.
+
+=item title=STRING (Default: keiner)
+
+Titel der Abbildung. Diese erscheint unter dem Bild.
+
+=item width=INTEGER (Default: die originale Breite des Bildes)
+
+Breite des Bildes.
+
+=item height=INTEGER (Default: die originale Höhe des Bildes)
+
+Höhe des Bildes.
+
+=item style=STRING (Default: keiner)
+
+CSS-Definition für den <img>
+
+=item center=BOOL (Default: gemäß Dokumenteingenschaft "centerFigures")
+
+Zentriere das Bild horizontal auf der Seite.
+
+In HTML/CSS lässt sich das Gleiche erreichen durch:
+
+    .sdoc-fig-p {
+        text-align: center;    /* Text zentrieren */
+    }
+    .sdoc-fig-img {
+        display: block;        /* nur Blockelemente können zentriert werden */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+Das Figure-Attribut "center" zu benutzen ist portabler. Es kann
+z.B. auch auf die Textdarstellung wirken.
+
+=back
+
+=head2 12.2. HTML-Struktur
+
+    <div class="sdoc-fig-p">
+      <img class="sdoc-fig-img" src="FILE" width="WIDTH" height="HEIGHT" style="STYLE" />
+      TITLE
+    </div>
+
+=head2 12.3. CSS-Klassen
+
+    sdoc-fig-p|Abbildungs-Paragraph
+    sdoc-fig-img|Bild
+
+Abbildung zentriert:
+
+    .sdoc-fig-p {
+        text-align: center;   /* Bildunterschrift zentriert */
+    }
+    .sdoc-fig-img {
+        margin: auto;         /* Bild zentriert */
+    }
+
+Abbildung links mit Einrückung von 1.75em:
+
+    .sdoc-fig-p {
+        margin-left: 1.75em;  /* Abstand der Abbildung vom linken Rand */
+    }
+    .sdoc-fig-img {
+    }
+
+=head1 13. Tabelle
+
+Eine Tabelle hat folgende Struktur:
+
+    | A1 | B1 | C1 |
+    | A2 | B2 | C2 |
+    | A3 | B3 | C3 |
+
+Diese produziert
+
+    A1|B1|C1
+    A2|B2|C2
+    A3|B3|C3
+
+=head2 13.1. Titelzellen
+
+Eine Titelzelle (th in HTML) wird mit einem Pluszeichen gekennzeichnet.
+
+    |+H1 |+H2 |+H3 |
+    | A1 | B1 | C1 |
+    | A2 | B2 | C2 |
+    | A3 | B3 | C3 |
+
+produziert
+
+    H1|H2|H3
+    A1|B1|C1
+    A2|B2|C2
+    A3|B3|C3
+
+Das Pluszeichen muss direkt auf das Pipe-Zeichen folgen, es darf
+kein Leerraum dazwischen stehen. Zum Zelleninhalt hin darf Leerraum
+vorkommen, wie das folgende Beispiel zeigt.
+
+Titelzellen können auch vertikal angeordnet sein:
+
+    |+ H1 | A1 | A2 |
+    |+ H2 | B1 | B2 |
+    |+ H3 | C1 | C2 |
+
+produziert
+
+    H1|A1|A2
+    H2|B1|B2
+    H3|C1|C2
+
+=head2 13.2. Ausrichtung der Spalten
+
+Eine Spalte kann linksbündig, rechtsbündig oder zentriert ausgerichtet
+werden. Dies wird durch das (optionale) Ausrichtungszeichen <
+(linksbündig), > (rechtsbündig) oder ~ (zentiert) definiert.  Das
+Ausrichtugszeichen muss direkt auf das Pipe- bzw. Plus-Symbol
+folgen. Ist kein Ausrichtungszeichen angegeben, wird linksbündig
+ausgerichtet.
+
+    |+<Parameter |+>Wert   |+~Einheit |
+    | Pressure   | 176.863 | mbar     |
+    | Salinity   | 10.908  | psu      |
+    | WaterTemp  | 22.96   | °C       |
+
+produziert
+
+    Parameter|Wert|Einheit
+    Pressure|176.863|mbar
+    Salinity|10.908|psu
+    WaterTemp|22.96|°C
+
+Die Ausrichtung gilt innerhalb der Spalte so lange, bis eine andere
+Ausrichtung angegeben wird, d.h. in jeder Zelle einer Spalte kann die
+Ausrichtung abweichend festgelegt werden.
+
+    |<AAAAA  |>BBBBB  |~CCCCC |
+    | A1     | B1     | C1    |
+    |>A2     |~B2     |<C2    |
+    |~A3     |<B3     |>C3    |
+    | A4     | B4     | C4    |
+
+produziert
+
+    AAAAA|BBBBB|CCCCC
+    A1|B1|C1
+    A2|B2|C2
+    A3|B3|C3
+    A4|B4|C4
+
+=head2 13.3. Titel und Ausrichtung
+
+    %Table:
+        title="Messwerte"
+    |+<Parameter |+>Wert   |+~Einheit |
+    | Pressure   | 176.863 | mbar     |
+    | Salinity   | 10.908  | psu      |
+    | WaterTemp  | 22.96   | °C       |
+
+produziert
+
+    %Table:
+        title="Messwerte"
+    |+<Parameter |+>Wert   |+~Einheit |
+    | Pressure   | 176.863 | mbar     |
+    | Salinity   | 10.908  | psu      |
+    | WaterTemp  | 22.96   | °C       |
+
+=head2 13.4. Eigenschaften
+
+=over 4
+
+=item center=BOOL (Default: gemäß Dokumenteingenschaft "centerFigures")
+
+Zentriere das Bild horizontal auf der Seite.
+
+In HTML/CSS lässt sich das Gleiche erreichen durch:
+
+    .sdoc-tab-div {
+        text-align: center;    /* Text zentrieren */
+    }
+    .sdoc-tab-table {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+Das Table-Attribut "center" zu benutzen ist portabler. Es kann
+z.B. auch auf die Textdarstellung wirken.
+
+=item title=STRING (Default: keiner)
+
+Titel der Tabelle. Dieser erscheint unter der Tabelle.
+
+=back
+
+=head2 13.5. HTML-Struktur
+
+    <div class="sdoc-tab-div">
+      <table class="sdoc-tab-table">
+      <tr class="sdoc-tab-tr-odd">
+        <td class="sdoc-tab-th" align="ALIGN_1_1">KOPF_1_1</td>
+        <td class="sdoc-tab-th" align="ALIGN_1_2">KOPF_1_2</td>
+        ...
+      </tr>
+      <tr class="sdoc-tab-tr-even">
+        <td class="sdoc-tab-td" align="ALIGN_1_1">INHALT_2_1</td>
+        <td class="sdoc-tab-td" align="ALIGN_1_2">INHALT_2_2</td>
+        ...
+      </tr>
+      ...
+      </table>
+      TITLE
+    </div>
+
+I<Anmerkung:> Eine Tabelle muss keine Kopfzellen (sdoc-tab-th)
+enthalten und Kopfzellen können auch an anderen Positionen stehen.
+
+=head2 13.6. CSS-Klassen
+
+    sdoc-tab-table|Tabelle
+    sdoc-tab-tr-odd|Ungerade Zeile
+    sdoc-tab-tr-even|Gerade Zeile
+    sdoc-tab-th|Header-Zelle
+    sdoc-tab-td|Normale Zelle
+
+=head1 14. Schlüssel/Wert-Tabelle
+
+Eine Schlüssel/Wert-Tabelle hat folgende Struktur:
+
+    | Vorname: => Hubert |
+    | Nachname: => Schlonz |
+    | Geburtstag: => 24.9.1949 |
+
+produziert
+
+    Vorname: => Hubert
+    Nachname: => Schlonz
+    Geburtstag: => 24.9.1949
+
+Wie bei einer Tabelle (s. L</Tabelle>) steht am Anfang und am Ende der
+Zeile ein Pipe-Symbol. Die Tabellen-Zeile besteht aus zwei Zellen, den
+Schlüssel und den Wert, die durch => voneinander getrennt sind.
+
+=head2 14.1. HTML-Struktur
+
+    <p>
+      <table class="sdoc-keyval-table">
+      <tr class="sdoc-keyval-tr">
+        <td class="sdoc-keyval-td-key">SCHLÜSSEL</td>
+        <td class="sdoc-keyval-td-value">WERT</td>
+      </tr>
+      ...
+      </table>
+    </p>
+
+=head2 14.2. CSS-Klassen
+
+    sdoc-keyval-table|Tabelle
+    sdoc-keyval-tr|Zeile
+    sdoc-keyval-td-key|Schlüssel-Zelle
+    sdoc-keyval-td-value|Wert-Zelle
+
+=head1 15. Zitat
+
+Ein Zitat ist ein Textblock, bei welchem jede Zeile mit einem > gefolgt von
+einem oder mehreren Leerzeichen beginnt.
+
+    > Dies ist ein
+    > Zitat.
+
+produziert
+
+I<Dies ist ein
+Zitat.>
+
+=head2 15.1. HTML-Struktur
+
+    <blockquote class="sdoc-quot-blockquote">
+      INHALT
+    </blockquote>
+
+=head2 15.2. CSS-Klassen
+
+    sdoc-quot-blockquote|Formatierung des Zitatabschnitts
+
+=head1 16. Kasten
+
+Ein Kasten ist ein eigenständiger Dokumentteil, der vom eigentlichen
+Text abgesetzt ist.
+
+    %Box:
+    | Dies ist ein
+    | Kasten
+    |
+    | mit zwei Paragraphen
+
+produziert
+
+B<>
+
+Dies ist ein
+Kasten
+
+mit zwei Paragraphen
+
+Ein Kasten mit Titel:
+
+    %Box:
+      title="CSS 2.1: outline"
+    |
+    |   .umrandung {
+    |       outline: 2px dotted #ff0000;
+    |   }
+    |
+    | Definiert den Umriss eines Elementes.
+
+produziert
+
+B<CSS 2.1: outline>
+
+    .umrandung {
+        outline: 2px dotted #ff0000;
+    }
+
+Definiert den Umriss eines Elementes.
+
+=head2 16.1. Eigenschaften
+
+=over 4
+
+=item title=STRING (Default: keiner)
+
+Titel zum Kasten (optional).
+
+=back
+
+=head2 16.2. HTML-Struktur
+
+    <div class="sdoc-box-div">
+      <p class="sdoc-box-title-p">
+        TITLE
+      </p>
+      CONTENT
+    </div>
+
+=head2 16.3. CSS-Klassen
+
+    sdoc-box-div|DIV, welches den Inhalt kapselt
+    sdoc-box-title-p|Paragraph für Titel
+
+=head1 17. Inhalte inkludieren
+
+Mit einem C<%Include:>-Block wird der Inhalt einer Datei oder die
+Ausgabe eines Programms in das Dokument eingesetzt. Der Inhalt der
+Datei bzw. die Ausgabe des Programms stellt den Inhalt des Blocks dar.
+
+=head2 17.1. Sdoc inkludieren
+
+Wird nichts anderes angegeben (siehe L</"Formatierte Inhalte inkludieren">), wird Sdoc-Text inkludiert.
+
+=head3 17.1.1. Sdoc aus Datei
+
+Der Sdoc-Text wird aus einer Datei eingesetzt, wenn das
+Attribut C<file="path"> angegeben ist.
+
+    %Include: file="include.sdoc"
+
+produziert
+
+I<Dies ist der Inhalt der Datei include.sdoc>
+
+=head3 17.1.2. Sdoc von Programm
+
+Wird mit exec ein Programmaufruf angegeben (C<exec="...">), wird
+die Ausgabe des Programms auf stdout in das Dokument eingefügt.
+
+    %Include: exec="Blob/sdoc_reference/include.pl"
+
+produziert
+
+I<Dies ist die Ausgabe des Programms ./include.pl>
+
+=head2 17.2. Formatierte Inhalte inkludieren
+
+Liegt der zu inkludierende Inhalt nicht in Sdoc vor, sondern
+formatiert, wird der Platzhalter %FORMAT% in den Dateinamen bzw. in
+den Programmaufruf eingesetzt. Dieser Platzhalter wird durch das
+jeweils bei der Generierung benötigte Format ersetzt.
+
+=head3 17.2.1. Formatierte Inhalte aus Datei
+
+    %Include: file="Blob/sdoc_reference/include.%FORMAT%"
+
+produziert
+
+I<Dies ist der Inhalt der Datei include.pod>
+
+=head2 17.3. Formatierte Inhalte von Programm
+
+    %Include: exec="Blob/sdoc_reference/include.pl %FORMAT%"
+
+produziert
+
+I<Dies ist die Ausgabe des Programms ./include.pl>
+
+=head1 18. Link Definition
+
+Eine Link-Definition kann in einen Link-Block ausgelagert werden:
+
+    %Link:
+      name=NAME
+      url=URL
+
+Hierbei handelt es sich lediglich um eine I<Definition>, d.h. es wird
+durch den Block kein Inhalt erzeugt. Dies geschieht, wenn im Text
+
+    U{NAME}
+
+verwendet wird. Bei der Erzeugung dieses Link werden die Eigenschaften
+des Link-Blocks herangezogen. Vorteil: Der Textfluss wird nicht durch
+die URL-Angabe gestört.
+
+=head1 19. Interner Link
+
+Ein Interner Link ist ein Verweis I<innerhalb> des Dokuments.
+Er besteht aus zwei Teilen, dem Link und dem Anker.
+
+=head2 19.1. Anker
+
+Jeder Abschnitt (s. L</Abschnitt>) und jedes Element einer
+Definitionsliste (s. L</Definitionsliste>) erhält automatisch
+einen oder mehrere Anker zugewiesen (sofern als Dokumenteigenschaft
+nicht L</generateAnchors>=0 definiert ist):
+
+=over 2
+
+=item *
+
+Titel (= Abschittstitel bzw. Definitionsterminus)
+
+=back
+
+Sofern ein Anker oder Schlüssel für das Objekt definiert ist, zusätzlich:
+
+=over 2
+
+=item *
+
+Anker bzw. Schlüssel-Anker (s. Segment L</A> oder L</K>)
+
+=back
+
+Sofern ein übergeordnetes Objekt einen Schlüssel definiert hat,
+zusätzlich:
+
+=over 2
+
+=item *
+
+Titelpfad-Anker (= Liste von Titeln)
+
+=item *
+
+Schlüsselpfad-Anker (= Liste von Schlüsseln + Anker oder Schlüssel-Anker
+oder Titel)
+
+=back
+
+B<Beispiel - Anker für Abschnitt>
+
+    == Optionen
+
+Der automatisch generierte Anker für diesen Abschnitt ist "Optionen".
+
+B<Beispiel - Anker für Definitionsterminus>
+
+    [-verbose]: schreibe zusätzliche Informationen nach STDOUT
+
+Der automatisch generierte Anker für dieses Definitionslisten-Element
+ist "-verbose".
+
+Es ist gleichgültig, welche Zeichen ein Titel enthält, der Text
+wird in eine interne Anker-Repräsentation übersetzt. Das gleiche
+geschieht beim Link.
+
+=head3 19.1.1. Interne Anker-Repräsentation
+
+=over 4
+
+=item 1.
+
+alle Buchstaben werden in Kleinschreibung gewandelt
+
+=item 2.
+
+alle Zeichen, die keine Buchstaben oder Ziffern sind,
+werden durch einen Unterstrich ersetzt
+
+=item 3.
+
+Unterstriche am Anfang und am Ende werden entfernt
+
+=item 4.
+
+alle Folgen von zwei oder mehr Unterstrichen werden auf
+einen einzelnen Unterstrich reduziert
+
+=back
+
+B<Beispiel - Anker-Repräsentation>
+
+    new() - Konstruktor
+
+wird zu
+
+    new_konstruktor
+
+=head2 19.2. Link
+
+Der Link zum Referenzieren eines Ankers wird mit Inline-Segment
+L gesetzt. An der Stelle, wo der Link steht, wird die
+expandierte Bezeichnung des Referenzierten Objekts eingesetzt.
+
+=head2 19.3. Überprüfung
+
+Interne Links werden von Sdoc auf ihre Gültigkeit überprüft,
+d.h. es wird bei der Übersetzung des Dokuments geprüft, ob der
+referenzierte Anker existiert und ob dieser eindeutig ist.
+Ist eins von beidem nicht der Fall, wird eine Warnung ausgegeben.
+
+=head2 19.4. Ändern des Ankers
+
+Ist der Text des automatisch generierten Ankers unpraktikabel,
+weil zu lang oder unpassend, kann dieser auf einen Teil
+eingeschränkt oder ersetzt werden. Dies wird mit den Inline-Segmenten
+A und a erreicht (s. Segment L</A>).
+
+    A{TEXT} - vereinbare TEXT als Anker
+    a{TEXT} - wie A{}, nur TEXT erscheint nicht im Dokument
+
+Einschränkung auf einen Teil:
+
+    == A{generateDocument}() - Generiere Dokument
+
+Statt "generateDocument() - Generiere Dokument" ist
+"generateDocument" der Anker.
+
+Ersetzung:
+
+    == generateDocument() - Generiere Dokument a{gD}
+
+Hier ist "gD" der Anker, diese Zeichenkette ist nicht Bestandteil
+des Abschnitts-Titels, sie wird entfernt.
+
+=head2 19.5. Auflösung von Mehrdeutigkeiten
+
+Mitunter ist der Abschnittstitel oder der Definitionsterminus im
+gesamten Dokument nicht eindeutig - sondern nur in einem Teil des
+Dokuments. Diese Mehrdeutigkeit kann dadurch aufgelöst werden, dass
+der kennzeichnende Ober-Abschnitt mit einem I<Abschnitts-Schlüssel>
+versehen wird.
+
+Dieser Schlüssel bildet den Anker für den Ober-Abschnitt und
+wird den automatisch generierten Ankern der Unter-Abschnitte
+und Definitionstermini hinzugefügt.
+
+Ein Abschnitts-Schlüssel wird mit den Inline-Segmenten K oder k
+definiert (s. Segment L</K>).
+
+    K{TEXT} - vereinbare TEXT als Abschnitts-Schlüssel
+    k{TEXT} - wie K{}, nur TEXT erscheint nicht im Dokument
+
+Analog zu a wird das Inline-Segment k entfernt.  Dem Segment k muss
+eine Wortgrenze (Zeichen, das kein Buchstabe ist) vorausgehen.
+Leerraum davor wird entfernt.
+
+B<Beispiel - Auflösung von Anker-Mehrdeutigkeiten>
+
+    == K{generateDocument}() - Generiere Dokument
+    ...
+    
+    === Optionen
+    ...
+    
+    [-verbose]: schreibe zusätzliche Informationen nach STDOUT
+
+Die drei automatisch generierten Anker sind "generateDocument" (für
+den kennzeichnenden Ober-Abschnitt), "generateDocument/Optionen" (für
+den Unterabschnitt) und "generateDocument/-verbose" (für den
+Definitionsterminus).
+
+=head1 20. Inline-Segment
+
+Ein Inline-Segment ist ein Text-Teil, der mit einem einbuchstabigen
+Segment-Namen und geschweiften Klammern ausgezeichnet ist.
+
+    A{...} - Anker (anchor)
+    a{...} - Unsichtbarer Anker
+    B{...} - Fette Schrift (bold)
+    C{...} - Monospaced Schrift (constant width)
+    E{...} - Hervorgehobene Schrift (emphasized)
+    # F{...} - Fußnote (footnote)
+    G{...} - Grafik/Bild im Textfluss (graphic)
+    I{...} - Kursive Schrift (italic)
+    K{...} - Abschnitts-Schlüssel (key)
+    k{...} - Unsichtbarer Abschnitts-Schlüssel
+    L{...} - Link innerhalb des Dokuments (link)
+    l{...} - Link mit kürzestmöglichem Linktext
+    Q{...} - Zitat (quote)
+    U{...} - Link auf externes Dokument (url)
+    # X{...} - Index-Eintrag (index)
+    # Z{...} - Attribut-Setzung
+    
+    (# = vorgesehen, aber noch nicht implementiert)
+
+Ein Inline-Segment hat einen Wert und optionale Attribute.
+Existiert nur der Wert, wird dieser zwischen die geschweiften Klammern
+gesetzt. Existieren zusätzliche Attribute, muss der Wert in doppelte
+Anführungsstriche gesetzt werden. Die Attribut/Wert-Paare folgen danach
+als Aufzählung in der Form
+
+    attrib1="val1",attrib2="val2" ...
+
+Als Trenner kann statt Komma auch Whitspace verwendet werden
+oder allgemein: jede Zeichenfolge, die nicht Bestandteil eines
+Attributnamens ist.  Ein Attributname besteht aus den Zeichen der
+Zeichnklasse \w.
+
+B<Beispiel - Inline-Grafik>
+
+    G{bild.png}
+
+bzw.
+
+    G{"bild.png",width="200",height="200"}
+
+oder
+
+    G{"bild.png" width="200" height="200"}
+
+oder
+
+    G{"bild.png" width="200"
+      height="200"}
+
+=head2 20.1. A, a - Anker
+
+Ein Anker definiert einen Punkt im Dokument, der von einem Link
+aus referenziert werden kann. Es wird zwischen einem großen
+A und einem kleinen a unterschieden:
+
+    A{Ein Anker}
+
+Der Text "Ein Anker" ist sichtbarer Bestandteil des Texts.
+
+    a{Ein Anker}
+
+Der Text "Ein Anker" ist unsichtbar, also I<nicht> Bestandteil des
+Texts.
+
+ACHTUNG: Aktuell können Anker ausschließlich in Abschnitts-Titeln und
+Termini von Definitionslisten vereinbart werden.
+
+=head2 20.2. B - Fett
+
+    Du machst mich B{sehr} wütend.
+
+Du machst mich B<sehr> wütend.
+
+=head2 20.3. C - Monospaced
+
+    Der Konstruktoraufruf C{$class->new()} liefert das Objekt.
+
+Der Konstruktoraufruf C<< $class->new() >> liefert das Objekt.
+
+=head2 20.4. E - Emphasized
+
+    KML (E{Keyhole Markup Language}) basiert auf XML.
+
+KML (I<Keyhole Markup Language>) basiert auf XML.
+
+=head2 20.5. G - Inline-Grafik
+
+Inline-Grafiken werden mit dem Segment G definiert:
+
+    Dies ist eine G{"sdoc_referenz.png",width="100",height="100"} Inline-Grafik
+
+produziert
+
+Dies ist eine GRAPHIC: /media/data/src/Revolution/SeitzF/sdoc_reference/sdoc_referenz.png Inline-Grafik
+
+Inline-Grafiken können im Gegensatz zu Abbildungen (s. L</Abbildung>)
+nicht betitelt und nicht durch Links (s. Segment L</L>)
+referenziert werden.
+
+=head3 20.5.1. Eigenschaften
+
+    Attribut|Beschreibung
+    width|Breite des Bildes im Dokument
+    height|Höhe des Bildes im Dokument
+
+=head2 20.6. I - Kursiv
+
+    Ich sagte, du sollst das I{nicht} essen.
+
+Ich sagte, du sollst das I<nicht> essen.
+
+=head2 20.7. K, k - Abschnitts-Schlüssel
+
+Definiert einen Abschnitts-Schlüssel. Das Segment ist nur
+in Abschnitts-Titeln zulässig.
+
+=head2 20.8. L, l - Link
+
+Mit einem Link wird innerhalb eines Dokuments auf
+einen Anker verwiesen.
+
+    Link1: L{Inline-Segment/L}
+    
+    Link2: L{L}
+    
+    Link3: l{Inline-Segment/L}
+    
+    Link4: l{L}
+    
+    Link5: L{"L",text="Dieser Abschnitt"}
+
+produziert
+
+Link1: L</Inline-Segment/L> (Titel-Pfad als Link-Text)
+
+Link2: L</L> (Titel-Pfad als Link-Text)
+
+Link3: L</Inline-Segment/L> (Anker als Link-Text)
+
+Link4: L</L> (Anker als Link-Text)
+
+Link5: L</L> (eigener Text als Link-Text)
+
+=head3 20.8.1. Erklärung
+
+=over 2
+
+=item *
+
+Der Oberabschnitt wurde mit Abschnitts-Schlüssel
+
+    = K{Inline-Segment}
+
+definiert.
+
+=item *
+
+Dieser Abschnitt wurde mit
+
+    == A{L}, l - Link
+
+definiert. Der Anker ist im Dokument eindeutig, daher kann dieser
+trotz des Abschnitts-Schlüsssels alleine verwendet werden.
+
+=item *
+
+Bei kleinem l wird der angegebene Text gesetzt, also nicht
+zum Vollständigen Abschnitts-Pfad expandiert.
+
+=item *
+
+Das Attribut C<text> überschreibt den Link-Text.
+
+=back
+
+=head3 20.8.2. Eigenschaften
+
+    Attribut|Beschreibung
+    text|Text anstelle der Bezeichnung des referenzierten Objekts
+
+=head2 20.9. Q - Inline-Zitat
+
+    Was heißt schon Q{richtig}?
+
+Was heißt schon "richtig"?
+
+=head2 20.10. U - URL
+
+=head3 20.10.1. URL alleine
+
+    Das Modul ist zu finden auf U{http://www.cpan.org/}.
+
+Das Modul ist zu finden auf L<http://www.cpan.org/>.
+
+=head3 20.10.2. URL mit Text
+
+    Das Modul ist zu finden auf U{"http://www.cpan.org/",text="CPAN"}.
+
+Das Modul ist zu finden auf L<CPAN|http://www.cpan.org/>.
+
+=head3 20.10.3. URL mit getrennter Link-Definition
+
+=over 2
+
+=item *
+
+Der Textfluss wird nicht durch den URL gestört
+
+=item *
+
+Der Text kann umbrochen sein (der Umbruch entspricht einem Leerzeichen)
+
+=item *
+
+Mehere Texte für den gleichen Link sind möglich (Namen werden
+durch | getrennt)
+
+=back
+
+    Das Modul ist zu finden auf U{CPAN}.
+    
+    ...
+    
+    %Link:
+      name="CPAN"
+      url="http://www.cpan.org/"
+
+Das Modul ist zu finden auf L<CPAN|http://www.cpan.org/>.
+
+=head3 20.10.4. Eigenschaften
+
+    Attribut|Beschreibung
+    text|Text, der anstelle des URL angezeigt wird
+    target|Zielframe oder -Window (HTML)
+
+=head2 20.11. CSS-Klassen
+
+    Klasse|Segment
+    sdoc-seg-b|B
+    sdoc-seg-c|C
+    sdoc-seg-e|E
+    sdoc-seg-g|G
+    sdoc-seg-i|I
+    sdoc-seg-u|U
+
+=head1 A. Entwicklernotizen
+
+=head2 A.1. TODO
+
+=over 2
+
+=item *
+
+Code-Abschnitte mit %Code: type= ausstatten, z.B. type=perl, dann kann
+dieser Code automatisch durch perldidy gehighlighted werden.
+
+=item *
+
+Code-Abschnitte mit hingeschriebenem Inhalt: generell Inline-Segmente
+expandieren, bei per file= oder exec= inkludiertem Code nicht.
+Option: expand=BOOL
+
+=item *
+
+Formatspezifische Blöcke:
+
+%Html: exec= file=
+xxx
+.
+
+%Pod: exec= file=
+xxx
+.
+
+%Latex: exec= file=
+xxx
+.
+
+=item *
+
+Generelles Konzept für formatspezifischen Inline-Code entwickeln
+
+=item *
+
+U mit Option target=WINDOW ausstatten
+
+=item *
+
+Code-Variante, in der Inline-Segmente expandiert werden
+
+=item *
+
+HTML einbetten <...>
+
+=item *
+
+Inline-Segmente rekursiv auflösen (Einbetten von Segmenten ineinander)
+
+=item *
+
+bei Inline-Segmenten "=" und "=>" erlauben
+
+=item *
+
+%ROOT%::Sdoc -> %ROOT%::Sdoc::Document
+
+=item *
+
+Umbruch in gedruckter Version
+
+    == Seitenumbruch vor Abschnitt
+    
+    Durch Hinzufügen eines Ausrufungszeichens (!) kann für den HTML-Druck
+    (also Ausgabe auf einem Drucker, nicht Anzeige im Browser)
+    ein Seitenumbruch forciert werden. Der Seitenumbruch wird unmittelbar
+    vor dem Abschnittstitel ausgeführt.
+    
+      ==! Dies ist ein Abschnitt der Ebene 2 mit Seitenumbruch davor
+
+=item *
+
+Bildunterschrift, wenn kein Titel aber referenziert?
+
+=item *
+
+Inline-Grafiken können keinen Titel haben und nicht referenziert werden.
+Dies sicherstellen.
+
+=item *
+
+Root-Pointer an alle Knoten
+
+=item *
+
+--- Horizontaler Ruler
+
+=item *
+
+Tabellenunterschrift, wenn Tabelle einen Titel hat
+
+=item *
+
+Anker für Bilder und Tabellen
+
+=item *
+
+boolsche Werte mit yes/no
+
+=item *
+
+mail-URL
+
+=item *
+
+F{...} - Fußnote
+
+=item *
+
+X{...} - Index-Eintrag
+
+=item *
+
+Prinzip der Blockelemente %XXX: ... dokumentieren
+
+    %XXX:
+      key=val
+      key=val
+    <Leerzeile>
+
+=back
+
+=head1 Author
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 Copyright
+
+Copyright (C) 2019 Frank Seitz
