@@ -1,0 +1,390 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::String - Operationen auf Zeichenketten
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 METHODS
+
+=head2 Encoding
+
+=head3 autoDecode() - Auto-dekodiere Zeichenkette
+
+=head4 Synopsis
+
+    $str = $class->autoDecode($str);
+    $str = $class->autoDecode($str,$otherEncoding);
+
+=head4 Description
+
+Analysiere Zeichenkette $str hinsichtlich ihres Character-Encodings
+und dekodiere sie entsprechend. Unterschieden werden:
+
+=over 2
+
+=item *
+
+ASCII
+
+=item *
+
+UTF-8
+
+=item *
+
+UTF-16/32 mit BOM
+
+=back
+
+und $otherEncoding. Ist $otherEncoding nicht angegeben, wird
+ISO-8859-1 angenommen.
+
+=head2 Einrückung
+
+=head3 indent() - Rücke Text ein
+
+=head4 Synopsis
+
+    $str2 = $class->indent($str,$indentStr,@opt);
+    $class->indent(\$str,$indentStr,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -indentBlankLines => $bool (Default: 0)
+
+Rücke auch Leerzeilen ein. Per Default werden nur Zeilen mit
+wenigstens einem Zeichen eingerückt.
+
+Diese Option ist nützlich, wenn die Funktion zum Auskommentieren
+genutzt werden soll.
+
+=item -strip => $bool (Default: 0)
+
+Entferne Newlines am Anfang und Whitespace am Ende. Per Default
+geschieht dies nicht.
+
+=back
+
+=head4 Description
+
+Rücke den Text $str um Zeichenkette $indentStr ein und liefere
+das Resultat zurück.
+
+Die Einrück-Zeichenkette $indentStr wird jeder Zeile von $str
+hinzugefügt, außer Leerzeilen.
+
+=head4 Example
+
+=over 2
+
+=item *
+
+Texteinrückung um vier Leerzeichen
+
+    $class->indent($txt,' ' x 4);
+    
+    |Dies ist                   |    Dies ist
+    |ein Test-   - wird zu ->   |    ein Test-
+    |Text.                      |    Text.
+
+=back
+
+=head3 determineIndentation() - Einrücktiefe eines Textes
+
+=head4 Synopsis
+
+    $n = $class->determineIndentation($str);
+
+=head4 Description
+
+Ermittele die Einrücktiefe des Textes $str und liefere diese zurück.
+Die Einrücktiefe ist der größte gemeinsame Teiler aller
+Zeilen-Einrückungen. Beispiel:
+
+    |Dies
+    |    ist
+    |       ein
+    |           Test
+
+Einrücktiefe ist 4.
+
+WICHTIG: Für die Einrückung zählen nur Leerzeichen, keine Tabs!
+
+=head3 reduceIndentation() - Reduziere Einrücktiefe eines Textes
+
+=head4 Synopsis
+
+    $str = $class->reduceIndentation($n,$str);
+    $class->reduceIndentation($n,\$str);
+
+=head4 Description
+
+Reduziere die Einrücktiefe des Textes $str auf Tiefe $n.
+
+=head4 Example
+
+Text:
+
+    |Dies
+    |    ist
+    |        ein
+    |            Test
+
+Reduktion auf Einrücktiefe 2:
+
+    Quiq::String->reduceIndentation(2,$str);
+
+Resultat:
+
+    |Dies
+    |  ist
+    |    ein
+    |      Test
+
+=head3 removeIndentation() - Entferne Text-Einrückung
+
+=head4 Synopsis
+
+    $str = $class->removeIndentation($str,@opt); # [1]
+    $class->removeIndentation(\$str,@opt);       # [2]
+
+=head4 Options
+
+=over 4
+
+=item -addNL => $bool (Default: 0)
+
+Nach dem Entfernen aller NEWLINEs am Ende füge ein NEWLINE hinzu.
+
+=back
+
+=head4 Description
+
+[1] Entferne Text-Einrückung aus Zeichenkette $str und liefere das
+Resultat zurück.
+
+[2] Wird eine Referenz auf $str übergeben, wird die
+Zeichenkette "in place" manipuliert und nichts zurückgegeben.
+
+=over 2
+
+=item *
+
+NEWLINEs am Anfang werden entfernt.
+
+=item *
+
+Whitespace (SPACEs, TABs, NEWLINEs) am Ende wird entfernt.
+Das Resultat endet also grundsätzlich nicht mit einem NEWLINE.
+
+=item *
+
+Die Methode kehrt zurück, wenn $str anschließend nicht mit wenigstens
+einem Whitespace-Zeichen beginnt, denn dann existiert keine
+Einrückung, die zu entfernen wäre.
+
+=item *
+
+Die Einrückung von $str ist die längste Folge von SPACEs
+und TABs, die allen Zeilen von $str gemeinsam ist,
+ausgenommen Leerzeilen. Diese Einrückung wird am Anfang
+aller Zeilen von $str entfernt.
+
+=item *
+
+Eine Leerzeile ist eine Zeile, die nur aus Whitespace besteht.
+
+=back
+
+=head4 Example
+
+=over 2
+
+=item *
+
+Einrückung entfernen, Leerzeile übergehen:
+
+    |
+    |  Dies ist
+    |              <- Leerzeile ohne Einrückung
+    |  ein Test-
+    |  Text.
+    |
+
+wird zu
+
+    |Dies ist
+    |
+    |ein Test-
+    |Text.
+
+=item *
+
+Tiefere Einrückung bleibt bestehen:
+
+    |
+    |    Dies ist
+    |  ein Test-
+    |  Text.
+    |
+
+wird zu
+
+    |  Dies ist
+    |ein Test-
+    |Text.
+
+=back
+
+=head3 removeIndentationNl() - Entferne Text-Einrückung
+
+=head4 Synopsis
+
+    $str = $class->removeIndentationNl($str,@opt); # [1]
+    $class->removeIndentationNl(\$str,@opt);       # [2]
+
+=head2 Kommentare
+
+=head3 removeComments() - Entferne Kommentare aus Quelltext
+
+=head4 Synopsis
+
+    $newCode = $this->removeComments($code,$start);
+    $newCode = $this->removeComments($code,$start,$stop);
+
+=head4 Description
+
+Entferne alle Kommentare aus Quelltext $code und liefere das
+Resultat zurück. Die Kommentarzeichen werden durch die Parameter
+$start und $stop definiert. Siehe Abschnitt Examples.
+
+Die Methode entfernt nicht nur die Kommentare selbst, sondern
+auch nachfolgenden oder vorausgehenden Whitespace, so dass
+kein überflüssiger Leerraum entsteht.
+
+Im Falle von einzeiligen Kommentaren (d.h. nur $start ist
+definiert), wird vorausgesetzt, dass dem Kommentarzeichen (der
+Kommentar-Zeichenkette) im Quelltext zusätzlich ein Leerzeichen
+oder Tab vorausgeht, sofern es nicht am Anfang der Zeile
+steht. D.h.
+
+    my $ind = ' ' x 4; # Einrückung
+                      ^ ^
+                      hier müssen Leerzeichen (oder Tabs) stehen
+    
+    my $ind = ' ' x 4;# Einrückung
+                      ^
+                      Wird nicht erkannt!
+    
+    my $ind = ' ' x 4; #Einrückung
+                       ^
+                       Wird nicht erkannt!
+
+Im Falle von mehrzeiligen Kommentaren ($start und $stop sind
+definiert) ist dies das vorausgehende Leereichen nicht nötig.
+
+=head4 Examples
+
+HTML, XML:
+
+    $code = Quiq::String->removeComments($code,'<!--','-->');
+
+C, Java, CSS:
+
+    $code = Quiq::String->removeComments($code,'/*','*/');
+
+C++, JavaScript:
+
+    $code = Quiq::String->removeComments($code,'//');
+
+Shell, Perl, Python, Ruby, ...:
+
+    $code = Quiq::String->removeComments($code,'#');
+
+SQL:
+
+    $code = Quiq::String->removeComments($code,'--');
+
+=head2 Umbruch
+
+=head3 wrap() - Umbreche Fließtext
+
+=head4 Synopsis
+
+    $text = $class->wrap($text,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -width => $n (Default: 70)
+
+Maximale Zeilenbreite des resultierenden Fließtextes (sofern kein
+einzelnes Wort länger als die Zeilenbreite ist).
+
+=back
+
+=head4 Description
+
+Umbreche Fließext $text, so dass die Zeilenlänge $width möglichst
+nicht überschritten wird. Sie kann überschritten werden, wenn ein
+Wort länger als $width ist, sonst ist die Zeilenlänge <= $width.
+
+Whitespace:
+
+=over 2
+
+=item *
+
+Whitespace am Anfang und am Ende von $text wird entfernt
+
+=item *
+
+Folgen von Whitespace-Zeichen innerhalb von $text werden zu
+einem Whitespace-Zeichen reduziert
+
+=back
+
+Paragraphen:
+
+Ist der Text in Paragraphen organisiert und soll dies erhalten
+bleiben, muss jeder Paragraph einzeln umbrochen werden.
+
+=head4 Example
+
+Maximale Zeilenlänge auf 12 Zeichen begrenzen:
+
+    $txt = "Dies ist ein Test mit einem kurzen Text.";
+    $txt = Quiq::String->wrap($txt,-width=>12);
+    # =>
+    Dies ist ein
+    Test mit
+    einem kurzen
+    Text.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/String.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

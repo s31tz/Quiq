@@ -1,0 +1,167 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Http::Client - HTTP-Client
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 DESCRIPTION
+
+Die Klasse implementiert einen HTTP-Client für GET- und POST-Requests.
+
+Die zentrale Methode ist $class->L</sendReceive>(). Diese sendet eine
+HTTP-Request-Message, die der Aufrufer konfiguriert hat, an einen
+Server (URL), und gibt die HTTP-Response-Message des Servers zurück.
+Die Methode beherrscht GET- und POSTS-Requests. Auf ihrer Basis
+sind die spezielleren Methoden $class->L</get>() und $class->L</post>()
+implementiert. Die HTTP-Messages, sowohl gesendete als auch empfangene,
+sind Instanzen der Klasse Quiq::HTTP::Message.
+
+=head1 EXAMPLE
+
+=head2 Universeller Client
+
+Siehe quiq-http-client
+
+=head2 GET-Request
+
+    my $msg = Quiq::Http::Client->get($url);
+    print $msg->asString;
+
+=head2 POST-Request
+
+    my $sMsg = Quiq::Http::Message->new(
+        contentType=>'text/plain',
+        contentLength=>-1,
+        body=>'Dies ist ein Test',
+    );
+    my $rMsg = Quiq::Http::Client->put($url,$sMsg);
+    print $rMsg->asString;
+
+=head1 METHODS
+
+=head2 Klassenmethoden
+
+=head3 sendReceive() - Führe HTTP-Request aus
+
+=head4 Synopsis
+
+    $rMsg = $class->sendReceive($op,$url,$sMsg,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $op
+
+Die HTTP-Operation: 'post' oder 'get'.
+
+=item $url
+
+Der URL, gegen den die Operation ausgeführt wird.
+
+=item $sMsg
+
+Die HTTP-Nachricht, die gesendet wird. Dies ist eine Instanz der Klasse
+Quiq::Http::Message.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -debug => $bool (Default: 0)
+
+Gib die kommunizierten Daten (Request, Response) und Metainformation
+(Zeitmessung) auf STDOUT aus.
+
+=item -redirect => $bool (Default: 1)
+
+Führe Redirects automatisch aus.
+
+=back
+
+=head4 Description
+
+Führe HTTP Request vom Typ $op gegen URL $url mit HTTP-Nachricht $sMsg aus
+und liefere die vom Server gelieferte Antwort $rMsg zurück.
+
+=head3 get() - Führe GET-Request aus
+
+=head4 Synopsis
+
+    $msg = $class->get($url,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $url
+
+Der URL, gegen den der GET-Request ausgeführt wird.
+
+=item $sMsg
+
+Die HTTP-Nachricht, die gesendet wird. Dies ist eine Instanz der Klasse
+Quiq::Http::Message.
+
+=back
+
+=head4 Options
+
+Siehe Methode L</sendReceive>().
+
+=head4 Description
+
+Führe HTTP POST-Request mit URL $url aus und liefere die vom Server
+gelieferte Antwort zurück.
+
+=head3 post() - Führe POST-Request aus
+
+=head4 Synopsis
+
+    $rMsg = $class->post($url,$sMsg,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $url
+
+Der URL, gegen den der GET-Request ausgeführt wird.
+
+=back
+
+=head4 Options
+
+Siehe Methode L</sendReceive>().
+
+=head4 Description
+
+Führe HTTP POST-Request gegen URL $url und mit HTTP-Nachricht $sMsg aus
+und liefere die vom Server gelieferte Antwort zurück.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Http/Client.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

@@ -1,0 +1,125 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Database::Api::Dbi::Connection - DBI Datenbank-Verbindung
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse Quiq::Database::Api::Dbi::Connection repräsentiert eine
+Verbindung zu einer Relationalen Datenbank über den DBI-Layer.
+
+=head1 ATTRIBUTES
+
+=over 4
+
+=item dbh => $dbh
+
+DBI Database Handle.
+
+=item dbms => $dbms
+
+Name des DBMS, für DBMS-spezifische Fallunterscheidungen.
+
+=back
+
+=head1 METHODS
+
+=head2 Konstruktor/Destruktor
+
+=head3 new() - Öffne Datenbankverbindung
+
+=head4 Synopsis
+
+    $db = $class->new($udlObj);
+
+=head4 Description
+
+Instantiiere eine Datenbankverbindung und liefere eine Referenz
+auf dieses Objekt zurück.
+
+=head3 destroy() - Schließe Datenbankverbindung
+
+=head4 Synopsis
+
+    $db->destroy;
+
+=head4 Description
+
+Schließe die Datenbankverbindung. Die Methode liefert keinen Wert zurück.
+
+=head2 Objektmethoden
+
+=head3 strict() - Schalte Datenbankverbindung in den Strict-Modus
+
+=head4 Synopsis
+
+    $bool = $db->strict;
+    $bool = $db->strict($bool);
+
+=head4 Description
+
+Ist der Strict-Modus eingeschaltet, führen alle Datenbank-Fehler
+zu einer Exception. Diese Methode schaltet den Strict-Modus ein
+oder stellt den ursprüngliche Modus wieder her.
+
+=head3 maxBlobSize() - Liefere/Setze maximale Größe eines BLOB/TEXT-Werts (Oracle)
+
+=head4 Synopsis
+
+    $n = $db->maxBlobSize;
+    $n = $db->maxBlobSize($n);
+
+=head4 Description
+
+Liefere/Setze die maximale Größe eines BLOB/TEXT-Werts auf $n Bytes.
+Defaulteinstellung ist 1024*1024 Bytes (1MB).
+
+Dieser Wert ist nur für Oracle relevant und wird bei der Selektion
+von BLOB/TEXT-Kolumnen benötigt. Ist der Wert einer BLOB/TEXT-Kolumne
+größer als die angegebene Anzahl an Bytes wird eine Exception
+ausgelöst.
+
+Bei anderen DBMSen als Oracle hat das Setzen keinen Effekt und der
+Returnwert ist immer 0.
+
+=head3 sql() - Führe SQL-Statement aus
+
+=head4 Synopsis
+
+    $cur = $db->sql($stmt,$forceExec);
+
+=head4 Description
+
+Führe SQL-Statement $stmt auf der Datenbank $db aus, instantiiere ein
+Resultat-Objekt $cur und liefere eine Referenz auf dieses Objekt
+zurück.
+
+Ist Parameter $forceExec angegeben und wahr, wird die Ausführung
+des Statement forciert. Dies kann bei Oracle PL/SQL Code notwendig
+sein (siehe Doku zu Quiq::Database::Connection/sql).
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Database/Api/Dbi/Connection.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

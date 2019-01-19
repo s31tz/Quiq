@@ -1,0 +1,395 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Pod::Generator - POD-Generator
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+Dokumentation der POD-Syntax: L<http://perldoc.perl.org/perlpod.html>
+
+Ein Objekt der Klasse repräsentiert einen POD-Generator. Mit den
+Methoden der Klasse können aus einem Perl-Programm heraus
+POD-Dokumente erzeugt werden, wobei man sich um die Syntaxregeln
+und die Details der Formatierung nicht zu kümmern braucht.
+
+=head1 ATTRIBUTES
+
+=over 4
+
+=item indentation => $n (Default: 4)
+
+Einrücktiefe bei Code-Abschnitten und Listen.
+
+=back
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere POD-Generator
+
+=head4 Synopsis
+
+    $pg = $class->new(@keyVal);
+
+=head4 Description
+
+Instantiiere einen POD-Generator und liefere eine Referenz auf
+dieses Objekt zurück.
+
+=head4 Example
+
+Generiere POD mit Einrückung 2:
+
+    $pg = Quiq::Pod::Generator->new(
+        indentation=>2,
+    );
+
+=head2 Abschnitts-Kommandos
+
+Alle Abschnitts-Methoden ergänzen den generierten POD-Code um eine
+Leerzeile am Ende, so dass das nächste Konstrukt direkt angefügt
+werden kann. Diese Leezeile ist in den Beispielen nicht
+wiedergegeben.
+
+=head3 encoding() - Deklaration des Encodings
+
+=head4 Synopsis
+
+    $pod = $pg->encoding($encoding);
+
+=head4 Description
+
+Erzeuge eine Deklaration des Encodings $encoding und liefere
+den resultierenden POD-Code zurück.
+
+=head4 Example
+
+    $pg->encoding('utf-8');
+
+erzeugt
+
+    =encoding utf-8
+
+=head3 section() - Abschnitt
+
+=head4 Synopsis
+
+    $pod = $pg->section($level,$title);
+    $pod = $pg->section($level,$title,$body);
+
+=head4 Description
+
+Erzeuge einen Abschnitt der Tiefe $level mit dem Titel $title und
+dem Abschnitts-Körper $body und liefere den resultierenden
+POD-Code zurück. Ist $body nicht angegeben oder ein Leerstring,
+wird nur der Titel erzeugt. Andernfalls wird $body per trim()
+von einer Einrückung befreit.
+
+=head4 Examples
+
+=over 2
+
+=item *
+
+ohne Body
+
+    $pg->section(1,'Test');
+
+erzeugt
+
+    =head1 Test
+
+=item *
+
+mit Body
+
+    $pg->section(1,'Test',"Dies ist\nein Test.");
+
+erzeugt
+
+    =head1 Test
+    
+    Dies ist
+    ein Test.
+
+=item *
+
+eine Einrückung wird automatisch entfernt
+
+    $pg->section(1,'DESCRIPTION',q~
+        Dies ist
+        ein Test.
+    ~);
+
+erzeugt
+
+    =head1 Test
+    
+    Dies ist
+    ein Test.
+
+=back
+
+=head3 code() - Code-Abschnitt
+
+=head4 Synopsis
+
+    $pod = $pg->code($text);
+
+=head4 Description
+
+Erzeuge einen Code-Abschnitt mit Text $text und liefere den
+resultierenden POD-Code zurück.
+
+=head4 Example
+
+    $pg->code("sub f {\n    return 1;\n}");
+
+erzeugt
+
+    $n Leerzeichen
+    ----
+        sub f {
+            return 1;
+        }
+
+Der Code ist um $n Leerzeichen (den Wert des Objekt-Attributs
+"indentation") eingerückt.
+
+=head3 bulletList() - Punkte-Liste
+
+=head4 Synopsis
+
+    $pod = $pg->bulletList(\@items);
+
+=head4 Description
+
+Erzeuge eine Punkte-Liste mit den Elementen @items und liefere
+den resultierenden POD-Code zurück.
+
+=head4 Example
+
+    $pg->bulletList(['Eins','Zwei']);
+
+erzeugt
+
+    =over 4
+    
+    =item *
+    
+    Eins
+    
+    =item *
+    
+    Zwei
+    
+    =back
+
+=head3 orderedList() - Aufzählungs-Liste
+
+=head4 Synopsis
+
+    $pod = $pg->orderedList(\@items);
+
+=head4 Description
+
+Erzeuge eine Aufzählungs-Liste mit den Elementen @items und liefere
+den resultierenden POD-Code zurück.
+
+=head4 Example
+
+    $pg->orderedList(['Eins','Zwei']);
+
+erzeugt
+
+    =over 4
+    
+    =item 1.
+    
+    Eins
+    
+    =item 2.
+    
+    Zwei
+    
+    =back
+
+=head3 definitionList() - Definitions-Liste
+
+=head4 Synopsis
+
+    $pod = $pg->definitionList(\@items);
+
+=head4 Description
+
+Erzeuge eine Definitions-Liste mit den Elementen @items und liefere
+den resultierenden POD-Code zurück.
+
+=head4 Example
+
+Die Aufrufe
+
+    $pg->definitionList([A=>'Eins',B=>'Zwei']);
+
+oder
+
+    $pg->definitionList([['A','Eins'],['B','Zwei']]);
+
+erzeugen
+
+    =over 4
+    
+    =item A
+    
+    Eins
+    
+    =item B
+    
+    Zwei
+    
+    =back
+
+=head3 for() - Formatierer-Code
+
+=head4 Synopsis
+
+    $pod = $pg->for($format,$code);
+
+=head4 Description
+
+Definiere Code $code für Formatierer des Formats $format und
+liefere das Resultat zurück. Ist $code einzeilig, wird eine
+for-Instruktion erzeugt, ansonsten eine begin/end-Instruktion.
+
+=head4 Examples
+
+=over 2
+
+=item *
+
+einzeiliger Code
+
+    $pg->for('html','<img src="figure1.png" />');
+
+erzeugt
+
+    =for html <img src="figure1.png" />
+
+=item *
+
+mehrzeiliger Code
+
+    $pg->for('html',qq|Ein Bild:\n<img src="figure1.png" />|);
+
+erzeugt
+
+    =begin html
+    
+    Ein Bild:
+    <img src="figure1.png" />
+    
+    =end html
+
+=back
+
+=head3 pod() - Beginne POD-Block
+
+=head4 Synopsis
+
+    $pod = $pg->pod;
+
+=head4 Description
+
+Beginne einen POD-Block. Diese Instruktion ist nur nötig, wenn der
+Block mit einem einfachen Text beginnt, denn I<jede> andere
+POD-Instruktion beginnt ebenfalls einen POD-Block.
+
+=head4 Example
+
+    $pg->pod;
+
+erzeugt
+
+    =pod
+
+=head3 cut() - Beende POD-Block
+
+=head4 Synopsis
+
+    $pod = $pg->cut;
+
+=head4 Description
+
+Beende einen POD-Block. Diese Instruktion ist nicht nötig, wenn
+danach kein Perl-Code folgt.
+
+=head4 Example
+
+    $pg->cut;
+
+erzeugt
+
+    =cut
+
+=head2 Format-Codes
+
+=head3 fmt() - Format-Code
+
+=head4 Synopsis
+
+    $str = $this->fmt($type,$text);
+
+=head4 Description
+
+Erzeuge Inline-Segment vom Typ $type (B, I, C usw.)
+und liefere den resultierenden POD-Code dieses zurück.
+
+Die Methode sorgt dafür, dass das Segment korrekt generiert wird,
+wenn in $text die Zeichen '<' oder '>' vorkommen.
+
+=head4 Examples
+
+Nomal:
+
+    $pg->fmt('C','$x');
+    =>
+    C<$x>
+
+1x > eingebettet:
+
+    $pg->fmt('C','$class->new()');
+    =>
+    C<< $class->new() >>
+
+2x > eingebettet:
+
+    $pg->fmt('C','$x >> $y');
+    =>
+    C<<< $x >> $y >>>
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Pod/Generator.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

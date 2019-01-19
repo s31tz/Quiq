@@ -1,0 +1,186 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::ImagePool::Sequence - Bild-Sequenz und -Ranges
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 ATTRIBUTES
+
+=over 4
+
+=item file
+
+Pfad der Datei.
+
+=item oHash
+
+Geordneter Hash der Schlüssel/Definitions-Paare.
+
+=item imageList
+
+Liste aller Bilder.
+
+=back
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Objekt aus Datei
+
+=head4 Synopsis
+
+    $ims = $class->new($file,$lst);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Pfad der Sequenz-Liste.
+
+=item $lst
+
+Liste aller Bilder.
+
+=back
+
+=head4 Description
+
+Instantiiere ein Sequenz-Objekt aus Datei $file, verknüpfe es mit
+Bildliste $lst und liefere eine Referenz auf dieses Objekt zurück.
+
+=head2 Objektmethoden
+
+=head3 count() - Anzahl der Range-Definitionen
+
+=head4 Synopsis
+
+    $n = $ims->count;
+
+=head4 Description
+
+Liefere die Anzahl der Range-Definitionen.
+
+=head3 keys() - Array der Range-Namen
+
+=head4 Synopsis
+
+    @keys|$keyA = $ims->keys;
+
+=head4 Description
+
+Liefere die Liste aller Range-Bezeichner. Im Skalarkontext liefere
+eine Referenz auf die Liste.
+
+=head3 exists() - Prüfe, ob Range existiert
+
+=head4 Synopsis
+
+    $bool = $ims->exists($key);
+
+=head4 Description
+
+Prüfe, ob Range $key existiert. Wenn ja, liefere 1, sonst 0.
+
+=head3 def() - Liefere Range-Definition
+
+=head4 Synopsis
+
+    @def|$defA = $ims->def($key);
+
+=head4 Description
+
+Liefere die Definition ($spec,$modifier) des Range $key.
+
+=head3 spec() - Liefere Range-Spezifikation
+
+=head4 Synopsis
+
+    $range = $ims->spec($key);
+
+=head4 Description
+
+Liefere die Spezifikation (Aufzählung der Bildnummern) für Range $key.
+
+=head3 specImages() - Liefere die Bilder eines Range
+
+=head4 Synopsis
+
+    @images|$imageA = $ims->specImages($key);
+
+=head4 Arguments
+
+=over 4
+
+=item $key
+
+Range-Bezeichner.
+
+=back
+
+=head4 Description
+
+Liefere die Liste der Bilder des Range $key. Im Skalarkontext liefere
+eine Referenz auf die Liste.
+
+=head3 modifier() - Liefere/Setze Range-Modifier
+
+=head4 Synopsis
+
+    $modifier = $ims->modifier($key);
+    $modifier = $ims->modifier($key=>$modifier);
+
+=head4 Description
+
+Liefere oder setze den Modifier für Range $key.
+
+=head2 Bilder
+
+=head3 images() - Liefere Bilder der Sequenz
+
+=head4 Synopsis
+
+    @images|$imageA = $ims->images;
+    @images|$imageA = $ims->images($key);
+
+=head4 Arguments
+
+=over 4
+
+=item $key
+
+Range-Bezeichner.
+
+=back
+
+=head4 Description
+
+Liefere alle Bilder der Sequenz oder die Bilder des Range $key. Ist $key
+undef oder ein Leerstring (''), werden ebenfalls alle Bilder geliefert.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/ImagePool/Sequence.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

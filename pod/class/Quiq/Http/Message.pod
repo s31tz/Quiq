@@ -1,0 +1,446 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Http::Message - HTTP-Nachricht
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt dieser Klasse repräsentiert eine HTTP-Nachricht. Eine
+HTTP-Nachricht besteht aus einer oder mehreren Kopfzeilen (Header) und
+einem optionalen Rumpf (Body). Kopfzeilen und Rumpf werden von der Klasse
+als Attribute implementiert, die durch Methoden der Klasse manipuliert
+werden können. Eine HTTP-Nachricht, die versendet werden kann,
+entsteht durch Erzeugen einer Stringrepräsentation des Objekts.
+
+Die Klasse kann für HTTP-Requests als auch für HTTP-Responses
+verwendet werden. Ggf. müssen weitere Header eingeführt werden.
+
+MEMO: Die Klasse ist nach dem Vorbild von R1::HttpResponse entstanden.
+Diese sollte so angepasst werden, dass sie Quiq::Http::Message
+als Basisklasse verwendet.
+
+=head1 EXAMPLES
+
+=head2 Einfache HTTP-Nachricht
+
+    my $msg = Quiq::Http::Message->new(
+        contentType=>'text/plain',
+        body=>"Hello world\n"
+    );
+    print $msg->asString;
+
+generiert auf STDOUT
+
+    Content-Type: text/plain
+    Content-Length: 12
+    
+    Hello world
+
+=head2 HTTP-Nachricht über Socket schicken (siehe auch Quiq::Http::Client)
+
+    my $sock = Quiq::Socket->new($host,$port);
+    
+    my $msg = Quiq::Http::Message->new(
+        contentType=>'text/plain',
+        body=>"Hello world\n"
+    );
+    
+    print $sock $msg->asString;
+
+=head2 HTTP-Nachricht vom Server empfangen
+
+    my $msg = Quiq::Http::Message->new(received=>1,$socket);
+    print $msg->asString;
+
+Die Setzung received=>1 bewirkt, dass wir bei der Auswertung der
+Headerzeilen nicht strikt sind, d.h. bei unbekannten Headern wird
+keine Exception geworfen, und die Methode $msg->L</asString>()
+liefert die Headerinformation exakt so wie sie empfangen wurde, d.h.
+sie wird nicht aus den Attributen gewonnen.
+
+=head2 HTTP-Nachricht aus Datei
+
+    my $msg = Quiq::Http::Message->new('http/message01.txt');
+    print $msg->asString;
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere ein HTTP Nachrichten-Objekt
+
+=head4 Synopsis
+
+    $http = $class->new(@keyVal);
+    $http = $class->new(@keyVal,$fh);
+    $http = $class->new(@keyVal,$file);
+    $http = $class->new(@keyVal,\$str);
+
+=head4 Returns
+
+Referenz auf HTTP-Objekt.
+
+=head4 Description
+
+Instantiiere ein HTTP Nachrichten-Objekt mit den Eigenschaften @keyVal.
+
+Folgende Eigenschaften können (u.a.) gesetzt werden:
+
+=over 2
+
+=item *
+
+contentType => $type
+
+=item *
+
+charset => $charset
+
+=item *
+
+contentLength => $n | -1
+
+=item *
+
+expires => $date | 'now' | 0
+
+=item *
+
+location => $url
+
+=item *
+
+setCookie => [$name=>$value,@keyVal]
+
+=item *
+
+refresh => [$n,$url]
+
+=item *
+
+body => $data
+
+=back
+
+Zum Setzen von Eigenschaften siehe auch die Methoden $msg->L</set>()
+und $msg->L</fromString>().
+
+Ist eine ungerade Anzahl an Parametern angegeben, wird zunächst
+die (ggf. leere) Liste von Attribut/Wert-Paaren @keyVal zugewiesen.
+Alle weiteren Eigenschaften werden via Handle $fh, Datei $file
+oder String $str gewonnen.
+
+=head2 Attribute
+
+=head3 set() - Setze Objekteigenschaften
+
+=head4 Synopsis
+
+    $http->set(@keyVal);
+
+=head4 Returns
+
+Die Methode liefert keinen Wert zurück.
+
+=head4 Description
+
+Setze die Objekteigenschaften @keyVal. Für die Liste der
+Eigenschaften siehe L</new>().
+
+=head4 Examples
+
+Ein HTTP-Request ohne Inhalt:
+
+    $http->set(
+        host=>$host,
+        connection=>'close',
+    );
+
+Eine HTTP-Response:
+
+    $http->set(
+        contentType=>'text/html',
+        charset=>'utf-8',
+        setCookie=>[id=>4711],
+        setCookie=>[user=>'seitzf'],
+        body=>"Test\n",
+    );
+
+=head2 Kopfzeilen (Header)
+
+Dieser Abschnitt beschreibt die Methoden zum Setzen und Abfragen
+von Kopfzeilen. Generell gilt: Ist ein Argument angegeben, wird die
+betreffende Kopfzeile gesetzt. Ist kein Argument angegeben, wird der
+Wert der Kopfzeile geliefert.
+
+Der Name der Methode entspricht dem Namen der HTTP-Kopfzeile unter
+Anwendung folgender Transformationsregeln:
+
+=over 2
+
+=item *
+
+der erste Buchstabe ist klein geschrieben
+
+=item *
+
+Bindestriche sind entfernt
+
+=item *
+
+mehrere Worte sind in "camel case" zusammengesetzt
+
+=back
+
+Beispiel: Die Kopfzeile "Content-Type" wird von der
+Methode contentType() verwaltet.
+
+Der Wert einer Kopfzeilen-Methode ist nicht immer eine Zeichenkette.
+Er kann auch eine Datenstruktur sein. Dies hängt von der jeweiligen
+Kopfzeile ab. Im Skalarkontext wird eine Referenz auf die Datenstruktur
+geliefert, im Array-Kontext die Liste der Elemente (siehe L</contentType>()
+oder L</setCookie>()).
+
+=head3 received() - Setze/Liefere received-Eigenschaft
+
+=head4 Synopsis
+
+    $bool = $http->received($bool);
+    $bool = $http->received;
+
+=head3 protocol() - Setze/Liefere Protokoll-Bezeichnung
+
+=head4 Synopsis
+
+    $protocol = $http->protocol($protocol);
+    $protocol = $http->protocol;
+
+=head4 Description
+
+Die Protokoll-Bezeichnung steht in der ersten Zeile einer Server-Antwort
+und hat die Form "HTTP/X.Y".
+
+=head3 status() - Setze/Liefere HTTP-Status
+
+=head4 Synopsis
+
+    $status = $http->status($status);
+    $status = $http->status;
+
+=head4 Description
+
+Der Status steht in der ersten Zeile einer Server-Antwort
+und ist ein dreistelliger Code in der Form NNN.
+
+=head3 statusText() - Setze/Liefere HTTP-StatusText
+
+=head4 Synopsis
+
+    $statusText = $http->statusText($statusText);
+    $statusText = $http->statusText;
+
+=head4 Description
+
+Der StatusText steht in der ersten Zeile einer Server-Antwort
+und ist eine textuelle Beschreibung des Statuscode.
+
+=head3 contentType() - Setze/Liefere Content-Type Header
+
+=head4 Synopsis
+
+    $type = $http->contentType($type);
+    $type = $http->contentType;
+
+=head3 charset() - Setze/Liefere Charset
+
+=head4 Synopsis
+
+    $charset = $http->charset($charset);
+    $charset = $http->charset;
+
+=head4 Description
+
+Setze/Liefere den Zeichensatz, der ergänzend im Content-Type
+Header angegeben wird.
+
+=head3 authorization() - Setze/Liefere Authorization-Information
+
+=head4 Synopsis
+
+    $userPass = $http->authorization($userPass);
+    $userPass = $http->authorization;
+
+=head3 transferEncoding() - Setze/Liefere Transfer-Encoding
+
+=head4 Synopsis
+
+    $val = $http->transferEncoding($val);
+    $val = $http->transferEncoding;
+
+=head3 contentLength() - Setze/Liefere Content-Length Header
+
+=head4 Synopsis
+
+    $n = $http->contentLength($n);
+    $n = $http->contentLength;
+
+=head3 expires() - Setze/Liefere Expires Header
+
+=head4 Synopsis
+
+    $val = $http->expires($val);
+    $val = $http->expires;
+
+=head3 host() - Setze/Liefere Header Host:
+
+=head4 Synopsis
+
+    $host = $http->host($host);
+    $host = $http->host;
+
+=head3 userAgent() - Setze/Liefere Wert von Header UserAgent:
+
+=head4 Synopsis
+
+    $userAgent = $http->userAgent($userAgent);
+    $userAgent = $http->userAgent;
+
+=head3 connection() - Setze/Liefere Header Connection:
+
+=head4 Synopsis
+
+    $val = $http->connection($val);
+    $val = $http->connection;
+
+=head3 location() - Setze/Liefere Location: Header
+
+=head4 Synopsis
+
+    $url = $http->location($val);
+    $url = $http->location;
+
+=head3 refresh() - Setze/Liefere Refresh-Header
+
+=head4 Synopsis
+
+    $http->refresh($n);
+    $http->refresh($n,$url);
+    ($n,$url) = $http->refresh;
+    $arr = $http->refresh;
+
+=head3 setCookie() - Setze/Liefere Set-Cookie Header
+
+=head4 Synopsis
+
+    $http->setCookie($name=>$value,@options);
+    @cookies = $http->setCookie;
+    $cookieA = $http->setCookie;
+
+=head4 Description
+
+Definiere Cookie $name mit Wert $value und Optionen @options.
+Existiert Cookie $name bereits, wird seine Definition überschrieben.
+Die Methode liefert beim Setzen keinen Wert zurück.
+
+Ohne Parameter gerufen liefert die Methode die Liste der
+Cookie-Objekte zurück. Im Skalarkontext wird eine Referenz auf
+die Liste geliefert.
+
+=head4 Example
+
+Generiere Id und setze permanenten Cookie, der nach 5 Jahren abläuft:
+
+    $id = Quiq::Converter->intToWord(time);
+    $http->setCookie(
+        id=>$id,
+        expires=>'+5y',
+    );
+
+=head2 Rumpf (Body)
+
+Der Body der HTTP-Antwort ist per Default leer, d.h. sein Wert ist,
+sofern beim Konstruktoraufruf nichts anderes angegeben wird,
+ein Leerstring.
+
+Der Body kann gesetzt werden:
+
+    $http->body($data);
+
+Oder er kann per Referenz "in place" manipuliert werden:
+
+    $ref = $http->bodyRef;
+    $$ref =~ /__TIME__/strftime '%F %H:%M:%S %Z',localtime/eg;
+
+Sein Wert wird geliefert durch:
+
+    $data = $http->body;
+
+=head3 body() - Setze/Liefere Body
+
+=head4 Synopsis
+
+    $body = $http->body($body);
+    $body = $http->body;
+
+=head3 bodyRef() - Liefere Referenz auf Body
+
+=head4 Synopsis
+
+    $ref = $http->bodyRef;
+
+=head3 append() - Füge Daten zum Rumpf hinzu
+
+=head4 Synopsis
+
+    $http->append($data);
+
+=head2 Externe Repräsentation
+
+=head3 fromString() - Setze Objektattribute aus Zeichenkette
+
+=head4 Synopsis
+
+    $http->fromString($fh);
+    $http->fromString($file);
+    $http->fromString(\$str);
+
+=head4 Description
+
+Die Methode liest eine HTTP-Message als Zeichenkette ein, zerlegt sie
+in ihre Bestandteile und weist die enthaltene Information den
+Komponenten des Objektes zu.
+
+Als Quelle kann eine Handle (Filehandle, Socket) eine Datei (Dateiname)
+oder eine Zeichenkette (Skalar-Referenz) angegeben werden.
+
+=head3 asString() - Liefere HTTP-Nachricht als Zeichenkette
+
+=head4 Synopsis
+
+    $str = $http->asString;
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Http/Message.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

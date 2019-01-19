@@ -1,0 +1,116 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Cascm - Schnittstelle zu CA Harvest SCM
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+    $scm = $class->new(@attVal);
+
+=head4 Arguments
+
+=over 4
+
+=item @attVal
+
+Liste von Attribut-Wert-Paaren.
+
+=back
+
+=head4 Returns
+
+Objekt
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
+dieses Objekt zurück.
+
+=head2 Kommandos
+
+=head3 listVersion() - Liefere Versionsinformation
+
+=head4 Synopsis
+
+    $info = $scm->listVersion($repoFile);
+
+=head4 Arguments
+
+=over 4
+
+=item $repoFile
+
+Der Pfad der Repository-Datei.
+
+=back
+
+=head4 Returns
+
+Informations-Text (String)
+
+=head4 Description
+
+Ermittele die Versionsinformation über Datei $repoFile und liefere
+diese zurück.
+
+=head3 sync() - Synchronisiere Workspace mit Repository
+
+=head4 Synopsis
+
+    $scm->sync;
+
+=head4 Description
+
+Bringe den Workspace auf den Stand des Repository.
+
+=head2 Privat
+
+=head3 run() - Führe CA Harvest SCM Kommando aus
+
+=head4 Synopsis
+
+    $output = $scm->run($scmCmd,$c);
+
+=head4 Description
+
+Führe das CA Harvest SCM Kommando $scmCmd mit den Optionen des
+Kommandozeilenobjekts $c aus und liefere die Ausgabe des
+Kommandos zurück.
+
+=head3 writeOutput() - Schreibe Kommando-Ausgabe
+
+=head4 Synopsis
+
+    $scm->writeOutput($output);
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Cascm.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

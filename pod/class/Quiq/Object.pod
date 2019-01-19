@@ -1,0 +1,212 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Object - Basisklasse für alle Klassen der Klassenbibliothek
+
+=head1 SYNOPSIS
+
+    package MyClass;
+    use base qw/Quiq::Object/;
+    ...
+
+=head1 METHODS
+
+=head2 Instantiierung
+
+=head3 bless() - Blesse Objekt auf Klasse
+
+=head4 Synopsis
+
+    $obj = $class->bless($ref);
+
+=head4 Description
+
+Objektorientierte Syntax für bless(). Blesse Objekt (Referenz) $ref auf
+Klasse $class und liefere die geblesste Referenz zurück. Dies geht
+natürlich nur, wenn $class eine direkte oder indirekte
+Subklasse von Quiq::Object ist.
+
+Der Aufruf ist äquivalent zu:
+
+    $obj = bless $ref,$class;
+
+=head4 Example
+
+    $hash = Hash->bless({});
+
+=head3 rebless() - Blesse Objekt auf eine andere Klasse um
+
+=head4 Synopsis
+
+    $obj->rebless($class);
+
+=head4 Description
+
+Blesse Objekt $obj auf Klasse $class um.
+
+Der Aufruf ist äquivalent zu:
+
+    bless $obj,$class;
+
+=head4 Example
+
+    $hash->rebless('MyClass');
+
+=head2 Exceptions
+
+=head3 throw() - Wirf Exception
+
+=head4 Synopsis
+
+    $this->throw;
+    $this->throw(@opt,@keyVal);
+    $this->throw($msg,@opt,@keyVal);
+
+=head4 Options
+
+=over 4
+
+=item -stdout => $bool (Default: 0)
+
+Erzeuge die Meldung auf STDOUT (statt STDERR), wenn -warning => 1
+gesetzt ist.
+
+=item -stacktrace => $bool (Default: 1)
+
+Ergänze den Exception-Text um einen Stacktrace.
+
+=item -warning => $bool (Default: 0)
+
+Wirf keine Exception, sondern gib lediglich eine Warnung aus.
+
+=back
+
+=head4 Description
+
+Wirf eine Exception mit dem Fehlertext $msg und den hinzugefügten
+Schlüssel/Wert-Paaren @keyVal. Die Methode kehrt nur zurück, wenn
+Option -warning gesetzt ist.
+
+=head2 Sonstiges
+
+=head3 addMethod() - Erweitere Klasse um Methode
+
+=head4 Synopsis
+
+    $this->addMethod($name,$ref);
+
+=head4 Description
+
+Füge Codereferenz $ref unter dem Namen $name zur Klasse $this hinzu.
+Existiert die Methode bereits, wird sie überschrieben.
+
+=head4 Example
+
+    MyClass->addMethod(myMethod=>sub {
+        my $self = shift;
+        return 4711;
+    });
+
+=head3 classFile() - Pfad der .pm-Datei
+
+=head4 Synopsis
+
+    $dir = $this->classFile;
+
+=head4 Description
+
+Ermitte den Pfad der .pm-Datei der Klasse $this und liefere
+diesen zurück. Die Klasse muss bereits geladen worden sein.
+
+=head4 Example
+
+    $path = Quiq::Object->classFile;
+    ==>
+    <PFAD>Quiq/Object.pm
+
+=head3 this() - Liefere Klassenname und Objektreferenz
+
+=head4 Synopsis
+
+    ($class,$self,$isClassMethod) = Quiq::Object->this($this);
+    $class = Quiq::Object->this($this);
+
+=head4 Description
+
+Liefere Klassenname und Objektreferenz zu Parameter $this und zeige
+auf dem dritten Rückgabewert an, ob die Methode als Klassen- oder
+Objektmethode gerufen wurde.
+
+Ist $this ein Klassenname (eine Zeichenkette) liefere den Namen selbst
+und als Objektreferenz undef und als dritten Rückgabewert 1. Ist
+$this eine Objektreferenz, liefere den Klassennamen zur Objektreferenz
+sowie die Objektreferenz selbst und als dritten Rückgabewert 0.
+
+=head4 Example
+
+=over 2
+
+=item *
+
+Klassen- sowie Objektmethode:
+
+    sub myMethod {
+        my ($class,$self) = Quiq::Object->this(shift);
+    
+        if ($self) {
+            # Aufruf als Objektmethode
+        }
+        else {
+            # Aufruf als Klassenmethode
+        }
+    }
+
+=item *
+
+Klassenmethode, die als Objektmethode gerufen werden kann:
+
+    sub mymethod {
+        my $class = Quiq::Object->this(shift);
+        ...
+    }
+
+=item *
+
+Objektmethode, die als Klassenmethode gerufen werden kann:
+
+    sub myMethod {
+        my ($class,$self,$isClassMethod) = Quiq::Object->this(shift);
+    
+        $self = $class->new(@_);
+    
+        # Ab hier ist mittels $self nicht mehr feststellbar,
+        # ob die Methode als Klassen- oder Objektmethode gerufen wurde.
+        # Die Variable $isclassmethod zeigt es an.
+    
+        $self->specialMethod if $isClassMethod;
+        ...
+    }
+
+=back
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Object.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

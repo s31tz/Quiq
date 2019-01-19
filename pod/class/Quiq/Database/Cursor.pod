@@ -1,0 +1,225 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Database::Cursor - Datenbank-Cursor
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repr‰sentiert das Resultat einer
+Statement-Ausf¸hrung auf einer Relationalen Datenbank.
+
+=head1 METHODS
+
+=head2 Konstruktor/Destruktor
+
+=head3 new() - Instantiiere Cursor
+
+=head4 Synopsis
+
+    $cur = $class->new(@keyVal);
+
+=head4 Description
+
+Instantiiere ein Cursor-Objekt mit den Attributen @keyVal
+und liefere dieses zur¸ck.
+
+=head3 close() - Schlieﬂe Cursor
+
+=head4 Synopsis
+
+    $cur->close;
+
+=head4 Alias
+
+destroy()
+
+=head4 Description
+
+Schlieﬂe Cursor. Die Methode liefert keinen Wert zur¸ck.
+
+=head2 Accessors
+
+=head3 bindVars() - Liefere Anzahl der Bind-Variablen
+
+=head4 Synopsis
+
+    $n = $cur->bindVars;
+
+=head3 bindTypes() - Setze/Liefere Datentypen der Bind-Variablen
+
+=head4 Synopsis
+
+    @arr|$arr = $cur->bindTypes(@dataTypes);
+    @arr|$arr = $cur->bindTypes;
+
+=head3 db() - Liefere Datenbankverbindung
+
+=head4 Synopsis
+
+    $db = $cur->db;
+
+=head3 hits() - Liefere Anzahl der getroffenen Datens‰tze
+
+=head4 Synopsis
+
+    $n = $cur->hits;
+
+=head4 Description
+
+Liefere die Anzahl der von einem INSERT, UPDATE oder DELETE
+getroffenen Dates‰tze.
+
+=head3 id() - Liefere Wert der Autoincrement-Kolumne
+
+=head4 Synopsis
+
+    $id = $cur->id;
+
+=head4 Alias
+
+insertId()
+
+=head4 Description
+
+Liefere den Wert der Autoinkrement-Kolumne nach einem INSERT.
+
+=head3 rowOperation() - Liefere die Datensatz-Operation
+
+=head4 Synopsis
+
+    $op = $cur->rowOperation;
+
+=head4 Description
+
+Liefere die von save() durchgef¸hrte Datensatz-Operation: 0, 'I', 'U'
+oder 'D'.
+
+=head3 rowClass() - Liefere Namen der Datensatz-Klasse
+
+=head4 Synopsis
+
+    $rowClass = $cur->rowClass;
+
+=head3 stmt() - Liefere SQL-Statement
+
+=head4 Synopsis
+
+    $stmt = $cur->stmt;
+
+=head4 Description
+
+Liefere das SQL-Statement, wie es an das DBMS ¸bermittelt und von
+ihm ausgef¸hrt wurde. Das von der Methode gelieferte Statement
+kann von dem Statement, das beim Aufruf angegeben wurde, verschieden
+sein, da ggf. interne Transformationsschritte auf das Statement
+anwendet wurden.
+
+=head3 titles() - Liefere Liste der Kolumnentitel
+
+=head4 Synopsis
+
+    @titles | $titlesA = $cur->titles;
+
+=head4 Description
+
+Liefere die Liste der Kolumnenwerte. Im Skalarkontext liefere
+eine Referenz auf die Liste.
+
+=head2 Tests
+
+=head3 isSelect() - Pr¸fe, ob Cursor Datens‰tze liefert
+
+=head4 Synopsis
+
+    $bool = $cur->isSelect;
+
+=head4 Description
+
+Liefere "wahr", wenn der Cursor Datens‰tze liefert,
+andernfalls "falsch".
+
+=head2 Time Measurement
+
+=head3 startTime() - Liefere Startzeitpunkt der Statement-Ausf¸hrung
+
+=head4 Synopsis
+
+    $time = $cur->startTime;
+
+=head3 execTime() - Liefere Dauer der Statement-Ausf¸hrung
+
+=head4 Synopsis
+
+    $time = $cur->execTime;
+
+=head3 time() - Liefere Dauer seit Start der Statement-Ausf¸hrung
+
+=head4 Synopsis
+
+    $time = $cur->time;
+
+=head2 Bind
+
+=head3 bind() - Binde Werte an Statement und f¸hre Statement aus
+
+=head4 Synopsis
+
+    $cur2 = $cur->bind(@vals);
+
+=head4 Description
+
+Binde eine Liste von Werten an die Platzhalter eines zuvor
+pr‰parierten SQL-Statements und f¸hre dieses Statement auf der
+Datenbank aus. Die Anzahl der Werte muﬂ ein Vielfaches der Anzahl der
+Bind-Variablen sein.
+
+=head2 Fetch
+
+=head3 fetch() - Liefere n‰chsten Datensatz der Ergebnismenge
+
+=head4 Synopsis
+
+    $row = $cur->fetch;
+
+=head4 Description
+
+Liefere den n‰chsten Datensatz aus der Ergebnismenge. Ist das Ende der
+Ergebnismenge erreicht, liefere undef.
+
+=head3 fetchAll() - Liefere gesamte Ergebnismenge
+
+=head4 Synopsis
+
+    @rows | $tab = $cur->fetchAll($autoClose);
+
+=head4 Description
+
+Liefere die Ergebnismenge als Liste von Datens‰tzen oder als
+Tabelle. Ist der Parameter $autoCloase angegeben und "wahr" schlieﬂe
+den Cursor automatisch.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Database/Cursor.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

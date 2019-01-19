@@ -1,0 +1,112 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Html::Page - HTML-Seite
+
+=head1 BASE CLASS
+
+L<Quiq::Html::Base|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Base.pod>
+
+=head1 SYNOPSIS
+
+    use Quiq::Html::Page;
+    
+    $h = Quiq::Html::Tag->new;
+    
+    $obj = Quiq::Html::Page->new(
+        body=>'hello world!',
+    );
+    
+    $html = $obj->html($h);
+
+=head1 ATTRIBUTES
+
+=over 4
+
+=item body => $str (Default: '')
+
+Rumpf der Seite.
+
+=item comment => $str (Default: undef)
+
+Kommentar am Anfang der Seite.
+
+=item encoding => $charset (Default: 'utf-8')
+
+Encoding der Seite, z.B. 'iso-8859-1'.
+
+=item head => $str (Default: '')
+
+Kopf der Seite.
+
+=item noNewline => $bool (Default: 0)
+
+Füge kein Newline am Ende der Seite hinzu.
+
+=item placeholders => \@keyVal (Default: [])
+
+Ersetze im generierten HTML-Code die angegebenen Platzhalter durch
+ihre Werte.
+
+=item javaScript => $url|$jsCode|[...] (Default: undef)
+
+URL oder JavaScript-Code im Head der Seite. Mehrfach-Definition,
+wenn Array-Referenz. Das Attribut kann mehrfach auftreten, die
+Werte werden zu einer Liste zusammengefügt.
+
+=item styleSheet => $spec | \@specs (Default: undef)
+
+Einzelne Style-Spezifikation oder Liste von Style-Spezifikationen.
+Siehe Methode Quiq::Css->style(). Das Attribut kann mehrfach
+auftreten, die Werte werden zu einer Liste zusammengefügt.
+
+=item title => $str (Default: undef)
+
+Titel der Seite.
+
+=item topIndentation => $n (Default: 2)
+
+Einrückung des Inhalts der obersten Elemente <head> und <body>.
+
+=back
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Konstruktor
+
+=head4 Synopsis
+
+    $obj = $class->new(@keyVal);
+
+=head2 Objektmethoden
+
+=head3 html() - Generiere HTML
+
+=head4 Synopsis
+
+    $html = $obj->html($h);
+    $html = $class->html($h,@keyVal);
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Html/Page.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

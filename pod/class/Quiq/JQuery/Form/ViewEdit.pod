@@ -1,0 +1,304 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::JQuery::Form::ViewEdit - Formular zum Ansehen und Bearbeiten von persistenten Daten
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+Die Klasse implementiert ein jQuery Widget Plugin zum Ansehen und
+Bearbeiten von Daten, die typischerweise aus einer Datenbank
+stammen.
+
+Das Layout muss die Platzhalter C<__SAVE__>, C<__DELETE__> und
+C<__EDIT__> enthalten. Für diese werden intern drei Widgets
+generiert: für C<__SAVE__> und C<__DELETE__> ein Button zum
+Speichern bzw. Löschen, für C<__EDIT__> eine Checkbox zum
+Umschalten zwischen Ansehen und Bearbeiten.
+
+Bei Betätigung der Button werden die Formulardaten an den
+action-URL gepostet. Im Erfolgsfall wird anschließend die
+onSuccess-Methode aufgerufen.
+
+=head2 CSS-Klassen
+
+=over 2
+
+=item *
+
+editCheckbox
+
+=item *
+
+saveButton
+
+=item *
+
+deleteButton
+
+=item *
+
+enabled
+
+=item *
+
+disabled
+
+=back
+
+=head2 Beschriftungen
+
+=over 2
+
+=item *
+
+Speichern
+
+=item *
+
+Löschen
+
+=item *
+
+Bearbeiten
+
+=back
+
+Die Beschriftungen (der Buttons) können über das Attribut text
+gendändert werden.
+
+=head1 ATTRIBUTES
+
+=over 4
+
+=item action => $url (Default: undef)
+
+URL, an den die Daten bei bei Betätigung des Save- oder
+des Delete-Buttons geschickt werden.
+
+=item hidden => \@keyVal (Default: [])
+
+Schlüssel/Wert-Paare, die als Hidden-Widgets gesetzt werden.
+
+=item id (Default: undef)
+
+Die DOM-Id des Formulars.
+
+=item instantiate => $bool (Default: 0)
+
+Füge die Plugin-Instantiierung beim Aufruf von html()
+zum HTML-Code hinzu.
+
+=item layout => $html (Default: '')
+
+Der HTML-Code des Layouts. In das Layout wird der HTML-Code der
+Widgets eingesetzt.
+
+=item onSucces => $javaScript (Default: undef)
+
+JavaScript-Methode, die nach einem erfolgreichen Ajax-Aufruf
+ausgeführt wird. Parameter: onSuccess(data,textStatus,jqXHR,op),
+wobei op 'save' oder 'delete' ist.
+
+=item state => 'update' | 'insert' (Default: 'update')
+
+Anfänglicher Zusatand des Formulars:
+
+=over 4
+
+=item 'update'
+
+Der Save- und der Delete-Button werden im Edit-Modus freigeschaltet.
+
+=item 'insert'
+
+Nur der Save-Button wird im Edit-Modus freigeschaltet.
+
+=back
+
+=item text => \%keyVal (Default: s. Text)
+
+Die Beschriftungen der intern generierten Widgets alle oder einzeln
+geändert werden:
+
+=over 2
+
+=item *
+
+saveButton => 'Speichern',
+
+=item *
+
+deleteButton => 'Löschen',
+
+=item *
+
+editCheckBox => 'Bearbeiten',
+
+=back
+
+=item widgets => \@widgets (Default: [])
+
+Liste der Widgets, die in das Layout eingesetzt werden.
+
+=back
+
+=head1 EXAMPLE
+
+    $html = Quiq::JQuery::Form::ViewEdit->html($h,
+        instantiate=>1,
+        id=>'personForm',
+        state=>'insert',
+        action=>$c->url_for('/person/speichern'),
+        onSuccess=>q|
+            function () {
+                var d = new Date;
+                var date = $.formatDate(d,'YYYY-MM-DD hh:mm:ss');
+                $('input[name=formTime]').val(date);
+            }
+        |,
+        text=>{
+            saveButton=>'Speichern',
+            deleteButton=>'Löschen',
+            editCheckbox=>'Bearbeiten',
+        },
+        layout=>$h->cat(
+            Quiq::Html::Table::Simple->html($h,
+                class=>'form',
+                rows=>[
+                    ['form-section',[colspan=>2,'Person']],
+                    ['form-widget',['Id:'],['__PER_ID__']],
+                    ['form-widget',['Vorname:'],['__PER_VORNAME__']],
+                    ['form-widget',['Nachname:'],['__PER_NACHNAME__']],
+                ],
+            ),
+            Quiq::Html::Table::Simple->html($h,
+                class=>'form',
+                rows=>[
+                    [['__SAVE__ __DELETE__ __EDIT__']],
+                ],
+            ),
+        ),
+        widgets=>[
+            Quiq::Html::Widget::Hidden->new(
+                name=>'formular',
+                value=>'person',
+            ),
+            Quiq::Html::Widget::Hidden->new(
+                name=>'formTime',
+                value=>$formTime,
+            ),
+            Quiq::Html::Widget::ReadOnly->new(
+                name=>'per_id',
+                value=>$per->per_id,
+            ),
+            Quiq::Html::Widget::TextField->new(
+                name=>'per_vorname',
+                size=>30,
+                value=>$per->per_vorname,
+            ),
+            Quiq::Html::Widget::TextField->new(
+                name=>'per_nachname',
+                size=>30,
+                value=>$per->per_nachname,
+            ),
+        ],
+    );
+
+=head1 METHODS
+
+=head2 Plugin-Code (Klassenmethoden)
+
+=head3 pluginCode() - JavaScript-Code des Plugin
+
+=head4 Synopsis
+
+    $javascript = $class->pluginCode;
+
+=head4 Description
+
+Liefere den JavaScript-Code des jQuery Widget Plugin. Dieser Code
+kann auf einer HTML-Seite inline verwendet oder - besser - vom
+Webserver geliefert werden.
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+    $e = $class->new(@keyVal);
+
+=head4 Description
+
+Instantiiere ein Formular-Objekt und liefere eine Referenz auf
+dieses Objekt zurück.
+
+=head2 HTML-Generierung
+
+=head3 html() - HTML-Code des Widget
+
+=head4 Synopsis
+
+    $html = $e->html($h);
+    $html = $class->html($h,@keyVal);
+
+=head4 Description
+
+Generiere den HTML-Code des Widget-Objekts und liefere diesen
+zurück. Als Klassenmethode gerufen, wird das Objekt intern erzeugt
+und mit den Attributen @keyVal instantiiert.
+
+=head2 Widget-Instantiierung
+
+=head3 instantiate() - JavaScript-Code, der das Widget instantiiert
+
+=head4 Synopsis
+
+    $javaScript = $e->instantiate;
+
+=head4 Description
+
+Liefere den JavaScript-Code, der das Widget instantiiert. Alle Parameter
+werden intern übergeben, dies sind die Attribute:
+
+=over 2
+
+=item *
+
+state
+
+=item *
+
+action
+
+=item *
+
+onSuccess
+
+=back
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/JQuery/Form/ViewEdit.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

@@ -1,0 +1,126 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::JQuery::Function - Nützliche Funktionen für jQuery
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 DESCRIPTION
+
+Diese Klasse erweitert das jQuery-Objekt um nützliche Funktionen.
+
+=head1 METHODS
+
+=head2 Klassenmethoden
+
+=head3 formatDate() - JavaScript-Code der Funktion
+
+=head4 Synopsis
+
+    $javaScript = $class->formatDate;
+
+=head4 Description
+
+Die JavaScript-Funktion formatiert ein JavaScript Datums-Objekt
+gemäß dem angegebenen Muster:
+
+    str = $.formatDate(d,fmt);
+
+=over 4
+
+=item YYYY
+
+Jahreszahl, vierstellig.
+
+=item YY
+
+Jahreszahl, zweistellig,
+
+=item MMMM
+
+Monatsname, voll ausgeschrieben.
+
+=item MMM
+
+Monatsname, die ersten drei Buchstaben.
+
+=item MM
+
+Monatsnummer, zweistellig.
+
+=item M
+
+Monatsnummer.
+
+=item DDDD
+
+Wochentag, voll ausgeschrieben.
+
+=item DDD
+
+Wochentag, die ersten drei Buchstaben.
+
+=item DD
+
+Tag des Monats, zweistellig.
+
+=item D
+
+Tag des Monats.
+
+=item hh
+
+Stunde, zweistellig.
+
+=item h
+
+Stunde.
+
+=item mm
+
+Minute, zweistellig.
+
+=item m
+
+Minute
+
+=item ss
+
+Sekunde, zweistellig.
+
+=item s
+
+Sekunde.
+
+=item xxx
+
+Millisekunden, dreistellig.
+
+=back
+
+Die Implementierung basiert auf der Funktion formatDate() im
+Buch L<jQuery in Action, Third Edition|https://www.manning.com/books/jquery-in-action-third-edition>, S. 352 ff.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/JQuery/Function.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

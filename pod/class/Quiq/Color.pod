@@ -1,0 +1,175 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Color - Eine Farbe des RGB-Farbraums
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 SYNOPSIS
+
+    use Quiq::Color;
+    
+    # Instantiierung
+    
+    $col = Quiq::Color->new(255,0,0); # aus dez. RGB-Tripel
+    $col = Quiq::Color->new('ff0000'); # aus hex. RGB-String
+    
+    # Helligkeit
+    
+    $brightness = $col->brightness; # 0 .. 255
+    
+    # Farbname
+    
+    $col->name('red'); # setzen
+    $name = $col->name; # abfragen
+    
+    # Externe Repr‰sentation
+    
+    $hex = $col->hexString; # 'ff0000' - hex. RGB-String
+    @rgb = $col->rgb; # (255,0,0) - dez. RGB-Tripel
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repr‰sentiert eine Farbe des RGB-Farbraums,
+also ein Tripel (R, G, B).
+
+Das Objekt kann aus verschiedenen externen Repr‰sentationen
+instantiiert werden und kann seinerseits verschiedene externe
+Repr‰sentationen liefern. Ferner kann die Helligkeit der Farbe
+ermittelt werden, was f¸r eine Fontauswahl n¸tzlich sein kann.
+Auﬂerdem kann der Farbe ein Name zugewiesen werden.
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Konstruktor
+
+=head4 Synopsis
+
+    $col = $class->new($r,$g,$b);
+    $col = $class->new(\@rgb);
+    $col = $class->new('rrggbb');
+    $col = $class->new('#rrggbb');
+
+=head4 Description
+
+Instantiiere eine RGB-Farbe und liefere eine Referenz
+auf das Objekt zur¸ck.
+
+=head2 Farbeigenschaften
+
+=head3 brightness() - Helligkeit der Farbe
+
+=head4 Synopsis
+
+    $brightness = $col->brightness;
+
+=head4 Description
+
+Liefere die Helligkeit der Farbe im Wertebereich 0 (schwarz) bis
+255 (weiﬂ). Bei einem Wert < 128 ist die Farbe dunkel, andernfalls hell.
+
+Die Methode kann genutzt werden um zu entscheiden, welche Textfarbe
+auf einem Hintergrund mit der Farbe genutzt werden sollte.
+
+Die Helligkeitsberechnung erfolgt auf Grundlage der Heuristik:
+
+    $brightness = sqrt 0.299*$r**2 + 0.587*$g**2 + 0.114*$b**2;
+
+=head4 See Also
+
+=over 2
+
+=item *
+
+L<http://fseitz.de/blog/index.php?/archives/112-Helligkeit-von-Farben-des-RGB-Farbraums-berechnen.html>
+
+=back
+
+=head4 Example
+
+    $col = Quiq::Color->new('ff0000');
+    $brightness = $col->brightness;
+    -> 139.44
+
+=head3 name() - Setze/Liefere Farbname
+
+=head4 Synopsis
+
+    $name = $col->name($name);
+    $name = $col->name;
+
+=head4 Description
+
+Das Farbobjekt besitzt zun‰chst keinen Namen. Mit dieser Methode
+kann der Farbe jedoch ein Name zugewiesen und abgefragt werden.
+
+Wurde dem Farbobjekt kein Name zugewiesen, liefert die Methode
+einen Leerstring.
+
+=head4 Example
+
+    my $col = Quiq::Color->new(255,0,0);
+    $col->name('red');
+    $name = $col->name;
+    -> 'red'
+
+=head2 Externe Repr‰sentationen
+
+=head3 hexString() - Farbwert als Hex-String
+
+=head4 Synopsis
+
+    $hexStr = $col->hexString;
+
+=head4 Description
+
+Liefere den Farbwert der Farbe als Hex-String
+
+=head4 Example
+
+    $col = Quiq::Color->new(255,255,255);
+    $hexStr = Quiq::Color->hexString;
+    -> 'ffffff'
+
+=head3 rgb() - Farbwert als Liste von dezimalen Werten
+
+=head4 Synopsis
+
+    @rgb | $rgbA = $col->rgb;
+
+=head4 Description
+
+Liefere den Farbwert als Liste von dezimalen Werten mit den Komponenten
+R, G, B. Im Skalarkontext liefere eine Referenz auf die Liste.
+
+=head4 Example
+
+    $col = Quiq::Color->new('ffffff');
+    @rgb = Quiq::Color->rgb;
+    -> (255,255,255)
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Color.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

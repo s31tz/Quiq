@@ -1,0 +1,475 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Array - Operationen auf Arrays
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert ein Array.
+
+Jede der Methoden kann sowohl auf ein Objekt der Klasse
+als auch per Aufruf als Klassenmethode auf ein "normales"
+Perl-Array angewendet werden.
+
+Aufruf als Objektmethode:
+
+    $arr->$meth(...);
+
+Aufruf als Klassenmethode:
+
+    $class->$meth(\@arr, ...);
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Konstruktor
+
+=head4 Synopsis
+
+    $arr = $class->new;
+    $arr = $class->new(\@arr);
+
+=head4 Description
+
+Instantiiere ein Array-Objekt und liefere eine Referenz auf dieses
+Objekt zurück.  Ohne Angabe einer Array-Referenz wird ein leeres
+Array-Objekt instantiiert.
+
+=head2 Operationen
+
+=head3 compare() - Vergleiche Array gegen Array
+
+=head4 Synopsis
+
+    ($only1A,$only2A,$bothA) = $arr1->compare(\@arr2);
+    ($only1A,$only2A,$bothA) = $class->compare(\@arr1,\@arr2);
+
+=head4 Description
+
+Vergleiche die Elemente der Arrays @$arr1 und @arr2 und liefere
+Referenzen auf drei Arrays (Mengen) zurück:
+
+=over 4
+
+=item $only1A:
+
+Referenz auf die Liste der Elemente, die nur in @arr1
+enthalten sind.
+
+=item $only2A:
+
+Referenz auf die Liste der Elemente, die nur in @arr2
+enthalten sind.
+
+=item $bothA:
+
+Referenz auf die Liste der Elemente, die sowohl in @arr1
+als auch in @arr2 enthalten sind.
+
+=back
+
+Die drei Ergebnislisten sind als Mengen zu sehen: Jedes Element taucht
+in einer der drei Listen höchstens einmal auf, auch wenn es in den
+Eingangslisten mehrfach vorkommt.
+
+=head4 Example
+
+=over 2
+
+=item *
+
+Verwalte Objekte auf Datenbank
+
+Die Funktion ist nützlich, wenn eine Menge von Objekten
+auf einer Datenbank identisch zu einer Menge von Elementen
+einer Benutzerauswahl gehalten werden soll. Die Objekte werden
+durch ihre Objekt-Id identifiziert. Die Liste der
+Datenbankobjekte sei @idsDb und die Liste der Objekte der
+Benutzerauswahl sei @idsUser. Dann liefert der Aufruf
+
+    ($idsNew,$idsDel) = $idsUserA->compare(\@idsDb);
+
+mit @$idsNew die Liste der zur Datenbank hinzuzufügenden Objekte und
+mit @$idsDel die Liste der von der Datenbank zu entfernenden Objekte.
+Die Liste der identischen Objekte wird hier nicht benötigt.
+
+=item *
+
+Prüfe, ob zwei Arrays die gleichen Elemente enthalten
+
+Prüfe, ob zwei Arrays die gleichen Elemente enthalten, aber nicht
+unbedingt in der gleichen Reihenfolge:
+
+    ($only1,$only2) = $arr1->compare(\@arr2);
+    if (!@$only1 && !@$only2) {
+        # @$arr1 und @$arr2 enthalten die gleichen Elemente
+    }
+
+=back
+
+=head3 decode() - Dekodiere Array
+
+=head4 Synopsis
+
+    $arr->decode($encoding);
+    $class->decode(\@arr,$encoding);
+
+=head4 Description
+
+Dekodiere die Elemente des Arrays gemäß Encoding $encoding.
+
+=head3 exists() - Teste, ob Element existiert
+
+=head4 Synopsis
+
+    $bool = $arr->exists($str);
+    $bool = $class->exists(\@arr,$str);
+
+=head4 Description
+
+Durchsuche $arr nach Element $str. Kommt $str in $arr vor,
+liefere "wahr", sonst "falsch". Vergleichsoperator ist eq.
+
+=head3 extractKeyVal() - Extrahiere Paar, liefere Wert
+
+=head4 Synopsis
+
+    $val = $arr->extractKeyVal($key);
+    $val = $class->extractKeyVal(\@arr,$key);
+
+=head4 Alias
+
+extractPair()
+
+=head4 Description
+
+Durchsuche @arr paarweise nach Element $key und liefere das folgende
+Element $val. Beide Elemente werden aus @arr entfernt. Kommt $key
+in @arr nicht vor, liefere undef und lasse @arr unverändert.
+Vergleichsoperator ist eq.
+
+=head3 eq() - Vergleiche Arrays per eq
+
+=head4 Synopsis
+
+    $bool = $arr->eq(\@arr);
+    $bool = $class->eq(\@arr1,\@arr2);
+
+=head4 Description
+
+Vergleiche @arr1 und @arr2 elementweise per eq. Liefere "wahr",
+wenn alle Elemente identisch sind, andernfalls "falsch".
+
+Sind zwei Elemente undef, gelten sie als identisch.
+
+=head3 findPairValue() - Liefere Wert zu Schlüssel
+
+=head4 Synopsis
+
+    $val = $arr->findPairValue($key);
+    $val = $class->findPairValue(\@arr,$key);
+
+=head4 Returns
+
+Wert oder C<undef>
+
+=head4 Description
+
+Durchsuche $arr paarweise nach Element $key. Kommt es vor, liefere
+dessen Wert. Kommt es nicht vor, liefere undef. Vergleichsoperator
+ist eq.
+
+=head3 index() - Suche Element
+
+=head4 Synopsis
+
+    $i = $arr->index($val);
+    $i = $class->index(\@arr,$val);
+
+=head4 Description
+
+Durchsuche @arr vom Anfang her nach Element $val und liefere
+dessen Index zurück. Kommt $str in @arr nicht vor, liefere -1.
+Vergleichsoperator ist eq.
+
+=head3 last() - Liefere letztes Element
+
+=head4 Synopsis
+
+    $e = $arr->last;
+    $e = $class->last(\@arr);
+
+=head3 maxLength() - Länge des längsten Elements
+
+=head4 Synopsis
+
+    $l = $arr->maxLength;
+    $l = $class>maxLength(\@arr);
+
+=head4 Description
+
+Ermittele die Länge des längsten Arrayelements und liefere diese
+zurück.
+
+=head3 pick() - Liefere Elemente nach Position heraus
+
+=head4 Synopsis
+
+    $arr2 | @arr = $class->pick(\@arr,$n,$m);
+    $arr2 | @arr = $class->pick(\@arr,$n);
+    $arr2 | @arr = $arr->pick($n,$m);
+    $arr2 | @arr = $arr->pick($n);
+
+=head4 Description
+
+Picke jedes $n-te Array-Element ab Positon $m heraus, bilde aus diesen
+Elementen ein neues Array und liefere dieses zurück.
+
+=head3 push() - Füge Element am Ende hinzu
+
+=head4 Synopsis
+
+    $arr->push($e);
+    $class->push(\@arr,$e);
+
+=head3 select() - Selektiere Array-Elemente
+
+=head4 Synopsis
+
+    $arr2|@arr2 = $arr->select($test);
+    $arr2|@arr2 = $class->select(\@arr,$test);
+
+=head4 Description
+
+Wende Test $test auf alle Arrayelemente an und liefere ein Array mit
+den Elementen zurück, die den Test erfüllen.
+
+Folgende Arten von Tests sind möglich:
+
+=over 4
+
+=item Regex qr/REGEX/
+
+Wende Regex-Test auf jedes Element an.
+
+=item Code-Referenz sub { CODE }
+
+Wende Subroutine-Test auf jedes Element an. Als erster
+Parameter wird das zu testende Element übergeben. Die
+Subroutine muss einen boolschen Wert liefern.
+
+=back
+
+=head3 shuffle() - Verwürfele Array-Elemente
+
+=head4 Synopsis
+
+    $arr->shuffle;
+    $arr->shuffle($factor);
+    $class->shuffle(\@arr);
+    $class->shuffle(\@arr,$factor);
+
+=head4 Arguments
+
+=over 4
+
+=item @arr
+
+Das zu mischende Array.
+
+=item $factor (Default: 100)
+
+Faktor für die Anzahl der Vertauschungsoperationen. Es werden
+I<Arraygröße> * $factor Vertauschungsoperationen ausgeführt.
+
+=back
+
+=head4 Description
+
+Mische die Elemente des Array @arr, d.h. bringe sie in eine
+zufällige Reihenfolge. Die Operation wird in-place ausgeführt.
+
+Die Methode liefert keinen Wert zurück.
+
+=head3 sort() - Sortiere Elemente alphanumerisch
+
+=head4 Synopsis
+
+    $arr | @arr = $arr->sort;
+    $arr | @arr = $class->sort(\@arr);
+
+=head4 Description
+
+Sortiere die Elemente des Array alphanumerisch.
+
+Im Skalar-Kontext sortiere die Elemente "in place" und liefere
+die Array-Referenz zurück (Method-Chaining).
+
+Im List-Kontext liefere die Elemente sortiert zurück, ohne
+den Inhalt des Array zu verändern.
+
+=head2 Numerische Operationen
+
+=head3 gcd() - Größter gemeinsamer Teiler
+
+=head4 Synopsis
+
+    $gcd = $arr->%METHOD;
+    $gcd = $class->gcd(\@arr);
+
+=head4 Description
+
+Berechne den größten gemeinsamen Teiler (greatest common divisor)
+der natürlichen Zahlen in Array @$arr bzw. @arr und liefere diesen
+zurück. Ist das Array leer, wird C<undef> geliefert. Enthält das
+Array nur ein Element, wird dessen Wert geliefert.
+
+=head3 min() - Ermittele numerisches Minimum
+
+=head4 Synopsis
+
+    $min = $arr->min;
+    $min = $class->min(\@arr);
+
+=head4 Description
+
+Ermittele die kleinste Zahl und liefere diese zurück. Enthält
+$arr keine Elemente, liefere undef.
+
+=head3 max() - Ermittele numerisches Maximum
+
+=head4 Synopsis
+
+    $max = $arr->max;
+    $max = $class->max(\@arr);
+
+=head4 Description
+
+Ermittele die größte Zahl und liefere diese zurück. Enthält $arr
+keine Elemente, liefere undef.
+
+=head3 minMax() - Ermittele numerisches Minimum und Maximum
+
+=head4 Synopsis
+
+    ($min,$max) = $arr->minMax;
+    ($min,$max) = $class->minMax(\@arr);
+
+=head4 Description
+
+Ermittele die kleinste und die größte Zahl und liefere die beiden Werte
+zurück. Enthält $arr keine Elemente, wird jeweils C<undef> geliefert.
+
+=head3 meanValue() - Berechne Mittelwert
+
+=head4 Synopsis
+
+    $x = $arr->meanValue;
+    $x = $class->meanValue(\@arr);
+
+=head4 Description
+
+Berechne das Arithmetische Mittel und liefere dieses
+zurück. Enthält $arr keine Elemente, liefere undef.
+
+=head3 standardDeviation() - Berechne Standardabweichung
+
+=head4 Synopsis
+
+    $x = $arr->standardDeviation;
+    $x = $class->standardDeviation(\@arr);
+
+=head4 Description
+
+Berechne die Standardabweichung und liefere diese zurück. Enthält
+$arr keine Elemente, liefere undef.
+
+=head3 variance() - Berechne Varianz
+
+=head4 Synopsis
+
+    $x = $arr->variance;
+    $x = $class->variance(\@arr);
+
+=head4 Description
+
+Berechne die Varianz und liefere diese zurück. Enthält das Array
+keine Elemente, liefere undef.
+
+=head3 median() - Ermittele den Median
+
+=head4 Synopsis
+
+    $x = $arr->median;
+    $x = $class->median(\@arr);
+
+=head4 Description
+
+Ermittele den Median und liefere diesen zurück. Enthält das Array
+keine Elemente, liefere undef.
+
+=head2 Dump/Restore
+
+=head3 dump() - Erzeuge einzeilige, externe Repräsentation
+
+=head4 Synopsis
+
+    $str = $arr->dump;
+    $str = $arr->dump($colSep);
+    $str = $class->dump(\@arr);
+    $str = $class->dump(\@arr,$colSep);
+
+=head4 Description
+
+Liefere eine einzeilige, externe Repräsentation für Array $arr bzw. @arr
+im Format
+
+    elem0|elem1|...|elemN
+
+Die Array-Elemente werden durch "|" (bzw. $colSep) getrennt. In den
+Elementen werden folgende Wandlungen vorgenommen:
+
+    undef    -> '' (undef wird zu Leerstring)
+    \        -> \\ (Backslash wird verdoppelt)
+    $colSep  -> \!
+    LF       -> \n
+    CR       -> \r
+
+=head3 restore() - Wandele einzeilige, externe Repräsentation in Array
+
+=head4 Synopsis
+
+    $arr = $class->restore($str);
+    $arr = $class->restore($str,$colSep);
+
+=head4 Description
+
+Wandele einzeilige, externe Array-Repräsentation (siehe Methode dump())
+in ein Array-Objekt und liefere dieses zurück.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Array.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

@@ -1,0 +1,319 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Converter - Konvertierung von Werten
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 METHODS
+
+=head2 Zeichenketten
+
+=head3 newlineToName() - Liefere Namen einer Newline-Zeichenkette
+
+=head4 Synopsis
+
+    $nlName = $this->newlineToName($nl);
+
+=head4 Description
+
+Liefere den "Namen" einer Newline-Zeichenkette, also "LF", "CRLF"
+oder "CR".
+
+=head3 snakeCaseToCamelCase() - Wandele Snake Case nach Camel Case
+
+=head4 Synopsis
+
+    $camel = $this->snakeCaseToCamelCase($snake);
+
+=head4 Description
+
+Wandele einen in Snake Case geschriebenen Bezeichner in einen Camel Case
+Bezeichner und liefere diesen zurück.
+
+Snake Case:
+
+    ims-apply-delta-row-by-row
+    ims_apply_delta_row_by_row
+
+Camel Case:
+
+    imsApplyDeltaRowByRow
+
+=head3 strToHex() - Wandele String in Hex-Darstellung
+
+=head4 Synopsis
+
+    $strHex = $this->strToHex($str);
+
+=head3 textToHtml() - Wandele Text nach HTML
+
+=head4 Synopsis
+
+    $html = $this->textToHtml($text);
+
+=head4 Description
+
+Ersetze in $text die Zeichen &, < und > durch HTML-Entities und
+liefere das Resultat zurück.
+
+=head3 doubleDecode() - Wandele doppelt enkodiertes UTF-8 zurück
+
+=head4 Synopsis
+
+    $class->doubleDecode(\$str);
+    $newStr = $class->doubleDecode($str);
+
+=head4 Description
+
+Wandele doppelt enkodiertes UTF-8 zurück in einfach enkodiertes UTF-8.
+Behandelt werden aktuell nur deutsche Umlaute und Sz.
+
+=head3 umlautToAscii() - Wandele deutsche Umlaute und SZ nach ASCII
+
+=head4 Synopsis
+
+    $class->umlautToAscii(\$str);
+    $newStr = $class->umlautToAscii($str);
+
+=head4 Description
+
+Schreibe ä, Ä, ö, Ö, ü, Ü, ß in ae, Ae, oe, Oe, ue, Ue, ss um
+und liefere das Resultat zurück. Wird eine Stringreferenz angegeben,
+findet die Umschreibung "in-place" statt.
+
+Die Methode setzt voraus, dass der String korrekt dekodiert wurde.
+
+=head2 Zahlen
+
+=head3 germanToProgramNumber() - Wandele deutsche Zahldarstellung in Zahl
+
+=head4 Synopsis
+
+    $x = $this->germanToProgramNumber($germanX);
+
+=head4 Description
+
+Wandele deutsche Zahldarstellung mit Punkt (.) als Stellen-Trenner und
+Komma (,) als Dezimaltrennzeichen in eine Zahl der Programmiersprache
+und liefere das Resultat zurück.
+
+=head3 intToWord() - Wandele positive ganze Zahl in Wort über Alphabet
+
+=head4 Synopsis
+
+    $word = $this->intToWord($n);
+    $word = $this->intToWord($n,$alphabet);
+
+=head4 Returns
+
+Zeichenkette
+
+=head4 Description
+
+Wandele positive ganze Zahl $n in ein Wort über dem Alphabet
+$alphabet und liefere dieses zurück. Für 0 liefere
+einen Leerstring.
+
+Das Alphabet, über welchem die Worte gebildet werden, wird in Form
+einer Zeichenkette angegeben, in der jedes Zeichen einmal
+vorkommt. Per Default wird das Alphabet
+
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+verwendet. Die Funktion implementiert folgende Abbildung:
+
+    0 -> ''
+    1 -> 'A'
+    2 -> 'B'
+    
+    ...
+    26 -> 'Z'
+    27 -> 'AA'
+    28 -> 'AB'
+    ...
+    52 -> 'AZ'
+    53 -> 'BA'
+    ...
+
+=head2 Längen
+
+=head3 ptToPx() - Rechne Punkt (pt) in Pixel (px) um
+
+=head4 Synopsis
+
+    $px = $this->ptToPx($pt);
+
+=head4 Alias
+
+pointToPixel()
+
+=head4 Arguments
+
+=over 4
+
+=item $pt (Number)
+
+Punkt-Wert
+
+=back
+
+=head4 Returns
+
+Pixel-Wert (Number)
+
+=head4 Description
+
+Rechne Punkt in Pixel um und liefere das Resultat zurück.
+
+    1 Punkt = 1/0.75 Pixel
+
+=head3 pxToPt() - Rechne Pixel (px) in Punkt (pt) um
+
+=head4 Synopsis
+
+    $pt = $this->pxToPt($px);
+
+=head4 Alias
+
+pixelToPoint()
+
+=head4 Arguments
+
+=over 4
+
+=item $px (Number)
+
+Pixel-Wert
+
+=back
+
+=head4 Returns
+
+Punkt-Wert (Number)
+
+=head4 Description
+
+Rechne Pixel in Punkt um und liefere das Resultat zurück.
+
+    1 Pixel = 0.75 Punkt
+
+=head2 Zeitdarstellung
+
+=head3 epochToDuration() - Wandele Sekunden in (lesbare) Angabe einer Dauer
+
+=head4 Synopsis
+
+    $str = $class->epochToDuration($epoch,$truncate,$format);
+
+=head4 Alias
+
+secondsToDuration()
+
+=head4 Description
+
+Wandele eine Zeitangabe in Sekunden in eine Zeichenkette der Form
+
+    HH:MM:SS  ($format nicht angegeben oder 1)
+
+oder
+
+    HHhMMmSSs ($format == 2)
+
+oder
+
+    HhMmSs ($format == 3)
+
+=head3 timestampToEpoch() - Wandele Timestamp in lokaler Zeit nach Epoch
+
+=head4 Synopsis
+
+    $t = $class->timestampToEpoch($timestamp);
+
+=head4 Description
+
+Es wird vorausgesetzt, dass der Timestamp das Format
+
+    YYYY-MM-DD HH24:MI:SSXFF
+
+hat.
+
+Fehlende Teile werden als 0 angenommen, so dass insbesondere
+auch folgende Formate gewandelt werden können:
+
+    YYYY-MM-DD HH24:MI:SS    (keine Sekundenbruchteile)
+    YYYY-MM-DD               (kein Zeitanteil)
+
+Diese Methode ist z.B. nützlich, um einen Oracle-Timestamp
+(in lokaler Zeit) nach Epoch zu wandeln.
+
+=head3 epochToTimestamp() - Wandele Epoch in Timestamp in lokaler Zeit
+
+=head4 Synopsis
+
+    $timestamp = $class->epochToTimestamp($t);
+
+=head4 Description
+
+Wandele Epoch-Wert $t in einen Timestamp der lokalen Zeitzone um
+und liefere diesen zurück.
+
+=head4 See Also
+
+L</timestampToEpoch>()
+
+=head2 Array/Hash
+
+=head3 stringToKeyVal() - Wandele Zeichenkette in Schüssel/Wert-Paare
+
+=head4 Synopsis
+
+    $arr|@arr = $class->stringToKeyVal($str);
+
+=head4 Description
+
+Liefere die in der Zeichenkette enthaltenen Schlüssel/Wert-Paare.
+
+Die Schlüssel/Wert-Paare haben die Form:
+
+    $key="$val"
+
+Wenn $val kein Whitespace enthält, können die Anführungsstriche
+weggelassen werden:
+
+    $key=$val
+
+=head4 Example
+
+    $class->stringToKeyVal(q|var1=val1 var2="val2"|);
+    =>
+    ('var1','val1','var2','val2a')
+
+=head4 Caveats
+
+Wenn $val mit einem doppelten Anführungsstrich beginnt, darf $val
+keine doppelten Anführungsstiche enthalten.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Converter.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

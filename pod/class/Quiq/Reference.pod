@@ -1,0 +1,104 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Reference - Operationen auf Referenzen
+
+=head1 DESCRIPTION
+
+Die Klasse stellt Methoden auf Referenzen zur Verfügung, insbesondere,
+um den Grundtyp einer Referenz zu ermitteln.
+
+=head1 METHODS
+
+=head2 Klassenmethoden
+
+=head3 refType() - Liefere Grundtyp der Referenz
+
+=head4 Synopsis
+
+    $refType = $class->refType($ref);
+
+=head4 Alias
+
+reftype()
+
+=head4 Description
+
+Ist $ref eine Referenz, liefere den Grundtyp der Referenz. Ist $ref
+keine Referenz, liefere einen Leerstring.
+
+Grundtypen sind:
+
+    SCALAR
+    ARRAY
+    HASH
+    CODE
+    GLOB
+    IO
+    REF
+
+Details siehe: C<perldoc -f ref>.
+
+=head3 isBlessedRef() - Test, ob Referenz geblesst ist
+
+=head4 Synopsis
+
+    $bool = $class->isBlessedRef($ref);
+
+=head4 Alias
+
+isBlessed()
+
+=head3 isArrayRef() - Teste auf Array-Referenz
+
+=head4 Synopsis
+
+    $bool = $class->isArrayRef($ref);
+
+=head3 isHashRef() - Teste auf Hash-Referenz
+
+=head4 Synopsis
+
+    $bool = $class->isHashRef($ref);
+
+=head3 isCodeRef() - Teste auf Code-Referenz
+
+=head4 Synopsis
+
+    $bool = $class->isCodeRef($ref);
+
+=head3 isRegexRef() - Teste auf Regex-Referenz
+
+=head4 Synopsis
+
+    $bool = $class->isRegexRef($ref);
+
+=head4 Caveats
+
+Wenn die Regex-Referenz umgeblesst wurde, muss sie auf
+eine Subklasse von Regex geblesst worden sein, sonst schlägt
+der Test fehl. Aktuell gibt es nicht den Grundtyp REGEX, der
+von reftype() geliefert würde, sondern eine Regex-Referenz gehört
+standardmäßig zu der Klasse Regex.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Reference.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

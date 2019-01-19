@@ -1,0 +1,67 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Ipc - Interprozesskommunikation
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 METHODS
+
+=head2 Methods
+
+=head3 filter() - Rufe ein Kommando als Filter auf
+
+=head4 Synopsis
+
+    $out = Quiq::Ipc->filter($cmd,$in,@opt);
+    ($out,$err) = Quiq::Ipc->filter($cmd,$in,@opt);
+    $out = Quiq::Ipc->filter($cmd,@opt);
+    ($out,$err) = Quiq::Ipc->filter($cmd,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -ignoreError => $bool (Default: 0)
+
+Ignoriere Exitcode von Kommando $cmd. D.h. es wird keine Exception
+geworfen, wenn das Kommando fehlschlägt.
+
+=back
+
+=head4 Description
+
+Rufe Kommando $cmd als Filter auf. Das Kommando erhält die Daten
+$in auf stdin und liefert die Daten $out und $err auf stdout
+bzw. stderr. In Skalarkontext wird nur die Ausgabe auf stdout
+geliefert.
+
+Achtung: Der Aufruf kann zu einem SIGPIPE führen, wenn per
+Parameter $in Daten an $cmd gesendet werden und das Kommando
+terminiert, bevor es alle Daten gelesen hat. Insbesondere sollten
+keine Daten an ein Kommando gesendet werden, das nicht von stdin
+liest!
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Ipc.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

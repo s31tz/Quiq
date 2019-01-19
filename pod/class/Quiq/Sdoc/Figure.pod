@@ -1,0 +1,96 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Sdoc::Figure - Bild
+
+=head1 BASE CLASS
+
+L<Quiq::Sdoc::Node|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Node.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert eine Abbildung.
+
+=head1 ATTRIBUTES
+
+=over 4
+
+=item parent => $parent
+
+Verweis auf Superknoten.
+
+=item file => $url
+
+Pfad/URL der Bilddatei.
+
+=item width => $n
+
+Breite des Bildes.
+
+=item height => $n
+
+Höhe des Bildes.
+
+=item style => $cssDef
+
+CSS-Definition
+
+=item title => $str
+
+Überschrift.
+
+=item center => $bool
+
+Zentriere Abbildung
+
+=item url => $url
+
+Mache Bild zu einem Link auf $url.
+
+=back
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Konstruktor
+
+=head4 Synopsis
+
+    $node = $class->new($doc,$parent,$att);
+
+=head2 Methods
+
+=head3 visibleTitle() - Liefere den Abbildungs-Titel, wie er ins Dokument geschrieben wird
+
+=head4 Synopsis
+
+    $text = $node->visibleTitle($format);
+
+=head3 dump() - Erzeuge externe Repräsentation für Abbildung
+
+=head4 Synopsis
+
+    $str = $node->dump($format,@args);
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Sdoc/Figure.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

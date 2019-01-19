@@ -1,0 +1,151 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::File::Video - Informationen über Video-Datei
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Video-Datei-Objekt
+
+=head4 Synopsis
+
+    $vid = $class->new($file,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -verbose => $bool (Default: 1)
+
+Gib das ffprobe-Kommando auf STDOUT aus.
+
+=back
+
+=head4 Description
+
+Instantiiere ein Video-Datei-Objekt und liefere eine Referenz auf
+dieses Objekt zurück.
+
+=head2 Eigenschaften
+
+=head3 file() - Dateiname
+
+=head4 Synopsis
+
+    $file = $vid->file;
+
+=head4 Description
+
+Liefere den Dateinamen (Pfad) der Video-Datei.
+
+=head3 width() - Breite
+
+=head4 Synopsis
+
+    $width = $vid->width;
+
+=head4 Description
+
+Liefere die Breite des Video in Pixeln, z.B. 1920.
+
+=head3 height() - Höhe
+
+=head4 Synopsis
+
+    $height = $vid->height;
+
+=head4 Description
+
+Liefere die Höhe des Video in Pixeln, z.B. 1080.
+
+=head3 size() - Breite und Höhe
+
+=head4 Synopsis
+
+    ($width,$height) = $vid->size;
+
+=head4 Description
+
+Liefere die Breite und Höhe des Video in Pixeln, z.B. (1920,1080).
+
+=head3 aspectRatio() - Seitenverhältnis
+
+=head4 Synopsis
+
+    $aspectRatio = $vid->aspectRatio;
+
+=head4 Description
+
+Liefere das Seitenverhältnis des Video, z.B. '16:9'.
+
+=head3 bitrate() - Bitrate
+
+=head4 Synopsis
+
+    $bitrate = $vid->bitrate;
+
+=head4 Description
+
+Liefere die Bitrate des Video in Kilobit (kb/s), z.B. 30213.
+
+=head3 duration() - Dauer
+
+=head4 Synopsis
+
+    $duration = $vid->duration;
+
+=head4 Description
+
+Liefere die Dauer des Video in Sekunden (millisekundengenau),
+z.B. 8.417.
+
+=head3 frames() - Anzahl Frames
+
+=head4 Synopsis
+
+    $frames = $vid->frames;
+
+=head4 Description
+
+Liefere die Anzahl der Frames des Video, z.B. 101.
+
+=head2 Interne Methoden
+
+=head3 analyzeFile() - Analysiere Video-Datei
+
+=head4 Synopsis
+
+    $vid->analyzeFile;
+
+=head4 Description
+
+Analysiere die Video-Datei mit ffprobe und weise die ermittelten
+Eigenschaften an die Attribute des Objektes zu.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/File/Video.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

@@ -1,0 +1,152 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::ImagePool - Speicher für Bild-Dateien
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Pool-Objekt
+
+=head4 Synopsis
+
+    $ipl = $class->new($path);
+
+=head4 Arguments
+
+=over 4
+
+=item $path
+
+Pfad zum Pool-Verzeichnises.
+
+=back
+
+=head2 Eigenschaften
+
+=head3 root() - Wurzelverzeichnis des Image-Pool
+
+=head4 Synopsis
+
+    $path = $ipl->root;
+    $path = $ipl->root($subPath);
+
+=head4 Description
+
+Liefere den Pfad des Wurzelverzeichnissess des Image-Pool. Ist
+Argument $subPath angegeben, füge diesen Pfad zum Wurzelverzeichnis
+hinzu.
+
+=head4 Example
+
+Mit Subpfad:
+
+    $ipl->root('cache');
+    =>
+    <POOLDIR>/cache
+
+=head2 Verzeichnisse
+
+=head3 directory() - Lookup Directory-Objekt nach Name
+
+=head4 Synopsis
+
+    $dir = $ipl->directory($name);
+
+=head4 Arguments
+
+=over 4
+
+=item $name
+
+Name des Bild-Verzeichnisses
+
+=back
+
+=head4 Description
+
+Liefere das Bild-Verzeichnis-Objekt mit Name $name. Das Objekt
+wird gecached. Existiert das Verzeichnis nicht, wird eine
+Exception geworfen.
+
+=head2 Cache
+
+=head3 cacheFile() - Generiere Pfad einer Cache-Datei
+
+=head4 Synopsis
+
+    $path = $ipl->cacheFile($img,$op,@args);
+
+=head4 Arguments
+
+=over 4
+
+=item $op
+
+Bezeichner für die angewendete Bild-Operation.
+
+=item @args
+
+Argumente für die Bild-Operation.
+
+=back
+
+=head4 Description
+
+Generiere einen Cache-Pfad für Bild $img und Bild-Operation $op
+mit den Argumenten @args und liefere diesen zurück.
+
+=head2 Bilder
+
+=head3 images() - Bilder gemäß Suchkriterium
+
+=head4 Synopsis
+
+    @images|$imageA = $ipl->images($key,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $key
+
+Bezeichner Bild-Sequenz.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -count => $n (Default: 0 = keine Beschränkung)
+
+Liefere maximal $n Bilder.
+
+=back
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/ImagePool.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

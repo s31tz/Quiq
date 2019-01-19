@@ -1,0 +1,776 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::FFmpeg - Konstruiere eine FFmpeg-Kommandozeile
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+FFmpg Online-Dokumentation:
+L<https://www.ffmpeg.org/ffmpeg-all.html>
+
+Ein Objekt der Klasse repräsentiert eine ffmpeg-Kommandozeile.
+Die Klasse verfügt einerseits über I<elementare> (Objekt-)Methoden,
+um eine solche Kommandozeile sukzessive aus Eingabe- und
+Ausgabe-Dateien, Optionen, Filtern usw. zu konstruieren und
+andererseits I<höhere> (Klassen-)Methoden, die eine vollständige
+Kommandozeile zur Erfüllung eines bestimmten Zwecks unter
+Rückgriff auf die elementaren Methoden erstellen. Die höheren
+Methoden Methoden befinden sich im Abschnitt L</"Klassenmethoden (vollständige Kommandozeilen)">.
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Konstruktor
+
+=head4 Synopsis
+
+    $cmd = $class->new;
+    $cmd = $class->new($str);
+
+=head4 Description
+
+Instantiiere ein FFmpeg-Kommando-Objekt und liefere eine Referenz auf
+dieses Objekt zurück.
+
+=head2 Objektmethoden
+
+=head3 command() - Kommandozeile als Zeichenkette
+
+=head4 Synopsis
+
+    $str = $cmd->command;
+
+=head4 Description
+
+Liefere das Kommando als Zeichenkette.
+
+=head3 input() - Eingabe-Datei als Objekt
+
+=head4 Synopsis
+
+    $fil = $cmd->input($i);
+
+=head4 Description
+
+Instantiiere Eingabe-Datei $i als Quiq::File-Objekt und liefere
+dieses zurück. Das Objekt wird gecached.
+
+=head3 suffix() - Suffix Ausgabe-Datei
+
+=head4 Synopsis
+
+    $str = $cmd->suffix;
+
+=head4 Description
+
+Liefere den Suffix für eine Ausgabedatei. Der Suffix ist eine
+Zeichenkette der Form
+
+    NAME-WIDTH-HEIGHT-START-STOP
+
+wobei Komponenten fehlen können, die nicht definiert sind.
+
+=head2 Kommandozeile konstruieren
+
+=head3 addOption() - Füge Option hinzu
+
+=head4 Synopsis
+
+    $cmd->addOption($opt);
+    $cmd->addOption($opt=>$val);
+
+=head4 Description
+
+Ergänze die Kommandozeile um die Option $opt und (optional) den
+Wert $val. Die Methode liefert keinen Wert zurück.
+
+=head4 Examples
+
+Option ohne Wert:
+
+    $cmd->addOption('-y');
+    =>
+    -y
+
+Option mit Wert:
+
+    $cmd->addOption(-i=>'video/GOPR1409.mp4');
+    =>
+    -i 'video/GOPR1409.mp4'
+
+=head3 addInput() - Füge Input-Option hinzu
+
+=head4 Synopsis
+
+    $cmd->addInput($input);
+
+=head4 Description
+
+Ergänze das Kommando um Input $input, sofern $input einen Wert hat.
+Die Methode liefert keinen Wert zurück.
+
+=head4 Examples
+
+Dateiname:
+
+    $cmd->addInput('video/GOPR1409.mp4');
+    =>
+    -i 'video/GOPR1409.mp4'
+
+Muster:
+
+    $cmd->addInput('img/*.jpg');
+    =>
+    -i 'img/*.jpg'
+
+Undefiniert:
+
+    $cmd->addInput(undef);
+    =>
+
+=head3 addFilter() - Füge Filter-Option hinzu
+
+=head4 Synopsis
+
+    $cmd->addFilter($opt,\@filter,$sep);
+
+=head4 Description
+
+Ergänze das Kommando um Filter-Option $opt mit den Filtern @filter
+und dem Trenner $sep (Komma oder Semikolon).
+
+=head4 Examples
+
+Video Filter-Chain:
+
+    $cmd->addFilter(-vf=>['crop=1440:1080','scale=720*a:720']);
+    =>
+    -vf 'crop=1440:1080,scale=720*a:720'
+
+=head3 addStartStop() - Füge Optionen für Zeitbereich hinzu
+
+=head4 Synopsis
+
+    $cmd->addStartStop($start,$stop);
+
+=head4 Description
+
+Ergänze das Kommando um Optionen, die den Zeitbereich auf
+den Bereich $start und $stop eingrenzen.
+
+=head4 Examples
+
+Nur Start-Zeitpunkt:
+
+    $cmd->addStartStop(5.5);
+    =>
+    -ss 5.5
+
+Nur Ende-Zeitpunkt:
+
+    $cmd->addStartStop(undef,20.5);
+    =>
+    -t 20.5
+
+Start- und Ende-Zeitpunkt:
+
+    $cmd->addStartStop(5.5,20.5);
+    =>
+    -ss 5.5 -t 20.5
+
+=head3 addBitrate() - Füge Bitrate-Option hinzu
+
+=head4 Synopsis
+
+    $cmd->addBitrate($bitrate);
+
+=head4 Description
+
+Ergänze das Kommando um eine allgemeine Bitrate-Option mit
+Suffix 'k' (= kb/s). Ist die Bitrate 0, '' oder undef, wird
+die Option nicht hinzugefügt.
+
+=head4 Examples
+
+Bitrate von 10000k:
+
+    $cmd->addBitrate(10000);
+    =>
+    -b 10000k
+
+=head3 addOutput() - Füge Output-Argument hinzu
+
+=head4 Synopsis
+
+    $cmd->addOutput($output);
+
+=head4 Description
+
+Ergänze das Kommando um Output $output.
+Die Methode liefert keinen Wert zurück.
+
+=head4 Examples
+
+Dateiname:
+
+    $cmd->addOutput('video/GOPR1409.mp4');
+    =>
+    'video/GOPR1409.mp4'
+
+Muster:
+
+    $cmd->addOutput('img/%06d.jpg');
+    =>
+    'img/%06d.jpg'
+
+=head3 addString() - Füge Zeichenkette am Ende hinzu
+
+=head4 Synopsis
+
+    $cmd->addString($str);
+
+=head4 Description
+
+Füge Zeichenkette $str am Ende der Kommandozeile hinzu, mit einem
+Leerzeichen als Trenner.
+
+=head4 Example
+
+Kommando nach Objekt-Instantiierung:
+
+    $cmd->addString('ffprobe');
+    =>
+    ffprobe
+
+=head3 prependString() - Füge Zeichenkette am Anfang hinzu
+
+=head4 Synopsis
+
+    $cmd->prependString($str);
+
+=head4 Description
+
+Füge Zeichenkette $str am Beginn der Kommandozeile hinzu.
+Ein Leerzeichen wird automatisch hinzugefügt.
+
+=head4 Example
+
+Kommando voranstellen:
+
+    $cmd->prependString('ffplay -autoexit');
+    =>
+    ffplay -autoexit ...
+
+=head2 Filter
+
+=head3 cropFilter() - Liefere Crop-Filter
+
+=head4 Synopsis
+
+    $str = $cmd->cropFilter($width,$height);
+    $str = $cmd->cropFilter($width,$height,$xOffset,$yOffset);
+
+=head4 Description
+
+Erzeuge eine Crop-Filter-Spezifikation für die angegebenen
+Argumente und liefere diese zurück.
+
+=head4 Examples
+
+Nur Breite und Höhe:
+
+    $cmd->cropFilter(1280,720);
+    =>
+    'crop=1280:720'
+
+Breite, Höhe, X-Offset, Y-Offset:
+
+    $cmd->cropFilter(1280,720,240,0);
+    =>
+    'crop=1280:720:240:0'
+
+=head3 scaleFilter() - Liefere Scale-Filter
+
+=head4 Synopsis
+
+    $str = $cmd->scaleFilter($width,$height);
+    $str = $cmd->scaleFilter("$width:$height");
+
+=head4 Description
+
+Erzeuge eine Crop-Filter-Spezifikation für die angegebenen
+Argumente und liefere diese zurück.
+
+Sind die Argumente undefiniert, wird eine leere Liste geliefert.
+
+=head4 Examples
+
+Breite und Höhe als getrennte Argumente:
+
+    $cmd->scaleFilter(1280,720);
+    =>
+    'scale=1280:720'
+
+Breite und Höhe in einem Argument:
+
+    $cmd->scaleFilter('1280:720');
+    =>
+    'scale=1280:720'
+
+Undefiniertes Argument:
+
+    @filter = $cmd->scaleFilter(undef);
+    =>
+    ()
+
+=head3 fpsFilter() - Liefere Fps-Filter
+
+=head4 Synopsis
+
+    $str = $cmd->fpsFilter($fps);
+
+=head4 Description
+
+Erzeuge eine Fps-Filter-Spezifikation und liefere diese zurück.
+Ist das Argument undef, liefere eine leere Liste.
+
+=head4 Examples
+
+Argument:
+
+    $cmd->fpsFilter(24);
+    =>
+    'fps=24'
+
+Undefiniertes Argument:
+
+    @filter = $cmd->fpsFilter(undef);
+    =>
+    ()
+
+=head3 framestepFilter() - Liefere Framestep-Filter
+
+=head4 Synopsis
+
+    $str = $cmd->framestepFilter($fps);
+
+=head4 Description
+
+Erzeuge eine Framestep-Filter-Spezifikation und liefere diese zurück.
+Ist das Argument undef, liefere eine leere Liste.
+
+=head4 Examples
+
+Argument:
+
+    $cmd->framestepFilter(4);
+    =>
+    'framestep=4'
+
+Undefiniertes Argument:
+
+    @filter = $cmd->framestepFilter(undef);
+    =>
+    ()
+
+=head2 Ausgabe-Datei-Eigenschaften (Getter/Setter)
+
+=head3 outName() - Setze/Liefere Bezeichnung Ausgabe-Datei
+
+=head4 Synopsis
+
+    $cmd->outName($name);
+    $name = $cmd->outName;
+
+=head4 Description
+
+Setze oder liefere die Bezeichnung für die Ausgabe-Datei.
+Die Angabe wird für den Suffix der Ausgabe-Datei genutzt.
+
+=head3 outSize() - Setze/Liefere Breite und Höhe Video-Ausgabe
+
+=head4 Synopsis
+
+    $cmd->outSize($width,$height);
+    ($width,$height) = $cmd->outSize;
+
+=head4 Description
+
+Setze oder liefere die Höhe und Breite der Video-Ausgabe.
+Die Angabe wird für den Suffix der Video-Ausgabe-Datei genutzt.
+
+=head3 outStart() - Setze/Liefere Start-Zeitpunkt
+
+=head4 Synopsis
+
+    $cmd->outStart($s);
+    $s = $cmd->outStart;
+
+=head4 Description
+
+Setze oder liefere den Start-Zeitpunkt der Ausgabe.
+Die Angabe wird für den Suffix der Ausgabe-Datei genutzt.
+
+=head3 outStop() - Setze/Liefere Stop-Zeitpunkt
+
+=head4 Synopsis
+
+    $cmd->outStop($s);
+    $s = $cmd->outStop;
+
+=head4 Description
+
+Setze oder liefere den Stop-Zeitpunkt der Ausgabe.
+Die Angabe wird für den Suffix der Ausgabe-Datei genutzt.
+
+=head2 Klassenmethoden (vollständige Kommandozeilen)
+
+=head3 imagesToVideo() - Füge Bild-Sequenz zu einem Video zusammen
+
+=head4 Synopsis
+
+    $cmd = $class->imagesToVideo($pattern,$output,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $pattern
+
+Pfad-Muster der Bilder. Enthält das Pfad-Muster einen Stern (*),
+wird C<-pattern_type glob> gewählt.
+
+Beispiele:
+
+    'img/%06d.jpg' => -i 'img/%06d.jpg'
+    'img/*.jpg'    => -pattern_type glob -i 'img/*.jpg'
+
+=item $output
+
+Name der generierten Video-Datei.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -audio => $file (Default: undef)
+
+Erzeuge einen Audio-Stream aus Audio-Datei $file.
+
+=item -duration => $duration (Default: undef)
+
+Beende die Ausgabe, wenn die Dauer $duration erreicht ist.
+
+=item -framerate => $n (Default: 8)
+
+Anzahl Bilder pro Sekunde.
+
+=item -loop => $bool (Default: 0)
+
+Wiederhole die Bildserie zyklisch.
+
+=item -play => 0|1|2 (Default: 0)
+
+Zeige das generierte Video im Player an, statt es in einer Datei
+zu speichern. Bei -play=>2 bleibt das Fenster des Players
+offen, bis es per Hand geschlossen wird.
+
+=item -preset => $preset (Default: undef)
+
+Satz an vorgewählten Optionen, für Encoding-Zeit
+vs. Kompressionsrate. Mögliche Werte: ultrafast, superfast,
+veryfast, faster, fast, medium, slow, slower, veryslow. Siehe
+L<https://trac.ffmpeg.org/wiki/Encode/H.264>.
+
+=item -size => "$width:$height" (Default: undef)
+
+Breite und Höhe des generierten Video. Ohne Angabe nimmt
+ffmpeg die Größe der Bilder.
+
+=item -videoBitrate => $bitrate (Default: 60_000)
+
+Video-Bitrate in kbit/s.
+
+=item -videoFilter => $filter
+
+Optionale Filterangabe. Z.B. -videoFilter => 'lutyuv=y=val*1.4,hue=s=10'
+
+=item -videoFramerate => $n (Default: 24)
+
+Framerate des Video.
+
+=back
+
+=head4 Description
+
+Generiere ein ffmpeg-Kommando zum Zusammenfügen der Bilder
+$pattern zu Video $output und liefere dieses Kommando zurück.
+
+=head3 videoToImages() - Extrahiere Bild-Sequenz (Frames) aus Video
+
+=head4 Synopsis
+
+    $cmd = $ffm->videoToImages($input,$dir,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -aspectRatio => '16:9'|'4:3' (Default: undef)
+
+Gewünschtes Seitenverhältnis der Bilder. Hat das Video ein
+abweichendes Seitenverhältnis, wird ein entsprechender Crop-Filter
+aufgesetzt.
+
+=item -framestep => $n (Default: 1)
+
+Extrahiere jeden $n-ten Frame.
+
+=item -pixelFormat=FMT (Default: 'yuvj422p')
+
+Pixel-Format des erzeugten Bildes. Laut Aussage im Netz ist yuvj422p
+das Standard-Pixel-Format für jpeg-Dateien. Wird das Pixel-Format
+hier nicht geändert, erzeugt ffmpeg die Bilder in Pixelformat
+yuvj420p, was Probleme beim Zusammenfügen mit Bildern einer
+Kamera zu einem Film macht.
+
+=item -quality => $n (Default: 2)
+
+Qualität der generierten jpg-Bilddateien. Wertebereich: 2-31, mit
+2 als bester und 31 als schlechtester Qualität.
+
+=item -start => $s (Default: 0)
+
+Zeitpunkt in Sekunden (ggf. mit Nachkommastellen) vom Beginn
+des Video, an dem das Extrahieren der Frames beginnt.
+
+=item -stop => $s (Default: undef)
+
+Zeitpunkt in Sekunden (ggf. mit Nachkommastellen) vom Beginn
+des Video, an dem das Extrahieren der Frames endet.
+
+=back
+
+=head4 Description
+
+Generiere ein ffmpeg-Kommando, das die Frames aus dem Video $input
+extrahiert und im Verzeichnis $dir speichert. Die Bilder haben
+das Format 'jpg'. Der Name der Dateien ist NNNNNN.jpg, von 1 an
+lückenlos aufsteigend.
+
+=head4 Examples
+
+Ohne Optionen:
+
+    $ffm->videoToImages('video.mp4','img');
+    =>
+    ffmpeg -y -loglevel error -stats
+        -i 'video.mp4'
+        -qscale:v 2
+        'img/%06d.jpg'
+
+Video-Seitenverhältnis 16:9 zu Bild-Seitenverhältnis 4:3 wandeln:
+
+    $ffm->videoToImages('video.mp4','img',
+        -aspectRatio=>'4:3',
+    );
+    =>
+    ffmpeg -y -loglevel error -stats
+        -i 'video.mp4'
+        -vf 'crop=ih/3*4:ih'
+        -qscale:v 2
+        'img/%06d.jpg'
+
+Alle Optionen:
+
+    $ffm->videoToImages('video.mp4','img',
+        -aspectRatio=>'4:3',
+        -framestep=>6,
+        -start=>3,
+        -stop=>10,
+    );
+    =>
+    ffmpeg -y -loglevel error -stats
+        -i 'video.mp4'
+        -vf 'framestep=6,crop=ih/3*4:ih'
+        -ss 3 -t 7
+        -qscale:v 2
+        'img/%06d.jpg'
+
+=head3 extract() - Extrahiere Abschnitt aus Audio- oder Video-Datei
+
+=head4 Synopsis
+
+    $cmd = $class->extract($input,$output,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $input
+
+Eingabe-Datei.
+
+=item $output
+
+Ausgabe-Datei.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -name => $str (Default: undef)
+
+Füge dem Dateinamen die Bezeichnung $str hinzu.
+
+=item -play => 0|1|2 (Default: 0)
+
+Extrahiere den Ausschnitt nicht, sondern zeige ihn an. 1=Exit am Ende,
+2=Fenster offen lassen (zu erneuten Positionen).
+
+=item -start => $s (Default: 0)
+
+Start-Position in einem Format, das die Klasse Quiq::Duration
+akzeptiert.
+
+=item -stop => $s (Default: undef)
+
+Ende-Position in einem Format, das die Klasse Quiq::Duration
+akzeptiert.
+
+=back
+
+=head4 Description
+
+Extrahiere von Position $start bis Position $stop einen Teil
+aus der Audio- oder Video-Datei $input und schreibe ihn auf Datei $output.
+
+Die Extraktion erfolgt ohne Transcoding, also ohne Qualitätsverlust.
+
+=head3 extract169To43() - Extrahiere/Croppe 16:9-Video zu 4:3-Video
+
+=head4 Synopsis
+
+    $cmd = $class->extract169To43($input,$output,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $input
+
+Eingabe-Datei.
+
+=item $output
+
+Ausgabe-Datei. Wenn undef, wird der Name der Ausgabedatei generiert.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -bitrate => $x (Default: undef)
+
+Die Bitrate des generierten Video in kb/s.
+
+=item -name => $str (Default: undef)
+
+Füge dem Dateinamen die Bezeichnung $str hinzu.
+
+=item -play => 0|1|2 (Default: 0)
+
+Zeige das generierte Video im Player an, statt es in einer Datei
+zu speichern. Bei -play=>2 bleibt das Fenster des Players
+offen, bis es per Hand geschlossen wird.
+
+=item -start => $s (Default: 0)
+
+Start-Position in Sekunden (mit Millisekunden als Nachkommastellen).
+
+=item -stop => $s (Default: undef)
+
+Ende-Position in Sekunden (mit Millisekunden als Nachkommastellen).
+
+=item -xOffset => $n (Default: undef)
+
+Crop-Offset in x-Richtung. Per Default croppt der crop-Filter mittig.
+
+=back
+
+=head4 Description
+
+Croppe 16:9-Video $input zum 4:3-Video $output. Die Crop-Operation
+schneidet links und rechts einen Teil des Video ab.
+
+=head3 videoInfo() - Schreibe Video-Stream-Information in XML
+
+=head4 Synopsis
+
+    $cmd = $class->videoInfo($input);
+    $cmd = $class->videoInfo($input,$streamIndex);
+
+=head4 Arguments
+
+=over 4
+
+=item $input
+
+Eingabe-Datei.
+
+=item $streamIndex (Default: 0)
+
+Index des Video-Stream.
+
+=back
+
+=head4 Description
+
+Erzeuge eine ffprobe-Kommandozeile, die Information über den
+Video-Stream $streamIndex in Datei $input liefert. Ist kein
+Stream-Index angegeben, wird der erste Stream (Index 0) genommen.
+
+=head2 Kommando-Ausführung
+
+=head3 execute() - Führe FFmpeg-Kommandozeile aus
+
+=head4 Synopsis
+
+    $cmd->execute;
+
+=head4 Description
+
+Führe FFmpeg-Kommando $cmd aus. Als Ausgabe erscheint lediglich
+die Fortschrittsanzeige.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/FFmpeg.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

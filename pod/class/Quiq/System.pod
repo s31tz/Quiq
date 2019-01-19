@@ -1,0 +1,147 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::System - Information über das System und seine Umgebung
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 METHODS
+
+=head2 Host
+
+=head3 numberOfCpus() - Anzahl der CPUs
+
+=head4 Synopsis
+
+    $n = $this->numberOfCpus;
+
+=head4 Description
+
+Liefere die Anzahl der CPUs des Systems. Diese Methode ist nicht
+portabel, sie basiert auf /proc/cpuinfo des Linux-Kernels bzw.
+dem dem Kommando 'sysctl -n hw.ncpu' von FreeBSD. Im Falle eines
+unbekannten Systems liefert die Methode 1.
+
+=head3 hostname() - Hostname des Systems oder zu IP
+
+=head4 Synopsis
+
+    $hostname = $this->hostname;
+    $hostname = $this->hostname($ip);
+
+=head4 Description
+
+Liefere "den" Hostnamen des Systems. Es ist der Name, den die
+Methode Sys::Hostname::hostname() liefert.
+
+=head4 See Also
+
+Sys::Hostname
+
+=head3 ip() - IP des Systems oder zu Hostname
+
+=head4 Synopsis
+
+    $ip = $this->ip;
+    $ip = $this->ip($hostname);
+
+=head4 Description
+
+Liefere die IP-Adresse des Systems (Aufruf ohne Parameter) oder die
+IP-Adresse für $hostname.
+
+Die IP-Adresse des Systems ist die IP-Adresse zu dem Hostnamen,
+den Quiq::System->hostname() liefert.
+
+=head2 Encoding
+
+=head3 encoding() - Character-Encoding der Umgebung
+
+=head4 Synopsis
+
+    $encoding = $this->encoding;
+
+=head4 Description
+
+Liefere das in der Umgebung eingestellte Character-Encoding. In dieses
+Encoding sollten Ausgaben auf das Terminal gewandelt werden.
+
+Wir ermitteln das Encoding durch Aufruf der internen Funktion
+_get_locale_encoding() des Pragmas encoding.
+
+=head4 See Also
+
+Pragma encoding
+
+=head4 Example
+
+Gib non-ASCII-Zeichen im Encoding der Umgebung auf STDOUT aus:
+
+    my $encoding = Quiq::System->encoding;
+    binmode STDOUT,":encoding($encoding)";
+    print "äöüßÄÖÜ\n";
+
+=head2 User
+
+=head3 user() - Benutzername zu User-Id
+
+=head4 Synopsis
+
+    $user = $this->user($uid);
+
+=head4 Description
+
+Liefere den Namen des Benutzers mit User-Id (UID) $uid.
+
+=head3 uid() - User-Id zu Benutzername
+
+=head4 Synopsis
+
+    $uid = $this->uid($user);
+
+=head4 Description
+
+Liefere die User-Id (UID) des Benutzers mit dem Namen $user.
+
+=head2 Suchpfad
+
+=head3 searchProgram() - Suche Programm via PATH
+
+=head4 Synopsis
+
+    $path = $class->searchProgram($program);
+
+=head4 Options
+
+=over 4
+
+=item -sloppy => $bool (Default: 0)
+
+Wirf keine Exception, wenn das Programm nicht gefunden wird,
+sondern liefere C<undef>.
+
+=back
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/System.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

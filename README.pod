@@ -1,0 +1,766 @@
+=encoding utf-8
+
+=head1 NAME
+
+Quiq - A class library for rapid development
+
+=head1 DESCRIPTION
+
+Diese Klassenbibliothek enthält anwendungsunabhängige
+Klassen, die ich in Perl-Projekten einsetze. Sie sind nach
+einheitlichen Prinzipien konzipiert. Die Bibliothek
+befindet sich unter kontinuierlicher Weiterentwicklung.
+
+=head1 CLASSES
+
+=over 4
+
+=item *
+
+L<Quiq::AnsiColor|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/AnsiColor.pod> - Erzeuge Text mit/ohne ANSI Colorcodes
+
+=item *
+
+L<Quiq::ApplicationPaths|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ApplicationPaths.pod> - Ermittele Pfade einer Unix-Applikation
+
+=item *
+
+L<Quiq::Array|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Array.pod> - Operationen auf Arrays
+
+=item *
+
+L<Quiq::AsciiTable|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/AsciiTable.pod> - ASCII-Tabelle parsen
+
+=item *
+
+L<Quiq::Assert|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Assert.pod> - Zusicherungen
+
+=item *
+
+L<Quiq::Cascm|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Cascm.pod> - Schnittstelle zu CA Harvest SCM
+
+=item *
+
+L<Quiq::ClassConfig|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ClassConfig.pod> - Verwalte Information auf Klassenebene
+
+=item *
+
+L<Quiq::ClassLoader|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ClassLoader.pod> - Lade Perl-Klassen automatisch
+
+=item *
+
+L<Quiq::Color|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Color.pod> - Eine Farbe des RGB-Farbraums
+
+=item *
+
+L<Quiq::ColumnFormat|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ColumnFormat.pod> - Format einer Text-Kolumne
+
+=item *
+
+L<Quiq::CommandLine|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/CommandLine.pod> - Konstruiere eine Unix-Kommandozeile
+
+=item *
+
+L<Quiq::Concat|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Concat.pod> - Konkateniere Zeichenketten
+
+=item *
+
+L<Quiq::Config|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Config.pod> - Konfigurationsdatei in "Perl Object Notation"
+
+=item *
+
+L<Quiq::Confluence::Client|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Confluence/Client.pod> - Confluence-Wiki Client
+
+=item *
+
+L<Quiq::Confluence::Markup|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Confluence/Markup.pod> - Confluence-Wiki Markup
+
+=item *
+
+L<Quiq::Confluence::Page|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Confluence/Page.pod> - Confluence-Wiki Seite
+
+=item *
+
+L<Quiq::ContentProcessor|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ContentProcessor.pod> - Prozessor für Abschnitts-Dateien
+
+=item *
+
+L<Quiq::ContentProcessor::BaseType|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ContentProcessor/BaseType.pod> - Typ
+
+=item *
+
+L<Quiq::ContentProcessor::File|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ContentProcessor/File.pod> - Basisklasse für Ausgabe-Dateien
+
+=item *
+
+L<Quiq::ContentProcessor::SubType|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ContentProcessor/SubType.pod> - Sub-Typ
+
+=item *
+
+L<Quiq::ContentProcessor::Type|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ContentProcessor/Type.pod> - Entität
+
+=item *
+
+L<Quiq::Converter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Converter.pod> - Konvertierung von Werten
+
+=item *
+
+L<Quiq::Css|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Css.pod> - Generiere CSS Code
+
+=item *
+
+L<Quiq::Database::Api|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/Api.pod> - Lowlevel Datenbank-Schnittstelle
+
+=item *
+
+L<Quiq::Database::Api::Dbi::Connection|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/Api/Dbi/Connection.pod> - DBI Datenbank-Verbindung
+
+=item *
+
+L<Quiq::Database::Api::Dbi::Cursor|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/Api/Dbi/Cursor.pod> - DBI Datenbank-Cursor
+
+=item *
+
+L<Quiq::Database::Connection|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/Connection.pod> - Verbindung zu einer Relationalen Datenbank
+
+=item *
+
+L<Quiq::Database::Cursor|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/Cursor.pod> - Datenbank-Cursor
+
+=item *
+
+L<Quiq::Database::ResultSet|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/ResultSet.pod> - Liste von Datensätzen (abstrakt)
+
+=item *
+
+L<Quiq::Database::ResultSet::Array|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/ResultSet/Array.pod> - Liste von Datensätzen in Array-Repräsentation
+
+=item *
+
+L<Quiq::Database::ResultSet::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/ResultSet/Object.pod> - Liste von Datensätzen in Objekt-Repräsentation
+
+=item *
+
+L<Quiq::Database::Row|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/Row.pod> - Basisklasse Datensatz (abstrakt)
+
+=item *
+
+L<Quiq::Database::Row::Array|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/Row/Array.pod> - Datensatz als Array
+
+=item *
+
+L<Quiq::Database::Row::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/Row/Object.pod> - Datensatz als Objekt
+
+=item *
+
+L<Quiq::Database::Row::Object::Join|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/Row/Object/Join.pod> - Datensatz eines Join
+
+=item *
+
+L<Quiq::Database::Row::Object::Table|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/Row/Object/Table.pod> - Datensatz einer Tabelle
+
+=item *
+
+L<Quiq::Database::Tree|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/Tree.pod> - Baum von Datensätzen
+
+=item *
+
+L<Quiq::Debug|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Debug.pod> - Hilfe beim Debuggen von Programmen
+
+=item *
+
+L<Quiq::DestinationTree|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/DestinationTree.pod> - Verwalte Zielbaum eines Datei-Generators
+
+=item *
+
+L<Quiq::DirHandle|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/DirHandle.pod> - Verzeichnis-Handle
+
+=item *
+
+L<Quiq::Duration|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Duration.pod> - Rechnen und Konvertieren von Zeiträumen
+
+=item *
+
+L<Quiq::Epoch|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Epoch.pod> - Ein Zeitpunkt
+
+=item *
+
+L<Quiq::ExampleCode|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ExampleCode.pod> - Führe Beispielcode aus
+
+=item *
+
+L<Quiq::FFmpeg|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/FFmpeg.pod> - Konstruiere eine FFmpeg-Kommandozeile
+
+=item *
+
+L<Quiq::Fibu::Bankbuchung|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Fibu/Bankbuchung.pod> - Buchung von einem Postbank-Konto
+
+=item *
+
+L<Quiq::Fibu::BankbuchungListe|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Fibu/BankbuchungListe.pod> - Liste von Buchungen von einem Postbank-Konto
+
+=item *
+
+L<Quiq::Fibu::Buchung|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Fibu/Buchung.pod> - Fibu-Buchung
+
+=item *
+
+L<Quiq::Fibu::BuchungListe|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Fibu/BuchungListe.pod> - Liste von Fibu-Buchungen
+
+=item *
+
+L<Quiq::File::Audio|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/File/Audio.pod> - Informationen über Audio-Datei
+
+=item *
+
+L<Quiq::File::Image|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/File/Image.pod> - Informationen über Bild-Datei
+
+=item *
+
+L<Quiq::File::Video|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/File/Video.pod> - Informationen über Video-Datei
+
+=item *
+
+L<Quiq::FileHandle|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/FileHandle.pod> - Datei-Handle
+
+=item *
+
+L<Quiq::Formatter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Formatter.pod> - Formatierung von Werten
+
+=item *
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod> - Zugriffssicherer Hash mit automatisch generierten Attributmethoden
+
+=item *
+
+L<Quiq::Html::Base|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Base.pod> - Basisklasse für HTML-Komponenten
+
+=item *
+
+L<Quiq::Html::Form::Layout|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Form/Layout.pod> - HTML-Formular mit freiem Layout
+
+=item *
+
+L<Quiq::Html::Fragment|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Fragment.pod> - Fragment aus HTML-, CSS- und JavaScript-Code
+
+=item *
+
+L<Quiq::Html::Image|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Image.pod> - Image-Block in HTML
+
+=item *
+
+L<Quiq::Html::List|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/List.pod> - HTML-Aufzählungsliste
+
+=item *
+
+L<Quiq::Html::Listing|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Listing.pod> - Programm-Listing in HTML
+
+=item *
+
+L<Quiq::Html::Page|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Page.pod> - HTML-Seite
+
+=item *
+
+L<Quiq::Html::Pygments|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Pygments.pod> - Syntax Highlighting in HTML
+
+=item *
+
+L<Quiq::Html::Table::Base|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Table/Base.pod> - Basisklasse für tabellengenerierende Klassen
+
+=item *
+
+L<Quiq::Html::Table::List|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Table/List.pod> - HTML-Tabelle zum Anzeigen einer Liste von Elementen
+
+=item *
+
+L<Quiq::Html::Table::Simple|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Table/Simple.pod> - HTML-Tabelle
+
+=item *
+
+L<Quiq::Html::Tag|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Tag.pod> - Generierung von HTML-Tags
+
+=item *
+
+L<Quiq::Html::Util|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Util.pod> - Hilfsmethoden für die HTML-Generierung
+
+=item *
+
+L<Quiq::Html::Verbatim|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Verbatim.pod> - Verbatim-Block in HTML
+
+=item *
+
+L<Quiq::Html::Widget|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Widget.pod> - Basisklasse für HTML-Widgets
+
+=item *
+
+L<Quiq::Html::Widget::Button|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Widget/Button.pod> - Schaltfläche
+
+=item *
+
+L<Quiq::Html::Widget::CheckBox|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Widget/CheckBox.pod> - Checkbox
+
+=item *
+
+L<Quiq::Html::Widget::CheckBoxBar|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Widget/CheckBoxBar.pod> - Zeile von CheckBoxes
+
+=item *
+
+L<Quiq::Html::Widget::FileUpload|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Widget/FileUpload.pod> - Datei Upload Feld
+
+=item *
+
+L<Quiq::Html::Widget::Hidden|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Widget/Hidden.pod> - Nicht sichtbares und nicht änderbares Formularelement
+
+=item *
+
+L<Quiq::Html::Widget::RadioButton|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Widget/RadioButton.pod> - Radio Button
+
+=item *
+
+L<Quiq::Html::Widget::RadioButtonBar|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Widget/RadioButtonBar.pod> - Zeile von Radio Buttons
+
+=item *
+
+L<Quiq::Html::Widget::ReadOnly|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Widget/ReadOnly.pod> - Nicht-änderbarer Text
+
+=item *
+
+L<Quiq::Html::Widget::SelectMenu|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Widget/SelectMenu.pod> - Liste mit Einzelauswahl
+
+=item *
+
+L<Quiq::Html::Widget::SelectMenuColor|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Widget/SelectMenuColor.pod> - Selectmenü mit farbigen Einträgen
+
+=item *
+
+L<Quiq::Html::Widget::TextArea|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Widget/TextArea.pod> - Mehrzeiliges Textfeld
+
+=item *
+
+L<Quiq::Html::Widget::TextField|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Widget/TextField.pod> - Einzeiliges Textfeld
+
+=item *
+
+L<Quiq::Http::Client|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Http/Client.pod> - HTTP-Client
+
+=item *
+
+L<Quiq::Http::Client::Lwp|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Http/Client/Lwp.pod> - HTTP Operationen
+
+=item *
+
+L<Quiq::Http::Cookie|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Http/Cookie.pod> - HTTP-Cookie
+
+=item *
+
+L<Quiq::Http::Message|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Http/Message.pod> - HTTP-Nachricht
+
+=item *
+
+L<Quiq::Image|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Image.pod> - Operationen im Zusammenhang mit Bildern/Bilddateien
+
+=item *
+
+L<Quiq::ImageMagick|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ImageMagick.pod> - Konstruiere eine ImageMagick-Kommandozeile
+
+=item *
+
+L<Quiq::ImagePool|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ImagePool.pod> - Speicher für Bild-Dateien
+
+=item *
+
+L<Quiq::ImagePool::Directory|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ImagePool/Directory.pod> - Unterverzeichnis eines Image-Pool
+
+=item *
+
+L<Quiq::ImagePool::Sequence|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ImagePool/Sequence.pod> - Bild-Sequenz und -Ranges
+
+=item *
+
+L<Quiq::Ipc|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Ipc.pod> - Interprozesskommunikation
+
+=item *
+
+L<Quiq::JQuery::Accordion|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/JQuery/Accordion.pod> - Erzeuge HTML einer jQuery UI Accodion Reiterleiste
+
+=item *
+
+L<Quiq::JQuery::DataTable|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/JQuery/DataTable.pod> - Erzeuge eine HTML/JavaScript DataTables-Tabelle
+
+=item *
+
+L<Quiq::JQuery::Form::ViewEdit|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/JQuery/Form/ViewEdit.pod> - Formular zum Ansehen und Bearbeiten von persistenten Daten
+
+=item *
+
+L<Quiq::JQuery::Function|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/JQuery/Function.pod> - Nützliche Funktionen für jQuery
+
+=item *
+
+L<Quiq::JQuery::Tabs|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/JQuery/Tabs.pod> - Erzeuge HTML einer jQuery UI Tabs Reiterleiste
+
+=item *
+
+L<Quiq::JavaScript|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/JavaScript.pod> - Generierung von JavaScript-Code
+
+=item *
+
+L<Quiq::LaTeX::Code|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/LaTeX/Code.pod> - Generator für LaTeX Code
+
+=item *
+
+L<Quiq::LaTeX::Document|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/LaTeX/Document.pod> - Erzeuge LaTeX Dokument
+
+=item *
+
+L<Quiq::LaTeX::Figure|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/LaTeX/Figure.pod> - Erzeuge LaTeX Figure
+
+=item *
+
+L<Quiq::LaTeX::LongTable|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/LaTeX/LongTable.pod> - Erzeuge LaTeX longtable
+
+=item *
+
+L<Quiq::LineProcessor|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/LineProcessor.pod> - Verarbeite Datei als Array von Zeilen
+
+=item *
+
+L<Quiq::LineProcessor::Line|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/LineProcessor/Line.pod> - Zeile einer Datei
+
+=item *
+
+L<Quiq::LockedCounter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/LockedCounter.pod> - Persistenter Zähler mit Lock
+
+=item *
+
+L<Quiq::Math|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Math.pod> - Mathematische Funktionen
+
+=item *
+
+L<Quiq::MediaWiki::Api|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/MediaWiki/Api.pod> - Clientseitiger Zugriff auf MediaWiki API
+
+=item *
+
+L<Quiq::MediaWiki::Markup|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/MediaWiki/Markup.pod> - MediaWiki Code Generator
+
+=item *
+
+L<Quiq::ModelCache|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ModelCache.pod> - Verwaltung/Caching von Modell-Objekten
+
+=item *
+
+L<Quiq::Mojolicious::Plugin::Log::Parameters|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Mojolicious/Plugin/Log/Parameters.pod> - Logge Request-Parameter
+
+=item *
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod> - Basisklasse für alle Klassen der Klassenbibliothek
+
+=item *
+
+L<Quiq::Option|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Option.pod> - Verarbeitung von Programm- und Methoden-Optionen
+
+=item *
+
+L<Quiq::OrderedHash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/OrderedHash.pod> - Hash mit geordneten Elementen
+
+=item *
+
+L<Quiq::Parallel|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Parallel.pod> - Parallele Verarbeitung
+
+=item *
+
+L<Quiq::Parameters|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Parameters.pod> - Verarbeitung von Programm- und Methodenparametern
+
+=item *
+
+L<Quiq::Path|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Path.pod> - Dateisystem-Operationen
+
+=item *
+
+L<Quiq::Perl|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Perl.pod> - Erweiterte und abgesicherte Perl-Operationen
+
+=item *
+
+L<Quiq::PersistentHash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PersistentHash.pod> - Persistenter Hash
+
+=item *
+
+L<Quiq::Pod::Generator|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Pod/Generator.pod> - POD-Generator
+
+=item *
+
+L<Quiq::Process|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Process.pod> - Information über den laufenden Prozess
+
+=item *
+
+L<Quiq::Program|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Program.pod> - Basisklasse für Programme
+
+=item *
+
+L<Quiq::Progress|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Progress.pod> - Berechne Fortschrittsinformation
+
+=item *
+
+L<Quiq::Record|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Record.pod> - Verarbeitung von Text-Records
+
+=item *
+
+L<Quiq::Reference|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Reference.pod> - Operationen auf Referenzen
+
+=item *
+
+L<Quiq::Rsync|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Rsync.pod> - Aufruf von rsync von Perl aus
+
+=item *
+
+L<Quiq::Sdoc|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc.pod> - Sdoc-Generator
+
+=item *
+
+L<Quiq::Sdoc::Box|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Box.pod> - Kasten
+
+=item *
+
+L<Quiq::Sdoc::BridgeHead|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/BridgeHead.pod> - Zwischenüberschrift
+
+=item *
+
+L<Quiq::Sdoc::Code|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Code.pod> - Code-Abschnitt
+
+=item *
+
+L<Quiq::Sdoc::Document|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Document.pod> - Sdoc-Dokument
+
+=item *
+
+L<Quiq::Sdoc::Figure|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Figure.pod> - Bild
+
+=item *
+
+L<Quiq::Sdoc::Include|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Include.pod> - Einbinden von externen Inhalten
+
+=item *
+
+L<Quiq::Sdoc::Item|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Item.pod> - Listenelement
+
+=item *
+
+L<Quiq::Sdoc::KeyValRow|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/KeyValRow.pod> - Zeile einer Schlüssel/Wert-Tabelle
+
+=item *
+
+L<Quiq::Sdoc::KeyValTable|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/KeyValTable.pod> - Schlüssel/Wert-Tabelle
+
+=item *
+
+L<Quiq::Sdoc::Line|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Line.pod> - Zeile einer Sdoc-Quelldatei
+
+=item *
+
+L<Quiq::Sdoc::Link|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Link.pod> - Definition eines Link
+
+=item *
+
+L<Quiq::Sdoc::List|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/List.pod> - Liste
+
+=item *
+
+L<Quiq::Sdoc::Node|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Node.pod> - Basisklasse für die Knoten eines Sdoc-Dokuments (abstrakt)
+
+=item *
+
+L<Quiq::Sdoc::PageBreak|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/PageBreak.pod> - Seitenumbruch
+
+=item *
+
+L<Quiq::Sdoc::Paragraph|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Paragraph.pod> - Paragraph
+
+=item *
+
+L<Quiq::Sdoc::Quote|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Quote.pod> - Zitat-Abschnitt
+
+=item *
+
+L<Quiq::Sdoc::Row|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Row.pod> - Zeile einer Tabelle
+
+=item *
+
+L<Quiq::Sdoc::Section|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Section.pod> - Abschnittsüberschrift
+
+=item *
+
+L<Quiq::Sdoc::Table|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Table.pod> - Tabelle
+
+=item *
+
+L<Quiq::Sdoc::TableOfContents|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/TableOfContents.pod> - Inhaltsverzeichnis
+
+=item *
+
+L<Quiq::Section::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Section/Object.pod> - Abschnitts-Objekt
+
+=item *
+
+L<Quiq::Section::Parser|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Section/Parser.pod> - Parser für Abschnitte
+
+=item *
+
+L<Quiq::Shell|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Shell.pod> - Ausführung von Shell-Kommandos
+
+=item *
+
+L<Quiq::SoapWsdlServiceCgi|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/SoapWsdlServiceCgi.pod> - Basisklasse für SOAP Web Services via CGI
+
+=item *
+
+L<Quiq::SoapWsdlServiceCgi::Demo|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/SoapWsdlServiceCgi/Demo.pod> - Demo für SOAP Web Service
+
+=item *
+
+L<Quiq::Socket|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Socket.pod> - TCP-Verbindung zu einem Server
+
+=item *
+
+L<Quiq::Sql|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sql.pod> - Klasse zur Generierung von SQL
+
+=item *
+
+L<Quiq::SqlPlus|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/SqlPlus.pod> - Erzeuge Code für SQL*Plus
+
+=item *
+
+L<Quiq::Stacktrace|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Stacktrace.pod> - Generiere und visualisiere einen Stacktrace
+
+=item *
+
+L<Quiq::Stopwatch|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Stopwatch.pod> - Zeitmesser
+
+=item *
+
+L<Quiq::Storable|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Storable.pod> - Persistenz für Perl-Datenstrukturen
+
+=item *
+
+L<Quiq::String|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/String.pod> - Operationen auf Zeichenketten
+
+=item *
+
+L<Quiq::System|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/System.pod> - Information über das System und seine Umgebung
+
+=item *
+
+L<Quiq::TeX::Code|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/TeX/Code.pod> - Generator für TeX Code
+
+=item *
+
+L<Quiq::TempDir|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/TempDir.pod> - Temporäres Verzeichnis
+
+=item *
+
+L<Quiq::TempFile|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/TempFile.pod> - Temporäre Datei
+
+=item *
+
+L<Quiq::Template|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Template.pod> - Klasse für HTML/XML/Text-Generierung
+
+=item *
+
+L<Quiq::Terminal|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Terminal.pod> - Ein- und Ausgabe aufs Terminal
+
+=item *
+
+L<Quiq::Test::Class|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Test/Class.pod> - Basisklasse für Testklassen
+
+=item *
+
+L<Quiq::Test::Class::Method|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Test/Class/Method.pod> - Testmethode
+
+=item *
+
+L<Quiq::Time|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Time.pod> - Klasse zur Repräsentation von Datum und Uhrzeit
+
+=item *
+
+L<Quiq::Time::RFC822|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Time/RFC822.pod> - Erzeuge Zeitangabe nach RFC 822
+
+=item *
+
+L<Quiq::TimeLapse::Directory|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/TimeLapse/Directory.pod> - Bildsequenz-Verzeichnis
+
+=item *
+
+L<Quiq::TimeLapse::File|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/TimeLapse/File.pod> - Bildsequenz-Datei
+
+=item *
+
+L<Quiq::TimeLapse::Filename|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/TimeLapse/Filename.pod> - Bildsequenz-Dateiname
+
+=item *
+
+L<Quiq::TimeLapse::RangeDef|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/TimeLapse/RangeDef.pod> - Range-Definitionen
+
+=item *
+
+L<Quiq::TimeLapse::Sequence|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/TimeLapse/Sequence.pod> - Bildsequenz
+
+=item *
+
+L<Quiq::Timeseries::Synchronizer|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Timeseries/Synchronizer.pod> - Rasterung/Synchronisation von Zeitreihen
+
+=item *
+
+L<Quiq::TreeFormatter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/TreeFormatter.pod> - Erzeugung von Baumdarstellungen
+
+=item *
+
+L<Quiq::Udl|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Udl.pod> - Universal Database Locator
+
+=item *
+
+L<Quiq::Unindent|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Unindent.pod> - Entferne Einrückung von "Here Document" oder String-Literal
+
+=item *
+
+L<Quiq::Url|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Url.pod> - URL Klasse
+
+=item *
+
+L<Quiq::XTerm|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/XTerm.pod> - XTerminal Fenster
+
+=item *
+
+L<Quiq::Xml::LibXml|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Xml/LibXml.pod> - Funktionale Erweiterungen von XML::LibXML
+
+=back
+
+=head1 DOCUMENTS
+
+=over 4
+
+=item *
+
+L<Quiq-Sdoc-Manual|https://github.com/s31tz/Quiq/tree/master/doc/pod/Quiq-Sdoc-Manual.pod> - Sdoc Handbuch
+
+=back
+
+=head1 INSTALLATION
+
+    $ cpanm Quiq
+
+=head1 VERSION
+
+1.130
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+

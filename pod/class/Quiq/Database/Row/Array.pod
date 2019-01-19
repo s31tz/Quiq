@@ -1,0 +1,104 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Database::Row::Array - Datensatz als Array
+
+=head1 BASE CLASS
+
+L<Quiq::Database::Row|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/Row.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert einen Datensatz mit
+einer einfachen Array-Repräsentation.
+
+Das Objekt ist eine Liste von Attributwerten, es besitzt
+keine weitere Information über Titel, Datensatz-Status usw.
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Konstruktor
+
+=head4 Synopsis
+
+    $row = $class->new(\@values);
+    $row = $class->new(\@titles,\@values);
+
+=head4 Description
+
+Instantiiere ein Datensatz-Array-Objekt mit den Kolumnenwerten
+@values und liefere eine Referenz auf dieses Objekt zurück.
+
+Beim einparametrigen Aufruf wird @values einfach auf die
+Klasse geblesst.
+
+Der zweiparametrige Aufruf ist der normierte Aufruf, mit dem
+$cur->fetch() Datensatzobjekte instantiiert. In dem Fall
+kopieren wir das Array, da DBI das Array wiederbenutzt
+(readonly-Array).
+
+=head2 Common
+
+=head3 asArray() - Liefere Datensatz als Array
+
+=head4 Synopsis
+
+    $arr|@arr = $row->asArray;
+
+=head4 Description
+
+Liefere den Datensatz als Array, entweder in Form einer Referenz
+(Skalarkontext) oder als Array von Werten (Listkontext).
+
+Da der Datensatz bereits ein Array ist, scheint die Methode
+überflüssig. Sie existiert jedoch, damit Object-Rows und
+Array-Rows einheitlich behandelt werden können.
+
+=head3 asString() - Liefere Datensatz als Zeichenkette
+
+=head4 Synopsis
+
+    $str = $row->asString;
+    $str = $row->asString($colSep);
+
+=head4 Description
+
+Liefere den Datensatz als Zeichenkette. Per Default werden die Kolumnen
+per TAB getrennt. Der Trenner kann mittels $colSep explizit angegeben
+werden.
+
+=head3 copy() - Kopiere Datensatz
+
+=head4 Synopsis
+
+    $newRow = $row->copy;
+
+=head3 isRaw() - Liefere, ob Klasse Raw-Datensätze repräsentiert
+
+=head4 Synopsis
+
+    $bool = $row->isRaw;
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Database/Row/Array.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

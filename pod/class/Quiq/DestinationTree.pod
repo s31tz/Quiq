@@ -1,0 +1,344 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::DestinationTree - Verwalte Zielbaum eines Datei-Generators
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 SYNOPSIS
+
+    use Quiq::DestinationTree;
+    
+    $dt = Quiq::DestinationTree->(@dirs);
+    ...
+    # Dateien und Verzeichnisse erzeugen
+    $dt->addFile($file,$content);
+    $dt->addDir($dir);
+    ...
+    # Überzählige Dateien und Verzeichnisse entfernen
+    $dt->cleanup;
+
+=head1 DESCRIPTION
+
+Die Klasse verwaltet die Dateien und Unterverzeichnisse von
+einem oder mehreren Zielverzeichnissen. Sie ist für Dateigeneratoren
+gedacht, die den Inhalt ihrer Zielverzeichnisse komplett
+kontrollieren.
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Konstruktor
+
+=head4 Synopsis
+
+    $tree = $class->new(@dirs,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -cleanup => $bool (Default: 0)
+
+Entferne alle Dateien und Verzeichnisse, die generiert wurden.
+
+Diese Option ist für ein "make clean" nützlich. Im Unterschied
+zu einem $tree->cleanup() direkt nach Objektinstantiierung,
+werden hierbei Dateien, die mit -writeInitially=>1 erzeugt wurden,
+nur dann gelöscht, wenn sie nicht modifiziert wurden. Wurden
+sie modifiziert, bleiben sie erhalten.
+
+=item -dryRun => $bool (Default: 0)
+
+Ändere nichts, zeige die Operationen nur an.
+
+=item -exclude => $regex (Default: keiner)
+
+Schließe alle Dateien, die Regex $regex erfüllen von der Betrachtung
+aus. D.h. diese werden vom Nutzer der Klasse nicht verwaltet (weder
+erzeugt noch entfernt).
+
+=item -files => \@files (Default: [])
+
+Liste von Einzeldateien. Beispiel:
+
+    -files=>[glob '*_1.sql'],
+
+=item -force => $bool (Default: 0)
+
+Forciere das Schreiben aller Dateien, auch wenn ihr Inhalt nicht
+differiert.
+
+=item -include => $regex (Default: keiner)
+
+Berücksichtige nur Dateien, die Regex $regex erfüllen, alle anderen
+werden von der Klasse nicht verwaltet (weder erzeugt noch entfernt).
+
+=item -inHandle => $fh (Default: \*STDIN)
+
+Filehandle, von der Benutzereingaben gelesen werden.
+
+=item -language => 'de'|'en' (Default: 'de')
+
+Sprache für die Kommunikation mit dem Benutzer.
+
+=item -prefix => $str (Default: '')
+
+Setze Zeichenkette $str an den Anfang jeder Änderungsmeldung.
+Beispiel: C<< -prefix=>'* ' >>
+
+=item -quiet => $bool (Default: 0)
+
+Schreibe keine Meldungen nach STDERR.
+
+=item -outHandle => $fh (Default: \*STDOUT)
+
+Filehandle, auf die Ausgaben geschrieben werden.
+
+=back
+
+=head4 Description
+
+Instantiiere ein Dateibaumobjekt über den Verzeichnissen @dirs
+und liefere eine Referenz auf dieses Objekt zurück. Die Verzeichnisse
+in @dirs müssen nicht existieren. Hat ein Verzeichnis die Form
+"DIR/*" wird nicht rekursiv in DIR abgestiegen, sondern nur
+die Dateien (nicht die Verzeichnisse) in DIR werden verwaltet.
+
+=head2 Objektmethoden
+
+=head3 addDir() - Füge Verzeichnis zum Dateibaum hinzu
+
+=head4 Synopsis
+
+    $bool = $tree->addDir($dir);
+
+=head4 Description
+
+Füge Verzeichnis $dir zum Dateibaum hinzu. Die Methode liefert 1, wenn
+das Verzeichnis effektiv erzeugt wurde (s.u.)  oder 0, wenn dies nicht
+der Fall war.
+
+Das Verzeichnis wird effektiv nur erzeugt, wenn es noch nicht
+existiert. In dem Fall schreibt die Methode eine entsprechende Meldung
+auf den Ausgabekanal und liefert als Returnwert 1.
+
+Der Rückgabewert kann benutzt werden, um im Falle der
+Verzeichniserzeugung weitere Aktionen auszuführen, wie z.B. das Setzen
+von Verzeichnisrechten.
+
+=head3 paths() - Liefere die Liste der Pfade
+
+=head4 Synopsis
+
+    @paths | $pathA = $tree->paths;
+
+=head4 Description
+
+Liefere die Liste der Pfade, die zu den Zielverzeichnissen gehören.
+
+=over 2
+
+=item *
+
+Die Reihenfolge ist undefiniert.
+
+=item *
+
+Die Liste enthält sowohl Verzeichnisse also auch Dateien.
+
+=back
+
+Sortierung herstellen:
+
+    @paths = sort $tree->paths;
+
+Nur Dateien erhalten:
+
+    @paths = grep {!-d} $tree->paths;
+
+=head3 addFile() - Füge Datei zum Dateibaum hinzu
+
+=head4 Synopsis
+
+    $bool = $tree->addFile($file,$data,@opt);
+    $bool = $tree->addFile($file,\$data,@opt);
+    $bool = $tree->addFile($file,@opt);
+    $bool = $tree->addFile($file,
+        -generate=>$bool,
+        -onGenerate=>sub {
+            ...
+            return $data;
+        },
+        @opt
+    );
+
+=head4 Options
+
+=over 4
+
+=item -encoding => $encoding (Default: undef)
+
+Encodiere/decodiere die Daten mit Encoding $encoding.
+
+=item -force => $bool (Default: 0)
+
+Forciere das Schreiben der Datei ohne den Dateiinhalt zu vergleichen.
+Die Option ist nützlich, wenn der Aufrufer bereits festgestellt hat,
+dass eine Differenz besteht.
+
+=item -generate => $bool (Default: 0)
+
+Rufe die onGenerate-Subroutine auf, um den Dateiinhalt zu generieren.
+
+=item -onGenerate => sub { ... } (Default: undef)
+
+Die Subroutine generiert und liefert den Inhalt der Datei. Sie wird
+aufgerufen, wenn Argument $data nicht definiert ist und die Datei
+nicht existiert oder Option -generate I<wahr> ist.
+
+=item -onUpdate => sub { ... } (Default: undef)
+
+Führe Subroutine aus, I<bevor> Datei $file geschrieben wird.
+
+=item -quiet => $bool (Default: 0)
+
+Unterdrücke Ausgabe der Meldung.
+
+=item -skipEmptyFiles => $bool
+
+Übergehe Dateien mit leerem Inhalt.
+
+=item -writeInitially => $bool (Default: 0)
+
+Schreibe Datei nur, wenn sie nicht existiert.
+
+Diese Option ist nützlich, wenn von einer Datei ein anfängliches
+Muster erzeugt werden soll, das anschließend manuell bearbeitet werden
+kann. Die manuell bearbeitete Datei soll danach natürlich nicht mehr
+vom Muster überschieben werden.
+
+=back
+
+=head4 Description
+
+Füge Datei $file mit dem Inhalt $data zum Dateibaum hinzu. Die
+Methode liefert 0, wenn die Datei nicht geschrieben wurde,
+1, wenn die Datei existiert hat und geschrieben wurde, 2, wenn
+die Datei neu erzeugt wurde.
+
+Ist $data C<undef> wird die Datei nicht geschrieben, bleibt
+aber weiter bestehen. Dies ist nützlich, wenn es teuer ist, den Inhalt
+der Datei zu generieren, und bekannt ist, dass sich am Inhalt nichts
+geändert hat.
+
+Die Datei wird effektiv geschrieben, wenn sie nicht existiert oder der
+Inhalt differiert. In dem Fall schreibt die Methode eine entsprechende
+Meldung nach STDERR und liefert als Returnwert 1.
+
+Der Rückgabewert kann benutzt werden, um im Falle des Schreibens
+der Datei weitere Aktionen auszuführen, wie z.B. das Setzen von
+Dateirechten.
+
+=head3 obsoletePaths() - Liste der überzähligen Pfade
+
+=head4 Synopsis
+
+    @arr | $arr = $tree->obsoletePaths;
+
+=head4 Description
+
+Die Pfade werden lexikalisch absteigend sortiert, so dass der
+Inhalt eines Verzeichnisses typischerweise vor dem Verzeichnis
+kommt. Dies ist aber nicht garantiert, da Punkt "." und Bindestrich
+"-" vor dem Verzeichnistrenner "/" kommen.
+
+=head3 removePath() - Lösche Datei oder Verzeichnis aus Baum
+
+=head4 Synopsis
+
+    $bool = $tree->removePath($path);
+
+=head4 Description
+
+Lösche Datei oder Verzeichnis $path aus dem Zielbaum. Liefere 1, wenn
+die Löschung durchgeführt wurde, andernfalls 0.
+
+Im Falle eines Verzeichnisses wird die Löschung nur durchgeführt, wenn
+das Verzeichnis leer ist. Dateien werden grundsätzlich gelöscht.
+
+=head3 cleanup() - Entferne überzählige Pfade aus dem Zielbaum
+
+=head4 Synopsis
+
+    $n|@paths = $tree->cleanup;
+    $n|@paths = $tree->cleanup($ask);
+    $n|@paths = $tree->cleanup($ask,\$timer);
+
+=head4 Returns
+
+Anzahl oder Liste der gelöschten Pfade (Skalarkontext/Arraykontext)
+
+=head4 Description
+
+Entferne alle Dateien und Verzeichnisse aus dem Zielbaum, die obsolet
+geworden sind, die seit Objekt-Instantiierung also nicht via
+$tree->addFile() oder $tree->addDir() angelegt wurden.
+
+Ist der Parameter $ask angegeben und wahr, wird vor der Löschung
+eine Rückfrage auf STDERR gestellt, ob die Löschung wirklich erfolgen
+soll. Wird diese nicht mit 'y' beantwortet (auf STDIN), findet
+kein Löschen statt und die Methode liefert 0.
+
+Ist ferner der Parameter $timer angegeben, wird die Antwortzeit
+des Benutzers auf dessen Wert aufaddiert.
+
+=head3 close() - Schließe Zielbaumvergleich ab
+
+=head4 Synopsis
+
+    $dt->close;
+
+=head4 Description
+
+Schließe Zielbaumvergeleich ab. Nach Aufruf kann die Objektreferenz
+nicht mehr verwendet werden. Die Methode liefert keinen Wert zurück.
+
+=head3 getText() - Liefere Übersetzung
+
+=head4 Synopsis
+
+    $text = $tree->getText($textDe);
+
+=head4 Returns
+
+Übersetzten Text (String)
+
+=head4 Description
+
+Liefere die Übersetzung zum deutschen Text $textDe.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/DestinationTree.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

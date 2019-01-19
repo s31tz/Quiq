@@ -1,0 +1,129 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Fibu::BankbuchungListe - Liste von Buchungen von einem Postbank-Konto
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Bankbuchungslisten-Objekt
+
+=head4 Synopsis
+
+    $bbl = $class->new($line);
+
+=head4 Arguments
+
+=over 4
+
+=item $line
+
+Titelzeile einer Postbank CSV-Datei.
+
+=back
+
+=head4 Description
+
+Instantiiere ein Bankbuchungslisten-Objekt aus der Titelzeile
+$line und liefere eine Referenz auf dieses Objekt zurück.
+
+=head2 Klassenmethoden
+
+=head3 splitLine() - Zelege CSV-Zeile in ihre Bestandteile
+
+=head4 Synopsis
+
+    $arr = $class->splitLine($line);
+
+=head4 Arguments
+
+=over 4
+
+=item $line
+
+Zeile der CSV-Datei.
+
+=back
+
+=head4 Returns
+
+Liste der Kolumnenwerte (Referenz auf Array)
+
+=head2 Objektmethoden
+
+=head3 anfangssaldoLesbar() - Liefere den Anfangsstand des Kontos
+
+=head4 Synopsis
+
+    $betrag = $bbl->anfangssaldoLesbar;
+
+=head4 Returns
+
+Betrag (String)
+
+=head3 append() - Füge Bankbuchungsobjekt hinzu
+
+=head4 Synopsis
+
+    $bbu = $bbl->append($line);
+
+=head4 Arguments
+
+=over 4
+
+=item $line
+
+Datenzeile einer Postbank CSV-Datei.
+
+=back
+
+=head4 Returns
+
+Liste der Kolumnenwerte (Referenz auf Array)
+
+=head3 entries() - Liefere Liste der Bankbuchungen
+
+=head4 Synopsis
+
+    @entries | $entryA = $bbl->entries;
+
+=head4 Returns
+
+Liste der Bankbuchungen (Array, im Skalarkontext Referenz auf Array)
+
+=head3 summe() - Liefere den Saldo des Kontos
+
+=head4 Synopsis
+
+    $betrag = $bbl->summe;
+
+=head4 Returns
+
+Betrag (String)
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Fibu/BankbuchungListe.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

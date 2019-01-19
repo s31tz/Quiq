@@ -1,0 +1,385 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::AsciiTable - ASCII-Tabelle parsen
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert eine Tabelle, die in Form
+eines ASCII-Texts gegeben ist. Diese Darstellung wird an den
+Konstruktor übergeben, von diesem geparst und inhaltlich
+analysiert. Die Klasse stellt Methoden zur Verfügung, um die
+Eigenschaften der Tabelle abzufragen.
+
+=head2 Aufbau einer ASCII-Tabelle
+
+Eine ASCII-Tabelle hat den allgemeinen Aufbau:
+
+    Right Left Center
+    ----- ---- ------
+        1 A      A
+       21 AB    AB
+      321 ABC   ABC
+     4321 ABCD  ABCD
+
+Die Tabelle besteht aus einem Tabellen-Kopf und einem
+Tabellen-Körper. Der Kopf enthält die Kolumnen-Titel und der
+Körper die Kolumnen-Daten. Die beiden Bereiche werden durch eine
+Trennzeile aus Bindestrichen (-) und Leerzeichen ( )
+getrennt. Außer der Trennung in Kopf und Körper definiert die
+Trennzeile durch die Bindestriche die Anzahl, Lage und
+Breite der einzelnen Kolumnen.
+
+Obige Tabelle besitzt z.B. drei Kolumnen: Die erste Kolumne ist 5
+Zeichen breit und reicht von Zeichenposition 0 bis 4. Die zweite
+Kolumne ist 4 Zeichen breit und reicht von Zeichenposition
+6 bis 9. Die dritte Kolumne ist 6 Zeichen breit und reicht von
+Zeichenpostion 11 bis 16. Die Positionsangaben sind zeilenbezogen
+und 0-basiert.
+
+Aus der Anordnung der Werte in einer Kolumne - I<sowohl im Kopf als
+auch im Körper> - ergibt sich, ob die Kolumne links, rechts oder
+zentriert ausgerichtet ist. Bei einer links ausgerichteten
+Kolumne belegen I<alle> (nichtleeren) Werte die erste Zeichenpositon.
+Bei einer rechts ausgerichteten Kolumne belegen I<alle> (nichtleeren)
+Werte die letzte Zeichenpositon. Bei einer zentrierten Kolumne
+sind die Werte weder eindeutig links noch rechts ausgerichtet.
+
+Der Tabellen-Kopf, also die Titel, können mehrzeilig sein:
+
+    Right Left
+
+    Aligned Aligned Centered
+    ------- ------- --------
+          1 A          A
+         21 AB         AB
+        321 ABC        ABC
+       4321 ABCD      ABCD
+
+Die Titel sind optional, können also auch fehlen:
+
+    ----- ---- ------
+        1 A      A
+       21 AB    AB
+      321 ABC   ABC
+     4321 ABCD  ABCD
+
+Die Kolumnenwerte können mehrzeilig sein:
+
+    Right   Left
+
+    Aligned   Aligned          Centered
+    -------   --------------   --------
+          1   This is             A
+              the first row
+    
+          2   Second row          B
+    
+          3   The third           C
+              row
+
+Bei einer Tabelle mit mehrzeiligen Kolumnenwerten werden die
+Zeilen durch Trennzeilen getrennt, gleichgültig, ob die einzelne
+Zeile einen mehrzeiligen Kolumnenwert enhält oder nicht (siehe
+Zeile 2). Die Trennzeile kann eine einfache Leerzeile sein oder
+Bindestriche enthalten wie die Trennzeile zwischen Tabellen-Kopf
+und -Körper:
+
+    Right   Left
+
+    Aligned   Aligned          Centered
+    -------   --------------   --------
+          1   This is             A
+              the first line
+    -------   --------------   --------
+          2   Second line         B
+    -------   --------------   --------
+          3   The third           C
+              line
+    -------   --------------   --------
+
+Generell gilt ferner:
+
+=over 2
+
+=item *
+
+Ist die Tabelle eingerückt, wird diese Einrückung entfernt. Die
+Einrückung muss aus Leerzeichen bestehen.
+
+=item *
+
+Leerzeien oberhalb und unterhalb der Tabelle werden entfernt.
+
+=back
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+    $tab = $class->new($str);
+
+=head4 Arguments
+
+=over 4
+
+=item $str
+
+Zeichenkette mit ASCII-Tabelle.
+
+=back
+
+=head4 Returns
+
+Tabellen-Objekt
+
+=head4 Description
+
+Instantiiere ein Tabellen-Objekt und liefere eine Referenz auf
+dieses Objekt zurück.
+
+=head2 Eigenschaften
+
+=head3 alignments() - Ausrichtung der Kolumnenwerte
+
+=head4 Synopsis
+
+    @align | $alignA = $tab->alignments;
+    @align | $alignA = $tab->alignments($domain);
+
+=head4 Arguments
+
+=over 4
+
+=item $domain (Default: 'latex')
+
+Legt die gelieferte Wertemenge fest.
+
+=over 4
+
+=item 'latex'
+
+Gelieferte Werte: 'l', 'r', 'c'.
+
+=item 'html'
+
+Gelieferte Werte: 'left', 'right', 'center'.
+
+=back
+
+=back
+
+=head4 Returns
+
+Liste der Kolumnenausrichtungen. Im Skalarkontext liefere eine
+Referenz auf die Liste.
+
+=head4 Description
+
+Liefere die Liste der Kolumnenausrichtungen der Domäne $domain.
+Mögliche Ausrichtungen:
+
+=over 2
+
+=item *
+
+Zentriert (centered).
+
+=item *
+
+Rechtsbündig (right aligned).
+
+=item *
+
+Linksbündig (left aligned).
+
+=back
+
+=head4 Example
+
+Tabelle:
+
+    Right Left    Centered
+
+    Aligned Aligned  Header
+    ------- ------- --------
+          1 A          A
+         21 AB         AB
+        321 ABC        ABC
+
+Resultat:
+
+    @align = $tab->alignments;
+    # ('r','l','c')
+
+=head3 multiLine() - Tabelle ist MultiLine-Tabelle
+
+=head4 Synopsis
+
+    $bool = $tab->multiLine;
+
+=head4 Returns
+
+Boolean
+
+=head4 Description
+
+Liefere 1, wenn die Tabelle eine MultiLine-Tabelle ist, andernfalls 0.
+
+=head4 Example
+
+Tabelle:
+
+    Right Left    Centered
+
+    Aligned Aligned  Header
+    ------- ------- --------
+          1 Erste       A
+            Zeile
+    
+          2 Zweite      B
+            Zeile
+    
+          3 Dritte      C
+            Zeile
+
+Resultat:
+
+    $multiLine = $tab->multiLine;
+    # 1
+
+=head3 rows() - Liste der Zeilen
+
+=head4 Synopsis
+
+    @rows | $rowA = $tab->rows;
+
+=head4 Returns
+
+Liste der Zeilen. Im Skalarkontext liefere eine Referenz auf die
+Liste.
+
+=head4 Example
+
+Tabelle:
+
+    Right Left    Centered
+
+    Aligned Aligned  Header
+    ------- ------- --------
+          1 A          A
+         21 AB         AB
+        321 ABC        ABC
+
+Resultat:
+
+    @rows = $tab->rows;
+    # (['1',  'A',  'A'],
+    #  ['21', 'AB', 'AB'],
+    #  ['321','ABC','ABC'])
+
+=head3 titles() - Liste der Kolumnentitel
+
+=head4 Synopsis
+
+    @titles | $titleA = $tab->titles;
+
+=head4 Returns
+
+Liste der Kolumnentitel. Im Skalarkontext liefere eine Referenz
+auf die Liste.
+
+=head4 Example
+
+Tabelle:
+
+    Right Left    Centered
+
+    Aligned Aligned  Header
+    ------- ------- --------
+          1 A          A
+         21 AB         AB
+        321 ABC        ABC
+
+Resultat:
+
+    @titles = $tab->titles;
+    # ("Right\nAligned","Left\nAligned","Centered\nHeader")
+
+=head3 width() - Anzahl der Kolumnen
+
+=head4 Synopsis
+
+    $n = $tab->width;
+
+=head4 Returns
+
+Kolumnenanzahl (Integer > 0)
+
+=head4 Description
+
+Liefere die Anzahl der Kolumnen der Tabelle.
+
+=head4 Example
+
+Tabelle:
+
+    Right Left    Centered
+
+    Aligned Aligned  Header
+    ------- ------- --------
+          1 A          A
+         21 AB         AB
+        321 ABC        ABC
+
+Resultat:
+
+    $n = $tab->width;
+    # 3
+
+=head2 Formate
+
+=head3 asText() - Liefere ASCII-Tabelle
+
+=head4 Synopsis
+
+    $str = $class->asText;
+
+=head4 Returns
+
+ASCII-Tabelle (String)
+
+=head4 Description
+
+Liefere die Tabelle als Zeichenkette, wie sie dem Konstruktor
+übergeben wurde, jedoch ohne Einrückung.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/AsciiTable.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

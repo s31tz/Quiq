@@ -1,0 +1,436 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::TimeLapse::Directory - Bildsequenz-Verzeichnis
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 SYNOPSIS
+
+    # Klasse laden
+    use Quiq::TimeLapse::Directory;
+    
+    # Instantiiere Verzeichnis-Objekt
+    $tdr = Quiq::TimeLapse::Directory->new('/my/image/dir');
+    
+    # Anzahl der enthaltenen Bilder
+    $n = $tdr->count;
+    
+    # Niedrigste Bildnummer
+    $n = $tdr->minNumber;
+    
+    # Höchste Bildnummer
+    $n = $tdr->maxNumber;
+    
+    # alle Bilder (des Verzeichnisses oder aus range.def, wenn definiert)
+    @images = $tdr->images;
+    
+    # Bilder eines Nummernbereichs
+    
+    @images = $tdr->images('113-234');
+    @images = $tdr->images('290-');
+    @images = $tdr->images('422');
+    
+    # Bilder zu einem Bezeichner aus range.def
+    @images = $tdr->images('autofahrt');
+    
+    # Alle Bilder des Verzeichnisses
+    @images = $tdr->images('all');
+    
+    # Alle Bilder aus range.def (leer, wenn range.def nicht existiert)
+    @images = $tdr->images('used');
+    
+    # Alle Bilder des Verzeichnisses, die nicht range.def vorkommen
+    # (leer, wenn range.def nicht existiert)
+    @images = $tdr->images('unused');
+    
+    # Lookup eines Bildes
+    $img = $tdr->image(422); # liefert undef, wenn nicht existent
+    
+    # Liefere das Objekt mit den Range- und Clip-Definitionen. Über
+    # dieses Objekt können die Bildfolgen von Ranges und Clips gezielt
+    # abgerufen werden. Details siehe Quiq::TimeLapse::RangeDef
+    $trd = $tdr->rangeDef;
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert ein Verzeichnis, das eine
+geordnete Liste von Bildern enthält, ggf. verteilt über mehrere
+Unterverzeichnisse. Die Bilder können einzeln über ihre Bildnummer
+oder als Bildfolge über die Angabe eines Nummern-Bereichs oder
+eines Range- oder Clip-Bezeichners (definiert in der Datei
+range.def) abgefragt werden.
+
+Mit der Liste von Bildern kann eine Bildfolge
+(Quiq::TimeLapse::Sequence) instantiiert werden, aus welcher
+u.a. ein Video generiert werden kann. Siehe die Doku dieser Klasse.
+
+=head1 ATTRIBUTES
+
+=over 4
+
+=item dir
+
+Pfad des Verzeichnisses.
+
+=item imageA
+
+Array der Bilddatei-Objekte des Verzeichnisses, nach Bildnummer
+sortiert.
+
+=item imageH
+
+Hash der Bilddatei-Objekte, mit Bildnummer als Schlüssel.
+
+=item rangeDef
+
+Referenz auf das Rangedatei-Objekt. Die Referenz wird beim ersten
+Zugriff zugewiesen. Existiert die Datei range.def nicht, wird eine
+Exception geworfen.
+
+=back
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Bildverzeichnis-Objekt
+
+=head4 Synopsis
+
+    $tdr = $class->new($dir);
+
+=head4 Arguments
+
+=over 4
+
+=item $dir
+
+Wurzelverzeichnis.
+
+=back
+
+=head4 Returns
+
+Referenz auf Bildverzeichnis-Objekt
+
+=head4 Description
+
+Instantiiere ein Bildverzeichnis-Objekt aus den Bildern in der
+Verzeichnisstruktur $dir und liefere eine Referenz auf dieses
+Objekt zurück. Die Verzeichnisstuktur wird per find() nach
+Bilddateien durchsucht und kann daher beliebig tief verschachtelt
+sein.
+
+=head2 Akzessoren
+
+=head3 dir() - Pfad des Zeitraffer-Verzeichnisses
+
+=head4 Synopsis
+
+    $path = $tdr->dir;
+    $path = $tdr->dir($subPath);
+
+=head4 Description
+
+Liefere den Pfad des Zeitraffer-Verzeichnisses. Ist Zeichenkette
+$subPath angegeben, wird diese mit '/' getrennt an den Pfad
+angefügt.
+
+=head2 Objektmethoden
+
+=head3 count() - Anzahl aller Bilder
+
+=head4 Synopsis
+
+    $n = $tdr->count;
+
+=head4 Returns
+
+Integer >= 0
+
+=head4 Description
+
+Liefere die Anzahl der im Zeitraffer-Verzeichnis enthaltenen Bilder.
+
+=head3 minNumber() - Niedrigste Bildnummer
+
+=head4 Synopsis
+
+    $n = $tdr->minNumber;
+
+=head4 Returns
+
+Integer >= 0
+
+=head4 Description
+
+Liefere die niedrigste Bildnummer. Die niedrigste Bildnummer ist
+die Nummer des ersten Bildes. Ist die Liste leer, liefere 0.
+
+=head3 maxNumber() - Höchste Bildnummer
+
+=head4 Synopsis
+
+    $n = $tdr->maxNumber;
+
+=head4 Returns
+
+Integer >= 0
+
+=head4 Description
+
+Liefere die höchste Bildnummer. Die höchste Bildnummer ist die
+Nummer des letzten Bildes. Ist die Liste leer, liefere 0.
+
+=head2 Bildnummern
+
+=head3 numbers() - Bildnummern-Ausdruck zu Bildnummern-Liste
+
+=head4 Synopsis
+
+    @numbers|$numberA = $tdr->numbers($expr);
+
+=head4 Returns
+
+Liste von Bildnummern (Integer). Im Skalarkontext eine Referenz
+auf die Liste.
+
+=head4 Description
+
+Liefere die Liste der Bildnummern zu Bildnummern-Ausdruck $expr.
+
+=head3 resolveFunctionExpression() - Wende Funktion an
+
+=head4 Synopsis
+
+    $str = $tdr->resolveFunctionExpression($name,$args);
+
+=head4 Returns
+
+Zeichenkette
+
+=head4 Description
+
+Wende Funktion $func auf seine Argumente $args an und liefere die
+resultierende Zeichenkette (Bildnummern-Aufzählung) zurück.
+
+=head3 resolveIdentifier() - Wert eines Clip- oder Range-Bezeichners
+
+=head4 Synopsis
+
+    $str = $tdr->resolveIdentifier($key);
+
+=head4 Returns
+
+Zeichenkette
+
+=head4 Description
+
+Liefere den Wert des Bezeichners $key.
+
+=head3 resolveRange() - Löse Bildnummern-Bereichsangabe auf
+
+=head4 Synopsis
+
+    $str = $tdr->resolveRange($n,$m);
+
+=head4 Returns
+
+Aufzählung von Bildnummern als Zeichenkette
+
+=head4 Description
+
+Überführe eine Bildnummern-Bereichsangabe ("N-M") in eine
+Nummern-Aufzählung ("N ... M").
+
+=head2 Bilddateien
+
+=head3 images() - Folge von Bilddatei-Objekten
+
+=head4 Synopsis
+
+    @images|$imageA = $tdr->images;
+    @images|$imageA = $tdr->images($expr);
+
+=head4 Arguments
+
+=over 4
+
+=item $expr
+
+Bildfolgen-Ausdruck.
+
+=back
+
+=head4 Returns
+
+Liste von Bilddatei-Objekten. Im Skalarkontext liefere eine
+Referenz auf die Liste.
+
+=head4 Description
+
+Liefere eine Folge von Bilddatei-Objekten gemäß
+Bildfolgen-Ausdruck $expr. Ist kein Bildfolgen-Ausdruck angegeben,
+liefere alle Bilddatei-Objekte. Ist eine Range-Datei definiert,
+bedeutet "alle", alle I<genutzten> Bilder (= 'used'), ansonsten
+ausnahmslos alle Bilder des Zeitraffer-Verzeichnisses (= 'all').
+
+Die Methode cached ihre Ergebnisse, so dass jede Bildfolge nur
+einmal bestimmt wird.
+
+=head3 image() - Lookup Bilddatei-Objekt nach Bild-Nummer
+
+=head4 Synopsis
+
+    $img = $tdr->image($n);
+
+=head4 Arguments
+
+=over 4
+
+=item $n
+
+Bild-Nummer
+
+=back
+
+=head4 Returns
+
+Bild-Objekt oder C<undef>.
+
+=head4 Description
+
+Liefere das Bild-Objekt mit Bild-Nummer $n. Existiert keine
+Bild-Objekt mit Nummer $n, liefere undef.
+
+=head2 Operationen
+
+=head3 importImages() - Importiere Bilddateien in Zeitraffer-Verzeichnis
+
+=head4 Synopsis
+
+    $class->importImages($dir,$srcDir);
+
+=head4 Arguments
+
+=over 4
+
+=item $dir
+
+Zeitraffer-Verzeichnis, in das importiert wird.
+
+=item $srcDir
+
+Quell-Verzeichnisstruktur mit den Bildern, die importiert werden.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -reorganize => $bool (Default: 0)
+
+Rufe Methode reorganize()
+
+=item -sort => 'name'|'mtime' (Default: 'name')
+
+Sortierung der Bilddateien vor dem Import. Entweder nach Name
+('name') oder nach letzter Änderung und sekundär Name
+('mtime'). Letzeres ist beim Import von GoPro-Bildern wichtig.
+
+=item -subDir => $subPath (Default: undef)
+
+Importiere die Bilder in das Zeitraffer-Subverzeichnis $subPath.
+Existiert das Verzeichnis nicht, wird es angelegt.
+
+=item -verbose => $bool (Default: 1)
+
+Gibt Laufzeitinformation auf STDOUT aus.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head4 Description
+
+Füge die Bilddateien aus Verzeichnisstruktur $srcDir zum
+Zeitraffer-Verzeichnis $dir hinzu.
+
+=head3 reorganize() - Reorganisiere Bilddateien
+
+=head4 Synopsis
+
+    $class->reorganize($dir,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $dir
+
+Pfad zum Zeitraffer-Verzeichnis.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -dryRun => $bool (Default: 0)
+
+Zeige Änderungen, führe sie aber nicht aus.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head4 Description
+
+Reorganisiere die Bilddateien des Zeitraffer-Verzeichnisses,
+indem sie nach ihrer Bildnummer auf Unterverzeichnisse mit
+je 500 Bilddateien verteilt werden.
+
+Es wird die Unterverzeichnisstruktur angelegt
+
+    000001  (für Bilder mit Bildnummer 1 bis Bildnummer 500)
+    000501  (Bildnummer 501 bis 1000)
+    001001  (Bildnummer 1001 bis 1500)
+    usw.
+
+und die Bilder in ihr Verzeichnis bewegt. Befindet sich eine Bilddatei
+bereits im richtigen Verzeichnis, wird sie nicht bewegt.
+
+Anschließend werden leere Verzeichnisse gelöscht.
+
+Die Operation kann wiederholt angewendet werden, an einem bereits
+reorganisierten Verzeichnis wird keine Änderung vorgenommen.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/TimeLapse/Directory.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

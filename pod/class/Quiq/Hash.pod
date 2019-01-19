@@ -1,0 +1,776 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Hash - Zugriffssicherer Hash mit automatisch generierten Attributmethoden
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 SYNOPSIS
+
+Klasse laden:
+
+    use Quiq::Hash;
+
+Hash-Objekt instantiieren:
+
+    my $h = Quiq::Hash->new(a=>1,b=>1,c=>3);
+
+Werte abfragen oder setzen:
+
+    my $v = $h->get('a'); # oder: $v = $h->{'a'};
+    $h->set(b=>2);        # oder: $h->{'b'} = 2;
+
+Unerlaubte Zugriffe:
+
+    $v = $h->get('d');    # Exception!
+    $h->set(d=>4);        # Exception!
+
+Erlaubte Zugriffe;
+
+    $v = $h->try('d');    # undef
+    $h->add(d=>4);
+
+=head1 DESCRIPTION
+
+Ein Objekt dieser Klasse repräsentiert einen I<zugriffssicheren> Hash,
+d.h. einen Hash, dessen Schlüsselvorrat bei der Instantiierung
+festgelegt wird. Ein lesender oder schreibender Zugriff mit einem
+Schlüssel, der nicht zum Schlüsselvorrat gehört, ist nicht erlaubt
+und führt zu einer Exception.
+
+Der Zugriffsschutz beruht auf der Funktionalität des
+L<Restricted Hash|http://perldoc.perl.org/Hash/Util.html#Restricted-hash>.
+
+Abgesehen vom Zugriffsschutz verhält sich ein Hash-Objekt der
+Klasse wie einer normaler Perl-Hash und kann auch so angesprochen
+werden.  Bei den Methoden ist der konventionelle Zugriff als
+C<Alternative Formulierung> angegeben.
+
+=head1 METHODS
+
+=head2 Instantiierung
+
+=head3 new() - Instantiiere Hash
+
+=head4 Synopsis
+
+    $h = $class->new;                       # [1]
+    $h = $class->new(@keyVal);              # [2]
+    $h = $class->new(\@keys,\@vals[,$val]); # [3]
+    $h = $class->new(\@keys[,$val]);        # [4]
+    $h = $class->new(\%hash);               # [5]
+
+=head4 Description
+
+Instantiiere ein Hash-Objekt, setze die Schlüssel/Wert-Paare
+und liefere eine Referenz auf dieses Objekt zurück.
+
+=over 4
+
+=item [1]
+
+Leerer Hash.
+
+=item [2]
+
+Die Argumentliste ist eine Aufzählung von Schlüssel/Wert-Paaren.
+
+=item [3]
+
+Schlüssel und Werte befinden sich in getrennten Arrays.
+Ist ein Wert C<undef>, wird $val gesetzt, falls angegeben.
+
+=item [4]
+
+Nur die Schlüssel sind angegeben. Ist $val angegeben, werden
+alle Werte auf diesen Wert gesetzt. Ist $val nicht angegeben,
+werden alle Werte auf C<undef> gesetzt.
+
+=item [5]
+
+Blesse den Hash %hash auf Klasse $class.
+
+=back
+
+=head3 fabricate() - Instantiiere Hash für Klasse
+
+=head4 Synopsis
+
+    $h = $class->fabricate($subClass,...);
+
+=head4 Description
+
+Wie new(), nur dass der Hash als Instanz der Subklasse $subClass
+erzeugt wird. Die Subklasse wird on-the-fly erzeugt, falls sie noch
+nicht existiert.
+
+=head2 Akzessor-Methoden
+
+=head3 get() - Werte abfragen
+
+=head4 Synopsis
+
+    $val = $h->get($key);
+    @vals = $h->get(@keys);
+
+=head4 Description
+
+Liefere die Werte zu den angegebenen Schlüsseln. In skalarem Kontext
+liefere keine Liste, sondern den Wert des ersten Schlüssels.
+
+Alternative Formulierung:
+
+    $val = $h->{$key};    # ein Schlüssel
+    @vals = @{$h}{@keys}; # mehrere Schlüssel
+
+=head3 getRef() - Referenz auf Wert
+
+=head4 Synopsis
+
+    $valS = $h->getRef($key);
+
+=head4 Description
+
+Liefere nicht den Wert zum Schlüssel $key, sondern eine Referenz auf
+den Wert.
+
+Dies kann praktisch sein, wenn der Wert manipuliert werden soll. Die
+Manipulation kann dann über die Referenz erfolgen und der Wert muss
+nicht erneut zugewiesen werden.
+
+Alternative Formulierung:
+
+    $valS = \$h->{$key};
+
+=head4 Example
+
+Newline an Wert anhängen mit getRef():
+
+    $valS = $h->getRef('x');
+    $$valS .= "\n";
+
+Dasselbe ohne getRef():
+
+    $val = $h->get('x');
+    $val .= "\n";
+    $val->set(x=>$val);
+
+=head3 getArray() - Liefere Array
+
+=head4 Synopsis
+
+    @arr|$arr = $h->getArray($key);
+
+=head4 Description
+
+Liefere die Liste von Werten des Schlüssels $key. Im Skalarkontext
+liefere eine Referenz auf die Liste (der Aufruf hat dann die gleiche
+Wirkung wie der Aufruf von $h->L</get>()). Der Wert von $key muss
+eine Array-Referenz sein.
+
+=head3 try() - Werte abfragen ohne Exception
+
+=head4 Synopsis
+
+    $val = $h->try($key);
+    @vals = $h->try(@keys);
+
+=head4 Description
+
+Wie L</get>(), nur dass im Falle eines unerlaubten Schlüssels
+keine Exception geworfen, sondern C<undef> geliefert wird.
+
+=head3 set() - Setze Schlüssel/Wert-Paare
+
+=head4 Synopsis
+
+    $h->set(@keyVal);
+
+=head4 Description
+
+Setze die angegebenen Schlüssel/Wert-Paare.
+
+Alternative Formulierung:
+
+    $h->{$key} = $val;    # ein Schlüssel/Wert-Paar
+    @{$h}{@keys} = @vals; # mehrere Schlüssel/Wert-Paare
+
+=head3 add() -  Setze Schlüssel/Wert-Paare ohne Exception
+
+=head4 Synopsis
+
+    $val = $h->add($key=>$val);
+    @vals = $h->add(@keyVal);
+
+=head4 Description
+
+Wie L</set>(), nur dass im Falle eines unerlaubten Schlüssels keine
+Exception generiert, sondern der Hash um das Schlüssel/Wert-Paar
+erweitert wird.
+
+=head3 memoize() - Cache Wert auf berechnetem Attribut
+
+=head4 Synopsis
+
+    $val = $h->memoize($key,$sub);
+
+=head4 Description
+
+Besitzt das Attribut $key einen Wert, liefere ihn. Andernfalls
+berechne den Wert mittels der Subroutine $sub und cache ihn
+auf dem Attribut.
+
+Die Methode ist nützlich, um in Objektmethoden eingebettet zu werden,
+die einen berechneten Wert liefern, der nicht immer wieder neu
+gerechnet werden soll.
+
+Alternative Formulierungen:
+
+    $val = $h->{$key} //= $h->$sub($key);
+
+oder
+
+    $val = $h->{$key} //= do {
+        # Implementierung der Subroutine
+    };
+
+=head3 memoizeWeaken() - Cache schwache Referenz auf berechnetem Attribut
+
+=head4 Synopsis
+
+    $ref = $h->memoizeWeaken($key,$sub);
+
+=head4 Description
+
+Wie memozize(), nur dass $sub eine Referenz liefert, die
+von der Methode automatisch zu einer schwachen Referenz gemacht wird.
+
+Bei nicht-existenter Referenz kann die Methode $sub einen Leerstring
+liefern. Dieser wird auf C<undef> abgebildet.
+
+=head3 compute() - Wende Subroutine auf Schlüssel/Wert-Paar an
+
+=head4 Synopsis
+
+    $val = $h->compute($key,$sub);
+
+=head4 Description
+
+Wende Subroutine $sub auf den Wert des Schlüssels $key an. Die
+Subroutine hat die Struktur:
+
+    sub {
+        my ($h,$key) = @_;
+        ...
+        return $val;
+    }
+
+Der Rückgabewert der Subroutine wird an Schlüssel $key zugewiesen.
+
+=head4 Example
+
+Methode L</increment>() mit apply() realisiert:
+
+    $val = $h->compute($key,sub {
+        my ($h,$key) = @_;
+        return $h->{$key}+1; # nicht $h->{$key}++!
+    });
+
+=head2 Automatische Akzessor-Methoden
+
+=head3 AUTOLOAD() - Erzeuge Akzessor-Methode
+
+=head4 Synopsis
+
+    $val = $h->AUTOLOAD;
+    $val = $h->AUTOLOAD($val);
+
+=head4 Description
+
+Erzeuge eine Akzessor-Methode für eine Hash-Komponente. Die Methode
+AUTOLOAD() wird für jede Hash-Komponente einmal aufgerufen.
+Danach gehen alle Aufrufe für die Komponente direkt an die erzeugte
+Akzessor-Methode.
+
+Die Methode AUTOLOAD() erweitert ihre Klasse um automatisch
+generierte Akzessor-Methoden. D.h. für jede Komponente des Hash
+wird bei Bedarf eine Methode erzeugt, durch die der Wert der
+Komponente manipuliert werden kann. Dadurch ist es möglich, die
+Manipulation von Attributen ohne Programmieraufwand nahtlos
+in die Methodenschnittstelle einer Klasse zu integrieren.
+
+Gegenüberstellung:
+
+    Hash-Zugriff           get()/set()               Methoden-Zugriff
+    --------------------   -----------------------   --------------------
+    $name = $h->{'name'}   $name = $h->get('name')   $name = $h->name;
+    $h->{'name'} = $name   $h->set(name=>$name)      $h->name($name)
+
+In der letzten Spalte ("Methoden-Zugriff") steht die Syntax der
+automatisch generierten Akzessor-Methoden.
+
+Die Erzeugung einer Akzessor-Methode erfolgt (vom Aufrufer unbemerkt)
+beim ersten Aufruf. Danach wird die Methode unmittelbar aufgerufen.
+
+Der Zugriff über eine automatisch generierte Attributmethode ist ca. 30%
+schneller als über $h->L</get>().
+
+=head2 Schlüssel
+
+=head3 keys() - Liste der Schlüssel
+
+=head4 Synopsis
+
+    @keys|$keyA = $h->keys;
+
+=head4 Description
+
+Liefere die Liste aller Schlüssel. Die Liste ist unsortiert.
+Im Skalarkontext liefere eine Referenz auf die Liste.
+
+Die Reihenfolge der Schlüssel ist undefiniert.
+
+Alternative Formulierung:
+
+    @keys = keys %$h;
+
+=head3 hashSize() - Anzahl der Schlüssel
+
+=head4 Synopsis
+
+    $n = $h->hashSize;
+
+=head4 Description
+
+Liefere die Anzahl der Schlüssel/Wert-Paare des Hash.
+
+Alternative Formulierung:
+
+    $n = keys %$h;
+
+=head3 validate() - Überprüfe Hash-Schlüssel
+
+=head4 Synopsis
+
+    $class->validate(\%hash,\@keys);
+    $class->validate(\%hash,\%keys);
+
+=head4 Description
+
+Prüfe die Schlüssel des Hash %hash gegen die Schlüssel in Array
+@keys bzw. Hash %keys. Enthält %hash einen Schlüssel, der nicht in
+@keys bzw. %keys vorkommt, wird eine Exception geworfen.
+
+=head2 Kopieren
+
+=head3 copy() - Kopiere Hash
+
+=head4 Synopsis
+
+    $h2 = $h->copy;
+    $h2 = $h->copy(@keyVal);
+
+=head4 Description
+
+Kopiere Hash, d.h. instantiiere einen neuen Hash mit den
+gleichen Schlüssel/Wert-Paaren. Es wird I<nicht> rekursiv kopiert,
+sondern eine "shallow copy" erzeugt.
+
+Sind Schlüssel/Wert-Paare @keyVal angegeben, werden
+diese nach dem Kopieren per L</set>() auf dem neuen Hash gesetzt.
+
+=head3 join() - Füge Hash hinzu
+
+=head4 Synopsis
+
+    $h = $h->join(\%hash);
+
+=head4 Returns
+
+Hash (für Method Chaining)
+
+=head4 Description
+
+Überschreibe die Schlüssel/Wert-Paare in Hash $h mit den
+Schlüssel/Wert-Paaren aus Hash %hash. Schlüssel/Wert-Paare
+in Hash $h, die in Hash %hash nicht vorkommen, bleiben bestehen.
+Enthält %hash einen Schlüssel, der in $h nicht vorkommt, wird eine
+Exception geworfen.
+
+=head4 Example
+
+Ein Hash-Objekt mit vorgegebenen Attributen aus einem anoymen Hash
+erzeugen. Der anonyme Hash darf weniger, aber nicht mehr Attribute
+enthalten:
+
+    $h = Quiq::Hash->new([qw/
+        name
+        label
+        width
+        height
+    /])->join(\%hash);
+
+=head2 Löschen
+
+=head3 delete() - Entferne Schlüssel/Wert-Paare
+
+=head4 Synopsis
+
+    $h->delete(@keys);
+
+=head4 Description
+
+Entferne die Schlüssel @keys (und ihre Werte) aus dem Hash. An der Menge
+der zulässigen Schlüssel ändert sich dadurch nichts!
+
+Alternative Formulierung:
+
+    delete $h->{$key};   # einzelner Schlüssel
+    delete @{$h}{@keys}; # mehrere Schlüssel
+
+=head3 clear() - Leere Hash
+
+=head4 Synopsis
+
+    $h->clear;
+
+=head4 Description
+
+Leere Hash, d.h. entferne alle Schlüssel/Wert-Paare.
+
+Alternative Formulierung:
+
+    %$h = ();
+
+=head2 Tests
+
+=head3 exists() - Prüfe Schlüssel auf Existenz
+
+=head4 Synopsis
+
+    $bool = $h->exists($key);
+
+=head4 Description
+
+Prüfe, ob der angegebene Schlüssel im Hash existiert. Wenn ja,
+liefere I<wahr>, andernfalls I<falsch>.
+
+Alternative Formulierung:
+
+    $bool = exists $self->{$key};
+
+=head3 defined() - Prüfe Wert auf Existenz
+
+=head4 Synopsis
+
+    $bool = $h->defined($key);
+
+=head4 Description
+
+Prüfe, ob der angegebene Schlüssel im Hash einen Wert hat. Wenn ja,
+liefere I<wahr>, andernfalls I<falsch>.
+
+Alternative Formulierung:
+
+    $bool = defined $h->{$key};
+
+=head3 isEmpty() - Prüfe auf leeren Hash
+
+=head4 Synopsis
+
+    $bool = $h->isEmpty;
+
+=head4 Description
+
+Prüfe, ob der Hash leer ist. Wenn ja, liefere I<wahr>,
+andernfalls I<falsch>.
+
+Alternative Formulierung:
+
+    $bool = %$h;
+
+=head2 Sperren
+
+=head3 isLocked() - Prüfe, ob Hash gesperrt ist
+
+=head4 Synopsis
+
+    $bool = $h->isLocked;
+
+=head4 Description
+
+Prüfe, ob der Hash gelockt ist. Wenn ja, liefere I<wahr>,
+andernfalls I<falsch>.
+
+=head3 lockKeys() - Sperre Hash
+
+=head4 Synopsis
+
+    $h = $h->lockKeys;
+
+=head4 Description
+
+Sperre den Hash. Anschließend kann kein weiterer Schlüssel zugegriffen
+werden. Wird dies versucht, wird eine Exception geworfen.
+
+Alternative Formulierung:
+
+    Hash::Util::lock_keys(%$h);
+
+Die Methode liefert eine Referenz auf den Hash zurück.
+
+=head3 unlockKeys() - Entsperre Hash
+
+=head4 Synopsis
+
+    $h = $h->unlockKeys;
+
+=head4 Description
+
+Entsperre den Hash. Anschließend kann der Hash uneingeschränkt
+manipuliert werden. Die Methode liefert eine Referenz auf den Hash
+zurück. Damit kann der Hash gleich nach der Instantiierung
+entsperrt werden:
+
+    return Quiq::Hash->new(...)->unlockKeys;
+
+Alternative Formulierung:
+
+    Hash::Util::unlock_keys(%$h);
+
+=head2 Sonstiges
+
+=head3 arraySize() - Größe des referenzierten Arrays
+
+=head4 Synopsis
+
+    $n = $h->arraySize($key);
+
+=head3 push() - Füge Werte zu Arraykomponente hinzu
+
+=head4 Synopsis
+
+    $h->push($key,@values);
+
+=head4 Arguments
+
+=over 4
+
+=item $key
+
+Arraykomponente.
+
+=item @values
+
+Werte, die zum Array hinzugefügt werden.
+
+=back
+
+=head4 Description
+
+Füge Werte @values zur Arraykomponente $key hinzu. Die Methode
+liefert keinen Wert zurück.
+
+=head3 unshift() - Füge Element am Anfang zu Arraykomponente hinzu
+
+=head4 Synopsis
+
+    $h->unshift($key,$val);
+
+=head4 Arguments
+
+=over 4
+
+=item $key
+
+Arraykomponente.
+
+=item $val
+
+Wert, der zum Array hinzugefügt wird.
+
+=back
+
+=head4 Description
+
+Füge Wert $val am Anfang zur Arraykomponente $key hinzu. Die
+Methode liefert keinen Wert zurück.
+
+=head3 increment() - Inkrementiere (Integer-)Wert
+
+=head4 Synopsis
+
+    $n = $h->increment($key);
+
+=head4 Description
+
+Inkrementiere (Integer-)Wert zu Schlüssel $key und liefere das
+Resultat zurück.
+
+Alternative Formulierung:
+
+    $n = ++$h->{$key};
+
+=head3 addNumber() - Addiere numerischen Wert
+
+=head4 Synopsis
+
+    $y = $h->addNumber($key,$x);
+
+=head4 Description
+
+Addiere numerischen Wert $x zum Wert des Schlüssels $key hinzu und
+liefere das Resultat zurück.
+
+Alternative Formulierung:
+
+    $y = $h->{$key} += $x;
+
+=head3 weaken() - Erzeuge schwache Referenz
+
+=head4 Synopsis
+
+    $ref = $h->weaken($key);
+    $ref = $h->weaken($key=>$ref);
+
+=head4 Description
+
+Mache die Referenz von Schlüssel $key zu einer schwachen Referenz
+und liefere sie zurück. Ist eine Referenz $ref als Parameter angegeben,
+setze die Referenz zuvor.
+
+=head2 Interna
+
+=head3 buckets() - Ermittele Bucket-Anzahl
+
+=head4 Synopsis
+
+    $n = $h->buckets;
+
+=head4 Description
+
+Liefere die Anzahl der Hash-Buckets.
+
+=head3 bucketsUsed() - Anzahl der genutzten Buckets
+
+=head4 Synopsis
+
+    $n = $h->bucketsUsed;
+
+=head4 Description
+
+Liefere die Anzahl der genutzten Hash-Buckets.
+
+=head3 getCount() - Anzahl der get-Aufrufe
+
+=head4 Synopsis
+
+    $n = $this->getCount;
+
+=head4 Description
+
+Liefere die Anzahl der get-Aufrufe seit Start des Programms.
+
+=head3 setCount() - Anzahl der set-Aufrufe
+
+=head4 Synopsis
+
+    $n = $this->setCount;
+
+=head4 Description
+
+Liefere die Anzahl der set-Aufrufe seit Start des Programms.
+
+=head1 DETAILS
+
+=head2 Benchmark
+
+Anzahl Zugriffe pro CPU-Sekunde im Vergleich zwischen verschiedenen
+Zugriffsmethoden:
+
+    A - Hash: $h->{$k}
+    B - Hash: eval{$h->{$k}}
+    C - Restricted Hash: $h->{$k}
+    D - Restricted Hash: eval{$h->{$k}}
+    E - Quiq::Hash: $h->{$k}
+    F - Quiq::Hash: $h->get($k)
+    
+           Rate    F    D    B    E    C    A
+    F 1401111/s   -- -71% -74% -82% -83% -84%
+    D 4879104/s 248%   --  -8% -37% -40% -44%
+    B 5297295/s 278%   9%   -- -32% -35% -39%
+    E 7803910/s 457%  60%  47%   --  -4% -11%
+    C 8104988/s 478%  66%  53%   4%   --  -7%
+    A 8745272/s 524%  79%  65%  12%   8%   --
+
+Den Hash via $h->L</get>() zuzugreifen (F) ist ca. 85% langsamer
+als der einfachste Hash-Lookup (A). Wird auf den Methodenaufruf
+verzichtet und per $h->{$key} zugegriffen (E), ist der Zugriff nur
+11% langsamer. Es ist also ratsam, intern per $h->{$key}
+zuzugreifen. Per $h->get() können immerhin 1.400.000 Lookups pro
+CPU-Sekunde ausgeführt werden. Bei nicht-zugriffsintensiven
+Anwendungen ist das sicherlich schnell genug.  Die Anzahl der
+Aufrufe von $h->get() und $h->set() wird intern gezählt und kann
+per $class->L</getCount>() und $class->L</setCount>() abgefragt
+werden.
+
+Das Benchmark-Programm (bench-hash):
+
+    #!/usr/bin/env perl
+    
+    use strict;
+    use warnings;
+    
+    use Benchmark;
+    use Hash::Util;
+    use Quiq::Hash;
+    
+    my $h1 = {0=>'a',1=>'b',2=>'c',3=>'d',4=>'e',5=>'f'};
+    my $h2 = Hash::Util::lock_ref_keys({0=>'a',1=>'b',2=>'c',3=>'d',4=>'e',5=>'f'});
+    my $h3 = Quiq::Hash->new({0=>'a',1=>'b',2=>'c',3=>'d',4=>'e',5=>'f'});
+    
+    my $i = 0;
+    Benchmark::cmpthese(-10,{
+        A=>sub {
+            $h1->{$i++%5};
+        },
+        B=>sub {
+            eval{$h1->{$i++%5}};
+        },
+        C=>sub {
+            $h2->{$i++%5};
+        },
+        D=>sub {
+            eval{$h2->{$i++%5}};
+        },
+        E=>sub {
+            $h3->{$i++%5};
+        },
+        F=>sub {
+            $h3->get($i++%5);
+        },
+    });
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Hash.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

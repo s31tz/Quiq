@@ -1,0 +1,165 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Database::Api::Dbi::Cursor - DBI Datenbank-Cursor
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert einen DBI-Datenbank-Cursor.
+
+=head1 ATTRIBUTES
+
+=over 4
+
+=item sth => $sth
+
+DBI Statement-Handle.
+
+=item bindVars => $n
+
+Anzahl an Bind-Variablen, die im Statement enthalten sind. Ist
+die Anzahl größer 0, handelt es sich um einen Bind-Cursor.
+
+=item titles => \@titles
+
+Array der Kolumentitel. Ist das Array nicht leer, handelt es
+sich um einen Select-Cursor.
+
+=item hits => $n
+
+Anzahl der getroffenen Datensätze.
+
+=item id => $id
+
+Id nach INSERT in Tabelle mit AUTOINCREMENT-Kolumne (MySQL, SQLite)
+
+=back
+
+=head1 METHODS
+
+=head2 Konstruktor/Destruktor
+
+=head3 new() - Instantiiere Cursor
+
+=head4 Synopsis
+
+    $cur = $class->new(@keyVal);
+
+=head4 Description
+
+Instantiiere ein Cursor-Objekt mit den Attributen @keyVal
+und liefere dieses zurück.
+
+=head3 destroy() - Schließe Cursor
+
+=head4 Synopsis
+
+    $cur->destroy;
+
+=head4 Description
+
+Schließe Cursor. Die Objektreferenz ist anschließend ungültig.
+Die Methode liefert keinen Wert zurück.
+
+=head2 Akzessoren
+
+=head3 bindVars() - Liefere die Anzahl der Bind-Variablen
+
+=head4 Synopsis
+
+    $n = $cur->bindVars;
+
+=head4 Description
+
+Liefere die Anzahl der Bind-Variablen, die im SQL-Statement enthalten
+waren.
+
+=head3 bindTypes() - Setze/Liefere Datentypen der Bind-Variablen
+
+=head4 Synopsis
+
+    @arr|$arr = $cur->bindTypes(@dataTypes);
+    @arr|$arr = $cur->bindTypes;
+
+=head3 hits() - Liefere die Anzahl der getroffenen Datensätze
+
+=head4 Synopsis
+
+    $n = $cur->hits;
+
+=head4 Description
+
+Liefere die Anzahl der Datesätze, die bei der Ausführung des
+Statement getroffen wurden. Im Falle einer Selektion ist dies die
+Anzahl der (bislang) gelesenen Datensätze.
+
+=head3 id() - Liefere die Id des eingefügten Datensatzes
+
+=head4 Synopsis
+
+    $id = $cur->id;
+
+=head3 titles() - Liefere eine Referenz auf Liste der Kolumnentitel
+
+=head4 Synopsis
+
+    $titlesA = $cur->titles;
+
+=head2 Objektmethoden
+
+=head3 bind() - Führe Bind-Statement aus
+
+=head4 Synopsis
+
+    $cur = $cur->bind(@vals);
+
+=head4 Description
+
+Führe Bind-Statement aus und liefere einen (neuen) Cursor über
+das Resultat der Statement-Ausführung zurück.
+
+=head3 fetch() - Liefere den nächsten Datensatz
+
+=head4 Synopsis
+
+    $row = $cur->fetch;
+
+=head4 Description
+
+Liefere eine Referenz auf den nächsten Datensatz der Ergebnismenge.
+Ist das Ende der Ergebnismenge erreicht, liefere undef.
+
+Der Datensatz ist ein Array mit den Kolumnenwerten.
+
+Bei DBI liefert jeder Aufruf dieselbe Referenz, so dass das Array vom
+Aufrufer normalerweise kopiert werden muss.
+
+Nullwerte werden durch einen Leerstring repräsentiert.
+Da DBI einen Nullwert durch undef repräsentiert, nimmt die
+Methode eine Abbildung von undef auf '' vor.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Database/Api/Dbi/Cursor.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

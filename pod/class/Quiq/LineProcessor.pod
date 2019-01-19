@@ -1,0 +1,206 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::LineProcessor - Verarbeite Datei als Array von Zeilen
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert eine Datei als ein Array von
+Zeilen. Die Zeilen sind ihrerseits Objekte (per Default Objekte
+der Klasse Quiq::LineProcessor::Line). Die Klasse stellt
+Methoden zur Manipulation des Arrays von Zeilen zur Verfügung.
+
+=head2 Fehlerbehandlung
+
+Für eine Fehlerbehandlung können die Methoden $par->input()
+und $line->number() genutzt werden:
+
+    $class->throw(
+        q~SDOC-00001: K\{} and k\{} are not supported anymore~,
+        Input => ''.$par->input,
+        Line => $line->number,
+    );
+
+produziert (z.B.)
+
+    Exception:
+        SDOC-00001: K{} and k{} is not supported anymore
+    Input:
+        /tmp/test.sdoc
+    Line:
+        20
+    Stacktrace:
+        ...
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Textdatei-Objekt
+
+=head4 Synopsis
+
+    $par = $class->new($file,@opt);
+    $par = $class->new(\$str,@opt);
+    $par = $class->new(\@lines,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -lineClass => $class (Default: 'Quiq::LineProcessor::Line')
+
+Klasse, auf die die Zeilen des Dokuments geblesst werden.
+
+=item -lineContinuation => $type (Default: undef)
+
+Art der Zeilenfortsetzung. Mögliche Werte:
+
+=over 4
+
+=item undef
+
+Keine Zeilenfortsetzung.
+
+=item 'backslash'
+
+Endet eine Zeile mit einem Backslash, entferne Whitespace am
+Anfang der Folgezeile und füge den Rest zur Zeile hinzu.
+
+Dies kann für eine Zeile unterdrückt werden, indem der Backslash am
+Ende der Zeile durch einen davorgestellten Backslash maskiert wird.
+In dem Fall wird statt einer Fortsetzung der Zeile der maskierende
+Backslash entfernt.
+
+=item 'whitespace'
+
+Beginnt eine Zeile mit einem oder mehreren Leerzeichen oder TABs, wird
+sie zur vorhergehenden Zeile hinzugefügt. Die Leerzeichen und TABs am
+Zeilenanfang werden entfernt. Die Teile werden mit \n als Trenner
+zusammengefügt.
+
+=back
+
+=item -skip => $regex (Default: undef)
+
+Überlies Zeilen, die Regex $regex erfüllen.
+
+=back
+
+=head4 Description
+
+Instantiiere ein Dokument-Objekt aus Datei $file, aus Text
+$text oder aus den Zeilen @lines und liefere eine Referenz
+auf dieses Objekt zurück.
+
+=head2 Akzessoren
+
+=head3 input() - Bezeichnung Eingabequelle
+
+=head4 Synopsis
+
+    $input = $par->input;
+
+=head4 Description
+
+Liefere die Bezeichnung der Eingabequelle. Dies kann ein Dateiname
+oder eine stringifizierte String- oder Arrayreferenz sein.
+
+=head3 lineClass() - Zeilen-Klasse
+
+=head4 Synopsis
+
+    $lineClass = $par->lineClass;
+
+=head4 Description
+
+Liefere die Zeilen-Klasse.
+
+=head3 lines() - Liste der Zeilen
+
+=head4 Synopsis
+
+    @lines | $lineA = $par->lines(\@lines);
+
+=head4 Description
+
+Liefere die Liste der Zeilen der Datei. Im Skalarkontext liefere
+eine Referenz auf die Liste.
+
+=head2 Operationen
+
+=head3 shiftLine() - Entferne und liefere erste Zeile
+
+=head4 Synopsis
+
+    $line = $par->shiftLine;
+
+=head4 Description
+
+Entferne die erste Zeile aus dem Dokument und liefere diese zurück.
+
+=head3 shiftLineIfEq() - Entferne erste Zeile, wenn bestimmter Inhalt
+
+=head4 Synopsis
+
+    $line = $par->shiftLineIfEq($str);
+
+=head4 Description
+
+Entferne die erste Zeile aus dem Dokument und liefere diese zurück,
+sofern ihr Inhalt eq $str ist.
+
+=head3 removeEmptyLines() - Entferne Leerzeilen am Anfang
+
+=head4 Synopsis
+
+    $par->removeEmptyLines;
+
+=head4 Description
+
+Entferne Leerzeilen am Anfang. Die Methode liefert
+keinen Wert zurück.
+
+=head2 Externe Repräsentation
+
+=head3 dump() - Erzeuge externe Repräsentation
+
+=head4 Synopsis
+
+    $str = $par->dump($format);
+    $str = $par->dump;
+
+=head4 Description
+
+Erzeuge eine externe Dokumentrepräsentation in Format $format
+für das gesamte Dokument und liefere diese zurück.
+
+B<Formate>
+
+Siehe $ln->dump()
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/LineProcessor.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

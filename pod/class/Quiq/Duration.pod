@@ -1,0 +1,239 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Duration - Rechnen und Konvertieren von Zeiträumen
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert eine Zeitdauer, die intern als
+numerischer Wert (Sekunden mit Nachkommastellen) gespeichert wird.
+
+Als externe Repäsentation wird die Darstellung
+
+    DdHhMmS.Xs
+
+verwendet, wobei
+
+    D = Anzahl Tage
+    H = Anzahl Stunden
+    M = Anzahl Minuten
+    S = Anzahl Sekunden
+    X = Bruchteil einer Sekunde
+
+Es gelten folgende Eingenschaften:
+
+=over 2
+
+=item *
+
+führende Anteile bis auf Ss fehlen, wenn sie 0 sind
+
+=item *
+
+X fehlt, wenn 0
+
+=item *
+
+Ss erscheint immer, auch bei 0 Sekunden
+
+=item *
+
+die leere Zeichenkette ('') oder undef entspricht 0 Sekunden
+
+=item *
+
+der Sekundenanteil kann Nachkommastellen haben
+
+=back
+
+Bei der Instantiierung kann die Zeitdauer auch in Doppelpunkt-Notation
+übergeben werden:
+
+    D:H:M:S.X
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Konstruktor
+
+=head4 Synopsis
+
+    $dur = Quiq::Duration->new($sec);
+    $dur = Quiq::Duration->new($str);
+
+=head4 Description
+
+Instantiiere ein Zeitdauer-Objekt und liefere einen Referenz auf
+dieses Objekt zurück. Die Zeitdauer kann als numerischer Wert $sec
+oder als Zeichenkette $str angegeben werden. Die Zeichenkette
+kann auch in Doppelpunkt-Notation (D:H:M:S.X) angegeben sein.
+
+=head2 Objektmethoden
+
+=head3 asSeconds() - Dauer in Sekunden
+
+=head4 Synopsis
+
+    $sec = $dur->asSeconds;
+
+=head4 Description
+
+Liefere die Zeitdauer in Sekunden - sofern vorhanden,
+mit Nachkommastellen.
+
+=head3 asString() - Dauer als Zeichenkette
+
+=head4 Synopsis
+
+    $str = $dur->asString;
+    $str = $dur->asString($prec);
+
+=head4 Description
+
+Liefere die Zeitdauer als Zeichenkette in der Form DdHhMmS.Xs.
+
+=head3 asShortString() - Dauer als kürzestmögliche Zeichenkette
+
+=head4 Synopsis
+
+    $str = $dur->asShortString(@opt);
+
+=head4 Options
+
+=over 4
+
+=item -maxUnit => 'd'|'h'|'m'|'s' (Default: 'd')
+
+Größte dargestellte Einheit.
+
+=item -minUnit => 'd'|'h'|'m'|'s' (Default: 's')
+
+Kleinste dargestellte Einheit.
+
+=item -notBlank => $bool (Default: 0)
+
+Bei einer Zeit von 0 Sekunden wird ein Leerstring geliefert.
+Ist diese Option gesetzt, erfolgt immer eine Ausgabe -
+mit -minUnit als Einheit.
+
+=item -precision => $n (Default: 0)
+
+Anzahl der Sekunden-Nachkommastellen.
+
+=back
+
+=head4 Description
+
+Liefere die Zeitdauer als Zeichenkette der Form DdHhMmSs (per
+Default, siehe Option -maxUnit), wobei alle Anteile, die 0 sind,
+weggelassen werden, sowohl am Anfang als auch am Ende.
+
+=head3 asArray() - Dauer als Array
+
+=head4 Synopsis
+
+    @arr | $arr = $dur->asArray;
+
+=head4 Description
+
+Liefere die Dauer als Array mit den Komponenten
+($days,$hours,$minutes,$seconds).
+
+=head3 asFFmpegString() - Dauer als Parameter für ffmpeg-Option -t
+
+=head4 Synopsis
+
+    $str = $dur->asFFmpegString;
+
+=head4 Description
+
+Liefere Dauer in der Form wie sie ffmpeg bei der Option -t erwartet,
+also im Format
+
+    H:M:S.XXX
+
+=head3 stringToSeconds() - Wandele Zeitdauer-Angabe in Sekunden
+
+=head4 Synopsis
+
+    $sec = $this->stringToSeconds($str);
+
+=head4 Description
+
+Wandele Zeichenkette zur Bezeichnung einer Zeitdauer in die Anzahl
+Sekunden.
+
+=head4 Examples
+
+Zeitdauer-Zeichenkette bestehend aus Tagen, Stunden, Mintuten, Sekunden:
+
+    $sec = Quiq::Duration->stringToSeconds('152d5h25m3.457s');
+    # 13152303.457
+
+Dasselbe mit Doppelpunkt-Notation:
+
+    $sec = Quiq::Duration->stringToSeconds('152:5:25:3.457');
+    # 13152303.457
+
+=head3 secondsToString() - Wandele Sekunden in Zeitdauer-Zeichenkette
+
+=head4 Synopsis
+
+    $str = $this->secondsToString($sec,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $sec
+
+Anzahl Sekunden, ggf. mit Nachkommastellen.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item $prec (Default: 0)
+
+Anzahl der Nachkommastellen bei den Sekunden. Ist kein Wert angegeben,
+wird auf ganze Sekunden gerundet.
+
+=item $unit (Default: undef)
+
+Liefere String fester Breite ab Einheit $unit.
+
+=back
+
+=head4 Description
+
+Wandele Anzahl Sekunden in eine Zeichenkette zur Bezeichnung einer
+Zeitdauer.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Duration.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

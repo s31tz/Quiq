@@ -1,0 +1,291 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::TimeLapse::Sequence - Bildsequenz
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 SYNOPSIS
+
+    # Klasse laden
+    use %CLASS;
+    
+    # Instantiiere Sequence-Objekt
+    $tsq = Quiq::TimeLapse::Sequence->new(\@images);
+    
+    # Exportiere Bilddateien in Verzeichnis
+    $tsq->export($dir);
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Bildsequenz-Objekt
+
+=head4 Synopsis
+
+    $tsq = $class->new(\@images);
+
+=head4 Arguments
+
+=over 4
+
+=item @images
+
+Array von Bilddatei-Objekten
+
+=back
+
+=head4 Returns
+
+Referenz auf das Bildsequenz-Objekt
+
+=head4 Description
+
+Instantiiere Bildsequenz-Objekt aus den Bilddateien \@images und
+liefere eine Referenz auf dieses Objekt zurück.
+
+=head2 Objektmethoden
+
+=head3 count() - Anzahl der Bilder
+
+=head4 Synopsis
+
+    $n = $tsq->count;
+
+=head4 Returns
+
+Integer >= 0
+
+=head4 Description
+
+Liefere die Anzahl der in der Sequenz enthaltenen Bilddateien.
+
+=head3 duration() - Dauer der Bildsequenz
+
+=head4 Synopsis
+
+    $duration = $tsq->duration($framerate);
+
+=head4 Returns
+
+String
+
+=head4 Description
+
+Berechne die Dauer der Bildsequenz, wenn sie mit Framerate $framerate
+gerendert wird, und liefere das Ergebnis als Zeitdauer in
+dem Format C<HhMmS.XXXs> (drei Nachkommastellen).
+
+=head3 export() - Exportiere Bildsequenz
+
+=head4 Synopsis
+
+    $tsq->export($destDir);
+
+=head4 Arguments
+
+=over 4
+
+=item $destDir
+
+Pfad des Zielverzeichnisses.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head4 Description
+
+Exportiere die Bildsequenz nach Verzeichnis $destDir. Existiert
+$destDir nicht, wird es erzeugt. Existiert das Verzeichnis, wird
+die Bildsequenz angehängt.
+
+=head3 morph() - Exportiere Bildsequenz mit Zwischenbildern
+
+=head4 Synopsis
+
+    $tsq->morph($n,$destDir);
+
+=head4 Arguments
+
+=over 4
+
+=item $n
+
+Anzahl der Zwischenbilder.
+
+=item $destDir
+
+Pfad des Zielverzeichnisses.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head4 Description
+
+Exportiere die Bildsequenz nach Verzeichnis $destDir mit jeweils
+$n gemorphten Zwischenbildern. Existiert $destDir nicht, wird es
+erzeugt. Existiert das Verzeichnis, wird die Bildsequenz
+angehängt.
+
+=head3 generate() - Erzeuge Video
+
+=head4 Synopsis
+
+    $tsq->generate($file,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Die zu erzeugende Video-Datei, z.B. '2018-07-28-anreise.mp4'.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -dryRun => $bool (Default: 0)
+
+Zeige Änderungen, führe sie aber nicht aus.
+
+=item -endFrames => $sec (Default: 1)
+
+Dauer der am Ende des Clip hinzugefügten "Ende-Frames" in
+Sekunden.  Ist der Wert negativ, wird der Clip auf diese Dauer
+verlängert (ist der Clip länger, wird der Default genommen).  Die
+End-Frames verlängern den Clip bis zur vollen Sekunde plus $sec-1
+Sekunden. D.h. der Wert 1 füllt bis zur nächsten vollen Sekunde
+auf. Bei 0 werden keine End-Frames hinzugefügt (was nicht ratsam
+ist, da ffmpeg dann am Clip-Ende seltsame Ergebnisse produziert).
+
+=item -framerate => $n (Default: 8)
+
+Anzahl Bilder pro Sekunde.
+
+=item -preset => $preset (Default: 'ultrafast')
+
+Satz an vorgewählten Optionen, für Encoding-Zeit
+vs. Kompressionsrate. Schnellstes Encoding: 'ultrafast', beste
+Kompression: 'veryslow'. Siehe Quiq::FFmpeg, imagesToVideo().
+
+=item -size => "$width:$height" (Default: undef)
+
+Geometrie des erzeugten Videos.
+
+=item -videoBitrate => $bitrate (Default: 60_000)
+
+Video-Bitrate in kbit/s.
+
+=item -videoFramerate => $n (Default: 24)
+
+Framerate des Video.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head4 Description
+
+Erzeuge aus der Bildsequenz das Video $file.
+
+=head3 images() - Liste der Bilddatei-Objekte
+
+=head4 Synopsis
+
+    @images|$imageA = $tsq->images;
+
+=head4 Returns
+
+Liste Bilddatei-Objekte. Im Skalarkontext eine Referenz auf die Liste.
+
+=head4 Description
+
+Liefere die Liste der Bilddatei-Objekte der Sequenz.
+
+=head3 sha1() - Hash Digest der Sequenz
+
+=head4 Synopsis
+
+    $sha1 = $tsq->sha1(@keyVal);
+
+=head4 Returns
+
+SHA1 Digest
+
+=head4 Description
+
+Berechne den SHA1 Hash-Wert für die Sequenz und liefere diesen zurück.
+Der Hash-Wert wird gebildet über allen Bilddateien, derem Pfad,
+deren Größe und Änderungszeitpunkt.
+
+Anhand des SHA1 Hash-Werts läßt sich prüfen, ob eine Änderung an
+der Bildsequenz stattgefunden hat und eine teure Operation wie das
+(erneute) Rendern eines Video notwendig ist.
+
+=head2 Manipulation
+
+=head3 pick() - Reduziere auf jede n-te Bilddatei
+
+=head4 Synopsis
+
+    $tsq = $tsq->pick($n);
+
+=head4 Returns
+
+Bildsquenz-Objekt (für Chaining)
+
+=head4 Description
+
+Reduziere die Folge der Bilddatei-Objekte auf jedes n-te Element,
+d.h. entferne alle anderen
+
+=head3 reverse() - Kehre Folge der Bilddatei-Objekt um
+
+=head4 Synopsis
+
+    $tsq = $tsq->reverse;
+
+=head4 Returns
+
+Bildsquenz-Objekt (für Chaining)
+
+=head4 Description
+
+Kehre die Folge der Bilddatei-Objekte um, so dass das erste Bild zum
+letzten wird, das zweite zum vorletzten usw.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/TimeLapse/Sequence.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

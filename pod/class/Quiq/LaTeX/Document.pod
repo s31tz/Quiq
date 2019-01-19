@@ -1,0 +1,211 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::LaTeX::Document - Erzeuge LaTeX Dokument
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 SYNOPSIS
+
+Der Code
+
+    use Quiq::LaTeX::Document;
+    use Quiq::LaTeX::Code;
+    
+    my $l = Quiq::LaTeX::Code->new;
+    
+    my $doc = Quiq::LaTeX::Document->new(
+        body => 'Hallo Welt',
+    );
+    
+    my $code = $doc->latex($l);
+
+produziert
+
+    \documentclass[ngerman,a4paper]{scrartcl}
+    \usepackage[T1]{fontenc}
+    \usepackage{lmodern}
+    \usepackage[utf8]{inputenc}
+    \usepackage{babel}
+    \usepackage{geometry}
+    \usepackage{microtype}
+    \geometry{height=22.5cm,bottom=3.8cm}
+    \setlength{\parindent}{0em}
+    \setlength{\parskip}{0.5ex}
+    \begin{document}
+    Hallo Welt!
+    \end{document}
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere LaTeX Dokument-Objekt
+
+=head4 Synopsis
+
+    $doc = $class->new(@keyVal);
+
+=head4 Arguments
+
+=over 4
+
+=item author => $str
+
+Der Autor des Dokuments. Wenn gesetzt, wird eine Titelseite bzw.
+ein Titelabschnitt erzeugt.
+
+=item body => $str | \@arr (Default: '')
+
+Der Rumpf des Dokuments.
+
+=item compactCode => $bool (Default: 1)
+
+Erzeuge den LaTeX Code ohne zusätzliche Leerzeilen und Kommentare.
+
+=item date => $str
+
+Das Datum des Dokuments. Wenn gesetzt, wird eine Titelseite bzw.
+ein Titelabschnitt erzeugt. Formatelemente von strftime werden
+expandiert. Spezielle Werte:
+
+=over 4
+
+=item today
+
+Wird ersetzt zu C<\today>.
+
+=item now
+
+Wird expandiert zu C<YYYY-MM-DD HH:MI:SS>.
+
+=back
+
+=item documentClass => $documentClass (Default: 'scrartcl')
+
+Die Dokumentklasse.
+
+=item encoding => $encoding (Default: 'utf8')
+
+Das Input-Encoding.
+
+=item fontEncoding => $font (Default: 'T1')
+
+Das Font-Encoding.
+
+=item fontSize => $fontSize (Default: undef)
+
+Die Größe des Hauptfont. Mogliche Werte für die Standard LaTeX
+Dokumentklassen article etc.: '10pt', '11pt', '12pt'. Die
+KOMA-Script Klassen 'scrartcl' etc. erlauben weitere Fontgrößen.
+
+=item geometry => $str (Default: 'height=22.5cm,bottom=3.8cm' bei a4paper)
+
+Gegenüber der Grundeinstellung abweichende Seitenmaße.
+
+=item language => $language (Default: 'ngerman')
+
+Die Sprache, in der das Dokument verfasst ist.
+
+=item options => $str | \@arr
+
+Dukument-Optionen.
+
+=item packages => \@arr (Default: [])
+
+Liste der Packages, die zusätzlich geladen werden sollen.
+Die Elemente sind Schlüssel/Wert-Paare der Art:
+
+    $package => \@options
+
+=item paperSize => $paperSize (Default: 'a4paper')
+
+Die Größe des Papiers, die die das Dokument gesetzt wird.
+
+=item parIndent => $length (Default: undef)
+
+Tiefe der Absatzeinrückung.
+
+=item parSkip => $length (Default: undef)
+
+Vertikaler Abstand zwischen Absätzen.
+
+=item preamble => $str | \@arr (Default: '')
+
+Dokumentvorspann mit Definitionen.
+
+=item preComment => $str
+
+Kommentar am Dokumentanfang. Wir mit einer Leerzeile vom folgenden
+Code abgesetzt.
+
+=item secNumDepth => $n
+
+Tiefe, bis zu der Abschnitte numeriert werden. Default seitens
+LaTeX: 3. -2 schaltet die Numerierung ab.
+
+=item title => $str
+
+Der Titel des Dokuments. Wenn gesetzt, wird eine Titelseite bzw.
+ein Titelabschnitt erzeugt.
+
+=item titlePageStyle => $pageStyle
+
+Seitenstil der ersten Seite. Mögliche Werte: 'empty' (Kopf-
+und Fußzeile leer), 'plain' (nur Fuß mit Seitennummer), 'headings'
+(Kopf mit Abschnittstiteln, Fuß mit Seitennummer).
+
+=item tocDepth => $n
+
+Tiefe, bis zu der Abschnitte in das Inhaltsverzeichnis aufgenommen
+werden. Default seitens LaTeX: 3.
+
+=back
+
+=head4 Returns
+
+Dokument-Objekt
+
+=head4 Description
+
+Instantiiere ein LaTeX Dokument-Objekt und liefere eine Referenz
+auf dieses Objekt zurück.
+
+=head2 Objektmethoden
+
+=head3 latex() - Generiere LaTeX-Code
+
+=head4 Synopsis
+
+    $code = $doc->latex($l);
+    $code = $class->latex($l,@keyVal);
+
+=head4 Description
+
+Generiere den LaTeX-Code des Objekts und liefere diesen
+zurück. Als Klassenmethode gerufen, wird das Objekt intern erzeugt
+und mit den Attributen @keyVal instantiiert.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/LaTeX/Document.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

@@ -1,0 +1,194 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::OrderedHash - Hash mit geordneten Elementen
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert einen geordneten Hash. Ein
+geordneter Hash ist ein Hash, bei dem die Schlüssel/Wert-Paare
+eine definierte Reihenfolge haben. Initial ist dies die
+Hinzufügereihenfolge.
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Konstruktor
+
+=head4 Synopsis
+
+    $oh = $class->new(@keyVal);
+
+=head4 Description
+
+Instantiiere einen geordneten Hash, setze die betreffenden
+Schlüssel/Wert-Paare und liefere eine Referenz auf dieses Objekt
+zurück.
+
+=head2 Getter/Setter
+
+=head3 get() - Liefere Werte
+
+=head4 Synopsis
+
+    @arr|$val = $oh->get(@keys);
+
+=head4 Description
+
+Liefere die Liste der Werte zu den angebenen Schlüsseln. Ist kein
+Schlüssel angegeben, liefere alle Werte. In Skalarkontext liefere
+keine Liste, sondern den Wert des ersten Schlüssels.
+
+=head3 set() - Setze Schlüssel/Wert-Paare
+
+=head4 Synopsis
+
+    $oh->set(@keyVal);
+
+=head4 Returns
+
+nichts
+
+=head4 Description
+
+Setze die angegebenen Schlüssel/Wert-Paare.
+
+=head3 setDelete() - Setze bzw. lösche Schlüssel/Wert-Paare
+
+=head4 Synopsis
+
+    $oh->setDelete(@keyVal);
+
+=head4 Description
+
+Setze die angegebenen Schlüssel auf die angegebenen Werte. Wenn $val
+undef ist, lösche den betreffenden Schlüssel. Die Methode liefert
+keinen Wert zurück.
+
+=head2 Miscellaneous
+
+=head3 clear() - Lösche Inhalt und setze Schlüssel/Wert-Paare
+
+=head4 Synopsis
+
+    $obj->clear(@keyVal);
+
+=head4 Description
+
+Lösche Inhalt und setze Schlüssel/Wert-Paare. Ist kein
+Schlüssel/Wert-Paar angegeben, wird nur der Inhalt gelöscht.
+Die Methode liefert keinen Wert zurück.
+
+=head3 copy() - Kopiere Hash
+
+=head4 Synopsis
+
+    $oh2 = $oh->copy;
+
+=head4 Description
+
+Kopiere Hashobjekt und liefere eine Referenz auf die Kopie zurück.
+
+=head3 delete() - Lösche Schlüssel
+
+=head4 Synopsis
+
+    $oh->delete(@keys);
+
+=head4 Description
+
+Lösche die angegebenen Schlüssel. Die Methode liefert keinen Wert zurück.
+
+=head3 increment() - Inkrementiere Wert
+
+=head4 Synopsis
+
+    $n = $hash->increment($key);
+
+=head4 Description
+
+Inkrementiere Wert zu Schlüssel $key und liefere das Resultat zurück.
+
+=head3 keys() - Liefere die Liste aller Schlüssel
+
+=head4 Synopsis
+
+    @keys|$keys = $oh->keys;
+
+=head4 Description
+
+Liefere die Liste der Schlüssel des Hash. In skalarem Kontext
+liefere eine Referenz auf die Liste.
+
+=head3 hashSize() - Anzahl der Elemente
+
+=head4 Synopsis
+
+    $n = $oh->hashSize;
+
+=head4 Description
+
+Liefere die Anzahl der Elemente.
+
+=head3 unshift() - Setze Schlüssel/Wert-Paar an den Anfang
+
+=head4 Synopsis
+
+    $oh->unshift($key=>$val);
+
+=head4 Description
+
+Setze das angegebene Schlüssel/Wert-Paar, sofern der Schlüssel noch nicht
+existiert, an den Anfang. Existiert der Schlüssel, wird der Wert
+ersetzt. Die Methode liefert keinen Wert zurück.
+
+=head3 values() - Liefere die Liste der Werte
+
+=head4 Synopsis
+
+    @arr|$arr = $oh->values;
+
+=head4 Description
+
+Liefere die Liste der Werte in Schlüsselreihenfolge. In skalarem Kontext
+liefere eine Referenz auf die Liste.
+
+=head2 Test Methods
+
+=head3 exists() - Prüfe Existenz eines Schlüssels
+
+=head4 Synopsis
+
+    $oh->exists($key);
+
+=head4 Description
+
+Liefere "wahr", wenn der Hash den Schlüssel $key enthält,
+andernfalls "falsch".
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/OrderedHash.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

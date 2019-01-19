@@ -1,0 +1,758 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Section::Object - Abschnitts-Objekt
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert einen "Abschnitt". Abschnitte werden
+von C<< Quiq::Section::Parser >> geparst und instantiiert.
+
+Ein Abschnittsobjekt gibt Auskunft über den Inhalt des Abschnitts
+und dessen "Ort" (Dateiname und Zeilennummer). Das Objekt ist readonly,
+d.h. die Objekteigenschaften können gelesen aber nicht gesetzt werden.
+
+Abschnittsobjekte können in einer hierarchischen Beziehung stehen.
+Ein Abschnitts-Objekt kann Unter-Abschnitte haben.
+
+=head1 ATTRIBUTES
+
+=over 4
+
+=item [0] type
+
+Abschnitts-Bezeichner.
+
+=item [1] brackets
+
+Klammerung des Abschnittsbezeichners.
+
+=item [2] keyA
+
+Liste der Schlüssel.
+
+=item [3] keyValH
+
+Attribut-Hash.
+
+=item [4] content
+
+Inhalt des Abschnitts.
+
+=item [5] source
+
+Quelltext des Abschnitts.
+
+=item [6] file
+
+Name der Quelldatei.
+
+=item [7] line
+
+Zeilennummer in Quelldatei.
+
+=back
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Konstruktor
+
+=head4 Synopsis
+
+    $sec = $class->new($type,$keyValH);
+    $sec = $class->new($type,$keyValH,$keyA,$content,$source,$file,$line);
+
+=head4 Arguments
+
+=over 4
+
+=item $type
+
+Abschnitts-Typ einschließlich Klammern (sofern vorhanden).
+
+=item $keyValH
+
+Referenz auf Schlüssel/Wert-Hash.
+
+=item $keyA
+
+Referenz auf Schlüssel-Array.
+
+=item $content
+
+Inhalt.
+
+=item $source
+
+Quelltext des Abschnitts.
+
+=item $file
+
+Name der Datei, die den Abschnitt enthält. Im Falle von STDIN ist
+ist der Dateiname "-", im Falle einer In-Memory-Datei ist der
+Dateiname "C<(source)>".
+
+=item $line
+
+Zeilennummer, an der der Abschnitt in der Datei beginnt.
+
+=back
+
+=head4 Returns
+
+Referenz auf Abschnitts-Objekt
+
+=head4 Description
+
+Instantiiere ein Abschnittsobjekt und liefere eine Referenz
+auf das Objekt zurück.
+
+=head2 Abschnittsinformation
+
+=head3 type() - Liefere/Setze Abschnittsbezeichner
+
+=head4 Synopsis
+
+    $type = $sec->type;
+    $type = $sec->type($type);
+
+=head4 Returns
+
+Abschnittsbezeichner (String)
+
+=head4 Description
+
+Liefere den Abschnittsbezeichner. Ist Parameter $type angegeben, setze
+den Abschnittsbezeichner auf diesen Wert.
+
+=head3 brackets() - Liefere/setze Klammerung
+
+=head4 Synopsis
+
+    $brackets = $sec->brackets;
+    $brackets = $sec->brackets($brackets);
+
+=head4 Returns
+
+Klammerpaar (String)
+
+=head4 Description
+
+Liefere die Klammerung um den Abschnittsbezeichner, sofern vorhanden.
+Ist der Abschnittsbezeichner nicht geklammert, liefere einen Leerstring.
+Ist Parameter $brackets angegeben, setze die Klammerung auf diesen Wert.
+
+=head4 Details
+
+Die Klamerung um den Abschnitts-Bezeichner ist optional.
+Sie besteht aus der öffnenden und schließenden Klammer,
+ist also "[]", "<>" oder "()" oder "{}".
+
+=head3 fullType() - Liefere Abschnittsbezeichner mit Klammerung
+
+=head4 Synopsis
+
+    $fullType = $sec->fullType;
+
+=head4 Description
+
+Liefere den vollständigen Abschnittsbezeichner einschließlich
+der Klammern.
+
+=head3 keys() - Liefere die Liste der Schlüssel
+
+=head4 Synopsis
+
+    $keyA|@keys = $sec->keys;
+
+=head4 Description
+
+Liefere die Liste der Schlüssel. Im Skalarkontext liefere eine
+Referenz auf die Liste.
+
+=head3 keyValHash() - Liefere den Attributhash
+
+=head4 Synopsis
+
+    $hash|@arr = $sec->keyValHash;
+
+=head4 Returns
+
+Im Sklarkontext liefere eine Referenz auf den Attribut-Hash.
+Im Arraykontext liefere die Liste der Attribut/Wert-Paare.
+
+=head3 content() - Liefere/Setze Inhalt
+
+=head4 Synopsis
+
+    $content = $sec->content;
+    $content = $sec->content($content);
+
+=head4 Returns
+
+Inhalt (String)
+
+=head3 contentRef() - Liefere Referenz auf den Inhalt
+
+=head4 Synopsis
+
+    $ref = $sec->contentRef;
+
+=head4 Returns
+
+Referenz auf Inhalt (String-Referenz)
+
+=head3 contentNL() - Liefere Inhalt mit Newline
+
+=head4 Synopsis
+
+    $contentN = $sec->contentNL;
+
+=head4 Returns
+
+Inhalt mit Newline (String)
+
+=head3 file() - Liefere Dateiname
+
+=head4 Synopsis
+
+    $file = $sec->file;
+
+=head4 Returns
+
+Dateiname (String)
+
+=head3 mtime() - Liefere Zeitpunkt der letzten Änderung der Datei
+
+=head4 Synopsis
+
+    $mtime = $sec->mtime;
+
+=head4 Returns
+
+Integer (Epoch-Wert)
+
+=head3 line() - Liefere Zeilennummer
+
+=head4 Synopsis
+
+    $n = $sec->line;
+
+=head4 Returns
+
+Zeilennummer (Integer)
+
+=head3 fileInfo() - Liefere Dateiname und Zeilennummer in einem Aufruf
+
+=head4 Synopsis
+
+    ($file,$line) = $sec->fileInfo;
+
+=head4 Returns
+
+Dateiname (String) und Zeilennummer (Integer)
+
+=head2 Quelltext
+
+=head3 source() - Liefere Quelltext
+
+=head4 Synopsis
+
+    $source = $sec->source;
+
+=head4 Returns
+
+Quelltext (String)
+
+=head3 sourceRef() - Liefere Referenz auf Quelltext
+
+=head4 Synopsis
+
+    $ref = $sec->sourceRef;
+
+=head4 Returns
+
+Skalar-Referenz
+
+=head3 deleteSource() - Lösche Quelltext
+
+=head4 Synopsis
+
+    $sec->deleteSource;
+
+=head4 Returns
+
+nichts
+
+=head3 transferSource() - Übertrage Quelltext von Sub-Abschnitten auf Abschnitt
+
+=head4 Synopsis
+
+    $sec->transferSource;
+
+=head4 Returns
+
+nichts
+
+=head4 Description
+
+Füge die Quelltexte aller Sub-Abschnitte von Abschnitt $sec zum
+Abschnitt hinzu. Die Quelltexte der Sub-Abschnitte werden von
+diesen gelöscht.
+
+=head3 removeEofMarker() - Entferne "# eof" von Quelltext und Content
+
+=head4 Synopsis
+
+    $sec->removeEofMarker;
+
+=head4 Returns
+
+nichts
+
+=head2 Attribute
+
+=head3 append() - Füge Zeichenkette zu Wert hinzu
+
+=head4 Synopsis
+
+    $val = $sec->append($key=>$str);
+
+=head4 Arguments
+
+=over 4
+
+=item $key
+
+Schlüssel, dessen Wert ergänzt wird.
+
+=back
+
+=head4 Returns
+
+Wert (String)
+
+=head4 Description
+
+Füge Zeichenkette $str zum Wert des Schlüssels $key hinzu
+und liefere den resultierenden Wert zurück.
+
+=head3 get() - Liefere Wert zu Schlüssel
+
+=head4 Synopsis
+
+    $val = $sec->get($key);
+    @vals = $sec->get(@keys);
+
+=head4 Arguments
+
+=over 4
+
+=item $key bzw. @keys
+
+Schlüssel, deren Wert geliefert wird.
+
+=back
+
+=head4 Returns
+
+Wert (Skalar-Kontext) oder Wertliste (Array-Kontext)
+
+=head4 Description
+
+Liefere den Wert zu Schlüssel $key bzw. die liste der Werte zu den
+Schlüsseln @keys. Beginnt der $key mit einem Großbuchstaben, ist
+es ein fataler Fehler, wenn zu dem Schlüssel mehrere Werte existieren.
+Solche Schlüssel müssen mit $obj->L</getArray>() abgefragt werden.
+
+=head3 getArray() - Liefere Wertliste zu Schlüssel
+
+=head4 Synopsis
+
+    $arr|@arr = $sec->getArray($key);
+
+=head4 Arguments
+
+=over 4
+
+=item $key
+
+Schlüssel dessen Wertliste geliefert wird.
+
+=back
+
+=head4 Returns
+
+Wert bzw. Werte
+
+=head4 Description
+
+Liefere die Wertliste von Schlüssel $key.
+
+=head3 getBool() - Liefere boolschen Wert zu Schlüssel
+
+=head4 Synopsis
+
+    $bool = $sec->getBool($key);
+    $bool = $sec->getBool($key,$default);
+
+=head4 Arguments
+
+=over 4
+
+=item $key
+
+Schlüssel, dessen Wert geliefert wird.
+
+=item $default
+
+Defaultwert, wenn Attribut nicht gesetzt
+
+=back
+
+=head4 Returns
+
+Wert (Skalar)
+
+=head4 Description
+
+Liefere boolschen Wert zu Schlüssel $key.
+
+=head3 getMandatory() - Liefere Wert eines Pflichtattributs
+
+=head4 Synopsis
+
+    $val = $sec->getMandatory($key);
+
+=head4 Arguments
+
+=over 4
+
+=item $key
+
+Schlüssel, dessen Wert geliefert wird.
+
+=back
+
+=head4 Returns
+
+Wert (Skalar)
+
+=head4 Description
+
+Wie $sec->L</get>(), nur dass ein Wert existieren muss, sonst
+wird eine Exception geworfen.
+
+=head3 getRef() - Liefere Referenz auf Schlüsselwert
+
+=head4 Synopsis
+
+    $ref = $sec->getRef($key);
+
+=head3 search() - Suche Attributwert
+
+=head4 Synopsis
+
+    ($key,$val) = $sec->search(\@sections,\@keys);
+
+=head4 Description
+
+Durchsuche die Liste der Abschnitts-Objekte ($self,@sections)
+nach dem ersten Attribut aus @keys, das einen Wert besitzt und
+liefere das Schlüssel/Wert-Paar zurück. Ist der Wert 'NULL',
+wird '' (Leerstring) geliefert. Auf diese Weise kann auf "höherer Ebene"
+definierter Wert außer Kraft gesetzt werden.
+
+=head3 try() - Werte abfragen ohne Exception
+
+=head4 Synopsis
+
+    $val = $sec->try($key);
+    @vals = $sec->try(@keys);
+
+=head4 Description
+
+Wie L</get>(), nur dass im Falle eines unerlaubten Schlüssels
+keine Exception geworfen, sondern C<undef> geliefert wird.
+
+=head3 memoize() - Ermittele Wert und cache ihn auf Attribut
+
+=head4 Synopsis
+
+    $val = $sec->memoize($key,$sub);
+
+=head4 Description
+
+Die Methode liefert den Wert des Attributs $key. Ist kein Wert
+definiert (Wert ist C<undef>), wird die Methode $sec->$sub($key)
+gerufen, der Wert berechnet und auf dem Attribut $key gespeichert.
+Weitere Aufrufe liefern diesen Wert, ohne dass er neu berechnet wird.
+
+Die Methode ist nützlich, um in Objektmethoden eingebettet zu werden,
+die einen berechneten Wert liefern, der nicht immer wieder neu
+gerechnet werden soll.
+
+=head4 Example
+
+    sub name {
+        return shift->memoize('name',sub {
+            my ($self,$key) = @_;
+            my $name = $self->get(ucfirst $key);
+            $name =~ s/^\W+//;
+            $name =~ s|\W+|/|g;
+            return $name;
+        });
+    }
+
+=head3 memoizeWeaken() - Ermittele schwache Referenz
+
+=head4 Synopsis
+
+    $val = $sec->memoizeWeaken($key,$sub);
+
+=head4 Description
+
+Die Methode ist identisch zu $sec->L</memoize>(), nur dass eine
+Referenz ermittelt und automatisch zu einer schwachen Referenz
+gemacht wird.
+
+=head3 set() - Setze Schlüssel auf Wert
+
+=head4 Synopsis
+
+    $sec->set(@keyVal);
+
+=head4 Arguments
+
+=over 4
+
+=item @keyVal
+
+Schlüssel/Wert-Paare, die gesetzt werden.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head3 setDefault() - Setze Defaultwert
+
+=head4 Synopsis
+
+    $sec->setDefault(@keyVal);
+
+=head4 Arguments
+
+=over 4
+
+=item @keyVal
+
+Liste der Schlüssel/Wert-Paare.
+
+=back
+
+=head4 Returns
+
+I<nichts>
+
+=head4 Description
+
+Setze Schlüssel ohne Wert, d.h. wenn der Wert ein Leerstring ist,
+setze ihn auf den angegebenen Defaultwert.
+
+=head4 Example
+
+    $sec->setDefault(
+        Width=>1000,
+        EntityMenuWidth=>345,
+        BorderWidth=>1,
+        PackageMenuHeight=>34,
+    );
+
+=head3 add() - Füge Schlüssel und Wert hinzu
+
+=head4 Synopsis
+
+    $sec->add(@keyVal);
+
+=head4 Arguments
+
+=over 4
+
+=item @keyVal
+
+Schlüssel/Wert-Paare, die gesetzt werden.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head3 push() - Füge Element zu Arraykomponente hinzu
+
+=head4 Synopsis
+
+    $sec->push($key,$val);
+
+=head4 Arguments
+
+=over 4
+
+=item $key
+
+Arraykomponente.
+
+=item $val
+
+Wert, der zum Array am Ende hinzugefügt wird.
+
+=back
+
+=head4 Description
+
+Füge Wert $val zur Arraykomponente $key hinzu. Die Methode liefert keinen
+Wert zurück.
+
+=head3 weaken() - Erzeuge schwache Referenz
+
+=head4 Synopsis
+
+    $ref = $sec->weaken($key);
+    $ref = $sec->weaken($key=>$ref);
+
+=head4 Description
+
+Mache die Referenz von Schlüssel $key zu einer schwachen Referenz
+und liefere sie zurück. Ist eine Referenz $ref als Parameter angegeben,
+setze die Referenz zuvor.
+
+=head3 validate() - Prüfe und ergänze Attribute
+
+=head4 Synopsis
+
+    $sec->validate($contentAllowed,\@keys);
+
+=head4 Arguments
+
+=over 4
+
+=item $contentAllowed
+
+Wenn falsch, erlaubt der Abschnitt keinen Content (außer "# eof"
+als Dateiende-Markierung).
+
+=item @keys
+
+Liste der zulässigen Abschnittsattribute
+
+=back
+
+=head4 Returns
+
+Nichts
+
+=head4 Description
+
+Die Methode finalisiert das Abschnittsobjekt in folgender Weise:
+
+=over 2
+
+=item *
+
+Sie prüft, dass wenn kein Content erlaubt ist, keiner existiert.
+
+=item *
+
+Sie prüft, dass nur Schlüssel im Objekt vorkommen, die in @keys
+vorkommen. Kommt ein anderer Schlüssel im Objekt vor, wird eine
+Exception geworfen.
+
+=item *
+
+Sie fügt Schlüssel aus @keys zum Objekt hinzu, die das Objekt nicht hat.
+
+=back
+
+=head3 lockKeys() - Locke die Keys des Attribut-Hash
+
+=head4 Synopsis
+
+    $sec->lockKeys;
+
+=head2 Fehler
+
+=head3 error() - Wirf eine Exception mit Dateiname und Zeilennummer
+
+=head4 Synopsis
+
+    $sec->error($msg,@keyVal);
+
+=head4 Arguments
+
+=over 4
+
+=item $msg
+
+Die Fehlermeldung.
+
+=item @keyVal
+
+Detailinformation zum Fehler.
+
+=back
+
+=head4 Returns
+
+Die Methode kehrt nicht zurück
+
+=head4 Description
+
+Die Methode wirft eine Exception mit dem Fehlertext $msg und den
+als Schlüssel/Wert-Paare angegebenen Informationen @keyVal. Ferner
+wird von der Methode der Dateiname und die Zeilennummer des
+Abschnitts ergnzt. Die Exception beinhaltet keinen Stacktrace.
+
+=head2 Automatische Akzessor-Methoden
+
+=head3 AUTOLOAD() - Erzeuge Akzessor-Methode
+
+=head4 Synopsis
+
+    $val = $this->AUTOLOAD;
+    $val = $this->AUTOLOAD($val);
+
+=head4 Description
+
+Erzeuge beim ersten Aufruf eine Akzessor-Methode für einen Schlüssel
+des Schlüssel/Wert-Hashs und führe den betreffenden Methodenaufruf
+durch.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Section/Object.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

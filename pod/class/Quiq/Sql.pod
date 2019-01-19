@@ -1,0 +1,2562 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Sql - Klasse zur Generierung von SQL
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 SYNOPSIS
+
+Das Programm
+
+    use Quiq::Sql;
+    
+    my $sql = Quiq::Sql->new('Oracle');
+    
+    my $stmt = $sql->createTable('person',
+        ['per_id',type=>'INTEGER',primaryKey=>1],
+        ['per_vorname',type=>'STRING(30)'],
+        ['per_nachname',type=>'STRING(30)',notNull=>1],
+    );
+    
+    print $stmt,"\n";
+
+generiert das CREATE TABLE Statement
+
+    CREATE TABLE person (
+        per_id NUMBER PRIMARY KEY,
+        per_vorname STRING2(30),
+        per_nachname STRING2(30) NOT NULL
+    )
+
+(man beachte die Abbildung der Kolumnentypen)
+
+=head1 DESCRIPTION
+
+=head2 Zweck der Klasse
+
+Die Klasse unterstützt die Entwicklung von portablen
+Datenbankanwendungen, d.h. Anwendungen, die unter mehreren DBMSen
+lauffähig sind, indem sie Methoden zur Verfügung stellt, die zum
+DBMS den passenden SQL-Code erzeugen.
+
+=head2 Unterstützte Datenbanksysteme
+
+Folgende DBMSe werden von der Klasse unterstützt:
+
+    Oracle
+    PostgreSQL
+    SQLite
+    MySQL
+
+=head1 ATTRIBUTES
+
+=over 4
+
+=item dbms => $dbmsName (Default: keiner)
+
+Name des DBMS.
+
+=back
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Konstruktor
+
+=head4 Synopsis
+
+    $sql = $class->new($dbms);
+    $sql = $class->new($dbms,$version);
+
+=head4 Description
+
+Instantiiere SQL-Objekt und liefere eine Referenz auf dieses Objekt
+zurück.
+
+=head2 Accessors
+
+=head3 dbms() - Name des DBMS in kanonischer Form
+
+=head4 Synopsis
+
+    $name = $sql->dbms;
+
+=head2 DBMS Names
+
+=head3 dbmsNames() - Liste der Namen der unterstützten Datenbanksysteme
+
+=head4 Synopsis
+
+    $namesA | @names = $this->dbmsNames;
+
+=head4 Description
+
+Liefere folgende Liste von DBMS-Namen (in dieser Reihenfolge):
+
+    Oracle
+    PostgreSQL
+    SQLite
+    MySQL
+    Access
+
+=head2 DBMS Tests
+
+=head3 dbmsTestVector() - Vektor für DBMS-Tests
+
+=head4 Synopsis
+
+    ($oracle,$postgresql,$sqlite,$mysql,$access) = $self->dbmsTestVector;
+
+=head4 Description
+
+Liefere einen Vektor von boolschen Werten, von denen genau einer den
+Wert "wahr" besitzt, und zwar der, der dem DBMS entspricht,
+auf den das Objekt instantiiert ist.
+
+Die Methode ist für Programmcode nützlich, der DBMS-spezifische
+Unterscheidungen macht. Der Code braucht dann lediglich auf den
+Wert einer Variable prüfen
+
+    if ($oracle) ...
+
+statt einen umständlichen und fehleranfälligen Stringvergleich
+durchzuführen
+
+    if ($dbms eq 'Oracle') ...
+
+=head3 isOracle() - Teste auf Oracle
+
+=head4 Synopsis
+
+    $bool = $class->isOracle;
+
+=head3 isPostgreSQL() - Teste auf PostgreSQL
+
+=head4 Synopsis
+
+    $bool = $class->isPostgreSQL;
+
+=head3 isSQLite() - Teste auf SQLite
+
+=head4 Synopsis
+
+    $bool = $class->isSQLite;
+
+=head3 isMySQL() - Teste auf MySQL
+
+=head4 Synopsis
+
+    $bool = $class->isMySQL;
+
+=head3 isAccess() - Teste auf Access
+
+=head4 Synopsis
+
+    $bool = $class->isAccess;
+
+=head2 Utilities
+
+=head3 split() - Zerlege SQL-Statement in Rumpf und Stringliteral-Werte
+
+=head4 Synopsis
+
+    ($stmt1,@arr) = $this->split($stmt);
+
+=head4 Description
+
+Zerlege $stmt in den Statement-Rumpf und eine Liste von
+Stringliteral-Werten und liefere diese beiden Bestandteile zurück.
+
+Statement-Rumpf und Stringliteralwerte können unabhängig bearbeitet
+und anschließend mit sprintf() wieder zusammengefügt werden.
+
+=head4 Example
+
+Zerlege Statement in Bestandteile:
+
+    $stmt1 = "SELECT 'a', 'b' FROM x WHERE x = 'c' AND y = 'd''e'";
+    ($stmt2,@arr) = $class->split($stmt1);
+    =>
+    "SELECT '%s', '%s' FROM x WHERE x = '%s' AND y = '%s''%s'"
+    ('a','b','c','d','e')
+
+Füge Bestandteile wieder zusammen:
+
+    $stmt2 = sprintf($stmt2,@arr);
+    =>
+    "SELECT 'a', 'b' FROM x WHERE x = 'c' AND y = 'd''e'"
+
+=head3 resolve() - Ersetze SQL-Platzhalter durch Werte
+
+=head4 Synopsis
+
+    $stmtResolved = $sql->resolve($stmt,@vals);
+
+=head4 Description
+
+Ersetze die Platzhalter ? in SQL-Statement $stmt durch die
+Werte @val und liefere das resultierende Statement zurück.
+
+Diese Methode ist für Debugging-Zwecke nützlich, wenn mit
+Platzhaltern gearbeitet wird, aber man das aufgelöste Statement
+sehen möchte.
+
+=head4 Example
+
+    $stmt = 'SELECT * FROM t WHERE x = ? AND y > ?';
+    @vals = (47,11);
+    $stmtResolved = $sql->resolve($stmt,@vals);
+    =>
+    "SELECT * FROM t WHERE x = '47' AND y > '11'"
+
+=head3 removeSelectClause() - Entferne SELECT-Klausel
+
+=head4 Synopsis
+
+    $newStmt = $sql->removeSelectClause($stmt);
+
+=head4 Description
+
+Entferne die Select-Klausel am Anfang von Select-Statement $stmt
+und liefere das resultierende Statement zurück.
+
+Als Select-Klausel wird alles vom Beginn des Statement
+bis zur FROM-Klausel angesehen.
+
+=head3 removeOrderByClause() - Entferne ORDER BY-Klausel
+
+=head4 Synopsis
+
+    $newStmt = $sql->removeOrderByClause($stmt);
+
+=head4 Description
+
+Entferne die Order By-Klausel vom Ende des Select-Statement $stmt
+und liefere das resultierende Statement zurück.
+
+Als Select-Klausel wird alles von der ORDER BY-Klausel bis zum
+Ende des Statment angesehen.
+
+=head3 checkName() - Prüfe Bezeichner
+
+=head4 Synopsis
+
+    $name = $sql->checkName($name);
+    $sql->checkName(\$name);
+
+=head4 Description
+
+Prüfe und manipuliere Bezeichner $name, so dass er den Konventionen
+des DBMS entspricht.
+
+B<Oracle>
+
+=over 2
+
+=item *
+
+Ist der Bezeichner länger als 30 Zeichen, kürze ihn auf 29
+Zeichen und ersetze das 30. Zeichen durch #.
+
+=back
+
+=head3 stmtListToScript() - Generiere aus Liste von SQL-Statements ein Skript
+
+=head4 Synopsis
+
+    $script = $class->stmtListToScript(@stmt)
+
+=head4 Description
+
+Erzeuge aus einer Liste von SQL-Statements ein einzelnes Skript,
+das von einem Client-Programm wie SQL*Plus, psql bzw. mysql
+ausgeführt werden kann.
+
+Die SQL-Statements bzw. SQL-Kommentare in @stmt haben am Ende
+weder Newline noch Semikolon. Diese Methode fügt sie hinzu
+und konkateniert alle Statements zu einer Zeichenkette.
+
+Folgende Manipulationen werden vorgenommen:
+
+=over 2
+
+=item *
+
+SQL-Statements erhalten am Ende ein Semikolon und ein Newline.
+
+=item *
+
+Kommentare erhalten am Ende ein Newline und werden von den umgebenden
+SQL-Statements abgesetzt, indem vor und nach ihnen eine Leerzeile
+eingefügt wird.
+
+=back
+
+Diverse Details werden unterschieden (siehe EXAMPLES).
+
+=head4 Example
+
+So verhält es sich im Detail:
+
+    $script = Quiq::Sql->stmtListToScript(
+        '-- TEXT1',
+        'STMT1',
+        "STMT2\n...',
+        "STMT3 (\n....\n)",
+        '-- TEXT2',
+        'STMT4',
+        '-- eof',
+    );
+
+wird zu:
+
+    -- TEXT1     Kommentar am Anfang => danach "\n\n"
+    
+    STMT1;       einzeiliges Statement => danach ";\n\n")
+    
+    STMT2        mehrzeilges Statement => danach "\n;\n")
+        ...
+    ;
+    STMT3 (      mehrzeiles Statement mit ) => danach ";\n")
+        ...
+    );
+    
+    -- TEXT2     innerer Kommentar => davor "\n", danach "\n\n"
+    
+    STMT4;       (wie einzeiliges Statement oben)
+    
+    -- eof       Kommentar am Ende, nach einzeiligem Statement
+                 => davor nichts, danach "\n"
+
+=head2 Data Types
+
+Methoden für die portable Spezifikation von Kolumnen-Datentypen.
+
+=head3 dataType() - Wandele portablen Datentyp-Bezeichner in DBMS-Typ-Bezeichner
+
+=head4 Synopsis
+
+    $dbmsType = $sql->dataType($portableType);
+    ($dbmsType,$args) = $sql->dataType($portableType);
+
+=head4 Description
+
+Wandele den portablen Datentyp $portableType in den entsprechenden
+DBMS-spezifischen Typ und liefere diesen zurück. Im Skalarkontext
+liefere den Typbezeichner einschließlich etwaiger Argumente,
+im Listkontext liefere Typ und Argumente getrennt.
+
+B<Typ-Abbildung>
+
+    Portabel   Oracle     PostgreSQL SQLite    MySQL
+    ---------- ---------- ---------- --------- ----------
+    STRING     VARCHAR2   VARCHAR    TEXT      VARCHAR
+    TEXT       CLOB       TEXT       TEXT      LONGTEXT
+    INTEGER    NUMBER     NUMERIC    INTEGER   (TINY|SMALL|MEDIUM|BIG)INT
+    REAL       NUMBER     NUMERIC    REAL      DECIMAL
+    DATETIME   TIMESTAMP  TIMESTAMP  TIMESTAMP TIMESTAMP
+    BLOB       BLOB       BYTEA      BLOB      LONGBLOB
+
+=over 2
+
+=item *
+
+VARCHAR2 kann bei Oracle max 4000 Zeichen lang sein
+
+=back
+
+=head4 Example
+
+Einige Konvertierungen im Falle von Oracle:
+
+    $type = $sql->dataType('STRING');
+    # => 'VARCHAR2'
+    
+    $type = $sql->dataType('STRING(20)');
+    # => 'VARCHAR2(20)'
+    
+    ($type,$args) = $sql->dataType('STRING');
+    # => ('VARCHAR2','')
+    
+    ($type,$args) = $sql->dataType('STRING(20)');
+    # => ('VARCHAR2','(20)')
+    
+    ($type,$args) = $sql->dataType('DATETIME');
+    # => ('TIMESTAMP','(0)')
+
+=head3 columnDef() - Generiere Kolumnen-Definition
+
+=head4 Synopsis
+
+    $colDef = $sql->columnDef(@colDef);
+    $colDef = $sql->columnDef($portableType,@colDef);
+
+=head4 Description
+
+Generiere aus der portablen Kolumnen-Spezifikation @colDef eine
+DBMS-spezifische Kolumnen-Definition, die als Zeichenkette
+nach dem Kolumnennamen in ein CREATE TABLE oder ALTER TABLE Statement
+eingesetzt werden kann, und liefere diese zurück.
+
+Die Methode wird von den Methoden createTable() und addColumn()
+genutzt.
+
+Die Kolumnen-Spezifikation @colDef besteht aus einer
+nicht-leeren Aufzählung von folgenden Schlüssel/Wert-Paaren:
+
+=over 4
+
+=item default=>$value
+
+Defaultwert der Kolumne.
+
+=item null=>$bool
+
+Kolumne ist kein Pflichtfeld. Diese explizite Setzung wird bei
+MySQL gebraucht, wenn ein TIMESTAMP-Feld nicht
+'0000-00-00 00:00:00' als Defaultwert erhalten soll.
+
+=item notNull=>$bool
+
+Kolumne ist Pflichtfeld.
+
+=item autoIncrement=>$bool
+
+Das DBMS erzeugt beim Einfügen eines Datensatzes einen
+eindeutigen Wert (SQLite und MySQL).
+
+=item primaryKey=>$bool
+
+Kolumne ist Primärschlüsselkolumne.
+
+=item type=>$type
+
+Portabler Kolumnentyp.
+
+=item oracleType=>$oracleType
+
+Kolumnentyp für Oracle.
+
+=item postgresqlType=>$postgresqlType
+
+Kolumnentyp für PostgreSQL.
+
+=item sqliteType=>$sqliteType
+
+Kolumnentyp für SQLite.
+
+=item mysqlType=>$mysqlType
+
+Kolumnentyp für MySQL.
+
+=back
+
+Der Kolumnentyp ist für eine Kolumnenspezifikation zwingend. Er
+wird als portabler Typ (type=>$type) oder als DBMS-spezifischer
+Typ (<dbms>Type=>$type) angegeben. Ist beides angegeben, hat der
+DBMS-spezifische Typ Vorrang.
+
+Das Attribut autoIncrement ist nicht portabel, es ist
+
+=head4 Example
+
+=over 2
+
+=item *
+
+Portabler Typ wird verwendet, wenn nichts anderes
+für das DBMS angegeben ist:
+
+    $sql = Quiq::Sql->new('Oracle');
+    $type = $sql->columnDef(
+        type=>'STRING(20)',
+    );
+    ==>
+    'VARCHAR2(20)'
+
+=item *
+
+DBMS-Typ wird verwendet, wenn angegeben:
+
+    $sql = Quiq::Sql->new('Oracle');
+    $type = $sql->columnDef(
+        type=>'INTEGER(5)',
+        oracleType=>'NUMBER(5)',
+    );
+    ==>
+    'NUMBER(5)'
+
+=back
+
+=head2 Comments
+
+=head3 comment() - Generiere SQL-Kommentar
+
+=head4 Synopsis
+
+    $stmt = $sql->comment($text);
+
+=head4 Description
+
+Setze an den Anfang jeder Zeile in $text die Zeichenfolge '-- '
+und liefert das Resultat zurück.
+
+Whitespace am Ende wird entfernt, d.h. der SQL-Kommentar endet
+wie die SQL-Statements per Default nicht mit einem Newline.
+
+=head4 Example
+
+    Lorem ipsum dolor sit amet, consetetur sadipscing
+    elitr, sed diam nonumy eirmod tempor invidunt ut
+    labore et dolore magna
+
+wird zu
+
+    -- Lorem ipsum dolor sit amet, consetetur sadipscing
+    -- elitr, sed diam nonumy eirmod tempor invidunt ut
+    -- labore et dolore magna
+
+=head2 Session
+
+=head3 setDateFormat() - Generiere Statements zum Setzen des Datumsformats
+
+=head4 Synopsis
+
+    @stmt = $class->setDateFormat;
+    @stmt = $class->setDateFormat($format);
+
+=head4 Description
+
+Setze als Default-Datumsformat $format. Ist $format nicht angegeben,
+setzte iso-Format.
+
+Folgende Datumsformate sind definiert:
+
+=over 4
+
+=item iso
+
+YYYY-MM-DD HH:MM:SS
+
+=back
+
+B<Oracle>
+
+    (iso)
+    ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS'
+    ALTER SESSION SET NLS_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH24:MI:SSXFF'
+
+B<PostgreSQL>
+
+    (iso)
+    SET datestyle TO iso, ymd
+
+B<SQLite>
+
+unbekannt
+
+B<MySQL>
+
+unbekannt
+
+=head3 setNumberFormat() - Generiere Statements zum Setzen des Zahlenformats
+
+=head4 Synopsis
+
+    @stmt = $class->setNumberFormat;
+    @stmt = $class->setNumberFormat($format);
+
+=head4 Description
+
+Setze als Default-Zahlenformat $format. Ist $format nicht angegeben,
+setzte angloamerikanisches Format.
+
+B<Oracle>
+
+    ALTER SESSION SET NLS_NUMERIC_CHARACTERS = '.,'
+
+B<PostgreSQL>
+
+unbekannt
+
+B<SQLite>
+
+unbekannt
+
+B<MySQL>
+
+unbekannt
+
+=head3 setSchema() - Generiere Statement zum Setzen des aktuellen Schema
+
+=head4 Synopsis
+
+    $class->setSchema($schema);
+
+=head4 Description
+
+B<Oracle>
+
+    ALTER SESSION SET CURRENT_SCHEMA = <schema>
+
+B<PostgreSQL>
+
+    SET search_path TO <schema>
+
+=over 2
+
+=item *
+
+Anstelle eines einzelnen Schema können mehrere Schemata, mit Komma
+getrennt, aufgezählt werden.
+
+=item *
+
+Die Setzung sollte sofort mit COMMIT bestätigt werden, da
+sie im Falle eines ROLLBACK sonst verfällt.
+
+=back
+
+B<SQLite>
+
+    <leer>
+
+SQLite hat das Konzept mehrerer Schemata, von denen eins das
+Default-Schema ist, nicht.
+
+Bei einer SQLite-Datenbank gibt es per Default keinen Schema-Präfix,
+dieser wird erst durch ATTACH einer Datenbank eingeführt.
+
+Ein Tabellenname ohne Schema wird immer über allen Attachten Datenbanken
+aufgelöst. Die zuerst hinzugefügte Tabelle ist der Dafault.
+
+B<MySQL>
+
+    USE <schema>
+
+=head3 setEncoding() - Generiere Statement zum Setzen des Client-Encodings
+
+=head4 Synopsis
+
+    $stmt = $class->setEncoding($charset);
+
+=head4 Description
+
+Werte für $charset:
+
+    iso-8859-1
+    utf-8
+
+B<Oracle>
+
+    <not implemented>
+
+B<PostgreSQL>
+
+    SET client_encoding TO <charset>
+
+B<SQLite>
+
+    <not implemented>
+
+B<MySQL>
+
+    <not implemented>
+
+=head2 Locking
+
+=head3 lockTable() - Generiere LOCK TABLE Statement
+
+=head4 Synopsis
+
+    $stmt = $class->lockTable($table);
+
+=head4 Description
+
+B<Oracle>
+
+    LOCK TABLE <table> IN EXCLUSIVE MODE NOWAIT
+
+B<PostgreSQL>
+
+    LOCK TABLE <table> IN EXCLUSIVE MODE NOWAIT
+
+B<SQLite>
+
+    nicht implementiert
+
+B<MySQL>
+
+    nicht implementiert
+
+=head2 User
+
+=head3 createUser() - Generiere CREATE USER Statement
+
+=head4 Synopsis
+
+    $stmt = $class->createUser($name,$password,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -defaultTableSpace => $name (Default: keiner)
+
+Name des Default-Tablespace
+
+=item -tempTableSpace => $name (Default: keiner)
+
+Name des Temporary-Tablespace
+
+=back
+
+=head2 Schema
+
+=head3 createSchema() - Generiere CREATE SCHEMA Statement
+
+=head4 Synopsis
+
+    $stmt = $class->createSchema($name);
+
+=head3 dropSchema() - Generiere DROP SCHEMA Statement
+
+=head4 Synopsis
+
+    $stmt = $class->dropSchema($name);
+
+=head2 Table
+
+=head3 splitTableName() - Zerlege Tabellennamen
+
+=head4 Synopsis
+
+    ($schema,$table) = $class->splitTableName($name);
+    ($schema,$table) = $class->splitTableName($name,$sloppy);
+
+=head4 Alias
+
+splitTablename()
+
+=head4 Description
+
+Zerlege den Tabellennamen $name in die Komponenten $schema und $table.
+Besitzt der Tabellennamen keinen Schema-Präfix, wird eine Exception
+geworfen. Dies geschieht nicht, wenn der Parameter $sloppy gesetzt
+und wahr ist. In dem Fall wird keine Exception geworfen, sondern als
+Schemaname C<undef> geliefert.
+
+=head3 createTable() - Generiere CREATE TABLE Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->createTable($table,
+        [$colName,@colDef],
+        ...
+        @opt,
+    );
+
+=head4 Options
+
+=over 4
+
+=item -tableSpace => $tableSpaceName (Default: keiner)
+
+Name des Tablespace, in dem die Tabelle erzeugt wird
+(Oracle und PostgreSQL).
+
+=item -tableType => $tableType (Default: 'InnoDB')
+
+Tabellentyp bei MySQL: 'InnoDb', 'MyISAM'.
+
+=back
+
+=head4 Description
+
+Generiere ein CREATE TABLE Statement und liefere dieses zurück.
+
+Für jede Kolumne wird ihr Name $colName und ihr Typ.
+
+Der Kolumnentyp wird als portabler Typ (type=>$type)
+oder als DBMS-spezifischer Typ (<dbms>Type=>$type) angegeben.
+Ist beides angegeben, hat der DBMS-spezifische Typ Priorität.
+Für die portablen Typen siehe Methode columnType().
+
+Alle weiteren Angaben in @colOpts sind optional.
+
+Folgende Kolumnen-Optionen sind definiert:
+
+=over 4
+
+=item notNull=>$bool
+
+Kolumne ist Pflichtfeld.
+
+=item autoIncrement=>$bool
+
+Das DBMS erzeugt beim Einfügen eines Datensatzes einen
+eindeutigen Wert (nicht Oracle und PostgreSQL, diese
+haben das Konzept der Sequenz).
+
+=item primaryKey=>$bool
+
+Kolumne ist Primärschlüsselkolumne.
+
+=item type=>$type
+
+Portabler Kolumnentyp.
+
+=item oracleType=>$oracleType
+
+Kolumnentyp für Oracle.
+
+=item postgresqlType=>$postgresqlType
+
+Kolumnentyp für PostgreSQL.
+
+=item sqliteType=>$sqliteType
+
+Kolumnentyp für SQLite.
+
+=item mysqlType=>$mysqlType
+
+Kolumnentyp für MySQL.
+
+=back
+
+MySQL-Tabellen werden per Default als InnoDB-Tabellen erzeugt
+und erhalten als Zusatz die Angabe "TYPE = InnoDB". Der
+Tabellentyp kann mit der Option -tableType abweichend gesetzt werden.
+
+Die Typ-Attribute type und <dbms>Type werden von columnTypeSpec()
+in den DBMS-Typ umgewandelt.
+
+=head3 dropTable() - Generiere DROP TABLE Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->dropTable($table);
+
+=head3 analyzeTable() - Generiere ANALYZE TABLE Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->analyzeTable($table);
+
+=head3 legalizeTablename() - Legalisiere Tabellennamen
+
+=head4 Synopsis
+
+    $table = $sql->legalizeTablename($table);
+
+=head4 Description
+
+Legalisiere Tabellennamen durch Quotierung, wenn dieser Sonderzeichen
+enthält. Dies geschieht bei MySQL durch Backticks, z.B. bei Tabellen,
+deren Name einen Bindestrich enthält:
+
+    Meine-Tabelle -> `Meine-Tabelle`
+    Mein-Schema.Meine-Tabelle -> `Meine-Schema`.`Meine-Tabelle`
+
+Für die anderen DBMSe ist das Feature aktuell nicht implementiert,
+d.h. es wird immer der unveränderte Tabellenname zurückgegeben.
+
+=head2 Columns
+
+=head3 addColumn() - Generiere ALTER TABLE Statement, das eine Kolumne erzeugt
+
+=head4 Synopsis
+
+    $stmt = $sql->addColumn($table,$column,@colDef);
+
+=head4 Description
+
+Erzeuge SQL-Statement, das der Tabelle $table die Kolumne $column
+mit der Spezifikation @colDef hinzufügt. Die portable
+Kolumnen-Spezifikation @colDef wird von Methode columnDef()
+in die DBMS-spezifische Zeichenkette gewandelt.
+
+B<PostgreSQL Syntax>
+
+    ALTER TABLE table ADD COLUMN column type ...
+
+B<Oracle Syntax>
+
+    ALTER TABLE table ADD (column type ...)
+
+B<SQLite Syntax>
+
+    ALTER TABLE table ADD COLUMN column type ...
+
+B<MySQL Syntax>
+
+    ALTER TABLE table ADD COLUMN column type ...
+
+Die Punkte stehen für zusätzliche optionale Kolumnen-Angaben, wie
+"DEFAULT expr", "NOT NULL", "PRIMARY KEY" usw.
+
+=head3 dropColumn() - Generiere ALTER TABLE Statement, das eine Kolumne entfernt
+
+=head4 Synopsis
+
+    $stmt = $sql->dropColumn($table,$column);
+
+=head4 Description
+
+Erzeuge SQL-Statement, das aus der Tabelle $table die Kolumne $column
+entfernt.
+
+B<Oracle, PostgreSQL, MySQL Syntax>
+
+    ALTER TABLE table DROP COLUMN column
+
+B<SQLite Syntax>
+
+    Eine Kolumne kann nicht entfernt werden (geprüft 3.6.13)
+
+=head3 modifyColumn() - Generiere ALTER TABLE Statement, das eine Kolumne modifiziert
+
+=head4 Synopsis
+
+    $stmt = $sql->modifyColumn($table,$column,$property=>$value);
+
+=head4 Description
+
+Erzeuge SQL-Statement, das in Tabelle $table die Kolumne $column
+modifiziert. Verändert wird die Eigenschaft $property auf Wert
+$value.
+
+B<NULL>
+
+=over 4
+
+=item PostgreSQL:
+
+    ALTER TABLE t ALTER COLUMN c DROP NOT NULL
+
+=item Oracle:
+
+    ALTER TABLE t MODIFY c NULL
+
+=item MySQL:
+
+    NOT NULL scheint nicht ohne Kenntnis des Kolumnentyps
+    manipuliert werden zu können (5.1.41).
+
+=item SQLite:
+
+    Eine Kolumne kann nicht modifiziert werden (geprüft 3.6.22)
+
+=back
+
+B<NOT NULL>
+
+=over 4
+
+=item PostgreSQL:
+
+    ALTER TABLE t ALTER COLUMN c SET NOT NULL
+
+=item Oracle:
+
+    ALTER TABLE t MODIFY COLUMN c NULL
+
+=item MySQL:
+
+    NOT NULL scheint nicht ohne Kenntnis des Kolumnentyps
+    manipuliert werden zu können (5.1.41).
+
+=item SQLite:
+
+    Eine Kolumne kann nicht modifiziert werden (geprüft 3.6.22)
+
+=back
+
+B<TYPE>
+
+=over 4
+
+=item PostgreSQL:
+
+    nicht implementiert
+
+=item Oracle:
+
+    ALTER TABLE <t> MODIFY COLUMN <c> <type>
+
+=item MySQL:
+
+    nicht implementiert
+
+=item SQLite:
+
+    Eine Kolumne kann nicht modifiziert werden (geprüft 3.6.22)
+
+=back
+
+=head3 renameColumn() - Generiere ALTER TABLE Statement, das eine Kolumne umbenennt
+
+=head4 Synopsis
+
+    $stmt = $sql->renameColumn($table,$oldName,$newName)
+
+=head4 Description
+
+Erzeuge SQL-Statement, das in Tabelle $table die Kolumne $oldName
+in $newName umbenennt.
+
+B<Syntax>
+
+=over 4
+
+=item PostgreSQL:
+
+    ALTER TABLE t RENAME COLUMN c1 TO c2
+
+=item Oracle:
+
+    ALTER TABLE t RENAME COLUMN c1 TO c2
+
+=item MySQL:
+
+    nicht implementiert
+
+=item SQLite:
+
+    nicht implementiert
+
+=back
+
+=head2 Constraints
+
+=head3 addPrimaryKeyConstraint() - Generiere PRIMARY KEY Constraint Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->addPrimaryKeyConstraint($tableName,\@colNames,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -constraintName => $str (Default: <TABLE>_PK)
+
+Name des Constraint.
+
+=item -exceptionTable => $tableName (Default: keiner)
+
+Constraint-Verletzende Datensätze werden in Tabelle $tableName
+protokollliert (nur Oracle).
+
+=item -tableSpace => $tableSpaceName (Default: keiner)
+
+Name des Tablespace, in dem der Index erzeugt wird
+(Oracle und PostgreSQL).
+
+=back
+
+=head4 Description
+
+B<Oracle Syntax>
+
+    ALTER TABLE <TABLE_NAME> ADD
+        CONSTRAINT <CONSTRAINT_NAME>
+        PRIMARY KEY (<TABLE_COLUMNS>)
+        USING INDEX TABLESPACE <TABLESPACE_NAME>
+        EXCEPTIONS INTO <EXCEPTION_TABLE_NAME>
+
+B<PostgreSQL Syntax>
+
+    ALTER TABLE <TABLE_NAME> ADD
+        CONSTRAINT <CONSTRAINT_NAME>
+        PRIMARY KEY (<TABLE_COLUMNS>)
+        USING INDEX TABLESPACE <TABLESPACE_NAME>
+
+=head3 addForeignKeyConstraint() - Generiere FOREIGN KEY Constraint Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->addForeignKeyConstraint($tableName,\@tableCols,
+        $refTableName,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -constraintName => $str (Default: <TABLE>_FK_<REFTABLE>)
+
+Name des Constraint.
+
+=item -defer => $bool (Default: 0)
+
+Constraint-Fehler wird verzögert gemeldet.
+
+=item -disable => $bool (Default: 0)
+
+Constraint wird erzeugt, ist aber abgeschaltet.
+
+=item -exceptionTable => $tableName (Default: keiner)
+
+Constraint-Verletzende Datensätze werden in Tabelle $tableName
+protokollliert (nur Oracle).
+
+=item -onDelete => 'cascade'|'null' (Default: keiner)
+
+Legt fest, was bei Löschung des Parent-Datensatzes passieren soll.
+
+=item -refTableCols => \@refTableCols (Default: undef)
+
+Liste der Kolumnen in der referenzierten Tabelle.
+Bei MySQL müssen die referenzierten Kolumnen aufgezählt werden, auch wenn
+ein Primary Key auf der referenzierten Tabelle definiert ist.
+
+=back
+
+=head4 Description
+
+B<Oracle Syntax>
+
+    ALTER TABLE <TABLE_NAME> ADD
+        CONSTRAINT <CONSTRAINT_NAME>
+        FOREIGN KEY (<TABLE_COLUMNS>)
+        REFERENCES <REF_TABLE_NAME>
+        ON DELETE <ACTION>
+        DEFERRABLE INITIALLY DEFERRED
+        EXCEPTIONS INTO <EXCEPTION_TABLE_NAME>
+        DISABLE
+
+B<PostgreSQL Syntax>
+
+    ALTER TABLE <TABLE_NAME> ADD
+        CONSTRAINT <CONSTRAINT_NAME>
+        FOREIGN KEY (<TABLE_COLUMNS>)
+        REFERENCES <REF_TABLE_NAME>
+        ON DELETE <ACTION>
+        DEFERRABLE INITIALLY DEFERRED
+
+B<MySQL Syntax>
+
+    ALTER TABLE <TABLE_NAME> ADD
+        CONSTRAINT <CONSTRAINT_NAME>
+        FOREIGN KEY (<TABLE_COLUMNS>)
+        REFERENCES <REF_TABLE_NAME> (REF_TABLE_COLUMNS)
+        ON DELETE <ACTION>
+
+=head3 addNotNullConstraint() - Generiere NOT NULL Constraint Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->addNotNullConstraint($tableName,$colName,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -constraintName => $str (Default: <TABLE>_CK)
+
+Name des Constraint (nicht PostgreSQL).
+
+=item -exceptionTable => $tableName (Default: keiner)
+
+Constraint-Verletzende Datensätze werden in Tabelle $tableName
+protokollliert (nur Oracle).
+
+=back
+
+=head4 Description
+
+B<Oracle Syntax>
+
+    ALTER TABLE <TABLE_NAME> MODIFY (
+        <COLUMN NAME>
+        CONSTRAINT <CONSTRAINT_NAME>
+        NOT NULL
+        EXCEPTIONS INTO <EXCEPTION_TABLE_NAME>
+    )
+
+B<PostgreSQL Syntax>
+
+    ALTER TABLE <TABLE_NAME>
+        ALTER COLUMN <COLUMN_NAME>
+        SET NOT NULL
+
+=head3 addCheckConstraint() - Generiere CHECK Constraint Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->addCheckConstraint($tableName,$clause,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -constraintName => $str (Default: <TABLE>_CK)
+
+Name des Constraint.
+
+=item -exceptionTable => $tableName (Default: keiner)
+
+Constraint-Verletzende Datensätze werden in Tabelle $tableName
+protokollliert (nur Oracle).
+
+=back
+
+=head4 Description
+
+B<Oracle Syntax>
+
+    ALTER TABLE <TABLE_NAME> ADD
+        CONSTRAINT <CONSTRAINT_NAME>
+        CHECK (<CHECK_CLAUSE>)
+        EXCEPTIONS INTO <EXCEPTION_TABLE_NAME>
+
+B<PostgreSQL Syntax>
+
+    ALTER TABLE <TABLE_NAME> ADD
+        CONSTRAINT <CONSTRAINT_NAME>
+        CHECK (<CHECK_CLAUSE>)
+
+=head3 addUniqueConstraint() - Generiere UNIQUE Constraint Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->addUniqueConstraint($tableName,\@colNames,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -constraintName => $str (Default: <TABLE>_UQ_<COLUMNS>)
+
+Name des Constraint.
+
+=item -exceptionTable => $tableName (Default: keiner)
+
+Constraint-Verletzende Datensätze werden in Tabelle $tableName
+protokollliert (nur Oracle).
+
+=item -tableSpace => $tableSpaceName (Default: keiner)
+
+Name des Tablespace, in dem der Index erzeugt wird
+(Oracle und PostgreSQL).
+
+=back
+
+=head4 Description
+
+Liefere ein SQL-Statement zur Erzeugung eines UNIQUE-Constraint
+auf Tabelle $tableName über den Kolumnen @colNames und liefere
+dieses zurück.
+
+B<Oracle Syntax>
+
+    ALTER TABLE <TABLE_NAME> ADD
+        CONSTRAINT <CONSTRAINT_NAME>
+        UNIQUE (<TABLE_COLUMNS>)
+        USING INDEX TABLESPACE <TABLESPACE_NAME>
+        EXCEPTIONS INTO <EXCEPTION_TABLE_NAME>
+
+B<PostgreSQL Syntax>
+
+    ALTER TABLE <TABLE_NAME> ADD
+        CONSTRAINT <CONSTRAINT_NAME>
+        UNIQUE (<TABLE_COLUMNS>)
+        USING INDEX TABLESPACE <TABLESPACE_NAME>
+
+=head2 Index
+
+=head3 indexName() - Liefere Namen für Index
+
+=head4 Synopsis
+
+    $indexName = $sql->indexName($table,\@colNames);
+
+=head3 createIndex() - Generiere CREATE INDEX Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->createIndex($tableName,\@colNames,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -indexName => $str (Default: <TABLE>_ix_<COLUMNS>)
+
+Name des Index.
+
+=item -tableSpace => $tableSpaceName (Default: keiner)
+
+Name des Tablespace, in dem der Index erzeugt wird
+(Oracle und PostgreSQL).
+
+=item -unique => $bool (Default: 0)
+
+Statement für Unique Index.
+
+=back
+
+=head4 Description
+
+Generiere ein CREATE INDEX Statement und liefere dieses zurück.
+
+B<Oracle Syntax>
+
+    CREATE [UNIQUE] INDEX <INDEX_NAME> ON <TABLE_NAME>
+        (<TABLE_COLUMNS>)
+        TABLESPACE <TABLESPACE_NAME>
+
+B<PostgreSQL Syntax>
+
+    CREATE [UNIQUE] INDEX <INDEX_NAME> ON <TABLE_NAME>
+        (<TABLE_COLUMNS>)
+        TABLESPACE <TABLESPACE_NAME>
+
+B<SQLite Syntax>
+
+    CREATE [UNIQUE] INDEX <INDEX_NAME> ON <TABLE_NAME>
+        (<TABLE_COLUMNS>)
+
+B<MySQL Syntax>
+
+    CREATE [UNIQUE] INDEX <INDEX_NAME> ON <TABLE_NAME>
+        (<TABLE_COLUMNS>)
+
+=head3 dropIndex() - Generiere DROP INDEX Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->dropIndex($tableName,\@colNames);
+
+=head4 Description
+
+Generiere ein DROP INDEX Statement und liefere dieses zurück.
+
+B<Syntax>
+
+    DROP INDEX <INDEX_NAME>
+
+=head2 Sequence
+
+=head3 createSequence() - Generiere SQL-Statements zur Erzeugung einer Sequenz
+
+=head4 Synopsis
+
+    @stmt = $sql->createSequence($name,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -startWith => $n (Default: 1)
+
+Lasse die Sequenz mit Startwert $n beginnen.
+
+=back
+
+=head4 Description
+
+Generiere Statements zur Erzeugung von Sequenz $name und liefere
+diese zurück.
+
+Unter Oracle und PostgreSQL, die das Konzept der Sequenz haben,
+wird ein CREATE SEQUENCE Statement generiert.
+
+Unter MySQL und SQLite, die das Konzept der Sequenz nicht haben,
+wird eine Tabelle (CREATE TABLE) mit Autoinkrement-Kolumne zur
+Simulation einer Sequenz erzeugt. Ist die Option -startWith angegeben,
+wird zusätzlich ein INSERT-Statement generiert.
+
+=head3 dropSequence() - Generiere SQL-Statement zum Löschen einer Sequenz
+
+=head4 Synopsis
+
+    $stmt = $sql->dropSequence($name);
+
+=head4 Description
+
+Generiere SQL-Statement zum Löschen von Sequenz $name und liefere
+dieses zurück.
+
+Unter Oracle und PostgreSQL, die das Konzept der Sequenz haben,
+wird ein DROP SEQUENCE Statement generiert.
+
+Unter MySQL und SQLite, die das Konzept der Sequenz nicht haben,
+wird ein DROP TABLE Statement generiert.
+
+=head3 setSequence() - Generiere SQL-Statements zum Setzen einer Sequenz
+
+=head4 Synopsis
+
+    @stmt = $sql->setSequence($name,$n);
+
+=head4 Description
+
+Generiere SQL-Statements zum Setzen von Sequenz $name auf Wert $n.
+
+=over 2
+
+=item *
+
+Unter Oracle wird die Sequenz gedroppt und neu erzeugt.
+
+=item *
+
+Unter PostgreSQL wird der Wert mit ALTER SEQUENCE gesetzt.
+
+=item *
+
+Unter MySQL und SQLite, die das Konzept der Sequenz nicht haben,
+wird die Sequenz-Tabelle geleert und der Wert als neuer
+Datensatz hinzugefügt. Einschränkung: Der Sequenzwert kann
+hochgesetzt, aber nicht verringert werden!
+
+=back
+
+=head2 Trigger
+
+=head3 createFunction() - Generiere Statement zum Erzeugen einer Funktion
+
+=head4 Synopsis
+
+    $stmt = $sql->createFunction($name,$body,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -replace => $bool (Default: 0)
+
+Generiere "OR REPLACE" Klausel.
+
+=item -returns => $type (Default: undef)
+
+Generiere "RETURNS $type" Klausel.
+
+=back
+
+=head4 Description
+
+B<PostgreSQL>
+
+    CREATE OR REPLACE FUNCTION <name>()
+    RETURNS <returns>
+    AS $SQL$
+      <body>
+    $SQL$ LANGUAGE plpgsql
+
+=over 2
+
+=item *
+
+<name> kann Schema enthalten
+
+=back
+
+=head3 dropFunction() - Generiere Statement zum Entfernen einer Funktion
+
+=head4 Synopsis
+
+    $stmt = $sql->dropFunction($name);
+
+=head4 Description
+
+B<PostgreSQL>
+
+    DROP FUNCTION <name>() CASCADE
+
+=head3 createTrigger() - Generiere Statement zum Erzeugen eines Triggers
+
+=head4 Synopsis
+
+    $stmt = $sql->createTrigger($table,$name,$when,$event,$level,
+        $body,@opt);
+    $stmt = $sql->createTrigger($table,$name,$when,$event,$level,
+        -execute=>$proc,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -replace => $bool (Default: 0)
+
+Generiere "OR REPLACE" Klausel (Oracle).
+
+=item -execute => $proc (Default: undef)
+
+Generiere "EXECUTE PROCEDURE $proc()" Klausel.
+
+=back
+
+=head4 Description
+
+B<Oracle>
+
+    $stmt = $sql->createTrigger(
+        '<table>',
+        '<name>',
+        'before',
+        'insert|update',
+        'row',
+        -replace=>1,'
+        <body>
+        '
+    );
+    
+    CREATE OR REPLACE TRIGGER <name>
+    BEFORE INSERT OR UPDATE ON <table>
+    FOR EACH ROW
+    <body>
+
+=over 2
+
+=item *
+
+Oracle-Trigger können eine Prozedur können einen
+Trigger-Body definieren.
+
+=back
+
+B<PostgreSQL>
+
+    $stmt = $sql->createTrigger(
+        '<table>',
+        '<name>',
+        'before',
+        'insert|update',
+        'row',
+        -execute=>'<proc>',
+    );
+    
+    CREATE TRIGGER <name>
+    BEFORE INSERT OR UPDATE ON <table>
+    FOR EACH ROW
+    EXECUTE PROCEDURE <proc>()
+
+=over 2
+
+=item *
+
+Trigger können eine Prozedur aufrufen (-execute=>$proc) aber keinen
+Trigger-Body definieren.
+
+=item *
+
+Keine Klausel "OR REPLACE" bei Triggern (-replace=>1 wird ignoriert)
+
+=back
+
+=head3 dropTrigger() - Generiere Statement zum Entfernen eines Triggers
+
+=head4 Synopsis
+
+    $stmt = $sql->dropTrigger($name);
+
+=head4 Description
+
+B<Oracle>
+
+    DROP TRIGGER <name>
+
+=head3 enableTrigger() - Generiere Statement zum Anschalten eines Triggers
+
+=head4 Synopsis
+
+    $stmt = $sql->enableTrigger($table,$tigger);
+
+=head4 Description
+
+B<PostgreSQL>
+
+    ALTER TABLE <table> ENABLE TRIGGER <trigger>
+
+=head3 disableTrigger() - Generiere Statement zum Abschalten eines Triggers
+
+=head4 Synopsis
+
+    $stmt = $sql->disableTrigger($table,$tigger);
+
+=head4 Description
+
+B<PostgreSQL>
+
+    ALTER TABLE <table> DISABLE TRIGGER <trigger>
+
+=head2 View
+
+=head3 createView() - Generiere CREATE VIEW Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->createView($viewName,$selectStmt);
+
+=head4 Description
+
+Generiere ein CREATE VIEW Statement und liefere dieses zurück.
+
+=head3 dropView() - Generiere DROP VIEW Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->dropView($viewName);
+
+=head2 Privileges
+
+=head3 grant() - Generiere GRANT Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->grant($objType,$objName,$privs,$roles);
+
+=head4 Description
+
+Generiere ein GRANT-Statement und liefere dieses zurück.
+
+=head4 Example
+
+=over 2
+
+=item *
+
+PostgreSQL GRANT auf Tabelle
+
+    $stmt = $sql->grant('TABLE','tab1','ALL','PUBLIC');
+
+generiert
+
+    GRANT ALL
+        ON TABLE tab1
+        TO PUBLIC
+
+=back
+
+=head3 grantUser() - Generiere GRANT Statement für Benutzerrechte
+
+=head4 Synopsis
+
+    $stmt = $sql->grantUser($userName,$privs);
+
+=head4 Example
+
+=over 2
+
+=item *
+
+Oracle GRANT für Benutzer
+
+    $stmt = $sql->grantUser('user1','connect, resource, dba');
+
+generiert
+
+    GRANT connect, resource, dba
+        TO user1
+
+=back
+
+=head2 Transactions
+
+=head3 begin() - Generiere BEGIN Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->begin;
+
+=head3 commit() - Generiere COMMIT Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->commit;
+
+=head3 rollback() - Generiere ROLLBACK Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->rollback;
+
+=head2 Data Manipulation
+
+=head3 select() - Generiere SELECT Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->select($stmt,@opt);
+    $stmt = $sql->select($table,@opt);
+    $stmt = $sql->select(@opt);
+
+=head4 Options
+
+=over 4
+
+=item -args, $name => $value, ...
+
+=item -args => "$name=$value,..."
+
+Ersetze im SELECT-Statement den Platzhalter "__$name__" durch $value.
+Mehrere Name/Wert-Kombinationen können angegeben werden.
+
+=item -comment => $text (Default: keiner)
+
+Setze Kommentar mit dem ein- oder mehrzeiligen Text $text an den
+Anfang des Statement.
+
+=item -select => @selectExpr (Default: '*')
+
+Generiere eine SELECT-Klausel aus den Ausdrücken @selectExpr.  Die
+Ausdrücke werden mit Komma separiert. Ist kein Select-Ausdrück
+spezifiziert, wird '*' angenommen.
+
+Platzhalter: %SELECT%
+
+=item -distinct => $bool (Default: keiner)
+
+Generiere "SELECT DISTINCT" statement.
+
+Schlüsselwort "DISTINCT" wird in %SELECT%-Platzhalter mit eingsetzt.
+
+=item -hint => $hint (Default: keiner)
+
+Setze im Statement hinter das Schlüsselwort SELECT einen
+Hint, d.h. einen Kommentar in der Form /*+ ... */. (nur Oracle)
+
+hint wird in %SELECT%-Platzhalter mit eingsetzt.
+
+=item -from => @fromExpr (Default: keiner)
+
+Generiere eine FROM-Klausel aus den Ausdrücken @fromExpr.
+Die Ausdrücke werden mit Komma separiert. Die FROM-Klausel ist
+bei Oracle eine Pflichtangabe.
+
+Platzhalter: %FROM%
+
+-from ist die Defaultoption, d.h. ist als erster Parameter keine
+Option angegeben, werden die folgenden Parameter als
+Tabellennamen interpretiert.
+
+=item -where => @whereExpr (Default: keiner)
+
+Generiere eine WHERE-Klausel aus den Ausdrücken @whereExpr.
+Die Ausdrücke werden mit 'AND' separiert.
+
+Platzhalter: %WHERE%
+
+=item -groupBy => @groupExpr (Default: keiner)
+
+Generiere eine GROUP BY-Klausel aus den Ausdrücken @groupExpr.
+Die Ausdrücke werden mit Komma separiert.
+
+Platzhalter: %GROUPBY%
+
+=item -having => @havingExpr (Default: keiner)
+
+Generiere eine HAVING-Klausel aus den Ausdrücken @havingExpr.
+Die Ausdrücke werden mit Komma separiert.
+
+Platzhalter: %HAVING%
+
+=item -orderBy => @orderExpr (Default: keiner)
+
+Generiere eine ORDER BY-Klausel aus den Ausdrücken @orderExpr.
+Die Ausdrücke werden mit Komma separiert.
+
+Platzhalter: %ORDERBY%
+
+=item -limit => $n (Default: keiner)
+
+Generiere eine LIMIT-Klausel.
+
+Platzhalter: %LIMIT%
+
+=item -offset => $n (Default: keiner)
+
+Generiere eine OFFSET-Klausel.
+
+Platzhalter: %OFFSET%
+
+=item -stmt => $stmt (Default: keiner)
+
+Liefere $stmt als Statement. Enthält $stmt Platzhalter,
+werden diese durch die entsprechenden Komponenten ersetzt
+(noch nicht implementiert).
+
+=back
+
+=head4 Description
+
+Konstruiere ein SELECT-Statement aus den Parametern und liefere
+dieses zurück.
+
+Ist das erste Argument keine Option und enthält es Whitespace,
+wird es als SQL-Statement interpretiert. Enthält es kein Whitespace, wird
+es als Tabellenname interpretiert.
+
+B<Besonderheiten>
+
+=over 2
+
+=item *
+
+Oracle: FROM-Klausel
+
+Bei Oracle ist die FROM-Klausel eine Pflichtangabe, fehlt sie,
+wird "FROM dual" generiert.
+
+=item *
+
+Oracle: LIMIT und OFFSET
+
+Oracle unterstützt weder LIMIT noch OFFSET.
+
+Im Falle von Oracle wird keine LIMIT-Klausel generiert, sondern
+die WHERE-Klausel um "ROWNUM <= $n" erweitert.
+
+Ist im Falle von Oracle OFFSET angegeben, wird eine Exception
+ausgelöst.
+
+=back
+
+B<FROM-Aliase>
+
+Bei PostgreSQL ist ein FROM-Alias zwingend erforderlich, wenn die
+FROM-Klausel ein Ausdruck ist statt ein Tabellenname, z.B.
+
+    ... FROM (<SELECT_STMT>) AS x ...
+
+Bei Oracle ist ein Alias in dem Fall nicht erforderlich, kann aber
+angegeben werden. Ein FROM-Alias wird bei Oracle aber IL<lt>nicht> mit
+"AS" eingeleitet. Das "AS" muss weggelassen werden.
+
+=head4 Example
+
+=over 2
+
+=item *
+
+SELECT ohne Option mit einem Argument
+
+    $stmt = $sql->select('x');
+    =>
+    SELECT
+        *
+    FROM
+        x
+
+=item *
+
+SELECT ohne Option mit mehreren Argumenten
+
+    $stmt = $sql->select('x',vorname=>'Elli',nachname=>'Pirelli');
+    =>
+    SELECT
+        *
+    FROM
+        x
+    WHERE
+        vorname = 'Elli'
+        AND nachname = 'Pirelli'
+
+=item *
+
+SELECT mit Statement-Platzhaltern
+
+    $stmt = $sql->select("
+        SELECT
+            *
+        FROM
+            x
+        WHERE
+            vorname = '__VORNAME__'
+            AND nachname = '__NACHNAME__'
+        ",
+        -args =>
+             VORNAME => 'Elli',
+             NACHNAME => 'Pirelli'
+    );
+    =>
+    SELECT
+        *
+    FROM
+        x
+    WHERE
+        vorname = 'Elli'
+        AND nachname = 'Pirelli'
+
+=item *
+
+SELECT mit Statement-Muster
+
+    my $select = <<'__SQL__';
+    SELECT
+        %SELECT%
+    FROM
+        station sta LEFT JOIN parameter par
+        ON par_station_id = sta_id
+    __SQL__
+    
+    $stmt = $sql->select(
+        -stmt=>$select,
+        -select=>qw/sta_id sta_name par_id par_name/,
+        -orderBy=>qw/sta_name par_name/,
+    );
+    =>
+    SELECT
+        sta_id,
+        sta_name,
+        par_id,
+        par_name
+    FROM
+        station sta LEFT JOIN parameter par
+        ON par_station_id = sta_id
+    ORDER BY
+        sta_name,
+        par_name
+
+=back
+
+=head3 insert() - Generiere INSERT-Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->insert($table,$row);
+    $stmt = $sql->insert($table,%keyVal);
+    $stmt = $sql->insert($table,@keyVal);
+    $stmt = $sql->insert($table,\@keys,\@vals);
+
+=head4 Description
+
+Generiere ein INSERT-Statement für Tabelle $table mit den Kolumnen
+und Werten %keyVal bzw. @keyVal bzw. @keys,@vals und liefere
+dieses zurück.
+
+Schlüssel/Wert-Paare ohne Wert (Leerstring, undef) werden
+ausgelassen. Damit ist sichergestellt, dass der Defaultwert der
+Kolumne verwendet wird, wenn einer auf der Datenbank deklariert
+ist.
+
+Ist der Kolumnenwert eine String-Referenz, wird der Wert ohne
+Anführungsstriche in das Statement eingesetzt. Auf diese Weise
+können per SQL berechnete Werte (Expressions) eingesetzt werden.
+
+Ist die Liste der Schlüssel/Wert-Paare leer oder sind alle
+Werte leer, wird ein Null-Statement (Leerstring) geliefert.
+
+=head4 Example
+
+=over 2
+
+=item *
+
+Normales INSERT, Schlüssel/Wert-Paare
+
+    $stmt = $sql->insert('person',
+        per_id=>10,
+        per_vorname=>'Hanno',
+        per_nachname=>'Seitz',
+        per_geburtstag=>undef,
+    );
+    
+    =>
+    
+    INSERT INTO person
+    (
+        per_id,
+        per_vorname,
+        per_nachname,
+    )
+    VALUES
+    (
+        '10',
+        'Hanno',
+        'Seitz',
+    )
+
+=item *
+
+Normales Insert, Schlüssel und Werte als getrennte Listen
+
+    @keys = qw/per_id per_vorname per_nachname per_geburtstag/;
+    @vals = (10,'Hanno','Seitz',undef);
+    $stmt = $sql->insert('person',\@keys,\@vals);
+    
+    =>
+    
+    INSERT INTO person
+    (
+        per_id,
+        per_vorname,
+        per_nachname,
+    )
+    VALUES
+    (
+        '10',
+        'Hanno',
+        'Seitz',
+    )
+
+=item *
+
+INSERT mit berechnetem Kolumnenwert
+
+    $stmt = $sql->insert('objekt',
+        obj_id=>4711,
+        obj_letzteaenderung=>\'SYSDATE',
+    );
+    
+    =>
+    
+    INSERT INTO objekt
+    (
+        obj_id,
+        obj_letzteaenderung
+    )
+    VALUES
+    (
+        '4711',
+        SYSDATE
+    )
+
+=item *
+
+Null-Statements
+
+    $stmt = $sql->insert('person');
+    
+    =>
+    
+    ''
+    
+    $stmt = $sql->insert('person',
+        per_id=>'',
+        per_vorname=>'',
+        per_nachname=>'',
+        per_geburtstag=>'',
+    );
+    
+    =>
+    
+    ''
+
+=item *
+
+INSERT mit Platzhaltern
+
+    $stmt = $sql->insert('person',
+        per_id=>\'?',
+        per_vorname=>\'?',
+        per_nachname=>\'?',
+        per_geburtstag=>\'?',
+    );
+    
+    INSERT INTO person
+    (
+        per_id,
+        per_vorname,
+        per_nachname,
+        per_geburtstag
+    )
+    VALUES
+    (
+        ?,
+        ?,
+        ?,
+        ?
+    )
+
+=back
+
+=head3 update() - Generiere UPDATE Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->update($table,@keyVal,-where,@where);
+
+=head4 Example
+
+    $stmt = $sql->update('person',
+        per_geburtstag=>'7.4.2000',
+        -where,per_id=>4711,
+    );
+
+=head3 delete() - Generiere DELETE Statement
+
+=head4 Synopsis
+
+    $stmt = $sql->delete($table,@opt,@where);
+
+=head4 Options
+
+=over 4
+
+=item -hint => $hint (Default: undef)
+
+Füge Hint (Oracle) in Statement ein.
+
+=back
+
+=head2 Operators and Functions
+
+=head3 Vergleichsoperatoren: <EXPR> <OP> <EXPR>
+
+    !=
+    <
+    <=
+    =
+    >
+    >=
+    (NOT) BETWEEN
+    (NOT) IN
+    (NOT) LIKE
+
+=head3 Aggregatfunktionen: <OP>(<EXPR>)
+
+    Implement.
+    ------------
+    AVG
+    COUNT
+    MAX
+    MIN
+    SUM
+                  Oracle       PostgreSQL   SQLite       MySQL
+                  ------------ ------------ ------------ ------------
+                                            GROUP_CONCAT
+                                            TOTAL
+
+=head3 Funktionen: <OP>(<EXPR>,...)
+
+    Implement.    Oracle       PostgreSQL   SQLite       MySQL
+    ------------- ------------ ------------ ------------ ------------
+                                            ABS
+                                            COALESCE
+                                            GLOB
+                                            IFNULL
+                                            HEX
+                                            LENGTH
+    LOWER         LOWER        LOWER        LOWER
+                                            LTRIM
+                                            MAX
+                                            MIN
+                                            NULLIF
+                                            QUOTE
+                                            RANDOM
+                                            RANDOMBLOB
+                                            REPLACE
+                                            ROUND
+                                            RTRIM
+    SUBSTR        SUBSTR       SUBSTR       SUBSTR
+                                            TRIM
+                                            TYPEOF
+    UPPER         UPPER        UPPER        UPPER
+    CAT           ||                        ||
+
+=head3 opFunc() - Generiere Funktionsaufruf
+
+=head4 Synopsis
+
+    $sqlExpr = $sql->opFunc($op,@args);
+
+=head4 Description
+
+Generiere Funktionsaufruf "<OP>(<EXPR1>, <EXPR2>, ...)" und
+liefere diesen zurück.
+
+Diese Methode wird zur Generierung von portablen Funktionsausdrücken
+wie UPPER, LOWER, MIN, MAX, SUBSTR, etc. benutzt.
+
+=head3 opRel() - Generiere rechte Seite eines Vergleichsausdrucks
+
+=head4 Synopsis
+
+    $sqlExpr = $sql->opRel($op,$arg);
+
+=head4 Description
+
+Generiere Ausdruck "<OP> <EXPR>" und liefere diesen zurück.
+
+=head3 opAS() - Generiere AS-Ausdruck (Alias)
+
+=head4 Synopsis
+
+    $sqlExpr = $sql->opAS($op,$arg,$name);
+
+=head4 Description
+
+Generiere Ausdruck "<EXPR> AS <NAME>" und liefere diesen zurück.
+
+=head3 opBETWEEN() - Generiere BETWEEN-Ausdruck
+
+=head4 Synopsis
+
+    $sqlExpr = $sql->opBETWEEN($op,$arg1,$arg2);
+
+=head4 Description
+
+Generiere Ausdruck "BETWEEN <EXPR1> AND <EXPR2>" und liefere diesen zurück.
+
+=head3 opCASEXPR() - Generiere CASE-Ausdruck
+
+=head4 Synopsis
+
+    $sqlExpr = $sql->opCASEXPR($op,@args);
+
+=head4 Description
+
+Für diff() implementiert, funktioniert aber nicht.
+
+=head3 opCAST() - Generiere CAST-Ausdruck (Wandlung Datentyp)
+
+=head4 Synopsis
+
+    $sqlExpr = $sql->opCAST($op,$dataType,$arg);
+
+=head3 opIN() - Generiere IN-Ausdruck
+
+=head4 Synopsis
+
+    $sqlExpr = $sql->opIN($op,@arr);
+
+=head4 Description
+
+Generiere Ausdruck "IN (VAL1, VAL2, ...)" und liefere diesen zurück.
+
+=head2 Expressions
+
+=head3 keyExpr() - Generiere SQL Identifier-Ausdruck
+
+=head4 Synopsis
+
+    $sqlExpr = $sql->keyExpr($expr);
+
+=head4 Description
+
+Generiere einen SQL Bezeichner-Ausdruck zum portablen Ausdruck $expr
+und liefere den generierten Ausdruck zurück.
+
+Ein Bezeichner-Ausdruck ist ein Ausdruck, wie er in der Select-Liste
+und auf der linken Seite von WHERE-Klausel-Bedingungen vorkommt.
+Er zeichnet sich dadurch aus, dass seine elementaren Komponenten
+ungequotete Bezeichner sind (und keine Werte).
+
+=head4 Example
+
+=over 2
+
+=item *
+
+Einfacher Bezeichner
+
+    $sql->keyExpr('per_id');
+    ==>
+    "per_id"
+
+=item *
+
+Ausdruck als Zeichenkette (nicht empfohlen, da nicht portabel)
+
+    $sql->keyExpr('UPPER(per_nachname)');
+    ==>
+    "UPPER(per_nachname)"
+
+=item *
+
+Portabler Ausdruck
+
+    $sql->keyExpr(['UPPER',['per_nachname']]);
+    ==>
+    "UPPER(per_nachname)"
+
+=item *
+
+Portabler Ausdruck mit Stringreferenz (wird String-Literal)
+
+    $sql->keyExpr(['UPPER',[\'Ratlos']]);
+    ==>
+    "UPPER('Ratlos')"
+
+=back
+
+=head3 valExpr() - Generiere SQL Wert-Ausdruck
+
+=head4 Synopsis
+
+    $sqlExpr = $sql->valExpr($expr);
+
+=head4 Description
+
+Generiere einen SQL Wert-Ausdruck zum portablen Ausdruck $expr
+und liefere den generierten Ausdruck zurück.
+
+Ein Wert-Ausdruck ist ein Ausdruck, wie er auf der rechten Seite
+von WHERE-Klausel-Bedingungen vorkommt. Er zeichnet sich dadurch aus,
+dass seine elementaren Komponenten Literale, keine Bezeichner sind.
+
+=head4 Example
+
+=over 2
+
+=item *
+
+Literal
+
+    $sql->valExpr('Kai Nelust');
+    ==>
+    "'Kai Nelust'"
+
+=item *
+
+Ausdruck
+
+    $sql->valExpr(\'USERNAME');
+    ==>
+    "USERNAME"
+
+=item *
+
+Portabler Ausdruck
+
+    $sql->valExpr(['UPPER','Kai Nelust']);
+    ==>
+    "UPPER('Kai Nelust')"
+
+=item *
+
+Portabler Ausdruck mit Stringreferenz (wird Identifier-Ausdruck)
+
+    $sql->valExpr(['LOWER',\'USERNAME']);
+    ==>
+    "LOWER(USERNAME)"
+
+=back
+
+=head3 whereExpr() - Generiere rechte Seite eines WHERE-Ausdrucks
+
+=head4 Synopsis
+
+    $sqlExpr = $sql->whereExpr($expr);
+
+=head4 Description
+
+Generiere die rechte Seite eines WHERE-Ausdrucks zum portablen
+Ausdruck $expr und liefere den generierten Ausdruck zurück.
+
+Der Ausdruck besteht aus einem Operator gefolgt von einem Wert-Ausdruck.
+
+=head4 Example
+
+=over 2
+
+=item *
+
+Literal
+
+    $sql->whereExpr('Kai Nelust');
+    ==>
+    "= 'Kai Nelust'"
+
+=item *
+
+Ausdruck
+
+    $sql->whereExpr(\'USERNAME');
+    ==>
+    "= USERNAME"
+
+=item *
+
+Portabler Ausdruck
+
+    $sql->whereExpr(['!=',['UPPER','Kai Nelust']]);
+    ==>
+    "!= UPPER('Kai Nelust')"
+
+=item *
+
+Portabler Ausdruck mit Stringreferenz (wird Identifier-Ausdruck)
+
+    $sql->whereExpr(['!=',['LOWER',\'USERNAME']]);
+    ==>
+    "!= LOWER(USERNAME)"
+
+=back
+
+=head3 expr() - Wandele portablen Ausdruck in SQL-Ausdruck
+
+=head4 Synopsis
+
+    $str = $sql->expr($type,$op,@args);
+
+=head3 stringLiteral() - Generiere SQL Stringliteral
+
+=head4 Synopsis
+
+    $literal = $sql->stringLiteral($str);
+    $literal = $sql->stringLiteral($str,$default);
+
+=head4 Description
+
+Verdoppele alle in $str enthaltenen einfachen Anführungsstriche,
+fasse den gesamten String in einfache Anführungsstriche ein und
+liefere das Resultat zurück.
+
+Ist der String leer ('' oder undef) liefere einen Leerstring
+(kein leeres String-Literal!). Ist $default angegeben, liefere diesen
+Wert.
+
+B<Anmerkung>: PostgreSQL erlaubt aktuell Escape-Sequenzen in
+String-Literalen. Wir behandeln diese nicht. Escape-Sequenzen sollten in
+postgresql.conf abgeschaltet werden mit der Setzung:
+
+    standard_conforming_strings = on
+
+=head4 Examples
+
+Eingebettete Anführungsstriche:
+
+    $sel->stringLiteral('Sie hat's');
+    =>
+    "'Sie hat''s'"
+
+Leerstring, wenn kein Wert:
+
+    $sel->stringLiteral('');
+    =>
+    ""
+
+'NULL', wenn kein Wert:
+
+    $sel->stringLiteral('','NULL');
+    =>
+    "NULL"
+
+=head3 selectClause() - Liefere SELECT-Klausel
+
+=head4 Synopsis
+
+    $selectClause = $sql->selectClause(@select);
+
+=head3 fromClause() - Liefere FROM-Klausel
+
+=head4 Synopsis
+
+    $fromClause = $sql->fromClause(@from);
+
+=head4 Description
+
+Wandele die Liste von From-Elementen, @from, in eine FROM-Klausel
+und liefere diese zurück.
+
+Die Elemente werden mit Komma als Trennzeichen konkateniert und
+folgendermaßen behandelt:
+
+=over 4
+
+=item 'string'
+
+Eine Zeichenkette wird nicht verändert.
+
+=item ['AS',$fromExpr,$alias]
+
+Es wird ein FROM-Alias erzeugt. Dieser hat entweder den Aufbau
+"expr AS alias" oder "fromExpr alias", abhängig vom DBMS.
+Oracle akzeptiert "fromExpr AS alias" nicht.
+
+=back
+
+=head3 whereClause() - Liefere WHERE-Klausel
+
+=head4 Synopsis
+
+    $where = $sql->whereClause(@where);
+
+=head4 Description
+
+Wenn +null in @where vorkommt, werden alle folgenden
+leeren Bedingungen nicht übergangen.
+
+=head3 setClause() - Liefere SET-Klausel für UPDATE-Statement
+
+=head4 Synopsis
+
+    $set = $sql->setClause(@keyVal);
+
+=head3 exists() - Liefere EXISTS-Klausel
+
+=head4 Synopsis
+
+    $str = $sql->exists(@opt,@select);
+
+=head4 Options
+
+=over 4
+
+=item -active => $bool (Default: 1)
+
+Bedingung, unter der die EXISTS-Klausel gilt. Ist $bool falsch, liefert
+die Methode eine leere Liste (Array-Kontext) oder einen Leerstring
+(Skalar-Kontext), d.h. die Klausel kann in der Verarbeitung
+ignoriert werden.
+
+=item -not => $bool (Default: 0)
+
+Liefere NOT EXISTS Klausel.
+
+=back
+
+=head3 notExists() - Liefere NOT EXISTS-Klausel
+
+=head4 Synopsis
+
+    $str = $sql->notExists(@select);
+
+=head2 Spezielle Konstrukte
+
+=head3 diff() - Liefere SELECT zur Differenzermittlung
+
+=head4 Synopsis
+
+    $stmt = $sql->diff(
+        $keyCol,
+        $fromClause,
+        [$type,$col1,$col2,$col2Expr],
+        ...
+        @where,
+        @selOpts
+    );
+
+=head4 Example
+
+    $tab = $db->diff(
+        't.id',
+        "de_ticket t LEFT OUTER JOIN spielgemeinschaftanteil s\n".
+        'ON t.id = s.spielid*65536+1',
+        ['N','t.subscription'=>'s.dauerschein'],
+        ['N','t.product_id'=>'s.spielgemeinschaftid',
+            \'CASE %C WHEN 9685 THEN 24 WHEN 9684 THEN 26 WHEN 9687 THEN 28 END',
+        ],
+        't.product_ticket_type'=>'LOTTERY_CLUB_TICKET',
+        -limit=>100,
+    );
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Sql.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

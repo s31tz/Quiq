@@ -1,0 +1,102 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Assert - Zusicherungen
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 METHODS
+
+=head2 Klassenmethoden
+
+=head3 isNumber() - Prüfe auf dezimale Zahldarstellung
+
+=head4 Synopsis
+
+    $class->isNumber($val,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $val
+
+Wert, der geprüft wird.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -name => $str
+
+Name, der bei Verletzung der Bedingung als Teil der Fehlermeldung
+ausgegeben wird. Dies kann der Name der geprüften Variable,
+des geprüften Parameters o.ä. sein.
+
+=back
+
+=head4 Description
+
+Prüfe den Wert $val daraufhin, dass er eine dezimale Zahl
+darstellt. Ist dies nicht der Fall, wirf eine Exception.  Ein
+leerer Wert wird übergangen.
+
+=head3 notNull() - Prüfe auf nichtleeren Wert
+
+=head4 Synopsis
+
+    $class->notNull($val,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $val
+
+Wert, der geprüft wird.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -name => $str
+
+Name, der bei Verletzung der Bedingung als Teil der Fehlermeldung
+ausgegeben wird. Dies kann der Name der geprüften Variable,
+des geprüften Parameters o.ä. sein.
+
+=back
+
+=head4 Description
+
+Prüfe den Wert $val daraufhin, dass er nichtleer, also weder
+undefiniert noch ein Leerstring ist. Ist er leer, wirf
+eine Exception.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Assert.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

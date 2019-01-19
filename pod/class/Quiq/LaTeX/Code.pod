@@ -1,0 +1,164 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::LaTeX::Code - Generator für LaTeX Code
+
+=head1 BASE CLASS
+
+L<Quiq::TeX::Code|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/TeX/Code.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert einen LaTeX
+Code-Generator. Mit den Methoden der Klasse kann aus einem
+Perl-Programm heraus LaTeX-Code erzeugt werden. Die Klasse stützt
+sich ab auf ihre Basisklasse Quiq::TeX::Code. Weitere Methoden
+siehe dort.
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere LaTeX Code-Generator
+
+=head4 Synopsis
+
+    $l = $class->new;
+
+=head4 Description
+
+Instantiiere einen LaTeX Code-Generator und liefere eine Referenz
+auf dieses Objekt zurück.
+
+=head2 Objektmethoden
+
+=head3 protect() - Schütze LaTeX Metazeichen
+
+=head4 Synopsis
+
+    $code = $l->protect($text);
+
+=head4 Description
+
+Schütze LaTeX-Metazeichen in $text und liefere den resultierenden
+Code zurück.
+
+Liste/Erläuterung der LaTeX-Metazeichen:
+L<https://www.namsu.de/Extra/strukturen/Sonderzeichen.html>
+
+=head4 Examples
+
+B<Dollarzeichen>
+
+    $l->protect('Der Text $text wird geschützt.');
+
+produziert
+
+    Der Text \$text wird geschützt.
+
+=head3 env() - Erzeuge LaTeX-Umgebung
+
+=head4 Synopsis
+
+    $code = $l->env($name,$body,@args);
+
+=head4 Options
+
+Siehe Methode $t->macro(). Weitere Optionen:
+
+=over 4
+
+=item -indent => $n (Default: 2)
+
+Rücke den Inhalt der Umgebung für eine bessere
+Quelltext-Lesbarkeit um $n Leerzeichen ein. Achtung: In einer
+Verbatim-Umgebung hat dies Auswirkungen auf die Darstellung und
+sollte in dem Fall mit C<< -indent => 0 >> abgeschaltet werden.
+
+=back
+
+=head4 Description
+
+Erzeuge eine LaTeX-Umgebung und liefere den resultierenden Code
+zurück. Body $body und @args können in beliebiger Reihenfolge
+auftreten.
+
+=head4 Examples
+
+B<Document-Umgebung mit Text>
+
+    $l->env('document','Dies ist ein Text.');
+
+produziert
+
+    \begin{document}
+      Dies ist ein Text.
+    \end{document}
+
+=head3 section() - Erzeuge LaTeX Section
+
+=head4 Synopsis
+
+    $code = $l->section($sectionName,$title);
+
+=head4 Arguments
+
+=over 4
+
+=item $sectionName
+
+Name des LaTeX-Abschnitts. Mögliche Werte: 'part', 'chapter', 'section',
+'subsection', 'susubsection', 'paragraph', 'subparagraph'.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -label => $label
+
+Kennzeichne Abschnitt mit Label $label.
+
+=item -notToc => $bool (Default: 0)
+
+Nimm die Überschrift nicht ins Inhaltsverzeichnis auf.
+
+=back
+
+=head4 Description
+
+Erzeuge ein LaTeX Section und liefere den resultierenden Code
+zurück.
+
+=head4 Examples
+
+B<Ein Abschnitt der Ebene 1>
+
+    $l->section('subsection','Ein Abschnitt');
+
+produziert
+
+    \subsection{Ein Abschnitt}
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/LaTeX/Code.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

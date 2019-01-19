@@ -1,0 +1,120 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::ImagePool::Directory - Unterverzeichnis eines Image-Pool
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Directory-Objekt
+
+=head4 Synopsis
+
+    $dir = $class->new($path);
+
+=head4 Arguments
+
+=over 4
+
+=item path
+
+Verzeichnis-Pfad.
+
+=back
+
+=head2 Sequenzen
+
+=head3 sequence() - Lookup Sequence-Objekt nach Name
+
+=head4 Synopsis
+
+    $seq = $dir->sequence($name,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $name
+
+Name der Sequenz.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -sloppy => $bool (Default: 0)
+
+Liefere undef, wenn die Sequenz-Datei nicht existiert oder
+keinen Range definiert.
+
+=back
+
+=head4 Description
+
+Liefere das Sequenz-Objekt mit Name $name. Das Objekt wird
+gecached. Existiert das Verzeichnis nicht, wird eine Exception
+geworfen, es sei denn, die Option -sloppy ist gesetzt.
+
+=head2 Bilder
+
+=head3 images() - Liste von Bildern aus dem Verzeichnis
+
+=head4 Synopsis
+
+    @images|$imageA = $dir->images($key);
+
+=head4 Description
+
+Liefere die Bild-Teilmenge $key. Der Schlüssel $key kann die
+Ausprägungen annehmen:
+
+=over 2
+
+=item *
+
+nicht agegeben oder leer
+
+=item *
+
+Sequenz-Bezeichner SEQUENCE
+
+=item *
+
+Range-Bezeichner SEQUENCE/RANGE
+
+=back
+
+=head3 image() - Lookup Bild-Objekt nach Bild-Nummer
+
+=head4 Synopsis
+
+    $img = $dir->image($n);
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/ImagePool/Directory.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

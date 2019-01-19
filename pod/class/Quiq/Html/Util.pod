@@ -1,0 +1,41 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Html::Util - Hilfsmethoden für die HTML-Generierung
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 METHODS
+
+=head2 Klassenmethoden
+
+=head3 insertDurationBytes() - Füge Ausführungszeit und Byteanzahl ein
+
+=head4 Synopsis
+
+    $class->insertDurationBytes(\$html,$t0);
+    $html2 = $class->insertDurationBytes($html1,$t0);
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Html/Util.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

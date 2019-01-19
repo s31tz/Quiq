@@ -1,0 +1,152 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::File::Audio - Informationen über Audio-Datei
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Audio-Datei-Objekt
+
+=head4 Synopsis
+
+    $aud = $class->new($file);
+
+=head4 Description
+
+Instantiiere ein Audio-Datei-Objekt und liefere eine Referenz auf
+dieses Objekt zurück.
+
+=head2 Meta-Information
+
+=head3 artist() - Künstler
+
+=head4 Synopsis
+
+    $artist = $aud->artist;
+
+=head4 Description
+
+Liefere den Künstler der Audio-Datei.
+
+=head4 See Also
+
+L</extractMetaData>()
+
+=head3 title() - Titel
+
+=head4 Synopsis
+
+    $title = $aud->title;
+
+=head4 Description
+
+Liefere den Titel der Audio-Datei.
+
+=head4 See Also
+
+L</extractMetaData>()
+
+=head2 Objektmethoden
+
+=head3 bitrate() - Bitrate
+
+=head4 Synopsis
+
+    $bitrate = $aud->bitrate;
+
+=head4 Description
+
+Liefere die Bitrate der Audion-Datei (z.Zt. als Zeichenkette).
+
+=head3 duration() - Dauer
+
+=head4 Synopsis
+
+    $duration = $aud->duration;
+
+=head4 Description
+
+Liefere die Länge (Dauer) der Audio-Datei in Sekunden
+(ggf. mit Nachkommastellen).
+
+=head3 extension() - Extension
+
+=head4 Synopsis
+
+    $ext = $aud->extension;
+
+=head4 Description
+
+Liefere die Extension der Audio-Datei.
+
+=head4 See Also
+
+L</extractMetaData>()
+
+=head3 file() - Dateiname
+
+=head4 Synopsis
+
+    $file = $aud->file;
+
+=head4 Description
+
+Liefere den Dateinamen (Pfad) der Audio-Datei.
+
+=head2 Interne Methoden
+
+=head3 analyzeFile() - Analysiere Audio-Datei
+
+=head4 Synopsis
+
+    $aud->analyzeFile;
+
+=head4 Description
+
+Analysiere die Audio-Datei mit ffprobe und weise die ermittelten
+Eigenschaften an die betreffenden Attribute des Objektes zu.
+
+=head3 extractMetaData() - Ermittele Künstler und Titel
+
+=head4 Synopsis
+
+    $aud->extractMetaData;
+
+=head4 Description
+
+Zerlege den Dateiname in die Komponenten <Artist> und <Title>
+und weise sie den betreffenden Objektattributen zu.
+
+Es wird vorausgesetzt, dass der Dateiname folgenden Aufbau hat:
+
+    <Path>/<Artist> - <Title>.<Extension>
+
+Die Methode liefert keinen Wert zurück.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/File/Audio.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

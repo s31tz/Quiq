@@ -1,0 +1,922 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Path - Dateisystem-Operationen
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 DESCRIPTION
+
+Die Klasse definiert alle grundlegenden (link, mkdir, rename, symlink
+usw.) und komplexen (copy, glob, find usw.) Dateisystem-Operationen.
+Eine Dateisystem-Operation ist eine Operation auf einem I<Pfad>.
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+    $p = $class->new;
+
+=head4 Returns
+
+Path-Objekt
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
+dieses Objekt zurück. Da die Klasse ausschließlich Klassenmethoden
+enthält, hat das Objekt ausschließlich die Funktion, eine abkürzende
+Aufrufschreibweise zu ermöglichen.
+
+=head2 Datei-Operationen
+
+=head3 append() - Hänge Daten an Datei an
+
+=head4 Synopsis
+
+    $class->append($file,$data);
+
+=head4 Description
+
+Hänge Daten $data an Datei $file an. Die Methode liefert keinen
+Wert zurück.
+
+=head3 checkFileSecurity() - Prüfe, ob Datei nur für Owner lesbar ist
+
+=head4 Synopsis
+
+    $this->checkFileSecurity($file);
+
+=head4 Description
+
+Prüfe, ob die Datei $file nur für ihren Owner lesbar ist.
+Wenn nicht, wirf eine Exception.
+
+=head3 compare() - Prüfe, ob Inhalt differiert
+
+=head4 Synopsis
+
+    $bool = $class->compare($file1,$file2);
+
+=head4 Description
+
+Prüfe, ob der Inhalt der Dateien $file1 und $file2 differiert.
+Ist dies der Fall, liefere I<wahr>, andernfalls I<falsch>.
+
+=head3 compareData() - Prüfe, ob Datei-Inhalt von Daten differiert
+
+=head4 Synopsis
+
+    $bool = $class->compareData($file,$data);
+
+=head4 Alias
+
+different()
+
+=head4 Description
+
+Prüfe, ob der Inhalt der Datei $file von $data differiert. Ist dies
+der Fall, liefere I<wahr>, andernfalls I<falsch>. Die Datei $file muss
+nicht existieren.
+
+=head3 copy() - Kopiere Datei
+
+=head4 Synopsis
+
+    $class->copy($srcPath,$destPath,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -createDir => $bool (Default: 0)
+
+Erzeuge Zielverzeichnis, falls es nicht existiert.
+
+=item -move => $bool (Default: 0)
+
+Lösche Quelldatei $srcPath nach dem Kopieren.
+
+=item -overwrite => $bool (Default: 1)
+
+Wenn gesetzt, wird die Zieldatei $destPath überschrieben, falls sie
+existiert. Andernfalls wird eine Exception geworfen.
+
+=item -preserve => $bool (Default: 0)
+
+Behalte den Zeitpunkt der letzten Änderung bei.
+
+=back
+
+=head4 Description
+
+Kopiere Datei $srcPath nach $destPath.
+
+=head3 copyToDir() - Kopiere Datei in Verzeichnis
+
+=head4 Synopsis
+
+    $class->copyToDir($srcFile,$destDir,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -createDir => $bool (Default: 0)
+
+Erzeuge Zielverzeichnis, falls es nicht existiert.
+
+=item -move => $bool (Default: 0)
+
+Lösche Quelldatei $srcPath nach dem Kopieren.
+
+=item -overwrite => $bool (Default: 1)
+
+Wenn gesetzt, wird die Zieldatei $destPath überschrieben, falls sie
+existiert. Andernfalls wird eine Exception geworfen.
+
+=item -preserve => $bool (Default: 0)
+
+Behalte den Zeitpunkt der letzten Änderung bei.
+
+=back
+
+=head4 Description
+
+Kopiere Datei $srcPath nach $destPath.
+
+=head3 duplicate() - Kopiere, bewege, linke oder symlinke Datei
+
+=head4 Synopsis
+
+    $class->duplicate($method,$srcPath,$destPath,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -preserve => $bool (Default: 0)
+
+Behalte den Zeitpunkt der letzten Änderung bei (nur bei 'copy'
+relevant).
+
+=back
+
+=head4 Description
+
+Mache Datei $srcPath nach Methode $method unter $destPath verfügbar.
+Werte für $method:
+
+    copy
+    move -or- rename
+    link
+    symlink
+
+=head3 encoding() - Liefere das Encoding der Datei
+
+=head4 Synopsis
+
+    $encoding = $class->encoding($path,$altEncoding);
+
+=head4 Description
+
+Analysiere Datei $path hinsichtlich ihres Character-Encodings
+und liefere den Encoding-Bezeichner zurück. Unterschieden werden:
+
+=over 2
+
+=item *
+
+ASCII
+
+=item *
+
+UTF-8
+
+=item *
+
+UTF-16/32 mit BOM
+
+=back
+
+und $altEncoding. Ist $altEncoding nicht angegeben, wird
+'ISO-8859-1' angenommen.
+
+Anmerkung: Die Datei wird zur Zeichensatz-Analyse vollständig eingelesen.
+Bei großen Dateien kann dies ineffizient sein.
+
+=head3 link() - Erzeuge (Hard)Link
+
+=head4 Synopsis
+
+    $class->link($path,$link);
+
+=head4 Description
+
+Erzeuge einen Hardlink $link auf Pfad $path.
+Die Methode liefert keinen Wert zurück.
+
+=head3 newlineStr() - Ermittele Zeilentrenner
+
+=head4 Synopsis
+
+    $nl = $class->newlineStr($file);
+
+=head4 Description
+
+Ermittele den physischen Zeilentrenner (CR, LF oder CRLF) der Datei
+$file und liefere diesen zurück. Wird kein Zeilentrenner gefunden,
+liefere undef.
+
+=head4 Example
+
+    local $/ = Quiq::Path->newlineStr($file);
+    
+    while (<$fh>) {
+        chomp;
+        # Zeile verarbeiten
+    }
+
+=head3 read() - Lies Datei
+
+=head4 Synopsis
+
+    $data = $class->read($file,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -autoDecode => $bool (Default: 0)
+
+Auto-Dekodiere die gelesenen Daten als Text und entscheide selbständig,
+ob es sich um UTF-8 oder ISO-8859-1 Encoding handelt.
+
+=item -decode => $encoding (Default: undef)
+
+Decodiere die Datei gemäß dem Encoding $encoding.
+
+=item -delete => $bool (Default: 0)
+
+Lösche Datei nach dem Lesen.
+
+=item -maxLines => $n (Default: 0)
+
+Lies höchstens $n Zeilen. Die Zählung beginnt nach den
+Skiplines (s. Option -skipLines). 0 bedeutet, lies alle Zeilen.
+
+=item -skip => $regex (Default: keiner)
+
+Überlies alle Zeilen, die das Muster $regex erfüllen. $regex
+wird als Zeichenkette angegeben. Die Option kann beispielsweise dazu
+verwendet werden, um Kommentarzeilen zu überlesen.
+
+=item -skipLines => $n (Default: 0)
+
+Überlies die ersten $n Zeilen.
+
+=back
+
+=head4 Description
+
+Lies den Inhalt der Datei und liefere diesen zurück.
+
+=head3 write() - Schreibe Datei
+
+=head4 Synopsis
+
+    $class->write($file); # leere Datei
+    $class->write($file,$data,@opt);
+    $class->write($file,\$data,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -append => $bool (Default: 0)
+
+Öffne die Datei im Append-Modus, d.h. hänge die Daten an die Datei an.
+
+=item -encode => $encoding (Default: keiner)
+
+Encodiere $data gemäß dem Encoding $encoding.
+
+=item -mode => $mode (Default: keiner)
+
+Setze die Permissions der Datei auf $mode. Beispiel: -mode=>0775
+
+=item -recursive => $bool (Default: 1)
+
+Erzeuge übergeordnete Verzeichnisse, wenn nötig.
+
+=back
+
+=head3 writeIfDifferent() - Schreibe Datei, wenn Inhalt differiert
+
+=head4 Synopsis
+
+    $class->writeIfDifferent($file,$data);
+
+=head3 writeInline() - Schreibe Inline-Daten in Datei
+
+=head4 Synopsis
+
+    $class->writeInline($file,<<'__EOT__',@opt);
+    DATA
+    ...
+    __EOT__
+
+=head2 Verzeichnis-Operationen
+
+=head3 find() - Liefere Pfade innerhalb eines Verzeichnisses
+
+=head4 Synopsis
+
+    @paths|$pathA = $class->find($path,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -decode => $encoding
+
+Dekodiere die Dateinamen gemäß dem angegebenen Encoding.
+
+=item -exclude => $regex (Default: keiner)
+
+Schließe alle Pfade aus, die Muster $regex erfüllen. Directories
+werden gepruned, d.h. sie werden nicht durchsucht. Matcht ein Pfad
+die Pattern sowohl von -pattern als auch -exclude, hat der
+exclude-Pattern Vorrang, d.h. die Datei wird ausgeschlossen.
+
+=item -follow => $bool (Default: 1)
+
+Folge Symbolic Links.
+
+=item -leavesOnly => $bool (Default: 0)
+
+Liefere nur Pfade, die kein Anfang eines anderen Pfads sind.
+Anwendungsfall: nur die Blatt-Verzeichnisse eines Verzeichnisbaums.
+
+=item -olderThan => $seconds (Default: 0)
+
+Liefere nur Dateien, die vor mindestens $seconds zuletzt geändert
+wurden. Diese Option ist z.B. nützlich, um veraltete temporäre Dateien
+zu finden, um sie zu löschen.
+
+=item -outHandle => $fh (Default: \*STDOUT)
+
+Filehandle, auf die Ausgabe im Falle von -verbose=>1 geschrieben
+werden.
+
+=item -pattern => $regex (Default: keiner)
+
+Schränke die Treffer auf jene Pfade ein, die Muster $regex
+erfüllen.  Matcht ein Pfad die Pattern sowohl von -pattern als
+auch -exclude, hat der exclude-Pattern Vorrang, d.h. die Datei
+wird ausgeschlossen.
+
+=item -slash => $bool (Default: 0)
+
+Füge einen Slash (/) am Ende von Directory-Namen hinzu.
+
+=item -sloppy => $bool (Default: 0)
+
+Wirf keine Exception, wenn $path nicht existiert, sondern liefere
+undef bzw. eine leere Liste.
+
+=item -subPath => $bool (Default: 0)
+
+Liefere nur den Subpfad, entferne also $path am Anfang.
+
+=item -testSub => sub {} (Default: undef)
+
+Subroutine, die den Pfad als Argument erthält und einen boolschen
+Wert liefert, der angibt, ob der Pfad zur Ergebnismenge gehört
+oder nicht.
+
+=item -type => 'd' | 'f' | undef (Default: undef)
+
+Liefere nur Verzeichnisse ('d') oder nur, was kein Verzeichnis ist ('f'),
+oder liefere alles (undef).
+
+=item -verbose => $bool (Default: 0)
+
+Schreibe Meldungen auf Ausgabe-Handle (s. Option -outHandle).
+
+=back
+
+=head4 Description
+
+Finde alle Dateien und Verzeichnisse unterhalb von und einschließlich
+Verzeichnis $path und liefere die Liste der gefundenen Pfade
+zurück. Im Skalarkontext liefere eine Referenz auf die Liste.
+
+Ist $dir Null (Leerstring oder undef), wird das aktuelle Verzeichnis
+('.') durchsucht.
+
+Die Reihenfolge der Dateien ist undefiniert.
+
+=head3 findProgram() - Ermittele Pfad zu Programm
+
+=head4 Synopsis
+
+    $path = $class->findProgram($program);
+    $path = $class->findProgram($program,$sloppy);
+
+=head4 Arguments
+
+=over 4
+
+=item $program
+
+Name des Programms.
+
+=item $sloppy
+
+Wenn wahr, wird keine Exception geworfen, wenn das Programm nicht
+gefunden wird, sondern undef zurück geliefert.
+
+=back
+
+=head4 Returns
+
+Programmpfad (String)
+
+=head4 Description
+
+Suche Programm $program über den Suchpfad der Shell und liefere
+den vollständigen Pfad zurück. Wird das Programm nicht gefunden,
+wird eine Exception geworfen, sofern $sloppy nicht wahr ist.
+
+=head3 maxFilename() - Liefere den lexikalisch größten Dateinamen
+
+=head4 Synopsis
+
+    $max = $class->maxFilename($dir);
+
+=head4 Description
+
+Liefere den lexikalisch größten Dateinamen aus Verzeichnis $dir.
+
+=head3 maxFileNumber() - Liefere den numerisch größten Dateinamen
+
+=head4 Synopsis
+
+    $max = $class->maxFileNumber($dir,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -sloppy => $bool (Default: 0)
+
+Wirf keine Exception, wenn ein Dateiname nicht mit einer Nummer
+beginnt.
+
+=back
+
+=head4 Description
+
+Liefere den numerisch größten Dateinamen aus Verzeichnis $dir.
+Die Methode ist nützlich, wenn die Dateinamen mit einer Zahl
+NNNNNN beginnen und man die Datei mit der größten Zahl ermitteln
+möchte um einer neu erzeugten Datei die nächsthöhere Nummer
+zuzuweisen.
+
+=head3 mkdir() - Erzeuge Verzeichnis
+
+=head4 Synopsis
+
+    $class->mkdir($dir,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -createParent => $bool (Default: 0)
+
+Erzeuge nicht den angegebenen Pfad, sondern den Parent-Pfad.
+Dies ist nützlich, wenn der übergebene Pfad ein Dateiname ist,
+dessen Verzeichnis bei Nicht-Existenz erzeugt werden soll.
+Impliziert -recursive=>1, wenn nicht explizit -recursive=>0
+gesetzt ist.
+
+=item -forceMode => $mode (Default: keiner)
+
+Setze Verzeichnisrechte auf $mode ohne Berücksichtigung
+der umask des Prozesses.
+
+=item -mode => $mode (Default: 0775)
+
+Setze Verzeichnisrechte auf $mode mit Berücksichtigung
+der umask des Prozesses.
+
+=item -mustNotExist => $bool (Default: 0)
+
+Das Verzeichnis darf nicht existieren. Wenn es existiert, wird
+eine Exception geworfen.
+
+=item -recursive => 0 | 1 (Default: 0)
+
+Erzeuge übergeordnete Verzeichnisse, wenn nötig.
+
+=back
+
+=head4 Description
+
+Erzeuge Verzeichnis. Existiert das Verzeichnis bereits, hat
+der Aufruf keinen Effekt. Kann das Verzeichnis nicht angelegt
+werden, wird eine Exception ausgelöst.
+
+=head3 rmdir() - Lösche Verzeichnis
+
+=head4 Synopsis
+
+    $class->rmdir($dir);
+
+=head4 Arguments
+
+=over 4
+
+=item $dir
+
+Pfad des Verzeichnisses
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head4 Description
+
+Lösche Verzeichnis $dir, falls dieses leer ist. Kann das
+Verzeichnis nicht gelöscht werden, wird eine Exception ausgelöst.
+
+=head2 Pfad-Operationen
+
+=head3 absolute() - Expandiere Pfad zu absolutem Pfad
+
+=head4 Synopsis
+
+    $absolutePath = $class->absolute($path);
+
+=head4 Alias
+
+realPath()
+
+=head4 Description
+
+Ist $path ein relativer Pfad, expandiere ihn zu einem absolutem Pfad
+und liefere diesen zurück. Ist $path bereits absolut, liefere ihn
+unverändert.
+
+=head3 basename() - Grundname eines Pfads
+
+=head4 Synopsis
+
+    $basename = $class->basename($path,@opt);
+
+=head4 Alias
+
+baseName()
+
+=head4 Options
+
+=over 4
+
+=item -all => $bool (Default: 0)
+
+Entferne alle, nicht nur die erste Extension.
+
+=back
+
+=head4 Description
+
+Liefere den Grundnamen des Pfads, d.h. ohne Pfadanfang und Extension.
+
+=head3 chmod() - Setze Zugriffsrechte
+
+=head4 Synopsis
+
+    $class->chmod($path,$mode);
+
+=head4 Description
+
+Setze Zugriffsrechte $mode auf Pfad $path.
+
+=head3 delete() - Lösche Pfad (rekursiv)
+
+=head4 Synopsis
+
+    $class->delete($path);
+
+=head4 Description
+
+Lösche den Pfad aus dem Dateisystem, also entweder die Datei oder
+das Verzeichnis einschließlich Inhalt. Es ist kein Fehler, wenn
+der Pfad im Dateisystem nicht existiert. Existiert der Pfad und
+kann nicht gelöscht werden, wird eine Exception ausgelöst.
+Die Methode liefert keinen Wert zurück.
+
+=head3 exists() - Prüfe Existenz
+
+=head4 Synopsis
+
+    $bool = $this->exists($path);
+
+=head4 Description
+
+Prüfe, ob Pfad $path existiert und liefere den entsprechenden
+Wahrheitswert zurück. Die Methode expandiert ~ am Pfadanfang.
+
+=head3 expandTilde() - Expandiere Tilde
+
+=head4 Synopsis
+
+    $path = $class->expandTilde($path);
+
+=head4 Returns
+
+Pfad (String)
+
+=head4 Description
+
+Ersetze eine Tilde am Pfadanfang durch das Home-Verzeichnis des
+Benutzers und liefere den resultierenden Pfad zurück.
+
+=head3 extension() - Extension des Pfads
+
+=head4 Synopsis
+
+    $ext = $class->extension($path);
+
+=head4 Description
+
+Ermittele die Extension des Pfads $path und liefere diese zurück.
+Besitzt der Pfad keine Extension, liefere einen Leerstring ('').
+
+=head3 filename() - Letzte Pfadkomponente
+
+=head4 Synopsis
+
+    $filename = $class->filename($path);
+
+=head4 Description
+
+Liefere die letzte Komponente des Pfads.
+
+=head3 glob() - Liefere Pfade, die Shell-Pattern erfüllen
+
+=head4 Synopsis
+
+    $path = $class->glob($pat);
+    @paths = $class->glob($pat);
+
+=head4 Description
+
+Liefere die Pfad-Objekte, die Shell-Pattern $pat erfüllen.
+Im Skalarkontext liefere den ersten Pfad, der dann
+der einzig erfüllbare Pfad sein muss, sonst wird eine Exception
+geworfen.
+
+=head3 isEmpty() - Prüfe, ob Datei oder Verzeichnis leer ist
+
+=head4 Synopsis
+
+    $bool = $class->isEmpty($path);
+
+=head3 mode() - Liefere Zugriffsrechte
+
+=head4 Synopsis
+
+    $mode = $this->mode($path);
+
+=head4 Description
+
+Liefere die Zugriffsrechte des Pfads $path.
+
+=head4 Examples
+
+=over 2
+
+=item *
+
+Permissions oktal anzeigen
+
+    printf "%04o\n",Quiq::Path->mode('/etc/passwd');
+    0644
+
+=item *
+
+Prüfen, ob eine Datei für andere lesbar oder schreibbar ist
+
+    if ($mode & 00066) {
+        die "ERROR: File ist readable or writable for others\n";
+    }
+
+=back
+
+=head3 mtime() - Setze/Liefere Modifikationszeit
+
+=head4 Synopsis
+
+    $mtime = $class->mtime($path);
+    $mtime = $class->mtime($path,$mtime);
+
+=head4 Description
+
+Liefere die Zeit der letzten Modifikation des Pfads $path. Wenn der
+Pfad nicht existiert, liefere 0.
+
+Ist ein zweiter Parameter $mtime angegeben, setze die Zeit auf den
+angegebenen Wert. In dem Fall muss der Pfad existieren.
+
+=head3 newer() - Vergleiche Modifikationsdatum zweier Pfade
+
+=head4 Synopsis
+
+    $bool = $class->newer($path1,$path2);
+
+=head4 Description
+
+Prüfe, ob Pfad $path1 ein jüngeres Modifikationsdatum besitzt als
+$path2. Ist dies der Fall, liefere 1, andernfalls 0. Liefere
+ebenfalls 1, wenn Datei $path2 nicht existiert. Pfad
+$path1 muss existieren.
+
+Pfad $path2 kann eine Zeichenkette oder ein Pfad-Objekt sein.
+
+Dieser Test ist nützlich, wenn $path2 aus $path1 erzeugt wird
+und geprüft werden soll, ob eine Neuerzeugung notwendig ist.
+
+=head3 readlink() - Liefere Ziel des Symlink
+
+=head4 Synopsis
+
+    $path = $class->readlink($symlinkPath);
+
+=head4 Alias
+
+readLink()
+
+=head4 Description
+
+Liefere den Pfad, auf den der Symlink $symlinkPath zeigt.
+
+=head3 removeExtension() - Entferne Extension
+
+=head4 Synopsis
+
+    $newPath = $class->removeExtension($path);
+
+=head4 Description
+
+Entferne die Extension von Pfad $path und liefere den
+resultierenden Pfad zurück. Besitzt $path keine Extension, sind
+$path und $newPath identisch.
+
+=head3 rename() - Benenne Pfad um
+
+=head4 Synopsis
+
+    $class->rename($oldPath,$newPath,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -overwrite => $bool (Default: 1)
+
+Wenn gesetzt, wird die Datei $newPath überschrieben, falls sie
+existiert. Wenn nicht gesetzt, wird eine Exception geworfen,
+falls sie existiert.
+
+=item -recursive => 0 | 1 (Default: 0)
+
+Erzeuge nicht-existente Verzeichnisse des Zielpfads
+und entferne leere Verzeichnisse des Quellpfads.
+
+=back
+
+=head4 Description
+
+Benenne Pfad $oldPath in $newPath um. Die Methode liefert keinen
+Wert zurück.
+
+=head4 Example
+
+Zielpfad erzeugen, Quellpfad entfernen mit -recursive=>1.
+Ausgangslage: Unterhalb von /tmp existieren weder a noch x.
+
+    my $srcPath = '/tmp/a/b/c/d/f';
+    my $destPath = '/tmp/x/b/c/d/f';
+    Quiq::Path->write($srcPath,'',-recursive=>1);
+    Quiq::Path->rename($srcPath,$destPath,-recursive=>1);
+
+Nach Ausführung existiert der der Pfad /tmp/x/b/c/d/f, aber der Pfad
+/tmp/a nicht mehr.
+
+=head3 split() - Zerlege Pfad in seine Komponenten
+
+=head4 Synopsis
+
+    ($dir,$file,$base,$ext) = $class->split($path);
+
+=head4 Description
+
+Zerlege Pfad in die vier Komponenten Verzeichnisname, Dateiname,
+Basisname (= Dateiname ohne Extension) und Extension und liefere diese
+zurück.
+
+Für eine Komponente, die nicht existiert, wird ein Leerstring
+geliefert.
+
+=head3 symlink() - Erzeuge Symlink
+
+=head4 Synopsis
+
+    $class->symlink($path,$symlink);
+
+=head4 Description
+
+Erzeuge Symlink $symlink für Pfad $path.
+Die Methode liefert keinen Wert zurück.
+
+=head3 symlinkRelative() - Erzeuge Symlink mit relativem Zielpfad
+
+=head4 Synopsis
+
+    $class->symlinkRelative($path,$symlink,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -createDir => $bool (Default: 0)
+
+Erzeuge nicht-existente Verzeichnisse des Zielpfads.
+
+=item -dryRun => $bool (Default: 0)
+
+Führe das Kommando nicht aus. Speziell Verbindung mit
+-verbose=>1 sinnvoll, um Code zu testen.
+
+=item -verbose => $bool (Default: 0)
+
+Gib Informationen über die erzeugten Symlinks auf STDOUT aus.
+
+=back
+
+=head4 Description
+
+Erzeuge einen Symlink $symlink, der auf den Pfad $path verweist.
+Die Methode liefert keinen Wert zurück.
+
+Die Methode zeichnet sich gegenüber der Methode symlink() dadurch
+aus, dass sie, wenn $path ein relativer Pfad ist, diesen so korrigiert,
+dass er von $symlink aus korrekt ist. Denn der Pfad $path múss als
+relativer Pfad als Fortsetzung von $symlink gesehen werden.
+
+=head4 Example
+
+    Quiq::Path->symlinkRelative('a','x')
+    # x => a
+    
+    Quiq::Path->symlinkRelative('a/b','x')
+    # x => a/b
+    
+    Quiq::Path->symlinkRelative('a/b','x/y')
+    # x/y => ../a/b
+    
+    Quiq::Path->symlinkRelative('a/b','x/y/z')
+    # x/y/z => ../../a/b
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Path.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

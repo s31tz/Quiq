@@ -1,0 +1,330 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Template - Klasse für HTML/XML/Text-Generierung
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 EXAMPLE
+
+Template-Datei C<test.html> oder Template-String C<$str>:
+
+    <html>
+    <head>
+      <title>__TITLE__</title>
+    </head>
+    <body>
+      __BODY__
+    </body>
+
+Code:
+
+    $tpl = Quiq::Template->new('html','test.html');
+    -oder-
+    $tpl = Quiq::Template->new('html',\$str);
+    
+    $tpl->replace(
+        __TITLE__ => 'Testseite',
+        __BODY__ => 'Hello World!',
+    );
+    $str = $tpl->asString;
+
+Resultat C<$str>:
+
+    <html>
+    <head>
+      <title>Testseite</title>
+    </head>
+    <body>
+      Hello World!
+    </body>
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Template-Objekt
+
+=head4 Synopsis
+
+    $tpl = Quiq::Template->new($type,$file,@opt);
+    $tpl = Quiq::Template->new($type,\$str,@opt);
+
+=head4 Options
+
+=over 4
+
+=item --lineContinuation => $type (Default: undef)
+
+Art der Zeilenfortsetzung. Mögliche Werte:
+
+=over 4
+
+=item undef
+
+Keine Zeilenfortsetzung.
+
+=item 'backslash'
+
+Endet eine Zeile mit einem Backslash, entferne Whitespace am
+Anfang der Folgezeile und füge den Rest zur Zeile hinzu.
+
+Dies kann für eine Zeile unterdrückt werden, indem der Backslash am
+Ende der Zeile durch einen davorgestellten Backslash maskiert wird.
+In dem Fall wird statt einer Fortsetzung der Zeile der maskierende
+Backslash entfernt.
+
+Diese Option ist nützlich, wenn ein Template-Text im Editor auf
+eine bestimmte Breite (z.B. 80 Zeichen/Zeile) begrenzt sein soll,
+aber der generierte Text breiter sein darf.
+
+=back
+
+=item -singleReplace => $bool (Default: 0)
+
+Ersetze bei replace() immer nur den ersten von mehreren identischen
+Platzhaltern. Dies ist z.B. in HTML bei Ersetzung von mehreren
+Checkboxen mit gleichem Namen nützlich.
+
+=back
+
+=head4 Description
+
+Instantiiere ein Template vom Typ $type aus Datei $file oder String $str
+und liefere eine Referenz auf dieses Objekt zurück.
+
+Template-Typen:
+
+=over 4
+
+=item 'xml'
+
+XML-Template. Metazeichen &, < und > in Werten werden durch
+Entities ersetzt.
+
+=item 'html'
+
+HTML-Template. Metazeichen &, < und > in Werten werden durch
+Entities ersetzt.
+
+=item 'text'
+
+Text-Template. Werte werden unverändert eingesetzt.
+
+=back
+
+=head2 Objektmethoden
+
+=head3 placeholders() - Liefere Liste der Platzhalter
+
+=head4 Synopsis
+
+    @arr | $arr = $tpl->placeholders;
+
+=head3 replace() - Ersetze Platzhalter
+
+=head4 Synopsis
+
+    $tpl = $tpl->replace(@keyVal);
+
+=head4 Returns
+
+Referenz auf das Template-Objekt (für Method-Chaining)
+
+=head4 Description
+
+Ersetze alle Platzhalter durch ihre Werte. Platzhalter und
+Werte werden als Paare @keyVal übergeben.
+
+Der Wert kann ein String, eine Arrayrefernz, eine Codereferenz oder
+ein Template-Objekt sein. Siehe Methode L</value>().
+
+Es wird für jeden Platzhalter mit einem Wert ungleich C<undef> geprüft,
+ob dieser im Template vorkommt. Wenn nicht, wird eine Exception geworfen.
+
+=head4 Example
+
+Subroutine liefert Platzhalter-Wert:
+
+    my $tpl = Quiq::Template->new('xml',\$Order);
+    $tpl->replace(
+        __CUSTNR__=>$kundenNr,
+        __LIEFERNAME__=>$vor->{'liefername'},
+        __LIEFERSTRASSE__=>$lieferstrasse,
+        __LIEFERHAUSNR__=>$lieferhausnr,
+        __LIEFERPLZ__=>$vor->{'lieferplz'},
+        __LIEFERORT__=>$vor->{'lieferort'},
+        __LIEFERLAND_ISO__=>$vor->{'lieferland_iso'},
+        __BESTELLDATUM__=>POSIX::strftime('%Y-%m',localtime),
+        __BESTELLNUMMER__=>$vor->{'vorgang_bestellnummer'},
+        __WAEHRUNG__=>$waehrung,
+        __ENVIRONMENT__=>$test? 'T': 'L',
+        __ORDERLINES__=>sub {
+            my @arr;
+            my $i = 0;
+            for my $pos (@$posA) {
+                my $tpl = Quiq::Template->new('xml',\$OrderLine);
+                $tpl->replace(
+                    __I__=>$i++,
+                    __LIEFERNR__=>$pos->{'posten_liefernr'},
+                    __ARTBE__=>$pos->{'posten_artbe'},
+                    __ANZAHL__=>$pos->{'posten_anzahl'},
+                    __EPREIS__=>$pos->{'posten_epreis'},
+                );
+                push @arr,$tpl;
+            }
+            return \@arr;
+        },
+    );
+
+Die Subroutine, die den Wert des Platzhalters __ORDERLINES__ berechnet,
+liefert keinen String, sondern eine Referenz auf ein Array von
+Template-Objekten. Wie jeder Platzhalterwert wird dieser von der
+Methode $tpl->L</value>() in einen String (oder C<undef>) umgesetzt.
+
+=head3 key() - Liefere Schlüssel und Ersetzungsattribut(e)
+
+=head4 Synopsis
+
+    $key = $tpl->key($arg);
+    ($key,@attr) = $tpl->key($arg);
+
+=head4 Description
+
+Als Schlüssel $arg kann
+
+=over 4
+
+=item 1.
+
+ein String,
+
+=item 2.
+
+eine Stringreferenz
+
+=item 3.
+
+eine Arrayreferenz
+
+=back
+
+angegeben sein.
+
+MEMO: Die Methode ist so gestaltet, dass (weitere) Einsetzungsattribute
+definiert werden können, wenn als Platzhalter eine Arrayreferenz
+übergeben wird, z.B.
+
+    ['__ITEMS__',call=>sub {...}]
+
+Die Ersetzungsattribute werden im Arraykontext neben dem Schlüssel
+zurückgegeben und können in replace() den Ersetzungsvorgang in
+spezieller Weise steuern. Dies wird aber noch nicht genutzt.
+
+=head3 value() - Liefere Platzhalter-Wert als Zeichenkette
+
+=head4 Synopsis
+
+    $str = $tpl->value($arg);
+
+=head4 Description
+
+Die Methode liefert die Zeichenkette $str zum (bei L</replace>()
+angegebenen) Platzhalter-Wert $arg.
+
+=over 4
+
+=item String:
+
+Liefere String.
+
+=item Arrayreferenz:
+
+Ermittele die Zeichenketten-Werte aller Array-Elemente,
+konkateniere diese mit "\n" und liefere das Resultat zurück.
+
+=item Corereferenz:
+
+Rufe Subroutine auf und liefere den Zeichenketten-Wert des
+Returnwerts.
+
+=item Template-Objekt:
+
+Rufe Methode L</asString>() des Objekts auf und liefere
+das Resultat zurück.
+
+=back
+
+=head3 removeOptional() - Entferne Optional-Metatags
+
+=head4 Synopsis
+
+    $tpl->removeOptional;
+
+=head4 Description
+
+Entferne die <optional>-Metatags aus dem Template-Text.
+Ein <optional>-Metatag hat die Struktur
+
+    <!--optional-->...<!--/optional-->
+
+oder
+
+    <!--optional-->
+    ...
+    <!--/optional-->
+
+<optional>-Konstrukte können geschachtelt sein. Sie werden von innen
+nach außen aufgelöst.
+
+B<Attribute>
+
+=over 4
+
+=item default="VALUE"
+
+Enthält der Inhalt einen unersetzten Platzhalter, ersetze den
+Inhalt durch VALUE.
+
+=item placeholder="NAME"
+
+Entferne den Inhalt nur dann, wenn der Platzhalter __NAME__ unersetzt
+ist. Andere unersetzte Platzhalter werden nicht beachtet.
+
+=back
+
+=head3 asString() - Liefere Inhalt
+
+=head4 Synopsis
+
+    $str = $tpl->asString;
+
+=head3 asStringNL() - Liefere Inhalt mit Newline am Ende
+
+=head4 Synopsis
+
+    $str = $tpl->asStringNL;
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Template.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

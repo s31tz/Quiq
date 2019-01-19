@@ -1,0 +1,389 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Program - Basisklasse für Programme
+
+=head1 BASE CLASSES
+
+=over 2
+
+=item *
+
+L<Quiq::Process|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Process.pod>
+
+=item *
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=back
+
+=head1 SYNOPSIS
+
+Programm:
+
+    #!/usr/bin/env perl
+    
+    use Quiq::Program;
+    exit Quiq::Program->run('MyProg')->exitCode;
+    
+    # eof
+
+Programm-Klasse:
+
+    package MyProg;
+    use base 'Quiq::Program';
+    
+    sub main {
+        my $self = shift;
+        ...
+        return;
+    }
+    
+    # eof
+
+Optionen und Argumente:
+
+    my ($error,$opt,$argA) = $self->options(
+        ...
+        -help=>0,
+    );
+    if ($error) {
+        $self->help(10,"ERROR: $error");
+    }
+    elsif ($opt->help) {
+        $self->help;
+    }
+    elsif (@$argA != 1) {
+        $self->help(11,'ERROR: Falsche Anzahl Argumente');
+    }
+    my $myArg = shift @$argA;
+    ...
+
+=head1 METHODS
+
+=head2 Programmsteuerung
+
+=head3 run() - Führe Programm-Klassen aus
+
+=head4 Synopsis
+
+    $prg = Quiq::Program->run($programClass,@options);
+
+=head4 Options
+
+Siehe Methode L</new>()
+
+=head3 exit() - Terminiere das Programm
+
+=head4 Synopsis
+
+    $prg->exit;
+    $prg->exit($exitCode);
+
+=head4 Description
+
+Terminiere das Programm mit Exitcode $exitCode. Ist kein Exitcode
+angegeben, terminiere mit dem Exitcode der auf dem Programmobjekt
+gesetzt ist. Die Methode kehrt nicht zurück. Nach ihrem Aufruf wird
+die Methode L</finish>() ausgeführt.
+
+=head2 Getter/Setter
+
+=head3 exitCode() - Liefere/Setze Exitcode
+
+=head4 Synopsis
+
+    $exitCode = $prg->exitCode;
+    $exitCode = $prg->exitCode($exitCode);
+
+=head3 name() - Name des Programms
+
+=head4 Synopsis
+
+    $name = $this->name;
+
+=head4 Description
+
+Liefere den Namen des Programms. Der Programmname ist die letzte
+Pfadkomponente von $0.
+
+=head2 Programmcode
+
+=head3 main() - Hauptprogramm
+
+=head4 Synopsis
+
+    $prg->main;
+
+=head3 catch() - Fange und behandle unbehandelte Exception
+
+=head4 Synopsis
+
+    $prg->catch($exception);
+
+=head4 Description
+
+Exception-Handler, der unbehandelte Exceptions der Anwendung fängt.
+Kann von der Programmklasse bei Bedarf überschrieben werden.
+Das Default-Verhalten ist, dass der Exception-Text auf STDERR
+ausgegeben und der Exitcode auf 99 gesetzt wird.
+
+Das Programm terminiert nicht sofort, sondern die Methode
+L</finish>() wird noch ausgeführt.
+
+=head3 finish() - Abschließender Code vor Programmende
+
+=head4 Synopsis
+
+    $prg->finish;
+
+=head2 Umgebung
+
+=head3 env() - Liefere/Setze Environment-Hash
+
+=head4 Synopsis
+
+    $envH = $this->env;
+    $envH = $this->env(\%env);
+
+=head3 argv() - Liefere/Setze Argument-Array
+
+=head4 Synopsis
+
+    $argA|@args = $this->argv;
+    $argA|@args = $this->argv(\@argv);
+
+=head3 stdin() - Liefere/Setze STDIN Filehandle
+
+=head4 Synopsis
+
+    $fh = $this->stdin;
+    $fh = $this->stdin($fh);
+
+=head3 stdout() - Liefere/Setze STDOUT Filehandle
+
+=head4 Synopsis
+
+    $fh = $this->stdout;
+    $fh = $this->stdout($fh);
+
+=head3 stderr() - Liefere/Setze STDERR Filehandle
+
+=head4 Synopsis
+
+    $fh = $this->stderr;
+    $fh = $this->stderr($fh);
+
+=head2 Character Encoding
+
+=head3 encoding() - Standard-Encoding
+
+=head4 Synopsis
+
+    $encoding = $prg->encoding;
+
+=head4 Description
+
+Liefere das Standard-Encoding, das in der Systemumgebung eingestellt ist.
+Im Konstruktor werden STDIN, STDOUT und STDERR auf dieses Encoding
+eingestellt, d.h. Eingaben und Ausgaben automatisch gemäß dieses
+Encodings gewandelt.
+
+=head3 decode() - Dekodiere Zeichenkette gemäß Standard-Encoding
+
+=head4 Synopsis
+
+    $str = $prg->decode($str);
+
+=head3 encode() - Enkodiere Zeichenkette gemäß Standard-Encoding
+
+=head4 Synopsis
+
+    $str = $prg->encode($str);
+
+=head2 Parameter
+
+=head3 parameters() - Argumente und Optionen des Programmaufrufs
+
+=head4 Synopsis
+
+    ($argA,$opt) = $prg->parameters($minArgs,$maxArgs,@optVal);
+
+=head4 Arguments
+
+=over 4
+
+=item $minArgs
+
+Mindestanzahl an Argumenten.
+
+=item $maxArgs
+
+Maximale Anzahl an Argumenten.
+
+=item @optVal
+
+Liste der Optionen und ihrer Defaultwerte.
+
+=back
+
+=head4 Returns
+
+=over 4
+
+=item $opt
+
+Hash-Objekt mit den Optionen.
+
+=item $argA
+
+Referenz auf Array mit mindestens $minArgs und höchstens
+$maxArgs Argumenten.
+
+=back
+
+=head4 Description
+
+Liefere die Argumente und Optionen des Programmaufs. Sind weniger als
+$minArgs oder mehr als $maxArgs Argumente übergeben oder nicht deklarierte
+Optionen übergeben worden, wird eine Exception geworfen.
+
+=head2 Optionen
+
+=head3 options() - Verarbeite Programmoptionen (DEPRECATED)
+
+=head4 Synopsis
+
+    ($error,$optH,$argA) = $prg->options(@keyVal);
+
+=head4 Description
+
+FIXME: Veraltete Methode. Alle Stellen, wo die Methode options()
+genutzt wird, auf parameters() portieren.
+
+=head3 opt() - Liefere Optionsobjekt oder Optionswerte
+
+=head4 Synopsis
+
+    $val = $prg->opt($key);   # [1]
+    @vals = $prg->opt(@keys); # [2]
+    $optH = $prg->opt;        # [3]
+
+=head2 Verzeichnisse
+
+=head3 projectDir() - Projektverzeichnis
+
+=head4 Synopsis
+
+    $dir = $prg->projectDir($depth);
+
+=head4 Description
+
+Liefere den Verzeichnispfad, der $depth Stufen oberhalb des
+Verzeichnisses endet, in dem das Programm installiert ist.
+
+Der Installationspfad wird anhand von $0 ermittelt. Wurde das
+Programm mit einem relativen Pfad aufgerufen, wird dieser zu einem
+absoluten Pfad komplettiert.
+
+=head4 Example
+
+Wurde das Programm myprog unter dem Pfad
+
+    /opt/myapp/bin/myprog
+
+installiert, dann liefert $prg->projectDir(1) den Pfad
+
+    /opt/myapp
+
+als Projektverzeichnis.
+
+=head2 Hilfe
+
+=head3 help() - Gib Hilfetext aus und beende Programm
+
+=head4 Synopsis
+
+    $self->help;
+    $self->help($exitCode);
+    $self->help($exitCode,$msg);
+
+=head4 Description
+
+Der Hilfetext wird aus der POD-Dokumentation des Programms generiert.
+
+=over 2
+
+=item *
+
+Ist $exitCode == 0, wird der Hilfetext auf STDOUT ausgegeben.
+Ist $exitCode != 0, wird der Hilfetext auf STDERR ausgegeben.
+
+=item *
+
+Ist $msg angegeben, wird die Hilfeseite oben und unten um Text $msg
+ergänzt (jeweils mit Leerzeile abgetrennt).
+
+=item *
+
+Ist $exitCode == 0 und STDOUT mit einem Terminal verbunden, wird
+der Hilfetext im Pager dargestellt (Environment-Variable $PAGER
+oder less).
+
+=back
+
+=head2 Instantiierung
+
+=head3 new() - Instantiiere Programm-Objekt
+
+=head4 Synopsis
+
+    $prg = $class->new(@options);
+
+=head4 Options
+
+=over 4
+
+=item -argv=>\@arr (Default: \@ARGV)
+
+Setze Programm-Argumente auf @arr.
+
+=item -env=>\%hash (Default: \%ENV)
+
+Setze Programm-Environment auf %hash.
+
+=item -stdin=>$fh (Default: \*STDIN)
+
+Setze STDIN des Programms auf $fh.
+
+=item -stdout=>$fh (Default: \*STDOUT)
+
+Setze STDOUT des Programms auf $fh.
+
+=item -stderr=>$fh (Default: \*STDERR)
+
+Setze STDERR des Programms auf $fh.
+
+=back
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Program.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

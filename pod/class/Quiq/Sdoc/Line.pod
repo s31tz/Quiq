@@ -1,0 +1,182 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Sdoc::Line - Zeile einer Sdoc-Quelldatei
+
+=head1 BASE CLASS
+
+L<Quiq::LineProcessor::Line|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/LineProcessor/Line.pod>
+
+=head1 METHODS
+
+=head2 Methods
+
+=head3 type() - Ermittele Zeilentyp
+
+=head4 Synopsis
+
+    ($type,$depth) = $line->type;
+
+=head4 Description
+
+Ermittele den Zeilentyp und liefefere diesen zurück.
+
+=head3 isRow() - Test auf Tabellenzeile
+
+=head4 Synopsis
+
+    $bool = $line->isRow;
+
+=head4 Description
+
+Prüfe, ob die Zeile eine Tabellenzeile ist. Wenn ja, liefere wahr,
+ansonsten falsch.
+
+=head3 isKeyValRow() - Test auf Schlssel/Wert-Zeile
+
+=head4 Synopsis
+
+    $bool = $line->isKeyValRow;
+
+=head4 Description
+
+Prüfe, ob die Zeile eine Schlssel/Wert-Zeile ist. Wenn ja, liefere
+wahr, ansonsten falsch.
+
+=head3 item() - Test auf List-Item
+
+=head4 Synopsis
+
+    ($itemType,$label,$indentation,$text) = $ln->item;
+    ($itemType,$label,$indentation,$text) = $ln->item($nextLine);
+
+=head4 Description
+
+Anlysiere die Zeile darauf hin, ob diese ein List-Item
+beschreibt, ihr Text also einem der folgenden Muster entspricht:
+
+    o Text        (Punktliste)
+    * Text        (Punktliste)
+    + Text        (Punktliste)
+    
+    1. Text       (nummerierte Liste)
+    1) Text       (nummerierte Liste)
+    
+    [Text]: Text  (Beschreibungsliste)
+    [Text:] Text  (Beschreibungsliste)
+    <Text>: Text  (Beschreibungsliste)
+    <Text:> Text  (Beschreibungsliste)
+    {Text}: Text  (Beschreibungsliste)
+    {Text:} Text  (Beschreibungsliste)
+    :Text: Text   (Beschreibungsliste)
+    :Text:: Text  (Beschreibungsliste)
+
+Ist dies nicht der Fall, liefert die Methode eine leere Liste
+zurück. Ist dies der Fall liefert die Methode vier Werte zurück:
+
+=over 4
+
+=item $itemType
+
+Typ des Labels. Fünf Itemtypen werden unterschieden:
+
+    o, *, + (Punktliste)
+    #       (numerierte Liste)
+    []      (Beschreibungsliste)
+
+=item $label
+
+Im Falle einer Punktliste das Symbol, im Falle einer numerierten Liste
+die Zahl (ohne Punkt oder Klammer), im Falle einer Beschreibungsliste
+der Labeltext.
+
+=item $indentation
+
+Die Einrückung des Listenelements. Alle Folgezeilen mit
+(mindestens) dieser Einrückung werden als zugehörig zum
+Listenelement angesehen.  Diese Einrückung ist die Anzahl an
+Zeichen bis zum ersten Buchstaben des Textes. Es wird davon
+ausgegangen, dass die weiteren Zeilen genauso eingerückt
+sind. Ausnahme: Beschreibungsliste. Da der Labeltext hier
+schwankt, wird die Einrückung der nächsten Zeile genommen,
+sofern es sich nicht um eine Leerzeile oder das nächste Item
+handelt.  Wird diese Angabe benötigt, muss der Parameter
+$nextLine angegeben sein.  Andernfalls wird der initale
+Whitespace plus vier Zeichen angenommen.
+
+    |  o Text Text Text Text Text
+    |    Text Text Text Text Text
+    |    Text Text Text Text Text
+     ----
+         ^ Textbeginn der ersten Zeile
+    
+    |  1) Text Text Text Text Text
+    |     Text Text Text Text Text
+    |     Text Text Text Text Text
+    | ...
+    | 10) Text Text Text Text Text
+    |     Text Text Text Text Text
+     -----
+          ^ Textbeginn der ersten Zeile
+    
+    |  [Text]: Text Text Text Text Text
+    |      Text Text Text Text Text
+    |      Text Text Text Text Text
+    
+    |  [Text:] Text Text Text Text Text
+    |      Text Text Text Text Text
+    |      Text Text Text Text Text
+    
+    |  :Text: Text Text Text Text Text
+    |      Text Text Text Text Text
+    |      Text Text Text Text Text
+    
+    |  :Text:: Text Text Text Text Text
+    |      Text Text Text Text Text
+    |      Text Text Text Text Text
+    
+     ------
+           ^ initialer Whitespce der Folgezeile -oder-
+             initialer Whitespace plus vier Zeichen
+
+=item $text
+
+Die erste Zeile des Listenelements, bei dem das Label durch Whitespace
+ersetzt ist.
+
+    |    Text Text Text Text Text
+     ----
+       ^ Textbeginn der ersten Zeile
+    
+    |     Text Text Text Text Text
+     -----
+       ^ Textbeginn der ersten Zeile
+    
+    |      Text Text Text Text Text
+     ------
+        ^ initialer Whitespace der Folgezeile -oder-
+          der ersten Zeile plus vier Zeichen
+
+=back
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Sdoc/Line.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

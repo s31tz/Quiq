@@ -1,0 +1,220 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::LaTeX::LongTable - Erzeuge LaTeX longtable
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 SYNOPSIS
+
+Der Code
+
+    use Quiq::LaTeX::LongTable;
+    use Quiq::LaTeX::Code;
+    
+    my $tab = Quiq::LaTeX::LongTable->new(
+        alignments => ['l','r','c'],
+        caption => 'Ein Test',
+        titles => ['Links','Rechts','Zentriert'],
+        rows => [
+            ['A',1,'AB'],
+            ['AB',2,'CD'],
+            ['ABC',3,'EF'],
+            ['ABCD',4,'GH'],
+        ],
+    );
+    
+    my $l = Quiq::LaTeX::Code->new;
+    my $code = $tab->latex($l);
+
+produziert
+
+    \begin{longtable}{|lrc|}
+    \hline
+    Links & Rechts & Zentriert \\ \hline
+    \endfirsthead
+    \multicolumn{3}{r}{\emph{Fortsetzung}} \
+    \hline
+    Links & Rechts & Zentriert \\ \hline
+    \endhead
+    \hline
+    \multicolumn{3}{r}{\emph{weiter nächste Seite}} \
+    \endfoot
+    \caption{Ein Test}
+    \endlastfoot
+    A & 1 & AB \\ \hline
+    AB & 2 & CD \\ \hline
+    ABC & 3 & EF \\ \hline
+    ABCD & 4 & GH \\ \hline
+    \end{longtable}
+
+was im LaTeX-Dokument in etwa so aussieht
+
+    +--------------------------+
+    | Links  Rechts  Zentriert |
+    +--------------------------+
+    | A           1     AB     |
+    +--------------------------+
+    | AB         12     CD     |
+    +--------------------------+
+    | ABC       123     EF     |
+    +--------------------------+
+    | ABCD     1234     GH     |
+    +--------------------------+
+    
+        Tabelle 1: Ein Test
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere LaTeX LongTable-Objekt
+
+=head4 Synopsis
+
+    $tab = $class->new(@keyVal);
+
+=head4 Arguments
+
+=over 4
+
+=item align => $align (Default: 'c')
+
+Horizontale Ausrichtung der Tabelle auf der Seite. Mögliche Werte:
+'l', 'c'.
+
+=item alignments => \@alignments (Default: [])
+
+Liste der Kolumnen-Ausrichtungen. Mögliche Werte je Kolumne: 'l',
+'r', 'c'.
+
+=item border => $border (Default: 'hHV' oder 'hvHV' bei multiLine)
+
+Linien in und um die Tabelle. Der Wert ist eine Zeichenkette, die
+sich aus den Zeichen 't', 'h', 'v', 'H', 'V' zusammensetzt.
+
+=item callbackArguments => \@arr (Default: [])
+
+Liste von zusätzlichen Argumenten, die an die Funktionen
+C<rowCallback> und C<titleCallback> übergeben werden.
+
+=item caption => $str
+
+Unterschrift zur Tabelle.
+
+=item indent => $length
+
+Einrückung der Tabelle vom linken Rand. Die Option C<align> darf
+dann nicht gesetzt sein, auch nicht auf 'l'.
+
+=item label => $str
+
+Label der Tabelle, über welches sie referenziert werden kann.
+
+=item language => 'german'|'english'
+
+Die Sprache des LaTeX-Dokuments.
+
+=item multiLine => $bool (Default: undef)
+
+Wende C<\makecell> auf alle Kolumnen an. Diese Option
+muss aktiviert werden, wenn mehrzeilige Zellen mehrzeilig
+dargestellt werden sollen, denn dies kann LaTeX nicht. Wird die
+Option aktiviert, muss das Package C<makecell> geladen werden.
+
+=item rows => \@rows (Default: [])
+
+Liste der Tabellenzeilen.
+
+=item rowCallback => sub {} (Default: I<siehe unten>)
+
+Subroutine, die für jede Zeile in @rows die Zeileninformation
+liefert, die in den LaTeX-Code eingesetzt wird. Default:
+
+    sub {
+        my ($self,$l,$row,$n) = @_;
+    
+        my @row;
+        for my $val (@$row) {
+            push @row,$l->protect($val);
+        }
+    
+        return @row;
+    }
+
+=item titleColor => $color
+
+Farbe der Titelzeile.
+
+=item titleWrapper => $code
+
+Zeichenkette, die um jeden Kolumnentitel gelegt wird. Für C<%s>
+wird der Titel eingesetzt. Auf diesem Weg kann ein Makro
+auf jeden Titel angewendet werden. Z.B. serifenlosen, fetten Font
+einstellen:
+
+    titleWrapper => '\textsf{\textbf{%s}}'
+
+=item titles => \@titles (Default: [])
+
+Liste der Kolumnentitel.
+
+=item titleCallback => sub {} (Default: I<siehe unten>)
+
+Subroutine, die die Titelinformation liefert, die in den
+LaTeX-Code eingesetzt wird. Default:
+
+    sub {
+        my ($self,$l,$title,$n) = @_;
+        return $l->protect($title);
+    }
+
+=back
+
+=head4 Returns
+
+LongTable-Objekt
+
+=head4 Description
+
+Instantiiere ein LaTeX LongTable-Objekt und liefere eine Referenz
+auf dieses Objekt zurück.
+
+=head2 Objektmethoden
+
+=head3 latex() - Generiere LaTeX-Code
+
+=head4 Synopsis
+
+    $code = $tab->latex($l);
+    $code = $class->latex($l,@keyVal);
+
+=head4 Description
+
+Generiere den LaTeX-Code des Objekts und liefere diesen
+zurück. Als Klassenmethode gerufen, wird das Objekt intern erzeugt
+und mit den Attributen @keyVal instantiiert.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/LaTeX/LongTable.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

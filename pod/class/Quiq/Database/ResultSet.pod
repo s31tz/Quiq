@@ -1,0 +1,429 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Database::ResultSet - Liste von Datensätzen (abstrakt)
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert eine Liste von gleichartigen
+Datensätzen.
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Tabellen-Objekt
+
+=head4 Synopsis
+
+    $tab = $class->new($rowClass,\@titles);
+    $tab = $class->new($rowClass,\@titles,\@rows,@keyVal);
+    
+    $newTab = $tab->new;
+    $newTab = $tab->new(\@rows);
+
+=head4 Description
+
+Instantiiere ein Tabellen-Objekt und liefere eine Referenz auf dieses
+Objekt zurück.
+
+Die Arrays @titles und @rows werden von der Methode I<nicht> kopiert.
+
+Als Objektmethode gerufen, wird ein neues Tabellen-Objekt mit
+$rowClass und $titles aus dem existierenden Tabellenobjekt
+initialisiert. Diese Methode ist nützlich, wenn ein
+Tabellen-Objekt mit einer Teilmenge des ursprünglichen
+Tabellen-Objektes gebildet werden soll.
+
+=head2 Accessors
+
+=head3 rowClass() - Liefere Namen der Datensatz-Klasse
+
+=head4 Synopsis
+
+    $rowClass = $tab->rowClass;
+
+=head3 rows() - Liefere/Setze die Liste der Datensätze
+
+=head4 Synopsis
+
+    $rowA|@rows = $tab->rows;
+    $rowA|@rows = $tab->rows(\@rows);
+
+=head4 Description
+
+Liefere die Liste der Datensätze der Tabelle. Im Skalarkontext liefere
+eine Referenz auf die Liste.
+
+Ist Parameter \@rows angegeben, wird die Datensatz-Liste auf diese
+Liste gesetzt.
+
+=head3 stmt() - Liefere Statement
+
+=head4 Synopsis
+
+    $stmt = $tab->stmt;
+
+=head4 Description
+
+Liefere das SQL-Statement, mit welchem die Datensätze der Tabelle
+selektiert wurden.
+
+=head3 stmtBody() - Liefere Rumpf für ein Subselect
+
+=head4 Synopsis
+
+    $stmt = $tab->stmtBody(@opt);
+
+=head4 Description
+
+Liefere den Rumpf des (Select-)Statement. Der Rumpf ist das ürsprüngliche
+Statement ohne Select- und Order-By-Klausel.
+
+=head4 Example
+
+Ursprüngliches Select:
+
+    SELECT
+        per_vorname
+        , per_nachname
+    FROM
+        person
+    WHERE
+        per_nachname = 'Schulz'
+    ORDER BY
+        per_vorname
+
+Resultierendes Select:
+
+    FROM
+        person
+    WHERE
+        per_nachname = 'Schulz'
+
+=head3 titles() - Liefere Liste der Kolumnentitel
+
+=head4 Synopsis
+
+    $titleA|@titles = $tab->titles;
+
+=head4 Description
+
+Liefere die Liste der Kolumnentitel der Tabelle. Im Skalarkontext liefere
+eine Referenz auf die Liste.
+
+=head2 Tests
+
+=head3 isRaw() - Prüfe, ob Raw-Tabelle
+
+=head4 Synopsis
+
+    $bool = $this->isRaw;
+
+=head2 Search
+
+=head3 lookup() - Suche Datensatz
+
+=head4 Synopsis
+
+    $row = $tab->lookup(@opt,$key=>$val);
+
+=head4 Options
+
+=over 4
+
+=item -sloppy => $bool (Default: 0)
+
+Wenn der gesuchte Datensatz nicht existiert, löse keine Exception aus,
+sondern liefere undef.
+
+=back
+
+=head4 Description
+
+Durchsuche die Tabelle nach dem ersten Datensatz, dessen
+Attribut $key den Wert $val besitzt und liefere diesen zurück.
+Erfüllt kein Datensatz das Kriterium, wird eine Exception ausgelöst.
+
+=head3 select() - Suche Datensätze
+
+=head4 Synopsis
+
+    @rows|$tab = $tab->select($testSub);
+
+=head4 Description
+
+Durchsuche die Tabelle nach den Datensätzen, die Test-Methode
+$testSub erfüllen und liefere die Liste dieser Datensätze zurück.
+Im Skalarkontext liefere ein neues Tabellen-Objekt.
+
+=head4 Example
+
+Schränke Produkt-Tabelle auf Produkte mit einem Preis > 100 ein:
+
+    my $sub = sub {
+        my $row = shift;
+        return $row->preis > 100? 1: 0;
+    };
+    $tab = $tab->select($sub);
+
+=head2 File I/O
+
+=head3 loadFromFile() - Lade Tabelle aus Datei
+
+=head4 Synopsis
+
+    $tab = $class->loadFromFile($file,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -colSep => $char (Default: '|')
+
+Kolumnen-Trennzeichen.
+
+=item -rowClass => $rowClass (Default: 'Quiq::Database::Row::Object')
+
+Name der Datensatzklasse, auf die die Datensätze geblesst werden.
+Die Datensatzklasse entscheidet auch über die Tabellenklasse.
+
+=item -rowStatus => '0'|'U'|'I'|'D' (Default: 'I')
+
+Setze den initialen Datensatz-Status.
+
+=back
+
+=head4 Description
+
+Lade Datensätze aus Datei $file in eine Datensatz-Tabelle und
+liefere eine Referenz auf dieses Objekt zurück.
+
+B<Dateiformat>
+
+Die erste Zeile enthält die Kolumentitel, alle weiteren Zeilen die
+Datensätze. Die Kolumen werden per | getrennt.
+
+=head4 Example
+
+    per_id|per_vorname|per_nachname
+    1|Rudi|Ratlos
+    2|Kai|Nelust
+    3|Elli|Pirelli
+    4|Susi|Sorglos
+
+=head3 saveToFile() - Sichere Tabelle in Datei
+
+=head4 Synopsis
+
+    $tab->saveToFile($file);
+
+=head4 Description
+
+Sichere die Datensätze der Tabelle in Datei $file.
+Die Methode liefert keinen Wert zurück.
+
+=head2 Miscellaneous
+
+=head3 elapsed() - Dauer seit Beginn der SQL_Ausführung
+
+=head4 Synopsis
+
+    $duration = $tab->elapsed;
+
+=head3 formats() - Liefere Kolumnenformate
+
+=head4 Synopsis
+
+    $fmtA | @fmts = $tab->formats;
+    $fmtA | @fmts = $tab->formats($force);
+
+=head4 Description
+
+Analysiere den Tabelleninhalt und liefere eine Liste von
+Kolumnenformat-Objekten zurück. Diese können zur tabellarischen
+Formatierung der Kolumnenwerte herangezogen werden.
+
+Die Analyse wird nur einmal durchgeführt und die resultierende
+Liste im Tabellenobjekt gespeichert. Ist der Parameter $force
+angegeben und "wahr", wird eine Neuberechnung forciert.
+
+=head3 align() - Liefere die Ausrichtung der Kolumnen
+
+=head4 Synopsis
+
+    @aligns | $alignA = $tab->align;
+
+=head4 Description
+
+Aktuell werden die Angaben 'left' und 'right' für die Ausrichtung
+von HTML-Tabellenzellen geliefert.
+
+=head3 width() - Liefere die Breite der Tabelle
+
+=head4 Synopsis
+
+    $n = $tab->width;
+
+=head3 count() - Liefere Anzahl der Datensätze
+
+=head4 Synopsis
+
+    $n = $tab->count;
+
+=head3 pop() - Entferne Datensatz am Ende
+
+=head4 Synopsis
+
+    $tab->pop;
+
+=head3 push() - Füge Datensatz am Ende hinzu
+
+=head4 Synopsis
+
+    $tab->push($row);
+
+=head3 defaultRowClass() - Liefere Namen der Default-Rowklasse
+
+=head4 Synopsis
+
+    $rowClass = $class->defaultRowClass;
+
+=head4 Description
+
+Liefere den Namen der Default-Rowklasse: 'Quiq::Database::Row::Object'
+
+Auf die Default-Rowklasse werden Datensätze instantiiert, für die
+bei der Instantiierung einer Table-Klasse keine Row-Klasse
+explizit angegeben wurde.
+
+=head4 Details
+
+Als Default-Rowklasse wird für die Quiq::Database::ResultSet-
+Klassenhierarchie 'Quiq::Database::Row::Object' definiert.
+
+Die Methode wird in der Subklasse Quiq::Database::ResultSet::Array
+überschrieben. Für diesen Zweig ist die Default-Rowklasse
+'Quiq::Database::Row::Array'.
+
+=head3 asString() - String-Repräsentation der Tabelle
+
+=head4 Synopsis
+
+    $str = $tab->asString;
+    $str = $tab->asString($colSep);
+    $str = $tab->asString($colSep,$rowSep);
+
+=head4 Description
+
+Liefere eine String-Repräsentation der Tabelle mit $colSep
+als Datensatz-Trenner (Default: "\t") und $rowSep als
+Kolumnentrenner (Default: "\n").
+
+=head3 asTable() - Tabellen-Repräsentation der Tabellendaten
+
+=head4 Synopsis
+
+    $str = $tab->asTable(@opt);
+
+=head4 Options
+
+=over 4
+
+=item -info => $n (Default: 3)
+
+Umfang an Information, die über die Daten hinaus ausgegeben wird:
+
+=over 4
+
+=item Z<>0
+
+Nur Daten.
+
+=item Z<>1
+
+Numerierung der Kolumnen, Anzahl Zeilen, Ausführungszeit.
+
+=item Z<>2
+
+Inforationsumfang 1 plus Liste der Kolumnennamen.
+
+=item Z<>3
+
+Inforationsumfang 2 plus SQL-Statement.
+
+=back
+
+=item -msg => $msg
+
+Füge $msg zur Statistik-Zeile hinzu.
+
+=back
+
+=head4 Description
+
+Liefere eine einfache Tabellen-Repräsentation der Tabellendaten.
+
+=head4 Example
+
+Beispiel-Ausgabe:
+
+    SELECT
+        *
+    FROM
+        did.mandant
+    WHERE
+        ROWNUM <= 10+1
+    ORDER BY
+        1
+    
+    1 id
+    2 id_person
+    3 bezeichnung
+    4 id_verknuepfungsgruppe
+    
+    1   2          3                         4
+    | 0 | 14485923 | unbekannter Mandant     | 0 |
+    | 1 | 14485924 | Otto                    | 0 |
+    | 2 |  7834646 | Otto  - TZ (HB)         | 0 |
+    | 3 | 14485928 | Schwab Versand GmbH     | 0 |
+    | 4 |  5423454 | Schwab - TZ (HB)        | 0 |
+    | 5 | 14913536 | Hanseatic Bank          | 0 |
+    | 6 | 14485937 | 3-Pagen Versand         | 0 |
+    | 7 |  8371420 | Fegro Markt G. M. B. H. | 0 |
+    | 8 | 14485941 | Heinrich Heine Versand  | 0 |
+    | 9 | 14485942 | Hermes T. Kundendienst  | 0 |
+    
+    0.093s, 10 rows - *MORE ROWS EXIST*
+
+=head3 diffReport() - Report über Differenzen
+
+=head4 Synopsis
+
+    $str = $tab->diffReport;
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Database/ResultSet.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

@@ -1,0 +1,160 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Html::Table::List - HTML-Tabelle zum Anzeigen einer Liste von Elementen
+
+=head1 BASE CLASS
+
+L<Quiq::Html::Table::Base|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Table/Base.pod>
+
+=head1 DESCRIPTION
+
+Die Klasse erzeugt eine HTML-Tabelle aus einer Liste von
+Objekten. Jedes Objekt wird durch eine Zeile dargestellt. Alle
+Zeilen- (tr-Elemente) und Zellenattribute (td-Elemente) können
+gesetzt werden. Die Klasse ist daher sehr flexibel.
+
+Für jedes Objekt wird die Methode $e->rowCallback() gerufen (falls
+nicht angegeben, werden die Daten ohne Verarbeitung kopiert).  Die
+Methode bekommt das Objekt und seine (0-basierte) Position in der
+Liste der Objekte (Attribut "rows") übergeben. Die Methode liefert
+die Spezifikation für die Zeile (tr) und ihre Zellen (td) zurück,
+wobei jede Spezifikation ein Array ist, das unmittelbar an die
+Methode tag() übergeben wird.
+
+=head1 ATTRIBUTES
+
+Zusätzlich zu den Attributen der Basisklasse definiert die Klasse
+folgende Attribute:
+
+=over 4
+
+=item align => \@arr (Default: [])
+
+Ausrichtung des Kolumneninhalts.
+
+=item allowHtml => $bool|\@titles (Default: 0)
+
+Erlaube HTML insgesamt oder auf den Kolumnen in @titles,
+d.h. ersetze die Werte der Kolumnen &, <, > I<nicht> automatisch
+durch HTML-Entities.
+
+=item empty => $str (Default: '&nbsp;')
+
+HTML-Code, der im Body der Tabelle gesetzt wird, wenn die Liste
+der Elemente leer ist. Wenn auf Leerstring, undef oder 0 gesetzt,
+wird kein Body angezeigt.
+
+=item rowCallback => $sub (Default: undef)
+
+Referenz auf eine Subroutine, die für jedes Element die
+darzustellende Zeileninformation (für tr- und td-Tag) liefert.
+Ist kein rowCallback definiert, werden die Row-Daten
+unverändert verwendet.
+
+=item rowCallbackArguments => \@args (Default: [])
+
+Liste von Argumenten, die I<zusätzlich> zu den Standardargumenten
+an die Subroutine rowCallback() übergeben werden.
+
+=item rows => \@rows (Default: [])
+
+Liste der Elemente. Für jedes Element wird die Callback-Methode
+(Attribut rowCallback) aufgerufen.
+
+=item titles => \@titles (Default: [])
+
+Liste der Kolumnentitel.
+
+=back
+
+=head1 EXAMPLES
+
+Attribute von tr- und td-Elemeten setzen. Für jedes Element
+wird eine Arrayreferenz geliefert:
+
+    $e = Quiq::Html::Table::List->new(
+        titles=>[qw/Id Name Vorname/],
+        align=>[qw/right left left/],
+        rows=>\@obj,
+        rowCallback=>sub {
+            my ($row,$i) = @_;
+    
+            my $trA = [class=>'TRCLASS'];
+            push my @tds,[class=>'TDCLASS',$row->get('ATTRIBUTE')];
+            ...
+    
+            return ($trA,@tds);
+        },
+    );
+    $html = $e->html($h);
+
+Lediglich Werte ausgeben. Für das tr-Element wird C<undef> geliefert,
+für die td-Elemente ein skalarer Wert (der Content des Elements):
+
+    $e = Quiq::Html::Table::List->new(
+        titles=>[qw/Id Name Vorname/],
+        align=>[qw/right left left/],
+        rows=>\@obj,
+        rowCallback=>sub {
+            my ($row,$i) = @_;
+    
+            push @arr,$row->get('ATTRIBUTE');
+            ...
+    
+            return (undef,@arr);
+        },
+    );
+    $html = $e->html($h);
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+    $e = $class->new(@keyVal);
+
+=head4 Description
+
+Instantiiere ein Tabellenobjekt mit den Eingenschaften @keyVal und
+liefere eine Referenz auf dieses Objekt zurück.
+
+=head2 Objektmethoden
+
+=head3 html() - Generiere HTML
+
+=head4 Synopsis
+
+    $html = $e->html($h);
+    $html = $class->html($h,@keyVal);
+
+=head4 Description
+
+Generiere HTML-Code für Tabellenobjekt $e und liefere diesen zurück.
+Bei Aufruf als Klassenmethode wird das Tabellenobjekt von
+der Methode aus den Argumenten @keyVal instantiiert.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Html/Table/List.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

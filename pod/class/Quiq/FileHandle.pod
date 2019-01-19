@@ -1,0 +1,409 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::FileHandle - Datei-Handle
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 SYNOPSIS
+
+Datei schreiben:
+
+    my $fh = Quiq::FileHandle->new('>',$path);
+    $fh->print("Test\n");
+    $fh->close;
+
+Datei lesen:
+
+    my $fh = Quiq::FileHandle->new('<',$path);
+    while (<$fh>) {
+        print;
+    }
+    $fh->close;
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert eine Dateihandle, über die
+Daten gelesen oder geschrieben werden können.
+
+=head1 EXAMPLES
+
+Zähler-Datei mit Locking:
+
+    my $fh = Quiq::FileHandle->open('+>>',$file,-lock=>'EX');
+    $fh->seek(0);
+    my $count = <$fh> || "0\n";
+    chomp $count;
+    $fh->truncate;
+    $fh->print(++$count,"\n");
+
+Siehe auch Quiq::LockedCounter.
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Öffne Dateihandle
+
+=head4 Synopsis
+
+    $fh = $class->new($mode,$path,@opt);
+    $fh = $class->new($globRef,@opt);
+    $fh = $class->new('<'); # Lesen von STDIN
+    $fh = $class->new('>'); # Schreiben nach STDOUT
+
+=head4 Alias
+
+open()
+
+=head4 Options
+
+=over 4
+
+=item -createDir => $bool (Default: 0)
+
+Erzeuge den Verzeichnispfad einer Datei, die geschrieben wird,
+falls er nicht existiert.
+
+=item -lock => 'EX'|'SH'|'EXNB'|'SHNB' (Default: kein Lock)
+
+Locke die Dateihandle nach dem Öffnen im angegebenen Lock-Modus.
+Folgende Lockmodes werden unterschieden: 'SH' (shared lock), 'EX'
+(exclusive lock).  Durch den Zusatz 'NB' (also Lockmode 'SHNB' der 'EXNB')
+wird die Operation "non blocking" ausgeführt, d.h. wenn der Lock nicht
+sofort erworben werden kann, wird eine Exception ausgelöst.
+
+Wurde die Datei vom Konstruktor geöffnet, schließt er sie, wenn
+der Lock nicht erworben werden kann. Andernfalls bleibt die
+Dateihandle geöffnet.
+
+=back
+
+=head4 Description
+
+Instantiiere Dateihandle-Objekt und liefere eine Referenz auf dieses
+Objekt zurück.
+
+=head4 Examples
+
+Filehandle-Objekt für STDOUT:
+
+    $fh = Quiq::FileHandle->new(\*STDOUT);
+
+Lesen von STDIN:
+
+    $fh = $class->new('<');
+    $fh = $class->new('<','');
+    $fh = $class->new('<','-');
+
+Schreiben nach STDOUT:
+
+    $fh = $class->new('>');
+    $fh = $class->new('>','');
+    $fh = $class->new('>','-');
+
+=head3 destroy() - Schließe Dateihandle
+
+=head4 Synopsis
+
+    $fh->destroy;
+
+=head4 Alias
+
+close()
+
+=head4 Description
+
+Schließe Dateihandle. Die Methode liefert keinen Wert zurück.
+Nach Aufruf der Methode ist die Objektreferenz ungültig.
+
+=head2 Lesen
+
+=head3 read() - Lies Daten von Dateihandle
+
+=head4 Synopsis
+
+    $data = $fh->read($n);
+
+=head4 Description
+
+Lies die nächste die nächsten $n I<Zeichen> von Dateihandle $fh
+und liefere diese zurück.
+
+=head3 readLine() - Lies Zeile von Dateihandle
+
+=head4 Synopsis
+
+    $line = $fh->readLine;
+
+=head4 Description
+
+Lies die nächste Zeile von Dateihandle $fh und liefere diese zurück.
+Schlägt dies fehl, wirf eine Exception.
+
+=head3 readLines() - Lies mehrere Zeilen von Dateihandle
+
+=head4 Synopsis
+
+    @lines|$lineA = $fh->readLines($n);
+
+=head4 Description
+
+Lies die nächsten $n Zeilen von Dateihandle $fh und liefere diese als
+Liste zurück. Der Zeilentrenner am Ende jeder Zeile wird entfernt.
+Im Skalarkontext liefere eine Referenz auf die Liste, wenn
+Zeilen gelesen wurden, sonst C<undef>.
+
+=head4 Example
+
+Liefere Chunks von 1000 Pfaden:
+
+    my $fh = Quiq::FileHandle->new('-|',"find @$dirA -name '*.xml.gz'");
+    while (my $fileA = $fh->readLines(1000)) {
+        ...
+    }
+    $fh->close;
+
+=head3 readLineChomp() - Lies Zeile ohne Zeilentrenner von Dateihandle
+
+=head4 Synopsis
+
+    $line = $fh->readLineChomp;
+
+=head4 Description
+
+Lies die nächste Zeile von Dateihandle $fh, entferne den Zeilentrenner
+mit chomp() und liefere das Resultat zurück.
+
+=head3 readLineNoWhiteSpace() - Lies Zeile und entferne Whitespace am Ende
+
+=head4 Synopsis
+
+    $line = $fh->readLineNoWhiteSpace;
+
+=head4 Description
+
+Lies die nächste Zeile von Dateihandle $fh, entferne
+jeglichen Whitespace am Zeilenende (mit s/\s+$//) und liefere
+das Resultat zurück.
+
+Diese Funktion ist nützlich, wenn verschiedene Zeilentrenner
+CRLF oder LF vorkommen können und Zeilen nur mit Whitespace
+zu Leerzeilen reduziert werden sollen.
+
+=head3 getc() - Lies nächstes Zeichen
+
+=head4 Synopsis
+
+    $c = $fh->getc;
+
+=head3 slurp() - Lies Rest der Datei
+
+=head4 Synopsis
+
+    $data = $fh->slurp;
+
+=head4 Returns
+
+String
+
+=head4 Description
+
+Lies den Rest von Dateihandle $fh liefere diesen zurück.
+
+Die Methode ist nützlich, wenn der gesamte Inhalt einer Datei ab einer
+bestimmten Position gelesen werden soll.
+
+=head4 Example
+
+Lies gesamten Inhalt einer Datei ab Position $pos:
+
+    my $fh = Quiq::FileHandle->open('<',$logFile);
+    $fh->seek($pos);
+    my $data = $fh->slurp;
+
+=head2 Schreiben
+
+=head3 print() - Schreibe Daten auf Dateihandle
+
+=head4 Synopsis
+
+    $fh->print(@data);
+
+=head4 Alias
+
+write()
+
+=head4 Description
+
+Schreibe Daten @data auf Dateihandle $fh. Die Methode liefert
+keinen Wert zurück.
+
+=head3 truncate() - Kürze Datei
+
+=head4 Synopsis
+
+    $fh->truncate;
+    $fh->truncate($length);
+
+=head4 Description
+
+Kürze Datei auf Länge $length. Ist $length nicht angegeben, kürze
+Datei auf Länge 0.
+
+=head2 Positionieren
+
+=head3 seek() - Setze Position in Datei
+
+=head4 Synopsis
+
+    $fh->seek($pos);
+    $fh->seek($pos,$whence);
+
+=head4 Description
+
+Setze die Position der Filehandle in der Datei. Die Methode liefert
+keinen Wert zurück. Genaue Funktionsbeschreibung siehe
+Perl-Dokumentation (perldoc -f seek).
+
+=head3 tell() - Liefere Position in Datei
+
+=head4 Synopsis
+
+    $pos = $fh->tell;
+
+=head4 Description
+
+Liefere die Position der Filehandle in der Datei. Genaue
+Funktionsbeschreibung siehe Perl-Dokumentation (perldoc -f tell).
+
+=head2 Sperren
+
+=head3 lock() - Sperre Datei
+
+=head4 Synopsis
+
+    $fh->lock($lockMode);
+
+=head4 Description
+
+Locke die Datei im Lock-Modus $lockMode. Die Methode liefert keinen
+Wert zurück.
+
+Folgende Lockmodes werden unterschieden:
+
+=over 4
+
+=item 'SH'
+
+shared lock
+
+=item 'EX'
+
+exclusive lock
+
+=item 'SHNB'
+
+shared lock, non-blocking
+
+=item 'EXNB'
+
+exclusive lock, non-bloking
+
+=back
+
+Liefere "wahr", wenn der Lock gesetzt werden kann, im Fehlerfall
+liefere "falsch".
+
+=head3 unlock() - Hebe Sperre auf
+
+=head4 Synopsis
+
+    $fh->unlock;
+
+=head4 Description
+
+Hebe Sperre auf Dateihandle $fh auf. Die Methode liefert keinen
+Wert zurück.
+
+=head2 Encoding
+
+=head3 setEncoding() - Setze Encoding
+
+=head4 Synopsis
+
+    $fh = $fh->setEncoding($encoding);
+
+=head4 Returns
+
+FileHandle-Objekt (für Method-Chaining)
+
+=head4 Description
+
+Definiere für Filehandle $fh das Encoding $encoding. D.h. alle Daten
+werden automatisch gemäß diesem Encoding beim Schreiben encodiert
+bzw. beim Lesen dekodiert.
+
+Die Methode liefert keinen Wert zurück.
+
+=head2 Verschiedenes
+
+=head3 autoFlush() - Schalte Filehandle in ungepufferten Modus
+
+=head4 Synopsis
+
+    $fh->autoFlush;
+    $fh->autoFlush($bool);
+
+=head3 binmode() - Aktiviere Binärmodus oder Layer
+
+=head4 Synopsis
+
+    $fh->binmode;
+    $fh->binmode($layer);
+
+=head4 Description
+
+Schalte Filehandle in Binärmodus oder setze Layer $layer. Genaue
+Funktionsbeschreibung siehe Perl-Dokumentation (perldoc -f binmode).
+
+=head2 Klassenmethoden
+
+=head3 captureStderr() - Fange STDERR ab
+
+=head4 Synopsis
+
+    $class->captureStderr(\$str);
+
+=head4 Returns
+
+Die Methode liefert keinen Wert zurrück
+
+=head4 Description
+
+Fange alle Ausgaben auf STDERR ab und lenke sie auf Skalarvariable
+$str um.
+
+=head1 VERSION
+
+1.130
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/FileHandle.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
