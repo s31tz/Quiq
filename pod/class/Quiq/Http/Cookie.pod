@@ -116,7 +116,7 @@ ohne Semikolon, Komma, Gleichheitszeichen und Leerzeichen bestehen.
 
 =head1 VERSION
 
-1.130
+1.131
 
 =head1 SEE ALSO
 

@@ -92,7 +92,7 @@ Einrückung des Inhalts der obersten Elemente <head> und <body>.
 
 =head1 VERSION
 
-1.130
+1.131
 
 =head1 SOURCE
 

@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq - A class library for rapid development
+Quiq - Perl class library for rapid development
 
 =head1 DESCRIPTION
 
@@ -749,7 +749,7 @@ L<Quiq-Sdoc-Manual|https://github.com/s31tz/Quiq/tree/master/doc/pod/Quiq-Sdoc-M
 
 =head1 VERSION
 
-1.130
+1.131
 
 =head1 AUTHOR
 

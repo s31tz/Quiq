@@ -6,7 +6,7 @@ use warnings;
 use v5.10.0;
 use utf8;
 
-our $VERSION = 1.130;
+our $VERSION = 1.131;
 
 # -----------------------------------------------------------------------------
 
@@ -180,7 +180,7 @@ sub dump {
 
 =head1 VERSION
 
-1.130
+1.131
 
 =head1 AUTHOR
 
