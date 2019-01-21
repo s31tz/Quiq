@@ -58,6 +58,9 @@ Die Methode ist logisch äquivalent zu
 
     $str = !$bool? '': join '',$expr // '', ...;
 
+Sie vermeidet jedoch, dass $expr // '', ... berechnet werden muss,
+wenn $bool falsch ist.
+
 =head4 Example
 
 B<Konkatenation bei zutreffender Bedingung>

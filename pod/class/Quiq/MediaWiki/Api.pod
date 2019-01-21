@@ -368,6 +368,33 @@ Seite eingepflegt werden muss -> Fehlermeldung
 
 =back
 
+=head3 siteInfo() - Allgemeine Information über das MediaWiki
+
+=head4 Synopsis
+
+    $res = $mwa->siteInfo;
+    $res = $mwa->siteInfo(@properties);
+
+=head4 Arguments
+
+=over 4
+
+=item @properties
+
+Liste der Sysinfo-Properties, die abgefragt werden sollen. Sind keine
+Properties angegeben, werden alle (zur Zeit der Implementierung
+bekannten) Properties abgefragt.
+
+=back
+
+=head4 Returns
+
+Response
+
+=head4 Example
+
+    $ quiq-mediawiki ruv statistics --debug
+
 =head2 Kommunikation
 
 =head3 send() - Sende HTTP-Anfrage, empfange HTTP-Antwort

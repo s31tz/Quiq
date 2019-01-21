@@ -732,6 +732,74 @@ sub loadPage {
 
 # -----------------------------------------------------------------------------
 
+=head3 siteInfo() - Allgemeine Information über das MediaWiki
+
+=head4 Synopsis
+
+    $res = $mwa->siteInfo;
+    $res = $mwa->siteInfo(@properties);
+
+=head4 Arguments
+
+=over 4
+
+=item @properties
+
+Liste der Sysinfo-Properties, die abgefragt werden sollen. Sind keine
+Properties angegeben, werden alle (zur Zeit der Implementierung
+bekannten) Properties abgefragt.
+
+=back
+
+=head4 Returns
+
+Response
+
+=head4 Example
+
+    $ quiq-mediawiki ruv statistics --debug
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub siteInfo {
+    my ($self,@properties) = @_;
+
+    my %property = (
+         general => 1,
+         namespaces => 1,
+         namespacealiases => 1,
+         specialpagealiases => 1,
+         magicwords => 1,
+         statistics => 1,
+         interwikimap => 1,
+         dbrepllag => 1,
+         usergroups => 1,
+         extensions => 1,
+         fileextensions => 1,
+         rightsinfo => 1,
+         languages => 1,
+         skins => 1,
+         extensiontags => 1,
+         functionhooks => 1,
+         showhooks => 1,
+         variables => 1,
+         protocols => 1,
+    );
+    if (!@properties) {
+        @properties = keys %property;
+    }
+
+    return $self->send(
+        GET => 'query',
+        meta => 'siteinfo',
+        siprop => join('|',@properties),
+    );
+}
+
+# -----------------------------------------------------------------------------
+
 =head2 Kommunikation
 
 =head3 send() - Sende HTTP-Anfrage, empfange HTTP-Antwort
