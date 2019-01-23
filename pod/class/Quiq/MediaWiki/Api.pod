@@ -395,6 +395,26 @@ Response
 
     $ quiq-mediawiki ruv statistics --debug
 
+=head3 upload() - Lade Datei hoch
+
+=head4 Synopsis
+
+    $res = $mwa->upload($file);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Pfad der Datei.
+
+=back
+
+=head4 Returns
+
+Response
+
 =head2 Kommunikation
 
 =head3 send() - Sende HTTP-Anfrage, empfange HTTP-Antwort

@@ -800,6 +800,53 @@ sub siteInfo {
 
 # -----------------------------------------------------------------------------
 
+=head3 upload() - Lade Datei hoch
+
+=head4 Synopsis
+
+    $res = $mwa->upload($file);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Pfad der Datei.
+
+=back
+
+=head4 Returns
+
+Response
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub upload {
+    my ($self,$file) = @_;
+
+    # Edit-Token besorgen
+    my $token = $self->getToken('edit');
+
+    my $p = Quiq::Path->new;
+    my $filename = $p->filename($file);
+    my $data = $p->read($file);
+
+    # Seite bearbeiten
+
+    return $self->send(
+        POST_DATA => 'upload',
+        token => $token,
+        filename => $filename,
+        file => $data,
+        text => 'abc',
+    );
+}
+
+# -----------------------------------------------------------------------------
+
 =head2 Kommunikation
 
 =head3 send() - Sende HTTP-Anfrage, empfange HTTP-Antwort
@@ -873,6 +920,12 @@ sub send {
     }
     elsif ($method eq 'POST') {
         $res = $ua->post($url,{@keyVal});
+    }
+    elsif ($method eq 'POST_DATA') {
+        $res = $ua->post($url,
+            {@keyVal},
+            Content_Type => 'multipart/form-data',
+        );
     }
     else {
         $self->throw(
