@@ -84,6 +84,10 @@ in Farbe aus.
 
 Gib Laufzeit-Information wie den Kommunikationsverlauf auf STDERR aus.
 
+=item -uploadUrl => $url
+
+URL für Datei-Upload.
+
 =back
 
 =head4 Returns
@@ -124,11 +128,13 @@ sub new {
 
     my $color = 1;
     my $debug = 0;
+    my $uploadUrl = undef;
     my $warnings = 0;
 
     my $argA = Quiq::Parameters->extractToVariables(\@_,1,3,
         -color => \$color,
         -debug => \$debug,
+        -uploadUrl => \$uploadUrl,
         -warnings => \$warnings,
     );
     my ($url,$user,$password) = @$argA;
@@ -150,6 +156,7 @@ sub new {
         warnings => $warnings,
         tokenH => Quiq::Hash->new->unlockKeys,
         ua => $ua,
+        uploadUrl => $uploadUrl,
         url => $url,
         user => $user,
         password => $password,
@@ -196,15 +203,13 @@ Alternativ ist ein automatisches Login möglich, siehe Konstruktor.
 sub login {
     my ($self,$user,$password) = @_;
 
-    my $res = $self->send(
-        POST => 'login',
+    my $res = $self->send('POST','login',
         lgname => $user,
         lgpassword => $password,
     );        
 
     if ($res->{'login'}->{'result'} eq 'NeedToken') {
-        $res = $self->send(
-            POST => 'login',
+        $res = $self->send('POST','login',
             lgname => $user,
             lgpassword => $password,
             lgtoken => $res->{'login'}->{'token'},
@@ -255,9 +260,7 @@ sub getToken {
     my ($self,$action) = @_;
 
     return $self->tokenH->memoize($action,sub {
-        my $res = $self->send(
-            GET => 'tokens',
-        );
+        my $res = $self->send('GET','tokens');
 
         my $token = $res->{'tokens'}->{$action.'token'};
         if (!$token) {
@@ -333,8 +336,7 @@ sub getPage {
 
     # Request ausführen
 
-    my $res = $self->send(
-        GET => 'query',
+    my $res = $self->send('GET','query',
         $arg =~ /^\d+$/? (pageids => $arg): (titles => $arg),
         prop => 'revisions',
         rvprop => 'ids|flags|timestamp|user|comment|size|content',
@@ -467,8 +469,7 @@ sub editPage {
 
     # Seite bearbeiten
 
-    return $self->send(
-        POST => 'edit',
+    return $self->send('POST','edit',
         token => $token,
         $arg =~ /^\d+$/? (pageid => $arg): (title => $arg),
         text => $text,
@@ -544,8 +545,7 @@ sub movePage {
 
     # Seite umbenennen
 
-    return $self->send(
-        POST => 'move',
+    return $self->send('POST','move',
         token => $token,
         $arg =~ /^\d+$/? (fromid => $arg): (from => $arg),
         to => $newTitle,
@@ -791,8 +791,7 @@ sub siteInfo {
         @properties = keys %property;
     }
 
-    return $self->send(
-        GET => 'query',
+    return $self->send('GET','query',
         meta => 'siteinfo',
         siprop => join('|',@properties),
     );
@@ -820,6 +819,21 @@ Pfad der Datei.
 
 Response
 
+=head4 Description
+
+MEMO: File upload funktioniert im RuV-Wiki nicht. Fehlermeldung:
+
+    Exception:
+        MEDIAWIKI-00099: API error
+    Code:
+        badupload_file
+    Info:
+        File upload param file is not a file upload; be sure to use
+        multipart/form-data for your POST and include a filename in the
+        Content-Disposition header.
+
+Beides ist bei dem Request jedoch der Fall. Prüfen.
+
 =cut
 
 # -----------------------------------------------------------------------------
@@ -836,12 +850,12 @@ sub upload {
 
     # Seite bearbeiten
 
-    return $self->send(
-        POST_DATA => 'upload',
+    return $self->send('POST','upload',
         token => $token,
-        filename => $filename,
+        filename => ucfirst $filename,
         file => $data,
-        text => 'abc',
+        comment => 'Ein Kommentar',
+        ignorewarnings => 1,
     );
 }
 
@@ -908,24 +922,23 @@ sub send {
     my ($ua,$url) = $self->get(qw/ua url/);
 
     # Wir wollen die Antwort in JSON
+
     # my @keyVal = (action=>$action,formatversion=>2,format=>'json',@_);
     my @keyVal = (action=>$action,format=>'json',@_);
 
     # HTTP-Request erzeugen und ausführen
 
     my $res;
-    if ($method eq 'GET') {
+    if ($action eq 'upload') {
+        # $url = 'http://lxv0103.ruv.de:8080/index.php/Spezial:Hochladen';
+        $res = $ua->post($url,{@keyVal},Content_Type=>'multipart/form-data');
+    }
+    elsif ($method eq 'GET') {
         my $queryString = Quiq::Url->queryEncode(-separator=>'&',@keyVal);
         $res = $ua->get("$url?$queryString");
     }
     elsif ($method eq 'POST') {
         $res = $ua->post($url,{@keyVal});
-    }
-    elsif ($method eq 'POST_DATA') {
-        $res = $ua->post($url,
-            {@keyVal},
-            Content_Type => 'multipart/form-data',
-        );
     }
     else {
         $self->throw(
