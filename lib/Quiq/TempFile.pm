@@ -37,7 +37,7 @@ im String-Kontext automatisch zum Datei-Pfad.
 
 =head4 Synopsis
 
-    $dir = $class->new(@opt);
+    $file = $class->new(@opt);
 
 =head4 Options
 

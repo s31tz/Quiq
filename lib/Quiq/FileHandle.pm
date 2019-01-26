@@ -8,8 +8,8 @@ use utf8;
 
 our $VERSION = 1.131;
 
-use Quiq::Option;
 use Quiq::Path;
+use Quiq::Option;
 use Scalar::Util ();
 use Quiq::Perl;
 use Fcntl qw(:flock);
@@ -137,7 +137,7 @@ sub new {
     }
     else {                          # Datei öffnen
         $mode = shift;
-        $path = shift;
+        $path = Quiq::Path->expandTilde(shift);
     }
 
     # Optionen

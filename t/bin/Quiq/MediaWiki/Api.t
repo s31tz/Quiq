@@ -15,7 +15,7 @@ sub test_loadClass : Init(1) {
 
 # -----------------------------------------------------------------------------
 
-sub test_unitTest: Ignore(2) {
+sub test_loadFile: Ignore(2) {
     my $self = shift;
 
     my $mwl = Quiq::MediaWiki::Api->new('ruv',-debug=>1);

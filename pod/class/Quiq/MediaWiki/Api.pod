@@ -62,10 +62,6 @@ in Farbe aus.
 
 Gib Laufzeit-Information wie den Kommunikationsverlauf auf STDERR aus.
 
-=item -uploadUrl => $url
-
-URL für Datei-Upload.
-
 =back
 
 =head4 Returns
@@ -315,38 +311,38 @@ Benenne die Seite mit dem Titel $oldTitle bzw. der Page-Id $pageId
 in $newTitle um. Die alte Seite existiert weiterhin. Das Wiki
 richtet automatisch eine Umleitung von der alten zur neuen Seite ein.
 
-=head3 loadPage() - Lade Seite ins Wiki
+=head3 loadFile() - Lade Seite oder Bilddatei ins Wiki
 
 =head4 Synopsis
 
-    $mwa->loadPage($mirrorDir,$pageName,$input,@opt);
+    $mwa->loadFile($cacheDir,$file,@opt);
 
 =head4 Arguments
 
 =over 4
 
-=item $mirrorDir
+=item $cacheDir
 
 Pfad zum Spiegel-Verzeichnis. Der Inhalt des Spiegel-Verzeichnisses wird
-von der Methode verwaltet. Es enthält Kopien der MediaWiki-Seiten (*.mw).
+von der Methode verwaltet. Es enthält Kopien der geladenen Dateien.
 
-=item $pageName
+=item $file
 
-Name für die Seite im Spiegel-Verzeichnis. Dieser Name identifiziert die
-Seite im Spiegel-Verzeichnis (und ist nicht zu verwechseln mit dem Titel
-der Seite). Der Name $pageName muss eindeutig sein.
-
-=item $input
-
-Pfad der MediaWiki Seitendatei oder eine Stringreferenz auf den
-Inhalt der Seitendatei.
+Pfad der Datei, die geladen werden soll. Dies kann eine Seitendatei
+(*.mw) oder eine sonstige Datei sein (*.png, *.jpg, *.gif, ...),
+die über die Upload-Schnittstelle des MediaWiki geladen werden kann.
 
 =back
 
 =head4 Description
 
-Lade die Seite $input mit dem eindeutigen Namen $pageName (im
-Spiegel-Verzeichnis) ins MediaWiki. Der $pageName ist nicht zu verwechseln
+# $cacheName
+Name für die Seite im Spiegel-Verzeichnis. Dieser Name identifiziert die
+Seite im Spiegel-Verzeichnis (und ist nicht zu verwechseln mit dem Titel
+der Seite). Der Name $cacheName muss eindeutig sein.
+
+Lade die Seite $input mit dem eindeutigen Namen $cacheName (im
+Spiegel-Verzeichnis) ins MediaWiki. Der $cacheName ist nicht zu verwechseln
 mit dem Titel der Seite. Der Titel der Seite ist zusammen mit
 dem Inhalt der Seite Teil der externen Seitenrepräsentation $input.
 Die Methode erkennt, ob die externe Seite $input
@@ -421,19 +417,38 @@ Response
 
 =head4 Description
 
-MEMO: File upload funktioniert im RuV-Wiki nicht. Fehlermeldung:
+Lade die lokale Datei $file über die Upload-Schnittstelle ins
+MediaWiki hoch. Dies ist typischerweise eine Bilddatei vom Typ
+PNG, JPEG oder GIF.
 
-    Exception:
-        MEDIAWIKI-00099: API error
-    Code:
-        badupload_file
-    Info:
-        File upload param file is not a file upload; be sure to use
-        multipart/form-data for your POST and include a filename in the
-        Content-Disposition header.
+=head4 See Also
 
-Beides ist bei dem Request jedoch der Fall. Prüfen.
+=over 2
 
+=item *
+
+L<API:Upload|https://www.mediawiki.org/wiki/API:Upload>
+
+=item *
+
+L<File Upload per LWP|http://lwp.interglacial.com/ch05_07.htm>
+
+=back
+
+=pod
+    # Datei hochladen (wir lesen $file selbst)
+
+    my $p = Quiq::Path->new;
+    my $data = $p->read($file);
+
+    # Datei hochladen
+
+    my $filename = $p->filename($file);
+    return $self->send('POST','upload',
+        token => $token,
+        filename => $filename,
+        file => [undef,$filename,Content=>$data],
+    );
 =head2 Kommunikation
 
 =head3 send() - Sende HTTP-Anfrage, empfange HTTP-Antwort

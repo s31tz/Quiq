@@ -84,10 +84,6 @@ in Farbe aus.
 
 Gib Laufzeit-Information wie den Kommunikationsverlauf auf STDERR aus.
 
-=item -uploadUrl => $url
-
-URL für Datei-Upload.
-
 =back
 
 =head4 Returns
@@ -128,13 +124,11 @@ sub new {
 
     my $color = 1;
     my $debug = 0;
-    my $uploadUrl = undef;
     my $warnings = 0;
 
     my $argA = Quiq::Parameters->extractToVariables(\@_,1,3,
         -color => \$color,
         -debug => \$debug,
-        -uploadUrl => \$uploadUrl,
         -warnings => \$warnings,
     );
     my ($url,$user,$password) = @$argA;
@@ -156,7 +150,6 @@ sub new {
         warnings => $warnings,
         tokenH => Quiq::Hash->new->unlockKeys,
         ua => $ua,
-        uploadUrl => $uploadUrl,
         url => $url,
         user => $user,
         password => $password,
@@ -556,38 +549,38 @@ sub movePage {
 
 # -----------------------------------------------------------------------------
 
-=head3 loadPage() - Lade Seite ins Wiki
+=head3 loadFile() - Lade Seite oder Bilddatei ins Wiki
 
 =head4 Synopsis
 
-    $mwa->loadPage($mirrorDir,$pageName,$input,@opt);
+    $mwa->loadFile($cacheDir,$file,@opt);
 
 =head4 Arguments
 
 =over 4
 
-=item $mirrorDir
+=item $cacheDir
 
 Pfad zum Spiegel-Verzeichnis. Der Inhalt des Spiegel-Verzeichnisses wird
-von der Methode verwaltet. Es enthält Kopien der MediaWiki-Seiten (*.mw).
+von der Methode verwaltet. Es enthält Kopien der geladenen Dateien.
 
-=item $pageName
+=item $file
 
-Name für die Seite im Spiegel-Verzeichnis. Dieser Name identifiziert die
-Seite im Spiegel-Verzeichnis (und ist nicht zu verwechseln mit dem Titel
-der Seite). Der Name $pageName muss eindeutig sein.
-
-=item $input
-
-Pfad der MediaWiki Seitendatei oder eine Stringreferenz auf den
-Inhalt der Seitendatei.
+Pfad der Datei, die geladen werden soll. Dies kann eine Seitendatei
+(*.mw) oder eine sonstige Datei sein (*.png, *.jpg, *.gif, ...),
+die über die Upload-Schnittstelle des MediaWiki geladen werden kann.
 
 =back
 
 =head4 Description
 
-Lade die Seite $input mit dem eindeutigen Namen $pageName (im
-Spiegel-Verzeichnis) ins MediaWiki. Der $pageName ist nicht zu verwechseln
+# $cacheName
+Name für die Seite im Spiegel-Verzeichnis. Dieser Name identifiziert die
+Seite im Spiegel-Verzeichnis (und ist nicht zu verwechseln mit dem Titel
+der Seite). Der Name $cacheName muss eindeutig sein.
+
+Lade die Seite $input mit dem eindeutigen Namen $cacheName (im
+Spiegel-Verzeichnis) ins MediaWiki. Der $cacheName ist nicht zu verwechseln
 mit dem Titel der Seite. Der Titel der Seite ist zusammen mit
 dem Inhalt der Seite Teil der externen Seitenrepräsentation $input.
 Die Methode erkennt, ob die externe Seite $input
@@ -617,35 +610,56 @@ Seite eingepflegt werden muss -> Fehlermeldung
 
 # -----------------------------------------------------------------------------
 
-sub loadPage {
+sub loadFile {
     my $self = shift;
-    # @_: $mirrorDir,$pageName,$input,@opt
+    # @_: $cacheDir,$file,@opt
 
     # Optionen und Argumente
 
     my $force = 1;
 
-    my $argA = Quiq::Parameters->extractToVariables(\@_,3,3,
+    my $argA = Quiq::Parameters->extractToVariables(\@_,2,2,
         -force => \$force,
     );
-    my ($mirrorDir,$pageName,$input) = @$argA;
+    my ($cacheDir,$file) = @$argA;
 
-    # Pfad-Objekt für diverse Pfad-Operationen instantiieren
+    # Pfad-Objekt für Pfad-Operationen instantiieren
     my $p = Quiq::Path->new;
+
+    my $cacheName = $p->filename($file);
+    my $varFile = sprintf '%s/%s',$cacheDir,$cacheName;
+
+    my $ext = $p->extension($file);
+    if ($ext ne 'mw') {
+        # Datei Upload
+
+        my $op = 'updated';
+        if (!$p->exists($varFile)) {
+            # Datei in Cache kopieren
+            $p->copy($file,$varFile);
+            $op = 'created';
+        }
+        elsif (!$force && !$p->compare($file,$varFile)) {
+            # Datei und CacheDatei sind identisch
+            return;
+        }
+        $self->upload($varFile);
+        printf "File %s: %s\n",$op,ucfirst $cacheName;
+        return;
+    }
 
     # Externe Seite: Information (Titel, Inhalt) ermitteln
 
-    my $pageCode = ref $input? $$input: $p->read($input,-decode=>'utf-8');
+    my $pageCode = $p->read($file,-decode=>'utf-8');
     my $recNew = Quiq::Hash->new(Quiq::Record->fromString($pageCode));
     my ($titleNew,$contentNew) = $recNew->get('Title','Content');
 
-    # Mirror-Seite: Information (Id, Titel, Inhalt) ermitteln.
-    # Existiert keine Mirror-Seite, versuchen wir, die Seite über
+    # Cache-Seite: Information (Id, Titel, Inhalt) ermitteln.
+    # Existiert keine Cache-Seite, versuchen wir, die Seite über
     # den Titel im Wiki zu finden. Falls sie im Wiki existiert, erzeugen
-    # wir aus ihr die Mirror-Seite. Falls nicht, legen wir eine leere
-    # Mirror-Seite an (die notwendig von der externen Seite differiert).
+    # wir aus ihr die Cache-Seite. Falls nicht, legen wir eine leere
+    # Cache-Seite an (die notwendig von der externen Seite differiert).
 
-    my $varFile = sprintf '%s/%s.mw',$mirrorDir,$pageName;
     if (!$p->exists($varFile)) {
         my $pageId = '';
         my $title = '';
@@ -680,9 +694,9 @@ sub loadPage {
             return;
         }
         if ($contentNew ne $contentOld) {
-            # Der Inhalt zwischen der externen Seite und der Mirror-Seite
+            # Der Inhalt zwischen der externen Seite und der Cache-Seite
             # hat sich geändert. Wir prüfen ob die Wiki-Seite geändert
-            # wurde, also zwischen dem Inhalt der Mirror-Seite und
+            # wurde, also zwischen dem Inhalt der Cache-Seite und
             # der Wiki-Seite ein Unterschied besteht.
 
             if (my $pag = $self->getPage($pageId)) {
@@ -701,7 +715,7 @@ sub loadPage {
             }
         }
         if ($titleNew ne $titleOld) {
-            # Der Titel zwischen der externen Seite und der Mirror-Seite
+            # Der Titel zwischen der externen Seite und der Cache-Seite
             # hat sich geändert. Wir benennen die Wiki-Seite um.
 
             $self->movePage($pageId,$titleNew);
@@ -821,42 +835,59 @@ Response
 
 =head4 Description
 
-MEMO: File upload funktioniert im RuV-Wiki nicht. Fehlermeldung:
+Lade die lokale Datei $file über die Upload-Schnittstelle ins
+MediaWiki hoch. Dies ist typischerweise eine Bilddatei vom Typ
+PNG, JPEG oder GIF.
 
-    Exception:
-        MEDIAWIKI-00099: API error
-    Code:
-        badupload_file
-    Info:
-        File upload param file is not a file upload; be sure to use
-        multipart/form-data for your POST and include a filename in the
-        Content-Disposition header.
+=head4 See Also
 
-Beides ist bei dem Request jedoch der Fall. Prüfen.
+=over 2
+
+=item *
+
+L<API:Upload|https://www.mediawiki.org/wiki/API:Upload>
+
+=item *
+
+L<File Upload per LWP|http://lwp.interglacial.com/ch05_07.htm>
+
+=back
 
 =cut
 
 # -----------------------------------------------------------------------------
 
 sub upload {
-    my ($self,$file) = @_;
+    my $self = shift;
+    my $file = Quiq::Path->expandTilde(shift);
 
     # Edit-Token besorgen
     my $token = $self->getToken('edit');
 
-    my $p = Quiq::Path->new;
-    my $filename = $p->filename($file);
-    my $data = $p->read($file);
+    # Datei hochladen ($file wird von LWP gelesen)
 
-    # Seite bearbeiten
-
+    my $filename = Quiq::Path->filename($file);
     return $self->send('POST','upload',
         token => $token,
-        filename => ucfirst $filename,
-        file => $data,
-        comment => 'Ein Kommentar',
-        ignorewarnings => 1,
+        filename => $filename,
+        file => [$file],
     );
+
+=pod
+    # Datei hochladen (wir lesen $file selbst)
+
+    my $p = Quiq::Path->new;
+    my $data = $p->read($file);
+
+    # Datei hochladen
+
+    my $filename = $p->filename($file);
+    return $self->send('POST','upload',
+        token => $token,
+        filename => $filename,
+        file => [undef,$filename,Content=>$data],
+    );
+=cut
 }
 
 # -----------------------------------------------------------------------------
@@ -926,19 +957,22 @@ sub send {
     # my @keyVal = (action=>$action,formatversion=>2,format=>'json',@_);
     my @keyVal = (action=>$action,format=>'json',@_);
 
-    # HTTP-Request erzeugen und ausführen
+    # HTTP-Request erzeugen und ausführen (lassen sich die Aufrufe
+    # ohne Fallunterscheidung vereinheitlichen?)
 
     my $res;
     if ($action eq 'upload') {
-        # $url = 'http://lxv0103.ruv.de:8080/index.php/Spezial:Hochladen';
-        $res = $ua->post($url,{@keyVal},Content_Type=>'multipart/form-data');
+        # Im Falle eines File-Upload muss die Liste der Schlüssel/Wert-Paare
+        # per Array-Referenz übergeben werden und die hochzuladende Datei
+        # per file => [undef,$name,Content=>$data] (siehe Methode upload)
+        $res = $ua->post($url,[@keyVal],Content_Type=>'form-data');
     }
     elsif ($method eq 'GET') {
         my $queryString = Quiq::Url->queryEncode(-separator=>'&',@keyVal);
         $res = $ua->get("$url?$queryString");
     }
     elsif ($method eq 'POST') {
-        $res = $ua->post($url,{@keyVal});
+        $res = $ua->post($url,[@keyVal]);
     }
     else {
         $self->throw(
