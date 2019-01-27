@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Quiq::MediaWiki::Api::Test;
+package Quiq::MediaWiki::Client::Test;
 use base qw/Quiq::Test::Class/;
 
 use strict;
@@ -10,16 +10,16 @@ use v5.10.0;
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
-    shift->useOk('Quiq::MediaWiki::Api');
+    shift->useOk('Quiq::MediaWiki::Client');
 }
 
 # -----------------------------------------------------------------------------
 
-sub test_loadFile: Ignore(2) {
+sub test_load: Ignore(2) {
     my $self = shift;
 
-    my $mwl = Quiq::MediaWiki::Api->new('ruv',-debug=>1);
-    $self->is(ref($mwl),'Quiq::MediaWiki::Api');
+    my $mwl = Quiq::MediaWiki::Client->new('ruv',-debug=>1);
+    $self->is(ref($mwl),'Quiq::MediaWiki::Client');
 
     my $url = $mwl->url;
     $self->is($url,'http://lxv0103.ruv.de:8080/api.php');
@@ -30,6 +30,6 @@ sub test_loadFile: Ignore(2) {
 # -----------------------------------------------------------------------------
 
 package main;
-Quiq::MediaWiki::Api::Test->runTests;
+Quiq::MediaWiki::Client::Test->runTests;
 
 # eof

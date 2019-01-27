@@ -437,7 +437,7 @@ L<Quiq::Math|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Math.pod> 
 
 =item *
 
-L<Quiq::MediaWiki::Api|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/MediaWiki/Api.pod> - Clientseitiger Zugriff auf MediaWiki API
+L<Quiq::MediaWiki::Client|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/MediaWiki/Client.pod> - Clientseitiger Zugriff auf ein MediaWiki
 
 =item *
 

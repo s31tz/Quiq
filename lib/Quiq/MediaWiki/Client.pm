@@ -1,4 +1,4 @@
-package Quiq::MediaWiki::Api;
+package Quiq::MediaWiki::Client;
 use base qw/Quiq::Hash/;
 
 use strict;
@@ -9,10 +9,10 @@ our $VERSION = 1.131;
 
 use Quiq::Parameters;
 use Quiq::AnsiColor;
-use Quiq::Hash;
 use LWP::UserAgent ();
 use Quiq::Option;
 use Quiq::Debug;
+use Quiq::Hash;
 use Quiq::Path;
 use Quiq::Record;
 use Quiq::Url;
@@ -24,7 +24,7 @@ use JSON ();
 
 =head1 NAME
 
-Quiq::MediaWiki::Api - Clientseitiger Zugriff auf MediaWiki API
+Quiq::MediaWiki::Client - Clientseitiger Zugriff auf ein MediaWiki
 
 =head1 BASE CLASS
 
@@ -32,8 +32,8 @@ L<Quiq::Hash>
 
 =head1 DESCRIPTION
 
-Diese Klasse implementiert verschiedene clientseitige Methoden für
-den Zugriff auf die serverseitige L<MediaWiki-API|https://www.mediawiki.org/w/api.php?action=help&recursivesubmodules=1>.
+Diese Klasse implementiert Methoden zur Kommunikation mit einem
+MediaWiki über die sogenannte MediaWiki-API.
 
 Die MediaWiki-API wird über api.php (statt index.php) angesprochen.
 Die Doku der API wird angezeigt, wenn api.php ohne Parameter
@@ -41,6 +41,54 @@ oder mit "action=help&recursivesubmodules=1" (alles auf einer Seite)
 aufgerufen wird.
 
 Die MediaWiki-API empfängt und liefert alle Daten in UTF-8.
+
+Insbesondere implementiert die Klasse die Methode $mw->L</load>(), mit
+welcher sowohl Seiten als auch Mediendateien (z.B. Bilder)
+"intelligent" geladen werden können.
+
+Bei Angabe der Option -debug => 1 bei Aufruf des Konstruktors
+wird die gesamte Kommunikation auf STDERR protokolliert.
+
+=head1 SEE ALSO
+
+=over 2
+
+=item *
+
+L<API Dokumentation|https://www.mediawiki.org/wiki/API> (www.mediawiki.org)
+
+=item *
+
+L<API Lowlevel-Dokumentation|https://www.mediawiki.org/w/api.php?action=help&recursivesubmodules=1>
+(www.mediawiki.org)
+
+=item *
+
+Client-Implementierung: quik-mediawiki
+
+=back
+
+=head1 EXAMPLES
+
+Beispiele für MediaWiki URLs:
+
+=over 2
+
+=item *
+
+L<https://www.mediawiki.org/w/api.php>
+
+=item *
+
+L<http://localhost/mediawiki/api.php>
+(nicht allgemein aufrufbar)
+
+=item *
+
+L<http://lxv0103.ruv.de:8080/api.php>
+(nicht allgemein aufrufbar)
+
+=back
 
 =head1 METHODS
 
@@ -50,8 +98,8 @@ Die MediaWiki-API empfängt und liefert alle Daten in UTF-8.
 
 =head4 Synopsis
 
-    $mwa = $class->new($url,@opt);
-    $mwa = $class->new($url,$user,$password,@opt);
+    $mw = $class->new($url,@opt);
+    $mw = $class->new($url,$user,$password,@opt);
 
 =head4 Arguments
 
@@ -88,29 +136,26 @@ Gib Laufzeit-Information wie den Kommunikationsverlauf auf STDERR aus.
 
 =head4 Returns
 
-Client-Objekt
+Client-Objekt (Referenz)
 
 =head4 Description
 
 Instantiiere einen Client für die MediaWiki-API $url und liefere eine
-Referenz auf dieses Objekt zurück. Sind Benutzername $user und Passwort
-$password angegeben, wird der Benutzer mit dem ersten Request automatisch
-eingeloggt. Alternativ kann die Methode $mwa->login() genutzt werden,
-um den Benutzer zu einem beliebigen Zeitpunkt einzuloggen.
+Referenz auf dieses Objekt zurück.
 
-=head4 Examples
+Der Konstruktor-Aufruf löst I<keinen> Server-Request aus. Sind
+$user und $password angegeben, wird der Benutzer erst mit dem
+ersten Token-Request eingeloggt. Er wird also nur eingeloggt, wenn
+es nötig ist. Vorteil: Ein Client, bei dem sich erst im Laufe der
+Ausführung herausstellt, ob er Requests ausführt, muss nicht vorab
+einen - ggf.  unnötigen - Login-Request ausführen. (De facto besteht
+ein Login-Request aus zwei Requests, da mit dem ersten Aufruf
+lediglich der Login-Token geliefert wird.) Solange der Client
+Requests ausführt, die kein Login benötigen, werden diese beiden
+Requests ebenfalls gespart.
 
-=over 2
-
-=item *
-
-https://www.mediawiki.org/w/api.php
-
-=item *
-
-http://lxv0103.ruv.de:8080/api.php
-
-=back
+Bei Angabe der Option -debug => 1 bei Aufruf des Konstruktors
+wird die gesamte Kommunikation auf STDERR protokolliert.
 
 =cut
 
@@ -148,17 +193,18 @@ sub new {
         color => $color,
         debug => $debug,
         warnings => $warnings,
-        tokenH => Quiq::Hash->new->unlockKeys,
         ua => $ua,
         url => $url,
         user => $user,
         password => $password,
+        tokenH => undef, # memoize
+        version => undef, # memoize
     );
 }
 
 # -----------------------------------------------------------------------------
 
-=head2 Meta-Operationen
+=head2 Grundlegende Operationen
 
 =head3 login() - Logge Nutzer ein
 
@@ -180,14 +226,19 @@ Passwort des Nutzers
 
 =back
 
+=head4 Returns
+
+Response (Hash-Referenz)
+
 =head4 Description
 
-Logge den Benutzer $user mit Passwort $password auf dem MediaWiki-Server ein.
-Alternativ ist ein automatisches Login möglich, siehe Konstruktor.
+Melde den Benutzer $user mit Passwort $password auf dem
+MediaWiki-Server an. Alternativ ist ein automatisches Login
+möglich, was eleganter ist. Siehe Konstruktor.
 
 =head4 Example
 
-    $ perl -MQuiq::MediaWiki::Api -E 'Quiq::MediaWiki::Api->new("http://lxv0103.ruv.de:8080/api.php",-debug=>1)->login("XV882JS","<PASSWORD>")'
+    $ perl -MQuiq::MediaWiki::Client -E 'Quiq::MediaWiki::Client->new("http://lxv0103.ruv.de:8080/api.php",-debug=>1)->login("XV882JS","<PASSWORD>")'
 
 =cut
 
@@ -196,12 +247,18 @@ Alternativ ist ein automatisches Login möglich, siehe Konstruktor.
 sub login {
     my ($self,$user,$password) = @_;
 
+    # Login-Request
+
     my $res = $self->send('POST','login',
         lgname => $user,
         lgpassword => $password,
     );        
 
     if ($res->{'login'}->{'result'} eq 'NeedToken') {
+        # Der erste Login-Request ist fehlgeschlagen, hat aber ein
+        # Login-Token geliefert. Wir wiederholen den Aufruf
+        # mit dem Login-Token.
+
         $res = $self->send('POST','login',
             lgname => $user,
             lgpassword => $password,
@@ -217,6 +274,9 @@ sub login {
         );
     }
 
+    # Kein automatisches Login mehr
+    $self->autoLogin(0);
+
     return $res;
 }
 
@@ -226,7 +286,7 @@ sub login {
 
 =head4 Synopsis
 
-    $token = $mwa->getToken($action);
+    $token = $mw->getToken($action);
 
 =head4 Arguments
 
@@ -238,12 +298,15 @@ Operation, für die das Token benötigt wird.
 
 =back
 
+=head4 Returns
+
+Token (String)
+
 =head4 Description
 
 Besorge vom Server ein Token zum Ausführen von Operation $action und
 liefere dieses zurück. Da das Token je Session für alle Seiten identisch
-ist, cachen wir die Tokens, so dass nur eine Serveranfrage je
-Operationstyp nötig ist.
+ist, cachen wir die Tokens, so dass nur eine Serveranfrage nötig ist.
 
 =cut
 
@@ -252,31 +315,66 @@ Operationstyp nötig ist.
 sub getToken {
     my ($self,$action) = @_;
 
-    return $self->tokenH->memoize($action,sub {
+    if ($self->autoLogin) {
+        # Wir loggen uns mit dem ersten Token-Request automatisch ein.
+        # Autologin wird in der Methode login() abgestellt, müssen
+        # wir hier nicht machen.
+        $self->login($self->user,$self->password);
+    }
+
+    my $h = $self->memoize('tokenH',sub {
         my $res = $self->send('GET','tokens');
+        my %token = %{$res->{'tokens'}};
+        return \%token;
+    });
 
-        my $token = $res->{'tokens'}->{$action.'token'};
-        if (!$token) {
-            $self->throw(
-                q~MEDIAWIKI-00099: No token~,
-                Action => $action,
-            );
-        }
+    my $token = $h->{$action.'token'};
+    if (!$token) {
+        $self->throw(
+            q~MEDIAWIKI-00099: No token~,
+            Action => $action,
+        );
+    }
 
-        return $token; 
+    return $token;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 version() - Versionsnummer MediaWiki-Server
+
+=head4 Synopsis
+
+    $version = $mw->version;
+
+=head4 Description
+
+Ermittele die Versionsnummer des MediaWiki-Servers und liefere
+diese zurück. Die Information wird im Objekt gecached.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub version {
+    my $self = shift;
+
+    return $self->memoize('version',sub {
+        my $res = $self->siteInfo('general');
+        my $version = $res->{'query'}->{'general'}->{'generator'};
+        $version =~ s/^MediaWiki\s+//;
+        return $version;
    });
 }
 
 # -----------------------------------------------------------------------------
 
-=head2 Seiten-Operationen
-
 =head3 getPage() - Liefere Seite
 
 =head4 Synopsis
 
-    $pag = $mwa->getPage($pageId,@opt);
-    $pag = $mwa->getPage($title,@opt);
+    $pag = $mw->getPage($pageId,@opt);
+    $pag = $mw->getPage($title,@opt);
 
 =head4 Arguments
 
@@ -298,18 +396,82 @@ Titel der Seite.
 
 =item -sloppy => $bool (Default: 0)
 
-Wirf keine Exception, wenn die Seite nicht gefunden wird.
+Wirf keine Exception, wenn die Seite nicht gefunden wird, sondern
+liefere undef.
 
 =back
 
 =head4 Returns
 
-Page-Objekt (Hash)
+Page-Objekt (Hash-Referenz)
 
 =head4 Description
 
-Ermittele die Seite mit der PageId $pageId bzw. dem Titel $title
-und liefere diese zurück.
+Ermittele die Seite mit der Page-Id $pageId bzw. dem Titel $title und
+liefere diese zurück. Die Methode erkennt eine Page-Id daran, dass
+der Wert ausschließlich aus Ziffern besteht. Alles andere wird als
+Seitentitel interpretiert.
+
+Der geliefere Hash besitzt folgende Komponenten, die auch per
+Accessor-Methode abgefragt werden können:
+
+=over 2
+
+=item *
+
+=over 2
+
+=item *
+
+(= Inhalt der Seite)
+
+=back
+
+=item *
+
+comment
+
+=item *
+
+contentformat
+
+=item *
+
+contentmodel
+
+=item *
+
+ns
+
+=item *
+
+pageid
+
+=item *
+
+parentid
+
+=item *
+
+revid
+
+=item *
+
+size
+
+=item *
+
+timestamp
+
+=item *
+
+title
+
+=item *
+
+user
+
+=back
 
 =cut
 
@@ -341,21 +503,7 @@ sub getPage {
         return undef;
     }
 
-    # Wir bauen die gelieferte Struktur in einen einzelnen Hash um.
-    # Dieser besitzt die Komponenten:
-    #
-    # * * (= Inhalt der Seite)
-    # * comment
-    # * contentformat
-    # * contentmodel
-    # * ns
-    # * pageid
-    # * parentid
-    # * revid
-    # * size
-    # * timestamp
-    # * title
-    # * user
+    # Wir bauen die gelieferte Struktur in einen einzelnen Hash um
 
     my $rev = $pag->{'revisions'}->[0];
     delete $pag->{'revisions'};
@@ -374,20 +522,20 @@ sub getPage {
 
 =head4 Synopsis
 
-    $res = $mwa->editPage($title,$text);
-    $res = $mwa->editPage($pageId,$text);
+    $res = $mw->editPage($pageId,$text); # [1]
+    $res = $mw->editPage($title,$text);  # [2]
 
 =head4 Arguments
 
 =over 4
 
-=item $title
-
-Titel der Seite.
-
 =item $pageId
 
 Page-Id der Seite.
+
+=item $title
+
+Titel der Seite.
 
 =item $text
 
@@ -397,56 +545,35 @@ Text der Seite
 
 =head4 Returns
 
-Response
+Response (Hash-Referenz)
 
 =head4 Description
 
-Setze den Inhalt der Seite mit dem Titel $title auf Text $text.
-Drei Fälle lassen sich unterscheiden:
+Dies ist die Lowlevel-Methode zum Speichern einer Seite oder
+des Contents einer Seite. Eine weitergehende Logik, die auch
+Titelnderungen erlaubt, implementiert die  Methode $mw->L</load>().
 
-=over 4
+In Fassung [1] wird der Content der Seite mit der Page-Id $pageId
+auf Text $text gesetzt. Die Seite muss existieren.
 
-=item 1.
-
-Existiert die Seite nicht, wird sie angelegt.
-
-=item 2.
-
-Existiert die Seite und der Text ist verschieden, wird der
-bestehende Text ersetzt.
-
-=item 3.
-
-Existiert die Seite und der Text ist identisch, wird der
-Aufruf vom Wiki ignoriert.
-
-=back
-
-=head4 Example
+In Fassung [2] muss die Seite nicht existieren.  Der MediaWiki-Server
+implementiert folgende Logik:
 
 =over 2
 
 =item *
 
-Response nach Neuanlage einer Seite
+Existiert die Seite nicht, wird sie angelegt.
 
-    $mwa->editPage("XV882JS - API Testseite 8","Ein Text")';
+=item *
 
-produziert (Log)
+Existiert die Seite und ist der Text verschieden, wird der
+bestehende Text ersetzt.
 
-    ---JSON---
-    \ {
-        edit   {
-            contentmodel   "wikitext",
-            new            "",
-            newrevid       13318,
-            newtimestamp   "2018-12-27T11:54:51Z",
-            oldrevid       0,
-            pageid         2446,
-            result         "Success",
-            title          "XV882JS - API Testseite 8"
-        }
-    }
+=item *
+
+Existiert die Seite und ist der Text identisch, wird der
+Aufruf vom Wiki-Server ignoriert.
 
 =back
 
@@ -460,7 +587,7 @@ sub editPage {
     # Edit-Token besorgen
     my $token = $self->getToken('edit');
 
-    # Seite bearbeiten
+    # Seite speichern
 
     return $self->send('POST','edit',
         token => $token,
@@ -475,20 +602,20 @@ sub editPage {
 
 =head4 Synopsis
 
-    $res = $mwa->movePage($oldTitle,$newTitle,@opt);
-    $res = $mwa->movePage($pageId,$newTitle,@opt);
+    $res = $mw->movePage($pageId,$newTitle,@opt);
+    $res = $mw->movePage($oldTitle,$newTitle,@opt);
 
 =head4 Arguments
 
 =over 4
 
-=item $oldTitle
-
-Titel der Seite.
-
 =item $pageId
 
 Page-Id der Seite.
+
+=item $oldTitle
+
+Titel der Seite.
 
 =item $newTitle
 
@@ -506,15 +633,21 @@ Grund für die Umbenennung.
 
 =item -redirect => $bool (Default: 1)
 
-Erzeuge ein Redirekt von der alten zur neuen Seite.
+Erzeuge ein Redirekt von der alten zur neuen Seite. Wird
+-redirect => 0 gesetzt, unterbleibt dies.
 
 =back
 
+=head4 Returns
+
+Response (Hash-Referenz)
+
 =head4 Description
 
-Benenne die Seite mit dem Titel $oldTitle bzw. der Page-Id $pageId
+Benenne die Seite mit Page-Id $pageId oder dem Titel $oldTitle
 in $newTitle um. Die alte Seite existiert weiterhin. Das Wiki
-richtet automatisch eine Umleitung von der alten zur neuen Seite ein.
+richtet automatisch eine Umleitung von der alten zur neuen
+Seite ein, sofern beim Aufruf nicht -redirect => 0 angegeben wird.
 
 =cut
 
@@ -533,7 +666,7 @@ sub movePage {
         -redirect => \$redirect,
     );
 
-    # Edit-Token besorgen (ein Move-Token gibt es nicht)
+    # Edit-Token besorgen
     my $token = $self->getToken('edit');
 
     # Seite umbenennen
@@ -549,209 +682,12 @@ sub movePage {
 
 # -----------------------------------------------------------------------------
 
-=head3 loadFile() - Lade Seite oder Bilddatei ins Wiki
-
-=head4 Synopsis
-
-    $mwa->loadFile($cacheDir,$file,@opt);
-
-=head4 Arguments
-
-=over 4
-
-=item $cacheDir
-
-Pfad zum Spiegel-Verzeichnis. Der Inhalt des Spiegel-Verzeichnisses wird
-von der Methode verwaltet. Es enthält Kopien der geladenen Dateien.
-
-=item $file
-
-Pfad der Datei, die geladen werden soll. Dies kann eine Seitendatei
-(*.mw) oder eine sonstige Datei sein (*.png, *.jpg, *.gif, ...),
-die über die Upload-Schnittstelle des MediaWiki geladen werden kann.
-
-=back
-
-=head4 Description
-
-# $cacheName
-Name für die Seite im Spiegel-Verzeichnis. Dieser Name identifiziert die
-Seite im Spiegel-Verzeichnis (und ist nicht zu verwechseln mit dem Titel
-der Seite). Der Name $cacheName muss eindeutig sein.
-
-Lade die Seite $input mit dem eindeutigen Namen $cacheName (im
-Spiegel-Verzeichnis) ins MediaWiki. Der $cacheName ist nicht zu verwechseln
-mit dem Titel der Seite. Der Titel der Seite ist zusammen mit
-dem Inhalt der Seite Teil der externen Seitenrepräsentation $input.
-Die Methode erkennt, ob die externe Seite $input
-
-=over 2
-
-=item *
-
-bereits im Wiki existiert oder neu angelegt werden muss
-
-=item *
-
-sich der Titel geändert hat -> movePage()
-
-=item *
-
-sich der Inhalt gegenüber dem letzten Stand geändert hat -> editPage()
-
-=item *
-
-eine Änderung im Wiki erfahren hat und diese Änderung in die externe
-Seite eingepflegt werden muss -> Fehlermeldung
-
-=back
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub loadFile {
-    my $self = shift;
-    # @_: $cacheDir,$file,@opt
-
-    # Optionen und Argumente
-
-    my $force = 1;
-
-    my $argA = Quiq::Parameters->extractToVariables(\@_,2,2,
-        -force => \$force,
-    );
-    my ($cacheDir,$file) = @$argA;
-
-    # Pfad-Objekt für Pfad-Operationen instantiieren
-    my $p = Quiq::Path->new;
-
-    my $cacheName = $p->filename($file);
-    my $varFile = sprintf '%s/%s',$cacheDir,$cacheName;
-
-    my $ext = $p->extension($file);
-    if ($ext ne 'mw') {
-        # Datei Upload
-
-        my $op = 'updated';
-        if (!$p->exists($varFile)) {
-            # Datei in Cache kopieren
-            $p->copy($file,$varFile);
-            $op = 'created';
-        }
-        elsif (!$force && !$p->compare($file,$varFile)) {
-            # Datei und CacheDatei sind identisch
-            return;
-        }
-        $self->upload($varFile);
-        printf "File %s: %s\n",$op,ucfirst $cacheName;
-        return;
-    }
-
-    # Externe Seite: Information (Titel, Inhalt) ermitteln
-
-    my $pageCode = $p->read($file,-decode=>'utf-8');
-    my $recNew = Quiq::Hash->new(Quiq::Record->fromString($pageCode));
-    my ($titleNew,$contentNew) = $recNew->get('Title','Content');
-
-    # Cache-Seite: Information (Id, Titel, Inhalt) ermitteln.
-    # Existiert keine Cache-Seite, versuchen wir, die Seite über
-    # den Titel im Wiki zu finden. Falls sie im Wiki existiert, erzeugen
-    # wir aus ihr die Cache-Seite. Falls nicht, legen wir eine leere
-    # Cache-Seite an (die notwendig von der externen Seite differiert).
-
-    if (!$p->exists($varFile)) {
-        my $pageId = '';
-        my $title = '';
-        my $content = '';
-
-        if (my $pag = $self->getPage($titleNew,-sloppy=>1)) {
-            $pageId = $pag->{'pageid'};
-            $title = $pag->{'title'};
-            $content = $pag->{'*'};
-        }
-
-        my $data = Quiq::Record->toString(
-            Id => $pageId,
-            Title => $title,
-            Content => $content,
-        );
-        $p->write($varFile,$data,
-            -recursive => 1,
-            -encode => 'UTF-8',
-        );
-    }
-
-    my $recOld = Quiq::Hash->new(Quiq::Record->fromFile(
-        $varFile,-encoding=>'UTF-8'));
-    my ($pageId,$titleOld,$contentOld) = $recOld->get('Id','Title','Content');
-
-    if ($pageId) {
-        # Wiki-Seite existiert bereits
-
-        if ($titleNew eq $titleOld && $contentNew eq $contentOld) {
-            # Keine Differenz, es gibt nichts zu tun.
-            return;
-        }
-        if ($contentNew ne $contentOld) {
-            # Der Inhalt zwischen der externen Seite und der Cache-Seite
-            # hat sich geändert. Wir prüfen ob die Wiki-Seite geändert
-            # wurde, also zwischen dem Inhalt der Cache-Seite und
-            # der Wiki-Seite ein Unterschied besteht.
-
-            if (my $pag = $self->getPage($pageId)) {
-                if ($pag->{'*'} ne $contentOld) {
-                    if (!$force) {
-                        printf "ERROR: Page has changed in Wiki: pageId=%s".
-                            " '%s'. Update skipped! Use --force to update the".
-                            " page.\n",$pageId,$pag->{'title'};
-                        return;
-                    }
-                    else {
-                        printf "WARNING: Page has changed in Wiki: pageId=%s".
-                        " '%s'\n",$pageId,$pag->{'title'};
-                    }
-                }
-            }
-        }
-        if ($titleNew ne $titleOld) {
-            # Der Titel zwischen der externen Seite und der Cache-Seite
-            # hat sich geändert. Wir benennen die Wiki-Seite um.
-
-            $self->movePage($pageId,$titleNew);
-            print "Page moved: pageId=$pageId '$titleOld' => '$titleNew'\n";
-        }
-    }
-
-    # Die Seite ist neu oder hat sich geändert. Wir bringen den
-    # neusten Stand aufs Wiki und speichern ihn im Cache.
-
-    my $op = $pageId? 'update': 'create'; # 
-
-    my $res = $self->editPage($pageId || $titleNew,$contentNew);
-    $pageId = $res->{'edit'}->{'pageid'};
-    my $data = Quiq::Record->toString(
-        Id => $pageId,
-        Title => $titleNew,
-        Content => $contentNew,
-    );
-    $p->write($varFile,$data,
-        -encode => 'UTF-8',
-    );
-
-    printf "Page %sd: pageId=%s '%s'\n",$op,$pageId,$titleNew;
-
-    return;
-}
-
-# -----------------------------------------------------------------------------
-
 =head3 siteInfo() - Allgemeine Information über das MediaWiki
 
 =head4 Synopsis
 
-    $res = $mwa->siteInfo;
-    $res = $mwa->siteInfo(@properties);
+    $res = $mw->siteInfo;
+    $res = $mw->siteInfo(@properties);
 
 =head4 Arguments
 
@@ -817,7 +753,7 @@ sub siteInfo {
 
 =head4 Synopsis
 
-    $res = $mwa->upload($file);
+    $res = $mw->upload($file);
 
 =head4 Arguments
 
@@ -894,11 +830,222 @@ sub upload {
 
 =head2 Kommunikation
 
+=head3 load() - Lade Seite oder Bilddatei ins Wiki
+
+=head4 Synopsis
+
+    $mw->load($cacheDir,$file,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $cacheDir
+
+Pfad zum Spiegel-Verzeichnis. Der Inhalt des Spiegel-Verzeichnisses wird
+von der Methode verwaltet. Es enthält Kopien der geladenen Dateien.
+
+=item $file
+
+Pfad der Datei, die geladen werden soll. Dies kann eine Seitendatei
+(*.mw) oder eine sonstige Datei sein (*.png, *.jpg, *.gif, ...),
+die über die Upload-Schnittstelle des MediaWiki geladen werden kann.
+
+=back
+
+=head4 Description
+
+# $cacheName
+Name für die Seite im Spiegel-Verzeichnis. Dieser Name identifiziert die
+Seite im Spiegel-Verzeichnis (und ist nicht zu verwechseln mit dem Titel
+der Seite). Der Name $cacheName muss eindeutig sein.
+
+Lade die Seite $input mit dem eindeutigen Namen $cacheName (im
+Spiegel-Verzeichnis) ins MediaWiki. Der $cacheName ist nicht zu verwechseln
+mit dem Titel der Seite. Der Titel der Seite ist zusammen mit
+dem Inhalt der Seite Teil der externen Seitenrepräsentation $input.
+Die Methode erkennt, ob die externe Seite $input
+
+=over 2
+
+=item *
+
+bereits im Wiki existiert oder neu angelegt werden muss
+
+=item *
+
+sich der Titel geändert hat -> movePage()
+
+=item *
+
+sich der Inhalt gegenüber dem letzten Stand geändert hat -> editPage()
+
+=item *
+
+eine Änderung im Wiki erfahren hat und diese Änderung in die externe
+Seite eingepflegt werden muss -> Fehlermeldung
+
+=back
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub load {
+    my $self = shift;
+    # @_: $cacheDir,$file,@opt
+
+    # Optionen und Argumente
+
+    my $force = 1;
+
+    my $argA = Quiq::Parameters->extractToVariables(\@_,2,2,
+        -force => \$force,
+    );
+    my ($cacheDir,$file) = @$argA;
+
+    # Pfad-Objekt für Pfad-Operationen instantiieren
+    my $p = Quiq::Path->new;
+
+    my $cacheName = $p->filename($file);
+    my $varFile = sprintf '%s/%s',$cacheDir,$cacheName;
+
+    my $ext = $p->extension($file);
+    if ($ext ne 'mw') {
+        # Datei Upload
+
+        my $exists = $p->exists($varFile);
+        if ($force || !$exists || $p->compare($file,$varFile)) {
+            my $res = $self->upload($file);
+            if ($res->{'upload'}->{'warnings'}) {
+                if (my $arr = $res->{'upload'}->{'warnings'}->{'duplicate'}) {
+                    print 'File exists';
+                    my $wikiName = $arr->[0];
+                    if (lc($wikiName) ne lc($cacheName)) {
+                        say " under the name: $arr->[0]";
+                    }
+                    else {
+                        say ": $arr->[0]";
+                    }
+                    # Wir kopieren die Datei nicht in den Cache
+                    return;
+                }
+            }
+            else {
+                printf "File %s: %s\n",$exists? 'updated': 'created',
+                    ucfirst $cacheName;
+            }
+            $p->copy($file,$varFile);
+        }
+
+        return;
+    }
+
+    # Externe Seite: Information (Titel, Inhalt) ermitteln
+
+    my $pageCode = $p->read($file,-decode=>'utf-8');
+    my $recNew = Quiq::Hash->new(Quiq::Record->fromString($pageCode));
+    my ($titleNew,$contentNew) = $recNew->get('Title','Content');
+
+    # Cache-Seite: Information (Id, Titel, Inhalt) ermitteln.
+    # Existiert keine Cache-Seite, versuchen wir, die Seite über
+    # den Titel im Wiki zu finden. Falls sie im Wiki existiert, erzeugen
+    # wir aus ihr die Cache-Seite. Falls nicht, legen wir eine leere
+    # Cache-Seite an (die notwendig von der externen Seite differiert).
+
+    if (!$p->exists($varFile)) {
+        my $pageId = '';
+        my $title = '';
+        my $content = '';
+
+        if (my $pag = $self->getPage($titleNew,-sloppy=>1)) {
+            $pageId = $pag->{'pageid'};
+            $title = $pag->{'title'};
+            $content = $pag->{'*'};
+        }
+
+        my $data = Quiq::Record->toString(
+            Id => $pageId,
+            Title => $title,
+            Content => $content,
+        );
+        $p->write($varFile,$data,
+            -recursive => 1,
+            -encode => 'UTF-8',
+        );
+    }
+
+    my $recOld = Quiq::Hash->new(Quiq::Record->fromFile(
+        $varFile,-encoding=>'UTF-8'));
+    my ($pageId,$titleOld,$contentOld) = $recOld->get('Id','Title','Content');
+
+    if ($pageId) {
+        # Wiki-Seite existiert bereits
+
+        if (!$force && $titleNew eq $titleOld && $contentNew eq $contentOld) {
+            # Keine Differenz, es gibt nichts zu tun.
+            return;
+        }
+        if ($contentNew ne $contentOld) {
+            # Der Inhalt zwischen der externen Seite und der Cache-Seite
+            # hat sich geändert. Wir prüfen ob die Wiki-Seite geändert
+            # wurde, also zwischen dem Inhalt der Cache-Seite und
+            # der Wiki-Seite ein Unterschied besteht.
+
+            if (my $pag = $self->getPage($pageId)) {
+                if ($pag->{'*'} ne $contentOld) {
+                    if (!$force) {
+                        printf "ERROR: Page has changed in Wiki: pageId=%s".
+                            " '%s'. Update skipped! Use --force to update the".
+                            " page.\n",$pageId,$pag->{'title'};
+                        return;
+                    }
+                    else {
+                        printf "WARNING: Page has changed in Wiki: pageId=%s".
+                        " '%s'\n",$pageId,$pag->{'title'};
+                    }
+                }
+            }
+        }
+        if ($titleNew ne $titleOld) {
+            # Der Titel zwischen der externen Seite und der Cache-Seite
+            # hat sich geändert. Wir benennen die Wiki-Seite um.
+
+            $self->movePage($pageId,$titleNew);
+            print "Page moved: pageId=$pageId '$titleOld' => '$titleNew'\n";
+        }
+    }
+
+    # Die Seite ist neu oder hat sich geändert. Wir bringen den
+    # neusten Stand aufs Wiki und speichern ihn im Cache.
+
+    my $op = $pageId? 'update': 'create'; # 
+
+    my $res = $self->editPage($pageId || $titleNew,$contentNew);
+    $pageId = $res->{'edit'}->{'pageid'};
+    my $data = Quiq::Record->toString(
+        Id => $pageId,
+        Title => $titleNew,
+        Content => $contentNew,
+    );
+    $p->write($varFile,$data,
+        -encode => 'UTF-8',
+    );
+
+    printf "Page %sd: pageId=%s '%s'\n",$op,$pageId,$titleNew;
+
+    return;
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Kommunikation
+
 =head3 send() - Sende HTTP-Anfrage, empfange HTTP-Antwort
 
 =head4 Synopsis
 
-    $res = $mwa->send($method,$action,@keyVal);
+    $res = $mw->send($method,$action,@keyVal);
 
 =head4 Arguments
 
@@ -943,13 +1090,6 @@ sub send {
     my ($self,$method,$action) = splice @_,0,3;
     # @_: @keyVal
 
-    if ($action ne 'login' && $self->autoLogin) {
-        # Wir loggen uns mit dem ersten Request automatisch ein
-
-        $self->login($self->user,$self->password);
-        $self->autoLogin(0);
-    }
-    
     my ($ua,$url) = $self->get(qw/ua url/);
 
     # Wir wollen die Antwort in JSON
@@ -1041,8 +1181,8 @@ sub send {
 
 =head4 Synopsis
 
-    $pag = $mwa->reduceToPage($res);
-    $pag = $mwa->reduceToPage($res,$sloppy);
+    $pag = $mw->reduceToPage($res);
+    $pag = $mw->reduceToPage($res,$sloppy);
 
 =head4 Arguments
 
@@ -1131,7 +1271,7 @@ sub reduceToPage {
 
 =head4 Synopsis
 
-    $mwa->log($title,$text);
+    $mw->log($title,$text);
 
 =head4 Description
 
@@ -1157,16 +1297,6 @@ sub log {
 =head1 VERSION
 
 1.131
-
-=head1 SEE ALSO
-
-=over 2
-
-=item *
-
-L<https://www.mediawiki.org/wiki/API>
-
-=back
 
 =head1 AUTHOR
 
