@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = 1.131;
+our $VERSION = 1.132;
 
 use Quiq::Parameters;
 use Quiq::AnsiColor;
@@ -341,30 +341,82 @@ sub getToken {
 
 # -----------------------------------------------------------------------------
 
-=head3 version() - Versionsnummer MediaWiki-Server
+=head3 editPage() - Speichere Seite
 
 =head4 Synopsis
 
-    $version = $mw->version;
+    $res = $mw->editPage($pageId,$text); # [1]
+    $res = $mw->editPage($title,$text);  # [2]
+
+=head4 Arguments
+
+=over 4
+
+=item $pageId
+
+Page-Id der Seite.
+
+=item $title
+
+Titel der Seite.
+
+=item $text
+
+Text der Seite
+
+=back
+
+=head4 Returns
+
+Response (Hash-Referenz)
 
 =head4 Description
 
-Ermittele die Versionsnummer des MediaWiki-Servers und liefere
-diese zurück. Die Information wird im Objekt gecached.
+Dies ist die Lowlevel-Methode zum Speichern einer Seite oder
+des Contents einer Seite. Eine weitergehende Logik, die auch
+Titelnderungen erlaubt, implementiert die  Methode $mw->L</load>().
+
+In Fassung [1] wird der Content der Seite mit der Page-Id $pageId
+auf Text $text gesetzt. Die Seite muss existieren.
+
+In Fassung [2] muss die Seite nicht existieren.  Der MediaWiki-Server
+implementiert folgende Logik:
+
+=over 2
+
+=item *
+
+Existiert die Seite nicht, wird sie angelegt.
+
+=item *
+
+Existiert die Seite und ist der Text verschieden, wird der
+bestehende Text ersetzt.
+
+=item *
+
+Existiert die Seite und ist der Text identisch, wird der
+Aufruf vom Wiki-Server ignoriert.
+
+=back
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub version {
-    my $self = shift;
+sub editPage {
+    my ($self,$arg,$text) = @_;
 
-    return $self->memoize('version',sub {
-        my $res = $self->siteInfo('general');
-        my $version = $res->{'query'}->{'general'}->{'generator'};
-        $version =~ s/^MediaWiki\s+//;
-        return $version;
-   });
+    # Edit-Token besorgen
+    my $token = $self->getToken('edit');
+
+    # Seite speichern
+
+    return $self->send('POST','edit',
+        token => $token,
+        $arg =~ /^\d+$/? (pageid => $arg): (title => $arg),
+        text => $text,
+    );
 }
 
 # -----------------------------------------------------------------------------
@@ -518,86 +570,6 @@ sub getPage {
 
 # -----------------------------------------------------------------------------
 
-=head3 editPage() - Erzeuge/ändere Seite
-
-=head4 Synopsis
-
-    $res = $mw->editPage($pageId,$text); # [1]
-    $res = $mw->editPage($title,$text);  # [2]
-
-=head4 Arguments
-
-=over 4
-
-=item $pageId
-
-Page-Id der Seite.
-
-=item $title
-
-Titel der Seite.
-
-=item $text
-
-Text der Seite
-
-=back
-
-=head4 Returns
-
-Response (Hash-Referenz)
-
-=head4 Description
-
-Dies ist die Lowlevel-Methode zum Speichern einer Seite oder
-des Contents einer Seite. Eine weitergehende Logik, die auch
-Titelnderungen erlaubt, implementiert die  Methode $mw->L</load>().
-
-In Fassung [1] wird der Content der Seite mit der Page-Id $pageId
-auf Text $text gesetzt. Die Seite muss existieren.
-
-In Fassung [2] muss die Seite nicht existieren.  Der MediaWiki-Server
-implementiert folgende Logik:
-
-=over 2
-
-=item *
-
-Existiert die Seite nicht, wird sie angelegt.
-
-=item *
-
-Existiert die Seite und ist der Text verschieden, wird der
-bestehende Text ersetzt.
-
-=item *
-
-Existiert die Seite und ist der Text identisch, wird der
-Aufruf vom Wiki-Server ignoriert.
-
-=back
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub editPage {
-    my ($self,$arg,$text) = @_;
-
-    # Edit-Token besorgen
-    my $token = $self->getToken('edit');
-
-    # Seite speichern
-
-    return $self->send('POST','edit',
-        token => $token,
-        $arg =~ /^\d+$/? (pageid => $arg): (title => $arg),
-        text => $text,
-    );
-}
-
-# -----------------------------------------------------------------------------
-
 =head3 movePage() - Benenne Seite um
 
 =head4 Synopsis
@@ -682,7 +654,7 @@ sub movePage {
 
 # -----------------------------------------------------------------------------
 
-=head3 siteInfo() - Allgemeine Information über das MediaWiki
+=head3 siteInfo() - Liefere Information über Server
 
 =head4 Synopsis
 
@@ -695,15 +667,20 @@ sub movePage {
 
 =item @properties
 
-Liste der Sysinfo-Properties, die abgefragt werden sollen. Sind keine
-Properties angegeben, werden alle (zur Zeit der Implementierung
-bekannten) Properties abgefragt.
+Liste der Sysinfo-Properties, die abgefragt werden sollen.
 
 =back
 
 =head4 Returns
 
-Response
+Response (Hash-Referenz)
+
+=head4 Description
+
+Ermittele die Server-Eigenschaften (genauer: Eigenschaften-Gruppen)
+@properties und liefere das Resultat zurück. Sind keine
+Properties angegeben, werden I<alle> (zur Zeit der Implementierung
+bekannten) Properties abgefragt.
 
 =head4 Example
 
@@ -749,11 +726,11 @@ sub siteInfo {
 
 # -----------------------------------------------------------------------------
 
-=head3 upload() - Lade Datei hoch
+=head3 uploadFile() - Lade Mediendatei hoch
 
 =head4 Synopsis
 
-    $res = $mw->upload($file);
+    $res = $mw->uploadFile($file);
 
 =head4 Arguments
 
@@ -771,9 +748,8 @@ Response
 
 =head4 Description
 
-Lade die lokale Datei $file über die Upload-Schnittstelle ins
-MediaWiki hoch. Dies ist typischerweise eine Bilddatei vom Typ
-PNG, JPEG oder GIF.
+Lade die lokale Mediendatei $file über die Upload-Schnittstelle ins
+MediaWiki hoch. Dies ist typischerweise eine Bilddatei.
 
 =head4 See Also
 
@@ -793,7 +769,7 @@ L<File Upload per LWP|http://lwp.interglacial.com/ch05_07.htm>
 
 # -----------------------------------------------------------------------------
 
-sub upload {
+sub uploadFile {
     my $self = shift;
     my $file = Quiq::Path->expandTilde(shift);
 
@@ -828,9 +804,37 @@ sub upload {
 
 # -----------------------------------------------------------------------------
 
-=head2 Kommunikation
+=head3 version() - Versionsnummer des Servers
 
-=head3 load() - Lade Seite oder Bilddatei ins Wiki
+=head4 Synopsis
+
+    $version = $mw->version;
+
+=head4 Description
+
+Ermittele die Versionsnummer des MediaWiki-Servers und liefere
+diese zurück. Die Information wird im Objekt gecached.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub version {
+    my $self = shift;
+
+    return $self->memoize('version',sub {
+        my $res = $self->siteInfo('general');
+        my $version = $res->{'query'}->{'general'}->{'generator'};
+        $version =~ s/^MediaWiki\s+//;
+        return $version;
+   });
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Höhere Operationen
+
+=head3 load() - Lade Seite oder Mediendatei ins Wiki
 
 =head4 Synopsis
 
@@ -853,37 +857,82 @@ die über die Upload-Schnittstelle des MediaWiki geladen werden kann.
 
 =back
 
+=head4 Options
+
+=over 4
+
+=item -force => $bool (Default: 0)
+
+Lade die Datei ins Wiki, auch wenn sie sich nicht geändert hat
+(gegenüber dem Cache).
+
+=back
+
+=head4 Returns
+
+nichts
+
 =head4 Description
 
-# $cacheName
-Name für die Seite im Spiegel-Verzeichnis. Dieser Name identifiziert die
-Seite im Spiegel-Verzeichnis (und ist nicht zu verwechseln mit dem Titel
-der Seite). Der Name $cacheName muss eindeutig sein.
+Lade Seite oder Mediendatei $file ins Wiki. Hierbei wird ein
+"intelligentes" Verfahren angewendet, das verschiedene Sonderfälle
+berücksichtigt (siehe unten). Eine Kopie der hochgeladenen Datei
+wird im Cache-Verzeichnis $cacheDir abgelegt. Ist die Cache-Version
+eines früheren Aufrufs identisch zu zur aktuellen Version $file,
+kehrt der Aufruf sofort zurück (außer bei Option -force => 1).
+Den Schlüssel stellt der Dateiname dar. Dieser muss über
+allen Dateien eindeutig sein und darf sich extern nicht ändern.
 
-Lade die Seite $input mit dem eindeutigen Namen $cacheName (im
-Spiegel-Verzeichnis) ins MediaWiki. Der $cacheName ist nicht zu verwechseln
-mit dem Titel der Seite. Der Titel der Seite ist zusammen mit
-dem Inhalt der Seite Teil der externen Seitenrepräsentation $input.
-Die Methode erkennt, ob die externe Seite $input
+Die Datei einer Seite muss die Endung *.mw besitzen und sowohl den
+Titel als auch den Inhalt der Seite als Record (siehe
+Quiq::Record) enthalten. Eine Mediendatei (*.png, *.jpg, ...)
+wird wie sie ist an die Methode übergeben.
+
+In der Cache-Datei einer Seite speichert die Methode die Page-Id
+der Seite. Dadurch kann die Methode auch bei Titeländerungen die
+Seite im Wiki ermitteln und vor dem Speichern eine move-Operation
+ausführen. Die Fälle im Einzelnen:
+
+=over 4
+
+=item Aufruf wird ignoriert
+
+Die Datei existiert im Cache und ist identisch zu dieser
+und -force ist nicht gesetzt.
+
+=item Seite oder Mediendatei wird im Wiki gespeichert
 
 =over 2
 
 =item *
 
-bereits im Wiki existiert oder neu angelegt werden muss
+Die Datei existiert nicht im Cache
 
 =item *
 
-sich der Titel geändert hat -> movePage()
+Die Datei existiert im Cache und ist gegenüber der externen
+Datei verschieden
 
 =item *
 
-sich der Inhalt gegenüber dem letzten Stand geändert hat -> editPage()
+Option -force ist gesetzt
 
-=item *
+=back
 
-eine Änderung im Wiki erfahren hat und diese Änderung in die externe
-Seite eingepflegt werden muss -> Fehlermeldung
+=item Aufruf wird mit Fehlermeldung zurückgewiesen
+
+Die Datei ist eine Seite soll gespeichert werden, wobei ein
+Unterschied zwischen Cache- und Wiki-Datei festgestellt wird.
+Das bedeutet, im Wiki wurde die Datei seit dem letzten Speichern
+geändert. Der Aufruf ist nur durch Setzen der Option -force möglich,
+denn die Änderung muss händisch in die externe Datei eingepflegt
+werden.
+
+=item Seite wird vor dem Speichern umbenannt
+
+Die Datei ist eine Seite und der Titel der Seite ist zwischen
+Cachedatei und externer Datei unterschiedlich. Die Seite wird
+automatisch im Wiki umbenannt.
 
 =back
 
@@ -916,7 +965,8 @@ sub load {
 
         my $exists = $p->exists($varFile);
         if ($force || !$exists || $p->compare($file,$varFile)) {
-            my $res = $self->upload($file);
+            my $res = $self->uploadFile($file);
+            # FIXME: Methode schreiben, die in die Tiefe abfragt
             if ($res->{'upload'}->{'warnings'}) {
                 if (my $arr = $res->{'upload'}->{'warnings'}->{'duplicate'}) {
                     print 'File exists';
@@ -968,6 +1018,8 @@ sub load {
             Id => $pageId,
             Title => $title,
             Content => $content,
+            -format => '@',
+            -space => 1,
         );
         $p->write($varFile,$data,
             -recursive => 1,
@@ -1027,6 +1079,8 @@ sub load {
         Id => $pageId,
         Title => $titleNew,
         Content => $contentNew,
+        -format => '@',
+        -space => 1,
     );
     $p->write($varFile,$data,
         -encode => 'UTF-8',
@@ -1041,7 +1095,7 @@ sub load {
 
 =head2 Kommunikation
 
-=head3 send() - Sende HTTP-Anfrage, empfange HTTP-Antwort
+=head3 send() - Sende Request, empfange Response
 
 =head4 Synopsis
 
@@ -1177,7 +1231,7 @@ sub send {
 
 =head2 Response Handling
 
-=head3 reduceToPage() - Reduziere Seitenliste auf Einzelseite
+=head3 reduceToPage() - Reduziere Antwort auf Einzelseite
 
 =head4 Synopsis
 
@@ -1204,7 +1258,8 @@ Reduzierte Response
 
 =head4 Description
 
-Reduziere die Server-Response $res mit einer Seitenliste der Art
+Reduziere die Server-Response $res mit einer einelementigen
+Seitenliste der Art
 
     {
         query => {
@@ -1248,7 +1303,8 @@ sub reduceToPage {
 
     # Ungültiges Element?
     # Existiert die Seite nicht, hat die pageid den Wert -1 oder die
-    # Seiteninformation enthält die Komponente missing (missing => '').
+    # Seiteninformation enthält die Komponente missing (missing => ''),
+    # wirf eine Exception-
 
     my $pag = $res->{'query'}->{'pages'}->{$pageIds[0]};
     if ($pageIds[0] == -1 || exists $pag->{'missing'}) {
@@ -1296,7 +1352,7 @@ sub log {
 
 =head1 VERSION
 
-1.131
+1.132
 
 =head1 AUTHOR
 

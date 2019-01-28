@@ -33,6 +33,20 @@ Definition der Accordion-Reiter.
 
 =back
 
+=head1 SEE ALSO
+
+=over 2
+
+=item *
+
+L<Accordion Widget API|http://api.jqueryui.com/accordion/>
+
+=item *
+
+L<Accordion Widget Beispiele|http://jqueryui.com/accordion/>
+
+=back
+
 =head1 EXAMPLE
 
 Perl:
@@ -98,21 +112,7 @@ mit den Attributen @keyVal instantiiert.
 
 =head1 VERSION
 
-1.131
-
-=head1 SEE ALSO
-
-=over 2
-
-=item *
-
-L<Accordion Widget API|http://api.jqueryui.com/accordion/>
-
-=item *
-
-L<Accordion Widget Beispiele|http://jqueryui.com/accordion/>
-
-=back
+1.132
 
 =head1 SOURCE
 

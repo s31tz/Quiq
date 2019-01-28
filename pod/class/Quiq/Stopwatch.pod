@@ -24,6 +24,10 @@ Methode elapsed() kann die seitdem vergangene Zeit abgefragt werden.
 Die Zeit wird in Sekunden gemessen. Die Genauigkeit (d.h. die maximale
 Anzahl der Nachkommastellen) ist systemabhängig.
 
+=head1 SEE ALSO
+
+Klasse Quiq::Duration
+
 =head1 METHODS
 
 =head2 Konstruktor
@@ -61,11 +65,7 @@ Ermittele die vergangene Zeit in Sekunden und liefere diese zurück.
 
 =head1 VERSION
 
-1.131
-
-=head1 SEE ALSO
-
-Klasse Quiq::Duration
+1.132
 
 =head1 SOURCE
 

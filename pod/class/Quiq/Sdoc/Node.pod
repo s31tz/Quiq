@@ -229,7 +229,7 @@ In Code-Abschnitten sollte keine Inline-Ersetzung stattfinden.
 
 =head1 VERSION
 
-1.131
+1.132
 
 =head1 SOURCE
 

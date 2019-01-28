@@ -749,7 +749,7 @@ L<Quiq-Sdoc-Manual|https://github.com/s31tz/Quiq/tree/master/doc/pod/Quiq-Sdoc-M
 
 =head1 VERSION
 
-1.131
+1.132
 
 =head1 AUTHOR
 

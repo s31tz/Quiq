@@ -40,7 +40,15 @@ oder
     Schlüssel2: Wert2
     ...
 
-oder ein Mischung aus beidem.
+oder ein Mischung aus beidem oder
+
+    @@Schlüssel@@
+    Wert1
+    @@Schlüsse2@@
+    Wert2
+
+Um die dritte Repräsentation (mit @@Schlüssel@@) zu erzeugen, muss
+als Option -format => '@' angegeben werden.
 
 =head1 METHODS
 
@@ -115,6 +123,18 @@ Wie L</fromString>, nur dass der Record aus Datei $file gelesen wird.
 
 =over 4
 
+=item --format => ':'|'@' (Default: ':')
+
+Im Falle von ':' erzeuge das Format:
+
+    <KEY>:
+        <VAL>
+
+Im Falle von '@' erzeuge das Format:
+
+    @@<KEY>@@
+    <VAL>
+
 =item -indent => $n (Default: 4)
 
 Tiefe der Einrückung.
@@ -156,7 +176,7 @@ Die Methode liefert keinen Wert zurück.
 
 =head1 VERSION
 
-1.131
+1.132
 
 =head1 SOURCE
 

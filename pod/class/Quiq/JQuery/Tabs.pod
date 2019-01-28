@@ -29,6 +29,20 @@ Definition der Reiter.
 
 =back
 
+=head1 SEE ALSO
+
+=over 2
+
+=item *
+
+L<Tabs Widget API|http://api.jqueryui.com/tabs/>
+
+=item *
+
+L<Tabs Widget Beispiele|http://jqueryui.com/tabs/>
+
+=back
+
 =head1 EXAMPLE
 
 Perl:
@@ -96,21 +110,7 @@ mit den Attributen @keyVal instantiiert.
 
 =head1 VERSION
 
-1.131
-
-=head1 SEE ALSO
-
-=over 2
-
-=item *
-
-L<Tabs Widget API|http://api.jqueryui.com/tabs/>
-
-=item *
-
-L<Tabs Widget Beispiele|http://jqueryui.com/tabs/>
-
-=back
+1.132
 
 =head1 SOURCE
 

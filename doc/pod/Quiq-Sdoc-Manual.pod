@@ -674,6 +674,7 @@ produziert
     puppet:x:126:134:Puppet configuration management daemon,,,:/var/lib/puppet:/usr/sbin/nologin
     systemd-coredump:x:996:996:systemd Core Dumper:/:/sbin/nologin
     _rpc:x:127:65534::/run/rpcbind:/usr/sbin/nologin
+    xv882js:x:1004:1004:R+V User,,,:/home/xv882js:/bin/bash
 
 Der Code-Block hat in dem Fall keinen Inhalt und endet mit der
 darauffolgenden Leerzeile.

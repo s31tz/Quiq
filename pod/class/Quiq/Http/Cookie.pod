@@ -50,6 +50,17 @@ HTTPS-Verbindung geschickt.
 
 =back
 
+=head1 SEE ALSO
+
+=over 2
+
+=item *
+
+Cookie-Spezifikation von Netscape
+(L<http://de.wikipedia.org/wiki/HTTP-Cookie#Cookie_nach_Netscape>)
+
+=back
+
 =head1 EXAMPLES
 
 =head2 Cookie für eine Browser-Sitzung
@@ -116,18 +127,7 @@ ohne Semikolon, Komma, Gleichheitszeichen und Leerzeichen bestehen.
 
 =head1 VERSION
 
-1.131
-
-=head1 SEE ALSO
-
-=over 2
-
-=item *
-
-Cookie-Spezifikation von Netscape
-(L<http://de.wikipedia.org/wiki/HTTP-Cookie#Cookie_nach_Netscape>)
-
-=back
+1.132
 
 =head1 SOURCE
 
