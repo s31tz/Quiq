@@ -9,6 +9,7 @@ our $VERSION = 1.132;
 
 use Quiq::Path;
 use Quiq::CommandLine;
+use Quiq::Stopwatch;
 use Quiq::Shell;
 use File::Temp ();
 
@@ -62,8 +63,9 @@ sub new {
     # @_: @attVal
 
     my $self = $class->SUPER::new(
-        user => undef,           # -usr
-        password => undef,       # -pw
+        user => undef,           # -usr (deprecated)
+        password => undef,       # -pw (deprecated)
+        passwordFile => undef,   # -eh
         broker => undef,         # -b
         projectContext => undef, # -en
         viewPath => undef,       # -vp
@@ -119,8 +121,7 @@ sub listVersion {
     my $c = Quiq::CommandLine->new;
     $c->addArgument($file);
     $c->addOption(
-        -usr => $self->user,
-        -pw => $self->password,
+        $self->credentialOptions,
         -b => $self->broker,
         -en => $self->projectContext,
         -vp => $dir? "$viewPath/$dir": $viewPath,
@@ -151,8 +152,7 @@ sub sync {
 
     my $c = Quiq::CommandLine->new;
     $c->addOption(
-        -usr => $self->user,
-        -pw => $self->password,
+        $self->credentialOptions,
         -b => $self->broker,
         -en => $self->projectContext,
         -vp => $self->viewPath,
@@ -170,6 +170,28 @@ sub sync {
 # -----------------------------------------------------------------------------
 
 =head2 Privat
+
+=head3 credentialOptions() - Liste der Credential-Optionen
+
+=head4 Synopsis
+
+    @arr = $scm->credentialOptions;
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub credentialOptions {
+    my $self = shift;
+
+    if (my $passwordFile = $self->passwordFile) {
+        return (-eh=>$passwordFile);
+    }
+
+    return (-usr=>$self->user,-pw=>$self->password);
+}
+
+# -----------------------------------------------------------------------------
 
 =head3 run() - Führe CA Harvest SCM Kommando aus
 
@@ -189,6 +211,8 @@ Kommandos zurück.
 
 sub run {
     my ($self,$scmCmd,$c) = @_;
+
+    my $stw = Quiq::Stopwatch->new;
 
     my $keepTempFiles = $self->keepTempFiles;
     my $useParameterFile = 0;
@@ -229,8 +253,10 @@ sub run {
     # Kommando protokollieren
 
     if ($self->verbose) {
-        my $password = $self->password;
-        (my $cmd = $cmd) =~ s/\Q$password/****/g;
+        my $cmd = $cmd;
+        if (my $password = $self->password) {
+            $cmd =~ s/\Q$password/****/g;
+        }
         warn "> $cmd\n";
     }
 
@@ -241,6 +267,7 @@ sub run {
 
     my $r = Quiq::Shell->exec("$cmd >>$outputFile",-sloppy=>1);
     my $output = Quiq::Path->read($outputFile);
+    $output .= sprintf "---\n%.2fs\n",$stw->elapsed;
     if ($r) {
         $self->throw(
             q~CASCM-00001: Command failed~,

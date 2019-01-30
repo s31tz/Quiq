@@ -76,6 +76,12 @@ Bringe den Workspace auf den Stand des Repository.
 
 =head2 Privat
 
+=head3 credentialOptions() - Liste der Credential-Optionen
+
+=head4 Synopsis
+
+    @arr = $scm->credentialOptions;
+
 =head3 run() - Führe CA Harvest SCM Kommando aus
 
 =head4 Synopsis
