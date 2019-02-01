@@ -8,6 +8,25 @@ Quiq::Cascm - Schnittstelle zu CA Harvest SCM
 
 L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
+=head1 DESCRIPTION
+
+=head2 Begriffe
+
+=over 4
+
+=item Workspace-Verzeichnis
+
+Verzeichnis mit den ausgecheckten Dateien. Im CASCM Jargon auch
+"Clientpath" genannt, Option -cp.
+
+=item Repository-Datei
+
+Datei im lokalen Workspace-Verzeichnis. Der Pfad einer
+Repository-Datei ist relativ zum Repository-Verzeichnis, beginnt
+also innerhalb des Workspace-Verzeichnisses.
+
+=back
+
 =head1 METHODS
 
 =head2 Konstruktor
@@ -39,7 +58,204 @@ dieses Objekt zurück.
 
 =head2 Kommandos
 
-=head3 listVersion() - Liefere Versionsinformation
+=head3 addFiles() - Füge Dateien zu Repository hinzu
+
+=head4 Synopsis
+
+    $scm->addFiles($package,$repoDir,@files);
+
+=head4 Arguments
+
+=over 4
+
+=item $packge
+
+Package, zu dem die Dateien hinzugefügt werden.
+
+=item $repoDir
+
+Verzeichnis I<innerhalb> des Workspace, in das die Dateien
+kopiert werden.
+
+=item @files
+
+Liste von Dateien I<außerhalb> des Workspace.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head3 checkin() - Checke Repository-Dateien ein
+
+=head4 Synopsis
+
+    $scm->checkin($package,@repoFiles);
+
+=head4 Arguments
+
+=over 4
+
+=item $packge
+
+Package.
+
+=item @repoFiles
+
+Liste von Repository-Dateien.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head3 checkout() - Checke Repository-Dateien aus
+
+=head4 Synopsis
+
+    $scm->checkout($package,@repoFiles);
+
+=head4 Arguments
+
+=over 4
+
+=item $packge
+
+Package.
+
+=item @repoFiles
+
+Liste von Repository-Dateien.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head3 createPackage() - Erzeuge Package
+
+=head4 Synopsis
+
+    $scm->createPackage($package);
+
+=head4 Arguments
+
+=over 4
+
+=item $packge
+
+Name des Package, das erzeugt werden soll.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head3 deletePackage() - Lösche Package
+
+=head4 Synopsis
+
+    $scm->deletePackage($package);
+
+=head4 Arguments
+
+=over 4
+
+=item $packge
+
+Name des Package, das gelöscht werden soll.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head3 demote() - Demote Package
+
+=head4 Synopsis
+
+    $scm->demote($package,$state);
+
+=head4 Arguments
+
+=over 4
+
+=item $packge
+
+Package, das demotet werden soll.
+
+=item $state
+
+Stufe, auf dem sich das Package befindet.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head4 Description
+
+Demote Package $package, das sich auf Stufe $state befindet
+(befinden muss) auf die darunterliegende Stufe. Befindet sich das
+Package auf einer anderen Stufe, schlägt das Kommando fehl.
+
+=head3 promote() - Promote Package
+
+=head4 Synopsis
+
+    $scm->promote($package,$state);
+
+=head4 Arguments
+
+=over 4
+
+=item $packge
+
+Package, das promotet werden soll.
+
+=item $state
+
+Stufe, auf dem sich das Package befindet.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head4 Description
+
+promote Package $package, das sich auf Stufe $state befindet
+(befinden muss) auf die darüberliegende Stufe. Befindet sich das
+Package auf einer anderen Stufe, schlägt das Kommando fehl.
+
+=head3 version() - Versionsnummer Repository-Datei
+
+=head4 Synopsis
+
+    $versiion = $scm->version($repoFile);
+
+=head4 Arguments
+
+=over 4
+
+=item $repoFile
+
+Repository-Datei
+
+=back
+
+=head4 Returns
+
+Versionsnummer (String)
+
+=head3 listVersion() - Versionsinformation zu Repository-Datei
 
 =head4 Synopsis
 
@@ -63,6 +279,56 @@ Informations-Text (String)
 
 Ermittele die Versionsinformation über Datei $repoFile und liefere
 diese zurück.
+
+=head3 deleteVersion() - Lösche Repository-Datei
+
+=head4 Synopsis
+
+    $scm->deleteVersion($repoFile);
+
+=head4 Arguments
+
+=over 4
+
+=item $repoFile
+
+Der Pfad der zu löschenden Repository-Datei.
+
+=back
+
+=head4 Returns
+
+Nichts
+
+=head3 putFiles() - Füge Datei zu Repository hinzu oder aktualisiere sie
+
+=head4 Synopsis
+
+    $scm->putFiles($package,$repoDir,@files);
+
+=head4 Arguments
+
+=over 4
+
+=item $packge
+
+Package, zu dem die Dateien gehören bzw. zu dem sie
+hinzugefügt werden.
+
+=item $repoDir
+
+Verzeichnis I<innerhalb> des Workspace, in das die Dateien
+kopiert werden.
+
+=item @files
+
+Liste von Dateien I<außerhalb> des Workspace.
+
+=back
+
+=head4 Returns
+
+nichts
 
 =head3 sync() - Synchronisiere Workspace mit Repository
 
