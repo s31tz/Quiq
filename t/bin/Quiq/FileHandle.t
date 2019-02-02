@@ -187,8 +187,12 @@ sub test_lock : Test(5) {
     $fh->lock('SHNB');
     $self->ok(1,'lock: shared lock, non-blocking');
 
-    $fh->lock('EX');
-    $self->ok(1,'lock: exclusive lock');
+    if ($^O eq 'MSWin32') {
+      $self->skip('On Windows exclusive locking hangs when used on file with shared lock');
+    } else {
+      $fh->lock('EX');
+      $self->ok(1,'lock: exclusive lock');
+    }
 
     $fh->lock('EXNB');
     $self->ok(1,'lock: exclusive lock, non-blocking');
