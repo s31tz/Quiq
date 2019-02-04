@@ -387,6 +387,21 @@ Die Methode liefert keinen Wert zurrück
 Fange alle Ausgaben auf STDERR ab und lenke sie auf Skalarvariable
 $str um.
 
+=head3 slurpFromStdin() - Lies Eingaben von STDIN
+
+=head4 Synopsis
+
+    $data = $class->slurpFromStdin;
+
+=head4 Returns
+
+String
+
+=head4 Description
+
+Lies alle Eingaben von STDIN und liefere diese als eine
+Zeichenkette zurück.
+
 =head1 VERSION
 
 1.133
