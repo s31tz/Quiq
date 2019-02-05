@@ -10,20 +10,17 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
+Ein Objekt der Klasse stellt eine Schnittstelle zu einem
+CA Harvest SCM Server zur Verfügung.
+
 =head2 Begriffe
 
 =over 4
 
-=item Workspace-Verzeichnis
+=item Workspace
 
-Verzeichnis mit den ausgecheckten Dateien. Im CASCM Jargon auch
-"Clientpath" genannt, Option -cp.
-
-=item Repository-Datei
-
-Datei im lokalen Workspace-Verzeichnis. Der Pfad einer
-Repository-Datei ist relativ zum Repository-Verzeichnis, beginnt
-also innerhalb des Workspace-Verzeichnisses.
+Lokales Verzeichnis mit (Kopien von) Repository-Dateien. Der
+Pfad wird "Clientpath" genannt, Option -cp´, z.B. C<~/var/workspace>.
 
 =back
 
@@ -56,13 +53,13 @@ Objekt
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
 dieses Objekt zurück.
 
-=head2 Kommandos
+=head2 Externe Dateien
 
-=head3 addFiles() - Füge Dateien zu Repository hinzu
+=head3 putFiles() - Füge Dateien zum Repository hinzu
 
 =head4 Synopsis
 
-    $scm->addFiles($package,$repoDir,@files);
+    $scm->putFiles($package,$repoDir,@files);
 
 =head4 Arguments
 
@@ -70,12 +67,12 @@ dieses Objekt zurück.
 
 =item $packge
 
-Package, zu dem die Dateien hinzugefügt werden.
+Package, dem die Dateien innerhalb von CASCM zugeordnet werden.
 
 =item $repoDir
 
-Verzeichnis I<innerhalb> des Workspace, in das die Dateien
-kopiert werden.
+Zielverzeichnis I<innerhalb> des Workspace, in das die Dateien
+kopiert werden. Dies ist ein I<relativer> Pfad.
 
 =item @files
 
@@ -87,29 +84,19 @@ Liste von Dateien I<außerhalb> des Workspace.
 
 nichts
 
-=head3 checkin() - Checke Repository-Dateien ein
+=head4 Description
 
-=head4 Synopsis
+Kopiere die Dateien @files in das Workspace-Verzeichnis $repoDir
+und checke sie anschließend ein, d.h. füge sie zum Repository hinzu.
+Eine Datei, die im Workspace-Verzeichnis schon vorhanden ist, wird
+zuvor ausgecheckt.
 
-    $scm->checkin($package,@repoFiles);
+Mit dieser Methode ist es möglich, sowohl neue Dateien zum Workspace
+hinzuzufügen als auch bereits existierende Dateien im Workspace
+zu aktualisieren. Dies geschieht für den Aufrufer transparent, er
+braucht sich um die Unterscheidung nicht zu kümmern.
 
-=head4 Arguments
-
-=over 4
-
-=item $packge
-
-Package.
-
-=item @repoFiles
-
-Liste von Repository-Dateien.
-
-=back
-
-=head4 Returns
-
-nichts
+=head2 Workspace-Dateien
 
 =head3 checkout() - Checke Repository-Dateien aus
 
@@ -121,77 +108,14 @@ nichts
 
 =over 4
 
-=item $packge
+=item $package
 
-Package.
+Package, dem die ausgecheckte Datei (mit reservierter Version)
+zugeordnet wird.
 
 =item @repoFiles
 
-Liste von Repository-Dateien.
-
-=back
-
-=head4 Returns
-
-nichts
-
-=head3 createPackage() - Erzeuge Package
-
-=head4 Synopsis
-
-    $scm->createPackage($package);
-
-=head4 Arguments
-
-=over 4
-
-=item $packge
-
-Name des Package, das erzeugt werden soll.
-
-=back
-
-=head4 Returns
-
-nichts
-
-=head3 deletePackage() - Lösche Package
-
-=head4 Synopsis
-
-    $scm->deletePackage($package);
-
-=head4 Arguments
-
-=over 4
-
-=item $packge
-
-Name des Package, das gelöscht werden soll.
-
-=back
-
-=head4 Returns
-
-nichts
-
-=head3 demote() - Demote Package
-
-=head4 Synopsis
-
-    $scm->demote($package,$state);
-
-=head4 Arguments
-
-=over 4
-
-=item $packge
-
-Package, das demotet werden soll.
-
-=item $state
-
-Stufe, auf dem sich das Package befindet.
+Liste von Workspace-Dateien, die ausgecheckt werden.
 
 =back
 
@@ -201,27 +125,25 @@ nichts
 
 =head4 Description
 
-Demote Package $package, das sich auf Stufe $state befindet
-(befinden muss) auf die darunterliegende Stufe. Befindet sich das
-Package auf einer anderen Stufe, schlägt das Kommando fehl.
+Checke die Workspace-Dateien @repoFiles aus.
 
-=head3 promote() - Promote Package
+=head3 checkin() - Checke Workspace-Datei ein
 
 =head4 Synopsis
 
-    $scm->promote($package,$state);
+    $scm->checkin($package,$repoFile);
 
 =head4 Arguments
 
 =over 4
 
-=item $packge
+=item $package
 
-Package, das promotet werden soll.
+Package, dem die neue Version der Datei zugeordnet wird.
 
-=item $state
+=item $repoFile
 
-Stufe, auf dem sich das Package befindet.
+Datei I<innerhalb> des Workspace. Der Dateipfad ist ein I<relativer> Pfad.
 
 =back
 
@@ -231,15 +153,14 @@ nichts
 
 =head4 Description
 
-promote Package $package, das sich auf Stufe $state befindet
-(befinden muss) auf die darüberliegende Stufe. Befindet sich das
-Package auf einer anderen Stufe, schlägt das Kommando fehl.
+Checke die Workspace-Datei $repoFile ein, d.h. übertrage ihren Stand
+als neue Version ins Repository und ordne diese dem Package $package zu.
 
 =head3 version() - Versionsnummer Repository-Datei
 
 =head4 Synopsis
 
-    $versiion = $scm->version($repoFile);
+    $version = $scm->version($repoFile);
 
 =head4 Arguments
 
@@ -300,11 +221,13 @@ Der Pfad der zu löschenden Repository-Datei.
 
 Nichts
 
-=head3 putFiles() - Füge Datei zu Repository hinzu oder aktualisiere sie
+=head2 Packages
+
+=head3 createPackage() - Erzeuge Package
 
 =head4 Synopsis
 
-    $scm->putFiles($package,$repoDir,@files);
+    $scm->createPackage($package);
 
 =head4 Arguments
 
@@ -312,23 +235,103 @@ Nichts
 
 =item $packge
 
-Package, zu dem die Dateien gehören bzw. zu dem sie
-hinzugefügt werden.
-
-=item $repoDir
-
-Verzeichnis I<innerhalb> des Workspace, in das die Dateien
-kopiert werden.
-
-=item @files
-
-Liste von Dateien I<außerhalb> des Workspace.
+Name des Package, das erzeugt werden soll.
 
 =back
 
 =head4 Returns
 
 nichts
+
+=head4 Description
+
+Erzeuge Package $package.
+
+=head3 deletePackage() - Lösche Package
+
+=head4 Synopsis
+
+    $scm->deletePackage($package);
+
+=head4 Arguments
+
+=over 4
+
+=item $packge
+
+Name des Package, das gelöscht werden soll.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head4 Description
+
+Lösche Package $package.
+
+=head3 promotePackage() - Promote Package
+
+=head4 Synopsis
+
+    $scm->promotePackage($package,$state);
+
+=head4 Arguments
+
+=over 4
+
+=item $packge
+
+Package, das promotet werden soll.
+
+=item $state
+
+Stufe, auf dem sich das Package befindet.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head4 Description
+
+promote Package $package, das sich auf Stufe $state befindet
+(befinden muss) auf die darüberliegende Stufe. Befindet sich das
+Package auf einer anderen Stufe, schlägt das Kommando fehl.
+
+=head3 demotePackage() - Demote Package
+
+=head4 Synopsis
+
+    $scm->demotePackage($package,$state);
+
+=head4 Arguments
+
+=over 4
+
+=item $packge
+
+Package, das demotet werden soll.
+
+=item $state
+
+Stufe, auf dem sich das Package befindet.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head4 Description
+
+Demote Package $package, das sich auf Stufe $state befindet
+(befinden muss) auf die darunterliegende Stufe. Befindet sich das
+Package auf einer anderen Stufe, schlägt das Kommando fehl.
+
+=head2 Workspace
 
 =head3 sync() - Synchronisiere Workspace mit Repository
 

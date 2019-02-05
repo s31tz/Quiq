@@ -43,12 +43,16 @@ Array-Objekt instantiiert.
 
 =head2 Operationen
 
-=head3 compare() - Vergleiche Array gegen Array
+=head3 different() - Vergleiche Array gegen Array
 
 =head4 Synopsis
 
-    ($only1A,$only2A,$bothA) = $arr1->compare(\@arr2);
-    ($only1A,$only2A,$bothA) = $class->compare(\@arr1,\@arr2);
+    ($only1A,$only2A,$bothA) = $arr1->different(\@arr2);
+    ($only1A,$only2A,$bothA) = $class->different(\@arr1,\@arr2);
+
+=head4 Alias
+
+compare()
 
 =head4 Description
 
@@ -93,7 +97,7 @@ durch ihre Objekt-Id identifiziert. Die Liste der
 Datenbankobjekte sei @idsDb und die Liste der Objekte der
 Benutzerauswahl sei @idsUser. Dann liefert der Aufruf
 
-    ($idsNew,$idsDel) = $idsUserA->compare(\@idsDb);
+    ($idsNew,$idsDel) = $idsUserA->different(\@idsDb);
 
 mit @$idsNew die Liste der zur Datenbank hinzuzufügenden Objekte und
 mit @$idsDel die Liste der von der Datenbank zu entfernenden Objekte.
@@ -106,7 +110,7 @@ Prüfe, ob zwei Arrays die gleichen Elemente enthalten
 Prüfe, ob zwei Arrays die gleichen Elemente enthalten, aber nicht
 unbedingt in der gleichen Reihenfolge:
 
-    ($only1,$only2) = $arr1->compare(\@arr2);
+    ($only1,$only2) = $arr1->different(\@arr2);
     if (!@$only1 && !@$only2) {
         # @$arr1 und @$arr2 enthalten die gleichen Elemente
     }
