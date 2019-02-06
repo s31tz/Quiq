@@ -10,6 +10,7 @@ our $VERSION = 1.133;
 use Quiq::Option;
 use Quiq::System;
 use Quiq::Progress;
+use Quiq::Hash;
 use Scalar::Util ();
 
 # -----------------------------------------------------------------------------
@@ -205,11 +206,42 @@ sub runFetch {
         $maxProcesses = Quiq::System->numberOfCpus;
     }
 
+    # Aktionen nach Beendigung eines Child-Prozesses
+
+    my $wait = sub {
+        my ($pro,$processH,$i) = @_;
+
+        my $pid = wait;
+        if ($pid >= 0) {
+            my $elem = $processH->{$pid};
+
+            my $type = Scalar::Util::reftype($elem) || '';
+            if ($type eq 'HASH') {
+                print $pro->msg($i,'i/n x% t/t(t) x/h x/s');
+            }
+            elsif ($type eq 'ARRAY') {
+                print $pro->msg($i,'i/n x% t/t(t) x/h x/s: %s',$elem->[0]);
+            }
+            else {
+                print $pro->msg($i,'i/n x% t/t(t) x/h x/s: %s',$elem);
+            }
+
+            delete $processH->{$pid};
+        }
+
+        return $pid;
+    };
+
     # Ausführung
 
     my $pro = Quiq::Progress->new($maxFetches);
+    if ($maxFetches) {
+        print $pro->msg('Waiting for first process to finish...');
+    }
 
-    my $i = 0;
+    my $i = 0; # Anzahl der gestarteten Prozesse
+    my $j = 0; # Anzahl der beendeten Prozesse
+    my $processH = Quiq::Hash->new;
     my $runningProcesses = 0;
     while (1) {
         $i++;
@@ -222,30 +254,27 @@ sub runFetch {
         }
 
         if ($runningProcesses >= $maxProcesses) {
-            wait;
+            $wait->($pro,$processH,++$j);
             $runningProcesses--;
         }
 
-        if (!fork) {
+        if (my $pid = fork) {
+            # Parent
+
+            $processH->add($pid=>$elem);
+            $runningProcesses++;
+        }
+        else {
             # Child
+
             $sub->($elem,$i);
             exit;
         }
-
-        my $type = Scalar::Util::reftype($elem) || '';
-        if ($type eq 'HASH') {
-            print $pro->msg($i,'i/n x% t/t(t) x/h x/s');
-        }
-        elsif ($type eq 'ARRAY') {
-            print $pro->msg($i,'i/n x% t/t(t) x/h x/s: %s',$elem->[0]);
-        }
-        else {
-            print $pro->msg($i,'i/n x% t/t(t) x/h x/s: %s',$elem);
-        }
-        $runningProcesses++;
     }
 
-    while (wait >= 0) {
+    # Warte auf die letzten Childs
+
+    while ($wait->($pro,$processH,++$j) >= 0) {
     }
 
     print $pro->msg;
