@@ -41,12 +41,35 @@ Aufrufschreibweise zu ermöglichen.
 
 =head4 Synopsis
 
-    $class->append($file,$data);
+    $this->append($file,$data,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Pfad der Datei.
+
+=item $data
+
+Daten, die auf die Datei geschrieben werden.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -lock => $bool (Default: 0)
+
+Locke die Datei während des Schreibens exklusiv.
+
+=back
 
 =head4 Description
 
-Hänge Daten $data an Datei $file an. Die Methode liefert keinen
-Wert zurück.
+Hänge Daten $data an Datei $file an.
 
 =head3 checkFileSecurity() - Prüfe, ob Datei nur für Owner lesbar ist
 
@@ -288,6 +311,27 @@ verwendet werden, um Kommentarzeilen zu überlesen.
 
 Lies den Inhalt der Datei und liefere diesen zurück.
 
+=head3 truncate() - Kürze Datei
+
+=head4 Synopsis
+
+    $this->truncate($file);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Pfad der Datei.
+
+=back
+
+=head4 Description
+
+Kürze Datei $file auf Länge 0, falls sie existiert. Existiert die
+Datei nicht, geschieht nichts.
+
 =head3 write() - Schreibe Datei
 
 =head4 Synopsis
@@ -307,6 +351,11 @@ Lies den Inhalt der Datei und liefere diesen zurück.
 =item -encode => $encoding (Default: keiner)
 
 Encodiere $data gemäß dem Encoding $encoding.
+
+=item -lock => $bool (Default: 0)
+
+Setze während des Schreibens einen Exclusive-Lock auf die Datei.
+Dies kann im Fallen von -append sinnvoll sein.
 
 =item -mode => $mode (Default: keiner)
 

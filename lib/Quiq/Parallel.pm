@@ -7,10 +7,13 @@ use v5.10.0;
 
 our $VERSION = 1.133;
 
-use Quiq::Option;
+use Quiq::Path;
+use Quiq::Parameters;
 use Quiq::System;
 use Quiq::Progress;
 use Quiq::Hash;
+use Quiq::TempDir;
+use Quiq::FileHandle;
 use Scalar::Util ();
 
 # -----------------------------------------------------------------------------
@@ -87,17 +90,7 @@ Die Subroutine, die für jedes Element in @elements ausgeführt wird.
 
 =head4 Options
 
-=over 4
-
-=item -maxProcesses => $n (Default: Anzahl der CPUs des Rechners)
-
-Die maximale Anzahl parallel laufender Prozesse.
-
-=item -progressMeter => $bool (Default: 0)
-
-Zeige Fortschrittsanzeige an.
-
-=back
+Die gleichen wie L</runFetch>().
 
 =head4 Returns
 
@@ -160,7 +153,24 @@ ist (vorab) nicht bekannt.
 
 Die maximale Anzahl parallel laufender Prozesse.
 
-=item -progressMeter => $bool (Default: 0)
+=item -outputDir => $dir (Default: undef)
+
+Verzeichnis, in das die Ausgaben der Prozesse auf STDOUT und STDERR
+geschrieben werden, jeweils in eine eigene Datei mit dem Namen
+
+    NNNNNN.out
+
+Die sechstellige Zahl NNNNNNN ist die Nummer des Prozesses in der
+Aufrufreihenfolge.
+
+=item -outputFile => $file (Default: undef)
+
+Datei, in der die Ausgaben aller Prozesse (chronologische
+Aufrufreihenfolge) zusammengefasst werden. Dies geschieht nach
+Beendigung des letzten Prozesses. Wird '-' als Dateiname angegeben,
+wird die Ausgabe nach STDOUT geschrieben.
+
+=item -progressMeter => $bool (Default: 1)
 
 Zeige Fortschrittsanzeige an.
 
@@ -179,31 +189,46 @@ die Anzahl der CPUs des ausführenden Rechners gewählt. Mit
 der Option -maxProcesses kann eine abweichende Anzahl gewählt
 werden.
 
-Tip: Die Anzahl der vorhandenen CPUs liefert die Methode
+Tipp: Die Anzahl der vorhandenen CPUs liefert die Methode
 
     $n = Quiq::System->numberOfCpus;
+
+Die Ausgaben der Prozesse auf STDOUT und STDERR werden in Dateien
+gespeichert, wenn Option -outputDir und/oder -outputFile angegeben sind.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
 sub runFetch {
-    my ($class,$fetchSub,$sub) = splice @_,0,3;
-    # @_: @opt
+    my $class = shift;
+    # @_: Parameters
+
+    # Pfadobjekt
+    my $p = Quiq::Path->new;
 
     # Optionen
 
     my $maxFetches = 0;
     my $maxProcesses = 0;
-    my $progressMeter = 0;
+    my $outputDir = undef;
+    my $outputFile = undef;
+    my $progressMeter = 1;
     
-    Quiq::Option->extract(\@_,
+    my $argA = Quiq::Parameters->extractToVariables(\@_,2,2,
         -maxFetches => \$maxFetches,
         -maxProcesses => \$maxProcesses,
+        -outputDir => \$outputDir,
+        -outputFile => \$outputFile,
         -progressMeter => \$progressMeter,
     );
+    my ($fetchSub,$sub) = @$argA;
+
     if (!$maxProcesses) {
         $maxProcesses = Quiq::System->numberOfCpus;
+    }
+    if ($outputDir) {
+        $p->mkdir($outputDir,-recursive=>1);
     }
 
     # Aktionen nach Beendigung eines Child-Prozesses
@@ -234,7 +259,7 @@ sub runFetch {
 
     # Ausführung
 
-    my $pro = Quiq::Progress->new($maxFetches);
+    my $pro = Quiq::Progress->new($maxFetches,-show=>$progressMeter);
     if ($maxFetches) {
         print $pro->msg('Waiting for first process to finish...');
     }
@@ -243,6 +268,7 @@ sub runFetch {
     my $j = 0; # Anzahl der beendeten Prozesse
     my $processH = Quiq::Hash->new;
     my $runningProcesses = 0;
+    my $dir = $outputDir || Quiq::TempDir->new;
     while (1) {
         $i++;
         if ($maxFetches && $i > $maxFetches) {
@@ -267,6 +293,14 @@ sub runFetch {
         else {
             # Child
 
+            if ($outputDir || $outputFile) {
+                my $file = sprintf '%s/%06d.out',$dir,$i;
+
+                CORE::close STDOUT;
+                CORE::open STDOUT,'>',$file or $class->throw;
+                CORE::open STDERR,'>&',\*STDOUT or $class->throw;
+            }
+
             $sub->($elem,$i);
             exit;
         }
@@ -278,6 +312,14 @@ sub runFetch {
     }
 
     print $pro->msg;
+
+    if ($outputFile) {
+        my $fh = Quiq::FileHandle->new('>',$outputFile);
+        for my $file ($p->glob("$dir/*.out")) {
+            $fh->print($p->read($file));
+        }
+        $fh->close;
+    }
     
     return;    
 }

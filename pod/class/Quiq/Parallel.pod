@@ -70,17 +70,7 @@ Die Subroutine, die für jedes Element in @elements ausgeführt wird.
 
 =head4 Options
 
-=over 4
-
-=item -maxProcesses => $n (Default: Anzahl der CPUs des Rechners)
-
-Die maximale Anzahl parallel laufender Prozesse.
-
-=item -progressMeter => $bool (Default: 0)
-
-Zeige Fortschrittsanzeige an.
-
-=back
+Die gleichen wie L</runFetch>().
 
 =head4 Returns
 
@@ -121,7 +111,24 @@ ist (vorab) nicht bekannt.
 
 Die maximale Anzahl parallel laufender Prozesse.
 
-=item -progressMeter => $bool (Default: 0)
+=item -outputDir => $dir (Default: undef)
+
+Verzeichnis, in das die Ausgaben der Prozesse auf STDOUT und STDERR
+geschrieben werden, jeweils in eine eigene Datei mit dem Namen
+
+    NNNNNN.out
+
+Die sechstellige Zahl NNNNNNN ist die Nummer des Prozesses in der
+Aufrufreihenfolge.
+
+=item -outputFile => $file (Default: undef)
+
+Datei, in der die Ausgaben aller Prozesse (chronologische
+Aufrufreihenfolge) zusammengefasst werden. Dies geschieht nach
+Beendigung des letzten Prozesses. Wird '-' als Dateiname angegeben,
+wird die Ausgabe nach STDOUT geschrieben.
+
+=item -progressMeter => $bool (Default: 1)
 
 Zeige Fortschrittsanzeige an.
 
@@ -140,9 +147,12 @@ die Anzahl der CPUs des ausführenden Rechners gewählt. Mit
 der Option -maxProcesses kann eine abweichende Anzahl gewählt
 werden.
 
-Tip: Die Anzahl der vorhandenen CPUs liefert die Methode
+Tipp: Die Anzahl der vorhandenen CPUs liefert die Methode
 
     $n = Quiq::System->numberOfCpus;
+
+Die Ausgaben der Prozesse auf STDOUT und STDERR werden in Dateien
+gespeichert, wenn Option -outputDir und/oder -outputFile angegeben sind.
 
 =head1 VERSION
 
