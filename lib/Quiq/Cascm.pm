@@ -544,6 +544,59 @@ sub deletePackage {
 
 # -----------------------------------------------------------------------------
 
+=head3 renamePackage() - Benenne Package um
+
+=head4 Synopsis
+
+    $scm->renamePackage($oldName,$newName);
+
+=head4 Arguments
+
+=over 4
+
+=item $oldName
+
+Bisheriger Name des Package.
+
+=item $newName
+
+Zukünftiger Name des Package.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head4 Description
+
+Benenne Package $oldName in $newName um.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub renamePackage {
+    my ($self,$oldName,$newName) = @_;
+
+    # Benenne Package um
+
+    my $c = Quiq::CommandLine->new;
+    $c->addOption(
+        $self->credentialOptions,
+        -b => $self->broker,
+        -en => $self->projectContext,
+        -p => $oldName,
+        -npn => $newName,
+    );
+
+    $self->run('hup',$c);
+
+    return;
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 promotePackage() - Promote Package
 
 =head4 Synopsis

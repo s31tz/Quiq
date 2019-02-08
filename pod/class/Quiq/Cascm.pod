@@ -271,6 +271,34 @@ nichts
 
 Lösche Package $package.
 
+=head3 renamePackage() - Benenne Package um
+
+=head4 Synopsis
+
+    $scm->renamePackage($oldName,$newName);
+
+=head4 Arguments
+
+=over 4
+
+=item $oldName
+
+Bisheriger Name des Package.
+
+=item $newName
+
+Zukünftiger Name des Package.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head4 Description
+
+Benenne Package $oldName in $newName um.
+
 =head3 promotePackage() - Promote Package
 
 =head4 Synopsis
