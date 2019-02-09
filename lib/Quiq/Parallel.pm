@@ -10,9 +10,9 @@ our $VERSION = 1.133;
 use Quiq::Path;
 use Quiq::Parameters;
 use Quiq::System;
+use Quiq::TempDir;
 use Quiq::Progress;
 use Quiq::Hash;
-use Quiq::TempDir;
 use Quiq::FileHandle;
 use Scalar::Util ();
 
@@ -227,8 +227,16 @@ sub runFetch {
     if (!$maxProcesses) {
         $maxProcesses = Quiq::System->numberOfCpus;
     }
-    if ($outputDir) {
-        $p->mkdir($outputDir,-recursive=>1);
+
+    my $dir;
+    if ($outputDir || $outputFile) {
+        # Die Prozesse schreiben ihre Ausgabe auf stdout
+        # und stderr nach $dir
+
+        if ($outputDir) {
+            $p->mkdir($outputDir,-recursive=>1);
+        }
+        $dir = $outputDir || Quiq::TempDir->new;
     }
 
     # Aktionen nach Beendigung eines Child-Prozesses
@@ -261,14 +269,18 @@ sub runFetch {
 
     my $pro = Quiq::Progress->new($maxFetches,-show=>$progressMeter);
     if ($maxFetches) {
-        print $pro->msg('Waiting for first process to finish...');
+        my $msg = 'Waiting for first process to finish';
+        if ($dir) {
+            $msg .= " (see $dir for output files)";
+        }
+        $msg .= '...';
+        print $pro->msg($msg);
     }
 
     my $i = 0; # Anzahl der gestarteten Prozesse
     my $j = 0; # Anzahl der beendeten Prozesse
     my $processH = Quiq::Hash->new;
     my $runningProcesses = 0;
-    my $dir = $outputDir || Quiq::TempDir->new;
     while (1) {
         $i++;
         if ($maxFetches && $i > $maxFetches) {
@@ -293,7 +305,10 @@ sub runFetch {
         else {
             # Child
 
-            if ($outputDir || $outputFile) {
+            if ($dir) {
+                # Lenke stdout und stderr in Ausgabedateien in Verzeichnis
+                # $dir um. Die Umlenkung gilt auch für Child-Prozesse.
+
                 my $file = sprintf '%s/%06d.out',$dir,$i;
 
                 CORE::close STDOUT;
@@ -314,6 +329,8 @@ sub runFetch {
     print $pro->msg;
 
     if ($outputFile) {
+        # Die Ausgaben aller Prozesse in Zieldatei schreiben
+
         my $fh = Quiq::FileHandle->new('>',$outputFile);
         for my $file ($p->glob("$dir/*.out")) {
             $fh->print($p->read($file));
