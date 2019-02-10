@@ -1,3 +1,8 @@
+1.134 2019-??-??
+================
+[Quiq::System]
+Test, der einen Reverse-DNS Eintrag erfordert, entfernt.
+
 1.133 2019-02-09
 ================
 [Quiq::Array]

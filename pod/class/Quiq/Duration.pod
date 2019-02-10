@@ -219,7 +219,7 @@ Zeitdauer.
 
 =head1 VERSION
 
-1.133
+1.134
 
 =head1 SOURCE
 

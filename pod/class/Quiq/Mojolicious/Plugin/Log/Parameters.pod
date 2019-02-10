@@ -43,7 +43,7 @@ wird nicht direkt, sondern von Mojolicious aufgerufen.
 
 =head1 VERSION
 
-1.133
+1.134
 
 =head1 SOURCE
 
