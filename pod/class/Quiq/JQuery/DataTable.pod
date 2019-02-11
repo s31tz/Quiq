@@ -475,7 +475,7 @@ Hash-Objekte (vom Typ Quiq::Hash).
 
 =head1 VERSION
 
-1.134
+1.135
 
 =head1 SOURCE
 

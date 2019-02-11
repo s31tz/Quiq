@@ -21,12 +21,13 @@ sub test_unitTest: Test(0) {
 
 # -----------------------------------------------------------------------------
 
-sub test_new: Test(10) {
+sub test_new: Test(11) {
     my $self = shift;
 
     my $user = 'xv882js';
     my $password = '*secret*';
-    my $passwordFile = '/home/xv882js/etc/cascm/credentials.dfo';
+    my $credentialsFile = '/home/xv882js/etc/cascm/credentials.dfo';
+    my $hsqlCredentialsFile = '/apps/scmclient/ruv/dfo/TU_CheckOut.dfo';
     my $broker = 'cascm';
     my $projectContext = 'S6800_DSS-PG_2014_N';
     my $viewPath = 'S6800_DSS_PG';
@@ -38,7 +39,8 @@ sub test_new: Test(10) {
     my $scm = Quiq::Cascm->new(
         user => $user,
         password => $password,
-        passwordFile => $passwordFile,
+        credentialsFile => $credentialsFile,
+        hsqlCredentialsFile => $hsqlCredentialsFile,
         broker => $broker,
         projectContext => $projectContext,
         viewPath => $viewPath,
@@ -51,7 +53,8 @@ sub test_new: Test(10) {
     $self->is(ref($scm),'Quiq::Cascm');
     $self->is($scm->user,$user);
     $self->is($scm->password,$password);
-    $self->is($scm->passwordFile,$passwordFile);
+    $self->is($scm->credentialsFile,$credentialsFile);
+    $self->is($scm->hsqlCredentialsFile,$hsqlCredentialsFile);
     $self->is($scm->broker,$broker);
     $self->is($scm->projectContext,$projectContext);
     $self->is($scm->workspace,$workspace);
@@ -64,12 +67,12 @@ sub test_new: Test(10) {
 
 # -----------------------------------------------------------------------------
 
-sub test_credentialOptions: Test(1) {
+sub test_credentialsOptions: Test(1) {
     my $self = shift;
 
     my $scm = $self->get('scm');
 
-    my @arr = $scm->credentialOptions;
+    my @arr = $scm->credentialsOptions;
     $self->isDeeply(\@arr,[-eh=>'/home/xv882js/etc/cascm/credentials.dfo']);
 }
 

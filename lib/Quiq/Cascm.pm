@@ -5,13 +5,16 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = 1.134;
+our $VERSION = 1.135;
 
+use Quiq::Database::Row::Array;
 use Quiq::Path;
 use Quiq::CommandLine;
-use Quiq::Stopwatch;
 use Quiq::TempFile;
+use Quiq::Unindent;
+use Quiq::Stopwatch;
 use Quiq::Shell;
+use Quiq::Database::ResultSet::Array;
 
 # -----------------------------------------------------------------------------
 
@@ -38,6 +41,36 @@ CA Harvest SCM Server zur Verfügung.
 
 Lokales Verzeichnis mit (Kopien von) Repository-Dateien. Der
 Pfad wird "Clientpath" genannt, Option -cp´, z.B. C<~/var/workspace>.
+
+    SELECT
+        *
+    FROM
+        harenvironment
+    ;
+    SELECT
+        p.* -- packagename
+    FROM
+        harPackage p
+        , harEnvironment e
+        , harState s
+    WHERE
+        p.envobjid = e.envobjid
+        AND p.stateobjid = s.stateobjid
+        AND e.environmentname = 'S6800_DSS-PG_2014_N'
+        -- AND s.statename = 'TTEST'
+    ORDER BY
+        p.packagename
+    ;
+
+=back
+
+=head1 SEE ALSO
+
+=over 2
+
+=item *
+
+L<https://docops.ca.com/ca-harvest-scm/13-0/en>
 
 =back
 
@@ -79,14 +112,15 @@ sub new {
     # @_: @attVal
 
     my $self = $class->SUPER::new(
-        user => undef,           # -usr (deprecated)
-        password => undef,       # -pw (deprecated)
-        passwordFile => undef,   # -eh
-        broker => undef,         # -b
-        projectContext => undef, # -en
-        viewPath => undef,       # -vp
-        workspace => undef,      # -cp
-        defaultState => undef,   # -st
+        user => undef,                # -usr (deprecated)
+        password => undef,            # -pw (deprecated)
+        credentialsFile => undef,     # -eh
+        hsqlCredentialsFile => undef, # -eh - für Datenbankabfragen
+        broker => undef,              # -b
+        projectContext => undef,      # -en
+        viewPath => undef,            # -vp
+        workspace => undef,           # -cp
+        defaultState => undef,        # -st
         keepTempFiles => 0,
         verbose => 1,
     );
@@ -230,7 +264,7 @@ sub checkout {
         $c->addArgument($repoFile);
     }
     $c->addOption(
-        $self->credentialOptions,
+        $self->credentialsOptions,
         -b => $self->broker,
         -en => $self->projectContext,
         -st => $self->defaultState,
@@ -291,7 +325,7 @@ sub checkin {
     my $c = Quiq::CommandLine->new;
     $c->addArgument($repoFile);
     $c->addOption(
-        $self->credentialOptions,
+        $self->credentialsOptions,
         -b => $self->broker,
         -en => $self->projectContext,
         -st => $self->defaultState,
@@ -383,7 +417,7 @@ sub listVersion {
     my $c = Quiq::CommandLine->new;
     $c->addArgument($file);
     $c->addOption(
-        $self->credentialOptions,
+        $self->credentialsOptions,
         -b => $self->broker,
         -en => $self->projectContext,
         -vp => $dir? "$viewPath/$dir": $viewPath,
@@ -428,7 +462,7 @@ sub deleteVersion {
     my $c = Quiq::CommandLine->new;
     $c->addArgument($file);
     $c->addOption(
-        $self->credentialOptions,
+        $self->credentialsOptions,
         -b => $self->broker,
         -en => $self->projectContext,
         -vp => $dir? "$viewPath/$dir": $viewPath,
@@ -478,7 +512,7 @@ sub createPackage {
     my $c = Quiq::CommandLine->new;
     $c->addArgument($package);
     $c->addOption(
-        $self->credentialOptions,
+        $self->credentialsOptions,
         -b => $self->broker,
         -en => $self->projectContext,
         -st => $self->defaultState,
@@ -531,7 +565,7 @@ sub deletePackage {
 
     my $c = Quiq::CommandLine->new;
     $c->addOption(
-        $self->credentialOptions,
+        $self->credentialsOptions,
         -b => $self->broker,
         -en => $self->projectContext,
         -pkgs => $package,
@@ -583,7 +617,7 @@ sub renamePackage {
 
     my $c = Quiq::CommandLine->new;
     $c->addOption(
-        $self->credentialOptions,
+        $self->credentialsOptions,
         -b => $self->broker,
         -en => $self->projectContext,
         -p => $oldName,
@@ -639,7 +673,7 @@ sub promotePackage {
     my $c = Quiq::CommandLine->new;
     $c->addArgument($package);
     $c->addOption(
-        $self->credentialOptions,
+        $self->credentialsOptions,
         -b => $self->broker,
         -en => $self->projectContext,
         -st => $state,
@@ -662,7 +696,7 @@ sub promotePackage {
 
 =over 4
 
-=item $packge
+=item $package
 
 Package, das demotet werden soll.
 
@@ -694,7 +728,7 @@ sub demotePackage {
     my $c = Quiq::CommandLine->new;
     $c->addArgument($package);
     $c->addOption(
-        $self->credentialOptions,
+        $self->credentialsOptions,
         -b => $self->broker,
         -en => $self->projectContext,
         -st => $state,
@@ -703,6 +737,138 @@ sub demotePackage {
     $self->run('hdp',$c);
 
     return;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 packageState() - Stufe des Pakets
+
+=head4 Synopsis
+
+    $state = $scm->packageState($package);
+
+=head4 Arguments
+
+=over 4
+
+=item $package
+
+Package.
+
+=back
+
+=head4 Returns
+
+=over 4
+
+=item $state
+
+Stufe.
+
+=back
+
+=head4 Description
+
+Liefere die Stufe $stage, auf der sich Package $package befindet.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub packageState {
+    my ($self,$package) = @_;
+
+    my $projectContext = $self->projectContext;
+
+    my $sqlFile = Quiq::TempFile->new(-unlink=>!$self->keepTempFiles);
+    Quiq::Path->write($sqlFile,Quiq::Unindent->trimNl("
+        SELECT
+            s.statename
+        FROM
+            harPackage p
+            , harEnvironment e
+            , harState s
+        WHERE
+            p.envobjid = e.envobjid
+            AND p.stateobjid = s.stateobjid
+            AND e.environmentname = '$projectContext'
+            AND p.packagename = '$package'
+    "));
+
+    my $c = Quiq::CommandLine->new;
+    $c->addOption(
+        $self->credentialsOptions('hsql'),
+        -b => $self->broker,
+        -f => $sqlFile,
+    );
+    $c->addBoolOption(
+        -t => 1,  # tabellarische Ausgabe
+    );
+
+    my @rows = $self->run('hsql',$c)->rows;
+    return @rows? $rows[0][0]: '';
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 listPackages() - Liste aller Pakete
+
+=head4 Synopsis
+
+    @packages | $packageA = $scm->listPackages;
+
+=head4 Returns
+
+=over 4
+
+=item @packages | $packageA
+
+Liste aller Packages (Array of Arrays). Im Skalarkontext eine Referenz
+auf die Liste.
+
+=back
+
+=head4 Description
+
+Liefere die Liste aller Packages.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub listPackages {
+    my $self = shift;
+
+    my $projectContext = $self->projectContext;
+
+    my $sqlFile = Quiq::TempFile->new(-unlink=>!$self->keepTempFiles);
+    Quiq::Path->write($sqlFile,Quiq::Unindent->trimNl("
+        SELECT
+            p.packagename
+            , s.statename
+        FROM
+            harPackage p
+            JOIN harEnvironment e
+                ON p.envobjid = e.envobjid
+            JOIN harState s
+                ON p.stateobjid = s.stateobjid
+        WHERE
+            e.environmentname = '$projectContext'
+        ORDER BY
+            1
+    "));
+
+    my $c = Quiq::CommandLine->new;
+    $c->addOption(
+        $self->credentialsOptions('hsql'),
+        -b => $self->broker,
+        -f => $sqlFile,
+    );
+    $c->addBoolOption(
+        -t => 1,  # tabellarische Ausgabe
+    );
+
+    return $self->run('hsql',$c);
 }
 
 # -----------------------------------------------------------------------------
@@ -728,7 +894,7 @@ sub sync {
 
     my $c = Quiq::CommandLine->new;
     $c->addOption(
-        $self->credentialOptions,
+        $self->credentialsOptions,
         -b => $self->broker,
         -en => $self->projectContext,
         -vp => $self->viewPath,
@@ -745,26 +911,69 @@ sub sync {
 
 # -----------------------------------------------------------------------------
 
-=head2 Privat
+=head2 Database
 
-=head3 credentialOptions() - Liste der Credential-Optionen
+=head3 sql() - Führe SQL aus
 
 =head4 Synopsis
 
-    @arr = $scm->credentialOptions;
+    $tab = $scm->sql($sql);
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub credentialOptions {
-    my $self = shift;
+sub sql {
+    my ($self,$sql) = @_;
 
-    if (my $passwordFile = $self->passwordFile) {
-        return (-eh=>$passwordFile);
+    my $projectContext = $self->projectContext;
+
+    $sql = Quiq::Unindent->trimNl($sql);
+    my $sqlFile = Quiq::TempFile->new(-unlink=>!$self->keepTempFiles);
+    Quiq::Path->write($sqlFile,$sql);
+
+    my $c = Quiq::CommandLine->new;
+    $c->addOption(
+        $self->credentialsOptions('hsql'),
+        -b => $self->broker,
+        -f => $sqlFile,
+    );
+    $c->addBoolOption(
+        -t => 1,  # tabellarische Ausgabe
+    );
+
+    return $self->run('hsql',$c);
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Privat
+
+=head3 credentialsOptions() - Liste der Credential-Optionen
+
+=head4 Synopsis
+
+    @arr = $scm->credentialsOptions;
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub credentialsOptions {
+    my $self = shift;
+    my $cmd = shift // '';
+
+    my $credentialsFile;
+    if ($cmd eq 'hsql') {
+        $credentialsFile = $self->get("${cmd}CredentialsFile");
+    }
+    $credentialsFile ||= $self->credentialsFile;
+    if ($credentialsFile) {
+        return (-eh=>$credentialsFile);
     }
 
-    return (-usr=>$self->user,-pw=>$self->password);
+    return $credentialsFile? (-eh=>$credentialsFile):
+        (-usr=>$self->user,-pw=>$self->password);
 }
 
 # -----------------------------------------------------------------------------
@@ -773,7 +982,7 @@ sub credentialOptions {
 
 =head4 Synopsis
 
-    $output = $scm->run($scmCmd,$c);
+    $str | $tab = $scm->run($scmCmd,$c);
 
 =head4 Description
 
@@ -828,24 +1037,20 @@ sub run {
         $cmd = sprintf '%s %s',$scmCmd,$c->command;
     }
 
-    # Kommando protokollieren
-
-    if ($self->verbose) {
-        my $cmd = $cmd;
-        if (my $password = $self->password) {
-            $cmd =~ s/\Q$password/****/g;
-        }
-        warn "> $cmd\n";
-    }
-
     # Kommando ausführen, aus Sicherheitsgründen (Benutzername, Passwort)
     # mit den Optionen aus der oben geschriebenen Parameterdatei.
     # Das Kommando schreibt Fehlermeldungen nach stdout (!), daher leiten
     # wir stdout in die Output-Datei um.
 
-    my $r = Quiq::Shell->exec("$cmd >>$outputFile",-sloppy=>1);
+    my $sh = Quiq::Shell->new(
+        log => $self->verbose,
+        logDest => *STDERR,
+        cmdPrefix => '> ',
+        cmdAnsiColor => 'bold',
+    );
+
+    my $r = $sh->exec("$cmd >>$outputFile",-sloppy=>1);
     my $output = Quiq::Path->read($outputFile);
-    $output .= sprintf "---\n%.2fs\n",$stw->elapsed;
     if ($r) {
         $self->throw(
             q~CASCM-00001: Command failed~,
@@ -853,8 +1058,25 @@ sub run {
             Output => $output,
         );
     }
+    if ($scmCmd eq 'hsql') {
+        # Liefern ein Objekt mit Titel und Zeilenobjekten zurück
+
+        my @rows = split /\n/,$output;
+        my @titles = map {lc} split /\t/,shift @rows;
+        my $width = @titles;
+        for my $row (@rows) {
+            $row = Quiq::Database::Row::Array->new(
+                [split /\t/,$row,$width]);
+        }
+
+        return Quiq::Database::ResultSet::Array->new(
+            'Quiq::Database::Row::Array',\@titles,\@rows,
+            execTime => $stw->elapsed);
+    }
 
     # Wir liefern den Inhalt der Output-Datei zurück
+
+    $output .= sprintf "---\n%.2fs\n",$stw->elapsed;
     return $output;
 }
 
@@ -885,7 +1107,7 @@ sub writeOutput {
 
 =head1 VERSION
 
-1.134
+1.135
 
 =head1 AUTHOR
 

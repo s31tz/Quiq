@@ -97,7 +97,7 @@ Liste von Werten:
 
 =head1 VERSION
 
-1.134
+1.135
 
 =head1 SOURCE
 

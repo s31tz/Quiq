@@ -22,6 +22,36 @@ CA Harvest SCM Server zur Verfügung.
 Lokales Verzeichnis mit (Kopien von) Repository-Dateien. Der
 Pfad wird "Clientpath" genannt, Option -cp´, z.B. C<~/var/workspace>.
 
+    SELECT
+        *
+    FROM
+        harenvironment
+    ;
+    SELECT
+        p.* -- packagename
+    FROM
+        harPackage p
+        , harEnvironment e
+        , harState s
+    WHERE
+        p.envobjid = e.envobjid
+        AND p.stateobjid = s.stateobjid
+        AND e.environmentname = 'S6800_DSS-PG_2014_N'
+        -- AND s.statename = 'TTEST'
+    ORDER BY
+        p.packagename
+    ;
+
+=back
+
+=head1 SEE ALSO
+
+=over 2
+
+=item *
+
+L<https://docops.ca.com/ca-harvest-scm/13-0/en>
+
 =back
 
 =head1 METHODS
@@ -339,7 +369,7 @@ Package auf einer anderen Stufe, schlägt das Kommando fehl.
 
 =over 4
 
-=item $packge
+=item $package
 
 Package, das demotet werden soll.
 
@@ -359,6 +389,57 @@ Demote Package $package, das sich auf Stufe $state befindet
 (befinden muss) auf die darunterliegende Stufe. Befindet sich das
 Package auf einer anderen Stufe, schlägt das Kommando fehl.
 
+=head3 packageState() - Stufe des Pakets
+
+=head4 Synopsis
+
+    $state = $scm->packageState($package);
+
+=head4 Arguments
+
+=over 4
+
+=item $package
+
+Package.
+
+=back
+
+=head4 Returns
+
+=over 4
+
+=item $state
+
+Stufe.
+
+=back
+
+=head4 Description
+
+Liefere die Stufe $stage, auf der sich Package $package befindet.
+
+=head3 listPackages() - Liste aller Pakete
+
+=head4 Synopsis
+
+    @packages | $packageA = $scm->listPackages;
+
+=head4 Returns
+
+=over 4
+
+=item @packages | $packageA
+
+Liste aller Packages (Array of Arrays). Im Skalarkontext eine Referenz
+auf die Liste.
+
+=back
+
+=head4 Description
+
+Liefere die Liste aller Packages.
+
 =head2 Workspace
 
 =head3 sync() - Synchronisiere Workspace mit Repository
@@ -371,19 +452,27 @@ Package auf einer anderen Stufe, schlägt das Kommando fehl.
 
 Bringe den Workspace auf den Stand des Repository.
 
-=head2 Privat
+=head2 Database
 
-=head3 credentialOptions() - Liste der Credential-Optionen
+=head3 sql() - Führe SQL aus
 
 =head4 Synopsis
 
-    @arr = $scm->credentialOptions;
+    $tab = $scm->sql($sql);
+
+=head2 Privat
+
+=head3 credentialsOptions() - Liste der Credential-Optionen
+
+=head4 Synopsis
+
+    @arr = $scm->credentialsOptions;
 
 =head3 run() - Führe CA Harvest SCM Kommando aus
 
 =head4 Synopsis
 
-    $output = $scm->run($scmCmd,$c);
+    $str | $tab = $scm->run($scmCmd,$c);
 
 =head4 Description
 
@@ -399,7 +488,7 @@ Kommandos zurück.
 
 =head1 VERSION
 
-1.134
+1.135
 
 =head1 SOURCE
 

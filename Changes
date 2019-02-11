@@ -34,7 +34,7 @@ Methode user() um parameterlose Fassung erweitert (eigener Benutzername).
 In der Doku global Abschnitt SEE ALSO vorgezogen.
 
 [Quiq::Cascm]
-Authentisierung mit verschlüsseltem Passwort credentialOptions() hinzugefügt.
+Authentisierung mit verschlüsseltem Passwort credentialsOptions() hinzugefügt.
 
 Methoden addFiles(), putFiles(), checkin(), checkout(), createPackage(),
 deletePackage(), demote(), promote(), version(), deleteVersion() hinzugefügt.

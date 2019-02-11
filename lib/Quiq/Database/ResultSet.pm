@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = 1.134;
+our $VERSION = 1.135;
 
 use Quiq::Object;
 use Time::HiRes ();
@@ -918,9 +918,8 @@ sub asTable {
 
     # Statement
 
-    if ($info >= 3) {
-        $str .= $self->stmt;
-        $str .= "\n\n";
+    if ($info >= 3 && (my $stmt = $self->stmt)) {
+        $str .= "$stmt\n\n";
     }
     if ($info >= 2) {
         # Kolumnenbezeichnungen
@@ -965,10 +964,12 @@ sub asTable {
     if ($info) {
         # Statistik
 
-        my $duration = $self->execTime + $self->fetchTime;
-        $str .= sprintf "\n%s rows, %s",
-            $self->count,
-            Quiq::Duration->new($duration)->asShortString(-precision=>3);
+        $str .= sprintf "\n%s rows",$self->count;
+        if (my $duration = $self->execTime + $self->fetchTime) {
+            $str .= ', '.Quiq::Duration->new($duration)->asShortString(
+                -precision=>3,
+            );
+        }
     }
     if ($msg) {
         $str .= $msg;
@@ -1055,7 +1056,7 @@ sub diffReport {
 
 =head1 VERSION
 
-1.134
+1.135
 
 =head1 AUTHOR
 
