@@ -42,6 +42,9 @@ Datensätzen.
     $tab = $class->new($rowClass,\@titles);
     $tab = $class->new($rowClass,\@titles,\@rows,@keyVal);
     
+    $tab = $class->new(\@titles);
+    $tab = $class->new(\@titles,\@rows,@keyVal);
+    
     $newTab = $tab->new;
     $newTab = $tab->new(\@rows);
 
@@ -51,6 +54,9 @@ Instantiiere ein Tabellen-Objekt und liefere eine Referenz auf dieses
 Objekt zurück.
 
 Die Arrays @titles und @rows werden von der Methode I<nicht> kopiert.
+
+Ist $rowClass nicht angegeben, wird $class->defaultRowClass() als
+Row-Klasse angenommen.
 
 Als Objektmethode gerufen, wird ein neues Tabellen-Objekt mit
 $rowClass und $titles aus dem existierenden Tabellenobjekt
@@ -66,12 +72,12 @@ sub new {
     my ($class,$self) = Quiq::Object->this(shift);
 
     if ($self) {
-        my $rows = shift || [];
+        my $rowA = shift || [];
 
         $self = $class->SUPER::new(
             rowClass=>$self->rowClass,
             titles=>scalar $self->titles,
-            rows=>$rows,
+            rows=>$rowA,
             stmt=>'',
             hits=>0,
             startTime=>scalar(Time::HiRes::gettimeofday),
@@ -81,15 +87,15 @@ sub new {
         );
     }
     else {
-        my $rowClass = shift;
+        my $rowClass = ref $_[0]? $class->defaultRowClass: shift;
         my $titles = shift;
-        my $rows = shift || [];
+        my $rowA = shift || [];
         # @_: @keyVal
 
         $self = $class->SUPER::new(
             rowClass=>$rowClass,
             titles=>$titles,
-            rows=>$rows,
+            rows=>$rowA,
             stmt=>'',
             hits=>0,
             startTime=>scalar(Time::HiRes::gettimeofday),

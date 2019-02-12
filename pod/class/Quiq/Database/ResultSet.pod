@@ -24,6 +24,9 @@ Datensätzen.
     $tab = $class->new($rowClass,\@titles);
     $tab = $class->new($rowClass,\@titles,\@rows,@keyVal);
     
+    $tab = $class->new(\@titles);
+    $tab = $class->new(\@titles,\@rows,@keyVal);
+    
     $newTab = $tab->new;
     $newTab = $tab->new(\@rows);
 
@@ -33,6 +36,9 @@ Instantiiere ein Tabellen-Objekt und liefere eine Referenz auf dieses
 Objekt zurück.
 
 Die Arrays @titles und @rows werden von der Methode I<nicht> kopiert.
+
+Ist $rowClass nicht angegeben, wird $class->defaultRowClass() als
+Row-Klasse angenommen.
 
 Als Objektmethode gerufen, wird ein neues Tabellen-Objekt mit
 $rowClass und $titles aus dem existierenden Tabellenobjekt

@@ -440,6 +440,32 @@ auf die Liste.
 
 Liefere die Liste aller Packages.
 
+=head3 findItem() - Zeige Information über Item an
+
+=head4 Synopsis
+
+    $tab = $scm->findItem($namePattern);
+
+=head4 Arguments
+
+=over 4
+
+=item $namePattern
+
+Name des Item (File oder Directory), SQL-Wildcards sind erlaubt.
+
+=back
+
+=head4 Returns
+
+=over 4
+
+=item $tab
+
+Ergebnismengen-Objekt.
+
+=back
+
 =head2 Workspace
 
 =head3 sync() - Synchronisiere Workspace mit Repository
@@ -458,6 +484,7 @@ Bringe den Workspace auf den Stand des Repository.
 
 =head4 Synopsis
 
+    $tab = $scm->sql($file);
     $tab = $scm->sql($sql);
 
 =head2 Privat

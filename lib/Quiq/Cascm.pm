@@ -11,7 +11,6 @@ use Quiq::Database::Row::Array;
 use Quiq::Path;
 use Quiq::CommandLine;
 use Quiq::TempFile;
-use Quiq::Unindent;
 use Quiq::Stopwatch;
 use Quiq::Shell;
 use Quiq::Database::ResultSet::Array;
@@ -781,19 +780,21 @@ sub packageState {
     my $projectContext = $self->projectContext;
 
     my $sqlFile = Quiq::TempFile->new(-unlink=>!$self->keepTempFiles);
-    Quiq::Path->write($sqlFile,Quiq::Unindent->trimNl("
+    Quiq::Path->write($sqlFile,"
         SELECT
-            s.statename
+            sta.statename
         FROM
-            harPackage p
-            , harEnvironment e
-            , harState s
+            harPackage pkg
+            , harEnvironment env
+            , harState sta
         WHERE
-            p.envobjid = e.envobjid
-            AND p.stateobjid = s.stateobjid
-            AND e.environmentname = '$projectContext'
-            AND p.packagename = '$package'
-    "));
+            pkg.envobjid = env.envobjid
+            AND pkg.stateobjid = sta.stateobjid
+            AND env.environmentname = '$projectContext'
+            AND pkg.packagename = '$package'
+        ",
+        -unindent => 1,
+    );
 
     my $c = Quiq::CommandLine->new;
     $c->addOption(
@@ -842,21 +843,105 @@ sub listPackages {
     my $projectContext = $self->projectContext;
 
     my $sqlFile = Quiq::TempFile->new(-unlink=>!$self->keepTempFiles);
-    Quiq::Path->write($sqlFile,Quiq::Unindent->trimNl("
+    Quiq::Path->write($sqlFile,"
         SELECT
-            p.packagename
-            , s.statename
+            pkg.packagename
+            , sta.statename
         FROM
-            harPackage p
-            JOIN harEnvironment e
-                ON p.envobjid = e.envobjid
-            JOIN harState s
-                ON p.stateobjid = s.stateobjid
+            harPackage pkg
+            JOIN harEnvironment env
+                ON pkg.envobjid = env.envobjid
+            JOIN harState sta
+                ON pkg.stateobjid = sta.stateobjid
         WHERE
-            e.environmentname = '$projectContext'
+            env.environmentname = '$projectContext'
         ORDER BY
             1
-    "));
+        ",
+        -unindent => 1,
+    );
+
+    my $c = Quiq::CommandLine->new;
+    $c->addOption(
+        $self->credentialsOptions('hsql'),
+        -b => $self->broker,
+        -f => $sqlFile,
+    );
+    $c->addBoolOption(
+        -t => 1,  # tabellarische Ausgabe
+    );
+
+    return $self->run('hsql',$c);
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 findItem() - Zeige Information über Item an
+
+=head4 Synopsis
+
+    $tab = $scm->findItem($namePattern);
+
+=head4 Arguments
+
+=over 4
+
+=item $namePattern
+
+Name des Item (File oder Directory), SQL-Wildcards sind erlaubt.
+
+=back
+
+=head4 Returns
+
+=over 4
+
+=item $tab
+
+Ergebnismengen-Objekt.
+
+=back
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub findItem {
+    my ($self,$namePattern) = @_;
+
+    my $projectContext = $self->projectContext;
+
+    my $sqlFile = Quiq::TempFile->new(-unlink=>!$self->keepTempFiles);
+    Quiq::Path->write($sqlFile,"
+        SELECT
+            itm.itemobjid AS id
+            , par.itemname AS parent
+            , itm.itemname AS item
+            , ver.mappedversion AS version
+            , ver.versiondataobjid
+            , pkg.packagename AS package
+            , sta.statename AS state
+        FROM
+            haritems itm
+            JOIN harversions ver
+                ON ver.itemobjid = itm.itemobjid
+            JOIN harpackage pkg
+                ON pkg.packageobjid = ver.packageobjid
+            JOIN harenvironment env
+                ON env.envobjid = pkg.envobjid
+            JOIN harstate sta
+                ON sta.stateobjid = pkg.stateobjid
+            JOIN haritems par
+                ON par.itemobjid = itm.parentobjid
+        WHERE
+            env.environmentname = '$projectContext'
+            AND itm.itemname LIKE '$namePattern'
+        ORDER BY
+            itm.itemobjid
+            , TO_NUMBER(ver.mappedversion)
+        ",
+        -unindent => 1,
+    );
 
     my $c = Quiq::CommandLine->new;
     $c->addOption(
@@ -917,6 +1002,7 @@ sub sync {
 
 =head4 Synopsis
 
+    $tab = $scm->sql($file);
     $tab = $scm->sql($sql);
 
 =cut
@@ -924,13 +1010,18 @@ sub sync {
 # -----------------------------------------------------------------------------
 
 sub sql {
-    my ($self,$sql) = @_;
+    my ($self,$arg) = @_;
 
     my $projectContext = $self->projectContext;
 
-    $sql = Quiq::Unindent->trimNl($sql);
-    my $sqlFile = Quiq::TempFile->new(-unlink=>!$self->keepTempFiles);
-    Quiq::Path->write($sqlFile,$sql);
+    my $sqlFile;
+    if ($arg !~ /\s/) {
+        $sqlFile = $arg;
+    }
+    else {
+        $sqlFile = Quiq::TempFile->new(-unlink=>!$self->keepTempFiles);
+        Quiq::Path->write($sqlFile,$arg,-unindent=>1);
+    }
 
     my $c = Quiq::CommandLine->new;
     $c->addOption(
@@ -1060,18 +1151,23 @@ sub run {
     }
     if ($scmCmd eq 'hsql') {
         # Liefern ein Objekt mit Titel und Zeilenobjekten zurück
-
-        my @rows = split /\n/,$output;
+        # <NL> und <TAB> ersetzen wir in den Daten durch \n bzw. \t.
+        
+        my @rows = map {s/<NL>/\n/g; $_} split /\n/,$output;
         my @titles = map {lc} split /\t/,shift @rows;
+
+        my $rowClass = 'Quiq::Database::Row::Array';
         my $width = @titles;
+
         for my $row (@rows) {
-            $row = Quiq::Database::Row::Array->new(
-                [split /\t/,$row,$width]);
+            $row = $rowClass->new(
+                [map {s/<TAB>/\t/g; $_} split /\t/,$row,$width]);
         }
 
-        return Quiq::Database::ResultSet::Array->new(
-            'Quiq::Database::Row::Array',\@titles,\@rows,
-            execTime => $stw->elapsed);
+        return Quiq::Database::ResultSet::Array->new($rowClass,
+            \@titles,\@rows,
+            execTime => $stw->elapsed,
+        );
     }
 
     # Wir liefern den Inhalt der Output-Datei zurück

@@ -365,6 +365,11 @@ Setze die Permissions der Datei auf $mode. Beispiel: -mode=>0775
 
 Erzeuge übergeordnete Verzeichnisse, wenn nötig.
 
+=item -unindent => $bool (Default: 0)
+
+Wende Quiq::Unindent->trimNl() auf die Daten $data an. Dies ist für
+inline geschriebenen Text nützlich.
+
 =back
 
 =head3 writeIfDifferent() - Schreibe Datei, wenn Inhalt differiert
