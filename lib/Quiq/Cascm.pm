@@ -8,11 +8,13 @@ use v5.10.0;
 our $VERSION = 1.135;
 
 use Quiq::Database::Row::Array;
+use Quiq::Shell;
 use Quiq::Path;
 use Quiq::CommandLine;
 use Quiq::TempFile;
 use Quiq::Stopwatch;
-use Quiq::Shell;
+use Quiq::Unindent;
+use Quiq::AnsiColor;
 use Quiq::Database::ResultSet::Array;
 
 # -----------------------------------------------------------------------------
@@ -31,37 +33,6 @@ L<Quiq::Hash>
 
 Ein Objekt der Klasse stellt eine Schnittstelle zu einem
 CA Harvest SCM Server zur Verfügung.
-
-=head2 Begriffe
-
-=over 4
-
-=item Workspace
-
-Lokales Verzeichnis mit (Kopien von) Repository-Dateien. Der
-Pfad wird "Clientpath" genannt, Option -cp´, z.B. C<~/var/workspace>.
-
-    SELECT
-        *
-    FROM
-        harenvironment
-    ;
-    SELECT
-        p.* -- packagename
-    FROM
-        harPackage p
-        , harEnvironment e
-        , harState s
-    WHERE
-        p.envobjid = e.envobjid
-        AND p.stateobjid = s.stateobjid
-        AND e.environmentname = 'S6800_DSS-PG_2014_N'
-        -- AND s.statename = 'TTEST'
-    ORDER BY
-        p.packagename
-    ;
-
-=back
 
 =head1 SEE ALSO
 
@@ -122,8 +93,17 @@ sub new {
         defaultState => undef,        # -st
         keepTempFiles => 0,
         verbose => 1,
+        sh => undef,
     );
     $self->set(@_);
+
+    my $sh = Quiq::Shell->new(
+        log => $self->verbose,
+        logDest => *STDERR,
+        cmdPrefix => '> ',
+        cmdAnsiColor => 'bold',
+    );
+    $self->set(sh=>$sh);
 
     return $self;
 }
@@ -779,35 +759,21 @@ sub packageState {
 
     my $projectContext = $self->projectContext;
 
-    my $sqlFile = Quiq::TempFile->new(-unlink=>!$self->keepTempFiles);
-    Quiq::Path->write($sqlFile,"
+    my $tab = $self->runSql("
         SELECT
             sta.statename
         FROM
             harPackage pkg
-            , harEnvironment env
-            , harState sta
+            JOIN harEnvironment env
+                ON env.envobjid = pkg.envobjid
+            JOIN harState sta
+                ON sta.stateobjid = pkg.stateobjid
         WHERE
-            pkg.envobjid = env.envobjid
-            AND pkg.stateobjid = sta.stateobjid
-            AND env.environmentname = '$projectContext'
+            env.environmentname = '$projectContext'
             AND pkg.packagename = '$package'
-        ",
-        -unindent => 1,
-    );
+    ");
 
-    my $c = Quiq::CommandLine->new;
-    $c->addOption(
-        $self->credentialsOptions('hsql'),
-        -b => $self->broker,
-        -f => $sqlFile,
-    );
-    $c->addBoolOption(
-        -t => 1,  # tabellarische Ausgabe
-    );
-
-    my @rows = $self->run('hsql',$c)->rows;
-    return @rows? $rows[0][0]: '';
+    return $tab->count? $tab->rows->[0]->[0]: '';
 }
 
 # -----------------------------------------------------------------------------
@@ -816,7 +782,7 @@ sub packageState {
 
 =head4 Synopsis
 
-    @packages | $packageA = $scm->listPackages;
+    $tab = $scm->listPackages;
 
 =head4 Returns
 
@@ -842,8 +808,7 @@ sub listPackages {
 
     my $projectContext = $self->projectContext;
 
-    my $sqlFile = Quiq::TempFile->new(-unlink=>!$self->keepTempFiles);
-    Quiq::Path->write($sqlFile,"
+    return $self->runSql("
         SELECT
             pkg.packagename
             , sta.statename
@@ -857,21 +822,7 @@ sub listPackages {
             env.environmentname = '$projectContext'
         ORDER BY
             1
-        ",
-        -unindent => 1,
-    );
-
-    my $c = Quiq::CommandLine->new;
-    $c->addOption(
-        $self->credentialsOptions('hsql'),
-        -b => $self->broker,
-        -f => $sqlFile,
-    );
-    $c->addBoolOption(
-        -t => 1,  # tabellarische Ausgabe
-    );
-
-    return $self->run('hsql',$c);
+    ");
 }
 
 # -----------------------------------------------------------------------------
@@ -911,8 +862,7 @@ sub findItem {
 
     my $projectContext = $self->projectContext;
 
-    my $sqlFile = Quiq::TempFile->new(-unlink=>!$self->keepTempFiles);
-    Quiq::Path->write($sqlFile,"
+    return $self->runSql("
         SELECT
             itm.itemobjid AS id
             , par.itemname AS parent
@@ -939,21 +889,7 @@ sub findItem {
         ORDER BY
             itm.itemobjid
             , TO_NUMBER(ver.mappedversion)
-        ",
-        -unindent => 1,
-    );
-
-    my $c = Quiq::CommandLine->new;
-    $c->addOption(
-        $self->credentialsOptions('hsql'),
-        -b => $self->broker,
-        -f => $sqlFile,
-    );
-    $c->addBoolOption(
-        -t => 1,  # tabellarische Ausgabe
-    );
-
-    return $self->run('hsql',$c);
+    ");
 }
 
 # -----------------------------------------------------------------------------
@@ -1090,57 +1026,16 @@ sub run {
 
     my $stw = Quiq::Stopwatch->new;
 
-    my $keepTempFiles = $self->keepTempFiles;
-    my $useParameterFile = 0;
-
     # Output-Datei zu den Optionen hinzufügen
 
-    # my $fh2 = % C-<File::Temp> %->new(UNLINK=>!$keepTempFiles); 
-    # my $outputFile = $fh2->filename;
-    my $outputFile = Quiq::TempFile->new(-unlink=>!$keepTempFiles);
+    my $outputFile = Quiq::TempFile->new(-unlink=>!$self->keepTempFiles);
     $c->addOption(-o=>$outputFile);
 
-    my $cmd;
-    if ($useParameterFile) {
-        # CASCM-Optionen in Datei speichern.
-        # MEMO: Die Datei wird von dem Harvest-Kommando auf jeden Fall gelöscht!
-        #
-        # DIESE VARIANTE FUNKTIONIERT AUS IRGENDWELCHEN GRÜNDEN NICHT!
-        #
-        # Fehlermeldung:
-        # I00060040: New connection with Broker cascm  established.
-        # E0202011d: Authentication operation failed: Invalid credentials .
-        # Error: Could not create session.
-        #
-        # Hängt das vielleicht mit dem Prozentzeichen (%) in meinem aktuellen
-        # Passwort zusammen? Vorher ging es, glaube ich.
+    # Kommando ausführen. Das Kommando schreibt Fehlermeldungen nach
+    # stdout (!), daher leiten wir stdout in die Output-Datei um.
 
-        # my $fh1 = % C-<File::Temp> %->new(UNLINK=>0);
-        # my $parameterFile = $fh1->filename;
-        my $parameterFile = Quiq::TempFile->new(-unlink=>0);
-        Quiq::Path->write($parameterFile," ".$c->command."\n");
-
-        $cmd = "$scmCmd -di $parameterFile";
-    }
-    else {
-        # Diese Variante ist nicht so sicher, da das Passwort auf
-        # der Kommandozeile erscheint
-        $cmd = sprintf '%s %s',$scmCmd,$c->command;
-    }
-
-    # Kommando ausführen, aus Sicherheitsgründen (Benutzername, Passwort)
-    # mit den Optionen aus der oben geschriebenen Parameterdatei.
-    # Das Kommando schreibt Fehlermeldungen nach stdout (!), daher leiten
-    # wir stdout in die Output-Datei um.
-
-    my $sh = Quiq::Shell->new(
-        log => $self->verbose,
-        logDest => *STDERR,
-        cmdPrefix => '> ',
-        cmdAnsiColor => 'bold',
-    );
-
-    my $r = $sh->exec("$cmd >>$outputFile",-sloppy=>1);
+    my $cmd = sprintf '%s %s >>%s',$scmCmd,$c->command,$outputFile;
+    my $r = $self->sh->exec($cmd,-sloppy=>1);
     my $output = Quiq::Path->read($outputFile);
     if ($r) {
         $self->throw(
@@ -1149,31 +1044,72 @@ sub run {
             Output => $output,
         );
     }
-    if ($scmCmd eq 'hsql') {
-        # Liefern ein Objekt mit Titel und Zeilenobjekten zurück
-        # <NL> und <TAB> ersetzen wir in den Daten durch \n bzw. \t.
-        
-        my @rows = map {s/<NL>/\n/g; $_} split /\n/,$output;
-        my @titles = map {lc} split /\t/,shift @rows;
-
-        my $rowClass = 'Quiq::Database::Row::Array';
-        my $width = @titles;
-
-        for my $row (@rows) {
-            $row = $rowClass->new(
-                [map {s/<TAB>/\t/g; $_} split /\t/,$row,$width]);
-        }
-
-        return Quiq::Database::ResultSet::Array->new($rowClass,
-            \@titles,\@rows,
-            execTime => $stw->elapsed,
-        );
-    }
 
     # Wir liefern den Inhalt der Output-Datei zurück
 
-    $output .= sprintf "---\n%.2fs\n",$stw->elapsed;
+    if ($scmCmd ne 'hsql') {
+        $output .= sprintf "---\n%.2fs\n",$stw->elapsed;
+    }
+
     return $output;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 runSql() - Führe SQL-Statement aus
+
+=head4 Synopsis
+
+    $tab = $scm->runSql($sql);
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub runSql {
+    my ($self,$sql) = @_;
+
+    my $stw = Quiq::Stopwatch->new;
+
+    $sql = Quiq::Unindent->trimNl($sql);
+    if ($self->verbose) {
+        my $a = Quiq::AnsiColor->new;
+        (my $sql = "$sql\n") =~ s/^(.*)/'> '.$a->str('bold',$1)/meg;
+        warn $sql;
+    }    
+
+    my $sqlFile = Quiq::TempFile->new(-unlink=>!$self->keepTempFiles);
+    Quiq::Path->write($sqlFile,$sql);
+
+    my $c = Quiq::CommandLine->new;
+    $c->addOption(
+        $self->credentialsOptions('hsql'),
+        -b => $self->broker,
+        -f => $sqlFile,
+    );
+    $c->addBoolOption(
+        -t => 1,  # tabellarische Ausgabe
+    );
+
+    my $output = $self->run('hsql',$c);
+
+    # Wir liefern ein Objekt mit Titel und Zeilenobjekten zurück
+    # <NL> und <TAB> ersetzen wir in den Daten durch \n bzw. \t.
+
+    my @rows = map {s/<NL>/\n/g; $_} split /\n/,$output;
+    my @titles = map {lc} split /\t/,shift @rows;
+
+    my $rowClass = 'Quiq::Database::Row::Array';
+    my $width = @titles;
+
+    for my $row (@rows) {
+        $row = $rowClass->new(
+            [map {s/<TAB>/\t/g; $_} split /\t/,$row,$width]);
+    }
+
+    return Quiq::Database::ResultSet::Array->new($rowClass,\@titles,\@rows,
+        execTime => $stw->elapsed,
+    );
 }
 
 # -----------------------------------------------------------------------------

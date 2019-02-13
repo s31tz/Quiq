@@ -13,37 +13,6 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 Ein Objekt der Klasse stellt eine Schnittstelle zu einem
 CA Harvest SCM Server zur Verfügung.
 
-=head2 Begriffe
-
-=over 4
-
-=item Workspace
-
-Lokales Verzeichnis mit (Kopien von) Repository-Dateien. Der
-Pfad wird "Clientpath" genannt, Option -cp´, z.B. C<~/var/workspace>.
-
-    SELECT
-        *
-    FROM
-        harenvironment
-    ;
-    SELECT
-        p.* -- packagename
-    FROM
-        harPackage p
-        , harEnvironment e
-        , harState s
-    WHERE
-        p.envobjid = e.envobjid
-        AND p.stateobjid = s.stateobjid
-        AND e.environmentname = 'S6800_DSS-PG_2014_N'
-        -- AND s.statename = 'TTEST'
-    ORDER BY
-        p.packagename
-    ;
-
-=back
-
 =head1 SEE ALSO
 
 =over 2
@@ -423,7 +392,7 @@ Liefere die Stufe $stage, auf der sich Package $package befindet.
 
 =head4 Synopsis
 
-    @packages | $packageA = $scm->listPackages;
+    $tab = $scm->listPackages;
 
 =head4 Returns
 
@@ -506,6 +475,12 @@ Bringe den Workspace auf den Stand des Repository.
 Führe das CA Harvest SCM Kommando $scmCmd mit den Optionen des
 Kommandozeilenobjekts $c aus und liefere die Ausgabe des
 Kommandos zurück.
+
+=head3 runSql() - Führe SQL-Statement aus
+
+=head4 Synopsis
+
+    $tab = $scm->runSql($sql);
 
 =head3 writeOutput() - Schreibe Kommando-Ausgabe
 
