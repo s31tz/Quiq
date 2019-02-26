@@ -21,6 +21,10 @@ CA Harvest SCM Server zur Verfügung.
 
 L<https://docops.ca.com/ca-harvest-scm/13-0/en>
 
+=item *
+
+L<https://search.ca.com/assets/SiteAssets/TEC486141_External/TEC486141.pdf>
+
 =back
 
 =head1 METHODS
@@ -33,13 +37,67 @@ L<https://docops.ca.com/ca-harvest-scm/13-0/en>
 
     $scm = $class->new(@attVal);
 
-=head4 Arguments
+=head4 Attributes
 
 =over 4
 
-=item @attVal
+=item user => $user
 
-Liste von Attribut-Wert-Paaren.
+Benutzername (-usr).
+
+=item password => $password
+
+Passwort (-pw).
+
+=item credentialsFile => $file
+
+Datei (Pfad) mit verschlüsseltem Benuternamen und Passwort (-eh).
+Diese Authentisierungsmethode ist gegenüber user und password
+aus Sicherheitsgründen vorzuziehen.
+
+=item hsqlCredentialsFile => $file
+
+Wie credentialsFile, nur für das hsql-Kommando, falls hierfür
+eine andere Authentisierung nötig ist.
+
+=item broker => $broker
+
+Name des Brokers (-b).
+
+=item projectContext => $project
+
+Name des Projektes, auch Environment genannt (-en).
+
+=item viewPath => $viewPath
+
+Pfad im Project (-vp).
+
+=item workspace => $workspace
+
+Pfad zum (lokalen) Workspace-Verzeichnis.
+
+=item states => \@states
+
+Liste der Stufen, bginnend mit der untersten Stufe, auf der
+Workspace-Dateien aus- und eingecheckt werden.
+
+=item udl => $udl
+
+Universal Database Locator für die CASCM-Datenbank. Ist dieser
+definiert, wird die CASCM-Datenbank direkt zugegriffen, nicht
+über das Programm hsql.
+
+=item keepTempFiles => $bool (Default: 0)
+
+Lösche Temporäre Dateien nicht.
+
+=item dryRun => $bool (Default: 0)
+
+Führe keine ändernden Kommandos aus.
+
+=item verbose => $bool (Default: 1)
+
+Schreibe Information über die Kommandoausführung nach STDERR.
 
 =back
 
@@ -58,7 +116,7 @@ dieses Objekt zurück.
 
 =head4 Synopsis
 
-    $scm->putFiles($package,$repoDir,@files);
+    $output = $scm->putFiles($package,$repoDir,@files);
 
 =head4 Arguments
 
@@ -81,7 +139,7 @@ Liste von Dateien I<außerhalb> des Workspace.
 
 =head4 Returns
 
-nichts
+Konkatenierte Ausgabe der der checkout- und checkin-Kommandos (String)
 
 =head4 Description
 
@@ -101,7 +159,7 @@ braucht sich um die Unterscheidung nicht zu kümmern.
 
 =head4 Synopsis
 
-    $scm->checkout($package,@repoFiles);
+    $output = $scm->checkout($package,@repoFiles);
 
 =head4 Arguments
 
@@ -120,17 +178,18 @@ Liste von Workspace-Dateien, die ausgecheckt werden.
 
 =head4 Returns
 
-nichts
+Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Checke die Workspace-Dateien @repoFiles aus.
+Checke die Workspace-Dateien @repoFiles aus und liefere die
+Ausgabe des Kommandos zurück.
 
 =head3 checkin() - Checke Workspace-Datei ein
 
 =head4 Synopsis
 
-    $scm->checkin($package,$repoFile);
+    $output = $scm->checkin($package,$repoFile);
 
 =head4 Arguments
 
@@ -148,18 +207,19 @@ Datei I<innerhalb> des Workspace. Der Dateipfad ist ein I<relativer> Pfad.
 
 =head4 Returns
 
-nichts
+Ausgabe des Kommandos (String)
 
 =head4 Description
 
 Checke die Workspace-Datei $repoFile ein, d.h. übertrage ihren Stand
-als neue Version ins Repository und ordne diese dem Package $package zu.
+als neue Version ins Repository, ordne diese dem Package $package zu
+und liefere die Ausgabe des Kommandos zurück.
 
-=head3 version() - Versionsnummer Repository-Datei
+=head3 versionNumber() - Versionsnummer Repository-Datei
 
 =head4 Synopsis
 
-    $version = $scm->version($repoFile);
+    $version = $scm->versionNumber($repoFile);
 
 =head4 Arguments
 
@@ -173,13 +233,13 @@ Repository-Datei
 
 =head4 Returns
 
-Versionsnummer (String)
+Versionsnummer (Integer)
 
-=head3 listVersion() - Versionsinformation zu Repository-Datei
+=head3 versionInfo() - Versionsinformation zu Repository-Datei
 
 =head4 Synopsis
 
-    $info = $scm->listVersion($repoFile);
+    $info = $scm->versionInfo($repoFile);
 
 =head4 Arguments
 
@@ -193,7 +253,7 @@ Der Pfad der Repository-Datei.
 
 =head4 Returns
 
-Informations-Text (String)
+Ausgabe des Kommandos (String)
 
 =head4 Description
 
@@ -204,7 +264,7 @@ diese zurück.
 
 =head4 Synopsis
 
-    $scm->deleteVersion($repoFile);
+    $output = $scm->deleteVersion($repoFile);
 
 =head4 Arguments
 
@@ -218,7 +278,70 @@ Der Pfad der zu löschenden Repository-Datei.
 
 =head4 Returns
 
-Nichts
+Ausgabe des Kommandos (String)
+
+=head4 Description
+
+Lösche die höchste Version der Repository-Datei (Item) $repoFile.
+Dies geht nur, wenn sich diese Version auf der untersten Stufe
+(Entwicklung) befindet.
+
+=head3 findItem() - Zeige Information über Item an
+
+=head4 Synopsis
+
+    $tab = $scm->findItem($namePattern);
+
+=head4 Arguments
+
+=over 4
+
+=item $namePattern
+
+Name des Item (File oder Directory), SQL-Wildcards sind erlaubt.
+
+=back
+
+=head4 Returns
+
+=over 4
+
+=item $tab
+
+Ergebnismengen-Objekt.
+
+=back
+
+=head3 removeItems() - Lösche Items
+
+=head4 Synopsis
+
+    $output = $scm->removeItems($package,@repoFile);
+
+=head4 Arguments
+
+=over 4
+
+=item @repoFiles
+
+Die Pfade der zu löschenden Repository-Dateien.
+
+=item $package
+
+Package, in das die Löschung eingetragen wird.
+
+=back
+
+=head4 Returns
+
+Ausgabe des Kommandos (String)
+
+=head4 Description
+
+Erzeuge neue Versionen der Items @repoFiles, welche die Items als zu
+Löschen kennzeichnen und trage diese in das Package $package ein.
+Wird das Package promotet, werden die Items auf der betreffenden
+Stufe gelöscht.
 
 =head2 Packages
 
@@ -226,7 +349,7 @@ Nichts
 
 =head4 Synopsis
 
-    $scm->createPackage($package);
+    $output = $scm->createPackage($package);
 
 =head4 Arguments
 
@@ -240,11 +363,11 @@ Name des Package, das erzeugt werden soll.
 
 =head4 Returns
 
-nichts
+Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Erzeuge Package $package.
+Erzeuge Package $package und liefere die Ausgabe des Kommandos zurück.
 
 =head3 deletePackage() - Lösche Package
 
@@ -264,11 +387,11 @@ Name des Package, das gelöscht werden soll.
 
 =head4 Returns
 
-nichts
+Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Lösche Package $package.
+Lösche Package $package und liefere die Ausgabe des Kommandos zurück.
 
 =head3 renamePackage() - Benenne Package um
 
@@ -292,71 +415,131 @@ Zukünftiger Name des Package.
 
 =head4 Returns
 
-nichts
+Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Benenne Package $oldName in $newName um.
+Benenne Package $oldName in $newName um und liefere die Ausgabe
+des Kommandos zurück.
 
-=head3 promotePackage() - Promote Package
+=head3 switchPackage() - Übertrage Item in anderes Paket
 
 =head4 Synopsis
 
-    $scm->promotePackage($package,$state);
+    $output = $scm->switchPackage($stage,$fromPackage,$toPackage,@files);
 
 =head4 Arguments
 
 =over 4
 
-=item $packge
+=item $stage
 
-Package, das promotet werden soll.
+Stufe (stage), auf der sich die Packete befinden.
 
-=item $state
+=item $fromPackage
 
-Stufe, auf dem sich das Package befindet.
+Name des Quellpakets (from package).
+
+=item $toPackage
+
+Name des Zielpakets (to package).
+
+=item @files
+
+Dateien (versions), die übertragen werden sollen.
 
 =back
 
 =head4 Returns
 
-nichts
+Ausgabe des Kommandos (String)
 
 =head4 Description
 
-promote Package $package, das sich auf Stufe $state befindet
-(befinden muss) auf die darüberliegende Stufe. Befindet sich das
-Package auf einer anderen Stufe, schlägt das Kommando fehl.
+Übertrage die Dateien @files von Paket $fromPackage in Paket $toPackage.
 
-=head3 demotePackage() - Demote Package
+=head3 promote() - Promote Packages
 
 =head4 Synopsis
 
-    $scm->demotePackage($package,$state);
+    $scm->promote($state,@packages);
 
 =head4 Arguments
 
 =over 4
 
-=item $package
-
-Package, das demotet werden soll.
-
 =item $state
 
-Stufe, auf dem sich das Package befindet.
+Stufe, auf dem sich die Packages befinden.
+
+=item @packges
+
+Packages, die promotet werden sollen.
 
 =back
 
 =head4 Returns
 
-nichts
+Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Demote Package $package, das sich auf Stufe $state befindet
-(befinden muss) auf die darunterliegende Stufe. Befindet sich das
-Package auf einer anderen Stufe, schlägt das Kommando fehl.
+Promote die Package @packages von der Stufe $state auf die
+darüberliegende Stufe und liefere die Ausgabe des Kommandos zurück.
+
+=head3 demote() - Demote Packages
+
+=head4 Synopsis
+
+    $scm->demote($state,@packages);
+
+=head4 Arguments
+
+=over 4
+
+=item $state
+
+Stufe, auf dem sich das Package befindet.
+
+=item @packages
+
+Packages, die demotet werden sollen.
+
+=back
+
+=head4 Returns
+
+Ausgabe des Kommandos (String)
+
+=head4 Description
+
+Demote die Packages @packages der Stufe $state auf die darunterliegende
+Stufe, und liefere die Ausgabe des Kommandos zurück.
+
+=head3 demoteToBase() - Demote Packages auf die unterste Stufe
+
+=head4 Synopsis
+
+    $scm->demoteToBase(@packages);
+
+=head4 Arguments
+
+=over 4
+
+=item @packages
+
+Packages, die demotet werden sollen.
+
+=back
+
+=head4 Returns
+
+Ausgabe des Kommandos (String)
+
+=head4 Description
+
+Demote die Packages @packages auf die unterste Stufe und liefere die
+Ausgabe des Kommandos zurück.
 
 =head3 packageState() - Stufe des Pakets
 
@@ -409,32 +592,6 @@ auf die Liste.
 
 Liefere die Liste aller Packages.
 
-=head3 findItem() - Zeige Information über Item an
-
-=head4 Synopsis
-
-    $tab = $scm->findItem($namePattern);
-
-=head4 Arguments
-
-=over 4
-
-=item $namePattern
-
-Name des Item (File oder Directory), SQL-Wildcards sind erlaubt.
-
-=back
-
-=head4 Returns
-
-=over 4
-
-=item $tab
-
-Ergebnismengen-Objekt.
-
-=back
-
 =head2 Workspace
 
 =head3 sync() - Synchronisiere Workspace mit Repository
@@ -445,7 +602,8 @@ Ergebnismengen-Objekt.
 
 =head4 Description
 
-Bringe den Workspace auf den Stand des Repository.
+Bringe den Workspace auf den Stand des Repository und liefere
+die Ausgabe des Kommandos zurück.
 
 =head2 Database
 
@@ -453,28 +611,97 @@ Bringe den Workspace auf den Stand des Repository.
 
 =head4 Synopsis
 
-    $tab = $scm->sql($file);
     $tab = $scm->sql($sql);
+    $tab = $scm->sql($file);
+
+=head4 Arguments
+
+=over 4
+
+=item $sql
+
+SELECT-Statement.
+
+=item $file
+
+Datei mit SELECT-Statement.
+
+=back
+
+=head4 Returns
+
+Ergebnismengen-Objekt (Quiq::Database::ResultSet::Array)
+
+=head4 Description
+
+Führe ein SELECT-Statement gegen die CASCM-Datenbank aus und liefere
+ein Ergebnismengen-Objekt zurück. Das SELECT-Statement kann als
+String $sql übergeben werden oder sich in einer Datei $file befinden.
 
 =head2 Privat
 
-=head3 credentialsOptions() - Liste der Credential-Optionen
+=head3 credentialsOptions() - Credential-Optionen
 
 =head4 Synopsis
 
     @arr = $scm->credentialsOptions;
 
-=head3 run() - Führe CA Harvest SCM Kommando aus
+=head4 Description
+
+CASCM kennt mehrere Authentisierungsmöglichkeiten, die sich durch
+Aufrufoptionen unterscheiden. Diese Methode liefert die passenden Optionen
+zu den beim Konstruktor-Aufruf angegebenen Authentisierungs-Informationen.
+unterschieden werden:
+
+=over 4
+
+=item 1.
+
+Authentisierung durch Datei mit verschlüsselten Credentials (-eh)
+
+=item 2.
+
+Authentisiertung durch Benutzername/Passwor (-usr, -pw)
+
+=back
+
+Bevorzugt ist Methode 1, da sie sicherer ist als Methode 2.
+
+=head3 runCmd() - Führe Kommando aus
 
 =head4 Synopsis
 
-    $str | $tab = $scm->run($scmCmd,$c);
+    $output = $scm->runCmd($cmd,$c);
+
+=head4 Arguments
+
+=over 4
+
+=item $cmd
+
+Name des CASCM-Kommandos
+
+=item $c
+
+Kommandozeilenobjekt mit den Optionen.
+
+=back
+
+=head4 Returns
+
+=over 4
+
+=item $output
+
+Inhalt der Ausgabedatei, die das Kommando geschrieben hat.
+
+=back
 
 =head4 Description
 
-Führe das CA Harvest SCM Kommando $scmCmd mit den Optionen des
-Kommandozeilenobjekts $c aus und liefere die Ausgabe des
-Kommandos zurück.
+Führe das CA Harvest SCM Kommando $cmd mit den Optionen des
+Kommandozeilenobjekts $c aus und liefere den Inhalt der Ausgabedatei
+zurück.
 
 =head3 runSql() - Führe SQL-Statement aus
 
@@ -482,11 +709,26 @@ Kommandos zurück.
 
     $tab = $scm->runSql($sql);
 
-=head3 writeOutput() - Schreibe Kommando-Ausgabe
+=head4 Arguments
 
-=head4 Synopsis
+=over 4
 
-    $scm->writeOutput($output);
+=item $sql
+
+SELECT-Statement, das gegen die CASCM-Datenbank abgesetzt wird.
+
+=back
+
+=head4 Returns
+
+Ergebnismengen-Objekt (Quiq::Database::ResultSet::Array)
+
+=head4 Description
+
+Führe SELECT-Statement $sql auf der CASCM-Datenbank aus und liefere
+die Ergebnismenge zurück. Ist ein UDL definiert (s. Konstruktoraufruf)
+wird die Selektion direkt auf der Datenbank ausgeführt, andernfalls
+über das CASCM-Kommando hsql.
 
 =head1 VERSION
 

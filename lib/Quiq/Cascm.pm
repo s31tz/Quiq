@@ -11,10 +11,11 @@ use Quiq::Database::Row::Array;
 use Quiq::Shell;
 use Quiq::Path;
 use Quiq::CommandLine;
-use Quiq::TempFile;
 use Quiq::Stopwatch;
+use Quiq::TempFile;
 use Quiq::Unindent;
 use Quiq::AnsiColor;
+use Quiq::Database::Connection;
 use Quiq::Database::ResultSet::Array;
 
 # -----------------------------------------------------------------------------
@@ -42,6 +43,10 @@ CA Harvest SCM Server zur Verfügung.
 
 L<https://docops.ca.com/ca-harvest-scm/13-0/en>
 
+=item *
+
+L<https://search.ca.com/assets/SiteAssets/TEC486141_External/TEC486141.pdf>
+
 =back
 
 =head1 METHODS
@@ -54,13 +59,67 @@ L<https://docops.ca.com/ca-harvest-scm/13-0/en>
 
     $scm = $class->new(@attVal);
 
-=head4 Arguments
+=head4 Attributes
 
 =over 4
 
-=item @attVal
+=item user => $user
 
-Liste von Attribut-Wert-Paaren.
+Benutzername (-usr).
+
+=item password => $password
+
+Passwort (-pw).
+
+=item credentialsFile => $file
+
+Datei (Pfad) mit verschlüsseltem Benuternamen und Passwort (-eh).
+Diese Authentisierungsmethode ist gegenüber user und password
+aus Sicherheitsgründen vorzuziehen.
+
+=item hsqlCredentialsFile => $file
+
+Wie credentialsFile, nur für das hsql-Kommando, falls hierfür
+eine andere Authentisierung nötig ist.
+
+=item broker => $broker
+
+Name des Brokers (-b).
+
+=item projectContext => $project
+
+Name des Projektes, auch Environment genannt (-en).
+
+=item viewPath => $viewPath
+
+Pfad im Project (-vp).
+
+=item workspace => $workspace
+
+Pfad zum (lokalen) Workspace-Verzeichnis.
+
+=item states => \@states
+
+Liste der Stufen, bginnend mit der untersten Stufe, auf der
+Workspace-Dateien aus- und eingecheckt werden.
+
+=item udl => $udl
+
+Universal Database Locator für die CASCM-Datenbank. Ist dieser
+definiert, wird die CASCM-Datenbank direkt zugegriffen, nicht
+über das Programm hsql.
+
+=item keepTempFiles => $bool (Default: 0)
+
+Lösche Temporäre Dateien nicht.
+
+=item dryRun => $bool (Default: 0)
+
+Führe keine ändernden Kommandos aus.
+
+=item verbose => $bool (Default: 1)
+
+Schreibe Information über die Kommandoausführung nach STDERR.
 
 =back
 
@@ -90,16 +149,34 @@ sub new {
         projectContext => undef,      # -en
         viewPath => undef,            # -vp
         workspace => undef,           # -cp
-        defaultState => undef,        # -st
+        states => [                   # -st
+            'Entwicklung',
+            'TTEST',
+            'STEST',
+            'RTEST',
+            'Produktion',
+        ],
+        udl => undef,                 # für direkten Zugriff auf DB
         keepTempFiles => 0,
+        dryRun => 0,
         verbose => 1,
+        # Private Attribute
+        db => undef,                  # wenn DB-Zugriff über UDL
         sh => undef,
+        @_,
     );
-    $self->set(@_);
 
     my $sh = Quiq::Shell->new(
+        dryRun => $self->dryRun,
         log => $self->verbose,
         logDest => *STDERR,
+        logRewrite => sub {
+            my ($sh,$cmd) = @_;
+            if (my $passw = $self->password) {
+                $cmd =~ s/\Q$passw/xxxxx/g;
+            }
+            return $cmd;
+        },
         cmdPrefix => '> ',
         cmdAnsiColor => 'bold',
     );
@@ -116,7 +193,7 @@ sub new {
 
 =head4 Synopsis
 
-    $scm->putFiles($package,$repoDir,@files);
+    $output = $scm->putFiles($package,$repoDir,@files);
 
 =head4 Arguments
 
@@ -139,7 +216,7 @@ Liste von Dateien I<außerhalb> des Workspace.
 
 =head4 Returns
 
-nichts
+Konkatenierte Ausgabe der der checkout- und checkin-Kommandos (String)
 
 =head4 Description
 
@@ -163,6 +240,7 @@ sub putFiles {
     my $workspace = $self->workspace;
     my $p = Quiq::Path->new;
 
+    my $output;
     for my $srcFile (@files) {
         my (undef,$file) = $p->split($srcFile);
         my $repoFile = sprintf '%s/%s',$repoDir,$file;
@@ -178,7 +256,7 @@ sub putFiles {
             }
 
             # Checke Repository-Datei aus
-            $self->checkout($package,$repoFile);
+            $output .= $self->checkout($package,$repoFile);
         }
 
         # Kopiere externe Datei in den Workspace. Entweder ist
@@ -190,10 +268,10 @@ sub putFiles {
         );
 
         # Checke Workspace-Datei ins Repository ein
-        $self->checkin($package,$repoFile);
+        $output .= $self->checkin($package,$repoFile);
     }
 
-    return;
+    return $output;
 }
 
 # -----------------------------------------------------------------------------
@@ -204,7 +282,7 @@ sub putFiles {
 
 =head4 Synopsis
 
-    $scm->checkout($package,@repoFiles);
+    $output = $scm->checkout($package,@repoFiles);
 
 =head4 Arguments
 
@@ -223,11 +301,12 @@ Liste von Workspace-Dateien, die ausgecheckt werden.
 
 =head4 Returns
 
-nichts
+Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Checke die Workspace-Dateien @repoFiles aus.
+Checke die Workspace-Dateien @repoFiles aus und liefere die
+Ausgabe des Kommandos zurück.
 
 =cut
 
@@ -235,8 +314,6 @@ Checke die Workspace-Dateien @repoFiles aus.
 
 sub checkout {
     my ($self,$package,@repoFiles) = @_;
-
-    # Checke Workspace-Dateien aus
 
     my $c = Quiq::CommandLine->new;
     for my $repoFile (@repoFiles) {
@@ -246,7 +323,7 @@ sub checkout {
         $self->credentialsOptions,
         -b => $self->broker,
         -en => $self->projectContext,
-        -st => $self->defaultState,
+        -st => $self->states->[0],
         -vp => $self->viewPath,
         -cp => $self->workspace,
         -p => $package,
@@ -256,9 +333,7 @@ sub checkout {
         -r => 1,
     );
 
-    $self->run('hco',$c);
-
-    return;
+    return $self->runCmd('hco',$c);
 }
 
 # -----------------------------------------------------------------------------
@@ -267,7 +342,7 @@ sub checkout {
 
 =head4 Synopsis
 
-    $scm->checkin($package,$repoFile);
+    $output = $scm->checkin($package,$repoFile);
 
 =head4 Arguments
 
@@ -285,12 +360,13 @@ Datei I<innerhalb> des Workspace. Der Dateipfad ist ein I<relativer> Pfad.
 
 =head4 Returns
 
-nichts
+Ausgabe des Kommandos (String)
 
 =head4 Description
 
 Checke die Workspace-Datei $repoFile ein, d.h. übertrage ihren Stand
-als neue Version ins Repository und ordne diese dem Package $package zu.
+als neue Version ins Repository, ordne diese dem Package $package zu
+und liefere die Ausgabe des Kommandos zurück.
 
 =cut
 
@@ -299,32 +375,28 @@ als neue Version ins Repository und ordne diese dem Package $package zu.
 sub checkin {
     my ($self,$package,$repoFile) = @_;
 
-    # Checke Repository-Dateien ein
-
     my $c = Quiq::CommandLine->new;
     $c->addArgument($repoFile);
     $c->addOption(
         $self->credentialsOptions,
         -b => $self->broker,
         -en => $self->projectContext,
-        -st => $self->defaultState,
+        -st => $self->states->[0],
         -vp => $self->viewPath,
         -cp => $self->workspace,
         -p => $package,
     );
 
-    $self->run('hci',$c);
-
-    return;
+    return $self->runCmd('hci',$c);
 }
 
 # -----------------------------------------------------------------------------
 
-=head3 version() - Versionsnummer Repository-Datei
+=head3 versionNumber() - Versionsnummer Repository-Datei
 
 =head4 Synopsis
 
-    $version = $scm->version($repoFile);
+    $version = $scm->versionNumber($repoFile);
 
 =head4 Arguments
 
@@ -338,19 +410,19 @@ Repository-Datei
 
 =head4 Returns
 
-Versionsnummer (String)
+Versionsnummer (Integer)
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub version {
+sub versionNumber {
     my ($self,$repoFile) = @_;
 
-    my $output = $self->listVersion($repoFile);
+    my $output = $self->versionInfo($repoFile);
     my ($version) = $output =~ /;(\d+)$/m;
     if (!defined $version) {
-        $self->throw("Can't find version number");
+        $self->throw("Can't find version number in output");
     }
 
     return $version;
@@ -358,11 +430,11 @@ sub version {
 
 # -----------------------------------------------------------------------------
 
-=head3 listVersion() - Versionsinformation zu Repository-Datei
+=head3 versionInfo() - Versionsinformation zu Repository-Datei
 
 =head4 Synopsis
 
-    $info = $scm->listVersion($repoFile);
+    $info = $scm->versionInfo($repoFile);
 
 =head4 Arguments
 
@@ -376,7 +448,7 @@ Der Pfad der Repository-Datei.
 
 =head4 Returns
 
-Informations-Text (String)
+Ausgabe des Kommandos (String)
 
 =head4 Description
 
@@ -387,7 +459,7 @@ diese zurück.
 
 # -----------------------------------------------------------------------------
 
-sub listVersion {
+sub versionInfo {
     my ($self,$repoFile) = @_;
 
     my ($dir,$file) = Quiq::Path->split($repoFile);
@@ -400,10 +472,10 @@ sub listVersion {
         -b => $self->broker,
         -en => $self->projectContext,
         -vp => $dir? "$viewPath/$dir": $viewPath,
-        -st => $self->defaultState,
+        -st => $self->states->[0],
     );
 
-    return $self->run('hlv',$c);
+    return $self->runCmd('hlv',$c);
 }
 
 # -----------------------------------------------------------------------------
@@ -412,7 +484,7 @@ sub listVersion {
 
 =head4 Synopsis
 
-    $scm->deleteVersion($repoFile);
+    $output = $scm->deleteVersion($repoFile);
 
 =head4 Arguments
 
@@ -426,7 +498,13 @@ Der Pfad der zu löschenden Repository-Datei.
 
 =head4 Returns
 
-Nichts
+Ausgabe des Kommandos (String)
+
+=head4 Description
+
+Lösche die höchste Version der Repository-Datei (Item) $repoFile.
+Dies geht nur, wenn sich diese Version auf der untersten Stufe
+(Entwicklung) befindet.
 
 =cut
 
@@ -445,10 +523,159 @@ sub deleteVersion {
         -b => $self->broker,
         -en => $self->projectContext,
         -vp => $dir? "$viewPath/$dir": $viewPath,
-        -st => $self->defaultState,
+        -st => $self->states->[0],
     );
 
-    return $self->run('hdv',$c);
+    return $self->runCmd('hdv',$c);
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 findItem() - Zeige Information über Item an
+
+=head4 Synopsis
+
+    $tab = $scm->findItem($namePattern);
+
+=head4 Arguments
+
+=over 4
+
+=item $namePattern
+
+Name des Item (File oder Directory), SQL-Wildcards sind erlaubt.
+
+=back
+
+=head4 Returns
+
+=over 4
+
+=item $tab
+
+Ergebnismengen-Objekt.
+
+=back
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub findItem {
+    my ($self,$namePattern) = @_;
+
+    my $projectContext = $self->projectContext;
+    my $viewPath = $self->viewPath;
+
+    my $tab = $self->runSql("
+        SELECT
+            itm.itemobjid AS id
+            , SYS_CONNECT_BY_PATH(itm.itemname,'/') AS item_path
+            , itm.itemtype AS item_type
+            , ver.mappedversion AS version
+            , ver.versiondataobjid
+            , pkg.packagename AS package
+            , sta.statename AS state
+        FROM
+            haritems itm
+            JOIN harversions ver
+                ON ver.itemobjid = itm.itemobjid
+            JOIN harpackage pkg
+                ON pkg.packageobjid = ver.packageobjid
+            JOIN harenvironment env
+                ON env.envobjid = pkg.envobjid
+            JOIN harstate sta
+                ON sta.stateobjid = pkg.stateobjid
+            JOIN haritems par
+                ON par.itemobjid = itm.parentobjid
+            JOIN harrepository rep
+                ON rep.repositobjid = itm.repositobjid
+        WHERE
+            env.environmentname = '$projectContext'
+            AND itm.itemname LIKE '$namePattern'
+        START WITH
+            itm.itemname = '$viewPath'
+            AND itm.repositobjid = rep.repositobjid
+        CONNECT BY
+            PRIOR itm.itemobjid = itm.parentobjid
+        ORDER BY
+            item_path
+            , TO_NUMBER(ver.mappedversion)
+    ");
+
+    # Wir entfernen den Anfang des View-Path,
+    # da er für alle Pfade gleich ist
+
+    for my $row ($tab->rows) {
+        $row->[1] =~ s|^/\Q$viewPath\E/||;
+    }
+
+    return $tab;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 removeItems() - Lösche Items
+
+=head4 Synopsis
+
+    $output = $scm->removeItems($package,@repoFile);
+
+=head4 Arguments
+
+=over 4
+
+=item @repoFiles
+
+Die Pfade der zu löschenden Repository-Dateien.
+
+=item $package
+
+Package, in das die Löschung eingetragen wird.
+
+=back
+
+=head4 Returns
+
+Ausgabe des Kommandos (String)
+
+=head4 Description
+
+Erzeuge neue Versionen der Items @repoFiles, welche die Items als zu
+Löschen kennzeichnen und trage diese in das Package $package ein.
+Wird das Package promotet, werden die Items auf der betreffenden
+Stufe gelöscht.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub removeItems {
+    my ($self,$package,@repoFiles) = @_;
+
+    # FIXME: Dateien mit dem gleichen ViewPath mit
+    # einem Aufruf behandeln (Optimierung).
+
+    my $output;
+    for my $repoFile (@repoFiles) {
+        my ($dir,$file) = Quiq::Path->split($repoFile);
+        my $viewPath = $self->viewPath;
+
+        my $c = Quiq::CommandLine->new;
+        $c->addArgument($file);
+        $c->addOption(
+            $self->credentialsOptions,
+            -b => $self->broker,
+            -en => $self->projectContext,
+            -vp => $dir? "$viewPath/$dir": $viewPath,
+            -st => $self->states->[0],
+            -p => $package,
+        );
+
+        $output .= $self->runCmd('hri',$c);
+    }
+
+    return $output;
 }
 
 # -----------------------------------------------------------------------------
@@ -459,7 +686,7 @@ sub deleteVersion {
 
 =head4 Synopsis
 
-    $scm->createPackage($package);
+    $output = $scm->createPackage($package);
 
 =head4 Arguments
 
@@ -473,11 +700,11 @@ Name des Package, das erzeugt werden soll.
 
 =head4 Returns
 
-nichts
+Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Erzeuge Package $package.
+Erzeuge Package $package und liefere die Ausgabe des Kommandos zurück.
 
 =cut
 
@@ -486,20 +713,16 @@ Erzeuge Package $package.
 sub createPackage {
     my ($self,$package) = @_;
 
-    # Erzeuge Package
-
     my $c = Quiq::CommandLine->new;
     $c->addArgument($package);
     $c->addOption(
         $self->credentialsOptions,
         -b => $self->broker,
         -en => $self->projectContext,
-        -st => $self->defaultState,
+        -st => $self->states->[0],
     );
 
-    $self->run('hcp',$c);
-
-    return;
+    return $self->runCmd('hcp',$c);
 }
 
 # -----------------------------------------------------------------------------
@@ -522,11 +745,11 @@ Name des Package, das gelöscht werden soll.
 
 =head4 Returns
 
-nichts
+Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Lösche Package $package.
+Lösche Package $package und liefere die Ausgabe des Kommandos zurück.
 
 =cut
 
@@ -534,8 +757,6 @@ Lösche Package $package.
 
 sub deletePackage {
     my ($self,$package) = @_;
-
-    # Lösche Package
 
     # Anmerkung: Das Kommando hdlp kann auch mehrere Packages auf
     # einmal löschen. Es ist jedoch nicht gut, es so zu
@@ -550,9 +771,7 @@ sub deletePackage {
         -pkgs => $package,
     );
 
-    $self->run('hdlp',$c);
-
-    return;
+    return $self->runCmd('hdlp',$c);
 }
 
 # -----------------------------------------------------------------------------
@@ -579,11 +798,12 @@ Zukünftiger Name des Package.
 
 =head4 Returns
 
-nichts
+Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Benenne Package $oldName in $newName um.
+Benenne Package $oldName in $newName um und liefere die Ausgabe
+des Kommandos zurück.
 
 =cut
 
@@ -591,8 +811,6 @@ Benenne Package $oldName in $newName um.
 
 sub renamePackage {
     my ($self,$oldName,$newName) = @_;
-
-    # Benenne Package um
 
     my $c = Quiq::CommandLine->new;
     $c->addOption(
@@ -603,54 +821,113 @@ sub renamePackage {
         -npn => $newName,
     );
 
-    $self->run('hup',$c);
-
-    return;
+    return $self->runCmd('hup',$c);
 }
 
 # -----------------------------------------------------------------------------
 
-=head3 promotePackage() - Promote Package
+=head3 switchPackage() - Übertrage Item in anderes Paket
 
 =head4 Synopsis
 
-    $scm->promotePackage($package,$state);
+    $output = $scm->switchPackage($stage,$fromPackage,$toPackage,@files);
 
 =head4 Arguments
 
 =over 4
 
-=item $packge
+=item $stage
 
-Package, das promotet werden soll.
+Stufe (stage), auf der sich die Packete befinden.
 
-=item $state
+=item $fromPackage
 
-Stufe, auf dem sich das Package befindet.
+Name des Quellpakets (from package).
+
+=item $toPackage
+
+Name des Zielpakets (to package).
+
+=item @files
+
+Dateien (versions), die übertragen werden sollen.
 
 =back
 
 =head4 Returns
 
-nichts
+Ausgabe des Kommandos (String)
 
 =head4 Description
 
-promote Package $package, das sich auf Stufe $state befindet
-(befinden muss) auf die darüberliegende Stufe. Befindet sich das
-Package auf einer anderen Stufe, schlägt das Kommando fehl.
+Übertrage die Dateien @files von Paket $fromPackage in Paket $toPackage.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub promotePackage {
-    my ($self,$package,$state) = @_;
-
-    # Promote Package
+sub switchPackage {
+    my ($self,$stage,$fromPackage,$toPackage,@files) = @_;
 
     my $c = Quiq::CommandLine->new;
-    $c->addArgument($package);
+    $c->addOption(
+        $self->credentialsOptions,
+        -b => $self->broker,
+        -en => $self->projectContext,
+        -st => $stage,
+        -fp => $fromPackage,
+        -tp => $toPackage,
+    );
+    $c->addBoolOption(
+        -s => 1,
+    );
+    $c->addArgument(@files);
+
+    return $self->runCmd('hspp',$c);
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 promote() - Promote Packages
+
+=head4 Synopsis
+
+    $scm->promote($state,@packages);
+
+=head4 Arguments
+
+=over 4
+
+=item $state
+
+Stufe, auf dem sich die Packages befinden.
+
+=item @packges
+
+Packages, die promotet werden sollen.
+
+=back
+
+=head4 Returns
+
+Ausgabe des Kommandos (String)
+
+=head4 Description
+
+Promote die Package @packages von der Stufe $state auf die
+darüberliegende Stufe und liefere die Ausgabe des Kommandos zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub promote {
+    my ($self,$state,@packages) = @_;
+
+    my $c = Quiq::CommandLine->new;
+    for my $package (@packages) {
+        $c->addArgument($package);
+    }
     $c->addOption(
         $self->credentialsOptions,
         -b => $self->broker,
@@ -658,54 +935,51 @@ sub promotePackage {
         -st => $state,
     );
 
-    $self->run('hpp',$c);
-
-    return;
+    return $self->runCmd('hpp',$c);
 }
 
 # -----------------------------------------------------------------------------
 
-=head3 demotePackage() - Demote Package
+=head3 demote() - Demote Packages
 
 =head4 Synopsis
 
-    $scm->demotePackage($package,$state);
+    $scm->demote($state,@packages);
 
 =head4 Arguments
 
 =over 4
 
-=item $package
-
-Package, das demotet werden soll.
-
 =item $state
 
 Stufe, auf dem sich das Package befindet.
+
+=item @packages
+
+Packages, die demotet werden sollen.
 
 =back
 
 =head4 Returns
 
-nichts
+Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Demote Package $package, das sich auf Stufe $state befindet
-(befinden muss) auf die darunterliegende Stufe. Befindet sich das
-Package auf einer anderen Stufe, schlägt das Kommando fehl.
+Demote die Packages @packages der Stufe $state auf die darunterliegende
+Stufe, und liefere die Ausgabe des Kommandos zurück.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub demotePackage {
-    my ($self,$package,$state) = @_;
-
-    # Demote Package
+sub demote {
+    my ($self,$state,@packages) = @_;
 
     my $c = Quiq::CommandLine->new;
-    $c->addArgument($package);
+    for my $package (@packages) {
+        $c->addArgument($package);
+    }
     $c->addOption(
         $self->credentialsOptions,
         -b => $self->broker,
@@ -713,7 +987,91 @@ sub demotePackage {
         -st => $state,
     );
 
-    $self->run('hdp',$c);
+    return $self->runCmd('hdp',$c);
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 demoteToBase() - Demote Packages auf die unterste Stufe
+
+=head4 Synopsis
+
+    $scm->demoteToBase(@packages);
+
+=head4 Arguments
+
+=over 4
+
+=item @packages
+
+Packages, die demotet werden sollen.
+
+=back
+
+=head4 Returns
+
+Ausgabe des Kommandos (String)
+
+=head4 Description
+
+Demote die Packages @packages auf die unterste Stufe und liefere die
+Ausgabe des Kommandos zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub demoteToBase {
+    my ($self,@packages) = @_;
+
+    my $projectContext = $self->projectContext;
+    my $packageNames = join ', ',map {"'$_'"} @packages;
+
+    my $tab = $self->runSql("
+        SELECT
+            pkg.packagename
+            , sta.statename
+        FROM
+            harPackage pkg
+            JOIN harEnvironment env
+                ON env.envobjid = pkg.envobjid
+            JOIN harState sta
+                ON sta.stateobjid = pkg.stateobjid
+        WHERE
+            env.environmentname = '$projectContext'
+            AND pkg.packagename IN ($packageNames)
+    ");
+
+    if (@packages != $tab->count) {
+        # Fehler: nicht alle Packages wurden gefunden
+
+        my %package;
+        @package{@packages} = (1) x @packages;
+        for my $row ($tab->rows) {
+            delete $package{$row->[0]};
+        }
+        $self->throw(
+            q~CASCM-00099: Package not found~,
+            Packages => join(', ',sort keys %package),
+        );
+    }
+
+    my %stage;
+    for my $row ($tab->rows) {
+        $stage{$row->[1]}++;
+    }
+    if (keys(%stage) > 1) {
+        # Fehler: die Packages sind nicht auf einer Stufe
+
+        $self->throw(
+            q~CASCM-00099: More than one stage~,
+            Stages => join(', ',sort keys %stage),
+        );
+    }
+
+    # FIXME: hier weiter
+
+    print $tab->asTable;
 
     return;
 }
@@ -827,73 +1185,6 @@ sub listPackages {
 
 # -----------------------------------------------------------------------------
 
-=head3 findItem() - Zeige Information über Item an
-
-=head4 Synopsis
-
-    $tab = $scm->findItem($namePattern);
-
-=head4 Arguments
-
-=over 4
-
-=item $namePattern
-
-Name des Item (File oder Directory), SQL-Wildcards sind erlaubt.
-
-=back
-
-=head4 Returns
-
-=over 4
-
-=item $tab
-
-Ergebnismengen-Objekt.
-
-=back
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub findItem {
-    my ($self,$namePattern) = @_;
-
-    my $projectContext = $self->projectContext;
-
-    return $self->runSql("
-        SELECT
-            itm.itemobjid AS id
-            , par.itemname AS parent
-            , itm.itemname AS item
-            , ver.mappedversion AS version
-            , ver.versiondataobjid
-            , pkg.packagename AS package
-            , sta.statename AS state
-        FROM
-            haritems itm
-            JOIN harversions ver
-                ON ver.itemobjid = itm.itemobjid
-            JOIN harpackage pkg
-                ON pkg.packageobjid = ver.packageobjid
-            JOIN harenvironment env
-                ON env.envobjid = pkg.envobjid
-            JOIN harstate sta
-                ON sta.stateobjid = pkg.stateobjid
-            JOIN haritems par
-                ON par.itemobjid = itm.parentobjid
-        WHERE
-            env.environmentname = '$projectContext'
-            AND itm.itemname LIKE '$namePattern'
-        ORDER BY
-            itm.itemobjid
-            , TO_NUMBER(ver.mappedversion)
-    ");
-}
-
-# -----------------------------------------------------------------------------
-
 =head2 Workspace
 
 =head3 sync() - Synchronisiere Workspace mit Repository
@@ -904,7 +1195,8 @@ sub findItem {
 
 =head4 Description
 
-Bringe den Workspace auf den Stand des Repository.
+Bringe den Workspace auf den Stand des Repository und liefere
+die Ausgabe des Kommandos zurück.
 
 =cut
 
@@ -920,14 +1212,10 @@ sub sync {
         -en => $self->projectContext,
         -vp => $self->viewPath,
         -cp => $self->workspace,
-        -st => $self->defaultState,
+        -st => $self->states->[0],
     );
 
-    my $output = $self->run('hsync',$c);
-    $output =~ s/^.*No need.*\n//gm;
-    $self->writeOutput($output);
-
-    return;
+    return $self->runCmd('hsync',$c);
 }
 
 # -----------------------------------------------------------------------------
@@ -938,49 +1226,74 @@ sub sync {
 
 =head4 Synopsis
 
-    $tab = $scm->sql($file);
     $tab = $scm->sql($sql);
+    $tab = $scm->sql($file);
+
+=head4 Arguments
+
+=over 4
+
+=item $sql
+
+SELECT-Statement.
+
+=item $file
+
+Datei mit SELECT-Statement.
+
+=back
+
+=head4 Returns
+
+Ergebnismengen-Objekt (Quiq::Database::ResultSet::Array)
+
+=head4 Description
+
+Führe ein SELECT-Statement gegen die CASCM-Datenbank aus und liefere
+ein Ergebnismengen-Objekt zurück. Das SELECT-Statement kann als
+String $sql übergeben werden oder sich in einer Datei $file befinden.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
 sub sql {
-    my ($self,$arg) = @_;
+    my $self = shift;
+    my $sql = $_[0] =~ /\s/? $_[0]: Quiq::Path->read($_[0]);
 
-    my $projectContext = $self->projectContext;
-
-    my $sqlFile;
-    if ($arg !~ /\s/) {
-        $sqlFile = $arg;
-    }
-    else {
-        $sqlFile = Quiq::TempFile->new(-unlink=>!$self->keepTempFiles);
-        Quiq::Path->write($sqlFile,$arg,-unindent=>1);
-    }
-
-    my $c = Quiq::CommandLine->new;
-    $c->addOption(
-        $self->credentialsOptions('hsql'),
-        -b => $self->broker,
-        -f => $sqlFile,
-    );
-    $c->addBoolOption(
-        -t => 1,  # tabellarische Ausgabe
-    );
-
-    return $self->run('hsql',$c);
+    return $self->runSql($sql);
 }
 
 # -----------------------------------------------------------------------------
 
 =head2 Privat
 
-=head3 credentialsOptions() - Liste der Credential-Optionen
+=head3 credentialsOptions() - Credential-Optionen
 
 =head4 Synopsis
 
     @arr = $scm->credentialsOptions;
+
+=head4 Description
+
+CASCM kennt mehrere Authentisierungsmöglichkeiten, die sich durch
+Aufrufoptionen unterscheiden. Diese Methode liefert die passenden Optionen
+zu den beim Konstruktor-Aufruf angegebenen Authentisierungs-Informationen.
+unterschieden werden:
+
+=over 4
+
+=item 1.
+
+Authentisierung durch Datei mit verschlüsselten Credentials (-eh)
+
+=item 2.
+
+Authentisiertung durch Benutzername/Passwor (-usr, -pw)
+
+=back
+
+Bevorzugt ist Methode 1, da sie sicherer ist als Methode 2.
 
 =cut
 
@@ -991,38 +1304,63 @@ sub credentialsOptions {
     my $cmd = shift // '';
 
     my $credentialsFile;
-    if ($cmd eq 'hsql') {
-        $credentialsFile = $self->get("${cmd}CredentialsFile");
+    if ($cmd eq 'hsql' && (my $file = $self->get("${cmd}CredentialsFile"))) {
+        $credentialsFile = $file;
     }
     $credentialsFile ||= $self->credentialsFile;
     if ($credentialsFile) {
         return (-eh=>$credentialsFile);
     }
 
-    return $credentialsFile? (-eh=>$credentialsFile):
+    return $credentialsFile?
+        (-eh=>Quiq::Path->expandTilde($credentialsFile)):
         (-usr=>$self->user,-pw=>$self->password);
 }
 
 # -----------------------------------------------------------------------------
 
-=head3 run() - Führe CA Harvest SCM Kommando aus
+=head3 runCmd() - Führe Kommando aus
 
 =head4 Synopsis
 
-    $str | $tab = $scm->run($scmCmd,$c);
+    $output = $scm->runCmd($cmd,$c);
+
+=head4 Arguments
+
+=over 4
+
+=item $cmd
+
+Name des CASCM-Kommandos
+
+=item $c
+
+Kommandozeilenobjekt mit den Optionen.
+
+=back
+
+=head4 Returns
+
+=over 4
+
+=item $output
+
+Inhalt der Ausgabedatei, die das Kommando geschrieben hat.
+
+=back
 
 =head4 Description
 
-Führe das CA Harvest SCM Kommando $scmCmd mit den Optionen des
-Kommandozeilenobjekts $c aus und liefere die Ausgabe des
-Kommandos zurück.
+Führe das CA Harvest SCM Kommando $cmd mit den Optionen des
+Kommandozeilenobjekts $c aus und liefere den Inhalt der Ausgabedatei
+zurück.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub run {
-    my ($self,$scmCmd,$c) = @_;
+sub runCmd {
+    my ($self,$cmd,$c) = @_;
 
     my $stw = Quiq::Stopwatch->new;
 
@@ -1033,21 +1371,36 @@ sub run {
 
     # Kommando ausführen. Das Kommando schreibt Fehlermeldungen nach
     # stdout (!), daher leiten wir stdout in die Output-Datei um.
+    # MEMO: Erstmal abgeschaltet, um es auf das spezifische Kommando
+    # einzuschränken
 
-    my $cmd = sprintf '%s %s >>%s',$scmCmd,$c->command,$outputFile;
-    my $r = $self->sh->exec($cmd,-sloppy=>1);
+    # my $cmdLine = sprintf '%s %s >>%s',$cmd,$c->command,$outputFile;
+    my $cmdLine = sprintf '%s %s',$cmd,$c->command;
+    my $r = $self->sh->exec($cmdLine,-sloppy=>1);
     my $output = Quiq::Path->read($outputFile);
     if ($r) {
+        if ($cmd eq 'hlv' && $output =~ /Invalid Version List/) {
+            my ($file) = $cmdLine =~ m|^hlv (.*?) |;
+            my ($dir) = $cmdLine =~ m|-vp .*?/(.*?) |;
+            if ($dir) {
+                $file = "$dir/$file";
+            }            
+            $self->throw(
+                q~CASCM-00001: Repository file not found~,
+                File => $file,
+            );
+        }
+
         $self->throw(
             q~CASCM-00001: Command failed~,
-            Command => $cmd,
+            Command => $cmdLine,
             Output => $output,
         );
     }
 
     # Wir liefern den Inhalt der Output-Datei zurück
 
-    if ($scmCmd ne 'hsql') {
+    if ($cmd ne 'hsql') {
         $output .= sprintf "---\n%.2fs\n",$stw->elapsed;
     }
 
@@ -1062,6 +1415,27 @@ sub run {
 
     $tab = $scm->runSql($sql);
 
+=head4 Arguments
+
+=over 4
+
+=item $sql
+
+SELECT-Statement, das gegen die CASCM-Datenbank abgesetzt wird.
+
+=back
+
+=head4 Returns
+
+Ergebnismengen-Objekt (Quiq::Database::ResultSet::Array)
+
+=head4 Description
+
+Führe SELECT-Statement $sql auf der CASCM-Datenbank aus und liefere
+die Ergebnismenge zurück. Ist ein UDL definiert (s. Konstruktoraufruf)
+wird die Selektion direkt auf der Datenbank ausgeführt, andernfalls
+über das CASCM-Kommando hsql.
+
 =cut
 
 # -----------------------------------------------------------------------------
@@ -1071,12 +1445,34 @@ sub runSql {
 
     my $stw = Quiq::Stopwatch->new;
 
+    my $udl = $self->udl;
+
     $sql = Quiq::Unindent->trimNl($sql);
     if ($self->verbose) {
         my $a = Quiq::AnsiColor->new;
-        (my $sql = "$sql\n") =~ s/^(.*)/'> '.$a->str('bold',$1)/meg;
+        (my $sql = $sql) =~ s/^(.*)/'> '.$a->str('bold',$1)/meg;
+        if (!$udl) {
+            $sql .= "\n";
+        }
         warn $sql;
     }    
+
+    if ($udl) {
+        # Wenn ein UDL definiert ist, selektieren wir direkt
+        # von der Datenbank. Beim ersten Zugriff bauen wir
+        # die Verbindung auf.
+
+
+        my $db = $self->db;
+        if (!$db) {
+            $db = Quiq::Database::Connection->new($udl,-utf8=>1);
+            $self->set(db=>$db);
+        }
+        return scalar $db->select($sql,-raw=>1);
+    }
+
+    # Wir haben keine direkte Verbindung zur Datenbank,
+    # sondern nutzen hsql
 
     my $sqlFile = Quiq::TempFile->new(-unlink=>!$self->keepTempFiles);
     Quiq::Path->write($sqlFile,$sql);
@@ -1091,7 +1487,7 @@ sub runSql {
         -t => 1,  # tabellarische Ausgabe
     );
 
-    my $output = $self->run('hsql',$c);
+    my $output = $self->runCmd('hsql',$c);
 
     # Wir liefern ein Objekt mit Titel und Zeilenobjekten zurück
     # <NL> und <TAB> ersetzen wir in den Daten durch \n bzw. \t.
@@ -1110,29 +1506,6 @@ sub runSql {
     return Quiq::Database::ResultSet::Array->new($rowClass,\@titles,\@rows,
         execTime => $stw->elapsed,
     );
-}
-
-# -----------------------------------------------------------------------------
-
-=head3 writeOutput() - Schreibe Kommando-Ausgabe
-
-=head4 Synopsis
-
-    $scm->writeOutput($output);
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub writeOutput {
-    my ($self,$output) = @_;
-
-    if ($self->verbose) {
-        $output =~ s/^/| /mg;
-        warn $output;
-    }
-
-    return;
 }
 
 # -----------------------------------------------------------------------------

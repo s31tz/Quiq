@@ -1719,13 +1719,13 @@ sub expandTilde {
     # Unter einem Daemon ist $HOME typischerweise nicht gesetzt, daher
     # prüfen wir zunächst, ob wir $HOME überhaupt expandieren müssen
 
-    if ($path && substr($path,0,2) eq '~/') {
+    if ($path && substr($path,0,1) eq '~') {
         if (!exists $ENV{'HOME'}) {
             $class->throw(
                 q~PATH-00016: Environment-Variable HOME existiert nicht~,
             );
         }
-        $path =~ s|^~/|$ENV{'HOME'}/|;
+        substr($path,0,1) = $ENV{'HOME'};
     }
     
     return $path;
@@ -1781,8 +1781,8 @@ sub filename {
 
 =head4 Synopsis
 
-    $path = $class->glob($pat);
-    @paths = $class->glob($pat);
+    $path = $this->glob($pat);
+    @paths = $this->glob($pat);
 
 =head4 Description
 
@@ -1796,7 +1796,7 @@ geworfen.
 # -----------------------------------------------------------------------------
 
 sub glob {
-    my ($class,$pat) = @_;
+    my ($this,$pat) = @_; # MEMO: Hier ist keine Tilde-Expansion nötig
 
     my @arr = CORE::glob $pat;
     if (wantarray) {
@@ -1804,13 +1804,13 @@ sub glob {
     }
 
     if (!@arr) {
-        $class->throw(
+        $this->throw(
             q~PATH-00014: Pfad existert nicht~,
             Pattern=>$pat,
         );
     }
     elsif (@arr > 1) {
-        $class->throw(
+        $this->throw(
             q~PATH-00015: Mehr als ein Pfad erfüllt Muster~,
             Pattern=>$pat,
         );

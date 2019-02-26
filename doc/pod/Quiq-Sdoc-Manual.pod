@@ -688,7 +688,7 @@ geliefert und zwar von dessen Ausgabe auf stdout.
 
 produziert
 
-    Mon Jan  1 00:00:00 CET 2001
+    Mon 01 Jan 2001 12:00:00 AM CET
 
 Der Code-Block hat in dem Fall keinen Inhalt und endet mit der
 darauffolgenden Leerzeile.

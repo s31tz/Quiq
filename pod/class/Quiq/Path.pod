@@ -732,8 +732,8 @@ Liefere die letzte Komponente des Pfads.
 
 =head4 Synopsis
 
-    $path = $class->glob($pat);
-    @paths = $class->glob($pat);
+    $path = $this->glob($pat);
+    @paths = $this->glob($pat);
 
 =head4 Description
 

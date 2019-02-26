@@ -459,6 +459,17 @@ Pfad der Datei.
 
 =back
 
+=head4 Options
+
+=over 4
+
+=item -force => $bool (Default: 0)
+
+Lade die Datei auch im Falle von Warnungen hoch, z.B. dass die Datei
+im Wiki bereits existiert.
+
+=back
+
 =head4 Returns
 
 Response
