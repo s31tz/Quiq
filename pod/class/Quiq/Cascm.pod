@@ -539,7 +539,8 @@ Ausgabe des Kommandos (String)
 =head4 Description
 
 Demote die Packages @packages auf die unterste Stufe und liefere die
-Ausgabe des Kommandos zurück.
+Ausgabe des Kommandos zurück. Die Packages müssen sich alle auf der
+gleichen Ausgangsstufe befinden, sonst wirft die Methode eine Exception.
 
 =head3 packageState() - Stufe des Pakets
 
@@ -569,7 +570,7 @@ Stufe.
 
 =head4 Description
 
-Liefere die Stufe $stage, auf der sich Package $package befindet.
+Liefere die Stufe $state, auf der sich Package $package befindet.
 
 =head3 listPackages() - Liste aller Pakete
 
@@ -604,6 +605,14 @@ Liefere die Liste aller Packages.
 
 Bringe den Workspace auf den Stand des Repository und liefere
 die Ausgabe des Kommandos zurück.
+
+=head2 States
+
+=head3 states() - Liste der Stufen
+
+=head4 Synopsis
+
+    @states | $stateA = $scm->states;
 
 =head2 Database
 

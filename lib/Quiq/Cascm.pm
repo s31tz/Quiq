@@ -1015,7 +1015,8 @@ Ausgabe des Kommandos (String)
 =head4 Description
 
 Demote die Packages @packages auf die unterste Stufe und liefere die
-Ausgabe des Kommandos zurück.
+Ausgabe des Kommandos zurück. Die Packages müssen sich alle auf der
+gleichen Ausgangsstufe befinden, sonst wirft die Methode eine Exception.
 
 =cut
 
@@ -1056,22 +1057,36 @@ sub demoteToBase {
         );
     }
 
-    my %stage;
+    my %state;
     for my $row ($tab->rows) {
-        $stage{$row->[1]}++;
+        $state{$row->[1]}++;
     }
-    if (keys(%stage) > 1) {
+    if (keys(%state) > 1) {
         # Fehler: die Packages sind nicht auf einer Stufe
 
         $self->throw(
-            q~CASCM-00099: More than one stage~,
-            Stages => join(', ',sort keys %stage),
+            q~CASCM-00099: More than one state~,
+            States => join(', ',sort keys %state),
         );
     }
+    my $state = (keys %state)[0]; # Wir haben nur einen State
 
-    # FIXME: hier weiter
+    # Stufen, die die Packages durchlaufen
 
-    print $tab->asTable;
+    my @states = reverse $self->states;
+    while (@states) {
+        if ($states[0] eq $state) {
+            last;
+        }
+        shift @states;
+    }
+    pop @states; # Niedrigste Stufe entfernen
+
+    # Packages demoten
+
+    for my $state (@states) {
+        $self->demote($state,@packages);
+    }
 
     return;
 }
@@ -1106,7 +1121,7 @@ Stufe.
 
 =head4 Description
 
-Liefere die Stufe $stage, auf der sich Package $package befindet.
+Liefere die Stufe $state, auf der sich Package $package befindet.
 
 =cut
 
@@ -1216,6 +1231,27 @@ sub sync {
     );
 
     return $self->runCmd('hsync',$c);
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 States
+
+=head3 states() - Liste der Stufen
+
+=head4 Synopsis
+
+    @states | $stateA = $scm->states;
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub states {
+    my $self = shift;
+
+    my $stateA = $self->{'states'};
+    return wantarray? @$stateA: $stateA;
 }
 
 # -----------------------------------------------------------------------------

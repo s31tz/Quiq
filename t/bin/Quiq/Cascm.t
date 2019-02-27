@@ -54,7 +54,7 @@ sub test_new: Test(12) {
     $self->is($scm->broker,$broker);
     $self->is($scm->projectContext,$projectContext);
     $self->is($scm->workspace,$workspace);
-    $self->isDeeply($scm->states,$stateA);
+    $self->isDeeply(scalar $scm->states,$stateA);
     $self->is($scm->udl,$udl);
     $self->is($scm->keepTempFiles,0);
     $self->is($scm->verbose,1);
