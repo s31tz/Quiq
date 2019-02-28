@@ -224,7 +224,7 @@ Ein Ausschnitt aus der produzierten Ausgabe:
 
 =item @tuples
 
-Liste von Tripeln [$level, $node, ...]. Die Komponenten ... werden
+Liste von Tupeln [$level, $node, ...]. Die Komponenten ... werden
 transparent weitergereicht.
 
 =back
