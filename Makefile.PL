@@ -42,6 +42,11 @@ WriteMakefile(
             },
         },
     },
+    META_ADD => {
+        provides => {
+            __MODULES__
+        },
+    },
 );
 
 # eof

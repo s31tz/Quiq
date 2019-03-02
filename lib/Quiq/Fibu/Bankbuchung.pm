@@ -6,7 +6,7 @@ use warnings;
 use v5.10.0;
 use utf8;
 
-our $VERSION = 1.135;
+our $VERSION = 1.136;
 
 use Quiq::Fibu::Buchung;
 
@@ -1329,7 +1329,7 @@ sub saldoZahl {
 
 =head1 VERSION
 
-1.135
+1.136
 
 =head1 AUTHOR
 

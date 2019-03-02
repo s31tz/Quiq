@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = 1.135;
+our $VERSION = 1.136;
 
 use Quiq::Database::Row::Array;
 use Quiq::Database::Row::Object;
@@ -532,7 +532,7 @@ sub fetchAll {
 
 =head1 VERSION
 
-1.135
+1.136
 
 =head1 AUTHOR
 

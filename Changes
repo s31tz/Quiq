@@ -1,4 +1,33 @@
-1.134 2019-??-??
+1.135 2019-03-02
+================
+[Quiq::Database::ResultSet]
+Konstruktor um Default-Klasse erweitert.
+
+In asTable() rows und time vertauscht.
+
+[Quiq::MediaWiki::Client]
+Upload von Dateien verbessert.
+
+[Quiq::Cascm]
+Klasse umfangreich erweitert.
+
+[Quiq::Parallel]
+Tilde-Expansion zu Outputfile hinzugefügt.
+
+[Quiq::Path]
+Option -unindent zu write() hinzugefügt.
+
+Methode expandTilde() auf Pfad '~' korrigiert.
+
+Kosmetik an Methode glob().
+
+[Quiq::Shell]
+Callback-Option logRewrite => sub{} eingeführt.
+
+[Quiq::TreeFormatter]
+Darstellungen 'up' und 'down' eingeführt.
+
+1.134 2019-02-10
 ================
 [Quiq::System]
 Test, der einen Reverse-DNS Eintrag erfordert, entfernt.
