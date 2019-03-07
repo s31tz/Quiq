@@ -11,6 +11,7 @@ use Quiq::Perl;
 use Encode ();
 use Quiq::Parameters;
 use Quiq::Option;
+use Time::HiRes ();
 use Quiq::FileHandle;
 use PerlIO::encoding;
 use Quiq::System;
@@ -673,6 +674,33 @@ sub projectDir {
 
 # -----------------------------------------------------------------------------
 
+=head2 Zeitmessung
+
+=head3 elapsed() - Vergangene Zeit in Sekunden
+
+=head4 Synopsis
+
+    $sec = $prg->elapsed;
+
+=head4 Returns
+
+Sekunden (Float)
+
+=head4 Description
+
+Ermittele die vergangene Zeit in Sekunden und liefere diese zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub elapsed {
+    my $self = shift;
+    return Time::HiRes::gettimeofday-$self->{'t0'};
+}
+
+# -----------------------------------------------------------------------------
+
 =head2 Hilfe
 
 =head3 help() - Gib Hilfetext aus und beende Programm
@@ -837,6 +865,7 @@ sub new {
         encoding=>$encoding,
         exitCode=>0,
         optH=>Quiq::Hash->new,
+        t0=>Time::HiRes::gettimeofday,
     );
 }
 

@@ -411,7 +411,8 @@ für den gesamten Prozess, nicht nur für das Shell-Objekt.
 # -----------------------------------------------------------------------------
 
 sub cd {
-    my ($self,$dir) = @_;
+    my $self = shift;
+    my $dir = Quiq::Path->expandTilde(shift);
 
     my $dryRun = $self->{'dryRun'};
     my $log = $self->{'log'};
