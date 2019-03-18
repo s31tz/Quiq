@@ -516,19 +516,23 @@ Ausgabe des Kommandos (String)
 Demote die Packages @packages der Stufe $state auf die darunterliegende
 Stufe, und liefere die Ausgabe des Kommandos zurück.
 
-=head3 demoteToBase() - Demote Packages auf die unterste Stufe
+=head3 movePackage() - Bringe Package auf Zielstufe
 
 =head4 Synopsis
 
-    $scm->demoteToBase(@packages);
+    $scm->movePackage($state,$package);
 
 =head4 Arguments
 
 =over 4
 
-=item @packages
+=item $state
 
-Packages, die demotet werden sollen.
+Stufe, auf die das Package gebracht werden soll.
+
+=item $packge
+
+Package, das bewegt werden soll.
 
 =back
 
@@ -538,9 +542,9 @@ Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Demote die Packages @packages auf die unterste Stufe und liefere die
-Ausgabe des Kommandos zurück. Die Packages müssen sich alle auf der
-gleichen Ausgangsstufe befinden, sonst wirft die Methode eine Exception.
+Bringe das Package $package von der aktuellen Stufe auf die Zielstufe
+$state und liefere die Ausgabe des Kommandos zurück. Liegt die Zielstufe
+über der aktuellen Stufe, wird das Package promotet, andernfalls demotet.
 
 =head3 packageState() - Stufe des Pakets
 

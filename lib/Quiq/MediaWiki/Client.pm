@@ -986,25 +986,8 @@ sub load {
         my $exists = $p->exists($varFile);
         if ($force || !$exists || $p->compare($file,$varFile)) {
             my $res = $self->uploadFile($file,-force=>1);
-            #!! FIXME: Methode schreiben, die in die Tiefe abfragt
-            #if ($res->{'upload'}->{'warnings'}) {
-            #    if (my $arr = $res->{'upload'}->{'warnings'}->{'duplicate'}) {
-            #        print 'File exists';
-            #        my $wikiName = $arr->[0];
-            #        if (lc($wikiName) ne lc($cacheName)) {
-            #            say " under the name: $arr->[0]";
-            #        }
-            #        else {
-            #            say ": $arr->[0]";
-            #        }
-            #        # Wir kopieren die Datei nicht in den Cache
-            #        return;
-            #    }
-            #}
-            #else {
-                printf "File %s: %s\n",$exists? 'updated': 'created',
-                    ucfirst $cacheName;
-            #}
+            printf "File %s: %s\n",$exists? 'updated': 'created',
+                ucfirst $cacheName;
             $p->copy($file,$varFile);
         }
 
