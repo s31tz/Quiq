@@ -66,8 +66,7 @@ Perl:
 
     $html = Quiq::JQuery::Accordion->html($h,
         id=>'accordion',
-        tabs=>[
-            {
+        tabs=>[{
                 label=>'A',
                 link=>'a',
             },{
@@ -76,8 +75,7 @@ Perl:
                     -text=>1,
                     'Text des Reiters B',
                 ),
-            },
-        ],
+        }],
     );
 
 HTML:

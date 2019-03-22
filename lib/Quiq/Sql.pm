@@ -3851,6 +3851,12 @@ sub select {
 
     # Select-Klausel ($selectClause)
 
+    if (@select == 1 && (!defined $select[0] || $select[0] eq '')) {
+        # Wenn die SELECT-Liste aus einem einzigen leeren Wert
+        # besteht, leeren wir sie.
+        @select = ();
+    }
+
     my $selectClause;
     if (@select) {
         if ($distinct) {
@@ -3875,7 +3881,7 @@ sub select {
 
     # Im Falle von $limit u.U. @where erweitern
 
-    if (defined $limit) {
+    if (defined($limit) && $limit ne '') {
         if ($limit == 0) {
             push @where,'1 = 0';
             $limit = undef; # keine zusätzliche LIMIT-Klausel generieren
