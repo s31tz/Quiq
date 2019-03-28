@@ -120,7 +120,7 @@ sub new {
 
 =head2 Objektmethoden
 
-=head3 active() - Farbdarstellung eingeschaltet
+=head3 active() - Farbdarstellung eingeschaltet?
 
 =head4 Synopsis
 

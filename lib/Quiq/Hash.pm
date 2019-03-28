@@ -579,14 +579,21 @@ Gegenüberstellung:
 
     Hash-Zugriff           get()/set()               Methoden-Zugriff
     --------------------   -----------------------   --------------------
-    $name = $h->{'name'}   $name = $h->get('name')   $name = $h->name;
-    $h->{'name'} = $name   $h->set(name=>$name)      $h->name($name)
+    $name = $h->{'name'}   $name = $h->get('name')   $name = $h->name
+    $h->{'name'} = $name   $h->set(name=>$name)      $h->name($name) -or-
+                                                     $h->name = $name
 
 In der letzten Spalte ("Methoden-Zugriff") steht die Syntax der
 automatisch generierten Akzessor-Methoden.
 
+Die Akzessor-Methode wird als lvalue-Methode generiert, d.h. die
+Hash-Komponente kann per Akzessor-Aufruf manipuliert werden. Beispiele:
+
+    $h->name = $name;
+    $h->name =~ s/-//g;
+
 Die Erzeugung einer Akzessor-Methode erfolgt (vom Aufrufer unbemerkt)
-beim ersten Aufruf. Danach wird die Methode unmittelbar aufgerufen.
+beim ersten Aufruf. Danach wird die Methode unmittelbar gerufen.
 
 Der Zugriff über eine automatisch generierte Attributmethode ist ca. 30%
 schneller als über $h->L</get>().
@@ -595,7 +602,7 @@ schneller als über $h->L</get>().
 
 # -----------------------------------------------------------------------------
 
-sub AUTOLOAD {
+sub AUTOLOAD :lvalue {
     my $this = shift;
     # @_: Methodenargumente
 
@@ -625,7 +632,7 @@ sub AUTOLOAD {
     # brauchen wir die Existenz des Attributs nicht selbst prüfen.
 
     no strict 'refs';
-    *{$AUTOLOAD} = sub {
+    *{$AUTOLOAD} = sub :lvalue {
         my $self = shift;
         # @_: $val
 
