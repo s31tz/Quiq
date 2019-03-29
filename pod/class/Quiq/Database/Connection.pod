@@ -108,7 +108,7 @@ nicht mehr verwendet werden.
 Prüfe, ob Verbindung zur Datenbank $udl möglich ist.
 Liefere "wahr", wenn dies der Fall ist, andernfalls "falsch".
 
-=head2 Accessors
+=head2 Akzessoren
 
 =head3 maxBlobSize() - Liefere/Setze max. Größe von BLOB/TEXT (Oracle)
 
@@ -214,7 +214,7 @@ DBMS-spezifische Unterscheidungen vorgenommen werden müssen.
 
 =head4 Synopsis
 
-    ($oracle,$postgresql,$sqlite,$mysql,$access) = $db->dbmsTestVector;
+    ($oracle,$postgresql,$sqlite,$mysql,$odbc) = $db->dbmsTestVector;
 
 =head3 isOracle() - Prüfe auf Oracle-DBMS
 
@@ -260,15 +260,15 @@ sonst "falsch".
 Liefere "wahr", wenn die Datenbank eine MySQL-Datenbank ist,
 sonst "falsch".
 
-=head3 isAccess() - Prüfe auf Access-DBMS
+=head3 isODBC() - Prüfe auf ODBC-DBMS
 
 =head4 Synopsis
 
-    $bool = $db->isAccess;
+    $bool = $db->isODBC;
 
 =head4 Description
 
-Liefere "wahr", wenn die Datenbank eine Access-Datenbank ist,
+Liefere "wahr", wenn die Datenbank eine ODBC-Datenbank ist,
 sonst "falsch".
 
 =head2 Handle

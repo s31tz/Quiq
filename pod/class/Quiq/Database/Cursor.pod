@@ -42,7 +42,7 @@ destroy()
 
 Schließe Cursor. Die Methode liefert keinen Wert zurück.
 
-=head2 Accessors
+=head2 Akzessoren
 
 =head3 bindVars() - Liefere Anzahl der Bind-Variablen
 

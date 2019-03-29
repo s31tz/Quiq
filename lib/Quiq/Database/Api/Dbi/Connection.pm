@@ -147,8 +147,8 @@ sub new {
             $errstr =~ s|\(\d+\)$||; # "(1)" entf.
             $msg = sprintf('SQLITE-%05d: %s',$err,$errstr);
         }
-        elsif ($dbms eq 'access') {
-            $msg = sprintf('ACCESS-%05d: %s',$err,$errstr);
+        elsif ($dbms eq 'odbc') {
+            $msg = sprintf('ODBC-%05d: %s',$err,$errstr);
         }
 
         if ($stmt) {
@@ -219,9 +219,11 @@ sub new {
                 $dbh->{'sqlite_unicode'} = 1;
             }
         }
-        elsif ($dbms eq 'access') {
+        elsif ($dbms eq 'odbc') {
             if ($utf8) {
                 $dbh->{'odbc_utf8_on'} = 1;
+                $dbh->{LongTruncOk} = 0; # RuV Auftrags-DB
+                $dbh->{LongReadLen} = 32768; # RuV Auftrags-DB
             }
         }
         else {
@@ -444,11 +446,11 @@ sub sql {
     else {
         $sth = $dbh->prepare($stmt);
 
-        if ($dbms ne 'access') {
-            # FIXME: im Falle von access ist nach Ausführung folgender
+        if ($dbms ne 'odbc') {
+            # FIXME: im Falle von odbc ist nach Ausführung folgender
             # Zeile eine Ausführung einer Selektion nicht mehr möglich!
             # D.h. nach aktuellem Stand kann ein SQL-Statement via
-            # access keine Platzhalter enthalten.
+            # odbc keine Platzhalter enthalten.
 
             $bindVars = $sth->{'NUM_OF_PARAMS'}; # Anzahl Bind-Variablen
         }

@@ -127,7 +127,7 @@ sub new {
 
 # -----------------------------------------------------------------------------
 
-=head2 Accessors
+=head2 Akzessoren
 
 =head3 dbms() - Name des DBMS in kanonischer Form
 
@@ -161,13 +161,13 @@ Liefere folgende Liste von DBMS-Namen (in dieser Reihenfolge):
     PostgreSQL
     SQLite
     MySQL
-    Access
+    ODBC
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-my @DbmsNames = qw/Oracle PostgreSQL SQLite MySQL Access/;
+my @DbmsNames = qw/Oracle PostgreSQL SQLite MySQL ODBC/;
 
 sub dbmsNames {
     my $this = shift;
@@ -182,7 +182,7 @@ sub dbmsNames {
 
 =head4 Synopsis
 
-    ($oracle,$postgresql,$sqlite,$mysql,$access) = $self->dbmsTestVector;
+    ($oracle,$postgresql,$sqlite,$mysql,$odbc) = $self->dbmsTestVector;
 
 =head4 Description
 
@@ -280,19 +280,19 @@ sub isMySQL {
 
 # -----------------------------------------------------------------------------
 
-=head3 isAccess() - Teste auf Access
+=head3 isODBC() - Teste auf ODBC
 
 =head4 Synopsis
 
-    $bool = $class->isAccess;
+    $bool = $class->isODBC;
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub isAccess {
+sub isODBC {
     my $self = shift;
-    return $self->{'dbms'} eq 'Access'? 1: 0;
+    return $self->{'dbms'} eq 'ODBC'? 1: 0;
 }
 
 # -----------------------------------------------------------------------------
@@ -687,7 +687,7 @@ my %DataType = (
         DATETIME=>'TIMESTAMP',
         BLOB=>'LONGBLOB',
     },
-    Access=>{
+    ODBC=>{
         STRING=>'TEXT',
         TEXT=>'MEMO',
         INTEGER=>'LONG',
@@ -1046,7 +1046,7 @@ sub setDateFormat {
     my $self = shift;
     my $format = shift || 'iso';
 
-    my ($oracle,$postgresql,$sqlite,$mysql,$access) = $self->dbmsTestVector;
+    my ($oracle,$postgresql,$sqlite,$mysql,$odbc) = $self->dbmsTestVector;
 
     # Statement generieren
 
@@ -1064,7 +1064,7 @@ sub setDateFormat {
             return ('SET datestyle TO iso, ymd');
         }
     }
-    elsif ($sqlite || $mysql || $access) {
+    elsif ($sqlite || $mysql || $odbc) {
         return; # FIXME: bislang nicht untersucht
     }
 
@@ -1112,7 +1112,7 @@ sub setNumberFormat {
     my $self = shift;
     my $format = shift || '.,';
 
-    my ($oracle,$postgresql,$sqlite,$mysql,$access) = $self->dbmsTestVector;
+    my ($oracle,$postgresql,$sqlite,$mysql,$odbc) = $self->dbmsTestVector;
 
     # Statement generieren
 
@@ -1120,7 +1120,7 @@ sub setNumberFormat {
     if ($oracle) {
         return ("ALTER SESSION SET NLS_NUMERIC_CHARACTERS = '$format'");
     }
-    elsif ($postgresql || $sqlite || $mysql || $access) {
+    elsif ($postgresql || $sqlite || $mysql || $odbc) {
         return; # FIXME: bislang nicht untersucht
     }
 
@@ -3826,7 +3826,7 @@ sub select {
         -stmt=>\$stmt,
     );
 
-    my ($oracle,$postgresql,$sqlite,$mysql) = $self->dbmsTestVector;
+    my ($oracle,$postgresql,$sqlite,$mysql,$odbc) = $self->dbmsTestVector;
 
     if (defined $offset && $oracle) {
         die;
@@ -4043,35 +4043,55 @@ sub select {
             );
         }
     }
+    elsif ($odbc && ($offset || $limit)) {
+        # Bei MSSQL sind OFFSET und LIMIT Ergänzungen zu ORDER BY.
+        # Wir brauchen also eine ORDER BY Klausel, wenn -offset
+        # und/oder -limit angegeben sind
+        $stmt .= "\nORDER BY\n    1";
+    }
 
     unless ($oracle) {
-        if ($limit) {
-            if ($body =~ /%LIMIT%/) {
-                $stmt =~ s/%LIMIT%/$limit/g;
-            }
-            elsif ($body !~ /\bLIMIT\b/i) {
-                $stmt .= "\nLIMIT\n    $limit";
-            }
-            else {
-                $self->throw(
-                    q~SELECT-00003: Kein Platzhalter für LIMIT~,
-                    Stmt=>$stmt,
-                    Limit=>$limit,
-                );
-            }
-        }
         if (defined $offset) {
             if ($body =~ /%OFFSET%/) {
                 $stmt =~ s/%OFFSET%/$offset/g;
             }
             elsif ($body !~ /\bOFFSET\b/i) {
                 $stmt .= "\nOFFSET\n    $offset";
+                if ($odbc) {
+                    $stmt .= ' ROWS';
+                }
             }
             else {
                 $self->throw(
                     q~SELECT-00003: Kein Platzhalter für OFFSET~,
                     Stmt=>$stmt,
                     Offset=>$offset,
+                );
+            }
+        }
+        if ($limit) {
+            if ($body =~ /%LIMIT%/) {
+                $stmt =~ s/%LIMIT%/$limit/g;
+            }
+            elsif ($body !~ /\bLIMIT\b/i) {
+                if ($odbc) {
+                    if (!$offset) {
+                        # Bei MSSQL ist FETCH eine Ergänzug zu OFFSET.
+                        # Wir brauchen also eine OFFSET-Klausel, wenn
+                        # -limit angegeben ist.
+                        $stmt .= "\nOFFSET\n    0 ROWS";
+                    }
+                    $stmt .= "\nFETCH\n    NEXT $limit ROWS ONLY";
+                }
+                else {
+                    $stmt .= "\nLIMIT\n    $limit";
+                }
+            }
+            else {
+                $self->throw(
+                    q~SELECT-00003: Kein Platzhalter für LIMIT~,
+                    Stmt=>$stmt,
+                    Limit=>$limit,
                 );
             }
         }

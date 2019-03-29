@@ -78,7 +78,7 @@ Name des DBMS.
 Instantiiere SQL-Objekt und liefere eine Referenz auf dieses Objekt
 zurück.
 
-=head2 Accessors
+=head2 Akzessoren
 
 =head3 dbms() - Name des DBMS in kanonischer Form
 
@@ -102,7 +102,7 @@ Liefere folgende Liste von DBMS-Namen (in dieser Reihenfolge):
     PostgreSQL
     SQLite
     MySQL
-    Access
+    ODBC
 
 =head2 DBMS Tests
 
@@ -110,7 +110,7 @@ Liefere folgende Liste von DBMS-Namen (in dieser Reihenfolge):
 
 =head4 Synopsis
 
-    ($oracle,$postgresql,$sqlite,$mysql,$access) = $self->dbmsTestVector;
+    ($oracle,$postgresql,$sqlite,$mysql,$odbc) = $self->dbmsTestVector;
 
 =head4 Description
 
@@ -153,11 +153,11 @@ durchzuführen
 
     $bool = $class->isMySQL;
 
-=head3 isAccess() - Teste auf Access
+=head3 isODBC() - Teste auf ODBC
 
 =head4 Synopsis
 
-    $bool = $class->isAccess;
+    $bool = $class->isODBC;
 
 =head2 Utilities
 

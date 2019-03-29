@@ -31,8 +31,8 @@ sub test_new : Test(6) {
     $sql = Quiq::Sql->new('MySQL');
     $self->is($sql->{'dbms'},'MySQL');
 
-    $sql = Quiq::Sql->new('Access');
-    $self->is($sql->{'dbms'},'Access');
+    $sql = Quiq::Sql->new('ODBC');
+    $self->is($sql->{'dbms'},'ODBC');
 
     eval { Quiq::Sql->new('Unknown') };
     $self->like($@,qr/SQL-00001/);
@@ -55,8 +55,8 @@ sub test_dbms : Test(5) {
     $sql = Quiq::Sql->new('mysql');
     $self->is($sql->dbms,'MySQL');
 
-    $sql = Quiq::Sql->new('access');
-    $self->is($sql->dbms,'Access');
+    $sql = Quiq::Sql->new('odbc');
+    $self->is($sql->dbms,'ODBC');
 }
 
 # -----------------------------------------------------------------------------
@@ -64,7 +64,7 @@ sub test_dbms : Test(5) {
 sub test_dbmsNames : Test(2) {
     my $self = shift;
 
-    my $dbmsNames = [qw/Oracle PostgreSQL SQLite MySQL Access/];
+    my $dbmsNames = [qw/Oracle PostgreSQL SQLite MySQL ODBC/];
 
     my @arr = Quiq::Sql->dbmsNames;
     $self->isDeeply(\@arr,$dbmsNames);
@@ -90,7 +90,7 @@ sub test_dbmsTestVector : Test(5) {
     @vec = Quiq::Sql->new('MySQL')->dbmsTestVector;
     $self->isDeeply(\@vec,[0,0,0,1,0]);
 
-    @vec = Quiq::Sql->new('Access')->dbmsTestVector;
+    @vec = Quiq::Sql->new('ODBC')->dbmsTestVector;
     $self->isDeeply(\@vec,[0,0,0,0,1]);
 }
 
@@ -144,13 +144,13 @@ sub test_isMySQL : Test(2) {
 
 # -----------------------------------------------------------------------------
 
-sub test_isAccess : Test(2) {
+sub test_isODBC : Test(2) {
     my $self = shift;
 
-    my $bool = Quiq::Sql->new('Access')->isAccess;
+    my $bool = Quiq::Sql->new('ODBC')->isODBC;
     $self->is($bool,1);
 
-    $bool = Quiq::Sql->new('PostgreSQL')->isAccess;
+    $bool = Quiq::Sql->new('PostgreSQL')->isODBC;
     $self->is($bool,0);
 }
 

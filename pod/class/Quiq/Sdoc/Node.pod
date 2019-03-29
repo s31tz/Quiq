@@ -25,7 +25,7 @@ Elementtyp. Folgende Elementtypen existieren:
 
 =head1 METHODS
 
-=head2 Accessors
+=head2 Akzessoren
 
 =head3 parent() - Liefere/Setze Elternknoten
 

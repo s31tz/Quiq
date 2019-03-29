@@ -46,7 +46,7 @@ initialisiert. Diese Methode ist nützlich, wenn ein
 Tabellen-Objekt mit einer Teilmenge des ursprünglichen
 Tabellen-Objektes gebildet werden soll.
 
-=head2 Accessors
+=head2 Akzessoren
 
 =head3 rowClass() - Liefere Namen der Datensatz-Klasse
 

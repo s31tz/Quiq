@@ -112,7 +112,7 @@ sub new {
 
 # -----------------------------------------------------------------------------
 
-=head2 Accessors
+=head2 Akzessoren
 
 =head3 rowClass() - Liefere Namen der Datensatz-Klasse
 

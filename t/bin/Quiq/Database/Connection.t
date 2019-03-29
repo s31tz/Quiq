@@ -544,8 +544,8 @@ sub test_dbms : Test(1) {
     elsif ($db->isMySQL) {
         $self->is($dbms,'MySQL');
     }
-    elsif ($db->isAccess) {
-        $self->is($dbms,'Access');
+    elsif ($db->isODBC) {
+        $self->is($dbms,'ODBC');
     }
     else {
         $self->ok(0);
@@ -618,14 +618,14 @@ sub test_isMySQL : Test(1) {
 
 # -----------------------------------------------------------------------------
 
-sub test_isAccess : Test(1) {
+sub test_isODBC : Test(1) {
     my ($self,$udl) = @_;
 
     my $dbms = Quiq::Udl->new($udl)->dbms;
     my $db = $self->get('db');
 
-    my $bool = $db->isAccess;
-    $self->ok($dbms eq 'access'? $bool: !$bool);
+    my $bool = $db->isODBC;
+    $self->ok($dbms eq 'odbc'? $bool: !$bool);
 }
 
 # -----------------------------------------------------------------------------

@@ -51,7 +51,7 @@ in einen Paragraphen.
 Lies eine Liste aus Textdokument $doc und liefere
 eine Referenz auf dieses Objekt zurück.
 
-=head2 Accessors
+=head2 Akzessoren
 
 =head3 itemType() - Liefere Itemtyp der Liste
 

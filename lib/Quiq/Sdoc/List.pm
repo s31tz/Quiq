@@ -120,7 +120,7 @@ sub new {
 
 # -----------------------------------------------------------------------------
 
-=head2 Accessors
+=head2 Akzessoren
 
 =head3 itemType() - Liefere Itemtyp der Liste
 

@@ -319,7 +319,7 @@ sub dbExists {
 
 # -----------------------------------------------------------------------------
 
-=head2 Accessors
+=head2 Akzessoren
 
 =head3 maxBlobSize() - Liefere/Setze max. Größe von BLOB/TEXT (Oracle)
 
@@ -501,7 +501,7 @@ sub dbms {
 
 =head4 Synopsis
 
-    ($oracle,$postgresql,$sqlite,$mysql,$access) = $db->dbmsTestVector;
+    ($oracle,$postgresql,$sqlite,$mysql,$odbc) = $db->dbmsTestVector;
 
 =cut
 
@@ -597,23 +597,23 @@ sub isMySQL {
 
 # -----------------------------------------------------------------------------
 
-=head3 isAccess() - Prüfe auf Access-DBMS
+=head3 isODBC() - Prüfe auf ODBC-DBMS
 
 =head4 Synopsis
 
-    $bool = $db->isAccess;
+    $bool = $db->isODBC;
 
 =head4 Description
 
-Liefere "wahr", wenn die Datenbank eine Access-Datenbank ist,
+Liefere "wahr", wenn die Datenbank eine ODBC-Datenbank ist,
 sonst "falsch".
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub isAccess {
-    return shift->{'sqlObj'}->isAccess;
+sub isODBC {
+    return shift->{'sqlObj'}->isODBC;
 }
 
 # -----------------------------------------------------------------------------

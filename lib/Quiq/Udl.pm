@@ -599,7 +599,7 @@ sub dsn {
     elsif ($dbms eq 'sqlite') {
         $dsn = "DBI:SQLite:dbname=$db";
     }
-    elsif ($dbms eq 'access') {
+    elsif ($dbms eq 'odbc') {
         $dsn = "DBI:ODBC:$db";
     }
     else {
@@ -703,7 +703,7 @@ sub udl {
 
         # Rückwärtskompatibilität
 
-        if (!grep { $dbms eq $_ } qw/oracle postgresql sqlite mysql access/) {
+        if (!grep { $dbms eq $_ } qw/oracle postgresql sqlite mysql odbc/) {
             ($dbms,$db,$user,$password) = ($user,$password,$dbms,$db);
         }
 

@@ -117,7 +117,7 @@ sub close {
 
 # -----------------------------------------------------------------------------
 
-=head2 Accessors
+=head2 Akzessoren
 
 =head3 bindVars() - Liefere Anzahl der Bind-Variablen
 
