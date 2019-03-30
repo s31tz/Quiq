@@ -6,7 +6,7 @@ use warnings;
 use v5.10.0;
 use utf8;
 
-our $VERSION = 1.136;
+our $VERSION = 1.138;
 
 use POSIX ();
 use Time::Local ();
@@ -1447,7 +1447,7 @@ sub monthAbbrToNum {
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 AUTHOR
 

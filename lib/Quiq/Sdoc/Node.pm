@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = 1.136;
+our $VERSION = 1.138;
 
 use Quiq::Array;
 use Quiq::Converter;
@@ -667,7 +667,10 @@ sub linkSegment {
     }
     elsif ($format eq 'pod') {
         # Wenn Whitespace im Anker, in "..." einfassen
-        return $anchor =~ /\s/? qq|L</"$anchor">|: "L</$anchor>";
+        # return $anchor =~ /\s/? qq|L</"$anchor">|: "L</$anchor>";
+        my $node = $arr->[0];
+        my $title = $node->title;
+        return qq{L<$anchor|"$title">};
     }
 
     return $anchor;
@@ -863,7 +866,7 @@ sub tableOfContents {
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 AUTHOR
 

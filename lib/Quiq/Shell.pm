@@ -9,7 +9,7 @@ use warnings;
 use v5.10.0;
 use utf8;
 
-our $VERSION = 1.136;
+our $VERSION = 1.138;
 
 use Time::HiRes ();
 use Quiq::Option;
@@ -207,7 +207,7 @@ Liefere Ausgabe auf stdout und stderr getrennt.
 
 =back
 
-Für Beispiele siehe Abschnitt L</exec/Examples>.
+Für Beispiele siehe Abschnitt ""exec/Examples"".
 
 =item -quiet => $bool (Default: 0)
 
@@ -588,7 +588,7 @@ sub _logCmd {
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 AUTHOR
 

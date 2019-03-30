@@ -16,7 +16,7 @@ sub test_loadClass : Init(1) {
 
 # -----------------------------------------------------------------------------
 
-sub test_new : Test(6) {
+sub test_new : Test(7) {
     my $self = shift;
 
     my $sql = Quiq::Sql->new('Oracle');
@@ -31,8 +31,11 @@ sub test_new : Test(6) {
     $sql = Quiq::Sql->new('MySQL');
     $self->is($sql->{'dbms'},'MySQL');
 
-    $sql = Quiq::Sql->new('ODBC');
-    $self->is($sql->{'dbms'},'ODBC');
+    $sql = Quiq::Sql->new('Access');
+    $self->is($sql->{'dbms'},'Access');
+
+    $sql = Quiq::Sql->new('MSSQL');
+    $self->is($sql->{'dbms'},'MSSQL');
 
     eval { Quiq::Sql->new('Unknown') };
     $self->like($@,qr/SQL-00001/);
@@ -40,7 +43,7 @@ sub test_new : Test(6) {
 
 # -----------------------------------------------------------------------------
 
-sub test_dbms : Test(5) {
+sub test_dbms : Test(6) {
     my $self = shift;
 
     my $sql = Quiq::Sql->new('oracle');
@@ -55,8 +58,11 @@ sub test_dbms : Test(5) {
     $sql = Quiq::Sql->new('mysql');
     $self->is($sql->dbms,'MySQL');
 
-    $sql = Quiq::Sql->new('odbc');
-    $self->is($sql->dbms,'ODBC');
+    $sql = Quiq::Sql->new('access');
+    $self->is($sql->dbms,'Access');
+
+    $sql = Quiq::Sql->new('mssql');
+    $self->is($sql->dbms,'MSSQL');
 }
 
 # -----------------------------------------------------------------------------
@@ -64,7 +70,7 @@ sub test_dbms : Test(5) {
 sub test_dbmsNames : Test(2) {
     my $self = shift;
 
-    my $dbmsNames = [qw/Oracle PostgreSQL SQLite MySQL ODBC/];
+    my $dbmsNames = [qw/Oracle PostgreSQL SQLite MySQL Access MSSQL/];
 
     my @arr = Quiq::Sql->dbmsNames;
     $self->isDeeply(\@arr,$dbmsNames);
@@ -75,23 +81,26 @@ sub test_dbmsNames : Test(2) {
 
 # -----------------------------------------------------------------------------
 
-sub test_dbmsTestVector : Test(5) {
+sub test_dbmsTestVector : Test(6) {
     my $self = shift;
 
     my @vec = Quiq::Sql->new('Oracle')->dbmsTestVector;
-    $self->isDeeply(\@vec,[1,0,0,0,0]);
+    $self->isDeeply(\@vec,[1,0,0,0,0,0]);
 
     @vec = Quiq::Sql->new('PostgreSQL')->dbmsTestVector;
-    $self->isDeeply(\@vec,[0,1,0,0,0]);
+    $self->isDeeply(\@vec,[0,1,0,0,0,0]);
 
     @vec = Quiq::Sql->new('SQLite')->dbmsTestVector;
-    $self->isDeeply(\@vec,[0,0,1,0,0]);
+    $self->isDeeply(\@vec,[0,0,1,0,0,0]);
 
     @vec = Quiq::Sql->new('MySQL')->dbmsTestVector;
-    $self->isDeeply(\@vec,[0,0,0,1,0]);
+    $self->isDeeply(\@vec,[0,0,0,1,0,0]);
 
-    @vec = Quiq::Sql->new('ODBC')->dbmsTestVector;
-    $self->isDeeply(\@vec,[0,0,0,0,1]);
+    @vec = Quiq::Sql->new('Access')->dbmsTestVector;
+    $self->isDeeply(\@vec,[0,0,0,0,1,0]);
+
+    @vec = Quiq::Sql->new('MSSQL')->dbmsTestVector;
+    $self->isDeeply(\@vec,[0,0,0,0,0,1]);
 }
 
 # -----------------------------------------------------------------------------
@@ -144,13 +153,25 @@ sub test_isMySQL : Test(2) {
 
 # -----------------------------------------------------------------------------
 
-sub test_isODBC : Test(2) {
+sub test_isAccess : Test(2) {
     my $self = shift;
 
-    my $bool = Quiq::Sql->new('ODBC')->isODBC;
+    my $bool = Quiq::Sql->new('Access')->isAccess;
     $self->is($bool,1);
 
-    $bool = Quiq::Sql->new('PostgreSQL')->isODBC;
+    $bool = Quiq::Sql->new('PostgreSQL')->isAccess;
+    $self->is($bool,0);
+}
+
+# -----------------------------------------------------------------------------
+
+sub test_isMSSQL : Test(2) {
+    my $self = shift;
+
+    my $bool = Quiq::Sql->new('MSSQL')->isMSSQL;
+    $self->is($bool,1);
+
+    $bool = Quiq::Sql->new('PostgreSQL')->isMSSQL;
     $self->is($bool,0);
 }
 
@@ -217,7 +238,7 @@ sub test_checkName : Test(1) {
 
 # -----------------------------------------------------------------------------
 
-sub test_dataType_scalarContext : Test(10) {
+sub test_dataType_scalarContext : Test(12) {
     my $self = shift;
 
     for my $dbms (Quiq::Sql->dbmsNames()) {
@@ -231,7 +252,7 @@ sub test_dataType_scalarContext : Test(10) {
     }
 }
 
-sub test_dataType_arryContext : Test(35) {
+sub test_dataType_arryContext : Test(42) {
     my $self = shift;
 
     for my $dbms (Quiq::Sql->dbmsNames()) {

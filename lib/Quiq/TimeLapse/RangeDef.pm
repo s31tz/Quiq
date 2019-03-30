@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = 1.136;
+our $VERSION = 1.138;
 
 use Quiq::OrderedHash;
 use Quiq::Path;
@@ -498,7 +498,7 @@ Bildfolgen-Ausdruck (String)
 
 Liefere den Bildfolgen-Ausdruck des Clip- oder Range-Bezeichners
 $key. Geklammerte Teile sind nicht enthalten (siehe Abschnitt
-L</Syntax>).
+L<Syntax|"Syntax">).
 
 =cut
 
@@ -525,7 +525,7 @@ sub expression {
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 AUTHOR
 

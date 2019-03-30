@@ -73,7 +73,7 @@ bzw.
     $ less +17 ./test.pl
 
 Der unterste Eintrag im Stacktrace ist der Aufruf des
-Konstruktors L</new>() oder der Methode L</asString>(), wenn sie
+Konstruktors L<new|"new() - Konstruktor">() oder der Methode L<asString|"asString() - Visualisiere Stacktrace-Objekt">(), wenn sie
 als Klassenmethode gerufen wird. Sollen Stacktrace-Frames am
 Ende weggelassen werden, kann dies durch Angabe des Parameters
 $i erreicht werden.
@@ -124,7 +124,7 @@ Stacktrace vorher enden,
 
 =item $i (Default: 0)
 
-Siehe L</new>().
+Siehe L<new|"new() - Konstruktor">().
 
 =back
 
@@ -135,7 +135,7 @@ diese zurück. Aufbau der Zeichenkette siehe Abschnitt DESCRIPTION.
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 SOURCE
 

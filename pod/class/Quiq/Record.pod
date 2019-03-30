@@ -110,7 +110,7 @@ Character Encoding, z.B. 'UTF-8'.
 
 =head4 Description
 
-Wie L</fromString>, nur dass der Record aus Datei $file gelesen wird.
+Wie L<fromString|"fromString() - Lies Schlüssel/Wert-Paare aus String">, nur dass der Record aus Datei $file gelesen wird.
 
 =head3 toString() - Schreibe Schlüssel/Wert-Paare auf String
 
@@ -167,16 +167,16 @@ Repräsentation und liefere diese zurück.
 
 =head4 Options
 
-Siehe L</toString>
+Siehe L<toString|"toString() - Schreibe Schlüssel/Wert-Paare auf String">
 
 =head4 Description
 
-Wie L</toString>, nur dass der Record auf eine Datei geschrieben wird.
+Wie L<toString|"toString() - Schreibe Schlüssel/Wert-Paare auf String">, nur dass der Record auf eine Datei geschrieben wird.
 Die Methode liefert keinen Wert zurück.
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 SOURCE
 

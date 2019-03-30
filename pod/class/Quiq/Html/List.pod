@@ -25,7 +25,7 @@ Unordered List (<ul>)
 
 =back
 
-erzeugen. Siehe Abschnitt L</EXAMPLES>.
+erzeugen. Siehe Abschnitt L<EXAMPLES|"EXAMPLES">.
 
 =head1 ATTRIBUTES
 
@@ -127,7 +127,7 @@ erzeugt und mit den Attributen @keyVal instantiiert.
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 SOURCE
 

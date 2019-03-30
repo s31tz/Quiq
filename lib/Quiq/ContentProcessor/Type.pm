@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = 1.136;
+our $VERSION = 1.138;
 
 # -----------------------------------------------------------------------------
 
@@ -50,7 +50,7 @@ I<allen> (Haupt-)Typen vorkommt.
 Die abgeleiteten Klassen ergänzen die Attribut-Liste und
 überschreiben u.U. das C<ContentAllowed>-Attribut.
 
-Die Methode L</create>() erzeugt aus einem Abschnitts-Objekt eine
+Die Methode L<create|"create() - Erzeuge Entität">()  erzeugt aus einem Abschnitts-Objekt eine
 Instanz des betreffenden Typs, eine sog. Entität, und setzt die
 für den ContentProcessor essentiellen Attribute (siehe Code der
 Methode). Die Methode wird in der Typ-Klasse überschrieben und von
@@ -430,7 +430,7 @@ Referenz auf Quelltext
 
 =head4 Description
 
-Wie $ent->L</fileSource>(), nur dass eine Referenz auf den
+Wie $ent->L<fileSource|"fileSource">(), nur dass eine Referenz auf den
 Quelltext geliefert wird.
 
 =cut
@@ -662,7 +662,7 @@ sub needsUpdate {
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 AUTHOR
 

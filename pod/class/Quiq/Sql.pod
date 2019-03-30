@@ -102,7 +102,8 @@ Liefere folgende Liste von DBMS-Namen (in dieser Reihenfolge):
     PostgreSQL
     SQLite
     MySQL
-    ODBC
+    Access
+    MSSQL
 
 =head2 DBMS Tests
 
@@ -110,7 +111,7 @@ Liefere folgende Liste von DBMS-Namen (in dieser Reihenfolge):
 
 =head4 Synopsis
 
-    ($oracle,$postgresql,$sqlite,$mysql,$odbc) = $self->dbmsTestVector;
+    ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) = $self->dbmsTestVector;
 
 =head4 Description
 
@@ -153,11 +154,17 @@ durchzuführen
 
     $bool = $class->isMySQL;
 
-=head3 isODBC() - Teste auf ODBC
+=head3 isAccess() - Teste auf Access
 
 =head4 Synopsis
 
-    $bool = $class->isODBC;
+    $bool = $class->isAccess;
+
+=head3 isMSSQL() - Teste auf MSSQL
+
+=head4 Synopsis
+
+    $bool = $class->isMSSQL;
 
 =head2 Utilities
 
@@ -2542,7 +2549,7 @@ Liefere NOT EXISTS Klausel.
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 SOURCE
 

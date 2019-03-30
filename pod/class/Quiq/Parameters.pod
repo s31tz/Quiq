@@ -314,7 +314,7 @@ Konstruktor mit einer variablen Anzahl an Argumenten und zwei Optionen:
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 SOURCE
 

@@ -37,7 +37,7 @@ Liefere den Künstler der Audio-Datei.
 
 =head4 See Also
 
-L</extractMetaData>()
+L<extractMetaData|"extractMetaData() - Ermittele Künstler und Titel">()
 
 =head3 title() - Titel
 
@@ -51,7 +51,7 @@ Liefere den Titel der Audio-Datei.
 
 =head4 See Also
 
-L</extractMetaData>()
+L<extractMetaData|"extractMetaData() - Ermittele Künstler und Titel">()
 
 =head2 Objektmethoden
 
@@ -88,7 +88,7 @@ Liefere die Extension der Audio-Datei.
 
 =head4 See Also
 
-L</extractMetaData>()
+L<extractMetaData|"extractMetaData() - Ermittele Künstler und Titel">()
 
 =head3 file() - Dateiname
 
@@ -132,7 +132,7 @@ Die Methode liefert keinen Wert zurück.
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 SOURCE
 

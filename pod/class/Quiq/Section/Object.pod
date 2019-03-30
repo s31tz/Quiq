@@ -370,7 +370,7 @@ Wert (Skalar-Kontext) oder Wertliste (Array-Kontext)
 Liefere den Wert zu Schlüssel $key bzw. die liste der Werte zu den
 Schlüsseln @keys. Beginnt der $key mit einem Großbuchstaben, ist
 es ein fataler Fehler, wenn zu dem Schlüssel mehrere Werte existieren.
-Solche Schlüssel müssen mit $obj->L</getArray>() abgefragt werden.
+Solche Schlüssel müssen mit $obj->L<getArray|"getArray() - Liefere Wertliste zu Schlüssel">() abgefragt werden.
 
 =head3 getArray() - Liefere Wertliste zu Schlüssel
 
@@ -447,7 +447,7 @@ Wert (Skalar)
 
 =head4 Description
 
-Wie $sec->L</get>(), nur dass ein Wert existieren muss, sonst
+Wie $sec->L<get|"get() - Liefere Wert zu Schlüssel">(), nur dass ein Wert existieren muss, sonst
 wird eine Exception geworfen.
 
 =head3 getRef() - Liefere Referenz auf Schlüsselwert
@@ -479,7 +479,7 @@ definierter Wert außer Kraft gesetzt werden.
 
 =head4 Description
 
-Wie L</get>(), nur dass im Falle eines unerlaubten Schlüssels
+Wie L<get|"get() - Liefere Wert zu Schlüssel">(), nur dass im Falle eines unerlaubten Schlüssels
 keine Exception geworfen, sondern C<undef> geliefert wird.
 
 =head3 memoize() - Ermittele Wert und cache ihn auf Attribut
@@ -519,7 +519,7 @@ gerechnet werden soll.
 
 =head4 Description
 
-Die Methode ist identisch zu $sec->L</memoize>(), nur dass eine
+Die Methode ist identisch zu $sec->L<memoize|"memoize() - Ermittele Wert und cache ihn auf Attribut">(), nur dass eine
 Referenz ermittelt und automatisch zu einer schwachen Referenz
 gemacht wird.
 
@@ -738,7 +738,7 @@ durch.
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 SOURCE
 

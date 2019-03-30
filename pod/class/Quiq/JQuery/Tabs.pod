@@ -12,8 +12,8 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 Die Klasse erzeugt den HTML-Code einer jQuery UI Reiterleiste.
 Dem Konstruktor wird die Reiterkonfiguration mit dem Attribut
-C<tabs> übergeben. Die Methode L</html>() generiert den HTML-Code.
-Siehe Abschnitt L</EXAMPLE>.
+C<tabs> übergeben. Die Methode L<html|"html() - Generiere HTML">() generiert den HTML-Code.
+Siehe Abschnitt L<EXAMPLE|"EXAMPLE">.
 
 =head1 ATTRIBUTES
 
@@ -110,7 +110,7 @@ mit den Attributen @keyVal instantiiert.
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 SOURCE
 

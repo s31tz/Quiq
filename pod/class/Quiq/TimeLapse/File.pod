@@ -71,7 +71,7 @@ Referenz auf dieses Objekt zurück.
 =head2 Objektmethoden
 
 Alle weiteren Methoden befinden sich in der Basisklasse (s. Abschnitt
-L</"BASE CLASS">).
+L<BASE CLASS|"BASE CLASS">).
 
 =head3 number() - Nummer des Bildes
 
@@ -131,7 +131,7 @@ Liefere den Text des Dateinamens.
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 SOURCE
 

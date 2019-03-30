@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = 1.136;
+our $VERSION = 1.138;
 
 # -----------------------------------------------------------------------------
 
@@ -98,7 +98,7 @@ sub betragZahl {
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 AUTHOR
 

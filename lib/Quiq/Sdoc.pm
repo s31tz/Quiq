@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = 1.136;
+our $VERSION = 1.138;
 
 use Quiq::Unindent;
 
@@ -50,7 +50,7 @@ Einrücktiefe bei der Codegenerierung
 =head4 Description
 
 Instantiiere einen Sdoc-Generator mit den Eigenschaften @keyVal
-(s. Abschnitt L</Attributes>) und liefere eine Referenz auf dieses
+(s. Abschnitt L<Attributes|"ATTRIBUTES">) und liefere eine Referenz auf dieses
 Objekt zurück.
 
 =head4 Example
@@ -452,7 +452,7 @@ sub eof {
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 AUTHOR
 

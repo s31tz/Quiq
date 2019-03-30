@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = 1.136;
+our $VERSION = 1.138;
 
 use Quiq::Option;
 
@@ -89,7 +89,7 @@ getText-Callback-Methode genutzt werden, um den betreffenden Knoten
 besonders darzustellen. Der Knoten $node kann ein Objekt oder ein Text
 sein. Die Ebene $level ist eine natürliche Zahl im Wertebereich von
 0 (Wurzelknoten) bis n. Die Paar-Liste kann aus irgendeiner Baumstruktur
-mit einer rekursiven Funktion erzeugt werden (siehe Abschnitt L</EXAMPLE>).
+mit einer rekursiven Funktion erzeugt werden (siehe Abschnitt L<EXAMPLE|"EXAMPLE">).
 
 =head1 EXAMPLE
 
@@ -519,7 +519,7 @@ sub asText {
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 AUTHOR
 

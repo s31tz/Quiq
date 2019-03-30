@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = 1.136;
+our $VERSION = 1.138;
 
 use Quiq::TimeLapse::Filename;
 
@@ -104,7 +104,7 @@ sub new {
 =head2 Objektmethoden
 
 Alle weiteren Methoden befinden sich in der Basisklasse (s. Abschnitt
-L</"BASE CLASS">).
+L<BASE CLASS|"BASE CLASS">).
 
 =head3 number() - Nummer des Bildes
 
@@ -206,7 +206,7 @@ sub text {
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 AUTHOR
 

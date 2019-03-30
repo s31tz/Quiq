@@ -25,11 +25,11 @@ einzelnen Datenbank-Tabelle stammt.
 
 Die DML-Operationen (select, insert, update, delete) der Klasse
 operieren auf der Tabelle. Entsprechend definiert die Klasse einen
-Tabellennamen. Dieser wird von der Methode L</tableName>() geliefert.
+Tabellennamen. Dieser wird von der Methode L<tableName|"tableName() - Liefere Namen der Datenbanktabelle">() geliefert.
 
 Über eine Tabelle wird vorausgesetzt, dass diese eine
 Primärschlüssel-Kolumne besitzt. Deren Name wird von der Methode
-L</primaryKey>() geliefert.
+L<primaryKey|"primaryKey() - Liefere Namen der Primärschlüssel-Kolumne">() geliefert.
 
 =head1 METHODS
 
@@ -211,7 +211,7 @@ Nach der Ausführung hat der Datensatz den Rowstatus 'I'.
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 SOURCE
 

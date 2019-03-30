@@ -133,7 +133,7 @@ Liefere Ausgabe auf stdout und stderr getrennt.
 
 =back
 
-Für Beispiele siehe Abschnitt L</exec/Examples>.
+Für Beispiele siehe Abschnitt ""exec/Examples"".
 
 =item -quiet => $bool (Default: 0)
 
@@ -254,7 +254,7 @@ Schreibe die Kommandozeile $cmd auf die Loghandle.
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 SOURCE
 

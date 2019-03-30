@@ -20,7 +20,7 @@ Ausgabe-Dateien, Optionen, Filtern usw. zu konstruieren und
 andererseits I<höhere> (Klassen-)Methoden, die eine vollständige
 Kommandozeile zur Erfüllung eines bestimmten Zwecks unter
 Rückgriff auf die elementaren Methoden erstellen. Die höheren
-Methoden Methoden befinden sich im Abschnitt L</"Klassenmethoden (vollständige Kommandozeilen)">.
+Methoden Methoden befinden sich im Abschnitt L<Klassenmethoden (vollständige Kommandozeilen)|"Klassenmethoden (vollständige Kommandozeilen)">.
 
 =head1 METHODS
 
@@ -756,7 +756,7 @@ die Fortschrittsanzeige.
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 SOURCE
 

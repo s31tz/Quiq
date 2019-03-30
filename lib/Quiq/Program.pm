@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = 1.136;
+our $VERSION = 1.138;
 
 use Quiq::Perl;
 use Encode ();
@@ -93,7 +93,7 @@ Optionen und Argumente:
 
 =head4 Options
 
-Siehe Methode L</new>()
+Siehe Methode L<new|"new() - Instantiiere Programm-Objekt">()
 
 =cut
 
@@ -156,7 +156,7 @@ sub run {
 Terminiere das Programm mit Exitcode $exitCode. Ist kein Exitcode
 angegeben, terminiere mit dem Exitcode der auf dem Programmobjekt
 gesetzt ist. Die Methode kehrt nicht zurück. Nach ihrem Aufruf wird
-die Methode L</finish>() ausgeführt.
+die Methode L<finish|"finish() - Abschließender Code vor Programmende">() ausgeführt.
 
 =cut
 
@@ -257,7 +257,7 @@ Das Default-Verhalten ist, dass der Exception-Text auf STDERR
 ausgegeben und der Exitcode auf 99 gesetzt wird.
 
 Das Programm terminiert nicht sofort, sondern die Methode
-L</finish>() wird noch ausgeführt.
+L<finish|"finish() - Abschließender Code vor Programmende">() wird noch ausgeführt.
 
 =cut
 
@@ -873,7 +873,7 @@ sub new {
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 AUTHOR
 

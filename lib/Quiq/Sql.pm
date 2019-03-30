@@ -6,7 +6,7 @@ use warnings;
 use v5.10.0;
 use utf8;
 
-our $VERSION = 1.136;
+our $VERSION = 1.138;
 
 use Quiq::Hash;
 use Quiq::Option;
@@ -161,13 +161,14 @@ Liefere folgende Liste von DBMS-Namen (in dieser Reihenfolge):
     PostgreSQL
     SQLite
     MySQL
-    ODBC
+    Access
+    MSSQL
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-my @DbmsNames = qw/Oracle PostgreSQL SQLite MySQL ODBC/;
+my @DbmsNames = qw/Oracle PostgreSQL SQLite MySQL Access MSSQL/;
 
 sub dbmsNames {
     my $this = shift;
@@ -182,7 +183,7 @@ sub dbmsNames {
 
 =head4 Synopsis
 
-    ($oracle,$postgresql,$sqlite,$mysql,$odbc) = $self->dbmsTestVector;
+    ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) = $self->dbmsTestVector;
 
 =head4 Description
 
@@ -280,19 +281,36 @@ sub isMySQL {
 
 # -----------------------------------------------------------------------------
 
-=head3 isODBC() - Teste auf ODBC
+=head3 isAccess() - Teste auf Access
 
 =head4 Synopsis
 
-    $bool = $class->isODBC;
+    $bool = $class->isAccess;
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub isODBC {
+sub isAccess {
     my $self = shift;
-    return $self->{'dbms'} eq 'ODBC'? 1: 0;
+    return $self->{'dbms'} eq 'Access'? 1: 0;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 isMSSQL() - Teste auf MSSQL
+
+=head4 Synopsis
+
+    $bool = $class->isMSSQL;
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub isMSSQL {
+    my $self = shift;
+    return $self->{'dbms'} eq 'MSSQL'? 1: 0;
 }
 
 # -----------------------------------------------------------------------------
@@ -687,7 +705,16 @@ my %DataType = (
         DATETIME=>'TIMESTAMP',
         BLOB=>'LONGBLOB',
     },
-    ODBC=>{
+    Access=>{
+        STRING=>'TEXT',
+        TEXT=>'MEMO',
+        INTEGER=>'LONG',
+        REAL=>'DOUBLE',
+        DATETIME=>'DATETIME',
+        BLOB=>'LONGBINARY',
+    },
+    MSSQL=>{
+        # FIXME: Ungeprüft
         STRING=>'TEXT',
         TEXT=>'MEMO',
         INTEGER=>'LONG',
@@ -1046,7 +1073,8 @@ sub setDateFormat {
     my $self = shift;
     my $format = shift || 'iso';
 
-    my ($oracle,$postgresql,$sqlite,$mysql,$odbc) = $self->dbmsTestVector;
+    my ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) =
+        $self->dbmsTestVector;
 
     # Statement generieren
 
@@ -1064,7 +1092,7 @@ sub setDateFormat {
             return ('SET datestyle TO iso, ymd');
         }
     }
-    elsif ($sqlite || $mysql || $odbc) {
+    elsif ($sqlite || $mysql || $access || $mssql) {
         return; # FIXME: bislang nicht untersucht
     }
 
@@ -1112,7 +1140,8 @@ sub setNumberFormat {
     my $self = shift;
     my $format = shift || '.,';
 
-    my ($oracle,$postgresql,$sqlite,$mysql,$odbc) = $self->dbmsTestVector;
+    my ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) =
+        $self->dbmsTestVector;
 
     # Statement generieren
 
@@ -1120,7 +1149,7 @@ sub setNumberFormat {
     if ($oracle) {
         return ("ALTER SESSION SET NLS_NUMERIC_CHARACTERS = '$format'");
     }
-    elsif ($postgresql || $sqlite || $mysql || $odbc) {
+    elsif ($postgresql || $sqlite || $mysql || $access || $mssql) {
         return; # FIXME: bislang nicht untersucht
     }
 
@@ -3826,7 +3855,8 @@ sub select {
         -stmt=>\$stmt,
     );
 
-    my ($oracle,$postgresql,$sqlite,$mysql,$odbc) = $self->dbmsTestVector;
+    my ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) =
+        $self->dbmsTestVector;
 
     if (defined $offset && $oracle) {
         die;
@@ -4043,7 +4073,7 @@ sub select {
             );
         }
     }
-    elsif ($odbc && ($offset || $limit)) {
+    elsif ($mssql && ($offset || $limit)) {
         # Bei MSSQL sind OFFSET und LIMIT Ergänzungen zu ORDER BY.
         # Wir brauchen also eine ORDER BY Klausel, wenn -offset
         # und/oder -limit angegeben sind
@@ -4057,7 +4087,7 @@ sub select {
             }
             elsif ($body !~ /\bOFFSET\b/i) {
                 $stmt .= "\nOFFSET\n    $offset";
-                if ($odbc) {
+                if ($mssql) {
                     $stmt .= ' ROWS';
                 }
             }
@@ -4074,7 +4104,7 @@ sub select {
                 $stmt =~ s/%LIMIT%/$limit/g;
             }
             elsif ($body !~ /\bLIMIT\b/i) {
-                if ($odbc) {
+                if ($mssql) {
                     if (!$offset) {
                         # Bei MSSQL ist FETCH eine Ergänzug zu OFFSET.
                         # Wir brauchen also eine OFFSET-Klausel, wenn
@@ -5380,7 +5410,7 @@ sub diff {
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 AUTHOR
 

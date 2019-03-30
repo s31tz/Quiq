@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = 1.136;
+our $VERSION = 1.138;
 
 use Quiq::Option;
 use DBI ();
@@ -147,8 +147,11 @@ sub new {
             $errstr =~ s|\(\d+\)$||; # "(1)" entf.
             $msg = sprintf('SQLITE-%05d: %s',$err,$errstr);
         }
-        elsif ($dbms eq 'odbc') {
-            $msg = sprintf('ODBC-%05d: %s',$err,$errstr);
+        elsif ($dbms eq 'mssql') {
+            $msg = sprintf('MSSQL-%05d: %s',$err,$errstr);
+        }
+        elsif ($dbms eq 'access') {
+            $msg = sprintf('ACCESS-%05d: %s',$err,$errstr);
         }
 
         if ($stmt) {
@@ -219,12 +222,17 @@ sub new {
                 $dbh->{'sqlite_unicode'} = 1;
             }
         }
-        elsif ($dbms eq 'odbc') {
+        elsif ($dbms eq 'access') {
             if ($utf8) {
                 $dbh->{'odbc_utf8_on'} = 1;
-                $dbh->{LongTruncOk} = 0; # RuV Auftrags-DB
-                $dbh->{LongReadLen} = 32768; # RuV Auftrags-DB
             }
+        }
+        elsif ($dbms eq 'mssql') {
+            if ($utf8) {
+                $dbh->{'odbc_utf8_on'} = 1;
+            }
+            $dbh->{LongTruncOk} = 0; # RuV Auftrags-DB
+            $dbh->{LongReadLen} = 32768; # RuV Auftrags-DB
         }
         else {
             $class->throw('Not implemented');
@@ -446,11 +454,11 @@ sub sql {
     else {
         $sth = $dbh->prepare($stmt);
 
-        if ($dbms ne 'odbc') {
-            # FIXME: im Falle von odbc ist nach Ausführung folgender
+        if ($dbms ne 'access') {
+            # FIXME: im Falle von access ist nach Ausführung folgender
             # Zeile eine Ausführung einer Selektion nicht mehr möglich!
             # D.h. nach aktuellem Stand kann ein SQL-Statement via
-            # odbc keine Platzhalter enthalten.
+            # access keine Platzhalter enthalten.
 
             $bindVars = $sth->{'NUM_OF_PARAMS'}; # Anzahl Bind-Variablen
         }
@@ -512,7 +520,7 @@ sub sql {
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 AUTHOR
 

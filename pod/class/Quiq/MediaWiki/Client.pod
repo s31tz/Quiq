@@ -20,7 +20,7 @@ aufgerufen wird.
 
 Die MediaWiki-API empfängt und liefert alle Daten in UTF-8.
 
-Insbesondere implementiert die Klasse die Methode $mw->L</load>(), mit
+Insbesondere implementiert die Klasse die Methode $mw->L<load|"load() - Lade Seite oder Mediendatei ins Wiki">(), mit
 welcher sowohl Seiten als auch Mediendateien (z.B. Bilder)
 "intelligent" geladen werden können.
 
@@ -230,7 +230,7 @@ Response (Hash-Referenz)
 
 Dies ist die Lowlevel-Methode zum Speichern einer Seite oder
 des Contents einer Seite. Eine weitergehende Logik, die auch
-Titelnderungen erlaubt, implementiert die  Methode $mw->L</load>().
+Titelnderungen erlaubt, implementiert die  Methode $mw->L<load|"load() - Lade Seite oder Mediendatei ins Wiki">().
 
 In Fassung [1] wird der Content der Seite mit der Page-Id $pageId
 auf Text $text gesetzt. Die Seite muss existieren.
@@ -494,6 +494,7 @@ L<File Upload per LWP|http://lwp.interglacial.com/ch05_07.htm>
 =back
 
 =pod
+
     # Datei hochladen (wir lesen $file selbst)
 
     my $p = Quiq::Path->new;
@@ -507,6 +508,7 @@ L<File Upload per LWP|http://lwp.interglacial.com/ch05_07.htm>
         filename => $filename,
         file => [undef,$filename,Content=>$data],
     );
+
 =head3 version() - Versionsnummer des Servers
 
 =head4 Synopsis
@@ -734,7 +736,7 @@ Schreibe den Text $text unter der Überschrift $title nach STDERR.
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 SOURCE
 

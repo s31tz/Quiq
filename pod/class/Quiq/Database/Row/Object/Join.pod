@@ -42,7 +42,7 @@ Platzhalter, die bei einer Selektion durch die Selektionsskriterien
 ersetzt werden.
 
 Die Einsetzung von Selektionskriterien in das Template nimmt
-die Methode L</selectStmt>() vor.
+die Methode L<selectStmt|"selectStmt() - Liefere Select-Statement der Klasse">() vor.
 
 =head4 Example
 
@@ -84,7 +84,7 @@ Select-Statement (String)
 
 Liefere ein Select-Statement der Klasse gem‰ﬂ den Selektionskriterien
 C<@select>. Die Selektionskriterien werden in das Muster-Statement
-eingesetzt (siehe L</selectTemplate>().
+eingesetzt (siehe L<selectTemplate|"selectTemplate() - Liefere Select-Template der Klasse">().
 
 =head2 Verschiedenes
 
@@ -140,7 +140,7 @@ bless $newRow auf $newClass
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 SOURCE
 

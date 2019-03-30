@@ -18,7 +18,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =end html
 
-Quelltext siehe Abschnitt L</"Beispiel Synopsis">.
+Quelltext siehe Abschnitt L<Beispiel Synopsis|"Beispiel Synopsis">.
 
 =head1 DESCRIPTION
 
@@ -207,7 +207,7 @@ erzeugt den HTML-Code (lange Zeilen umbrochen)
 
 Beispiel für die Angabe von Instantiierungs-Argumenten. Dies
 kann bei Aufruf der Methode
-L</"instantiate() - Instantiiere Widget in JavaScript">
+L<instantiate() - Instantiiere Widget in JavaScript|"instantiate() - Instantiiere Widget in JavaScript">
 
     $dt->instantiate(q~
         fixedHeader: true,
@@ -475,7 +475,7 @@ Hash-Objekte (vom Typ Quiq::Hash).
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 SOURCE
 

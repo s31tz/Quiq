@@ -6,7 +6,7 @@ use warnings;
 use v5.10.0;
 use utf8;
 
-our $VERSION = 1.136;
+our $VERSION = 1.138;
 
 use Quiq::Sql;
 use Quiq::Object;
@@ -279,7 +279,8 @@ sub disconnect {
     #
     #if ($self->isSQLite) {
     #    $self->begin; # für SQLite, da sonst (auch ohne Aufruf von commit):
-    #                  # SQLITE-00001: cannot commit - no transaction is active
+    #                  # SQLITE-00001: cannot commit - no transaction is
+    #                  # active
     #    $self->commit;
     #}
 
@@ -501,7 +502,7 @@ sub dbms {
 
 =head4 Synopsis
 
-    ($oracle,$postgresql,$sqlite,$mysql,$odbc) = $db->dbmsTestVector;
+    ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) = $db->dbmsTestVector;
 
 =cut
 
@@ -597,23 +598,44 @@ sub isMySQL {
 
 # -----------------------------------------------------------------------------
 
-=head3 isODBC() - Prüfe auf ODBC-DBMS
+=head3 isAccess() - Prüfe auf Access-DBMS
 
 =head4 Synopsis
 
-    $bool = $db->isODBC;
+    $bool = $db->isAccess;
 
 =head4 Description
 
-Liefere "wahr", wenn die Datenbank eine ODBC-Datenbank ist,
+Liefere "wahr", wenn die Datenbank eine Access-Datenbank ist,
 sonst "falsch".
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub isODBC {
-    return shift->{'sqlObj'}->isODBC;
+sub isAccess {
+    return shift->{'sqlObj'}->isAccess;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 isMSSQL() - Prüfe auf MSSQL-DBMS
+
+=head4 Synopsis
+
+    $bool = $db->isMSSQL;
+
+=head4 Description
+
+Liefere "wahr", wenn die Datenbank eine MSSQL-Datenbank ist,
+sonst "falsch".
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub isMSSQL {
+    return shift->{'sqlObj'}->isMSSQL;
 }
 
 # -----------------------------------------------------------------------------
@@ -1151,7 +1173,7 @@ nur bei PostgreSQL und -fetchMode 1 oder 2 eine Bedeutung.
 =item -fetchMode => 0 | 1 | 2 (Default: 1)
 
 Der Parameter hat nur im Falle PostgreSQL eine Auswirkung. Siehe
-auch Abschnitt L</"SELECT mit PostgreSQL">.
+auch Abschnitt "SELECT mit PostgreSQL".
 
 =over 4
 
@@ -4202,7 +4224,7 @@ Von Perl aus auf die Access-Datenbank zugreifen:
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 AUTHOR
 

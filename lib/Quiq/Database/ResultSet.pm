@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = 1.136;
+our $VERSION = 1.138;
 
 use Quiq::Object;
 use Time::HiRes ();
@@ -568,7 +568,7 @@ sub formats {
             my $mask = 0;
     
             my $title = $titles->[$i];
-            foreach my $row (@$rowA) {
+            for my $row (@$rowA) {
                 my $val = $isRaw? $row->[$i]: $row->$title;
     
                 # Anzahl Nullwerte
@@ -1062,7 +1062,7 @@ sub diffReport {
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 AUTHOR
 

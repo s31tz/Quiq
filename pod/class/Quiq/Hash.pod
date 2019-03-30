@@ -168,7 +168,7 @@ Dasselbe ohne getRef():
 
 Liefere die Liste von Werten des Schlüssels $key. Im Skalarkontext
 liefere eine Referenz auf die Liste (der Aufruf hat dann die gleiche
-Wirkung wie der Aufruf von $h->L</get>()). Der Wert von $key muss
+Wirkung wie der Aufruf von $h->L<get|"get() - Werte abfragen">()). Der Wert von $key muss
 eine Array-Referenz sein.
 
 =head3 try() - Werte abfragen ohne Exception
@@ -180,7 +180,7 @@ eine Array-Referenz sein.
 
 =head4 Description
 
-Wie L</get>(), nur dass im Falle eines unerlaubten Schlüssels
+Wie L<get|"get() - Werte abfragen">(), nur dass im Falle eines unerlaubten Schlüssels
 keine Exception geworfen, sondern C<undef> geliefert wird.
 
 =head3 set() - Setze Schlüssel/Wert-Paare
@@ -207,7 +207,7 @@ Alternative Formulierung:
 
 =head4 Description
 
-Wie L</set>(), nur dass im Falle eines unerlaubten Schlüssels keine
+Wie L<set|"set() - Setze Schlüssel/Wert-Paare">(), nur dass im Falle eines unerlaubten Schlüssels keine
 Exception generiert, sondern der Hash um das Schlüssel/Wert-Paar
 erweitert wird.
 
@@ -272,7 +272,7 @@ Der Rückgabewert der Subroutine wird an Schlüssel $key zugewiesen.
 
 =head4 Example
 
-Methode L</increment>() mit apply() realisiert:
+Methode L<increment|"increment() - Inkrementiere (Integer-)Wert">() mit apply() realisiert:
 
     $val = $h->compute($key,sub {
         my ($h,$key) = @_;
@@ -323,7 +323,7 @@ Die Erzeugung einer Akzessor-Methode erfolgt (vom Aufrufer unbemerkt)
 beim ersten Aufruf. Danach wird die Methode unmittelbar gerufen.
 
 Der Zugriff über eine automatisch generierte Attributmethode ist ca. 30%
-schneller als über $h->L</get>().
+schneller als über $h->L<get|"get() - Werte abfragen">().
 
 =head2 Schlüssel
 
@@ -387,7 +387,7 @@ gleichen Schlüssel/Wert-Paaren. Es wird I<nicht> rekursiv kopiert,
 sondern eine "shallow copy" erzeugt.
 
 Sind Schlüssel/Wert-Paare @keyVal angegeben, werden
-diese nach dem Kopieren per L</set>() auf dem neuen Hash gesetzt.
+diese nach dem Kopieren per L<set|"set() - Setze Schlüssel/Wert-Paare">() auf dem neuen Hash gesetzt.
 
 =head3 join() - Füge Hash hinzu
 
@@ -713,7 +713,7 @@ Zugriffsmethoden:
     C 8104988/s 478%  66%  53%   4%   --  -7%
     A 8745272/s 524%  79%  65%  12%   8%   --
 
-Den Hash via $h->L</get>() zuzugreifen (F) ist ca. 85% langsamer
+Den Hash via $h->L<get|"get() - Werte abfragen">() zuzugreifen (F) ist ca. 85% langsamer
 als der einfachste Hash-Lookup (A). Wird auf den Methodenaufruf
 verzichtet und per $h->{$key} zugegriffen (E), ist der Zugriff nur
 11% langsamer. Es ist also ratsam, intern per $h->{$key}
@@ -721,7 +721,7 @@ zuzugreifen. Per $h->get() können immerhin 1.400.000 Lookups pro
 CPU-Sekunde ausgeführt werden. Bei nicht-zugriffsintensiven
 Anwendungen ist das sicherlich schnell genug.  Die Anzahl der
 Aufrufe von $h->get() und $h->set() wird intern gezählt und kann
-per $class->L</getCount>() und $class->L</setCount>() abgefragt
+per $class->L<getCount|"getCount() - Anzahl der get-Aufrufe">() und $class->L<setCount|"setCount() - Anzahl der set-Aufrufe">() abgefragt
 werden.
 
 Das Benchmark-Programm (bench-hash):
@@ -763,7 +763,7 @@ Das Benchmark-Programm (bench-hash):
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 SOURCE
 

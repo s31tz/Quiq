@@ -6,7 +6,7 @@ use warnings;
 use v5.10.0;
 use utf8;
 
-our $VERSION = 1.136;
+our $VERSION = 1.138;
 
 use POSIX ();
 use Time::Local ();
@@ -539,7 +539,7 @@ und liefere diesen zurück.
 
 =head4 See Also
 
-L</timestampToEpoch>()
+L<timestampToEpoch|"timestampToEpoch() - Wandele Timestamp in lokaler Zeit nach Epoch">()
 
 =cut
 
@@ -616,7 +616,7 @@ sub stringToKeyVal {
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 AUTHOR
 

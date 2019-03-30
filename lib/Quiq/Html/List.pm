@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = 1.136;
+our $VERSION = 1.138;
 
 # -----------------------------------------------------------------------------
 
@@ -36,7 +36,7 @@ Unordered List (<ul>)
 
 =back
 
-erzeugen. Siehe Abschnitt L</EXAMPLES>.
+erzeugen. Siehe Abschnitt L<EXAMPLES|"EXAMPLES">.
 
 =head1 ATTRIBUTES
 
@@ -189,7 +189,7 @@ sub html {
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 AUTHOR
 

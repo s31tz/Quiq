@@ -85,7 +85,7 @@ legt das Zeitraster auf 5, 15, 25, 35, 45, 55 Minuten.
 =item -geoCoordinates => $bool (Default: 0)
 
 Die Messerwerte haben zustzlich zur Zeit eine Ortskoordinate.
-Wenn gesetzt, erwartet die Methode L</add>() zusätzlich die
+Wenn gesetzt, erwartet die Methode L<add|"add() - Füge Parameterwerte hinzu">() zusätzlich die
 Ortsangaben $latitude und $longitude.
 
 =item -minTime => $t (Default: undef)
@@ -230,7 +230,7 @@ am dichtesten am Rasterpunkt gelegenen Wert hat.
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 SOURCE
 

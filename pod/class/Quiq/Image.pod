@@ -171,7 +171,7 @@ Anstelle eines Dateinamens kann auch eine Skalarreferenz
 
 =head1 VERSION
 
-1.136
+1.138
 
 =head1 SOURCE
 
