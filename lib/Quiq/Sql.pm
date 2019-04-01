@@ -5162,7 +5162,7 @@ sub whereClause {
 
     my @where;
     while (@_) {
-        if ($_[0] =~ /[\s=><]/) {
+        if (defined($_[0]) && $_[0] =~ /[\s=><]/) {
             # Enthält das Argument Leerzeichen oder einen der
             # Vergleichsoperatoren =, >, <, betrachten wir es als
             # vollständige Klausel und übernehmen es in die WHERE-Klausel.

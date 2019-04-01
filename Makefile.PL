@@ -3,7 +3,7 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
     NAME => 'Quiq',
     VERSION_FROM => 'lib/Quiq.pm',
-    MIN_PERL_VERSION => 5.10.0,
+    MIN_PERL_VERSION => 5.16.0,
     BUILD_REQUIRES => {
         ExtUtils::MakeMaker => 6.48, # wg. MIN_PERL_VERSION
     },
