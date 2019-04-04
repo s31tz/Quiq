@@ -132,7 +132,18 @@ eine Referenz auf die Liste.
 
 =head2 Tests
 
-=head3 isSelect() - Prüfe, ob Cursor Datensätze liefert
+=head3 fromCache() - Liefert der Cursor Datensätze aus dem Cache?
+
+=head4 Synopsis
+
+    $bool = $cur->fromCache;
+
+=head4 Description
+
+Liefere wahr, wenn der Cursor Datensätze aus dem Cache liefert,
+andernfalls falsch.
+
+=head3 isSelect() - Liefert der Cursor Datensätze?
 
 =head4 Synopsis
 
@@ -140,8 +151,8 @@ eine Referenz auf die Liste.
 
 =head4 Description
 
-Liefere "wahr", wenn der Cursor Datensätze liefert,
-andernfalls "falsch".
+Liefere wahr, wenn der Cursor Datensätze liefert,
+andernfalls falsch.
 
 =head2 Time Measurement
 

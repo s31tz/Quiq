@@ -18,6 +18,8 @@ use POSIX ();
 use Quiq::FileHandle;
 use Quiq::Array;
 use Quiq::String;
+use Quiq::Digest;
+use Quiq::Path;
 use Quiq::Database::Cursor;
 use Time::HiRes ();
 
@@ -58,6 +60,11 @@ connect()
 =head4 Options
 
 =over 4
+
+=item -cacheDir => $path
+
+In diesem Verzeichnis werden Ergebnismengen gecacht, wenn dies
+bei Selektionen angefordert wird.
 
 =item -handle => $dbh (Default: undef)
 
@@ -106,6 +113,7 @@ sub new {
 
     # Optionen
 
+    my $cacheDir = undef;
     my $handle = undef;
     my $log = undef;
     my $logfile = '-';
@@ -114,12 +122,13 @@ sub new {
     my $utf8 = undef;
 
     Quiq::Option->extract(\@_,
-        -handle=>\$handle,
-        -log=>\$log,
-        -logfile=>\$logfile,
-        -sqlClass=>\$sqlClass,
-        -strict=>\$strict,
-        -utf8=>\$utf8,
+        -cacheDir => \$cacheDir,
+        -handle => \$handle,
+        -log => \$log,
+        -logfile => \$logfile,
+        -sqlClass => \$sqlClass,
+        -strict => \$strict,
+        -utf8 => \$utf8,
     );
 
     # Objektmethode: Wir erzeugen eine parallele Datenbankverbindung
@@ -135,11 +144,11 @@ sub new {
 
         # FIXME: alle Attribute kopieren
         return $class->new($self->{'udlObj'},
-            -log=>$log,
-            -logfile=>$logfile,
-            -sqlClass=>$sqlClass,
-            -strict=>$strict,
-            -utf8=>$utf8,
+            -log => $log,
+            -logfile => $logfile,
+            -sqlClass => $sqlClass,
+            -strict => $strict,
+            -utf8 => $utf8,
         );
     }
 
@@ -157,7 +166,7 @@ sub new {
     elsif (@_) {
         $class->throw(
             q~DB-00002: Zu viele Parameter~,
-            Parameters=>join(',',@_),
+            Parameters => join(',',@_),
         );
     }
 
@@ -165,28 +174,29 @@ sub new {
 
     my $udlObj = ref $udl? $udl: Quiq::Udl->new($udl);
     my $apiObj = Quiq::Database::Api->connect($udlObj,
-        -utf8=>$utf8,
-        -handle=>$handle,
+        -utf8 => $utf8,
+        -handle => $handle,
     );
     my $sqlObj = $sqlClass->new($udlObj->dbms);
 
     $self = $class->SUPER::new(
-        startTime=>scalar(Time::HiRes::gettimeofday),
-        apiObj=>$apiObj,
-        udlObj=>$udlObj,
-        sqlClass=>$sqlClass,
-        sqlObj=>$sqlObj,
-        titleListCache=>Quiq::Hash->new->unlockKeys,
-        nullRowCache=>Quiq::Hash->new->unlockKeys,
-        utf8=>$utf8,
-        schema=>undef,
-        log=>$log,
-        logfile=>$logfile,
-        logSeparator=>'===',
-        logMsgSeparator=>'---',
-        logMsgPrefix=>'# ',
-        logProgressStep=>1000,
-        logProgressCount=>0,
+        startTime => scalar(Time::HiRes::gettimeofday),
+        apiObj => $apiObj,
+        udlObj => $udlObj,
+        sqlClass => $sqlClass,
+        sqlObj => $sqlObj,
+        titleListCache => Quiq::Hash->new->unlockKeys,
+        nullRowCache => Quiq::Hash->new->unlockKeys,
+        utf8 => $utf8,
+        schema => undef,
+        log => $log,
+        logfile => $logfile,
+        logSeparator => '===',
+        logMsgSeparator => '---',
+        logMsgPrefix => '# ',
+        logProgressStep => 1000,
+        logProgressCount => 0,
+        cacheDir => $cacheDir,
     );
 
     if ($self->isLog) {
@@ -1165,6 +1175,13 @@ sub lockTable {
 
 =over 4
 
+=item cache => $n (Default: undef)
+
+Cache die Datensätze, die das Statement $stmt liefert, für $n Sekunden.
+D.h. hole die Datensätze innerhalb dieser Zeitspanne nicht erneut
+von der Datenbank, sondern lies sie aus dem Cache. Ist $n 0,
+werden die Datensätze unbegrenzt lange gecacht.
+
 =item -chunkSize => $n (Default: 500)
 
 Fetche Datensätze in Chunks von $n Sätzen. Diese Option hat aktuell
@@ -1272,11 +1289,11 @@ Hierbei ist:
     <n> die Anzahl der zu fetchenden Datensätze
 
 Die Methode $db->sql() implementiert im Falle von PostgreSQL
-SELECTs durch obige Anweisungsfolge, wenn die Option -pgFetchMode
+SELECTs durch obige Anweisungsfolge, wenn die Option -fetchMode
 gesetzt ist.
 
     -fetchMode=>0|1|2 (Default: 0)
-        0=Defaultverhalten, 1=dekl. Cursor, 2=dekl. Cursor und extra Session
+        0=Defaultverhalten, 1=dekl. Cursor, 2=dekl. Cursor + extra Session
     -chunkSize=>$n (Default: 500)
         Fetche Datensätze in Chunks von $n Stück
 
@@ -1296,6 +1313,7 @@ sub sql {
 
     # Optionen
 
+    my $cache = undef;
     my $chunkSize = 500;
     my $fetchMode = 0;
     my $forceExec = 0;
@@ -1305,56 +1323,92 @@ sub sql {
     my $log = $self->{'log'};
 
     Quiq::Option->extract(\@_,
-        -chunkSize=>\$chunkSize,
-        -fetchMode=>\$fetchMode,
-        -forceExec=>\$forceExec,
-        -raw=>\$raw,
-        -rowClass=>\$rowClass,
-        -tableClass=>\$tableClass,
-        -log=>\$log,
+        -cache => \$cache,
+        -chunkSize => \$chunkSize,
+        -fetchMode => \$fetchMode,
+        -forceExec => \$forceExec,
+        -raw => \$raw,
+        -rowClass => \$rowClass,
+        -tableClass => \$tableClass,
+        -log => \$log,
     );
 
-    (my $stmt) = (my $origStmt) = shift || ''; # Leeres Statement ergibt Pseudocursor
+    # Leeres Statement ergibt Pseudocursor
+    (my $stmt) = (my $origStmt) = shift || '';
     Quiq::String->removeIndentation(\$stmt);
+
+    # Ergebnismenge aus dem Cache holen?
+
+    my $cacheOp = ''; # damit einfach mit eq verglichen werden kann
+    my $cacheFile;
+    if (defined($cache) && $stmt) {
+        $cacheFile = $self->cacheDir.'/'.Quiq::Digest->md5($stmt);
+        my $p = Quiq::Path->new;
+        if ($p->exists($cacheFile) &&
+                (!$cache || CORE::time-$p->mtime($cacheFile) < $cache)) {
+            # Cachedatei existiert und ist noch gültig,
+            # d.h. wir lesen den Cache.
+            $cacheOp = 'r';
+        }
+        else {
+            # Cachedatei existiert nicht oder ist abgelaufen,
+            # d.h. wír bauen die Cachedatei neu auf.
+            $cacheOp = 'w';
+        }
+    }
 
     if ($log) {
         $self->stmtToLog($stmt);
     }
 
-    unless ($rowClass) {
-        $rowClass = $self->defaultRowClass($raw);
-    }
-    unless ($tableClass) {
-        $tableClass = $rowClass->tableClass;
-    }
+    my $startTime = Time::HiRes::gettimeofday;
 
     # Statement ausführen
 
-    my $curName;
-    # FIXME: Select-Statement- und Bind-Varibalen-Erkennung verbessern
-    if ($self->isPostgreSQL && $fetchMode &&
-            $stmt !~ /^DECLARE/ && $stmt =~ /\bSELECT\b/i && $stmt !~ /\?/) {
-        if ($fetchMode == 2) {
-            $self = $self->new; # parallele Connection
+    my ($curName,$apiCur,$err,$titles,$id);
+    my $bindVars = 0;
+    my $hits = 0;    
+
+    if ($cacheOp ne 'r') {
+        # FIXME: Select-Statement- und Bind-Varibalen-Erkennung verbessern
+        if ($self->isPostgreSQL && $fetchMode &&
+                $stmt !~ /^DECLARE/ && $stmt =~ /\bSELECT\b/i && $stmt !~ /\?/) {
+            if ($fetchMode == 2) {
+                $self = $self->new; # parallele Connection
+            }
+
+            # FIXME: Logik auf API-Ebene verlagern? Idee: $curName,
+            # $chunkSize als Parameter an Methode sql() übergeben.
+            # Code in fetch() und destroy() ebenfalls auf API-Ebene verlagern.
+            # Gegen dieses Konzept spricht, dass dann FETCH und CLOSE
+            # nicht protokolliert werden.
+
+            my $time = Time::HiRes::gettimeofday;
+            $time =~ s/\.//;
+            $curName = sprintf 'csr%s',$time;
+            $self->sql("DECLARE $curName CURSOR FOR\n$stmt",-log=>0);
+            $stmt = "FETCH $chunkSize FROM $curName";
         }
 
-        # FIXME: Logik auf API-Ebene verlagern? Idee: $curName,
-        # $chunkSize als Parameter an Methode sql() übergeben.
-        # Code in fetch() und destroy() ebenfalls auf API-Ebene verlagern.
-        # Gegen dieses Konzept spricht, dass dann FETCH und CLOSE
-        # nicht protokolliert werden.
+        $apiCur = eval { $self->get('apiObj')->sql($stmt,$forceExec) };
+        $err = $@;
 
-        my $time = Time::HiRes::gettimeofday;
-        $time =~ s/\.//;
-        $curName = sprintf 'csr%s',$time;
-        $self->sql("DECLARE $curName CURSOR FOR\n$stmt",-log=>0);
-        $stmt = "FETCH $chunkSize FROM $curName";
+        if (!$err) {
+            # Attribute Lowlevel-Cursor abfragen
+
+            $bindVars = $apiCur->bindVars;
+            $hits = $apiCur->hits;
+            $titles = $apiCur->titles;
+            $id = $apiCur->id;
+
+            # Lowlevel-Cursor schließen, falls er nicht mehr gebraucht wird
+
+            if (!$bindVars && !@$titles) {
+                $apiCur->destroy;
+            }
+        }
     }
 
-    my $startTime = Time::HiRes::gettimeofday;
-    my $apiCur = eval { $self->get('apiObj')->sql($stmt,$forceExec) };
-
-    my $err = $@;
     my $execTime = Time::HiRes::gettimeofday-$startTime;
 
     # FIXME: Fetch-Zeit auch loggen
@@ -1370,34 +1424,52 @@ sub sql {
         die $err;
     }
 
-    # Attribute Lowlevel-Cursor abfragen
+    # Cache schreiben oder lesen
 
-    my $bindVars = $apiCur->bindVars;
-    my $hits = $apiCur->hits;
-    my $titles = $apiCur->titles;
-    my $id = $apiCur->id;
+    my $cacheFh;
+    if ($cacheOp eq 'w') {
+        # Cache schreiben
 
-    # Lowlevel-Cursor schließen, falls er nicht mehr gebraucht wird
+        $cacheFh = Quiq::FileHandle->new('>',$cacheFile);
+        $cacheFh->writeData($origStmt);
+        my $width = @$titles;
+        $cacheFh->writeData($width);
+        for (@$titles) {
+            $cacheFh->writeData($_);
+        }
+    }
+    elsif ($cacheOp eq 'r') {
+        # Cache lesen
 
-    if (!$bindVars && !@$titles) {
-        $apiCur->destroy;
+        $cacheFh = Quiq::FileHandle->new('<',$cacheFile);
+        $origStmt = $cacheFh->readData;
+        my $width = $cacheFh->readData;
+        my @titles;
+        for (my $i = 0; $i < $width; $i++) {
+            push @titles,$cacheFh->readData;
+        }
+        $titles = \@titles;
     }
 
+    $rowClass ||= $self->defaultRowClass($raw);
+
     return Quiq::Database::Cursor->new(
-        apiCur=>$apiCur,
-        bindVars=>$bindVars,
-        db=>$self, # schwache Referenz, siehe Cursor-Konstruktor
-        stmt=>$origStmt,
-        hits=>$hits,
-        id=>$id,
-        rowClass=>$rowClass,
-        tableClass=>$tableClass,
-        titles=>$titles,
-        startTime=>$startTime,
-        execTime=>$execTime,
-        curName=>$curName,
-        chunkSize=>$chunkSize,
-        chunkPos=>0,
+        apiCur => $apiCur,
+        bindVars => $bindVars,
+        cacheFh => $cacheFh,
+        cacheOp => $cacheOp,
+        db => $self, # schwache Referenz, siehe Cursor-Konstruktor
+        stmt => $origStmt,
+        hits => $hits,
+        id => $id,
+        rowClass => $rowClass,
+        tableClass => $tableClass || $rowClass->tableClass,
+        titles => $titles,
+        startTime => $startTime,
+        execTime => $execTime,
+        curName => $curName,
+        chunkSize => $chunkSize,
+        chunkPos => 0,
     );
 }
 
@@ -1850,6 +1922,10 @@ sub primaryKey {
 
 =over 4
 
+=item -cache => $n
+
+Siehe Quiq::Database::Connection/sql().
+
 =item -chunkSize => $n
 
 Siehe Quiq::Database::Connection/sql().
@@ -1886,6 +1962,7 @@ sub select {
 
     # Optionen
 
+    my $cache = undef;
     my $chunkSize = undef;
     my $cursor = 0;
     my $fetchMode = 1;
@@ -1894,6 +1971,7 @@ sub select {
     my $tableClass = undef;
 
     Quiq::Option->extract(-mode=>'sloppy',\@_,
+        -cache=>\$cache,
         -chunkSize=>\$chunkSize,
         -cursor=>\$cursor,
         -fetchMode=>\$fetchMode,
@@ -1904,6 +1982,7 @@ sub select {
 
     my $stmt = $self->stmt->select(@_);
     my $cur = $self->sql($stmt,
+        -cache=>$cache,
         -chunkSize=>$chunkSize,
         -fetchMode=>$fetchMode,
         -raw=>$raw,

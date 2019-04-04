@@ -12,6 +12,7 @@ use Quiq::Path;
 use Quiq::Option;
 use Scalar::Util ();
 use Quiq::Perl;
+no bytes;
 use Fcntl qw(:flock);
 
 # -----------------------------------------------------------------------------
@@ -274,6 +275,54 @@ sub read {
 
 # -----------------------------------------------------------------------------
 
+=head3 readData() - Lies Daten mit Längenangabe
+
+=head4 Synopsis
+
+    $data = $fh->readData;
+
+=head4 Description
+
+Lies Daten in der Repräsentation
+
+    <LENGTH><DATA>
+
+und liefere <DATA> zurück. <LENGTH> ist ein 32 Bit Integer und <DATA>
+sind beliebige Daten mit <LENGTH> Bytes Länge.
+
+Wurden die Daten in einem Encoding wie UTF-8 geschrieben, müssen diese
+nach dem Einlesen anscheinend nicht dekodiert werden. Warum?
+
+Wurden die Daten $data in einem Encoding wie UTF-8 geschrieben, müssen
+diese anschließend decodiert werden mit
+
+    Encode::decode('utf-8',$data);
+
+Auf der FileHandle $fh das Encoding zu definieren, ist I<nicht>
+richtig, da die Längenangabe diesem Encoding nicht unterliegt!
+
+=head4 See Also
+
+writeData()
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub readData {
+    my $self = shift;
+
+    my $length = $self->read(4);
+    if (!defined($length) || $length eq '') { # FIXME: Warum eq '' nötig?
+        # EOF
+        return undef;
+    }
+
+    return !defined $length? undef: $self->read(unpack 'I',$length);
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 readLine() - Lies Zeile von Dateihandle
 
 =head4 Synopsis
@@ -503,6 +552,45 @@ sub print {
 {
     no warnings 'once';
     *write = \&print;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 writeData() - Schreibe Daten mit Längenangabe
+
+=head4 Synopsis
+
+    $fh->writeData($data);
+
+=head4 Description
+
+Schreibe die Daten $data in der Repräsentation
+
+    <LENGTH><DATA>
+
+Hierbei ist <LENGTH> ein 32 Bit Integer, der die Länge der
+darauffolgenden Daten <DATA> in Bytes angibt.
+
+Liegen die Daten $data in einem Encoding wie UTF-8 vor, müssen diese
+zuvor encodiert werden mit
+
+    Encode::encode('utf-8',$data);
+
+Auf der FileHandle $fh das Encoding zu definieren, ist I<nicht>
+richtig, da die Längenangabe diesem Encoding nicht unterliegt!
+
+=head4 See Also
+
+readData()
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub writeData {
+    my ($self,$str) = @_;
+    Quiq::Perl->print($self,pack('I',bytes::length($str)),$str);
+    return;
 }
 
 # -----------------------------------------------------------------------------

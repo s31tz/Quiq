@@ -173,6 +173,10 @@ L<Quiq::DestinationTree|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq
 
 =item *
 
+L<Quiq::Digest|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Digest.pod> - Erzeuge Digest
+
+=item *
+
 L<Quiq::DirHandle|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/DirHandle.pod> - Verzeichnis-Handle
 
 =item *

@@ -34,6 +34,11 @@ connect()
 
 =over 4
 
+=item -cacheDir => $path
+
+In diesem Verzeichnis werden Ergebnismengen gecacht, wenn dies
+bei Selektionen angefordert wird.
+
 =item -handle => $dbh (Default: undef)
 
 Bereits aufgebaute Low-Level Datenbankverbindung zuweisen.
@@ -513,6 +518,13 @@ Importiere die Daten aus Datei $file in Tabelle $table.
 
 =over 4
 
+=item cache => $n (Default: undef)
+
+Cache die Datensätze, die das Statement $stmt liefert, für $n Sekunden.
+D.h. hole die Datensätze innerhalb dieser Zeitspanne nicht erneut
+von der Datenbank, sondern lies sie aus dem Cache. Ist $n 0,
+werden die Datensätze unbegrenzt lange gecacht.
+
 =item -chunkSize => $n (Default: 500)
 
 Fetche Datensätze in Chunks von $n Sätzen. Diese Option hat aktuell
@@ -620,11 +632,11 @@ Hierbei ist:
     <n> die Anzahl der zu fetchenden Datensätze
 
 Die Methode $db->sql() implementiert im Falle von PostgreSQL
-SELECTs durch obige Anweisungsfolge, wenn die Option -pgFetchMode
+SELECTs durch obige Anweisungsfolge, wenn die Option -fetchMode
 gesetzt ist.
 
     -fetchMode=>0|1|2 (Default: 0)
-        0=Defaultverhalten, 1=dekl. Cursor, 2=dekl. Cursor und extra Session
+        0=Defaultverhalten, 1=dekl. Cursor, 2=dekl. Cursor + extra Session
     -chunkSize=>$n (Default: 500)
         Fetche Datensätze in Chunks von $n Stück
 
@@ -806,6 +818,10 @@ nicht unterstützt.
 =head4 Options
 
 =over 4
+
+=item -cache => $n
+
+Siehe Quiq::Database::Connection/sql().
 
 =item -chunkSize => $n
 
