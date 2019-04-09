@@ -335,6 +335,22 @@ sub toBuchungen {
             ),
         ;
     }
+    elsif (# $self->empfaenger =~ /Borgert-Bühren/ &&
+            $self->buchungsdetails =~ /Betriebskostenabrechung 2017/i &&
+            $self->betragZahl =~ /-1286,24/) {
+        push @arr,
+            Quiq::Fibu::Buchung->new(
+                vorgang => 'Grundstückskosten / Gas, Wasser, Strom',
+                betrag => '-190,36',
+                text => 'Büro Nebenkosten Nachzahlung',
+            ),
+            Quiq::Fibu::Buchung->new(
+                vorgang => 'Sonstige Geldabgänge / Entnahme nach Privat',
+                betrag => '-1095,88',
+                text => 'Nebenkosten Nachzahlung',
+            ),
+        ;
+    }
     elsif ($self->empfaenger =~ /Borgert-Bühren/ &&
             $self->buchungsdetails =~ /Nebenkosten/i &&
             $self->betrag =~ /1\.720,07/) {
