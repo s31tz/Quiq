@@ -255,7 +255,7 @@ sub destroy {
 =head4 Description
 
 Lies die nächste die nächsten $n I<Zeichen> von Dateihandle $fh
-und liefere diese zurück.
+und liefere diese zurück. Ist das Dateiende erreicht, liefere undef.
 
 =cut
 
@@ -264,10 +264,19 @@ und liefere diese zurück.
 sub read {
     my ($self,$n) = @_;
 
+    if ($n == 0) {
+        # Der Returnwert 0 von read() zeigt nur dann EOF an, wenn
+        # mehr als 0 Bytes gelesen werden sollen
+        return '';
+    }
+
     undef $!;
-    CORE::read($self,my $data,$n);
-    if (!defined $data and $!) {
+    $n = CORE::read($self,my $data,$n);
+    if (!defined $n) {
         $self->throw(q~FH-00012: Read fehlgeschlagen~,Errstr=>$!);
+    }
+    elsif ($n == 0) {
+        return undef;
     }
 
     return $data;
@@ -313,12 +322,11 @@ sub readData {
     my $self = shift;
 
     my $length = $self->read(4);
-    if (!defined($length) || $length eq '') { # FIXME: Warum eq '' nötig?
-        # EOF
+    if (!defined $length) {
         return undef;
     }
 
-    return !defined $length? undef: $self->read(unpack 'I',$length);
+    return $self->read(unpack 'I',$length);
 }
 
 # -----------------------------------------------------------------------------

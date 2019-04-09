@@ -20,6 +20,7 @@ use Quiq::Array;
 use Quiq::String;
 use Quiq::Digest;
 use Quiq::Path;
+use Quiq::TempFile;
 use Quiq::Database::Cursor;
 use Time::HiRes ();
 
@@ -1337,23 +1338,34 @@ sub sql {
     (my $stmt) = (my $origStmt) = shift || '';
     Quiq::String->removeIndentation(\$stmt);
 
-    # Ergebnismenge aus dem Cache holen?
+    # Ergebnismenge im Cache holen?
 
-    my $cacheOp = ''; # damit einfach mit eq verglichen werden kann
+    my $cacheOp = ''; # damit per eq verglichen werden kann
     my $cacheFile;
     if (defined($cache) && $stmt) {
-        $cacheFile = $self->cacheDir.'/'.Quiq::Digest->md5($stmt);
+        my $cacheDir = $self->{'cacheDir'};
+        $cacheFile = $cacheDir.'/'.Quiq::Digest->md5($stmt);
         my $p = Quiq::Path->new;
-        if ($p->exists($cacheFile) &&
+        if ((my $exists = $p->exists($cacheFile)) &&
                 (!$cache || CORE::time-$p->mtime($cacheFile) < $cache)) {
             # Cachedatei existiert und ist noch gültig,
-            # d.h. wir lesen den Cache.
+            # d.h. wir lesen die Datensätze aud dem Cache.
             $cacheOp = 'r';
         }
         else {
-            # Cachedatei existiert nicht oder ist abgelaufen,
-            # d.h. wír bauen die Cachedatei neu auf.
+            if ($exists) {
+                # Cache-Datei ist abgelaufen, wir löschen sie
+                $p->delete($cacheFile);
+            }
+
+            # Wír bauen die Cachedatei auf. Damit im Falle eines Fehlers
+            # keine unvollständige Cachedatei entsteht, schreiben
+            # wir die Datensätze zunächst in eine Temporäre Datei.
+            # Diese benennen wir am Ende der Fetch-Sequenz in die
+            # richtige Cache-Datei um, siehe $cur->fetch().
+
             $cacheOp = 'w';
+            $cacheFile = Quiq::TempFile->new(-dir=>$cacheDir);
         }
     }
 
@@ -1372,7 +1384,8 @@ sub sql {
     if ($cacheOp ne 'r') {
         # FIXME: Select-Statement- und Bind-Varibalen-Erkennung verbessern
         if ($self->isPostgreSQL && $fetchMode &&
-                $stmt !~ /^DECLARE/ && $stmt =~ /\bSELECT\b/i && $stmt !~ /\?/) {
+                $stmt !~ /^DECLARE/ && $stmt =~ /\bSELECT\b/i &&
+                $stmt !~ /\?/) {
             if ($fetchMode == 2) {
                 $self = $self->new; # parallele Connection
             }
@@ -1430,8 +1443,7 @@ sub sql {
     if ($cacheOp eq 'w') {
         # Cache schreiben
 
-        $cacheFh = Quiq::FileHandle->new('>',$cacheFile);
-        $cacheFh->writeData($origStmt);
+        $cacheFh = Quiq::FileHandle->new('>',$cacheFile,-createDir=>1);
         my $width = @$titles;
         $cacheFh->writeData($width);
         for (@$titles) {
@@ -1442,7 +1454,6 @@ sub sql {
         # Cache lesen
 
         $cacheFh = Quiq::FileHandle->new('<',$cacheFile);
-        $origStmt = $cacheFh->readData;
         my $width = $cacheFh->readData;
         my @titles;
         for (my $i = 0; $i < $width; $i++) {
@@ -1456,6 +1467,7 @@ sub sql {
     return Quiq::Database::Cursor->new(
         apiCur => $apiCur,
         bindVars => $bindVars,
+        cacheFile => $cacheFile,
         cacheFh => $cacheFh,
         cacheOp => $cacheOp,
         db => $self, # schwache Referenz, siehe Cursor-Konstruktor

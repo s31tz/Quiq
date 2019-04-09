@@ -131,7 +131,7 @@ Nach Aufruf der Methode ist die Objektreferenz ungültig.
 =head4 Description
 
 Lies die nächste die nächsten $n I<Zeichen> von Dateihandle $fh
-und liefere diese zurück.
+und liefere diese zurück. Ist das Dateiende erreicht, liefere undef.
 
 =head3 readData() - Lies Daten mit Längenangabe
 
