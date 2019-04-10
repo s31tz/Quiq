@@ -93,10 +93,6 @@ sub toBuchungen {
 
     # Miete
 
-say $self->empfaenger;
-say $self->buchungsdetails;
-say $self->betragZahl;
-
     if ($self->isDauerauftrag && $self->buchungsdetails =~ /^MIETE/i) {
         if ($self->betragZahl eq '-1070.00') {
             push @arr,
@@ -340,18 +336,24 @@ say $self->betragZahl;
         ;
     }
     elsif ($self->empfaenger =~ /Borgert-Bühren/i &&
-            $self->buchungsdetails =~ /etriebskostenabrechnung 2017/i &&
+            $self->buchungsdetails =~ /Betriebskostenabrechnung 2017/i &&
             $self->betragZahl eq '-1286.24') {
         push @arr,
             Quiq::Fibu::Buchung->new(
-                vorgang => 'Grundstückskosten / Gas, Wasser, Strom',
-                betrag => '-190,36',
-                text => 'Büro Nebenkosten Nachzahlung',
-            ),
-            Quiq::Fibu::Buchung->new(
                 vorgang => 'Sonstige Geldabgänge / Entnahme nach Privat',
-                betrag => '-1095,88',
-                text => 'Nebenkosten Nachzahlung',
+                betrag => '-1286,24',
+                text => 'Privatentnahme',
+            ),
+        ;
+    }
+    elsif ($self->auftraggeber =~ /Borgert-Buhren, Kirsten/i &&
+            $self->buchungsdetails =~ /Betriebskostenabrechnung 2017/i &&
+            $self->betragZahl eq '1286.24') {
+        push @arr,
+            Quiq::Fibu::Buchung->new(
+                vorgang => 'Sonstige Geldzugänge / Einlage von Privat',
+                betrag => '1286,24',
+                text => 'Privateinlage',
             ),
         ;
     }
