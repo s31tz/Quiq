@@ -93,6 +93,10 @@ sub toBuchungen {
 
     # Miete
 
+say $self->empfaenger;
+say $self->buchungsdetails;
+say $self->betragZahl;
+
     if ($self->isDauerauftrag && $self->buchungsdetails =~ /^MIETE/i) {
         if ($self->betragZahl eq '-1070.00') {
             push @arr,
@@ -335,9 +339,9 @@ sub toBuchungen {
             ),
         ;
     }
-    elsif (# $self->empfaenger =~ /Borgert-Bühren/ &&
-            $self->buchungsdetails =~ /Betriebskostenabrechung 2017/i &&
-            $self->betragZahl =~ /-1286,24/) {
+    elsif ($self->empfaenger =~ /Borgert-Bühren/i &&
+            $self->buchungsdetails =~ /etriebskostenabrechnung 2017/i &&
+            $self->betragZahl eq '-1286.24') {
         push @arr,
             Quiq::Fibu::Buchung->new(
                 vorgang => 'Grundstückskosten / Gas, Wasser, Strom',
