@@ -79,6 +79,10 @@ Mögliche Werte für $type: 'date', 'num', 'num-fmt', 'html-num',
 'html-num-fmt', 'html', 'string'. Siehe
 L<https://datatables.net/reference/option/columns.type>
 
+=item footer => $bool (Default: 0)
+
+Setze die Titel auch als Footer.
+
 =item id => $id (Default: undef)
 
 DOM-Id der DataTable (des Table-Elements).
@@ -475,6 +479,7 @@ sub new {
         arguments=>undef,
         class=>undef,
         columns=>[],
+        footer=>0,
         id=>undef,
         instantiate=>0,
         rowCallback=>undef,
@@ -512,8 +517,8 @@ sub html {
 
     my $self = ref $this? $this: $this->new(@_);
 
-    my ($arguments,$class,$id,$instantiate,$rowCallback,$rowA) =
-        $self->get(qw/arguments class id instantiate rowCallback rows/);
+    my ($arguments,$class,$footer,$id,$instantiate,$rowCallback,$rowA) =
+        $self->get(qw/arguments class footer id instantiate rowCallback rows/);
 
     # Liste der Kolumnendefinitionen als Hash-Objekte
     my @columns = $self->getColumns;
@@ -553,6 +558,7 @@ sub html {
         rowCallbackArguments=>[\@columns],
         rows=>$rowA,
         titles=>\@titles,
+        footer=>$footer,
     );
 
     if ($instantiate) {
@@ -615,6 +621,9 @@ sub instantiate {
         if (my $visible = $col->visible) {
             $keyVals .= "visible: '$visible',\n"; 
         }
+        if (my $width = $col->width) {
+            $keyVals .= "width: '$width',\n"; 
+        }
         if ($keyVals) {
             $keyVals =~ s/^/    /mg;
             $columns .= sprintf "{ // %s\n%s},",$col->title,$keyVals;
@@ -670,6 +679,7 @@ sub getColumns {
             orderable
             searchable
             visible
+            width
         /])->join($h);
     }
 

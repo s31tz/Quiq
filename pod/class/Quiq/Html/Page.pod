@@ -55,6 +55,11 @@ URL oder JavaScript-Code im Head der Seite. Mehrfach-Definition,
 wenn Array-Referenz. Das Attribut kann mehrfach auftreten, die
 Werte werden zu einer Liste zusammengefügt.
 
+=item javaScriptToHead => $bool (Default: 0)
+
+Setze den JavaScrip-Code nicht an das Ende des Body, sondern in
+den Head der HTML-Seite.
+
 =item styleSheet => $spec | \@specs (Default: undef)
 
 Einzelne Style-Spezifikation oder Liste von Style-Spezifikationen.

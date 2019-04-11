@@ -64,6 +64,10 @@ Mögliche Werte für $type: 'date', 'num', 'num-fmt', 'html-num',
 'html-num-fmt', 'html', 'string'. Siehe
 L<https://datatables.net/reference/option/columns.type>
 
+=item footer => $bool (Default: 0)
+
+Setze die Titel auch als Footer.
+
 =item id => $id (Default: undef)
 
 DOM-Id der DataTable (des Table-Elements).

@@ -46,6 +46,10 @@ HTML-Code, der im Body der Tabelle gesetzt wird, wenn die Liste
 der Elemente leer ist. Wenn auf Leerstring, undef oder 0 gesetzt,
 wird kein Body angezeigt.
 
+=item footer => $bool (Default: 0)
+
+Setze die Titel @titles auch als Footer.
+
 =item rowCallback => $sub (Default: undef)
 
 Referenz auf eine Subroutine, die für jedes Element die

@@ -57,6 +57,10 @@ HTML-Code, der im Body der Tabelle gesetzt wird, wenn die Liste
 der Elemente leer ist. Wenn auf Leerstring, undef oder 0 gesetzt,
 wird kein Body angezeigt.
 
+=item footer => $bool (Default: 0)
+
+Setze die Titel @titles auch als Footer.
+
 =item rowCallback => $sub (Default: undef)
 
 Referenz auf eine Subroutine, die für jedes Element die
@@ -148,6 +152,7 @@ sub new {
         align=>[],
         allowHtml=>0,
         empty=>'&nbsp;',
+        footer=>0,
         rowCallback=>undef,
         rowCallbackArguments=>[],
         rows=>[],
@@ -190,9 +195,9 @@ sub html {
 
     # Attribute
 
-    my ($align,$allowHtml,$empty,$rowCallback,$rowCallbackArgumentA,$rowA,
-        $titleA) = $self->get(qw/align allowHtml empty rowCallback
-        rowCallbackArguments rows titles/);
+    my ($align,$allowHtml,$empty,$footer,$rowCallback,$rowCallbackArgumentA,
+        $rowA,$titleA) = $self->get(qw/align allowHtml empty footer
+        rowCallback rowCallbackArguments rows titles/);
 
     return '' if !@$titleA && !@$rowA;
 
@@ -213,8 +218,8 @@ sub html {
 
     # Kopf
 
+    my $ths;
     if (@$titleA) {
-        my $ths;
         my $i = 0;
         for my $title (@$titleA) {
             $ths .= $h->tag('th',
@@ -275,6 +280,14 @@ sub html {
     }
     if ($trs) {
         $html .= $h->tag('tbody',$trs);
+    }
+
+    # Fuß
+
+    if ($footer && $ths) {
+        $html .= $h->tag('tfoot',
+            $h->tag('tr',$ths),
+        );
     }
 
     return $self->SUPER::html($h,$html);
