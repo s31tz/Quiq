@@ -315,6 +315,54 @@ Sekunden (Float)
 
 Ermittele die vergangene Zeit in Sekunden und liefere diese zurück.
 
+=head2 Logging
+
+=head3 log() - Schreibe Meldung nach STDERR
+
+=head4 Synopsis
+
+    $prg->log($fmt,@args);
+    $prg->log($level,$fmt,@args);
+
+=head4 Description
+
+Schreibe eine Logmeldung nach STDERR, wenn $level größer oder gleich
+dem eingestellten Loglevel ($prg->logLevel) ist. Ist $level nicht
+angegeben, wird 1 angenommen.
+
+Die Logmeldung wird per
+
+    printf STDERR $fmt,@args;
+
+erzeugt. Endet $fmt nicht mit einem Newline, wird es hinzugefügt.
+
+Per Default ist der LogLevel 0. Er wird mit
+
+    $prg->logLevel($n); # $n > 0
+
+eingestellt.
+
+=head4 Caveats
+
+=over 2
+
+=item *
+
+Ist $fmt eine Zahl, muss der Level $level explizit angegeben werden.
+
+=item *
+
+Die Argumente der Methode werden I<immer> ausgewertet, auch wenn
+kein Logging erfolgt. Ist damit ein größerer Aufwand verbunden,
+kann es sinnvoll sein, eine Bedingung zu formulieren:
+
+    if ($level >= $prg->logLevel) {
+        # $msg mit großem Aufwand erzeugen
+        $prg->log($level,$msg);
+    }
+
+=back
+
 =head2 Hilfe
 
 =head3 help() - Gib Hilfetext aus und beende Programm
