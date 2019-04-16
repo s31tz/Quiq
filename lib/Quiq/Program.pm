@@ -758,7 +758,7 @@ sub log {
     my $level = $_[0] =~ /^\d+$/? shift: 1;
     # @_: $fmt,@args
 
-    if ($level >= $self->logLevel) {
+    if ($self->logLevel >= $level) {
         my $fmt = shift;
         if (substr($fmt,-1,1) ne "\n") {
             $fmt .= "\n";

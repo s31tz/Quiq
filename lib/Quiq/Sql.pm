@@ -612,6 +612,96 @@ sub stmtListToScript {
 
 # -----------------------------------------------------------------------------
 
+=head2 Commands
+
+=head3 commands() - Liste der Kommandos des DBMS
+
+=head4 Synopsis
+
+    @commands | $commandA = $sql->commands;
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+my %Commands = (
+    Oracle => [
+    ],
+    PostgreSQL => [qw/
+        ABORT
+        ALTER
+        ANALYZE
+        BEGIN
+        CALL
+        CHECKPOINT
+        CLOSE
+        CLUSTER
+        COMMENT
+        COMMIT
+        COPY CREATE
+        DEALLOCATE
+        DECLARE
+        DELETE
+        DISCARD
+        DO
+        DROP
+        END
+        EXECUTE
+        EXPLAIN
+        FETCH
+        GRANT
+        IMPORT FOREIGN SCHEMA
+        INSERT
+        LISTEN
+        LOAD
+        LOCK
+        MOVE
+        NOTIFY
+        PREPARE
+        REASSIGN OWNED
+        REFRESH MATERIALIZED VIEW
+        REINDEX
+        RELEASE SAVEPOINT
+        ROLLBACK
+        SAVEPOINT
+        SECURITY LABEL
+        SELECT
+        SET
+        SHOW
+        START TRANSACTION
+        TRUNCATE
+        UNLISTEN
+        UPDATE
+        VACUUM
+        VALUES
+    /],
+    SQLite => [
+    ],
+    MySQL => [
+    ],
+    Access => [
+    ],
+    MSSQL => [
+    ],
+);
+
+sub commands {
+    my $self = shift;
+
+    my $dbms = $self->{'dbms'};
+    my $cmdA = $Commands{$dbms};
+    if (!@$cmdA) {
+        $self->throw(
+            q~SQL-00099: No commands defined for DBMS~,
+            Dbms => $dbms,
+        );
+    }
+
+    return wantarray? @$cmdA: $cmdA;
+}
+
+# -----------------------------------------------------------------------------
+
 =head2 Data Types
 
 Methoden für die portable Spezifikation von Kolumnen-Datentypen.

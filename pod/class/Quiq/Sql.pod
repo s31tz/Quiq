@@ -340,6 +340,14 @@ wird zu:
     -- eof       Kommentar am Ende, nach einzeiligem Statement
                  => davor nichts, danach "\n"
 
+=head2 Commands
+
+=head3 commands() - Liste der Kommandos des DBMS
+
+=head4 Synopsis
+
+    @commands | $commandA = $sql->commands;
+
 =head2 Data Types
 
 Methoden für die portable Spezifikation von Kolumnen-Datentypen.
