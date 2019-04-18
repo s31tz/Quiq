@@ -110,6 +110,39 @@ Objekt
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
 dieses Objekt zurück.
 
+=head2 Datei bearbeiten
+
+=head3 edit() - Bearbeite Repository-Datei
+
+=head4 Synopsis
+
+    $output = $scm->edit($repoFile,$package);
+
+=head4 Arguments
+
+=over 4
+
+=item $repoFile
+
+Datei mit Repository-Pfadangabe.
+
+=item $package
+
+Package, dem die ausgecheckte Datei (mit reservierter Version)
+zugeordnet wird.
+
+=back
+
+=head4 Returns
+
+Ausgabe der CASCM-Kommandos (String)
+
+=head4 Description
+
+Checke die Workspace-Datei $repoFile aus, öffne sie im Editor und
+checke sie nach dem Editieren wieder ein (sofern sie geändert wurde).
+Vor dem Einchecken einer Änderung wird eine Rückfrage gestellt.
+
 =head2 Externe Dateien
 
 =head3 putFiles() - Füge Dateien zum Repository hinzu

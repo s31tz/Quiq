@@ -10,6 +10,7 @@ our $VERSION = 1.138;
 use Quiq::Database::Row::Array;
 use Quiq::Shell;
 use Quiq::Path;
+use Quiq::Terminal;
 use Quiq::CommandLine;
 use Quiq::Array;
 use Quiq::Stopwatch;
@@ -184,6 +185,104 @@ sub new {
     $self->set(sh=>$sh);
 
     return $self;
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Datei bearbeiten
+
+=head3 edit() - Bearbeite Repository-Datei
+
+=head4 Synopsis
+
+    $output = $scm->edit($repoFile,$package);
+
+=head4 Arguments
+
+=over 4
+
+=item $repoFile
+
+Datei mit Repository-Pfadangabe.
+
+=item $package
+
+Package, dem die ausgecheckte Datei (mit reservierter Version)
+zugeordnet wird.
+
+=back
+
+=head4 Returns
+
+Ausgabe der CASCM-Kommandos (String)
+
+=head4 Description
+
+Checke die Workspace-Datei $repoFile aus, öffne sie im Editor und
+checke sie nach dem Editieren wieder ein (sofern sie geändert wurde).
+Vor dem Einchecken einer Änderung wird eine Rückfrage gestellt.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub edit {
+    my ($self,$repoFile,$package) = @_;
+
+    # Vollständigen Pfad der Repository-Datei ermitteln
+
+    my $p = Quiq::Path->new;
+    my $file = sprintf '%s/%s',$self->workspace,$repoFile;
+    if (!$p->exists($file)) {
+        $self->throw(
+            q~CASCM-00099: Repository file does not exist~,
+            File => $file,
+        );
+    }
+    
+    # Datei ins lokale Verzeichnis kopieren
+
+    my $localFile = $p->filename($file);
+    my $which = 'r';
+    if (-e $localFile) {
+        # Repo-Datei muss nicht kopiert werden, wenn sie schon
+        # vorhanden ist, falls sie nicht differiert
+        $which = 'l';
+        if ($p->compare($file,$localFile)) {
+            $which = Quiq::Terminal->askUser(
+                'Local file exists and differs from repository file.'.
+                    ' Which file: l=local, r=repository, q=quit?',
+                -values=>'l/r/q',
+                -default=>'l',
+            );
+            if ($which eq 'q') {
+                return '';
+            }
+            # Datei differiert und wird kopiert
+        }
+    }
+    if ($which eq 'r') {
+        $p->copyToDir($file,'.');
+    }
+
+    my $backupFile = "$localFile.bak";
+    $p->copy($localFile,$backupFile);
+
+    my $editor = $ENV{'EDITOR'} || 'vi';
+    Quiq::Shell->exec("$editor $localFile");
+    if ($p->compare($localFile,$backupFile)) {
+        my $answ = Quiq::Terminal->askUser(
+            "Save changes to repository?",
+            -values=>'y/n',
+            -default=>'y',
+        );
+        if ($answ eq 'y') {
+            my ($repoDir) = $p->split($repoFile);
+            return $self->putFiles($package,$repoDir,$localFile);
+        }
+    }
+
+    return '';
 }
 
 # -----------------------------------------------------------------------------
