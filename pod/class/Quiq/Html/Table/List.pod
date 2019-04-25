@@ -144,7 +144,7 @@ der Methode aus den Argumenten @keyVal instantiiert.
 
 =head1 VERSION
 
-1.138
+1.139
 
 =head1 SOURCE
 
