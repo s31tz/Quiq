@@ -684,6 +684,10 @@ sub toHash {
     my $arr = ref $_[0]? CORE::shift: CORE::splice @_,0,2;
     my $val = shift // 1;
 
+    # FIXME: Ist das schneller?
+    # my %hash;
+    # @hash{@$arr} = ($val) x @$arr;
+
     my %hash = map {$_=>$val} @$arr;
 
     return wantarray? %hash: \%hash;
