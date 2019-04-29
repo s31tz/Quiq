@@ -643,6 +643,54 @@ sub sort {
 
 # -----------------------------------------------------------------------------
 
+=head3 toHash() - Erzeuge Hash aus Array
+
+=head4 Synopsis
+
+    %hash | $hashH = $arr->toHash;
+    %hash | $hashH = $arr->toHash($val);
+    %hash | $hashH = $class->toHash(\@arr);
+    %hash | $hashH = $class->toHash(\@arr,$val);
+
+=head4 Arguments
+
+=over 4
+
+=item @$arr, @arr
+
+Array.
+
+=item $val (Default: 1)
+
+Wert.
+
+=back
+
+=head4 Returns
+
+Hash. Im Skalarkontext wird eine Referenz auf den Hash geliefert.
+
+=head4 Description
+
+    Erzeuge aus Array @$arr bzw. @arr einen Hash mit den Werten des Array
+    als Schlüssel und dem Wert $val als deren Werte und liefere diesen zurück.
+    Ist $val nicht angegeben, werden alle Werte des Hash auf 1 gesetzt.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub toHash {
+    my $arr = ref $_[0]? CORE::shift: CORE::splice @_,0,2;
+    my $val = shift // 1;
+
+    my %hash = map {$_=>$val} @$arr;
+
+    return wantarray? %hash: \%hash;
+}
+
+# -----------------------------------------------------------------------------
+
 =head2 Numerische Operationen
 
 =head3 gcd() - Größter gemeinsamer Teiler
