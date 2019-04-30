@@ -129,7 +129,7 @@ Datei mit Repository-Pfadangabe.
 =item $package
 
 Package, dem die ausgecheckte Datei (mit reservierter Version)
-zugeordnet wird.
+beim Einchecken zugeordnet wird.
 
 =back
 
@@ -139,9 +139,34 @@ Ausgabe der CASCM-Kommandos (String)
 
 =head4 Description
 
-Checke die Workspace-Datei $repoFile aus, öffne sie im Editor und
-checke sie nach dem Editieren wieder ein (sofern sie geändert wurde).
-Vor dem Einchecken einer Änderung wird eine Rückfrage gestellt.
+Öffne die Repository-Datei $repoFile im Editor. Nach dem Verlassen
+des Editors wird geprüft, ob die Datei (eine Kopie im lokalen Verzeichnis)
+verändert wurde. Falls ja, wird die Repository-Datei ausgecheckt und
+die gänderte lokale Datei unter einer neuen Versionsnummer eingecheckt.
+
+=head3 view() - Repository-Datei ansehen
+
+=head4 Synopsis
+
+    $scm->view($repoFile);
+
+=head4 Arguments
+
+=over 4
+
+=item $repoFile
+
+Datei mit Repository-Pfadangabe.
+
+=back
+
+=head4 Returns
+
+nichts
+
+=head4 Description
+
+Öffne die Repository-Datei $repoFile im Pager.
 
 =head2 Externe Dateien
 
@@ -375,6 +400,31 @@ Erzeuge neue Versionen der Items @repoFiles, welche die Items als zu
 Löschen kennzeichnen und trage diese in das Package $package ein.
 Wird das Package promotet, werden die Items auf der betreffenden
 Stufe gelöscht.
+
+=head3 repoFileToFile() - Expandiere Repo-Pfad zu absolutem Pfad
+
+=head4 Synopsis
+
+    $file = $scm->repoFileToFile($repoFile);
+
+=head4 Arguments
+
+=over 4
+
+=item $repoFile
+
+Datei mit Repository-Pfadangabe.
+
+=back
+
+=head4 Returns
+
+Pfad (String)
+
+=head4 Description
+
+Expandiere den Reository-Dateipfad zu einem absoluten Dateipfad
+und liefere diesen zurück.
 
 =head2 Packages
 
@@ -682,6 +732,7 @@ Stufe.
 =head4 Description
 
 Liefere die Stufe $state, auf der sich Package $package befindet.
+Existiert das Package nicht, liefere einen Leerstring ('').
 
 =head3 listPackages() - Liste aller Pakete
 
