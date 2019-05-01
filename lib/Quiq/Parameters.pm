@@ -242,7 +242,7 @@ sub extract {
             # Existenz der Option prüfen
 
             if (!exists $opt{$key}) {
-                # Option existiert nicht. Wir übergehen die Parameter.
+                # Option existiert nicht. Wir übergehen den Parameter.
 
                 $i += $remove;
                 next;
@@ -448,7 +448,8 @@ Parameterliste, z.B. @_.
 
 Mindestanzahl an Argumenten.
 
-$ maxArgs
+=item $maxArgs
+
 Maximale Anzahl an Argumenten, C<undef> bedeutet beliebig viele.
 
 =item @optRef

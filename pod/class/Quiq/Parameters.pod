@@ -267,7 +267,8 @@ Parameterliste, z.B. @_.
 
 Mindestanzahl an Argumenten.
 
-$ maxArgs
+=item $maxArgs
+
 Maximale Anzahl an Argumenten, C<undef> bedeutet beliebig viele.
 
 =item @optRef

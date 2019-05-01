@@ -230,6 +230,8 @@ die gänderte lokale Datei unter einer neuen Versionsnummer eingecheckt.
 sub edit {
     my ($self,$repoFile,$package) = @_;
 
+    my $output = '';
+
     my $p = Quiq::Path->new;
 
     # Vollständigen Pfad der Repository-Datei ermitteln
@@ -268,9 +270,9 @@ sub edit {
                 -default=>'l',
             );
             if ($which eq 'q') {
-                return '';
+                return $output;
             }
-            # Datei differiert und wird kopiert
+            # Datei differiert und wird kopiert, wenn r gewählt wurde
         }
     }
     if ($which eq 'r') {
@@ -300,7 +302,7 @@ sub edit {
         );
         if ($answ eq 'y') {
             my ($repoDir) = $p->split($repoFile);
-            return $self->putFiles($package,$repoDir,$localFile);
+            $output = $self->putFiles($package,$repoDir,$localFile);
         }
     }
     elsif (!$p->compare($localFile,$origFile)) {
@@ -313,7 +315,7 @@ sub edit {
     # Die Backup-Datei löschen wir immer
     $p->delete($backupFile);
 
-    return '';
+    return $output;
 }
 
 # -----------------------------------------------------------------------------

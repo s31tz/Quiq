@@ -57,8 +57,8 @@ Beispiele: 'bold reverse' oder 'dark red on_green'
 
 =head2 Texte mit Colorcodes weiter verarbeiten
 
-Die im folgenden genannten Programme C<aha>, C<wkhtmltopdf> und C<less>
-sind im Debian-Repository enthalten.
+Die im folgenden genannten Programme C<aha>, C<wkhtmltopdf> sind im
+Debian-Repository enthalten.
 
 =head3 Nach PDF wandeln
 

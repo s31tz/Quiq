@@ -264,8 +264,9 @@ Vergleichsoperator ist eq.
 sub extractKeyVal {
     my $arr = ref $_[0]? CORE::shift: CORE::splice @_,0,2;
     my $key = CORE::shift;
+    my $step = CORE::shift // 2;
 
-    for (my $i = 0; $i < @$arr; $i += 2) {
+    for (my $i = 0; $i < @$arr; $i += $step) {
         if ($arr->[$i] eq $key) {
             return scalar CORE::splice @$arr,$i,2;
         }

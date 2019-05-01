@@ -2707,6 +2707,89 @@ sub delete {
 
 # -----------------------------------------------------------------------------
 
+=head2 Schemas
+
+=head3 schemas() - Liste der Schemata
+
+=head4 Synopsis
+
+    @schemas | $schemaA = $db->schemas(@opt);
+    %schemas | $schemaH = $db->schemas(-hash=>1,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -cache => $bool (Default: 1)
+
+Cache die Liste.
+
+=item -hash => $bool (Default: 0)
+
+Liefere einen Hash mit den Schemanamen als Schlüssel und 1 als Wert.
+
+=back
+
+=head4 Returns
+
+=over 4
+
+=item @schemas, $schemaA
+
+Liste der Schemanamen (Liste von Strings) oder eine Referenz auf
+die Liste.
+
+=item %schemas, $schemaH
+
+Hash der Schemanamen oder eine Referenz auf den Hash. Der Hashwert ist 1.
+
+=back
+
+=head4 Description
+
+Ermittele die Schemata der Datenbank und liefere die Liste
+oder den Hash der Namen zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub schemas {
+    my $self = shift;
+
+    # Optionen
+
+    my $cache = 1;
+    my $hash = 0;
+
+    Quiq::Parameters->extractToVariables(\@_,0,0,
+        -cache => \$cache,
+        -hash => \$hash,
+    );
+
+    state $schemaA;
+    if (!$schemaA || !$cache) {
+        if ($self->isPostgreSQL) {
+            $schemaA = $self->values(
+                -select => 'nspname',
+                -from => 'pg_namespace',
+                -orderBy => 1,
+            );
+        }
+        else {
+            $self->throw;
+        }
+    }
+
+    if ($hash) {
+        return Quiq::Array->toHash($schemaA);
+    }
+
+    return wantarray? @$schemaA: $schemaA;
+}
+
+# -----------------------------------------------------------------------------
+
 =head2 Tables
 
 =head3 createTable() - Erzeuge Tabelle
