@@ -244,7 +244,9 @@ sub exists {
 =head4 Synopsis
 
     $val = $arr->extractKeyVal($key);
+    $val = $arr->extractKeyVal($key,$step);
     $val = $class->extractKeyVal(\@arr,$key);
+    $val = $class->extractKeyVal(\@arr,$key,$step);
 
 =head4 Alias
 
@@ -252,10 +254,12 @@ extractPair()
 
 =head4 Description
 
-Durchsuche @arr paarweise nach Element $key und liefere das folgende
+Durchsuche @arr nach Element $key und liefere das folgende
 Element $val. Beide Elemente werden aus @arr entfernt. Kommt $key
 in @arr nicht vor, liefere undef und lasse @arr unverändert.
-Vergleichsoperator ist eq.
+Vergleichsoperator ist eq. Per Default wird das Array paarweise
+durchsucht, d.h. der Defaultwert für $step ist 2. Wird $step auf
+1 gesetzt, kann jedes Element den gesuchten $key enthalten.
 
 =cut
 
