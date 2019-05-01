@@ -140,7 +140,7 @@ bless $newRow auf $newClass
 
 =head1 VERSION
 
-1.139
+1.140
 
 =head1 SOURCE
 

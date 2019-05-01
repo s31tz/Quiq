@@ -92,7 +92,7 @@ einschließlich aller Subknoten im Format $format und liefere diese zurück.
 
 =head1 VERSION
 
-1.139
+1.140
 
 =head1 SOURCE
 

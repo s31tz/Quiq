@@ -127,7 +127,7 @@ ohne Semikolon, Komma, Gleichheitszeichen und Leerzeichen bestehen.
 
 =head1 VERSION
 
-1.139
+1.140
 
 =head1 SOURCE
 
