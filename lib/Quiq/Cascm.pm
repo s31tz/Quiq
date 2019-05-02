@@ -1800,7 +1800,7 @@ sub runSql {
     my $udl = $self->udl;
 
     $sql = Quiq::Unindent->trimNl($sql);
-    if ($self->verbose) {
+    if ($self->verbose > 1) {
         my $a = Quiq::AnsiColor->new;
         (my $sql = $sql) =~ s/^(.*)/'> '.$a->str('bold',$1)/meg;
         if (!$udl) {

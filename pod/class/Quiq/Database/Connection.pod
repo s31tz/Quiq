@@ -1360,6 +1360,12 @@ Analysiere Tabelle $table und liefere einen Cursor zurück.
 
 Siehe Quiq::Sql::addForeignKeyConstraint()
 
+=head3 statistic() - Information über Daten einer Relation oder Selektion
+
+=head4 Synopsis
+
+    $h = $db->statistic(@select);
+
 =head3 countRows() - Zähle die Anzahl der Datensätze in der Tabelle
 
 =head4 Synopsis
