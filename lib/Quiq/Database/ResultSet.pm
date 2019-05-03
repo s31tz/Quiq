@@ -955,7 +955,7 @@ sub asTable {
             $str .= "\n";
             for (my $i = 0; $i < @fmt; $i++) {
                 my $numWidth = length $i+1;
-                my $width = $fmt[$i]->width+3;
+                my $width = abs($fmt[$i]->width)+3;
                 $str .= sprintf '%d%s',$i+1,(' ' x ($width-$numWidth));
             }
             $str .= "\n";

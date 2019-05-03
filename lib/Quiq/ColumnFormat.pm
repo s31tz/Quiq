@@ -130,7 +130,7 @@ sub asFixedWidthString {
     }
 
     if ($type eq 's' || $type eq 't') {
-        $value = sprintf '%-*s',$width,$value;
+        $value = sprintf '%*s',-$width,$value;
     }
     elsif ($type eq 'd') {
         # %d funktioniert bei großen Zahlen mit z.B. 24 Stellen nicht.

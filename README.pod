@@ -129,6 +129,10 @@ L<Quiq::Database::Cursor|https://github.com/s31tz/Quiq/tree/master/pod/class/Qui
 
 =item *
 
+L<Quiq::Database::DataAnalysis|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/DataAnalysis.pod> - Führe Datenanalyse durch
+
+=item *
+
 L<Quiq::Database::ResultSet|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/ResultSet.pod> - Liste von Datensätzen (abstrakt)
 
 =item *
