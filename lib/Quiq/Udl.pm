@@ -421,7 +421,7 @@ sub apiClass {
 
 =item -secure => $bool (Default: 0)
 
-Ersetze das Passwort durch (fünf) Sterne.
+Ersetze das Passwort durch einen Stern.
 
 =back
 
@@ -473,7 +473,7 @@ sub asString {
         }
         if ($password) {
             if ($secure) {
-                $password = '*****';
+                $password = '*';
             }
             $str .= ":$password";
         }

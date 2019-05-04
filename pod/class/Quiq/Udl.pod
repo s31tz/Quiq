@@ -214,7 +214,7 @@ Die API-Klasse für das DBI-API ist:
 
 =item -secure => $bool (Default: 0)
 
-Ersetze das Passwort durch (fünf) Sterne.
+Ersetze das Passwort durch einen Stern.
 
 =back
 

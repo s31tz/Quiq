@@ -18,8 +18,8 @@ use POSIX ();
 use Quiq::FileHandle;
 use Quiq::Array;
 use Quiq::String;
-use Quiq::Digest;
 use Quiq::Path;
+use Quiq::Digest;
 use Quiq::TempFile;
 use Quiq::Database::Cursor;
 use Time::HiRes ();
@@ -207,6 +207,12 @@ sub new {
             $udlObj->asString(-secure=>1),
             POSIX::strftime('%Y-%m-%d %H:%M:%S',localtime),
         );
+    }
+
+    if (defined $cacheDir) {
+        # Wir ergänzen den Cache-Verzeichnispfad um den UDL-String
+        $cacheDir .= '/'.$udlObj->asString(-secure=>1);
+        $self->set(cacheDir=>$cacheDir);
     }
 
     # Strict-Modus aktivieren
@@ -1345,13 +1351,14 @@ sub sql {
     my $cacheOp = ''; # damit per eq verglichen werden kann
     my $cacheFile;
     if (defined($cache) && $stmt) {
-        my $cacheDir = $self->{'cacheDir'};
-        $cacheFile = $cacheDir.'/'.Quiq::Digest->md5($stmt);
         my $p = Quiq::Path->new;
+        my $cacheDir = $self->{'cacheDir'};
+        $p->mkdir($cacheDir);
+        $cacheFile = $cacheDir.'/'.Quiq::Digest->md5($stmt);
         if ((my $exists = $p->exists($cacheFile)) &&
-                (!$cache || CORE::time-$p->mtime($cacheFile) < $cache)) {
-            # Cachedatei existiert und ist noch gültig,
-            # d.h. wir lesen die Datensätze aud dem Cache.
+                ($cache == 0 || CORE::time-$p->mtime($cacheFile) < $cache)) {
+            # Cachedatei existiert und ist noch gültig (0 = ewige
+            # Gültigkeit), d.h. wir lesen die Datensätze aud dem Cache.
             $cacheOp = 'r';
         }
         else {
