@@ -210,7 +210,7 @@ sub test_lock : Test(5) {
     $self->ok(1,'lock: shared lock, non-blocking');
 
     if ($^O eq 'MSWin32') {
-        $self->skipTest('On Windows exclusive locking hangs when used on'.
+        $self->skipTest(1,'On Windows exclusive locking hangs when used on'.
             ' file with shared lock');
     } else {
         $fh->lock('EX');
