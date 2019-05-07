@@ -118,7 +118,7 @@ sub asFixedWidthString {
     my $scale = $self->[2];
 
     if (!defined($value) || $value eq '') {
-        return ' ' x $width;
+        return ' ' x abs($width);
     }
 
     if (($type eq 'd' || $type eq 'f') && $value =~ /[^-\d.]/) {

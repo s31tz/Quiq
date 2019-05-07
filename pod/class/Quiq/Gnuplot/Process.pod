@@ -1,0 +1,66 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Gnuplot::Process - Gnuplot-Prozess
+
+=head1 BASE CLASS
+
+L<R1::HashObject|https://github.com/s31tz/Quiq/tree/master/pod/class/R1/HashObject.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert einen Gnuplot-Prozess.
+Der Gnuplot-Prozess erzeugt Plots.
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Gnuplot-Prozess
+
+=head4 Synopsis
+
+    $gnu = Quiq::Gnuplot::Process->new;
+
+=head2 Objektmethoden
+
+=head3 render() - Rendere Plot
+
+=head4 Synopsis
+
+    $gnu->render($plt);
+    $img = $gnu->render($plt); # funktioniert nicht
+
+=head4 Description
+
+Rendere den Plot und speichere ihn auf auf der angebenen Bilddatei
+oder liefere die Bilddaten zurück. Werden die Bilddaten zurückgeliefert,
+wird die Bilddatei automatisch gelöscht.
+
+=head3 print() - Übertrage Daten an den Gnuplot-Prozess
+
+=head4 Synopsis
+
+    $gnu->print(@data);
+
+=head1 VERSION
+
+1.140
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Gnuplot/Process.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

@@ -230,20 +230,21 @@ sub new {
     }
 
     # Lange Selectlisten müssen wir auf mehrere Selektionen aufteilen.
-    # Wert 300 ist hier recht willkürlich gewählt, unter PostgreSQL
+    # Wert 250 ist hier recht willkürlich gewählt, unter PostgreSQL
     # klappt es damit, sonst entstehen teilweise zu große Executionpläne.
 
-    my $splitFactor = 1;
-    my $size = @columns;
-    while ($size > 150) {
-       $size /= 2;
-       $splitFactor++;
+    my $chunkSize;
+    for (my $i = 1; ; $i++) {
+        if (@columns/$i <= 250) {
+            $chunkSize = POSIX::ceil(@columns/$i);
+            last;
+        }
     }
-    my $chunkSize = POSIX::ceil(@columns/$splitFactor);
 
     my @selects;
-    for (my $i = 0; $i < $splitFactor; $i++) {
-        $selects[$i] = [splice @columns,0,$chunkSize];
+    my $i = 0;
+    while (@columns) {
+        push @selects,[splice @columns,0,$chunkSize];
     }
 
     # Statement-Muster erstellen
@@ -380,7 +381,8 @@ sub asTable {
             }
             push @row,$val;
         }
-        # Enum-Kolumne hinzufügen
+
+        # Wert Enum-Kolumne ermitteln
 
         my @vals = @{$self->{'enumH'}->{$title}};
         for (@vals) {

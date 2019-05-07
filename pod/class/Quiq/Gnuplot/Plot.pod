@@ -1,0 +1,102 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Gnuplot::Plot - Gnuplot-Plot
+
+=head1 BASE CLASS
+
+L<R1::HashObject|https://github.com/s31tz/Quiq/tree/master/pod/class/R1/HashObject.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert einen Plot.
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Plot-Objekt
+
+=head4 Synopsis
+
+    $plt = Quiq::Gnuplot::Plot->new;
+
+=head2 Objektmethoden
+
+=head3 title() - Setze/liefere Plot-Titel
+
+=head4 Synopsis
+
+    $title = $plt->title;
+    $title = $plt->title($title);
+
+=head3 addGraph() - Füge Graph zum Plot-Objekt hinzu
+
+=head4 Synopsis
+
+    $plt->addGraph($gph);
+    $plt->addGraph(@keyVal);
+
+=head4 Alias
+
+add()
+
+=head4 Description
+
+Füge Graph $gph oder einen Graph mit der Attributen @keyVal
+zum Plot hinzu. In letzterem Fall instantiiert die Methode
+das Quiq::Gnuplot::Graph-Objekt.
+
+=head3 addArrow() - Füge Arrow zum Plot-Objekt hinzu
+
+=head4 Synopsis
+
+    $plt->addArrow($arw);
+    $plt->addArrow(@keyVal);
+
+=head4 Description
+
+Füge Arrow $arw oder einen Arrow mit der Attributen @keyVal
+zum Plot hinzu. In letzterem Fall instantiiert die Methode
+selbst das Quiq::Gnuplot::Arrow-Objekt.
+
+=head3 addLabel() - Füge Label zum Plot-Objekt hinzu
+
+=head4 Synopsis
+
+    $plt->addLabel($lab);
+    $plt->addLabel(@keyVal);
+
+=head4 Description
+
+Füge Label $lab oder ein Label mit den Attributen @keyVal
+zum Plot hinzu. In letzterem Fall instantiiert die Methode
+selbst das Quiq::Gnuplot::Label-Objekt.
+
+=head3 graphsWithData() - Liefere Graphen mit Daten
+
+=head4 Synopsis
+
+    @gph | $gphA = $plt->graphsWithData;
+
+=head1 VERSION
+
+1.140
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Gnuplot/Plot.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
