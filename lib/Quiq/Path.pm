@@ -1755,6 +1755,35 @@ sub extension {
 
 # -----------------------------------------------------------------------------
 
+=head3 newExtension() - Setze eine neue Extension
+
+=head4 Synopsis
+
+    $newPath = $this->newExtension($path,$ext);
+
+=head4 Description
+
+Entferne die bestehende Extension von Pfad $path und füge $ext als
+neue Extension hinzu. Besitzt $path keine Extension, wird
+$ext hinzugefügt. Etension $ext kann mit oder ohne Punkt am Anfang
+angegeben werden.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub newExtension {
+    my ($this,$path,$ext) = @_;
+
+    $ext =~ s/^\.//;         # Wir entfernen einen optionalen .
+    $path =~ s/\.([^.]+)$//; # Wir entfernen die bestehende Extension
+    $path .= ".$ext";        # Wir fügen die neue Extension hinzu
+
+    return $path;
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 filename() - Letzte Pfadkomponente
 
 =head4 Synopsis
