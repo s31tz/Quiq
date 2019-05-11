@@ -336,6 +336,22 @@ sub toBuchungen {
         ;
     }
     elsif ($self->empfaenger =~ /Borgert-Bühren/i &&
+            $self->buchungsdetails =~ /Betriebskosten 2017/i &&
+            $self->betragZahl eq '-1286.24') {
+        push @arr,
+            Quiq::Fibu::Buchung->new(
+                vorgang => 'Grundstückskosten / Gas, Wasser, Strom',
+                betrag => '-190,36',
+                text => 'Büro Nebenkosten Nachzahlung',
+            ),
+            Quiq::Fibu::Buchung->new(
+                vorgang => 'Sonstige Geldabgänge / Entnahme nach Privat',
+                betrag => '-1095,88',
+                text => 'Nebenkosten Nachzahlung',
+            ),
+        ;
+    }
+    elsif ($self->empfaenger =~ /Borgert-Bühren/i &&
             $self->buchungsdetails =~ /Betriebskostenabrechnung 2017/i &&
             $self->betragZahl eq '-1286.24') {
         push @arr,
@@ -370,6 +386,28 @@ sub toBuchungen {
                 vorgang => 'Sonstige Geldabgänge / Entnahme nach Privat',
                 betrag => '-1465,50',
                 text => 'Nebenkosten Nachzahlung',
+            ),
+        ;
+    }
+    elsif ($self->buchungshinweis =~ /25.02.19 VISA CARD/) {
+        push @arr,
+            Quiq::Fibu::Buchung->new(
+                vorgang => 'Sonstige Kosten / Sonstige Kosten',
+                betrag => '-0,99',
+                text => 'Samsung Cloud Service (2019-01-28)',
+                beleg => 0,
+            ),
+            Quiq::Fibu::Buchung->new(
+                vorgang => 'Sonstige Kosten / Sonstige Kosten',
+                betrag => '-6,33',
+                text => 'github.com (2019-01-28)',
+                beleg => 1,
+            ),
+            Quiq::Fibu::Buchung->new(
+                vorgang => 'Sonstige Kosten / Sonstige Kosten',
+                betrag => '-9,87',
+                text => 'Amazon Server (2019-01-03)',
+                beleg => 1,
             ),
         ;
     }
