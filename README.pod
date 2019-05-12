@@ -677,6 +677,10 @@ L<Quiq::System|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/System.p
 
 =item *
 
+L<Quiq::Table|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Table.pod> - Datenstruktur aus Zeilen und Kolumnen
+
+=item *
+
 L<Quiq::TeX::Code|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/TeX/Code.pod> - Generator für TeX Code
 
 =item *
