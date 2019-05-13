@@ -8,6 +8,8 @@ use v5.10.0;
 our $VERSION = 1.140;
 
 use Quiq::Hash;
+use Quiq::TableRow;
+use Quiq::Parameters;
 
 # -----------------------------------------------------------------------------
 
@@ -15,7 +17,7 @@ use Quiq::Hash;
 
 =head1 NAME
 
-Quiq::Table - Datenstruktur aus Zeilen und Kolumnen
+Quiq::Table - Tabelle
 
 =head1 BASE CLASS
 
@@ -25,7 +27,13 @@ L<Quiq::Hash>
 
     use Quiq::Table;
     
+    # Objekt
     $tab = Quiq::Table->new(['a','b','c','d']);
+    
+    # Kolumnen
+    
+    $width = $tab->width;
+    # 4
     
     @columns = $tab->columns;
     # ('a','b','c','d')
@@ -33,17 +41,13 @@ L<Quiq::Hash>
     $columnA = $tab->columns;
     # ['a','b','c','d']
     
-    $i = $tab->columnIndex('a');
-    # 0
-    
-    $i = $tab->columnIndex('d');
-    # 3
+    $i = $tab->columnIndex('c');
+    # 2
     
     $i = $tab->columnIndex('z');
     # Exception
     
-    $count = $tab->count;
-    # 0
+    # Zeilen
     
     @rows = $tab->rows;
     # ()
@@ -51,15 +55,40 @@ L<Quiq::Hash>
     $rowA = $tab->rows;
     # []
     
-    $width = $tab->width;
-    # 4
+    $count = $tab->count;
+    # 0
+    
+    $tab->push([1,2,3,4]);
+    $tab->push([5,6,7,8]);
+    $tab->push([1,9,10,11]);
+    $count = $tab->count;
+    # 3
+    
+    # Über alle Zeilen und Kolumnen iterieren
+    
+    for my $row ($tab->rows) {
+        for my $value ($row->values) {
+            # ...
+        }
+    }
+    
+    # Werte
+    
+    @values = $tab->values('a');
+    # (1,5,1)
+    
+    $valueA = $tab->values('a');
+    # [1,5,1]
+    
+    @values = $tab->values('a',-distinct=>1);
+    # (1,5)
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine Datenstruktur aus Zeilen
-und Kolumnen. Die Namen der Kolumnen werden dem Konstruktor der Klasse
-übergeben. Sie bezeichnen Komponenten der Zeilen. Die Zeilen sind Objekte
-der Klasse Quiq::TableRow.
+Ein Objekt der Klasse repräsentiert eine Tabelle, also eine Liste
+von gleichförmigen Zeilen. Die Namen der Kolumnen werden dem Konstruktor
+der Klasse übergeben. Sie bezeichnen die Komponenten der Zeilen. Die
+Zeilen sind Objekte der Klasse Quiq::TableRow.
 
 =head1 METHODS
 
@@ -89,7 +118,7 @@ Referenz auf Tabellen-Objekt
 
 Instantiiere ein Tabellen-Objekt mit den Kolumnennamen @columns und
 liefere eine Referenz auf das Objekt zurück. Die Kolumnennamen werden
-nicht kopiert, sondern die Referenz wird im Objekt gespeichert. Die
+nicht kopiert, die Referenz wird im Objekt gespeichert. Die
 Liste der Zeilen ist zunächst leer.
 
 =cut
@@ -170,6 +199,16 @@ sub count {
 
     $i = $tab->columnIndex($column);
 
+=head4 Arguments
+
+=over 4
+
+=item $column
+
+Kolumnenname (String).
+
+=back
+
 =head4 Returns
 
 Integer
@@ -186,6 +225,43 @@ Position innerhalb des Kolumnen-Array.
 sub columnIndex {
     my ($self,$column) = @_;
     return $self->{'columnH'}->{$column};
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 push() - Füge Zeile hinzu
+
+=head4 Synopsis
+
+    $tab->push(\@arr);
+
+=head4 Arguments
+
+=over 4
+
+=item @arr
+
+Liste von Zeilendaten (Strings).
+
+=back
+
+=head4 Description
+
+Füge eine Zeile mit den Daten @arr zur Tabelle hinzu. Die Anzahl der
+Elemente in @arr muss mit der Anzahl der Kolumnen übereinstimmen,
+sonst wird eine Exception geworfen.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub push {
+    my ($self,$valueA) = @_;
+
+    my $row = Quiq::TableRow->new($self,$valueA);
+    $self->SUPER::push('rowA',$row);
+
+    return;
 }
 
 # -----------------------------------------------------------------------------
@@ -214,6 +290,76 @@ sub rows {
 
     my $rowA = $self->{'rowA'};
     return wantarray? @$rowA: $rowA;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 values() - Werte einer Kolumne
+
+=head4 Synopsis
+
+    @values | $valueA = $tab->values($column,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $column
+
+Kolumnenname (String).
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -distinct => $bool (Default: 0)
+
+Liste der I<verschiedenen> Werte.
+
+=back
+
+=head4 Returns
+
+Liste der Werte (Strings). Im Skalarkontext eine Referenz auf die Liste.
+
+=head4 Description
+
+Liefere die Liste der Werte der Kolumne $column. Per Default wird die
+Liste I<aller> Werte geliefert, auch wenn sie mehrfach vorkommen. Siehe
+auch Option C<-distinct>.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub values {
+    my $self = shift;
+    my $column = shift;
+    # @_: @opt
+
+    # Optionen
+
+    my $distinct = 0;
+
+    Quiq::Parameters->extractToVariables(\@_,0,0,
+        -distinct => \$distinct,
+    );
+
+    # Erstelle Werteliste
+
+    my (@arr,%seen);
+    my $i = $self->columnIndex($column);
+    for my $row (@{$self->{'rowA'}}) {
+        my $val = $row->[1][$i];
+        if ($distinct && $seen{$val}++) {
+            next;
+        }
+        CORE::push @arr,$val;
+    }
+
+    return wantarray? @arr: \@arr;
 }
 
 # -----------------------------------------------------------------------------

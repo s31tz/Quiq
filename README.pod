@@ -677,7 +677,11 @@ L<Quiq::System|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/System.p
 
 =item *
 
-L<Quiq::Table|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Table.pod> - Datenstruktur aus Zeilen und Kolumnen
+L<Quiq::Table|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Table.pod> - Tabelle
+
+=item *
+
+L<Quiq::TableRow|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/TableRow.pod> - Tabellenzeile
 
 =item *
 
