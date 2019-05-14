@@ -8,6 +8,7 @@ use v5.10.0;
 our $VERSION = 1.140;
 
 use Quiq::Hash;
+use Quiq::Properties;
 use Quiq::TableRow;
 use Quiq::Parameters;
 
@@ -189,6 +190,49 @@ Liefere die Anzahl der Zeilen der Tabelle.
 sub count {
     my $self = shift;
     return scalar @{$self->{'rowA'}};
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 columnProperties() - Eigenschaften der Werte einer Kolumne
+
+=head4 Synopsis
+
+    $prp = $tab->columnProperties($column);
+
+=head4 Arguments
+
+=over 4
+
+=item $column
+
+Kolumnenname (String).
+
+=back
+
+=head4 Returns
+
+Properties-Objekt (Quiq::Properties)
+
+=head4 Description
+
+Ermittele die Eigenschaften der Werte der Kolumne $column und liefere
+ein Objekt, das diese Eigenschaften abfragbar zur Verfügung stellt,
+zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub columnProperties {
+    my ($self,$column) = @_;
+
+    my $prp = Quiq::Properties->new;
+    for my $val ($self->values($column,-distinct=>1)) {
+        $prp->add($val);
+    }
+
+    return $prp;
 }
 
 # -----------------------------------------------------------------------------

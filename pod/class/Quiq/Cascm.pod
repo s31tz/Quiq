@@ -143,6 +143,8 @@ Ausgabe der CASCM-Kommandos (String)
 des Editors wird geprüft, ob die Datei (eine Kopie im lokalen Verzeichnis)
 verändert wurde. Falls ja, wird die Repository-Datei ausgecheckt und
 die gänderte lokale Datei unter einer neuen Versionsnummer eingecheckt.
+Das Package $package wird auf die unterste Stufe bewegt und wieder
+zurück bewegt, falls nötig.
 
 =head3 view() - Repository-Datei ansehen
 

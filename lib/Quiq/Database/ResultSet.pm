@@ -848,11 +848,11 @@ Numerierung der Kolumnen, Anzahl Zeilen, Ausführungszeit.
 
 =item Z<>2
 
-Inforationsumfang 1 plus Liste der Kolumnennamen.
+Informationsumfang 1 plus Liste der Kolumnennamen.
 
 =item Z<>3
 
-Inforationsumfang 2 plus SQL-Statement.
+Informationsumfang 2 plus SQL-Statement.
 
 =back
 
