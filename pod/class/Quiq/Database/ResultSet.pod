@@ -259,17 +259,6 @@ Die Analyse wird nur einmal durchgeführt und die resultierende
 Liste im Tabellenobjekt gespeichert. Ist der Parameter $force
 angegeben und "wahr", wird eine Neuberechnung forciert.
 
-=head3 align() - Liefere die Ausrichtung der Kolumnen
-
-=head4 Synopsis
-
-    @aligns | $alignA = $tab->align;
-
-=head4 Description
-
-Aktuell werden die Angaben 'left' und 'right' für die Ausrichtung
-von HTML-Tabellenzellen geliefert.
-
 =head3 width() - Liefere die Breite der Tabelle
 
 =head4 Synopsis

@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Properties - Eigenschaften einer Menge von Werten
+Quiq::Properties - Eigenschaften einer Menge von skalaren Werten
 
 =head1 BASE CLASS
 
@@ -11,8 +11,9 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 =head1 DESCRIPTION
 
 Ein Objekt der Klasse ist Träger von Information über eine
-Menge von Werten. Diese Information ist nützlich, wenn
-die Werte tabellarisch dargestellt werden sollen.
+Menge von skalaren Werten (Integer, Float, String). Die Information
+ist nützlich, wenn die Menge der Werte tabellarisch dargestellt werden
+soll.
 
 =head1 ATTRIBUTES
 
@@ -20,20 +21,20 @@ die Werte tabellarisch dargestellt werden sollen.
 
 =item type
 
-Typ des Werts: s (Text), f (Float), d (Integer).
+Typ der Wertemenge: s (Text), f (Float), d (Integer).
 
 =item width
 
-Maximale Länge eines Werts.
+Breite des breitesten Werts der Wertemenge.
 
 =item scale
 
-Maximale Anzahl an Nachkommastellen im Falle eines Float (f).
+Maximale Anzahl an Nachkommastellen im Falle einer Wertemenge
+vom Typ f (Float).
 
 =item align
 
-Bevorzugte Ausrichtung: l (left), r (right). Im Falle von Float
-und Integer r und im Falle von Text per Default l.
+Ausrichtung der Werte der Wertemenge: l (left), r (right).
 
 =back
 
@@ -54,31 +55,161 @@ dieses Objekt zurück.
 
 =head2 Akzessoren
 
-=head3 type() - Typ der Kolumne
+=head3 align() - Setze/Liefere Ausrichtung der Werte
 
 =head4 Synopsis
 
-    $type = $fmt->type;
+    $align = $prp->align;
+    $align = $prp->align($align);
+
+=head4 Returns
+
+Ausrichtung (Zeichen)
+
+=head4 Description
+
+Setze/Liefere die Ausrichtung der Werte, falls sie tabellarisch
+angezeigt werden sollen.
+
+=over 2
+
+=item *
+
+Eine Wertemenge vom Typ d oder f hat die Ausrichtung r.
+
+=item *
+
+Eine Wertemenge vom Typ s hat per Default die Ausrichtung l,
+die aber auf r geändert werden werden kann.
+
+=back
 
 =head3 scale() - Maximale Anzahl Nachkommastellen
 
 =head4 Synopsis
 
-    $scale = $fmt->scale;
+    $scale = $prp->scale;
+
+=head4 Returns
+
+Integer
+
+=head4 Description
+
+Liefere die Maximale Anzahl an Nachkommastellen. Diese Information
+hat nur im Falle des Typs f (Float) eine Bedeutung.
+
+=head3 type() - Typ der Kolumne
+
+=head4 Synopsis
+
+    $type = $prp->type;
+
+=head4 Returns
+
+Typbezeichner (Zeichen)
+
+=head4 Description
+
+Liefere den Typ der Kolumne.
+
+=over 2
+
+=item *
+
+Eine Wertmenge hat den Typ d, wenn sie ausschließlich aus
+Integern (und Leerstrings) besteht.
+
+=item *
+
+Eine Wertmenge hat den Typ f, wenn sie ausschließlich aus numerischen
+Werten (und Leerstrings) besteht und wenigstens ein numerischer
+Wert einen Dezimalpunkt enthält, also Nachkommastellen besitzt.
+
+=item *
+
+Eine Wertmenge hat den Typ s, wenn sie leer ist, nur aus Leerstrings
+besteht oder wenigsténs einen nichtnumerischen Wert enthält.
+
+=back
 
 =head3 width() - Länge des längsten Werts
 
 =head4 Synopsis
 
-    $width = $fmt->width;
+    $width = $prp->width;
+
+=head4 Returns
+
+Integer
+
+=head4 Description
+
+Liefere die Länge des längsten Werts.
+
+=over 2
+
+=item *
+
+Die Breite einer Wertemenge des Typs d oder s ist die Länge des
+längsten Werts.
+
+=item *
+
+Die Breite einer Wertemenge des Typs f ist die
+Summe aus der maximalen Anzahl an Nachkommastellen plus der
+maximalen Anzahl an Zeichen vor und einschließlich des Kommas.
+
+=back
 
 =head2 Objektmethoden
 
-=head3 add() - Füge Wert hinzu
+=head3 analyze() - Füge Wert zur Analysemenge hinzu
 
 =head4 Synopsis
 
-    $fmt->add($value);
+    $prp->analyze($value);
+
+=head4 Arguments
+
+=over 4
+
+=item $value
+
+Skalarer Wert (Integer, Float, String)
+
+=back
+
+=head4 Description
+
+Analysiere Wert $value hinsichtlich seiner Eigenschaften und passe
+die Eigenschaften der Menge entsprechend an. Ein leerer Wert (undef oder
+Leerstring) ändert die Eigenschaften nicht.
+
+=head3 format() - Formatiere Wert
+
+=head4 Synopsis
+
+    $str = $prp->format($format,$val);
+
+=head4 Arguments
+
+=over 4
+
+=item $format
+
+Formatierung, die auf den Wert angewendet wird.
+Mögliche Werte: 'text', 'html'.
+
+=item $val
+
+Skalarer Wert (Integer, Float, String) aus der Wertemenge.
+
+=back
+
+=head4 Description
+
+Formatiere Wert $val gemäß Format $format und liefere das Resultat zurück.
 
 =head1 VERSION
 

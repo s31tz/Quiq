@@ -229,7 +229,7 @@ sub columnProperties {
 
     my $prp = Quiq::Properties->new;
     for my $val ($self->values($column,-distinct=>1)) {
-        $prp->add($val);
+        $prp->analyze($val);
     }
 
     return $prp;

@@ -53,10 +53,6 @@ L<Quiq::Color|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Color.pod
 
 =item *
 
-L<Quiq::ColumnFormat|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ColumnFormat.pod> - Format einer Text-Kolumne
-
-=item *
-
 L<Quiq::CommandLine|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/CommandLine.pod> - Konstruiere eine Unix-Kommandozeile
 
 =item *
@@ -529,7 +525,7 @@ L<Quiq::Progress|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Progre
 
 =item *
 
-L<Quiq::Properties|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Properties.pod> - Eigenschaften einer Menge von Werten
+L<Quiq::Properties|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Properties.pod> - Eigenschaften einer Menge von skalaren Werten
 
 =item *
 
