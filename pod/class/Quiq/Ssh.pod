@@ -119,7 +119,7 @@ Exitcode des Kommandos. Ist immer 0, außer wenn -sloppy=>1 gesetzt ist.
 
 =head1 VERSION
 
-1.140
+1.141
 
 =head1 SOURCE
 

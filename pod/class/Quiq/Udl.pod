@@ -256,7 +256,7 @@ Der Aufruf ohne Parameter ist identisch zum Aufruf von asString().
 
 =head1 VERSION
 
-1.140
+1.141
 
 =head1 SOURCE
 

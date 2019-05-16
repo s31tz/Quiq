@@ -206,7 +206,7 @@ Trennzeichens erlaubt:
 
 =head1 VERSION
 
-1.140
+1.141
 
 =head1 SOURCE
 

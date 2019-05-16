@@ -6,7 +6,7 @@ use warnings;
 use v5.10.0;
 use utf8;
 
-our $VERSION = '1.140';
+our $VERSION = '1.141';
 
 use Quiq::Hash;
 use Quiq::Option;
@@ -5500,7 +5500,7 @@ sub diff {
 
 =head1 VERSION
 
-1.140
+1.141
 
 =head1 AUTHOR
 
