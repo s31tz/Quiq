@@ -1,3 +1,49 @@
+1.140 2019-05-16
+================
+[Quiq::Cascm]
+* Methode edit() um automatischen demoten und promoten erweitert
+* Logausgabe SQL optional gemacht
+
+[Quiq::ColumnFormat]
+* Klasse durch Klasse Quiq::Properties ersetzt
+
+[Quiq::Database::Connection]
+* Cachepfad um UDL ergänzt
+* Doku tableDiff() erweitert
+
+[Quiq::Database::DataAnalysis]
+* Klasse implementiert
+
+[Quiq::Database::ResultSet]
+* Methode formats() auf Quiq::Properties umgestellt
+
+[Quiq::Gnuplot::*]
+* Klassen hinzugefügt
+
+[Quiq::Parameters]
+* Methode extractToObject() hinzugefügt
+
+[Quiq::Path]
+* Methode nexExtension() hinzugefügt
+
+[Quiq::Properties]
+* Klasse hinzugefügt
+
+[Quiq::Sdoc::*]
+* Klassen entfernt
+
+[Quiq::Ssh]
+* Klasse hinzugefügt
+
+[Quiq::Table]
+* Klasse hinzugefügt
+
+[Quiq::TableRow]
+* Klasse hinzugefügt
+
+[Quiq::Udl]
+* Kosmetik
+
 1.139 2019-05-01
 ================
 [Quiq::AnsiColor]

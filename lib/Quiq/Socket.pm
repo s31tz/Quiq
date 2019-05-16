@@ -6,7 +6,7 @@ use warnings;
 use v5.10.0;
 use utf8;
 
-our $VERSION = 1.140;
+our $VERSION = '1.140';
 
 use Quiq::Option;
 

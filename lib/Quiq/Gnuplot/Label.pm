@@ -1,11 +1,11 @@
 package Quiq::Gnuplot::Label;
-use base qw/R1::HashObject/;
+use base qw/Quiq::Hash/;
 
 use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = 1.140;
+our $VERSION = '1.140';
 
 # -----------------------------------------------------------------------------
 
@@ -17,7 +17,7 @@ Quiq::Gnuplot::Label - Gnuplot-Label
 
 =head1 BASE CLASS
 
-L<R1::HashObject>
+L<Quiq::Hash>
 
 =head1 DESCRIPTION
 

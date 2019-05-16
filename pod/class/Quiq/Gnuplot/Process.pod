@@ -6,7 +6,7 @@ Quiq::Gnuplot::Process - Gnuplot-Prozess
 
 =head1 BASE CLASS
 
-L<R1::HashObject|https://github.com/s31tz/Quiq/tree/master/pod/class/R1/HashObject.pod>
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 

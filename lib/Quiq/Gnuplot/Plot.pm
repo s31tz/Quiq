@@ -1,11 +1,11 @@
 package Quiq::Gnuplot::Plot;
-use base qw/R1::HashObject/;
+use base qw/Quiq::Hash/;
 
 use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = 1.140;
+our $VERSION = '1.140';
 
 use Quiq::Gnuplot::Graph;
 use Quiq::Gnuplot::Arrow;
@@ -21,7 +21,7 @@ Quiq::Gnuplot::Plot - Gnuplot-Plot
 
 =head1 BASE CLASS
 
-L<R1::HashObject>
+L<Quiq::Hash>
 
 =head1 DESCRIPTION
 

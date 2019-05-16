@@ -23,8 +23,13 @@ sub test_loadClass : Init(1) {
 sub test_unitTest : Test(1) {
     my $self = shift;
 
+    if (!Quiq::Path->findProgram('gnuplot',1)) {
+        $self->skipAllTests('Program gnuplot not found');
+        return;
+    }
+
     my $gnu = Quiq::Gnuplot::Process->new(
-        debug=>1, # 1 schreibt Kommandos nach STDERR
+        debug=>0, # 1 schreibt Kommandos nach STDERR
     );
     $self->is(ref($gnu),'Quiq::Gnuplot::Process');
 
@@ -134,8 +139,9 @@ sub test_unitTest : Test(1) {
     );
 
     my @data;
-    my $fh = Quiq::FileHandle->new('<',
-        'Blob/test-data/R1/Gnuplot/Process/processes.dat');
+    my $datFile = $self->testPath(
+        't/data/gnuplot/process/processes.dat');
+    my $fh = Quiq::FileHandle->new('<',$datFile);
     while (<$fh>) {
         chomp;
         push @data,(split /\|/)[0,1];
@@ -148,8 +154,9 @@ sub test_unitTest : Test(1) {
     );
     $plt->add($gph);
 
-    @data = split /[|\n]/,Quiq::Path->read(
-        'Blob/test-data/R1/Gnuplot/Process/cpu_percent.dat'); 
+    $datFile = $self->testPath(
+        't/data/gnuplot/process/cpu_percent.dat');
+    @data = split /[|\n]/,Quiq::Path->read($datFile); 
     $gph = Quiq::Gnuplot::Graph->new(
         title=>'Sys% + User% (1 CPU = 6.25%)',
         with=>'lines',
@@ -176,8 +183,9 @@ sub test_unitTest : Test(1) {
         myTics=>0,
     );
 
-    @data = split /[|\n]/,Quiq::Path->read(
-        'Blob/test-data/R1/Gnuplot/Process/cpu_count.dat'); 
+    $datFile = $self->testPath(
+        't/data/gnuplot/process/cpu_count.dat');
+    @data = split /[|\n]/,Quiq::Path->read($datFile);
     $gph = Quiq::Gnuplot::Graph->new(
         title=>'Genutzte CPUs (mit: Sys + User > 5%)',
         with=>'lines',
@@ -186,8 +194,9 @@ sub test_unitTest : Test(1) {
     $plt->add($gph);
 
     @data = ();
-    $fh = Quiq::FileHandle->new('<',
-        'Blob/test-data/R1/Gnuplot/Process/processes.dat');
+    $datFile = $self->testPath(
+        't/data/gnuplot/process/processes.dat');
+    $fh = Quiq::FileHandle->new('<',$datFile);
     while (<$fh>) {
         chomp;
         push @data,(split /\|/)[0,1];
