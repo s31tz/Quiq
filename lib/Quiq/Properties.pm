@@ -7,6 +7,8 @@ use v5.10.0;
 
 our $VERSION = 1.140;
 
+use Quiq::Parameters;
+
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -38,6 +40,12 @@ Typ der Wertemenge: s (Text), f (Float), d (Integer).
 
 Breite des breitesten Werts der Wertemenge.
 
+=item floatPrefix
+
+Maximale Anzahl an Zeichen einer Fließkommazahl vor und einschließlich
+dem Punkt. Dieses Attribut wird nur intern gebraucht, um die maximale
+Breite einer Fließkommazahl zu bestimmen.
+
 =item scale
 
 Maximale Anzahl an Nachkommastellen im Falle einer Wertemenge
@@ -49,6 +57,31 @@ Ausrichtung der Werte der Wertemenge: l (left), r (right).
 
 =back
 
+=head1 EXAMPLE
+
+Erzeuge eine formatierte Liste von Float-Werten:
+
+    my @values = (
+        234.567,
+          5.45,
+      92345.6,
+         42.56739,
+    );
+    
+    my $prp = Quiq::Properties->new(\@values);
+    
+    my $text;
+    for (@values) {
+        $text .= $prp->format('text',$_)."\n";
+    }
+    print $text;
+    
+    __END__
+      234.56700
+        5.45000
+    92345.60000
+       42.56739
+
 =head1 METHODS
 
 =head2 Klassenmethoden
@@ -57,12 +90,38 @@ Ausrichtung der Werte der Wertemenge: l (left), r (right).
 
 =head4 Synopsis
 
-    $prp = $class->new;
+    $prp = $class->new(@opt);
+    $prp = $class->new(\@values,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item @arr
+
+Array von skalaren Werten (Integers, Floats, Strings)
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -noTrailingZeros => $bool (Default: 0)
+
+Entferne bei Floats nach dem Dezimalpunkt 0-en am Ende.
+
+=back
+
+=head4 Returns
+
+Objekt
 
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurück. Ist als Parameter eine Referenz auf ein Array
+angegeben, werden dessen Werte analysiert.
 
 =cut
 
@@ -70,12 +129,35 @@ dieses Objekt zurück.
 
 sub new {
     my $class = shift;
-    #             0 type
-    #             |   1 width
-    #             |   | 2 floatPrefix
-    #             |   | | 3 scale
-    #             |   | | | 4 align
-    return bless ['d',0,0,0,undef],$class;
+    # @_: @opt -or- $valueA,@opt
+
+    # Argumente und Optionen
+
+    my $noTrailingZeros = 0;
+
+    my $argA = Quiq::Parameters->extractToVariables(\@_,0,1,
+        -noTrailingZeros => \$noTrailingZeros,
+    );
+    my $valueA = shift(@$argA) // [];
+
+    # Instantiiere Objekt
+
+    #                 0 type
+    #                 |   1 width
+    #                 |   | 2 floatPrefix
+    #                 |   | | 3 scale
+    #                 |   | | | 4 align
+    #                 |   | | | |     5 Option $noTrailingZeros
+    #                 |   | | | |     |
+    my $self = bless ['d',0,0,0,undef,$noTrailingZeros],$class;
+
+    # Analysiere Werte
+
+    for (@$valueA) {
+        $self->analyze($_);
+    }
+
+    return $self;
 }
 
 # -----------------------------------------------------------------------------
@@ -281,7 +363,7 @@ sub analyze {
     }
 
     # Bisherige Information holen
-    my ($type,$width,$floatPrefix,$scale,$align) = @$self;
+    my ($type,$width,$floatPrefix,$scale,$align,$opt) = @$self;
 
     # Typ behandeln
 
@@ -335,7 +417,7 @@ sub analyze {
     }
 
     # Neue Information setzen
-    @$self = ($type,$width,$floatPrefix,$scale,$align);
+    @$self = ($type,$width,$floatPrefix,$scale,$align,$opt);
 
     return;
 }
@@ -399,6 +481,11 @@ sub format {
         }
         elsif ($type eq 'f') {
             $val = sprintf '%*.*f',$width,$self->scale,$val;
+            if ($self->[5]) { # noTrailingZeros
+                if ($val =~ s/(0+)$/' ' x length($1)/e) {
+                    $val =~ s/\.$/ /;
+                }
+            }
         }
         else {
             $self->throw(
@@ -414,6 +501,11 @@ sub format {
         elsif ($type eq 'f') {
             $val = sprintf '%*.*f',$width,$self->scale,$val;
             $val =~ s/^ +//g;
+            if ($self->[5]) { # noTrailingZeros
+                if ($val =~ s/(0+)$/'&nbsp;' x length($1)/e) {
+                    $val =~ s/\.$/&nbsp;/;
+                }
+            }
         }
         elsif ($type eq 's') {
             $val =~ s/&/&amp;/g;

@@ -197,22 +197,6 @@ L<Quiq::FFmpeg|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/FFmpeg.p
 
 =item *
 
-L<Quiq::Fibu::Bankbuchung|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Fibu/Bankbuchung.pod> - Buchung von einem Postbank-Konto
-
-=item *
-
-L<Quiq::Fibu::BankbuchungListe|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Fibu/BankbuchungListe.pod> - Liste von Buchungen von einem Postbank-Konto
-
-=item *
-
-L<Quiq::Fibu::Buchung|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Fibu/Buchung.pod> - Fibu-Buchung
-
-=item *
-
-L<Quiq::Fibu::BuchungListe|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Fibu/BuchungListe.pod> - Liste von Fibu-Buchungen
-
-=item *
-
 L<Quiq::File::Audio|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/File/Audio.pod> - Informationen über Audio-Datei
 
 =item *
@@ -541,90 +525,6 @@ L<Quiq::Rsync|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Rsync.pod
 
 =item *
 
-L<Quiq::Sdoc|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc.pod> - Sdoc-Generator
-
-=item *
-
-L<Quiq::Sdoc::Box|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Box.pod> - Kasten
-
-=item *
-
-L<Quiq::Sdoc::BridgeHead|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/BridgeHead.pod> - Zwischenüberschrift
-
-=item *
-
-L<Quiq::Sdoc::Code|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Code.pod> - Code-Abschnitt
-
-=item *
-
-L<Quiq::Sdoc::Document|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Document.pod> - Sdoc-Dokument
-
-=item *
-
-L<Quiq::Sdoc::Figure|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Figure.pod> - Bild
-
-=item *
-
-L<Quiq::Sdoc::Include|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Include.pod> - Einbinden von externen Inhalten
-
-=item *
-
-L<Quiq::Sdoc::Item|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Item.pod> - Listenelement
-
-=item *
-
-L<Quiq::Sdoc::KeyValRow|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/KeyValRow.pod> - Zeile einer Schlüssel/Wert-Tabelle
-
-=item *
-
-L<Quiq::Sdoc::KeyValTable|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/KeyValTable.pod> - Schlüssel/Wert-Tabelle
-
-=item *
-
-L<Quiq::Sdoc::Line|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Line.pod> - Zeile einer Sdoc-Quelldatei
-
-=item *
-
-L<Quiq::Sdoc::Link|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Link.pod> - Definition eines Link
-
-=item *
-
-L<Quiq::Sdoc::List|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/List.pod> - Liste
-
-=item *
-
-L<Quiq::Sdoc::Node|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Node.pod> - Basisklasse für die Knoten eines Sdoc-Dokuments (abstrakt)
-
-=item *
-
-L<Quiq::Sdoc::PageBreak|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/PageBreak.pod> - Seitenumbruch
-
-=item *
-
-L<Quiq::Sdoc::Paragraph|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Paragraph.pod> - Paragraph
-
-=item *
-
-L<Quiq::Sdoc::Quote|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Quote.pod> - Zitat-Abschnitt
-
-=item *
-
-L<Quiq::Sdoc::Row|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Row.pod> - Zeile einer Tabelle
-
-=item *
-
-L<Quiq::Sdoc::Section|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Section.pod> - Abschnittsüberschrift
-
-=item *
-
-L<Quiq::Sdoc::Table|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Table.pod> - Tabelle
-
-=item *
-
-L<Quiq::Sdoc::TableOfContents|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/TableOfContents.pod> - Inhaltsverzeichnis
-
-=item *
-
 L<Quiq::Section::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Section/Object.pod> - Abschnitts-Objekt
 
 =item *
@@ -654,6 +554,10 @@ L<Quiq::Sql|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sql.pod> - 
 =item *
 
 L<Quiq::SqlPlus|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/SqlPlus.pod> - Erzeuge Code für SQL*Plus
+
+=item *
+
+L<Quiq::Ssh|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Ssh.pod> - Führe Kommando per SSH aus
 
 =item *
 

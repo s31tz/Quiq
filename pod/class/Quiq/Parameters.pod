@@ -313,6 +313,54 @@ Konstruktor mit einer variablen Anzahl an Argumenten und zwei Optionen:
         ...
     }
 
+=head3 extractToObject() - Extrahiere Parameter und speichere Optionen in Objekt
+
+=head4 Synopsis
+
+    ($argA,$opt) = $class->extractToObject(\@params,$minArgs,$maxArgs,@optVal);
+
+=head4 Arguments
+
+=over 4
+
+=item @params
+
+Parameterliste, z.B. @_.
+
+=item $minArgs
+
+Mindestanzahl an Argumenten.
+
+=item $maxArgs
+
+Maximale Anzahl an Argumenten, C<undef> bedeutet beliebig viele.
+
+=item @optVal
+
+Liste der Optionen und ihrer Defaultwerte.
+
+=back
+
+=head4 Returns
+
+=over 4
+
+=item $argA
+
+Referenz auf die Liste der extrahierten Argumente.
+
+=item $opt
+
+Hash-Objekt mit den Optionen aus @params gem‰ﬂ @optVal.
+
+=back
+
+=head4 Description
+
+Extrahiere Argumente und Optionen aus der Parameterliste @params.
+Enth‰lt die Parameterliste unbekannte Optionen oder zu wenige
+oder zu viele Argumente, wird eine Exception geworfen.
+
 =head1 VERSION
 
 1.140

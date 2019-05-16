@@ -35,7 +35,7 @@ L<Quiq::Object>
     Quiq::Rsync->exec('/src/dir1/','/dest/dir2');
     
     # Änderungen anzeigen, aber nicht durchführen
-    Quiq::Rsync->exec($src,$dest,-dryRun => 1);
+    Quiq::Rsync->exec($src,$dest,-dryRun=>1);
 
 =head1 DESCRIPTION
 

@@ -18,6 +18,7 @@ WriteMakefile(
         JSON => 0,
         LWP::UserAgent => 0,
         Mojolicious::Plugin => 0,
+        Net::SSH::Perl => 0,
         Pod::WSDL => 0,
         SOAP::Transport::HTTP => 0,
         WWW::Mechanize => 0,

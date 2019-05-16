@@ -16,6 +16,83 @@ sub test_loadClass : Init(1) {
 
 # -----------------------------------------------------------------------------
 
+sub test_new_1 : Test(1) {
+    my $self = shift;
+
+    my @values = (
+        234.567,
+          5.45,
+      92345.6,
+         42.56739,
+    );
+
+    my $prp = Quiq::Properties->new(\@values);
+
+    my $text;
+    for (@values) {
+        $text .= $prp->format('text',$_)."\n";
+    }
+
+    $self->is($text,Quiq::Unindent->string('
+        234.56700
+          5.45000
+      92345.60000
+         42.56739
+    '));
+}
+
+sub test_new_2 : Test(1) {
+    my $self = shift;
+
+    my @values = (
+        234.567,
+          5.45,
+      92345.6,
+         42.56739,
+    );
+
+    my $prp = Quiq::Properties->new(\@values,-noTrailingZeros=>1);
+
+    my $text;
+    for (@values) {
+        $text .= '|'.$prp->format('text',$_)."|\n";
+    }
+
+    $self->is($text,Quiq::Unindent->string('
+        |  234.567  |
+        |    5.45   |
+        |92345.6    |
+        |   42.56739|
+    '));
+}
+
+sub test_new_3 : Test(1) {
+    my $self = shift;
+
+    my @values = (
+        234.567,
+          5.45,
+      92345.6,
+         42.56739,
+    );
+
+    my $prp = Quiq::Properties->new(\@values,-noTrailingZeros=>1);
+
+    my $text;
+    for (@values) {
+        $text .= '|'.$prp->format('html',$_)."|\n";
+    }
+
+    $self->is($text,Quiq::Unindent->string('
+        |234.567&nbsp;&nbsp;|
+        |5.45&nbsp;&nbsp;&nbsp;|
+        |92345.6&nbsp;&nbsp;&nbsp;&nbsp;|
+        |42.56739|
+    '));
+}
+
+# -----------------------------------------------------------------------------
+
 sub test_analyze_1 : Test(10) {
     my $self = shift;
 
@@ -92,7 +169,7 @@ sub test_analyze_2 : Test(35) {
 
 # -----------------------------------------------------------------------------
 
-sub test_format_1 : Test(17) {
+sub test_format_1 : Test(15) {
     my $self = shift;
 
     my $prp = Quiq::Properties->new;
