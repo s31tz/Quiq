@@ -87,7 +87,7 @@ Kommandozeile
 
 =over 4
 
-=item -login => $bool (Default: 1)
+=item -loginShell => $bool (Default: 1)
 
 Führe das Remote-Kommando unter einer Login-Shell aus. Als Shell
 wird die bash verwendet.

@@ -98,6 +98,7 @@ sub new {
     # Operation ausführen
 
     my $obj = Net::SSH::Perl->new($host,
+        # interactive => 0,
         debug => $opt->debug,
     );
 
@@ -111,6 +112,8 @@ sub new {
             Reason => $@,
         );
     }
+
+    # Objekt instantiieren
 
     return $class->SUPER::new(
         obj => $obj,
@@ -142,7 +145,7 @@ Kommandozeile
 
 =over 4
 
-=item -login => $bool (Default: 1)
+=item -loginShell => $bool (Default: 1)
 
 Führe das Remote-Kommando unter einer Login-Shell aus. Als Shell
 wird die bash verwendet.
@@ -182,25 +185,25 @@ sub exec {
 
     # Argumente und Optionen
 
-    my $login = 1;
+    my $loginShell = 1;
     my $sloppy = 0;
 
     my $argA = Quiq::Parameters->extractToVariables(\@_,1,1,
-        -login => \$login,
+        -loginShell => \$loginShell,
         -sloppy => \$sloppy,
     );
     my $cmd = shift @$argA;
 
     # Operation ausführen
 
-    if ($login) {
+    if ($loginShell) {
         # Login-Shell
 
         $cmd =~ s/'/\\'/g; # Single Quotes schützen
         $cmd = "/bin/bash -lc '$cmd'";
     }
 
-    my ($stdout,$stderr,$exit) = $self->obj->cmd($cmd,'');
+    my ($stdout,$stderr,$exit) = $self->obj->cmd($cmd);
     $exit //= 0;
     if (!$sloppy) {
         # $exit ist als Exitcode kodiert
