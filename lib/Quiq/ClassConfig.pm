@@ -27,14 +27,14 @@ Information definieren (Anwendungsbeispiel):
     package Model::Object;
     
     __PACKAGE__->def(
-        table=>'Object',
-        prefix=>'Obj',
-        columns=>[
-            id=>{
-                domain=>'Integer',
-                primaryKey=>1,
-                notNull=>1,
-                description=>'Primärschlüssel',
+        table => 'Object',
+        prefix => 'Obj',
+        columns => [
+            id => {
+                domain => 'Integer',
+                primaryKey => 1,
+                notNull => 1,
+                description => 'Primärschlüssel',
             },
             ...
         ],

@@ -61,7 +61,7 @@ Ferner ist es möglich, die Tabellenklasse bei der Selektion per
 Option festzulegen:
 
     $tab = $rowClass->select($db,
-        -tableClass=>$tableClass,
+        -tableClass => $tableClass,
     );
 
 =head3 makeTable() - Erzeuge Datensatz-Tabelle

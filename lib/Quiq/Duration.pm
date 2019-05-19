@@ -212,10 +212,10 @@ sub asShortString {
 
     if (@_) {
         Quiq::Option->extract(\@_,
-            -maxUnit=>\$maxUnit,
-            -minUnit=>\$minUnit,
-            -notBlank=>\$notBlank,
-            -precision=>\$precision,
+            -maxUnit => \$maxUnit,
+            -minUnit => \$minUnit,
+            -notBlank => \$notBlank,
+            -precision => \$precision,
         );
     }
 
@@ -385,8 +385,8 @@ sub stringToSeconds {
         else {
             $class->throw(
                 q~DURATION-00001: Unbekannter Anteil einer Dauer~,
-                Unit=>$unit,
-                Value=>$x,
+                Unit => $unit,
+                Value => $x,
             );
         }
     }

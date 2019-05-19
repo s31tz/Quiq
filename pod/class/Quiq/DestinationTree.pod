@@ -169,8 +169,8 @@ Nur Dateien erhalten:
     $bool = $tree->addFile($file,\$data,@opt);
     $bool = $tree->addFile($file,@opt);
     $bool = $tree->addFile($file,
-        -generate=>$bool,
-        -onGenerate=>sub {
+        -generate => $bool,
+        -onGenerate => sub {
             ...
             return $data;
         },

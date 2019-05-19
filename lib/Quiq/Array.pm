@@ -1044,7 +1044,7 @@ sub restore {
 
         $class->throw(
             q~ARR-00001: Inkorrekte Array-Repräsentation~,
-            EscapeSequence=>"\\$_[0]",
+            EscapeSequence => "\\$_[0]",
         );
     };
 

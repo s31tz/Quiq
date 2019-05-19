@@ -197,7 +197,7 @@ sub new {
             }
             else {
                 $class->throw(q~CFG-00002: Config file not found~,
-                    ConfigFile=>$cfgFile,
+                    ConfigFile => $cfgFile,
                 );
             }
         }
@@ -244,7 +244,7 @@ sub get {
         if (!exists $self->{$key}) {
             $self->throw(
                 q~CFG-00001: Config-Variable existiert nicht~,
-                Variable=>$key,
+                Variable => $key,
             );
         }
     }

@@ -23,8 +23,8 @@ die von der dieser Klasse abgeleitet ist:
     use base qw/Quiq::ContentProcessor::Type/;
     
     __PACKAGE__->def(
-        ContentAllowed=>0,
-        Attributes=>[qw/
+        ContentAllowed => 0,
+        Attributes => [qw/
             Name
         /],
     );
@@ -49,7 +49,7 @@ dort aus gerufen:
     use base qw/Yeah::Type::Program/;
     
     __PACKAGE__->def(
-        Attributes=>[qw/
+        Attributes => [qw/
             <Spezifische Attribute des Typs>
         /],
     );

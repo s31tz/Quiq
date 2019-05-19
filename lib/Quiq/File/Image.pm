@@ -58,15 +58,15 @@ sub new {
 
     return $class->SUPER::new(
         # Eigenschaften
-        path=>$path,
-        filename=>undef,
-        basename=>undef,
-        extension=>undef,
-        width=>undef,
-        height=>undef,
-        type=>undef,
+        path => $path,
+        filename => undef,
+        basename => undef,
+        extension => undef,
+        width => undef,
+        height => undef,
+        type => undef,
         # Properties
-        propertyH=>Quiq::Hash->new->unlockKeys,
+        propertyH => Quiq::Hash->new->unlockKeys,
     );
 }
 

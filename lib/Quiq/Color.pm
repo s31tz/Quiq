@@ -103,7 +103,7 @@ sub new {
     if ($error) {
         $class->throw(
            q~COLOR-00001: Unknown color representation~,
-           Arguments=>join(',',@_),
+           Arguments => join(',',@_),
         );
     }
 

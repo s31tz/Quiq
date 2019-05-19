@@ -45,12 +45,12 @@ sub new {
     my ($class,$file) = @_;
 
     return $class->SUPER::new(
-        file=>$file,
-        artist=>undef,
-        title=>undef,
-        duration=>undef,
-        bitrate=>undef,
-        extension=>undef,
+        file => $file,
+        artist => undef,
+        title => undef,
+        duration => undef,
+        bitrate => undef,
+        extension => undef,
     );
 }
 
@@ -238,8 +238,8 @@ sub analyzeFile {
         $file =~ s/([\$"])/\\$1/g;
         my $cmd = sprintf 'ffprobe "%s"',$file;
         my $outp = Quiq::Shell->exec($cmd,
-            -capture=>'stdout+stderr',
-            -sloppy=>1,
+            -capture => 'stdout+stderr',
+            -sloppy => 1,
         );
 
         # Duration
@@ -294,9 +294,9 @@ sub extractMetaData {
     my (undef,undef,$basename,$ext) = Quiq::Path->split($self->file);
     my ($artist,$title) = split / - /,$basename;
     $self->set(
-        artist=>$artist,
-        title=>$title,
-        extension=>$ext,
+        artist => $artist,
+        title => $title,
+        extension => $ext,
     );
 
     return;

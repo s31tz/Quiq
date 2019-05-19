@@ -100,7 +100,7 @@ sub selectTemplate {
     if (!$$ref) {
         $class->throw(
             q~ROW-00001: Join-Klasse definiert kein Select-Statement~,
-            JoinClass=>$class,
+            JoinClass => $class,
         );
     }
 
@@ -210,8 +210,8 @@ sub cast {
     if (!@$bothA) {
         $self->throw(
             q~ROW-00006: Datensatz-Klassen haben keine gemeinsamen Kolumnen~,
-            RowClass=>ref($self),
-            CastClass=>$newClass,
+            RowClass => ref($self),
+            CastClass => $newClass,
         );
     }
     if (@$onlyNewA) {

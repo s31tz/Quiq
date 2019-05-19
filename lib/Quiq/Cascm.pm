@@ -261,8 +261,8 @@ sub edit {
             $which = Quiq::Terminal->askUser(
                 'Local file exists and differs from repository file.'.
                     ' Which file: l=local, r=repository, q=quit?',
-                -values=>'l/r/q',
-                -default=>'l',
+                -values => 'l/r/q',
+                -default => 'l',
             );
             if ($which eq 'q') {
                 return $output;
@@ -292,8 +292,8 @@ sub edit {
     if ($p->compare($localFile,$backupFile)) {
         my $answ = Quiq::Terminal->askUser(
             "Save changes to repository?",
-            -values=>'y/n',
-            -default=>'y',
+            -values => 'y/n',
+            -default => 'y',
         );
         if ($answ eq 'y') {
             $self->movePackage($self->states->[0],$package);

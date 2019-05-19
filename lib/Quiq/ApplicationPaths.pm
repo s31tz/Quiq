@@ -157,11 +157,11 @@ sub new {
     my $varDir = "$prefix/var/opt/$application";
 
     my $self = bless {
-        name=>$application,
-        prefix=>$prefix,
-        homeDir=>$homeDir,
-        etcDir=>$etcDir,
-        varDir=>$varDir,
+        name => $application,
+        prefix => $prefix,
+        homeDir => $homeDir,
+        etcDir => $etcDir,
+        varDir => $varDir,
     },$class;
     Hash::Util::lock_ref_keys($self);
 

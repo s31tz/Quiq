@@ -614,9 +614,9 @@ sub style {
         }
         else {
             $linkTags .= $h->tag('link',
-                rel=>'stylesheet',
-                type=>'text/css',
-                href=>$spec,
+                rel => 'stylesheet',
+                type => 'text/css',
+                href => $spec,
             );
         }
     }
@@ -624,7 +624,7 @@ sub style {
     return $h->cat(
         $linkTags,
         $h->tag('style',
-            -ignoreIfNull=>1,
+            -ignoreIfNull => 1,
             $style
         ),
     );

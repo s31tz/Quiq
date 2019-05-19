@@ -75,7 +75,7 @@ Ferner ist es möglich, die Tabellenklasse bei der Selektion per
 Option festzulegen:
 
     $tab = $rowClass->select($db,
-        -tableClass=>$tableClass,
+        -tableClass => $tableClass,
     );
 
 =cut
@@ -106,7 +106,7 @@ sub tableClass {
         if (!$found) {
             $class->throw(
                 q~ROW-00001: Datensatz-Klasse definiert keine Tabellenklasse~,
-                RowClass=>$class,
+                RowClass => $class,
             );
         }
     }

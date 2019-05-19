@@ -404,7 +404,7 @@ Die Methode liefert keinen Wert zurück.
 =head4 Description
 
 Wechsle in Arbeitsverzeichnis $dir. Anmerkung: Diese Änderung gilt
-für den gesamten Prozess, nicht nur für das Shell-Objekt.
+auch für den aufrufenden Prozess, nicht nur für das Shell-Objekt.
 
 =cut
 

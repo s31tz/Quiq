@@ -198,8 +198,8 @@ sub primaryKeyWhere {
     if ($val eq '') {
         $self->throw(
             q~ROW-00005: Primärschlüsselkolumne ist NULL~,
-            PrimaryKeyColumn=>$key,
-            Row=>$self->asString('|'),
+            PrimaryKeyColumn => $key,
+            Row => $self->asString('|'),
         );
     }
 

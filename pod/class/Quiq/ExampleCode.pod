@@ -23,8 +23,8 @@ Form eines Objektes zurückliefern. Die Ausgabe auf STDOUT
 unterbleibt.
 
     my $exa = Quiq::ExampleCode->new(
-        -objectReturn=>1,
-        -verbose=>0,
+        -objectReturn => 1,
+        -verbose => 0,
     );
 
 Ausführung im Skalar-Kontext:
@@ -54,14 +54,14 @@ gestellt werden.
 Variable vorab setzen:
 
     $exa->setVariable(
-        ffm=>$ffm,
+        ffm => $ffm,
     );
     my $cmd = $exa->execute(q|
         $ffm->videoToImages('video.mp4','img',
-            -aspectRatio=>'4:3',
-            -framestep=>6,
-            -start=>3,
-            -stop=>10,
+            -aspectRatio => '4:3',
+            -framestep => 6,
+            -start => 3,
+            -stop => 10,
         );
     |);
 
@@ -69,27 +69,27 @@ Variable per Option -variables bei Aufruf setzen:
 
     my $cmd = $exa->execute(q|
         $ffm->videoToImages('video.mp4','img',
-            -aspectRatio=>'4:3',
-            -framestep=>6,
-            -start=>3,
-            -stop=>10,
+            -aspectRatio => '4:3',
+            -framestep => 6,
+            -start => 3,
+            -stop => 10,
         );|,
-        -variables=>[
-            ffm=>$ffm,
+        -variables => [
+            ffm => $ffm,
         ],
     );
 
 oder (in anderer Reihenfolge):
 
     my $cmd = $exa->execute(
-        -variables=>[
-            ffm=>$ffm,
+        -variables => [
+            ffm => $ffm,
         ],q|
             $ffm->videoToImages('video.mp4','img',
-                -aspectRatio=>'4:3',
-                -framestep=>6,
-                -start=>3,
-                -stop=>10,
+                -aspectRatio => '4:3',
+                -framestep => 6,
+                -start => 3,
+                -stop => 10,
             );
         |,
     );
@@ -151,9 +151,9 @@ selbst mit der Option -variables angegeben werden.
 =head4 Example
 
     $exa->setVariable(
-        obj=>$obj,
-        x=>$x,
-        y=>$y,
+        obj => $obj,
+        x => $x,
+        y => $y,
     );
 
 =head2 Beispielcode ausführen
@@ -211,20 +211,20 @@ Der Aufruf
 
     $cmd = $exa->execute(q|
         $ffm->videoToImages('video.mp4','img',
-            -aspectRatio=>'4:3',
-            -framestep=>6,
-            -start=>3,
-            -stop=>10,
+            -aspectRatio => '4:3',
+            -framestep => 6,
+            -start => 3,
+            -stop => 10,
         );
     |);
 
 führt zu der Ausgabe
 
     $ffm->videoToImages('video.mp4','img',
-        -aspectRatio=>'4:3',
-        -framestep=>6,
-        -start=>3,
-        -stop=>10,
+        -aspectRatio => '4:3',
+        -framestep => 6,
+        -start => 3,
+        -stop => 10,
     );
     =>
     ffmpeg -y -loglevel error -stats -i 'video.mp4'

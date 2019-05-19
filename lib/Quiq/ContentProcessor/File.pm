@@ -38,13 +38,13 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-        entity=>$ent,
-        name=>undef,
-        type=>undef,
-        data=>undef,
-        method=>undef,
-        isCode=>0,
-        mode=>undef,
+        entity => $ent,
+        name => undef,
+        type => undef,
+        data => undef,
+        method => undef,
+        isCode => 0,
+        mode => undef,
     );
     $self->set(@_);
     $self->weaken('entity');

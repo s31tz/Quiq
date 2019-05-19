@@ -580,7 +580,7 @@ Ohne Optionen:
 Video-Seitenverhältnis 16:9 zu Bild-Seitenverhältnis 4:3 wandeln:
 
     $ffm->videoToImages('video.mp4','img',
-        -aspectRatio=>'4:3',
+        -aspectRatio => '4:3',
     );
     =>
     ffmpeg -y -loglevel error -stats
@@ -592,10 +592,10 @@ Video-Seitenverhältnis 16:9 zu Bild-Seitenverhältnis 4:3 wandeln:
 Alle Optionen:
 
     $ffm->videoToImages('video.mp4','img',
-        -aspectRatio=>'4:3',
-        -framestep=>6,
-        -start=>3,
-        -stop=>10,
+        -aspectRatio => '4:3',
+        -framestep => 6,
+        -start => 3,
+        -stop => 10,
     );
     =>
     ffmpeg -y -loglevel error -stats

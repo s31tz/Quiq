@@ -101,9 +101,9 @@ sub new {
     }
 
     return $class->SUPER::new(
-        table=>$tab,
-        type=>$type,
-        pkIndex=>$h,
+        table => $tab,
+        type => $type,
+        pkIndex => $h,
     );
 }
 

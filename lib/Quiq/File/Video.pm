@@ -60,21 +60,21 @@ sub new {
     my $verbose = 1;
 
     Quiq::Option->extract(\@_,
-        -verbose=>\$verbose,
+        -verbose => \$verbose,
     );
 
     # Objekt instantiieren
 
     return $class->SUPER::new(
-        file=>$file,
-        verbose=>$verbose,
-        width=>undef,
-        height=>undef,
-        aspectRatio=>undef,
-        bitrate=>undef,
-        framerate=>undef,
-        duration=>undef,
-        frames=>undef,
+        file => $file,
+        verbose => $verbose,
+        width => undef,
+        height => undef,
+        aspectRatio => undef,
+        bitrate => undef,
+        framerate => undef,
+        duration => undef,
+        frames => undef,
     );
 }
 

@@ -260,9 +260,9 @@ sub newFromSbit {
     my ($class,$db) = @_;
 
     return $class->new($db->udlDbms,
-        -handle=>$db->dbh,
-        -log=>0,
-        -logfile=>'/tmp/tsplot.log',
+        -handle => $db->dbh,
+        -log => 0,
+        -logfile => '/tmp/tsplot.log',
     );
 }
 
@@ -385,7 +385,7 @@ Bei eingeschaltetem Strict-Modus wird eine Exception
 =head4 Example
 
     my $db = Quiq::Database::Connection->new('dbi#mysql',
-        -handle=>$main::dbh,
+        -handle => $main::dbh,
     );
     
     ...
@@ -1087,8 +1087,8 @@ sub exportTable {
 
     my $colSep = '|';
     my $cur = $self->select($table,
-        -cursor=>1,
-        -raw=>1,
+        -cursor => 1,
+        -raw => 1,
     );
     my $titleA = $cur->titles;
 
@@ -1856,7 +1856,7 @@ sub save {
     else {
         $self->throw(
             q~DB-00003: Ungültiger Datensatz-Status~,
-            RowStatus=>$stat,
+            RowStatus => $stat,
         );
     }
     $cur->{'rowOperation'} = $stat;
@@ -1992,23 +1992,23 @@ sub select {
     my $tableClass = undef;
 
     Quiq::Option->extract(-mode=>'sloppy',\@_,
-        -cache=>\$cache,
-        -chunkSize=>\$chunkSize,
-        -cursor=>\$cursor,
-        -fetchMode=>\$fetchMode,
-        -raw=>\$raw,
-        -rowClass=>\$rowClass,
-        -tableClass=>\$tableClass,
+        -cache => \$cache,
+        -chunkSize => \$chunkSize,
+        -cursor => \$cursor,
+        -fetchMode => \$fetchMode,
+        -raw => \$raw,
+        -rowClass => \$rowClass,
+        -tableClass => \$tableClass,
     );
 
     my $stmt = $self->stmt->select(@_);
     my $cur = $self->sql($stmt,
-        -cache=>$cache,
-        -chunkSize=>$chunkSize,
-        -fetchMode=>$fetchMode,
-        -raw=>$raw,
-        -rowClass=>$rowClass,
-        -tableClass=>$tableClass,
+        -cache => $cache,
+        -chunkSize => $chunkSize,
+        -fetchMode => $fetchMode,
+        -raw => $raw,
+        -rowClass => $rowClass,
+        -tableClass => $tableClass,
     );
     if ($cursor || $cur->bindVars) {
         return $cur;
@@ -2087,8 +2087,8 @@ sub lookup {
     my $sloppy = 0;
 
     Quiq::Option->extract(-mode=>'sloppy',\@_,
-        -new=>\$new,
-        -sloppy=>\$sloppy,
+        -new => \$new,
+        -sloppy => \$sloppy,
     );
 
     # Operation ausführen
@@ -2109,7 +2109,7 @@ sub lookup {
     if ($row2 && !($sloppy & 2)) {
         $self->throw(
             q~DB-00003: Mehr als ein Datensatz gefunden~,
-            Sql=>$stmt,
+            Sql => $stmt,
         );
     }
 
@@ -2122,7 +2122,7 @@ sub lookup {
         }
         $self->throw(
             q~DB-00001: Datensatz nicht gefunden~,
-            Sql=>$stmt,
+            Sql => $stmt,
         );
     }
 
@@ -2232,8 +2232,8 @@ sub nullRow {
         my $rowClass = undef;
 
         Quiq::Option->extract(-mode=>'sloppy',\@_,
-            -raw=>\$raw,
-            -rowClass=>\$rowClass,
+            -raw => \$raw,
+            -rowClass => \$rowClass,
         );
 
         unless ($rowClass) {
@@ -2312,62 +2312,62 @@ C<< -hash=>1 >> angegeben ist.
 Alle Werte einer Kolumne (sortiert):
 
     @arr = $db->values(
-        -select=>'per_nachname',
-        -from=>'person',
-        -orderBy=>1,
+        -select => 'per_nachname',
+        -from => 'person',
+        -orderBy => 1,
     );
 
 Nur verschiedene Werte (sortiert):
 
     @arr = $db->values(
-        -select=>'per_nachname',
-        -distinct=>1,
-        -from=>'person',
-        -orderBy=>1,
+        -select => 'per_nachname',
+        -distinct => 1,
+        -from => 'person',
+        -orderBy => 1,
     );
 
 Abbildung von Id auf Nachname:
 
     %hash = $db->values(
-        -select=>'per_id','per_nachname',
-        -from=>'person',
+        -select => 'per_id','per_nachname',
+        -from => 'person',
     );
 
 Dasselbe, nur dass eine Referenz (Hash-Objekt) geliefert wird:
 
     $hash = $db->values(
-        -select=>'per_id','per_nachname',
-        -from=>'person',
-        -hash=>1,
+        -select => 'per_id','per_nachname',
+        -from => 'person',
+        -hash => 1,
     );
 
 Lookup-Hash für Nachname:
 
     $hash = $db->values(
-        -select=>'per_nachname',1,
-        -from=>'person',
-        -hash=>1,
+        -select => 'per_nachname',1,
+        -from => 'person',
+        -hash => 1,
     );
 
 Array mit Paaren:
 
     @arr = $db->values(
-        -select=>'per_id','per_nachname',
-        -from=>'person',
+        -select => 'per_id','per_nachname',
+        -from => 'person',
     );
 
 Dasselbe, nur dass eine Referenz (Array-Objekt) geliefert wird:
 
     $arr = $db->values(
-        -select=>'per_id','per_nachname',
-        -from=>'person',
+        -select => 'per_id','per_nachname',
+        -from => 'person',
     );
 
 Array mit Abfolge von Tripeln:
 
     @arr = $db->values(
-        -select=>'per_id','per_nachname','per_vorname',
-        -from=>'person',
+        -select => 'per_id','per_nachname','per_vorname',
+        -from => 'person',
     );
 
 =cut
@@ -2383,7 +2383,7 @@ sub values {
     my $hash = 0;
 
     Quiq::Option->extract(-mode=>'sloppy',\@_,
-        -hash=>\$hash,
+        -hash => \$hash,
     );
 
     # Operation ausführen
@@ -2470,14 +2470,14 @@ sub value {
     my $default = undef;
 
     Quiq::Option->extract(-mode=>'sloppy',\@_,
-        -default=>\$default,
+        -default => \$default,
     );
 
     # Operation ausführen
 
     my ($val) = $self->lookup(@_,
         defined $default? (-sloppy=>1): (),
-        -raw=>1,
+        -raw => 1,
     );
 
     return defined $val? $val: $default;
@@ -2524,7 +2524,7 @@ sub insert {
     my $sloppy = 0;
 
     Quiq::Option->extract(\@_,
-        -sloppy=>\$sloppy,
+        -sloppy => \$sloppy,
     );
 
     my $stmt = $self->stmt->insert($table,@_);
@@ -2651,8 +2651,8 @@ sub update {
         #unless (@_) {
         #    $self->throw(
         #        q~DB-00002: Keine WHERE-Bedingung für Datensatz-Update~,
-        #        Table=>$table,
-        #        Row=>$row->asString('|'),
+        #        Table => $table,
+        #        Row => $row->asString('|'),
         #    );
         #}
 
@@ -2702,8 +2702,8 @@ sub delete {
         unless (@_) {
             $self->throw(
                 q~DB-00002: Keine WHERE-Bedingung für Datensatz-Delete~,
-                Table=>$table,
-                Row=>$row->asString('|'),
+                Table => $table,
+                Row => $row->asString('|'),
             );
         }
     }
@@ -2842,10 +2842,10 @@ sub createTable {
     my $sloppy = 0;
 
     Quiq::Option->extract(-mode=>'sloppy',\@_,
-        -reCreate=>\$replace, # Rückwärtskompatibilität
-        -recreate=>\$replace, # Rückwärtskompatibilität
-        -replace=>\$replace,
-        -sloppy=>\$sloppy,
+        -reCreate => \$replace, # Rückwärtskompatibilität
+        -recreate => \$replace, # Rückwärtskompatibilität
+        -replace => \$replace,
+        -sloppy => \$sloppy,
     );
 
     # Tabelle droppen
@@ -2945,9 +2945,9 @@ sub tableExists {
 
     local $@;
     my $stmt = $self->stmt->select(
-        -select=>0,
-        -from=>$table,
-        -limit=>0,
+        -select => 0,
+        -from => $table,
+        -limit => 0,
     );
     eval { $self->sql($stmt) };
     return $@? 0: 1;
@@ -3048,9 +3048,9 @@ sub columnExists {
 
     local $@;
     my $stmt = $self->stmt->select(
-        -select=>$column,
-        -from=>$table,
-        -limit=>0,
+        -select => $column,
+        -from => $table,
+        -limit => 0,
     );
     eval { $self->sql($stmt) };
     return $@? 0: 1;
@@ -3078,9 +3078,9 @@ liefere undef.
 =head4 Example
 
     $cur = $db->addColumn('person','mag_eis',
-        type=>'STRING(1)',
-        notNull=>1,
-        default=>1,
+        type => 'STRING(1)',
+        notNull => 1,
+        default => 1,
     );
 
 =cut
@@ -3096,7 +3096,7 @@ sub addColumn {
     my $sloppy = 0;
 
     Quiq::Option->extract(-mode=>'sloppy',\@_,
-        -sloppy=>\$sloppy,
+        -sloppy => \$sloppy,
     );
 
     # Statement ausführen
@@ -3281,10 +3281,10 @@ sub countDistinctMinMax {
 
     $table = $self->stmt->legalizeTablename($table);
     return $self->lookup(
-        -select=>"COUNT($column)","COUNT(DISTINCT $column)",
+        -select => "COUNT($column)","COUNT(DISTINCT $column)",
             "MIN($column)","MAX($column)",
-        -from=>$table,
-        -raw=>1,
+        -from => $table,
+        -raw => 1,
     );
 }
 
@@ -3322,11 +3322,11 @@ sub indexExists {
     my $row;
     if ($self->isPostgreSQL) {
         ($row) = $self->lookup(
-            -from=>'pg_class',
-            -where,relname=>$indexName,
-                relkind=>'i',
-            -raw=>1,
-            -sloppy=>1,
+            -from => 'pg_class',
+            -where,relname => $indexName,
+                relkind => 'i',
+            -raw => 1,
+            -sloppy => 1,
         );
     }
     else {
@@ -3390,10 +3390,10 @@ sub createIndex {
 
     if (@_) {
         Quiq::Option->extract(\@_,
-             -indexName=>\$indexName,
-             -reCreate=>\$reCreate,
-             -tableSpace=>\$tableSpace,
-             -unique=>\$unique,
+             -indexName => \$indexName,
+             -reCreate => \$reCreate,
+             -tableSpace => \$tableSpace,
+             -unique => \$unique,
         );
     }
 
@@ -3406,9 +3406,9 @@ sub createIndex {
     # Index erzeugen
 
     my $stmt = $self->stmt->createIndex($tableName,$colNameA,
-        -indexName=>$indexName,
-        -tableSpace=>$tableSpace,
-        -unique=>$unique,
+        -indexName => $indexName,
+        -tableSpace => $tableSpace,
+        -unique => $unique,
     );
 
     return $self->sqlAtomic($stmt,@_);
@@ -3518,8 +3518,8 @@ sub createSequence {
 
     if (@_) {
         Quiq::Option->extract(\@_,
-            -reCreate=>\$reCreate,
-            -startWith=>\$startWith,
+            -reCreate => \$reCreate,
+            -startWith => \$startWith,
         );
     }
 
@@ -3701,7 +3701,7 @@ sub createView {
     my $reCreate = 0;
 
     Quiq::Option->extract(-mode=>'sloppy',\@_,
-        -reCreate=>\$reCreate,
+        -reCreate => \$reCreate,
     );
 
     # View droppen
@@ -3788,9 +3788,9 @@ sub viewExists {
 
     local $@;
     my $stmt = $self->stmt->select(
-        -select=>0,
-        -from=>$viewName,
-        -limit=>0,
+        -select => 0,
+        -from => $viewName,
+        -limit => 0,
     );
     eval { $self->sql($stmt) };
     return $@? 0: 1;
@@ -3806,7 +3806,7 @@ sub viewExists {
 
     $cur = $db->createTrigger($table,$name,$when,$event,$level,$body,@opt);
     $cur = $db->createTrigger($table,$name,$when,$event,$level,
-        $dbms=>$body,
+        $dbms => $body,
         ...,
         @opt
     );
@@ -3838,10 +3838,10 @@ programmieren zu können, unterschiedliche Prozedur-Rümpfe für
 verschiedene RDBMSe definiert werden:
 
     ...
-    Oracle=>"
+    Oracle => "
     <oracle_body>
     ",
-    PostgreSQL=>"
+    PostgreSQL => "
     <postgresql_body>
     ",
     ...
@@ -3854,12 +3854,12 @@ Rumpf-Definition aus.
 Erzeuge unterschiedlichen Triggercode für Oracle und PostgreSQL:
 
     $db->createTrigger('mytab','mytrig','before','insert|update','row',
-        Oracle=>"
+        Oracle => "
         BEGIN
             :new.c := 'a';
         END
         ",
-        PostgreSQL=>"
+        PostgreSQL => "
         BEGIN
             NEW.c = 'a';
             RETURN NEW;
@@ -3913,7 +3913,7 @@ sub createTrigger {
     my $replace = 0;
 
     Quiq::Option->extract(\@_,
-        -replace=>\$replace,
+        -replace => \$replace,
     );
 
     # Body ermitteln
@@ -3937,12 +3937,12 @@ sub createTrigger {
         my $procName = $name.'_proc';
 
         my $stmt = $sql->createFunction($procName,$body,
-            -returns=>'trigger'
+            -returns => 'trigger'
         );
         $self->sqlAtomic($stmt);
 
         $stmt = $sql->createTrigger($table,$name,$when,$event,$level,
-            -execute=>$procName,
+            -execute => $procName,
         );
         return $self->sqlAtomic($stmt);
     }
@@ -3999,18 +3999,18 @@ sub triggerExists {
     my $row;
     if ($self->isOracle) {
         ($row) = $self->lookup(
-            -from=>'all_triggers',
-            -where,trigger_name=>$name,
-            -raw=>1,
-            -sloppy=>1,
+            -from => 'all_triggers',
+            -where,trigger_name => $name,
+            -raw => 1,
+            -sloppy => 1,
         );
     }
     elsif ($self->isPostgreSQL) {
         ($row) = $self->lookup(
-            -from=>'pg_proc',
-            -where,proname=>$name.'_proc',
-            -raw=>1,
-            -sloppy=>1,
+            -from => 'pg_proc',
+            -where,proname => $name.'_proc',
+            -raw => 1,
+            -sloppy => 1,
         );
     }
     else {
@@ -4420,9 +4420,9 @@ ein Bind-Cursor geliefert.
 =head3 Beispiel mit INSERT
 
     my $bindCur = $db->insert('person',
-        per_id=>\'?',
-        per_vorname=>\'?',
-        per_nachname=>\'?',
+        per_id => \'?',
+        per_vorname => \'?',
+        per_nachname => \'?',
     );
     
     $bindCur->bind(
@@ -4434,8 +4434,8 @@ ein Bind-Cursor geliefert.
 =head3 Beispiel mit SELECT
 
     my $bindCur = $db->select(
-        -from=>'person',
-        -where=>'per_nachname = ?',
+        -from => 'person',
+        -where => 'per_nachname = ?',
     );
     
     my $cur = $bindCur->bind('Mustermann');
@@ -4482,9 +4482,9 @@ neu erzeugt wurde:
         # initialisieren
     
         $row->set(
-            per_id=>$db->nextValue('id');
-            per_vorname=>'Erika',
-            per_namchname=>'Mustermann',
+            per_id => $db->nextValue('id');
+            per_vorname => 'Erika',
+            per_namchname => 'Mustermann',
         );
     
         # speichern
@@ -4497,9 +4497,9 @@ neu erzeugt wurde:
 
     my $per_id = $db->nextValue('id');
     $db->insert('person',
-        per_id=>$per_id,
-        per_vorname=>'Rudi',
-        per_nachname=>'Ratlos',
+        per_id => $per_id,
+        per_vorname => 'Rudi',
+        per_nachname => 'Ratlos',
     );
     my $per = $db->lookup('person',-where,per_id=>$per_id);
 
@@ -4511,18 +4511,18 @@ der Datensatz selektiert werden.
 
     my $per = $db->nullRow('person');
     $per->set(
-        per_id=>$db->nextValue('id'),
-        per_vorname=>'Rudi',
-        per_nachname=>'Ratlos',
+        per_id => $db->nextValue('id'),
+        per_vorname => 'Rudi',
+        per_nachname => 'Ratlos',
     );
     $db->insert('person',$row);
 
 =head3 Mittels Objekt (noch nicht implementiert)
 
     my $per = Person->new($db,
-        per_id=>$db->nextValue('id'),
-        per_vorname=>'Rudi',
-        per_nachname=>'Ratlos',
+        per_id => $db->nextValue('id'),
+        per_vorname => 'Rudi',
+        per_nachname => 'Ratlos',
     );
     $per->insert($db);
 
@@ -4569,10 +4569,10 @@ Der Defaultwert ist 1024*1024 Bytes (1MB).
 =head3 Daten speichern
 
     $cur = $db->insert('person',
-        per_id=>\'?',
-        per_vorname=>\'?',
-        per_nachname=>\'?',
-        per_foto=>\'?',
+        per_id => \'?',
+        per_vorname => \'?',
+        per_nachname => \'?',
+        per_foto => \'?',
     );
     
     # BLOB-Kolumne bekannt machen, damit die Schnittstelle

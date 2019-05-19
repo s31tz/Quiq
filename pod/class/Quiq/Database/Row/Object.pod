@@ -352,7 +352,7 @@ setClauseFromModifiedRow() liefert uns die SET-Klausel für ein UPDATE:
     );
     $db->update('shopartikellieferanteninfo',
         @setClause,
-        -where,artikelid=>$artId,
+        -where,artikelid => $artId,
     );
 
 Wurde keine der Kolumnen geändert, liefert setClauseFromModifiedRow() eine leere

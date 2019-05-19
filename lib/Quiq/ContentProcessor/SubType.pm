@@ -63,9 +63,9 @@ sub create {
     $sec->validate($class->contentAllowed,scalar $class->attributes);
         
     $sec->set(
-        parent=>$parent,
+        parent => $parent,
         # memoize
-        name=>undef,
+        name => undef,
         # Subklassen-Attribute
         @_,
     );

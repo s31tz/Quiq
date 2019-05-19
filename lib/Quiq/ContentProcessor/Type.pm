@@ -34,8 +34,8 @@ die von der dieser Klasse abgeleitet ist:
     use base qw/Quiq::ContentProcessor::Type/;
     
     __PACKAGE__->def(
-        ContentAllowed=>0,
-        Attributes=>[qw/
+        ContentAllowed => 0,
+        Attributes => [qw/
             Name
         /],
     );
@@ -60,7 +60,7 @@ dort aus gerufen:
     use base qw/Yeah::Type::Program/;
     
     __PACKAGE__->def(
-        Attributes=>[qw/
+        Attributes => [qw/
             <Spezifische Attribute des Typs>
         /],
     );
@@ -203,15 +203,15 @@ sub create {
     }
         
     $sec->set(
-        processor=>$cop,
-        plugin=>$plg,
-        fileSource=>'',
-        testable=>0,
+        processor => $cop,
+        plugin => $plg,
+        fileSource => '',
+        testable => 0,
         # memoize
-        name=>undef,
-        entityId=>undef,
-        entityFile=>undef,
-        entityType=>undef,
+        name => undef,
+        entityId => undef,
+        entityFile => undef,
+        entityType => undef,
         # Subklassen-Attribute
         @_,
     );

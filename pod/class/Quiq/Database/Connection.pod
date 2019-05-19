@@ -149,7 +149,7 @@ Bei eingeschaltetem Strict-Modus wird eine Exception
 =head4 Example
 
     my $db = Quiq::Database::Connection->new('dbi#mysql',
-        -handle=>$main::dbh,
+        -handle => $main::dbh,
     );
     
     ...
@@ -1018,62 +1018,62 @@ C<< -hash=>1 >> angegeben ist.
 Alle Werte einer Kolumne (sortiert):
 
     @arr = $db->values(
-        -select=>'per_nachname',
-        -from=>'person',
-        -orderBy=>1,
+        -select => 'per_nachname',
+        -from => 'person',
+        -orderBy => 1,
     );
 
 Nur verschiedene Werte (sortiert):
 
     @arr = $db->values(
-        -select=>'per_nachname',
-        -distinct=>1,
-        -from=>'person',
-        -orderBy=>1,
+        -select => 'per_nachname',
+        -distinct => 1,
+        -from => 'person',
+        -orderBy => 1,
     );
 
 Abbildung von Id auf Nachname:
 
     %hash = $db->values(
-        -select=>'per_id','per_nachname',
-        -from=>'person',
+        -select => 'per_id','per_nachname',
+        -from => 'person',
     );
 
 Dasselbe, nur dass eine Referenz (Hash-Objekt) geliefert wird:
 
     $hash = $db->values(
-        -select=>'per_id','per_nachname',
-        -from=>'person',
-        -hash=>1,
+        -select => 'per_id','per_nachname',
+        -from => 'person',
+        -hash => 1,
     );
 
 Lookup-Hash für Nachname:
 
     $hash = $db->values(
-        -select=>'per_nachname',1,
-        -from=>'person',
-        -hash=>1,
+        -select => 'per_nachname',1,
+        -from => 'person',
+        -hash => 1,
     );
 
 Array mit Paaren:
 
     @arr = $db->values(
-        -select=>'per_id','per_nachname',
-        -from=>'person',
+        -select => 'per_id','per_nachname',
+        -from => 'person',
     );
 
 Dasselbe, nur dass eine Referenz (Array-Objekt) geliefert wird:
 
     $arr = $db->values(
-        -select=>'per_id','per_nachname',
-        -from=>'person',
+        -select => 'per_id','per_nachname',
+        -from => 'person',
     );
 
 Array mit Abfolge von Tripeln:
 
     @arr = $db->values(
-        -select=>'per_id','per_nachname','per_vorname',
-        -from=>'person',
+        -select => 'per_id','per_nachname','per_vorname',
+        -from => 'person',
     );
 
 =head3 value() - Liefere Wert einer Kolumne eines Datensatzes
@@ -1398,9 +1398,9 @@ liefere undef.
 =head4 Example
 
     $cur = $db->addColumn('person','mag_eis',
-        type=>'STRING(1)',
-        notNull=>1,
-        default=>1,
+        type => 'STRING(1)',
+        notNull => 1,
+        default => 1,
     );
 
 =head3 dropColumn() - Entferne Kolumne aus Tabelle
@@ -1666,7 +1666,7 @@ Prüfe, ob View existiert. Wenn ja, liefere "wahr", sonst "falsch".
 
     $cur = $db->createTrigger($table,$name,$when,$event,$level,$body,@opt);
     $cur = $db->createTrigger($table,$name,$when,$event,$level,
-        $dbms=>$body,
+        $dbms => $body,
         ...,
         @opt
     );
@@ -1698,10 +1698,10 @@ programmieren zu können, unterschiedliche Prozedur-Rümpfe für
 verschiedene RDBMSe definiert werden:
 
     ...
-    Oracle=>"
+    Oracle => "
     <oracle_body>
     ",
-    PostgreSQL=>"
+    PostgreSQL => "
     <postgresql_body>
     ",
     ...
@@ -1714,12 +1714,12 @@ Rumpf-Definition aus.
 Erzeuge unterschiedlichen Triggercode für Oracle und PostgreSQL:
 
     $db->createTrigger('mytab','mytrig','before','insert|update','row',
-        Oracle=>"
+        Oracle => "
         BEGIN
             :new.c := 'a';
         END
         ",
-        PostgreSQL=>"
+        PostgreSQL => "
         BEGIN
             NEW.c = 'a';
             RETURN NEW;
@@ -1996,9 +1996,9 @@ ein Bind-Cursor geliefert.
 =head3 Beispiel mit INSERT
 
     my $bindCur = $db->insert('person',
-        per_id=>\'?',
-        per_vorname=>\'?',
-        per_nachname=>\'?',
+        per_id => \'?',
+        per_vorname => \'?',
+        per_nachname => \'?',
     );
     
     $bindCur->bind(
@@ -2010,8 +2010,8 @@ ein Bind-Cursor geliefert.
 =head3 Beispiel mit SELECT
 
     my $bindCur = $db->select(
-        -from=>'person',
-        -where=>'per_nachname = ?',
+        -from => 'person',
+        -where => 'per_nachname = ?',
     );
     
     my $cur = $bindCur->bind('Mustermann');
@@ -2058,9 +2058,9 @@ neu erzeugt wurde:
         # initialisieren
     
         $row->set(
-            per_id=>$db->nextValue('id');
-            per_vorname=>'Erika',
-            per_namchname=>'Mustermann',
+            per_id => $db->nextValue('id');
+            per_vorname => 'Erika',
+            per_namchname => 'Mustermann',
         );
     
         # speichern
@@ -2073,9 +2073,9 @@ neu erzeugt wurde:
 
     my $per_id = $db->nextValue('id');
     $db->insert('person',
-        per_id=>$per_id,
-        per_vorname=>'Rudi',
-        per_nachname=>'Ratlos',
+        per_id => $per_id,
+        per_vorname => 'Rudi',
+        per_nachname => 'Ratlos',
     );
     my $per = $db->lookup('person',-where,per_id=>$per_id);
 
@@ -2087,18 +2087,18 @@ der Datensatz selektiert werden.
 
     my $per = $db->nullRow('person');
     $per->set(
-        per_id=>$db->nextValue('id'),
-        per_vorname=>'Rudi',
-        per_nachname=>'Ratlos',
+        per_id => $db->nextValue('id'),
+        per_vorname => 'Rudi',
+        per_nachname => 'Ratlos',
     );
     $db->insert('person',$row);
 
 =head3 Mittels Objekt (noch nicht implementiert)
 
     my $per = Person->new($db,
-        per_id=>$db->nextValue('id'),
-        per_vorname=>'Rudi',
-        per_nachname=>'Ratlos',
+        per_id => $db->nextValue('id'),
+        per_vorname => 'Rudi',
+        per_nachname => 'Ratlos',
     );
     $per->insert($db);
 
@@ -2145,10 +2145,10 @@ Der Defaultwert ist 1024*1024 Bytes (1MB).
 =head3 Daten speichern
 
     $cur = $db->insert('person',
-        per_id=>\'?',
-        per_vorname=>\'?',
-        per_nachname=>\'?',
-        per_foto=>\'?',
+        per_id => \'?',
+        per_vorname => \'?',
+        per_nachname => \'?',
+        per_foto => \'?',
     );
     
     # BLOB-Kolumne bekannt machen, damit die Schnittstelle
