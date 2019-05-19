@@ -152,7 +152,7 @@ sub exec {
     if (!$rsy->exec) {
         my $errA = $rsy->err;
         $class->throw(
-            q~RSYNC-00001: Command failed~,
+            'RSYNC-00001: Command failed',
             # Cmd => $rsy->cmd,
             Stderr => $errA? join('',@$errA): undef,
         );

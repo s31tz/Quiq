@@ -164,7 +164,7 @@ sub new {
         }
         else {
             $class->throw(
-                q~TEMPLATE-00001: Ungüliger Wert für Option -lineContinuation~,
+                'TEMPLATE-00001: Ungüliger Wert für Option -lineContinuation',
                 Value => $lineContinuation,
             );
         }
@@ -362,7 +362,7 @@ sub replace {
             #}
  
             $self->throw(
-                q~TMPL-00001: Platzhalter existiert nicht~,
+                'TMPL-00001: Platzhalter existiert nicht',
                 # Template=>$str,
                 Placeholder=>$key,
             );

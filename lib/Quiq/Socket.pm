@@ -98,7 +98,7 @@ sub new {
     my $self = $class->SUPER::new("$host:$port");
     if (!$self && !$sloppy) {
         $class->throw(
-            q~SOCK-00001: Verbindungsaufbau fehlgeschlagen~,
+            'SOCK-00001: Verbindungsaufbau fehlgeschlagen',
             Host=>$host,
             Port=>$port,
         );
@@ -148,7 +148,7 @@ sub close {
     my $self = shift;
 
     CORE::close $self or do {
-        $self->throw(q~SOCK-00002: Socket schließen fehlgeschlagen~);
+        $self->throw('SOCK-00002: Socket schließen fehlgeschlagen');
     };
 
     return;

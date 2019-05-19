@@ -561,7 +561,7 @@ sub dsn {
 
     if ($api ne 'dbi') {
         $self->throw(
-            q~UDL-00001: DSN nur für DBI API definiert~,
+            'UDL-00001: DSN nur für DBI API definiert',
             API=>$api,
         );
     }
@@ -607,7 +607,7 @@ sub dsn {
     }
     else {
         $self->throw(
-            q~UDL-00002: Nicht-unterstütztes DBMS~,
+            'UDL-00002: Nicht-unterstütztes DBMS',
             Dbms=>$dbms,
         );
     }

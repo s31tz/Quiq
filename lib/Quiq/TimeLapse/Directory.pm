@@ -170,7 +170,7 @@ sub new {
         my $n = $img->number;
         if ($hash{$n}) {
             $class->throw(
-                q~TIMELAPSE-00002: Duplicate image number~,
+                'TIMELAPSE-00002: Duplicate image number',
                 Number=>$n,
                 File=>$img->path,
             );
@@ -445,7 +445,7 @@ sub resolveFunctionExpression {
     }
     else {
         $self->throw(
-            q~TIMELAPSE-00001: Unknown function~,
+            'TIMELAPSE-00001: Unknown function',
             Function=>$func,
         );
     }
@@ -546,7 +546,7 @@ sub resolveIdentifier {
     }
     else {
         $self->throw(
-            q~TIMELAPSE-00001: Unknown identifier~,
+            'TIMELAPSE-00001: Unknown identifier',
             Key=>$key,
             Directory=>$self->dir,
         );
@@ -689,7 +689,7 @@ sub image {
     
     if ($n !~ /^\d+$/) {
         $self->throw(
-            q~TIMELAPSE-00001: Not an integer~,
+            'TIMELAPSE-00001: Not an integer',
             Key=>!defined $n? 'undef': $n eq ''? "''": $n,
         );
     }
@@ -794,7 +794,7 @@ sub importImages {
 
         if ($subDir =~ m|^/|) {
             $class->throw(
-                q~TIMEPAPSE-00001: Path of subdir must be relative~,
+                'TIMEPAPSE-00001: Path of subdir must be relative',
                 Subdir=>$subDir,
             );
         }

@@ -99,7 +99,7 @@ sub selectTemplate {
     my $ref = *{"$class\::Select"}{SCALAR};
     if (!$$ref) {
         $class->throw(
-            q~ROW-00001: Join-Klasse definiert kein Select-Statement~,
+            'ROW-00001: Join-Klasse definiert kein Select-Statement',
             JoinClass => $class,
         );
     }
@@ -209,7 +209,7 @@ sub cast {
         Quiq::Array->compare($titles,$newTitles);
     if (!@$bothA) {
         $self->throw(
-            q~ROW-00006: Datensatz-Klassen haben keine gemeinsamen Kolumnen~,
+            'ROW-00006: Datensatz-Klassen haben keine gemeinsamen Kolumnen',
             RowClass => ref($self),
             CastClass => $newClass,
         );

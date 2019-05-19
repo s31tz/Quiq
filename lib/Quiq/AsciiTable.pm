@@ -212,7 +212,7 @@ sub new {
 
     if (!$sepLine || substr($sepLine,0,1) ne '-') {
         $class->throw(
-            q~TABLE-00001: No table (no parting line)~,
+            'TABLE-00001: No table (no parting line)',
             Input => $str,
         );
     }

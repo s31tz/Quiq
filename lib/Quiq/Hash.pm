@@ -613,7 +613,7 @@ sub AUTOLOAD :lvalue {
 
     if (!ref $this) {
         $this->throw(
-            q~HASH-00002: Klassen-Methode existiert nicht~,
+            'HASH-00002: Klassen-Methode existiert nicht',
             Method=>$key,
         );
     }
@@ -622,7 +622,7 @@ sub AUTOLOAD :lvalue {
 
     if (!exists $this->{$key}) {
         $this->throw(
-            q~HASH-00001: Hash-Schlüssel oder Methode existiert nicht~,
+            'HASH-00001: Hash-Schlüssel oder Methode existiert nicht',
             Attribute=>$key,
             Class=>ref($this)? ref($this): $this,
         );
@@ -735,7 +735,7 @@ sub validate {
     for my $key (CORE::keys %$h) {
         if (!exists $refH->{$key}) {
             $class->throw(
-                q~HASH-00099: Unzulässiger Hash-Schlüssel~,
+                'HASH-00099: Unzulässiger Hash-Schlüssel',
                 Key=>$key,
             );
         }
@@ -1093,7 +1093,7 @@ sub arraySize {
     }
     
     $self->throw(
-        q~HASH-00005: Keine Array-Referenz~,
+        'HASH-00005: Keine Array-Referenz',
         Key=>$key,
         Class=>ref($self),
     );

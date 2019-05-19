@@ -80,7 +80,7 @@ sub filter {
     my $pid = IPC::Open3::open3(\*W,\*R,\*E,$cmd);
     unless ($pid) {
         $class->throw(
-            q~IPC-00001: Kann Filterkommando nicht forken~,
+            'IPC-00001: Kann Filterkommando nicht forken',
             Cmd=>$cmd,
         );
     }

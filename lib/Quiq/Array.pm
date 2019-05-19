@@ -1043,7 +1043,7 @@ sub restore {
         return "\r" if $_[0] eq 'r';
 
         $class->throw(
-            q~ARR-00001: Inkorrekte Array-Repräsentation~,
+            'ARR-00001: Inkorrekte Array-Repräsentation',
             EscapeSequence => "\\$_[0]",
         );
     };

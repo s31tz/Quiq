@@ -21,7 +21,7 @@ Für eine Fehlerbehandlung können die Methoden $par->input()
 und $line->number() genutzt werden:
 
     $class->throw(
-        q~SDOC-00001: K\{} and k\{} are not supported anymore~,
+        'SDOC-00001: K\{} and k\{} are not supported anymore',
         Input => ''.$par->input,
         Line => $line->number,
     );

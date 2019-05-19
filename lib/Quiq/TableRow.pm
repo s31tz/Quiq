@@ -62,7 +62,7 @@ sub new {
 
     if (@$valueA != @{$tab->{'columnA'}}) {
         $class->throw(
-            q~TABLE-00099: Unexpected array length~,
+            'TABLE-00099: Unexpected array length',
             TableWidth => scalar @{$tab->{'columnA'}},
             ArrayLength => scalar @$valueA,
         );

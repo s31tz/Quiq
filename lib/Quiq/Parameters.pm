@@ -348,7 +348,7 @@ sub extractPropertiesToVariables {
     $class->extract(1,1,undef,$paramA,0,@_);
     if (@$paramA) {
         $class->throw(
-            q~PARAM-00099: Unexpected parameter(s)~,
+            'PARAM-00099: Unexpected parameter(s)',
             Parameters => "@$paramA",
         );
     }
@@ -420,7 +420,7 @@ sub extractPropertiesToObject {
     my (undef,$opt) = $class->extract(0,1,undef,$paramA,0,@_);
     if (@$paramA) {
         $class->throw(
-            q~PARAM-00099: Unexpected parameter(s)~,
+            'PARAM-00099: Unexpected parameter(s)',
             Parameters => "@$paramA",
         );
     }
@@ -504,12 +504,12 @@ sub extractToVariables {
     my $argA = $class->extract(1,0,undef,$paramA,$maxArgs,@_);
     if (@$argA < $minArgs) {
         $class->throw(
-            q~PARAM-00099: not enough arguments~,
+            'PARAM-00099: not enough arguments',
         );
     }
     elsif (@$paramA) {
         $class->throw(
-            q~PARAM-00099: Unexpected parameter(s)~,
+            'PARAM-00099: Unexpected parameter(s)',
             Parameters => "@_",
         );
     }
@@ -577,12 +577,12 @@ sub extractToObject {
     my ($argA,$opt) = $class->extract(0,0,undef,$paramA,$maxArgs,@_);
     if (@$argA < $minArgs) {
         $class->throw(
-            q~PARAM-00099: not enough arguments~,
+            'PARAM-00099: not enough arguments',
         );
     }
     elsif (@$paramA) {
         $class->throw(
-            q~PARAM-00099: Unexpected parameter(s)~,
+            'PARAM-00099: Unexpected parameter(s)',
             Parameters => "@_",
         );
     }

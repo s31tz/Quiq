@@ -1035,7 +1035,7 @@ sub parseFiles {
                         # Plugin definiert worden sein
 
                         $sec->error(
-                            q~COP-00001: Missing plugin for section~,
+                            'COP-00001: Missing plugin for section',
                             Section => $sec->fullType,
                         );
                     }
@@ -1056,7 +1056,7 @@ sub parseFiles {
                     # Fehler: Erster Abschnitt ist kein []-Abschnitt
 
                     $sec->error(
-                        q~COP-00002: First section must be a []-section~,
+                        'COP-00002: First section must be a []-section',
                          Section => $sec->fullType,
                     );
                 }
@@ -1079,7 +1079,7 @@ sub parseFiles {
 
         if (substr($$fileSourceR,-1,1) ne "\n") {
             $fileEnt->error(
-                q~COP-00003: File entity must end with a newline~,
+                'COP-00003: File entity must end with a newline',
             );
         }
     }
@@ -1211,7 +1211,7 @@ sub entities {
     });
 
     my $a = $h->{$type} || $self->throw(
-        q~COP-00000: Unknown type~,
+        'COP-00000: Unknown type',
         Type => $type,
     );    
     return wantarray? @$a: $a;

@@ -36,7 +36,7 @@ Für eine Fehlerbehandlung können die Methoden $par->input()
 und $line->number() genutzt werden:
 
     $class->throw(
-        q~SDOC-00001: K\{} and k\{} are not supported anymore~,
+        'SDOC-00001: K\{} and k\{} are not supported anymore',
         Input => ''.$par->input,
         Line => $line->number,
     );
@@ -143,7 +143,7 @@ sub new {
     eval "use $lineClass";
     if ($@) {
         $class->throw(
-            q~TEXT-00001: Kann Zeilenklasse nicht laden~,
+            'TEXT-00001: Kann Zeilenklasse nicht laden',
             LineClass=>$lineClass,
             InternalError=>$@,
         );
@@ -198,7 +198,7 @@ sub new {
             }
             else {
                 $class->throw(
-                    q~TEXT-00002: Ungüliger Wert für Option -lineContinuation~,
+                    'TEXT-00002: Ungüliger Wert für Option -lineContinuation',
                     Value=>$lineContinuation,
                 );
             }

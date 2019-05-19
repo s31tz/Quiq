@@ -207,7 +207,7 @@ sub user {
 
     return getpwuid($uid) // do {
         $this->throw(
-            q~SYS-00001: Benutzer existiert nicht~,
+            'SYS-00001: Benutzer existiert nicht',
             Uid=>$uid,
             Error=>"$!",
         );
@@ -235,7 +235,7 @@ sub uid {
 
     return getpwnam($user) // do {
         $this->throw(
-            q~SYS-00001: Benutzer existiert nicht~,
+            'SYS-00001: Benutzer existiert nicht',
             User=>$user,
             Error=>"$!",
         );
@@ -298,7 +298,7 @@ sub searchProgram {
     }
 
     $class->throw(
-        q~PATH-00020: Programm/Skript nicht gefunden~,
+        'PATH-00020: Programm/Skript nicht gefunden',
         Program=>$program,
         Paths=>$ENV{'PATH'},
     );

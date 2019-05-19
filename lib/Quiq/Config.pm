@@ -196,7 +196,7 @@ sub new {
                 Quiq::Path->write($cfgFile,$create,-recursive=>1);
             }
             else {
-                $class->throw(q~CFG-00002: Config file not found~,
+                $class->throw('CFG-00002: Config file not found',
                     ConfigFile => $cfgFile,
                 );
             }
@@ -243,7 +243,7 @@ sub get {
     for my $key (@_) {
         if (!exists $self->{$key}) {
             $self->throw(
-                q~CFG-00001: Config-Variable existiert nicht~,
+                'CFG-00001: Config-Variable existiert nicht',
                 Variable => $key,
             );
         }

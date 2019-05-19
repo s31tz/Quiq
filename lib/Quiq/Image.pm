@@ -338,7 +338,7 @@ sub type {
     }
     elsif (!$sloppy) {
         $class->throw(
-            q~IMG-00001: Unknown image type~,
+            'IMG-00001: Unknown image type',
             File=>$file,
             Data=>$data,
         );

@@ -51,7 +51,7 @@ sub new {
 
     if (!$inputR || !ref $inputR) {
         $class->throw(
-            q~LINE-00002: Illegal path~,
+            'LINE-00002: Illegal path',
             Path => !defined($inputR)? 'undef': $inputR,
             Text => $text,
             Line => $number,
@@ -373,7 +373,7 @@ sub dump {
     }
 
     $self->throw(
-        q~LINE-00001: Ungültiges Ausgabeformat~,
+        'LINE-00001: Ungültiges Ausgabeformat',
         Format=>$format,
     );
 }

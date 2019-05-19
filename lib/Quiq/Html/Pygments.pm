@@ -161,7 +161,7 @@ sub css {
     my $bgColor = $1;
     if (!$bgColor) {
         $class->throw(
-            q~PYG-00001: Can't determine main background-color~,
+            'PYG-00001: Can\'t determine main background-color',
             Style => $style,
             CssRules => $rules,
         );

@@ -60,7 +60,7 @@ sub new {
 
     opendir my $dh,$dir or do {
         $class->throw(
-            q~DIR-00001: Verzeichnis öffnen fehlgeschlagen~,
+            'DIR-00001: Verzeichnis öffnen fehlgeschlagen',
             Dir => $dir,
             Error => "$!",
         );
@@ -90,7 +90,7 @@ sub close {
 
     closedir $self or do {
         $self->throw(
-            q~DIR-00002: Dirhandle schließen fehlgeschlagen~,
+            'DIR-00002: Dirhandle schließen fehlgeschlagen',
             Error => "$!",
         );
     };

@@ -49,7 +49,7 @@ sub new {
 
     if (!-e $path) {
         $class->throw(
-             q~IMAGE-00001: File not found~,
+             'IMAGE-00001: File not found',
              Path => $path,
         );
     }

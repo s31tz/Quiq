@@ -103,7 +103,7 @@ sub new {
         if (@arr < 2 || @arr > 3) {
             # Prüfe Dateiaufbau
             $self->throw(
-                q~SEQ-00001: Falsche Kolumnen-Anzahl~,
+                'SEQ-00001: Falsche Kolumnen-Anzahl',
                 File=>$file,
                 Line=>$.,
                 MaxColumns=>3,
@@ -202,7 +202,7 @@ sub def {
     my ($self,$key) = @_;
     my $arr = $self->oHash->get($key) || do {
         $self->throw(
-            q~IMGSET-00002: Schlüssel existiert nicht~,
+            'IMGSET-00002: Schlüssel existiert nicht',
             File=>$self->file,
             Key=>$key,
         );

@@ -359,7 +359,7 @@ sub parse {
                 }
                 else {
                     # Syntaxfehler
-                    die q~SECPAR-00001: Abschnitt erwartet~,"\n";
+                    die 'SECPAR-00001: Abschnitt erwartet',"\n";
                 }
             }
             elsif ($state == 1) {
@@ -451,7 +451,7 @@ sub parse {
             }
             else {
                 # Paranoia
-                die q~SECPAR-00002: Unerwarteter Zustand~,"\n";
+                die 'SECPAR-00002: Unerwarteter Zustand',"\n";
             }
             $source .= $_;
             $line++;

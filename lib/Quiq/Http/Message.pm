@@ -823,7 +823,7 @@ sub fromString {
         # X-(.*?):
         elsif (!$received) {
             $self->throw(
-                q~HTTP-00003: Unbekannte HTTP Headerzeile~,
+                'HTTP-00003: Unbekannte HTTP Headerzeile',
                 Line=>$_,
             );
         }
@@ -860,7 +860,7 @@ sub fromString {
     }
     else {
         $self->throw(
-            q~HTTP-00001: Transfer-Encoding nicht unterstützt~,
+            'HTTP-00001: Transfer-Encoding nicht unterstützt',
             Value=>$transferEncoding,
         );
     }

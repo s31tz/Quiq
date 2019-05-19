@@ -101,7 +101,7 @@ sub new {
     #
     #if ($sec !~ /^[0-9.:dhms]+$/) {
     #    $class->throw(
-    #        q~DURATION-00002: Illegal duration~,
+    #        'DURATION-00002: Illegal duration',
     #        Duration => $sec,
     #    );
     #}
@@ -384,7 +384,7 @@ sub stringToSeconds {
         }
         else {
             $class->throw(
-                q~DURATION-00001: Unbekannter Anteil einer Dauer~,
+                'DURATION-00001: Unbekannter Anteil einer Dauer',
                 Unit => $unit,
                 Value => $x,
             );

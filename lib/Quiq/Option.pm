@@ -210,7 +210,7 @@ sub extract {
                 die "Ungültige Methodenoption: $key\n";
             }
             $class->throw(
-                q~OPT-00002: Ungültige Methodenoption~,
+                'OPT-00002: Ungültige Methodenoption',
                 Option=>$key,
             );
         }
@@ -303,7 +303,7 @@ sub extract {
                 die "Ungültige Option: $dashPrefix$key\n";
             }
             $class->throw(
-                q~OPT-00001: Ungültige Option~,
+                'OPT-00001: Ungültige Option',
                 Option=>"$dashPrefix$key",
             );
         };
@@ -442,7 +442,7 @@ sub extractMulti {
         }
         else {
             $this->throw(
-                q~OPT-00004: Ungültige Option~,
+                'OPT-00004: Ungültige Option',
                 Option=>$key,
             );
         }
@@ -462,7 +462,7 @@ sub extractMulti {
             $refType = Scalar::Util::reftype($ref);
             if (!defined $refType) {
                 $this->throw(
-                    q~OPT-00002: Ungültige Variablen-Referenz~,
+                    'OPT-00002: Ungültige Variablen-Referenz',
                     Option=>$arg,
                 );
             }
@@ -475,7 +475,7 @@ sub extractMulti {
 
             if (!$sloppy) {
                 $this->throw(
-                    q~OPT-00001: Ungültige Option~,
+                    'OPT-00001: Ungültige Option',
                     Option=>$arg);
             }
             $ref = undef;

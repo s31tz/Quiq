@@ -507,7 +507,7 @@ sub asText {
     }
     else {
         $self->throw(
-            q~TREE-FORMATTER-00001: Unknown format~,
+            'TREE-FORMATTER-00001: Unknown format',
             Format => $format,
         );
     }

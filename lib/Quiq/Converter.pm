@@ -56,7 +56,7 @@ sub newlineToName {
     }
     
     $this->throw(
-        q~PATH-00099: Unknown newline string~,
+        'PATH-00099: Unknown newline string',
         NewlineString => $nl,
     );
 }

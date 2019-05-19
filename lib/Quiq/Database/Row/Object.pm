@@ -484,7 +484,7 @@ sub getSet {
         my $oldVal = $self->[0]->{$key};
         if (!$oldVal && !exists $self->[0]->{$key}) {
             $self->throw(
-                q~ROW-00004: Datensatz-Attribut existiert nicht~,
+                'ROW-00004: Datensatz-Attribut existiert nicht',
                 Key => $key,
             );
         }
@@ -582,7 +582,7 @@ sub rowStatus {
         my $rowStatus = shift;
         if ($rowStatus !~ /^[0IUD]$/) {
             $self->throw(
-                q~ROW-00005: Ungültiger Datensatz-Status~,
+                'ROW-00005: Ungültiger Datensatz-Status',
                 RowStatus => $rowStatus,
             );
         }
@@ -732,7 +732,7 @@ sub modifiedColumns {
         }
         if (!exists $self->[0]->{$key}) {
             $self->throw(
-                q~ROW-00001: Datensatz-Attribut existiert nicht~,
+                'ROW-00001: Datensatz-Attribut existiert nicht',
                 Key => $key,
             );
         }
@@ -1354,7 +1354,7 @@ sub save {
     }
     else {
         $self->throw(
-            q~ROW-00005: Ungültiger Datensatz-Status~,
+            'ROW-00005: Ungültiger Datensatz-Status',
             RowStatus => $stat,
         );
     }
@@ -1593,7 +1593,7 @@ sub AUTOLOAD {
     my ($rowClass,$key) = our $AUTOLOAD =~ /^(.*)::(\w+)$/;
     if (!defined $key) {
         $this->throw(
-            q~ROW-00003: Methodenname enthält ungültige Zeichen~,
+            'ROW-00003: Methodenname enthält ungültige Zeichen',
             Method => $AUTOLOAD,
         );
     }
@@ -1606,7 +1606,7 @@ sub AUTOLOAD {
 
     if (!ref $this) {
         $this->throw(
-            q~ROW-00001: Klassen-Methode existiert nicht~,
+            'ROW-00001: Klassen-Methode existiert nicht',
             Attribute => $key,
         );
     }
@@ -1615,7 +1615,7 @@ sub AUTOLOAD {
 
     if (!exists $this->[0]->{$key}) {
         $this->throw(
-            q~ROW-00002: Datensatz-Attribut oder Methode existiert nicht~,
+            'ROW-00002: Datensatz-Attribut oder Methode existiert nicht',
             Attribute => $key,
         );
     }

@@ -84,7 +84,7 @@ sub isNumber {
 
     if (!Quiq::Math->isNumber($val)) {
         $class->throw(
-            q~ASSERT-00001: Not a number~,
+            'ASSERT-00001: Not a number',
             defined $name? (Name => $name): (),
             Value => $val,
         );
@@ -150,7 +150,7 @@ sub notNull {
     if (!defined($val) || $val eq '') {
         $class->throw(
             defined $name? (Name => $name): (),
-            q~ASSERT-00002: Value is null~,
+            'ASSERT-00002: Value is null',
         );
     }
 

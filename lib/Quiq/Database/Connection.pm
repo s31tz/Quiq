@@ -164,11 +164,11 @@ sub new {
     my $udl = @_? shift: $ENV{'UDL'};
 
     if (!defined $udl || $udl eq '') {
-        $class->throw(q~DB-00002: Kein UDL~);
+        $class->throw('DB-00002: Kein UDL');
     }
     elsif (@_) {
         $class->throw(
-            q~DB-00002: Zu viele Parameter~,
+            'DB-00002: Zu viele Parameter',
             Parameters => join(',',@_),
         );
     }
@@ -1855,7 +1855,7 @@ sub save {
     }
     else {
         $self->throw(
-            q~DB-00003: Ungültiger Datensatz-Status~,
+            'DB-00003: Ungültiger Datensatz-Status',
             RowStatus => $stat,
         );
     }
@@ -2108,7 +2108,7 @@ sub lookup {
 
     if ($row2 && !($sloppy & 2)) {
         $self->throw(
-            q~DB-00003: Mehr als ein Datensatz gefunden~,
+            'DB-00003: Mehr als ein Datensatz gefunden',
             Sql => $stmt,
         );
     }
@@ -2121,7 +2121,7 @@ sub lookup {
             return;
         }
         $self->throw(
-            q~DB-00001: Datensatz nicht gefunden~,
+            'DB-00001: Datensatz nicht gefunden',
             Sql => $stmt,
         );
     }
@@ -2650,7 +2650,7 @@ sub update {
 
         #unless (@_) {
         #    $self->throw(
-        #        q~DB-00002: Keine WHERE-Bedingung für Datensatz-Update~,
+        #        'DB-00002: Keine WHERE-Bedingung für Datensatz-Update',
         #        Table => $table,
         #        Row => $row->asString('|'),
         #    );
@@ -2701,7 +2701,7 @@ sub delete {
 
         unless (@_) {
             $self->throw(
-                q~DB-00002: Keine WHERE-Bedingung für Datensatz-Delete~,
+                'DB-00002: Keine WHERE-Bedingung für Datensatz-Delete',
                 Table => $table,
                 Row => $row->asString('|'),
             );

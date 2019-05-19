@@ -152,7 +152,7 @@ sub askUser {
         }
         else {
             $class->throw(
-                q~ASK-00001: Im Automatikmodus ist Defaultwert erforderlich~,
+                'ASK-00001: Im Automatikmodus ist Defaultwert erforderlich',
             );
         }
     }

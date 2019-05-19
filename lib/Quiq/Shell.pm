@@ -322,7 +322,7 @@ sub exec {
     }
     else {
         $self->throw(
-            q~CMD-00004: Ungültiger Wert für -capture~,
+            'CMD-00004: Ungültiger Wert für -capture',
             Capture=>$capture,
         );
     }
@@ -524,7 +524,7 @@ sub checkError {
     }
     elsif ($errCode == -1) {
         $this->throw(
-            q~CMD-00001: Kommando konnte nicht aufgerufen werden~,
+            'CMD-00001: Kommando konnte nicht aufgerufen werden',
             Command=>$cmd,
             ErrorMessage=>$errMsg,
         );
@@ -533,7 +533,7 @@ sub checkError {
         my $sig = $errCode & 127;  # unterste 8 Bit sind Signalnummer
         my $core = $errCode & 128; # 8. Bit zeigt Coredump an
         $this->throw(
-            q~CMD-00003: Kommando wurde abgebrochen~,
+            'CMD-00003: Kommando wurde abgebrochen',
             Signal=>$sig.($core? ' (Coredump)': ''),
             Command=>$cmd,
             ErrorMessage=>$errMsg,
@@ -541,7 +541,7 @@ sub checkError {
     }
     $errCode >>= 8;
     $this->throw(
-        q~CMD-00002: Kommando endete mit Fehler~,
+        'CMD-00002: Kommando endete mit Fehler',
         ExitCode=>$errCode,
         Command=>$cmd,
         Cwd=>Cwd::getcwd,

@@ -1351,7 +1351,7 @@ sub tag {
             }
             else {
                 $self->throw(
-                    q~HTML-00001: Unbekannte Option~,
+                    'HTML-00001: Unbekannte Option',
                     Option=>$key,
                     Value=>$val,
                 );
@@ -1370,7 +1370,7 @@ sub tag {
     
         if ($endTagOnly) {
             $self->throw(
-                q~HTML-00004: Attribute bei Option -endTagOnly nicht erlaubt~,
+                'HTML-00004: Attribute bei Option -endTagOnly nicht erlaubt',
                 Tag=>$tag,
                 Attribute=>$key,
                 Value=>$val,
@@ -1382,7 +1382,7 @@ sub tag {
         my $dom = $Attribute{$key} || '';
         if (!$dom && $checkLevel && $key !~ /^data-/) {
             $self->throw(
-                q~HTML-00003: Unbekanntes Attribut~,
+                'HTML-00003: Unbekanntes Attribut',
                 Tag=>$tag,
                 Attribute=>$key,
                 Value=>$val,
@@ -1460,7 +1460,7 @@ sub tag {
     # Element prüfen
 
     if (!$e && $checkLevel) {
-        $self->throw(q~HTML-00002: Unbekanntes Element~,Element=>$tag);
+        $self->throw('HTML-00002: Unbekanntes Element',Element=>$tag);
     }
 
     # Content bestimmen
@@ -1532,7 +1532,7 @@ sub tag {
     }
     elsif ($fmt eq 'e' || $fmt eq 'E') {
         if (length $content) {
-            $self->throw(q~HTML-00003: Kein Content erwartet~);
+            $self->throw('HTML-00003: Kein Content erwartet');
         }
     }
     elsif ($fmt eq 'v' && $content !~ /\n/ || $fmt eq 'i') {
@@ -1563,7 +1563,7 @@ sub tag {
     }
     else {
         $self->throw(
-            q~HTML-00002: Unerlaubter Wert für Option -fmt~,
+            'HTML-00002: Unerlaubter Wert für Option -fmt',
             Value=>$fmt,
         );
     }
@@ -1777,7 +1777,7 @@ sub cat {
         }
         #else {
         #    $self->throw(
-        #        q~HTML-00002: Unbekannte Option~,
+        #        'HTML-00002: Unbekannte Option',
         #        Option=>$_[0],
         #    );
         #}
@@ -1871,7 +1871,7 @@ sub doctype {
         }
         else {
             $self->throw(
-                q~HTML-00001: Unbekannte Option~,
+                'HTML-00001: Unbekannte Option',
                 Option=>$key,
                 Value=>shift,
             );
@@ -1911,7 +1911,7 @@ sub doctype {
     }
     else {
         $self->throw(
-            q~HTML-00002: Unbekannte HTML-Version~,
+            'HTML-00002: Unbekannte HTML-Version',
             Version=>"'$version'",
         );
     }
@@ -2032,7 +2032,7 @@ sub optional {
         }
         else {
             $self->throw(
-                q~HTML--0001: Unbekannte Option~,
+                'HTML--0001: Unbekannte Option',
                 Option=>$key,
                 Value=>$val,
             );

@@ -105,7 +105,7 @@ sub tableClass {
         # Paranoia-Test
         if (!$found) {
             $class->throw(
-                q~ROW-00001: Datensatz-Klasse definiert keine Tabellenklasse~,
+                'ROW-00001: Datensatz-Klasse definiert keine Tabellenklasse',
                 RowClass => $class,
             );
         }

@@ -348,7 +348,7 @@ sub geoToDegree {
         }
         else {
             $class->throw(
-                q~MATH-00001: Unbekannte Himmelsrichtung~,
+                'MATH-00001: Unbekannte Himmelsrichtung',
                 Direction=>$dir,
             );
         }

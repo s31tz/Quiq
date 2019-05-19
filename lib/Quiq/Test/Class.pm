@@ -264,7 +264,7 @@ sub get {
     my @arr;
     for my $key (@_) {
         if (!exists $hash->{$key}) {
-            $self->throw(q~TEST-00002: Unbekanntes Attribut~,Key=>$key);
+            $self->throw('TEST-00002: Unbekanntes Attribut',Key=>$key);
         }
         push @arr,$hash->{$key};
     }
@@ -502,7 +502,7 @@ sub runTests {
         if ($@) {
             # FIXME: Erstmal rausbomben, später verbessern
             $class->throw(
-                q~TEST-00005: Foreach-Testmethode fehlgeschlagen~,
+                'TEST-00005: Foreach-Testmethode fehlgeschlagen',
                 Error=>$@,
             );
         }
@@ -1139,7 +1139,7 @@ sub MODIFY_CODE_ATTRIBUTES {
         }
         else {
             $class->throw(
-                q~TEST-00001: Unbekanntes Code-Attribut~,
+                'TEST-00001: Unbekanntes Code-Attribut',
                 Attribute=>$_,
             );
         }

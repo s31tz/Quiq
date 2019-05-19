@@ -199,7 +199,7 @@ sub html {
             }
             else {
                 $self->throw(
-                    q~LISTING-00002: Unbekannter Anker-Typ~,
+                    'LISTING-00002: Unbekannter Anker-Typ',
                     Anchor=>$anchor,
                 );
             }
@@ -321,7 +321,7 @@ sub html {
             }
             else {
                 $self->throw(
-                    q~LISTING-00001: Unbekannte Sprache~,
+                    'LISTING-00001: Unbekannte Sprache',
                     Language=>$lang,
                 );
             }

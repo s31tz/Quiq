@@ -304,7 +304,7 @@ sub latex {
 
     if ($titleColor && $titleColor !~ s/^#//) {
         $self->throw(
-            q~LATEX-00001: Only RGB color allowed~,
+            'LATEX-00001: Only RGB color allowed',
             Color => $titleColor,
         );
     }

@@ -94,7 +94,7 @@ sub new {
         }
         else {
             $class->throw(
-                q~TEMPFILE-00001: Unknown option~,
+                'TEMPFILE-00001: Unknown option',
                 Option => $_[0],
             )
         }

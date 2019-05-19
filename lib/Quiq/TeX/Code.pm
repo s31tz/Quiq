@@ -371,7 +371,7 @@ sub macro {
             }
             else {
                 $self->throw(
-                    q~TEX-00001: Unexpected reference~,
+                    'TEX-00001: Unexpected reference',
                     RefType => $refType,
                 );
             }
@@ -398,7 +398,7 @@ sub macro {
         }
         else {
             $self->throw(
-                q~LATEX-00001: Unknown Option~,
+                'LATEX-00001: Unknown Option',
                 Option => $opt,
             );
         }
@@ -527,7 +527,7 @@ sub modifyLength {
         $len = eval $expr;
         if ($@) {
             $self->throw(
-                q~TEX-00001: Illegal expression~,
+                'TEX-00001: Illegal expression',
                 Expression => $expr,
             );
         }

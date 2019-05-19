@@ -113,7 +113,7 @@ sub new {
     if ($@) {
         $@ =~ s/ at .*//;
         $class->throw(
-            q~SSH-00099: Login failed~,
+            'SSH-00099: Login failed',
             Reason => $@,
         );
     }

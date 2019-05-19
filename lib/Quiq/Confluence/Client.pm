@@ -585,7 +585,7 @@ sub send {
     my $res = $ua->request($req);
     if (!$res->is_success) {
         $self->throw(
-            q~CLIENT-00001: HTTP request failed~,
+            'CLIENT-00001: HTTP request failed',
             StatusLine => $res->status_line,
             Response => $res->content,
         );

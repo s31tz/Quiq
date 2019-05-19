@@ -311,6 +311,20 @@ SQL:
 
     $code = Quiq::String->removeComments($code,'--');
 
+=head2 Quoting
+
+=head3 quote() - Fasse Zeichenkette in Single Quotes ein
+
+=head4 Synopsis
+
+    $quotedStr = $class->quote($str);
+
+=head4 Description
+
+Fasse Zeichenkette $str in einfache Anführungsstriche (') ein und liefere
+das Resultat zurück. Enthält die Zeichenkette bereits einfache
+Anführungsstriche, werden diese per Backslash geschützt.
+
 =head2 Umbruch
 
 =head3 wrap() - Umbreche Fließtext

@@ -172,7 +172,7 @@ sub new {
     if (!$n || !$width || !$height || !$ext) {
     
         $class->throw(
-            q~SEQ-00001: Illegal image sequence filename~,
+            'SEQ-00001: Illegal image sequence filename',
             number=>$n // 'undef',
             width=>$width // 'undef',
             height=>$height // 'undef',

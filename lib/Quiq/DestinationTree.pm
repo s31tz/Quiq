@@ -468,7 +468,7 @@ sub addFile {
           # ihren Inhalt nicht erzeugen, da wir ihn nicht haben.
 
             $self->throw(
-                q~DTREE-00001: Datei existiert nicht. Ohne Inhalt kann sie nicht angelegt werden.~,
+                'DTREE-00001: Datei existiert nicht. Ohne Inhalt kann sie nicht angelegt werden.',
                 File => $file,
             );
         }

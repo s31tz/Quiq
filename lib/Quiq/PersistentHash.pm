@@ -71,7 +71,7 @@ sub new {
     }
     else {
         $class->throw(
-            q~BDB-00001: Unbekannter Mode~,
+            'BDB-00001: Unbekannter Mode',
             Mode=>$mode,
         );
     }
@@ -81,7 +81,7 @@ sub new {
         $DB_File::DB_HASH;
     unless ($ref) {
         $class->throw(
-            q~BDB-00001: Kann Persistenten Hash nicht öffnen~,
+            'BDB-00001: Kann Persistenten Hash nicht öffnen',
             File=>$file,
             Mode=>$mode,
             Errstr=>$!,
@@ -113,11 +113,11 @@ sub sync {
     my $self = shift;
 
     my $x = tied %$self || $self->throw(
-        q~BDB-00002: Kann Tie-Objekt nicht ermitteln~,
+        'BDB-00002: Kann Tie-Objekt nicht ermitteln',
     );
     if ($x->sync < 0) {
         $self->throw(
-            q~BDB-00003: Sync ist fehlgeschlagen~,
+            'BDB-00003: Sync ist fehlgeschlagen',
             Errstr=>$!,
         );
     }

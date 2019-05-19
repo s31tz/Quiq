@@ -71,7 +71,7 @@ sub cwd {
     }
     CORE::chdir $dir or do {
         $this->throw(
-            q~PROC-00001: Cannot change directory~,
+            'PROC-00001: Cannot change directory',
             Argument=>$dir,
             CurrentWorkingDirectory=>Cwd::cwd,
         );
@@ -128,7 +128,7 @@ sub euid {
     $> = $uid;
     if ($> != $uid) {
         $this->throw(
-            q~PROC-00002: Cannot set EUID~,
+            'PROC-00002: Cannot set EUID',
             UID=>$<,
             EUID=>$>,
             NewEUID=>$uid,
@@ -185,7 +185,7 @@ sub homeDir {
 
     if (!exists $ENV{'HOME'}) {
         $class->throw(
-            q~PROCESS-00001: Environment-Variable HOME existiert nicht~,
+            'PROCESS-00001: Environment-Variable HOME existiert nicht',
         );
     }
 

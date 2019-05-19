@@ -233,7 +233,7 @@ sub lookup {
     };
 
     return $h->{$id} || $self->throw(
-        q~MODEL-00001: Entity not found~,
+        'MODEL-00001: Entity not found',
         Type=>$type,
         PrimaryKey=>$id,
     );

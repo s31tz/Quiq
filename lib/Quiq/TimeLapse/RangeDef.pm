@@ -252,7 +252,7 @@ sub new {
 
                 if ($clipH->exists($clip) || $rangeH->exists($clip)) {
                     $class->throw(
-                        q~TIMELAPSE-00003: Duplicate clip/range key~,
+                        'TIMELAPSE-00003: Duplicate clip/range key',
                         Key=>$clip,
                         File=>$file,
                     );
@@ -289,7 +289,7 @@ sub new {
                     ($range,$def) = split /\s+/,$_,2;
                     if ($rangeH->exists($range) || $clipH->exists($range)) {
                         $class->throw(
-                            q~TIMELAPSE-00003: Duplicate range/clip key~,
+                            'TIMELAPSE-00003: Duplicate range/clip key',
                             Key=>$range,
                             File=>$file,
                         );

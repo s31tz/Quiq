@@ -104,7 +104,7 @@ sub get {
     my $res = $redirect? $ua->request($req): $ua->simple_request($req);
     if ($res->is_error && !$sloppy) {
         $class->throw(
-            q~HTTP-00001: GET Request failed~,
+            'HTTP-00001: GET Request failed',
             Url=>$url,
             StatusLine=>$res->status_line,
         );

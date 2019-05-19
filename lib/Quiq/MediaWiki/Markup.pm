@@ -1423,7 +1423,7 @@ sub fmt {
         }
         else {
             $self->throw(
-                q~MEDIAWIKI-00001: Unknown inline format~,
+                'MEDIAWIKI-00001: Unknown inline format',
                 Format => $type,
             );
         }

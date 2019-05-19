@@ -261,12 +261,12 @@ sub AUTOLOAD {
     if ($@) {
         $@ =~ s/ at .*//s;
         $die->($class,$sub,$@,
-            q~CLASSLOADER-00001: Modul kann nicht geladen werden~);
+            'CLASSLOADER-00001: Modul kann nicht geladen werden');
     }
 
     unless ($this->can($sub)) {
         $die->($class,$sub,undef,
-            q~CLASSLOADER-00002: Methode existiert nicht~);
+            'CLASSLOADER-00002: Methode existiert nicht');
     }
 
     return $this->$sub(@_);

@@ -489,7 +489,7 @@ sub format {
         }
         else {
             $self->throw(
-                q~PROP-00099: Unknown type~,
+                'PROP-00099: Unknown type',
                 Type => $type,
             );
         }
@@ -515,7 +515,7 @@ sub format {
     }
     else {
         $self->throw(
-            q~PROP-00099: Unknown format~,
+            'PROP-00099: Unknown format',
             Format => $format,
         );
     }

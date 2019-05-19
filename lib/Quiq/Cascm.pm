@@ -244,7 +244,7 @@ sub edit {
     my $state = $self->packageState($package);
     if (!$state) {
         $self->throw(
-            q~CASCM-00099: Package does not exist~,
+            'CASCM-00099: Package does not exist',
             Package => $package,
         );
     }
@@ -887,7 +887,7 @@ sub repoFileToFile {
     my $file = sprintf '%s/%s',$self->workspace,$repoFile;
     if (!$p->exists($file)) {
         $self->throw(
-            q~CASCM-00099: Repository file does not exist~,
+            'CASCM-00099: Repository file does not exist',
             File => $file,
         );
     }
@@ -1380,7 +1380,7 @@ sub movePackage {
     my $i = Quiq::Array->index(\@states,$state);
     if ($i < 0) {
         $self->throw(
-            q~CASCM-00099: State does not exist~,
+            'CASCM-00099: State does not exist',
             State => $state,
         );
     }
@@ -1735,13 +1735,13 @@ sub runCmd {
                 $file = "$dir/$file";
             }            
             $self->throw(
-                q~CASCM-00001: Repository file not found~,
+                'CASCM-00001: Repository file not found',
                 File => $file,
             );
         }
 
         $self->throw(
-            q~CASCM-00001: Command failed~,
+            'CASCM-00001: Command failed',
             Command => $cmdLine,
             Output => $output,
         );

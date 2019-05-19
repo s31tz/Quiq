@@ -683,7 +683,7 @@ sub get {
         my $val = $self->[3]->{$key};
         if (ref($val) && $key =~ /^[A-Z]/) {
             $self->throw(
-                q~SECOBJ-00001: Schlüssel besitzt mehrere Werte~,
+                'SECOBJ-00001: Schlüssel besitzt mehrere Werte',
                 Key=>$key,
                 Values=>'['.join(',',@$val).']',
             );
@@ -786,7 +786,7 @@ sub getBool {
     }
     else {
         $self->throw(
-            q~COTEDO-00001: Illegal attribute value. Only Yes/No allowed.~,
+            'COTEDO-00001: Illegal attribute value. Only Yes/No allowed.',
             Attribute=>$key,
             Value=>$val,
             File=>$self->file,
@@ -835,7 +835,7 @@ sub getMandatory {
     my $val = $self->get($key);
     if (!defined $val || $val eq '') { 
         $self->throw(
-            q~SECOBJ-00002: Attribute has no value~,
+            'SECOBJ-00002: Attribute has no value',
             Key=>$key,
             File=>$self->file,
             Line=>$self->line,
@@ -1248,7 +1248,7 @@ sub validate {
 
     if (!$contentAllowed && $self->[4] ne '' && $self->[4] ne '# eof') {
         $self->throw(
-            q~SECTION-00001: Inhalt ist nicht erlaubt~,
+            'SECTION-00001: Inhalt ist nicht erlaubt',
             Section=>$self->type,
             Content=>$self->[4],
             File=>$self->file,
@@ -1280,7 +1280,7 @@ sub validate {
         }
 
         $self->throw(
-            q~SECTION-00001: Unknown section attributes~,
+            'SECTION-00001: Unknown section attributes',
             Section=>$self->type,
             Keys=>join(', ',@keys),
             File=>$self->file,
@@ -1394,7 +1394,7 @@ sub AUTOLOAD {
 
     if (!ref $this) {
         $this->throw(
-            q~HASH-00002: Klassen-Methode existiert nicht~,
+            'HASH-00002: Klassen-Methode existiert nicht',
             Method=>$key,
         );
     }
@@ -1403,7 +1403,7 @@ sub AUTOLOAD {
 
     if (!exists $this->[3]->{$key}) {
         $this->throw(
-            q~HASH-00001: Schlüssel existiert nicht~,
+            'HASH-00001: Schlüssel existiert nicht',
             Attribute=>$key,
             Class=>ref($this)? ref($this): $this,
         );

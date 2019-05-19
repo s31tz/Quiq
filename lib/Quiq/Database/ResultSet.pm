@@ -331,7 +331,7 @@ sub lookup {
     # Exception
 
     $self->throw(
-        q~TAB-00001: Datensatz nicht gefunden~,
+        'TAB-00001: Datensatz nicht gefunden',
         Key => $key,
         Value => $val,
     );

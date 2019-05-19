@@ -916,7 +916,7 @@ sub new {
         }
         else {
             $class->throw(
-                q~PROG-00001: Unbekannte Option~,
+                'PROG-00001: Unbekannte Option',
                 Option=>$key,
             );
         }

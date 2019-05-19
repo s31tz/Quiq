@@ -327,7 +327,7 @@ sub code {
         }
         else {
              $self->throw(
-                 q~CONFLUENCE-00001: Unknown code macro option~,
+                 'CONFLUENCE-00001: Unknown code macro option',
                  Option => $key,
              );
         }
@@ -408,7 +408,7 @@ sub noFormat {
         }
         else {
              $self->throw(
-                 q~CONFLUENCE-00001: Unknown noformat macro option~,
+                 'CONFLUENCE-00001: Unknown noformat macro option',
                  Option => $key,
              );
         }
@@ -508,7 +508,7 @@ sub panel {
         }
         else {
              $self->throw(
-                 q~CONFLUENCE-00001: Unknown panel option~,
+                 'CONFLUENCE-00001: Unknown panel option',
                  Option => $key,
              );
         }
@@ -650,7 +650,7 @@ sub tableOfContents {
         }
         else {
              $self->throw(
-                 q~CONFLUENCE-00001: Unknown panel option~,
+                 'CONFLUENCE-00001: Unknown panel option',
                  Option => $key,
              );
         }

@@ -168,7 +168,7 @@ sub new {
     if ($window) {
         if ($window > $interval/2) {
             $class->throw(
-                q~TSYNC-00099: Windowbreite groesser Intervallbreite~,
+                'TSYNC-00099: Windowbreite groesser Intervallbreite',
                 WindowWidth=>$window,
                 IntervalWidth=>$interval,
             );
@@ -261,7 +261,7 @@ sub add {
 
         if (!$paramHash->{$param}) {
             $self->throw(
-                q~TSYNC-00099: Unbekannter Parameter~,
+                'TSYNC-00099: Unbekannter Parameter',
                 Parameter=>$param,
             );
         }
@@ -453,7 +453,7 @@ sub rows {
 
         unless ($paramHash->{$param}) {
             $self->throw(
-                q~TSYNC-00099: Unbekannter Parameter~,
+                'TSYNC-00099: Unbekannter Parameter',
                 Parameter=>$param,
             );
         }
@@ -504,7 +504,7 @@ sub rows {
             }
             else {
                 $self->throw(
-                    q~TSYNC-00099: Unbekannte Parameter-Option~,
+                    'TSYNC-00099: Unbekannte Parameter-Option',
                     Option=>$opt,
                 );
             }
@@ -589,7 +589,7 @@ sub rows {
                 }
                 else {
                     $self->throw(
-                        q~TSYNC-00099: Unbekannte Parameter-Option~,
+                        'TSYNC-00099: Unbekannte Parameter-Option',
                         Option=>$opt,
                     );
                 }

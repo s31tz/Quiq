@@ -84,7 +84,7 @@ sub autoDecode {
     else {
         # Unerwarteter Fehler
         $class->throw(
-            q~PATH-00099: Zeichen-Dekodierung fehlgeschlagen~,
+            'PATH-00099: Zeichen-Dekodierung fehlgeschlagen',
             Message=>$dec,
         );
     }
@@ -276,7 +276,7 @@ sub reduceIndentation {
     if ($m) {
         if ($m < $n || $m%$n) {
             $class->throw(
-                q~STRING-00001: Einrücktiefe kann nicht reduziert werden~,
+                'STRING-00001: Einrücktiefe kann nicht reduziert werden',
                 TextIndentation=>$m,
                 WantedIndentation=>$n,
             );
@@ -591,6 +591,35 @@ sub removeComments {
     }
 
     return join('',@frag);
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Quoting
+
+=head3 quote() - Fasse Zeichenkette in Single Quotes ein
+
+=head4 Synopsis
+
+    $quotedStr = $class->quote($str);
+
+=head4 Description
+
+Fasse Zeichenkette $str in einfache Anführungsstriche (') ein und liefere
+das Resultat zurück. Enthält die Zeichenkette bereits einfache
+Anführungsstriche, werden diese per Backslash geschützt.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub quote {
+    my ($class,$str) = @_;
+
+    $str =~ s/'/\\'/g;
+    $str = "'$str'";
+
+    return $str;
 }
 
 # -----------------------------------------------------------------------------
