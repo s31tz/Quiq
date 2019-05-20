@@ -673,16 +673,6 @@ L<Quiq::Xml::LibXml|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Xml
 
 =back
 
-=head1 DOCUMENTS
-
-=over 4
-
-=item *
-
-L<Quiq-Sdoc-Manual|https://github.com/s31tz/Quiq/tree/master/doc/pod/Quiq-Sdoc-Manual.pod> - Sdoc Handbuch
-
-=back
-
 =head1 INSTALLATION
 
     $ cpanm Quiq
