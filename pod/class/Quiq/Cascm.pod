@@ -182,7 +182,7 @@ nichts
 
 =over 4
 
-=item $packge
+=item $package
 
 Package, dem die Dateien innerhalb von CASCM zugeordnet werden.
 
@@ -212,6 +212,38 @@ Mit dieser Methode ist es möglich, sowohl neue Dateien zum Workspace
 hinzuzufügen als auch bereits existierende Dateien im Workspace
 zu aktualisieren. Dies geschieht für den Aufrufer transparent, er
 braucht sich um die Unterscheidung nicht zu kümmern.
+
+=head3 putDir() - Füge Dateien eines Verzeichnisbaums zum Repository hinzu
+
+=head4 Synopsis
+
+    $output = $scm->putDir($package,$dir);
+
+=head4 Arguments
+
+=over 4
+
+=item $package
+
+Package, dem die Dateien innerhalb von CASCM zugeordnet werden.
+
+=item $dir
+
+Quellverzeichnis, dem die Dateien entnommen werden. Die Pfade
+I<innerhalb> von $dir werden als Repository-Pfade verwendet.
+Die Repository-Pfade müssen vorab existieren, sonst wird eine
+Exception geworfen.
+
+=back
+
+=head4 Returns
+
+Konkatenierte Ausgabe der der checkout- und checkin-Kommandos (String)
+
+=head4 Description
+
+Füge alle Dateien in Verzeichnis $dir via Methode put()
+zum Repository hinzu bzw. aktualisiere sie. Details siehe dort.
 
 =head2 Workspace-Dateien
 

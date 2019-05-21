@@ -368,7 +368,7 @@ sub view {
 
 =over 4
 
-=item $packge
+=item $package
 
 Package, dem die Dateien innerhalb von CASCM zugeordnet werden.
 
@@ -409,7 +409,7 @@ sub putFiles {
     my $workspace = $self->workspace;
     my $p = Quiq::Path->new;
 
-    my $output;
+    my $output = '';
     for my $srcFile (@files) {
         my (undef,$file) = $p->split($srcFile);
         my $repoFile = sprintf '%s/%s',$repoDir,$file;
@@ -419,7 +419,7 @@ sub putFiles {
             # und die Workspace-Datei sich unterscheiden. Wenn nein, ist
             # nichts zu tun.
 
-            if (!$p->different($srcFile,"$workspace/$repoFile")) {
+            if (!$p->compare($srcFile,"$workspace/$repoFile")) {
                 # Bei fehlender Differenz tun wir nichts
                 next;
             }
@@ -438,6 +438,70 @@ sub putFiles {
 
         # Checke Workspace-Datei ins Repository ein
         $output .= $self->checkin($package,$repoFile);
+    }
+
+    return $output;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 putDir() - Füge Dateien eines Verzeichnisbaums zum Repository hinzu
+
+=head4 Synopsis
+
+    $output = $scm->putDir($package,$dir);
+
+=head4 Arguments
+
+=over 4
+
+=item $package
+
+Package, dem die Dateien innerhalb von CASCM zugeordnet werden.
+
+=item $dir
+
+Quellverzeichnis, dem die Dateien entnommen werden. Die Pfade
+I<innerhalb> von $dir werden als Repository-Pfade verwendet.
+Die Repository-Pfade müssen vorab existieren, sonst wird eine
+Exception geworfen.
+
+=back
+
+=head4 Returns
+
+Konkatenierte Ausgabe der der checkout- und checkin-Kommandos (String)
+
+=head4 Description
+
+Füge alle Dateien in Verzeichnis $dir via Methode put()
+zum Repository hinzu bzw. aktualisiere sie. Details siehe dort.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub putDir {
+    my ($self,$package,$dir) = @_;
+
+    my $workspace = $self->workspace;
+    my $p = Quiq::Path->new;
+
+    my @files = sort $p->find($dir,-type=>'f');
+
+    my $output;
+
+    for my $srcFile (@files) {
+        my ($repoDir,$repoFile) = $p->split($srcFile);
+        $repoDir =~ s|^\Q$dir/||; # Pfadanfang entfernen
+        my $workspaceDir = "$workspace/$repoDir";
+        if (!$p->exists($workspaceDir)) {
+            $self->throw(
+                'CASCM-00099: Workspace directory does not exist',
+                WorkspaceDir => $workspaceDir,
+            );
+        }
+        $output .= $self->putFiles($package,$repoDir,$srcFile);
     }
 
     return $output;
