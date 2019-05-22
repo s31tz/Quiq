@@ -19,9 +19,9 @@ use Encode ();
 use Fcntl qw/:DEFAULT/;
 use Quiq::Perl;
 use Quiq::Unindent;
+use Quiq::DirHandle;
 use File::Find ();
 use Quiq::Shell;
-use Quiq::DirHandle;
 use Cwd ();
 use Quiq::Process;
 
@@ -934,6 +934,55 @@ sub writeInline {
 # -----------------------------------------------------------------------------
 
 =head2 Verzeichnis-Operationen
+
+=head3 entries() - Liste der Verzeichniseinträge
+
+=head4 Synopsis
+
+    @paths | $pathA = $this->entries($dir);
+
+=head4 Arguments
+
+=over 4
+
+=item $dir
+
+Pfad des Verzeichnisses.
+
+=back
+
+=head4 Returns
+
+Liste der Verzeichniseinträge (Array of Strings). Im Skalarkontext
+eine Referenz auf die Liste.
+
+=head4 Description
+
+Ermittele die Einträge des Verzeichnisses $dir und liefere diese
+als Liste zurück. Die Liste umfasst alle Verzeichniseinträge
+außer C<.> und C<..>.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub entries {
+    my ($this,$dir) = @_;
+
+    my @arr;
+    my $dh = Quiq::DirHandle->new($dir);
+    while (my $entry = $dh->next) {
+        if ($entry eq '.' || $entry eq '..') {
+            next;
+        }
+        push @arr,$entry;
+    }
+    $dh->close;
+
+    return wantarray? @arr: \@arr;
+}
+
+# -----------------------------------------------------------------------------
 
 =head3 find() - Liefere Pfade innerhalb eines Verzeichnisses
 

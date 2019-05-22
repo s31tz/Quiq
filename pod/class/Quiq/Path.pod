@@ -389,6 +389,33 @@ inline geschriebenen Text nützlich.
 
 =head2 Verzeichnis-Operationen
 
+=head3 entries() - Liste der Verzeichniseinträge
+
+=head4 Synopsis
+
+    @paths | $pathA = $this->entries($dir);
+
+=head4 Arguments
+
+=over 4
+
+=item $dir
+
+Pfad des Verzeichnisses.
+
+=back
+
+=head4 Returns
+
+Liste der Verzeichniseinträge (Array of Strings). Im Skalarkontext
+eine Referenz auf die Liste.
+
+=head4 Description
+
+Ermittele die Einträge des Verzeichnisses $dir und liefere diese
+als Liste zurück. Die Liste umfasst alle Verzeichniseinträge
+außer C<.> und C<..>.
+
 =head3 find() - Liefere Pfade innerhalb eines Verzeichnisses
 
 =head4 Synopsis

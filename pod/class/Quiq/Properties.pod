@@ -156,11 +156,12 @@ Integer
 Liefere die Maximale Anzahl an Nachkommastellen. Diese Information
 hat nur im Falle des Typs f (Float) eine Bedeutung.
 
-=head3 type() - Typ der Kolumne
+=head3 type() - Liefere/Setze Typ der Kolumne
 
 =head4 Synopsis
 
     $type = $prp->type;
+    $type = $prp->type($type);
 
 =head4 Returns
 

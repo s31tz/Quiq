@@ -127,14 +127,23 @@ Liste der Zeilen ist zunächst leer.
 # -----------------------------------------------------------------------------
 
 sub new {
-    my ($class,$columnA) = @_;
+    my $class = shift;
+    my $columnA = shift;
+    my $rowA = shift // [];
 
     my $i = 0;
-    return $class->SUPER::new(
+    my $self = $class->SUPER::new(
         columnA => $columnA,
         columnH => Quiq::Hash->new({map {$_ => $i++} @$columnA}),
+        propertyA => undef,
         rowA => [],
     );
+
+    for my $row (@$rowA) {
+        $self->push($row);
+    }
+
+    return $self;
 }
 
 # -----------------------------------------------------------------------------
@@ -397,7 +406,7 @@ sub values {
     my $i = $self->columnIndex($column);
     for my $row (@{$self->{'rowA'}}) {
         my $val = $row->[1][$i];
-        if ($distinct && $seen{$val}++) {
+        if ($distinct && $seen{$val//''}++) {
             next;
         }
         CORE::push @arr,$val;
@@ -429,6 +438,99 @@ Liefere die Anzahl der Kolumnen der Tabelle.
 sub width {
     my $self = shift;
     return scalar @{$self->{'columnA'}};
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Formatierung
+
+=head3 analyze() - Liste der Kolumneneigenschaften
+
+=head4 Synopsis
+
+    @properties | $propertyA = $tab->analyze;
+    @properties | $propertyA = $tab->analyze($redo);
+
+=head4 Arguments
+
+=over 4
+
+=item $redo
+
+Die Kolumneneigenschaften werden innerhalb des Objekts gecacht.
+Ist $redo wahr, wird die Analyse der Kolumneninhalte erneut durchgeführt.
+
+=back
+
+=head4 Returns
+
+Liste der Kolumneneigenschaften (Array of Quiq::Properties). Im
+Skalarkontext eine Referenz auf die Liste.
+
+=head4 Description
+
+Analysiere die Kolumnen der Tabelle hinsichtlich ihrer Eigenschaften
+und liefere die Liste der Kolumneneigenschaften (Objekte der Klasse
+Quiq::Properties) zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub analyze {
+    my ($self,$redo) = @_;
+
+    if ($redo) {
+        $self->{'propertyA'} = undef;
+    }
+
+    my $arr = $self->memoize('propertyA',sub {
+        my $self = shift;
+
+        my @arr;
+        for ($self->columns) {
+            CORE::push @arr,my $prp = $self->columnProperties($_);
+        }
+
+        return \@arr;
+    });
+
+    return wantarray? @$arr: $arr;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 asText() - Tabelle als Text
+
+=head4 Synopsis
+
+    $text = $tab->asText;
+
+=head4 Returns
+
+String
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub asText {
+    my $self = shift;
+
+    my $propertyA = $self->analyze;
+
+    my $str = '';
+    for my $row ($self->rows) {
+        my @row;
+        my $valueA = $row->values;
+        for (my $i = 0; $i < @$valueA; $i++) {
+            CORE::push @row,
+                sprintf $propertyA->[$i]->format('text',$valueA->[$i]);
+        }
+        $str .= '| '.join(' | ',@row)." |\n";
+    }
+
+    return $str;
 }
 
 # -----------------------------------------------------------------------------

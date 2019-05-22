@@ -275,6 +275,47 @@ Integer
 
 Liefere die Anzahl der Kolumnen der Tabelle.
 
+=head2 Formatierung
+
+=head3 analyze() - Liste der Kolumneneigenschaften
+
+=head4 Synopsis
+
+    @properties | $propertyA = $tab->analyze;
+    @properties | $propertyA = $tab->analyze($redo);
+
+=head4 Arguments
+
+=over 4
+
+=item $redo
+
+Die Kolumneneigenschaften werden innerhalb des Objekts gecacht.
+Ist $redo wahr, wird die Analyse der Kolumneninhalte erneut durchgeführt.
+
+=back
+
+=head4 Returns
+
+Liste der Kolumneneigenschaften (Array of Quiq::Properties). Im
+Skalarkontext eine Referenz auf die Liste.
+
+=head4 Description
+
+Analysiere die Kolumnen der Tabelle hinsichtlich ihrer Eigenschaften
+und liefere die Liste der Kolumneneigenschaften (Objekte der Klasse
+Quiq::Properties) zurück.
+
+=head3 asText() - Tabelle als Text
+
+=head4 Synopsis
+
+    $text = $tab->asText;
+
+=head4 Returns
+
+String
+
 =head1 VERSION
 
 1.141

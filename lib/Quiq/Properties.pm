@@ -147,9 +147,9 @@ sub new {
     #                 |   | 2 floatPrefix
     #                 |   | | 3 scale
     #                 |   | | | 4 align
-    #                 |   | | | |     5 Option $noTrailingZeros
-    #                 |   | | | |     |
-    my $self = bless ['d',0,0,0,undef,$noTrailingZeros],$class;
+    #                 |   | | | |   5 Option $noTrailingZeros
+    #                 |   | | | |   |
+    my $self = bless ['d',0,0,0,'r',$noTrailingZeros],$class;
 
     # Analysiere Werte
 
@@ -236,11 +236,12 @@ sub scale {
 
 # -----------------------------------------------------------------------------
 
-=head3 type() - Typ der Kolumne
+=head3 type() - Liefere/Setze Typ der Kolumne
 
 =head4 Synopsis
 
     $type = $prp->type;
+    $type = $prp->type($type);
 
 =head4 Returns
 
@@ -276,6 +277,12 @@ besteht oder wenigsténs einen nichtnumerischen Wert enthält.
 
 sub type {
     my $self = shift;
+    # @_: $type
+
+    if (@_) {
+        $self->[0] = shift;
+    }
+
     return $self->[1] == 0? 's': $self->[0];
 }
 
@@ -379,6 +386,7 @@ sub analyze {
 
                 if ($val !~ /^[+-]?(\d*\.(\d+)$|\d+)$/) {
                     $type = 's';
+                    $align = 'l';
                     $floatPrefix = 0;
                     $scale = 0;
                 }
@@ -471,7 +479,7 @@ sub format {
         }
 
         if ($type eq 's') {
-            $val = sprintf '%*s',-$width,$val;
+            $val = sprintf '%*s',$self->[4] eq 'l'? -$width: $width,$val;
         }
         elsif ($type eq 'd') {
             # %d funktioniert bei großen Zahlen mit z.B. 24 Stellen nicht.
