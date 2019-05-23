@@ -42,10 +42,10 @@ L<Quiq::Hash>
     $columnA = $tab->columns;
     # ['a','b','c','d']
     
-    $i = $tab->columnIndex('c');
+    $i = $tab->index('c');
     # 2
     
-    $i = $tab->columnIndex('z');
+    $i = $tab->index('z');
     # Exception
     
     # Zeilen
@@ -91,6 +91,10 @@ von gleichförmigen Zeilen. Die Namen der Kolumnen werden dem Konstruktor
 der Klasse übergeben. Sie bezeichnen die Komponenten der Zeilen. Die
 Zeilen sind Objekte der Klasse Quiq::TableRow.
 
+=head1 EXAMPLE
+
+Siehe quiq-ls
+
 =head1 METHODS
 
 =head2 Klassenmethoden
@@ -135,7 +139,7 @@ sub new {
     my $self = $class->SUPER::new(
         columnA => $columnA,
         columnH => Quiq::Hash->new({map {$_ => $i++} @$columnA}),
-        propertyA => undef,
+        propertyH => undef,
         rowA => [],
     );
 
@@ -203,11 +207,11 @@ sub count {
 
 # -----------------------------------------------------------------------------
 
-=head3 columnProperties() - Eigenschaften der Werte einer Kolumne
+=head3 properties() - Eigenschaften einer Kolumne
 
 =head4 Synopsis
 
-    $prp = $tab->columnProperties($column);
+    $prp = $tab->properties($column);
 
 =head4 Arguments
 
@@ -227,18 +231,24 @@ Properties-Objekt (Quiq::Properties)
 
 Ermittele die Eigenschaften der Werte der Kolumne $column und liefere
 ein Objekt, das diese Eigenschaften abfragbar zur Verfügung stellt,
-zurück.
+zurück. Die Eigenschaften werden gecacht, so dass bei einem wiederholten
+Aufruf die Eigenschaften nicht erneut ermittelt werden müssen. Wird die
+Tabelle mit push() erweitert, wird der Cache automatisch gelöscht.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub columnProperties {
+sub properties {
     my ($self,$column) = @_;
 
-    my $prp = Quiq::Properties->new;
-    for my $val ($self->values($column,-distinct=>1)) {
-        $prp->analyze($val);
+    my $prp = $self->{'propertyH'}->{$column};
+    if (!$prp) {
+        $prp = Quiq::Properties->new;
+        for my $val ($self->values($column,-distinct=>1)) {
+            $prp->analyze($val);
+        }
+        $self->{'propertyH'}->{$column} = $prp;
     }
 
     return $prp;
@@ -246,11 +256,11 @@ sub columnProperties {
 
 # -----------------------------------------------------------------------------
 
-=head3 columnIndex() - Index einer Kolumne
+=head3 index() - Index einer Kolumne
 
 =head4 Synopsis
 
-    $i = $tab->columnIndex($column);
+    $i = $tab->index($column);
 
 =head4 Arguments
 
@@ -269,13 +279,13 @@ Integer
 =head4 Description
 
 Liefere den Index der Kolumne $column. Der Index einer Kolumne ist ihre
-Position innerhalb des Kolumnen-Array.
+Position innerhalb des Kolumnen-Arrays.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub columnIndex {
+sub index {
     my ($self,$column) = @_;
     return $self->{'columnH'}->{$column};
 }
@@ -304,6 +314,8 @@ Füge eine Zeile mit den Daten @arr zur Tabelle hinzu. Die Anzahl der
 Elemente in @arr muss mit der Anzahl der Kolumnen übereinstimmen,
 sonst wird eine Exception geworfen.
 
+Sind durch
+
 =cut
 
 # -----------------------------------------------------------------------------
@@ -313,6 +325,7 @@ sub push {
 
     my $row = Quiq::TableRow->new($self,$valueA);
     $self->SUPER::push('rowA',$row);
+    $self->{'propertyH'} &&= undef; # Kolumneneigenschaften löschen
 
     return;
 }
@@ -403,7 +416,7 @@ sub values {
     # Erstelle Werteliste
 
     my (@arr,%seen);
-    my $i = $self->columnIndex($column);
+    my $i = $self->index($column);
     for my $row (@{$self->{'rowA'}}) {
         my $val = $row->[1][$i];
         if ($distinct && $seen{$val//''}++) {
@@ -444,62 +457,6 @@ sub width {
 
 =head2 Formatierung
 
-=head3 analyze() - Liste der Kolumneneigenschaften
-
-=head4 Synopsis
-
-    @properties | $propertyA = $tab->analyze;
-    @properties | $propertyA = $tab->analyze($redo);
-
-=head4 Arguments
-
-=over 4
-
-=item $redo
-
-Die Kolumneneigenschaften werden innerhalb des Objekts gecacht.
-Ist $redo wahr, wird die Analyse der Kolumneninhalte erneut durchgeführt.
-
-=back
-
-=head4 Returns
-
-Liste der Kolumneneigenschaften (Array of Quiq::Properties). Im
-Skalarkontext eine Referenz auf die Liste.
-
-=head4 Description
-
-Analysiere die Kolumnen der Tabelle hinsichtlich ihrer Eigenschaften
-und liefere die Liste der Kolumneneigenschaften (Objekte der Klasse
-Quiq::Properties) zurück.
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub analyze {
-    my ($self,$redo) = @_;
-
-    if ($redo) {
-        $self->{'propertyA'} = undef;
-    }
-
-    my $arr = $self->memoize('propertyA',sub {
-        my $self = shift;
-
-        my @arr;
-        for ($self->columns) {
-            CORE::push @arr,my $prp = $self->columnProperties($_);
-        }
-
-        return \@arr;
-    });
-
-    return wantarray? @$arr: $arr;
-}
-
-# -----------------------------------------------------------------------------
-
 =head3 asText() - Tabelle als Text
 
 =head4 Synopsis
@@ -517,7 +474,7 @@ String
 sub asText {
     my $self = shift;
 
-    my $propertyA = $self->analyze;
+    my @properties = map {$self->properties($_)} $self->columns;
 
     my $str = '';
     for my $row ($self->rows) {
@@ -525,7 +482,7 @@ sub asText {
         my $valueA = $row->values;
         for (my $i = 0; $i < @$valueA; $i++) {
             CORE::push @row,
-                sprintf $propertyA->[$i]->format('text',$valueA->[$i]);
+                sprintf $properties[$i]->format('text',$valueA->[$i]);
         }
         $str .= '| '.join(' | ',@row)." |\n";
     }

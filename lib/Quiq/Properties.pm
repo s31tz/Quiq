@@ -205,7 +205,7 @@ sub align {
         $self->[4] = shift;
     }
 
-    return $self->type eq 's'? $self->[4] // 'l': 'r';
+    return $self->type eq 's'? ($self->[1] == 0? 'l': $self->[4]): 'r';
 }
 
 # -----------------------------------------------------------------------------
@@ -529,6 +529,45 @@ sub format {
     }
 
     return $val;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 set() - Setze Eigenschaften explizit
+
+=head4 Synopsis
+
+    $prp->set($type,$align);
+
+=head4 Arguments
+
+=over 4
+
+=item $type
+
+Typ der Wertemenge: s (Text)
+
+=item $align
+
+Ausrichtung der Werte der Wertemenge: l (left), r (right).
+
+=back
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub set {
+    my ($self,$type,$align) = @_;
+
+    if (defined $type) {
+        $self->type($type);
+    }
+    if (defined $align) {
+        $self->align($align);
+    }
+
+    return;
 }
 
 # -----------------------------------------------------------------------------

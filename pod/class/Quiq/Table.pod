@@ -26,10 +26,10 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
     $columnA = $tab->columns;
     # ['a','b','c','d']
     
-    $i = $tab->columnIndex('c');
+    $i = $tab->index('c');
     # 2
     
-    $i = $tab->columnIndex('z');
+    $i = $tab->index('z');
     # Exception
     
     # Zeilen
@@ -74,6 +74,10 @@ Ein Objekt der Klasse repräsentiert eine Tabelle, also eine Liste
 von gleichförmigen Zeilen. Die Namen der Kolumnen werden dem Konstruktor
 der Klasse übergeben. Sie bezeichnen die Komponenten der Zeilen. Die
 Zeilen sind Objekte der Klasse Quiq::TableRow.
+
+=head1 EXAMPLE
+
+Siehe quiq-ls
 
 =head1 METHODS
 
@@ -137,11 +141,11 @@ Integer
 
 Liefere die Anzahl der Zeilen der Tabelle.
 
-=head3 columnProperties() - Eigenschaften der Werte einer Kolumne
+=head3 properties() - Eigenschaften einer Kolumne
 
 =head4 Synopsis
 
-    $prp = $tab->columnProperties($column);
+    $prp = $tab->properties($column);
 
 =head4 Arguments
 
@@ -161,13 +165,15 @@ Properties-Objekt (Quiq::Properties)
 
 Ermittele die Eigenschaften der Werte der Kolumne $column und liefere
 ein Objekt, das diese Eigenschaften abfragbar zur Verfügung stellt,
-zurück.
+zurück. Die Eigenschaften werden gecacht, so dass bei einem wiederholten
+Aufruf die Eigenschaften nicht erneut ermittelt werden müssen. Wird die
+Tabelle mit push() erweitert, wird der Cache automatisch gelöscht.
 
-=head3 columnIndex() - Index einer Kolumne
+=head3 index() - Index einer Kolumne
 
 =head4 Synopsis
 
-    $i = $tab->columnIndex($column);
+    $i = $tab->index($column);
 
 =head4 Arguments
 
@@ -186,7 +192,7 @@ Integer
 =head4 Description
 
 Liefere den Index der Kolumne $column. Der Index einer Kolumne ist ihre
-Position innerhalb des Kolumnen-Array.
+Position innerhalb des Kolumnen-Arrays.
 
 =head3 push() - Füge Zeile hinzu
 
@@ -209,6 +215,8 @@ Liste von Zeilendaten (Strings).
 Füge eine Zeile mit den Daten @arr zur Tabelle hinzu. Die Anzahl der
 Elemente in @arr muss mit der Anzahl der Kolumnen übereinstimmen,
 sonst wird eine Exception geworfen.
+
+Sind durch
 
 =head3 rows() - Liste der Zeilen
 
@@ -276,35 +284,6 @@ Integer
 Liefere die Anzahl der Kolumnen der Tabelle.
 
 =head2 Formatierung
-
-=head3 analyze() - Liste der Kolumneneigenschaften
-
-=head4 Synopsis
-
-    @properties | $propertyA = $tab->analyze;
-    @properties | $propertyA = $tab->analyze($redo);
-
-=head4 Arguments
-
-=over 4
-
-=item $redo
-
-Die Kolumneneigenschaften werden innerhalb des Objekts gecacht.
-Ist $redo wahr, wird die Analyse der Kolumneninhalte erneut durchgeführt.
-
-=back
-
-=head4 Returns
-
-Liste der Kolumneneigenschaften (Array of Quiq::Properties). Im
-Skalarkontext eine Referenz auf die Liste.
-
-=head4 Description
-
-Analysiere die Kolumnen der Tabelle hinsichtlich ihrer Eigenschaften
-und liefere die Liste der Kolumneneigenschaften (Objekte der Klasse
-Quiq::Properties) zurück.
 
 =head3 asText() - Tabelle als Text
 

@@ -393,7 +393,7 @@ inline geschriebenen Text nützlich.
 
 =head4 Synopsis
 
-    @paths | $pathA = $this->entries($dir);
+    @paths | $pathA = $this->entries($dir,@opt);
 
 =head4 Arguments
 
@@ -402,6 +402,16 @@ inline geschriebenen Text nützlich.
 =item $dir
 
 Pfad des Verzeichnisses.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -encoding => $charset (Default: 'utf-8')
+
+Dekodiere die Verzeichniseinträge gemäß Zeichensatz $charset.
 
 =back
 

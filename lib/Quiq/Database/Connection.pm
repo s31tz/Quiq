@@ -3019,6 +3019,416 @@ sub countRows {
 
 # -----------------------------------------------------------------------------
 
+=head3 tableDiff() - Daten-Differenzen zwischen zwei Tabellen
+
+=head4 Synopsis
+
+    $tab = $db->tableDiff($table1,$table2,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $table1
+
+Tabellenname, mit oder ohne Schema-Präfix.
+
+=item $table2
+
+Tabellenname, mit oder ohne Schema-Präfix.
+
+=back
+
+=head4 Options
+
+Im folgenden ist @titles ein Array von Kolumnennamen und $titles
+eine kommaseparierte Liste von Kolumnennamen.
+
+=over 4
+
+=item -columns => \@titles | $titles (Default: I<Kolumnen Tabelle 1>)
+
+Kolumnen, die verglichen werden.
+
+=item -ignoreColumns => \@titles | $titles
+
+Kolumnen, die ignoriert werden. Diese Option ist nützlich, wenn
+alle Kolumnen verglichen werden sollen, bis auf die mit dieser
+Option genannten.
+
+=item -limit => $n (Default: 10)
+
+Begrenze die Größe der beiden Differenzmengen (s.u.) auf jeweils N Zeilen.
+D.h. es werden maximal 2 * N Zeilen geliefert. Darüber hinausgehende
+Differenzen werden nicht berücksichtigt. Limit 0 bedeutet, es
+gibt keine Begrenzung.
+
+=item -sortColumns => \@titles | $titles (Default: I<Kolumnen>)
+
+Kolumnen, nach denen die Gesamt-Differenzliste sortiert wird.
+
+=back
+
+=head4 Description
+
+Die Methode untersucht zwei strukturell identische Tabellen hinsichtlich
+etwaig vorhandener Daten-Differenzen. Sie tut dies mittels SQL und ist
+dadurch auch auf großen Datenmengen sehr schnell. Der Vergleich
+geschieht durch die Bildung der zwei Differenzmengen
+
+    -- Alle Zeilen in Tabelle 1, die nicht in Tabelle 2 vorkommen
+    
+    SELECT
+        COLUMNS1
+    FROM
+        TABLE1
+    EXCEPT
+    SELECT
+        COLUMNS2
+    FROM
+        TABLE2
+    ORDER BY
+        COLUMNS1
+
+und
+
+    -- Alle Zeilen in Tabelle 2, die nicht in Tabelle 1 vorkommen
+    
+    SELECT
+        COLUMNS2
+    FROM
+        TABLE2
+    EXCEPT
+    SELECT
+        COLUMNS1
+    FROM
+        TABLE1
+    ORDER BY
+        COLUMNS2
+
+Sind beide Differenzmengen leer, sind die Tabellen identisch.
+
+Die beiden Differenzmengen werden in einer Ergebnismenge zusammengefasst
+und als ResultSet-Objekt zurückgeliefert. Die Herkunft einer Row wird
+durch das Zeilenattribut sourceTable angezeigt. Tabelle 1 wird mit 'A'
+bezeichnet, Tabelle 2 mit 'B'.
+
+=head4 Example
+
+Vergleich der Tabelle q68t999 in den Schemata xv882js und xv882js_test_01
+über das Programm quiq-db-table-diff, das ein Frontend zur Methode
+tableDiff() darstellt:
+
+    $ quiq-db-table-diff dbi#postgresql:dsstest%xv882js:*@tdca.ruv.de:5432 xv882js.q68t999 xv882js_test_01.q68t999
+     1 sourceTable
+     2 pgmname
+     3 tabname
+     4 jobname
+     5 anz_ins
+     6 anz_upd
+     7 anz_del
+     8 upd_dat
+     9 status
+    10 runtime
+    
+    1   2                 3         4   5          6   7    8                            9   10
+    | A | xv882js_160538  | q68t340 |   | 37806420 | 0 | -1 | 2019-04-25 09:30:12.034297 |   | 2019-04-25 09:29:51 |
+    | B | xv882js_2285224 | q68t340 |   | 37806420 | 0 | -1 | 2019-04-25 09:33:33.987502 |   | 2019-04-25 09:33:11 |
+    
+    2 rows
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub tableDiff {
+    my $self = shift;
+
+    # Optionen und Argumente
+
+    my $columns = undef;
+    my $ignoreColumns = undef;
+    my $limit = 10;
+    my $sortColumns = undef;
+
+    my $argA = Quiq::Parameters->extractToVariables(\@_,2,2,
+        -columns => \$columns,
+        -ignoreColumns => \$ignoreColumns,
+        -limit => \$limit,
+        -sortColumns => \$sortColumns,
+    );
+    my ($table1,$table2) = @$argA;
+
+    # Select-Kolumnen
+
+    my @columns;
+    if (ref $columns) {
+        @columns = @$columns;
+    }
+    elsif ($columns) {
+        @columns = split /\s*,\s*/,$columns;
+    }
+    else {
+        @columns = $self->titles($table1);
+    }
+
+    # Ignore-Kolumnen
+
+    my @ignoreColumns;
+    if (ref $ignoreColumns) {
+        @ignoreColumns = @$ignoreColumns;
+    }
+    elsif ($ignoreColumns) {
+        for my $ignoreTitle (split /\s*,\s*/,$ignoreColumns) {
+            for (my $i = 0; $i < @columns; $i++) {
+                if ($ignoreTitle eq $columns[$i]) {
+                    splice @columns,$i--,1;
+                }
+            }
+        }
+    }
+
+    # Sortier-Kolumnen
+
+    my @sortColumns;
+    if (ref $sortColumns) {
+        @sortColumns = @$sortColumns;
+    }
+    elsif ($sortColumns) {
+        @sortColumns = split /\s*,\s*/,$sortColumns;
+    }
+    else {
+       @sortColumns = @columns;
+    }
+
+    # Differenzen ermitteln
+
+    my @rows; # Differierende Kolumnen aus beiden Mengen
+
+    # TABLE1 EXCEPT TABLE2
+
+    my $sql = $self->stmt;
+    my $stmt = $sql->select("
+        SELECT
+            __TITLES1__
+        FROM
+            __TABLE1__
+        EXCEPT
+        SELECT
+            __TITLES2__
+        FROM
+            __TABLE2__
+        ORDER BY
+            __TITLES1__
+        ",
+        -args =>
+            TABLE1 => $table1,
+            TITLES1 => join(', ',@columns),
+            TABLE2 => $table2,
+            TITLES2 => join(', ',@columns),
+    );
+
+    my $i = 0;
+    my $cur = $self->sql($stmt);
+    while (my $row = $cur->fetch) {
+        if ($limit && $i++ > $limit) {
+            last;
+        }
+        $row->add(sourceTable=>'A');
+        push @rows,$row;
+    }
+    $cur->close;
+
+    # TABLE2 EXCEPT TABLE1
+
+    $stmt = $sql->select("
+        SELECT
+            __TITLES2__
+        FROM
+            __TABLE2__
+        EXCEPT
+        SELECT
+            __TITLES1__
+        FROM
+            __TABLE1__
+        ORDER BY
+            __TITLES2__
+        ",
+        -args =>
+            TABLE1 => $table1,
+            TITLES1 => join(', ',@columns),
+            TABLE2 => $table2,
+            TITLES2 => join(', ',@columns),
+    );
+
+    $i = 0;
+    $cur = $self->sql($stmt);
+    while (my $row = $cur->fetch) {
+        if ($limit && $i++ > $limit) {
+            last;
+        }
+        $row->add(sourceTable=>'B');
+        push @rows,$row;
+    }
+    $cur->close;
+
+    # Zeilen beider Differenzmengen gemäß @sortColumns sortieren
+
+    my $sub = sub ($$) {
+        my ($a,$b) = @_;
+        my $sort = 0;
+        for my $title (@sortColumns) {
+            if ($sort = $a->$title cmp $b->$title) {
+                last;
+            }
+        }
+        return $sort || $a->sourceTable cmp $b->sourceTable;
+    };
+    @rows = sort $sub @rows;
+
+    unshift @columns,'sourceTable';
+    return Quiq::Database::ResultSet->new(\@columns,\@rows);
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 doublets() - Dubletten in einer Tabelle
+
+=head4 Synopsis
+
+    $tab = $db->doublets($table,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $table
+
+Tabellenname, mit oder ohne Schema-Präfix.
+
+=back
+
+=head4 Options
+
+Im folgenden ist @titles ein Array von Kolumnennamen und $titles
+eine kommaseparierte Liste von Kolumnennamen.
+
+=over 4
+
+=item -columns => \@titles | $titles (Default: I<Alle Kolumnen der Tabelle>)
+
+Kolumnen, die auf Dubletten hin untersucht werden.
+
+=item -ignoreColumns => \@titles | $titles
+
+Kolumnen, die ignoriert werden. Diese Option ist nützlich, wenn
+alle Kolumnen betrachtet werden sollen, bis auf die mit dieser
+Option genannten.
+
+=item -limit => $n (Default: 10)
+
+Begrenze die Anzahl der gemeldeten Dubletten.
+
+=item -sortColumns => \@titles | $titles (Default: I<Kolumnen>)
+
+Kolumnen, nach denen die Gesamt-Differenzliste sortiert wird.
+
+=back
+
+=head4 Returns
+
+Ergebnismengen-Objekt (Quiq::ResultSet::Object)
+
+=head4 Description
+
+Suche Dubletten in der Tabelle $table und liefere ein Ergebnisobjekt
+mit den Treffern zurück.
+
+=head4 Example
+
+    $  perl -MQuiq::Database::Connection -E 'print Quiq::Database::Connection\
+         ->new("dbi#postgresql:dsstest%xv882js:*\@tdca.ruv.de:5432")\
+         ->doublets("dss_meta.cpm_load_objects",-columns=>"load_object,\
+         target_object",-limit=>10)->asTable'
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub doublets {
+    my $self = shift;
+
+    # Optionen und Argumente
+
+    my $columns = undef;
+    my $ignoreColumns = undef;
+    my $limit = 10;
+    my $sortColumns = undef;
+
+    my $argA = Quiq::Parameters->extractToVariables(\@_,1,1,
+        -columns => \$columns,
+        -ignoreColumns => \$ignoreColumns,
+        -limit => \$limit,
+        -sortColumns => \$sortColumns,
+    );
+    my ($table) = @$argA;
+
+    # Select-Kolumnen
+
+    my @columns;
+    if (ref $columns) {
+        @columns = @$columns;
+    }
+    elsif ($columns) {
+        @columns = split /\s*,\s*/,$columns;
+    }
+    else {
+        @columns = $self->titles($table);
+    }
+
+    # Ignore-Kolumnen
+
+    my @ignoreColumns;
+    if (ref $ignoreColumns) {
+        @ignoreColumns = @$ignoreColumns;
+    }
+    elsif ($ignoreColumns) {
+        for my $ignoreTitle (split /\s*,\s*/,$ignoreColumns) {
+            for (my $i = 0; $i < @columns; $i++) {
+                if ($ignoreTitle eq $columns[$i]) {
+                    splice @columns,$i--,1;
+                }
+            }
+        }
+    }
+
+    # Sortier-Kolumnen
+
+    my @sortColumns;
+    if (ref $sortColumns) {
+        @sortColumns = @$sortColumns;
+    }
+    elsif ($sortColumns) {
+        @sortColumns = split /\s*,\s*/,$sortColumns;
+    }
+    else {
+       @sortColumns = @columns;
+    }
+
+    # Dubletten ermitteln
+
+    return $self->select(
+        -select => @columns,'COUNT(1)',
+        -from => $table,
+        -groupBy => @columns,
+        -having => 'COUNT(1) > 1',
+        -orderBy => @sortColumns,
+        -limit => $limit,
+    );
+}
+
+# -----------------------------------------------------------------------------
+
 =head2 Columns
 
 =head3 columnExists() - Prüfe, ob Kolumne existiert
@@ -4023,279 +4433,6 @@ sub triggerExists {
 # -----------------------------------------------------------------------------
 
 =head2 Spezielle Operationen
-
-=head3 tableDiff() - Ermittele Daten-Differenzen
-
-=head4 Synopsis
-
-    $tab = $db->tableDiff($table1,$table2,@opt);
-
-=head4 Arguments
-
-=over 4
-
-=item $table1
-
-Tabellenname, mit oder ohne Schema-Präfix.
-
-=item $table2
-
-Tabellenname, mit oder ohne Schema-Präfix.
-
-=back
-
-=head4 Options
-
-Im folgenden ist @titles ein Array von Kolumnennamen und $ttitles
-eine kommaseparierte Liste von Kolumnennamen.
-
-=over 4
-
-=item -columns => \@titles | $titles (Default: I<Kolumnen Tabelle 1>)
-
-Kolumnen, die verglichen werden.
-
-=item -ignoreColumns => \@titles | $titles
-
-Kolumnen, die ignoriert werden. Diese Option ist nützlich, wenn
-alle Kolumnen verglichen werden sollen, bis auf die mit dieser
-Option genannten.
-
-=item -limit => $n (Default: 10)
-
-Begrenze die Größe der beiden Differenzmengen (s.u.) auf jeweils N Zeilen.
-D.h. es werden maximal 2 * N Zeilen geliefert. Darüber hinausgehende
-Differenzen werden nicht berücksichtigt. Limit 0 bedeutet, es
-gibt keine Begrenzung.
-
-=item -sortColumns => \@titles | $titles (Default: I<Kolumnen>)
-
-Kolumnen, nach denen die Gesamt-Differenzliste sortiert wird.
-
-=back
-
-=head4 Description
-
-Die Methode untersucht zwei strukturell identische Tabellen hinsichtlich
-etwaig vorhandener Daten-Differenzen. Sie tut dies mittels SQL und ist
-dadurch auch auf großen Datenmengen sehr schnell. Der Vergleich
-geschieht durch die Bildung der zwei Differenzmengen
-
-    -- Alle Zeilen in Tabelle 1, die nicht in Tabelle 2 vorkommen
-    
-    SELECT
-        COLUMNS1
-    FROM
-        TABLE1
-    EXCEPT
-    SELECT
-        COLUMNS2
-    FROM
-        TABLE2
-    ORDER BY
-        COLUMNS1
-
-und
-
-    -- Alle Zeilen in Tabelle 2, die nicht in Tabelle 1 vorkommen
-    
-    SELECT
-        COLUMNS2
-    FROM
-        TABLE2
-    EXCEPT
-    SELECT
-        COLUMNS1
-    FROM
-        TABLE1
-    ORDER BY
-        COLUMNS2
-
-Sind beide Differenzmengen leer, sind die Tabellen identisch.
-
-Die beiden Differenzmengen werden in einer Ergebnismenge zusammengefasst
-und als ResultSet-Objekt zurückgeliefert. Die Herkunft einer Row wird
-durch das Zeilenattribut sourceTable angezeigt. Tabelle 1 wird mit 'A'
-bezeichnet, Tabelle 2 mit 'B'.
-
-=head4 Example
-
-Vergleich der Tabelle q68t999 in den Schemata xv882js und xv882js_test_01
-über das Programm quiq-db-table-diff, das ein Frontend zur Methode
-tableDiff() darstellt:
-
-    $ quiq-db-table-diff dbi#postgresql:dsstest%xv882js:*@tdca.ruv.de:5432 xv882js.q68t999 xv882js_test_01.q68t999
-     1 sourceTable
-     2 pgmname
-     3 tabname
-     4 jobname
-     5 anz_ins
-     6 anz_upd
-     7 anz_del
-     8 upd_dat
-     9 status
-    10 runtime
-    
-    1   2                 3         4   5          6   7    8                            9   10
-    | A | xv882js_160538  | q68t340 |   | 37806420 | 0 | -1 | 2019-04-25 09:30:12.034297 |   | 2019-04-25 09:29:51 |
-    | B | xv882js_2285224 | q68t340 |   | 37806420 | 0 | -1 | 2019-04-25 09:33:33.987502 |   | 2019-04-25 09:33:11 |
-    
-    2 rows
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub tableDiff {
-    my $self = shift;
-
-    # Optionen und Argumente
-
-    my $columns = undef;
-    my $ignoreColumns = undef;
-    my $limit = 10;
-    my $sortColumns = undef;
-
-    my $argA = Quiq::Parameters->extractToVariables(\@_,2,2,
-        -columns => \$columns,
-        -ignoreColumns => \$ignoreColumns,
-        -limit => \$limit,
-        -sortColumns => \$sortColumns,
-    );
-    my ($table1,$table2) = @$argA;
-
-    # Select-Kolumnen
-
-    my @columns;
-    if (ref $columns) {
-        @columns = @$columns;
-    }
-    elsif ($columns) {
-        @columns = split /\s*,\s*/,$columns;
-    }
-    else {
-        @columns = $self->titles($table1);
-    }
-
-    # Ignore-Kolumnen
-
-    my @ignoreColumns;
-    if (ref $ignoreColumns) {
-        @ignoreColumns = @$ignoreColumns;
-    }
-    elsif ($ignoreColumns) {
-        for my $ignoreTitle (split /\s*,\s*/,$ignoreColumns) {
-            for (my $i = 0; $i < @columns; $i++) {
-                if ($ignoreTitle eq $columns[$i]) {
-                    splice @columns,$i--,1;
-                }
-            }
-        }
-    }
-
-    # Sortier-Kolumnen
-
-    my @sortColumns;
-    if (ref $sortColumns) {
-        @sortColumns = @$sortColumns;
-    }
-    elsif ($sortColumns) {
-        @sortColumns = split /\s*,\s*/,$sortColumns;
-    }
-    else {
-       @sortColumns = @columns;
-    }
-
-    # Differenzen ermitteln
-
-    my @rows; # Differierende Kolumnen aus beiden Mengen
-
-    # TABLE1 EXCEPT TABLE2
-
-    my $sql = $self->stmt;
-    my $stmt = $sql->select("
-        SELECT
-            __TITLES1__
-        FROM
-            __TABLE1__
-        EXCEPT
-        SELECT
-            __TITLES2__
-        FROM
-            __TABLE2__
-        ORDER BY
-            __TITLES1__
-        ",
-        -args =>
-            TABLE1 => $table1,
-            TITLES1 => join(', ',@columns),
-            TABLE2 => $table2,
-            TITLES2 => join(', ',@columns),
-    );
-
-    my $i = 0;
-    my $cur = $self->sql($stmt);
-    while (my $row = $cur->fetch) {
-        if ($limit && $i++ > $limit) {
-            last;
-        }
-        $row->add(sourceTable=>'A');
-        push @rows,$row;
-    }
-    $cur->close;
-
-    # TABLE2 EXCEPT TABLE1
-
-    $stmt = $sql->select("
-        SELECT
-            __TITLES2__
-        FROM
-            __TABLE2__
-        EXCEPT
-        SELECT
-            __TITLES1__
-        FROM
-            __TABLE1__
-        ORDER BY
-            __TITLES2__
-        ",
-        -args =>
-            TABLE1 => $table1,
-            TITLES1 => join(', ',@columns),
-            TABLE2 => $table2,
-            TITLES2 => join(', ',@columns),
-    );
-
-    $i = 0;
-    $cur = $self->sql($stmt);
-    while (my $row = $cur->fetch) {
-        if ($limit && $i++ > $limit) {
-            last;
-        }
-        $row->add(sourceTable=>'B');
-        push @rows,$row;
-    }
-    $cur->close;
-
-    # Zeilen beider Differenzmengen gemäß @sortColumns sortieren
-
-    my $sub = sub ($$) {
-        my ($a,$b) = @_;
-        my $sort = 0;
-        for my $title (@sortColumns) {
-            if ($sort = $a->$title cmp $b->$title) {
-                last;
-            }
-        }
-        return $sort || $a->sourceTable cmp $b->sourceTable;
-    };
-    @rows = sort $sub @rows;
-
-    unshift @columns,'sourceTable';
-    return Quiq::Database::ResultSet->new(\@columns,\@rows);
-}
-
-# -----------------------------------------------------------------------------
 
 =head3 diff() - Ermittele Datendifferenzen
 

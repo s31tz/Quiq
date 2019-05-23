@@ -19,6 +19,7 @@ use Encode ();
 use Fcntl qw/:DEFAULT/;
 use Quiq::Perl;
 use Quiq::Unindent;
+use Quiq::Parameters;
 use Quiq::DirHandle;
 use File::Find ();
 use Quiq::Shell;
@@ -939,7 +940,7 @@ sub writeInline {
 
 =head4 Synopsis
 
-    @paths | $pathA = $this->entries($dir);
+    @paths | $pathA = $this->entries($dir,@opt);
 
 =head4 Arguments
 
@@ -948,6 +949,16 @@ sub writeInline {
 =item $dir
 
 Pfad des Verzeichnisses.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -encoding => $charset (Default: 'utf-8')
+
+Dekodiere die Verzeichniseinträge gemäß Zeichensatz $charset.
 
 =back
 
@@ -967,7 +978,19 @@ außer C<.> und C<..>.
 # -----------------------------------------------------------------------------
 
 sub entries {
-    my ($this,$dir) = @_;
+    my $this = shift;
+    # @_: $dir,@opt
+
+    # Options
+
+    my $encoding = 'utf-8';
+
+    my $argA = Quiq::Parameters->extractToVariables(\@_,1,1,
+        -encoding => \$encoding,
+    );
+    my $dir = shift @$argA;
+
+    # Operation ausführen
 
     my @arr;
     my $dh = Quiq::DirHandle->new($dir);
@@ -975,7 +998,7 @@ sub entries {
         if ($entry eq '.' || $entry eq '..') {
             next;
         }
-        push @arr,$entry;
+        push @arr,$encoding? Encode::decode($encoding,$entry): $entry;
     }
     $dh->close;
 
