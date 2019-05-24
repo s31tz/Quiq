@@ -19,8 +19,8 @@ use Encode ();
 use Fcntl qw/:DEFAULT/;
 use Quiq::Perl;
 use Quiq::Unindent;
-use Quiq::Parameters;
 use Quiq::DirHandle;
+use Quiq::Parameters;
 use File::Find ();
 use Quiq::Shell;
 use Cwd ();
@@ -935,6 +935,53 @@ sub writeInline {
 # -----------------------------------------------------------------------------
 
 =head2 Verzeichnis-Operationen
+
+=head3 count() - Anzahl der Verzeichniseinträge
+
+=head4 Synopsis
+
+    $n = $this->count($dir);
+
+=head4 Arguments
+
+=over 4
+
+=item $dir
+
+Pfad des Verzeichnisses.
+
+=back
+
+=head4 Returns
+
+Anzahl Verzeichniseinträge (Integer)
+
+=head4 Description
+
+Ermittele die Anzahl Einträge des Verzeichnisses $dir und liefere diese
+zurück. Die Einträge C<.> und C<..> werden I<nicht> mitgezählt.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub count {
+    my ($this,$dir) = @_;
+
+    my $n = 0;
+    my $dh = Quiq::DirHandle->new($dir);
+    while (my $entry = $dh->next) {
+        if ($entry eq '.' || $entry eq '..') {
+            next;
+        }
+        $n++;
+    }
+    $dh->close;
+
+    return $n;
+}
+
+# -----------------------------------------------------------------------------
 
 =head3 entries() - Liste der Verzeichniseinträge
 

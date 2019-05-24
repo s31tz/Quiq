@@ -11,6 +11,7 @@ use Quiq::Hash;
 use Quiq::Properties;
 use Quiq::TableRow;
 use Quiq::Parameters;
+use Quiq::AnsiColor;
 
 # -----------------------------------------------------------------------------
 
@@ -207,6 +208,42 @@ sub count {
 
 # -----------------------------------------------------------------------------
 
+=head3 index() - Index einer Kolumne
+
+=head4 Synopsis
+
+    $i = $tab->index($column);
+
+=head4 Arguments
+
+=over 4
+
+=item $column
+
+Kolumnenname (String).
+
+=back
+
+=head4 Returns
+
+Integer
+
+=head4 Description
+
+Liefere den Index der Kolumne $column. Der Index einer Kolumne ist ihre
+Position innerhalb des Kolumnen-Arrays.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub index {
+    my ($self,$column) = @_;
+    return $self->{'columnH'}->{$column};
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 properties() - Eigenschaften einer Kolumne
 
 =head4 Synopsis
@@ -252,42 +289,6 @@ sub properties {
     }
 
     return $prp;
-}
-
-# -----------------------------------------------------------------------------
-
-=head3 index() - Index einer Kolumne
-
-=head4 Synopsis
-
-    $i = $tab->index($column);
-
-=head4 Arguments
-
-=over 4
-
-=item $column
-
-Kolumnenname (String).
-
-=back
-
-=head4 Returns
-
-Integer
-
-=head4 Description
-
-Liefere den Index der Kolumne $column. Der Index einer Kolumne ist ihre
-Position innerhalb des Kolumnen-Arrays.
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub index {
-    my ($self,$column) = @_;
-    return $self->{'columnH'}->{$column};
 }
 
 # -----------------------------------------------------------------------------
@@ -461,11 +462,31 @@ sub width {
 
 =head4 Synopsis
 
-    $text = $tab->asText;
+    $text = $tab->asText(@opt);
+
+=head4 Options
+
+=over 4
+
+=item -colorize => $sub
+
+Callback-Funktion, die für jede Zelle gerufen wird und eine Termnal-Farbe
+für die jeweilige Zelle liefert. Die Funktion hat die Struktur:
+
+    sub {
+        my ($tab,$row,$column,$val) = @_;
+        ...
+        return $color;
+    }
+
+Die Terminal-Farbe ist eine Zeichenkette, wie sie Quiq::AnsiColor
+erwartet. Anwendungsbeispiel siehe quiq-ls.
+
+=back
 
 =head4 Returns
 
-String
+Text-Tabelle (String)
 
 =cut
 
@@ -474,15 +495,37 @@ String
 sub asText {
     my $self = shift;
 
+    # Optionen
+
+    my $colorizeS = undef;
+
+    Quiq::Parameters->extractToVariables(\@_,0,0,
+        -colorize => \$colorizeS,
+    );
+
+    # Kolumnennamen
+    my $columnA = $self->columns;
+
+    # Kolumneneigenschaften
     my @properties = map {$self->properties($_)} $self->columns;
+
+    # Terminal-Farben
+    my $a = Quiq::AnsiColor->new;
+
+    # Erzeuge Tabellenzeile
 
     my $str = '';
     for my $row ($self->rows) {
         my @row;
         my $valueA = $row->values;
         for (my $i = 0; $i < @$valueA; $i++) {
-            CORE::push @row,
-                sprintf $properties[$i]->format('text',$valueA->[$i]);
+            my $val = sprintf $properties[$i]->format('text',$valueA->[$i]);
+            if ($colorizeS) {
+                if (my $color = $colorizeS->($self,$row,$columnA->[$i],$val)) {
+                    $val = $a->str($color,$val);
+                }
+            }
+            CORE::push @row,$val;
         }
         $str .= '| '.join(' | ',@row)." |\n";
     }

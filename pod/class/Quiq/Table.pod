@@ -141,6 +141,31 @@ Integer
 
 Liefere die Anzahl der Zeilen der Tabelle.
 
+=head3 index() - Index einer Kolumne
+
+=head4 Synopsis
+
+    $i = $tab->index($column);
+
+=head4 Arguments
+
+=over 4
+
+=item $column
+
+Kolumnenname (String).
+
+=back
+
+=head4 Returns
+
+Integer
+
+=head4 Description
+
+Liefere den Index der Kolumne $column. Der Index einer Kolumne ist ihre
+Position innerhalb des Kolumnen-Arrays.
+
 =head3 properties() - Eigenschaften einer Kolumne
 
 =head4 Synopsis
@@ -168,31 +193,6 @@ ein Objekt, das diese Eigenschaften abfragbar zur Verfügung stellt,
 zurück. Die Eigenschaften werden gecacht, so dass bei einem wiederholten
 Aufruf die Eigenschaften nicht erneut ermittelt werden müssen. Wird die
 Tabelle mit push() erweitert, wird der Cache automatisch gelöscht.
-
-=head3 index() - Index einer Kolumne
-
-=head4 Synopsis
-
-    $i = $tab->index($column);
-
-=head4 Arguments
-
-=over 4
-
-=item $column
-
-Kolumnenname (String).
-
-=back
-
-=head4 Returns
-
-Integer
-
-=head4 Description
-
-Liefere den Index der Kolumne $column. Der Index einer Kolumne ist ihre
-Position innerhalb des Kolumnen-Arrays.
 
 =head3 push() - Füge Zeile hinzu
 
@@ -289,11 +289,31 @@ Liefere die Anzahl der Kolumnen der Tabelle.
 
 =head4 Synopsis
 
-    $text = $tab->asText;
+    $text = $tab->asText(@opt);
+
+=head4 Options
+
+=over 4
+
+=item -colorize => $sub
+
+Callback-Funktion, die für jede Zelle gerufen wird und eine Termnal-Farbe
+für die jeweilige Zelle liefert. Die Funktion hat die Struktur:
+
+    sub {
+        my ($tab,$row,$column,$val) = @_;
+        ...
+        return $color;
+    }
+
+Die Terminal-Farbe ist eine Zeichenkette, wie sie Quiq::AnsiColor
+erwartet. Anwendungsbeispiel siehe quiq-ls.
+
+=back
 
 =head4 Returns
 
-String
+Text-Tabelle (String)
 
 =head1 VERSION
 

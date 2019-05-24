@@ -389,6 +389,31 @@ inline geschriebenen Text nützlich.
 
 =head2 Verzeichnis-Operationen
 
+=head3 count() - Anzahl der Verzeichniseinträge
+
+=head4 Synopsis
+
+    $n = $this->count($dir);
+
+=head4 Arguments
+
+=over 4
+
+=item $dir
+
+Pfad des Verzeichnisses.
+
+=back
+
+=head4 Returns
+
+Anzahl Verzeichniseinträge (Integer)
+
+=head4 Description
+
+Ermittele die Anzahl Einträge des Verzeichnisses $dir und liefere diese
+zurück. Die Einträge C<.> und C<..> werden I<nicht> mitgezählt.
+
 =head3 entries() - Liste der Verzeichniseinträge
 
 =head4 Synopsis
