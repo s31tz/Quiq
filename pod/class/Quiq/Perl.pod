@@ -958,7 +958,7 @@ POD-Code liegen) werden ebenfalls entfernt.
 
 =head1 VERSION
 
-1.141
+1.142
 
 =head1 SOURCE
 

@@ -65,7 +65,7 @@ B<Konkatenation bei zutreffender Bedingung>
 
 =head1 VERSION
 
-1.141
+1.142
 
 =head1 SOURCE
 

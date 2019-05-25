@@ -1031,7 +1031,7 @@ relativer Pfad als Fortsetzung von $symlink gesehen werden.
 
 =head1 VERSION
 
-1.141
+1.142
 
 =head1 SOURCE
 
