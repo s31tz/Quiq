@@ -571,10 +571,10 @@ setze ihn auf den angegebenen Defaultwert.
 =head4 Example
 
     $sec->setDefault(
-        Width=>1000,
-        EntityMenuWidth=>345,
-        BorderWidth=>1,
-        PackageMenuHeight=>34,
+        Width => 1000,
+        EntityMenuWidth => 345,
+        BorderWidth => 1,
+        PackageMenuHeight => 34,
     );
 
 =head3 add() - Füge Schlüssel und Wert hinzu

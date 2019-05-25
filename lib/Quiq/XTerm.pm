@@ -59,7 +59,7 @@ sub new {
     if ($program !~ /^(xterm|gnome-terminal)$/) {
         $class->throw(
             'XTERM-00001: Unknown terminal type',
-            Type=>$program,
+            Type => $program,
         );
     }
 

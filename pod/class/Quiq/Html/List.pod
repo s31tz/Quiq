@@ -56,10 +56,10 @@ Die I<Unordered List> ist der Default.
 Der Aufruf
 
     $html = Quiq::Html::List->html($h,
-        id=>'list01',
-        class=>'list',
-        isText=>1,
-        items=>['Apfel & Birne','Orange','Pflaume','Zitrone'],
+        id => 'list01',
+        class => 'list',
+        isText => 1,
+        items => ['Apfel & Birne','Orange','Pflaume','Zitrone'],
     );
 
 liefert
@@ -79,11 +79,11 @@ C<< type=>'ordered' >> erzeugt.
 Der Aufruf
 
     $html = Quiq::Html::List->html($h,
-        type=>'ordered',
-        id=>'list02',
-        class=>'list',
-        isText=>1,
-        items=>['Apfel & Birne','Orange','Pflaume','Zitrone'],
+        type => 'ordered',
+        id => 'list02',
+        class => 'list',
+        isText => 1,
+        items => ['Apfel & Birne','Orange','Pflaume','Zitrone'],
     );
 
 liefert

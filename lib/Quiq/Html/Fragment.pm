@@ -96,11 +96,11 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-        doctype=>0,
-        html=>'',
-        javaScript=>[],
-        placeholders=>undef,
-        styleSheet=>[],
+        doctype => 0,
+        html => '',
+        javaScript => [],
+        placeholders => undef,
+        styleSheet => [],
     );
     while (@_) {
         my $key = shift;
@@ -149,7 +149,7 @@ sub html {
         $self->get(qw/doctype html javaScript placeholders styleSheet/);
 
     return $h->cat(
-        -placeholders=>$placeholders,
+        -placeholders => $placeholders,
         '-',
         $doctype? $h->doctype: '',
         Quiq::Css->style($h,$styleSheet),

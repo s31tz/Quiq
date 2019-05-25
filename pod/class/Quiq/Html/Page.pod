@@ -15,7 +15,7 @@ L<Quiq::Html::Base|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html
     $h = Quiq::Html::Tag->new;
     
     $obj = Quiq::Html::Page->new(
-        body=>'hello world!',
+        body => 'hello world!',
     );
     
     $html = $obj->html($h);

@@ -426,46 +426,46 @@ nicht-leeren Aufzählung von folgenden Schlüssel/Wert-Paaren:
 
 =over 4
 
-=item default=>$value
+=item default => $value
 
 Defaultwert der Kolumne.
 
-=item null=>$bool
+=item null => $bool
 
 Kolumne ist kein Pflichtfeld. Diese explizite Setzung wird bei
 MySQL gebraucht, wenn ein TIMESTAMP-Feld nicht
 '0000-00-00 00:00:00' als Defaultwert erhalten soll.
 
-=item notNull=>$bool
+=item notNull => $bool
 
 Kolumne ist Pflichtfeld.
 
-=item autoIncrement=>$bool
+=item autoIncrement => $bool
 
 Das DBMS erzeugt beim Einfügen eines Datensatzes einen
 eindeutigen Wert (SQLite und MySQL).
 
-=item primaryKey=>$bool
+=item primaryKey => $bool
 
 Kolumne ist Primärschlüsselkolumne.
 
-=item type=>$type
+=item type => $type
 
 Portabler Kolumnentyp.
 
-=item oracleType=>$oracleType
+=item oracleType => $oracleType
 
 Kolumnentyp für Oracle.
 
-=item postgresqlType=>$postgresqlType
+=item postgresqlType => $postgresqlType
 
 Kolumnentyp für PostgreSQL.
 
-=item sqliteType=>$sqliteType
+=item sqliteType => $sqliteType
 
 Kolumnentyp für SQLite.
 
-=item mysqlType=>$mysqlType
+=item mysqlType => $mysqlType
 
 Kolumnentyp für MySQL.
 
@@ -489,7 +489,7 @@ für das DBMS angegeben ist:
 
     $sql = Quiq::Sql->new('Oracle');
     $type = $sql->columnDef(
-        type=>'STRING(20)',
+        type => 'STRING(20)',
     );
     ==>
     'VARCHAR2(20)'
@@ -500,8 +500,8 @@ DBMS-Typ wird verwendet, wenn angegeben:
 
     $sql = Quiq::Sql->new('Oracle');
     $type = $sql->columnDef(
-        type=>'INTEGER(5)',
-        oracleType=>'NUMBER(5)',
+        type => 'INTEGER(5)',
+        oracleType => 'NUMBER(5)',
     );
     ==>
     'NUMBER(5)'
@@ -808,37 +808,37 @@ Folgende Kolumnen-Optionen sind definiert:
 
 =over 4
 
-=item notNull=>$bool
+=item notNull => $bool
 
 Kolumne ist Pflichtfeld.
 
-=item autoIncrement=>$bool
+=item autoIncrement => $bool
 
 Das DBMS erzeugt beim Einfügen eines Datensatzes einen
 eindeutigen Wert (nicht Oracle und PostgreSQL, diese
 haben das Konzept der Sequenz).
 
-=item primaryKey=>$bool
+=item primaryKey => $bool
 
 Kolumne ist Primärschlüsselkolumne.
 
-=item type=>$type
+=item type => $type
 
 Portabler Kolumnentyp.
 
-=item oracleType=>$oracleType
+=item oracleType => $oracleType
 
 Kolumnentyp für Oracle.
 
-=item postgresqlType=>$postgresqlType
+=item postgresqlType => $postgresqlType
 
 Kolumnentyp für PostgreSQL.
 
-=item sqliteType=>$sqliteType
+=item sqliteType => $sqliteType
 
 Kolumnentyp für SQLite.
 
-=item mysqlType=>$mysqlType
+=item mysqlType => $mysqlType
 
 Kolumnentyp für MySQL.
 
@@ -1492,7 +1492,7 @@ B<PostgreSQL>
     $stmt = $sql->createTrigger($table,$name,$when,$event,$level,
         $body,@opt);
     $stmt = $sql->createTrigger($table,$name,$when,$event,$level,
-        -execute=>$proc,@opt);
+        -execute => $proc,@opt);
 
 =head4 Options
 
@@ -1518,7 +1518,7 @@ B<Oracle>
         'before',
         'insert|update',
         'row',
-        -replace=>1,'
+        -replace => 1,'
         <body>
         '
     );
@@ -1545,7 +1545,7 @@ B<PostgreSQL>
         'before',
         'insert|update',
         'row',
-        -execute=>'<proc>',
+        -execute => '<proc>',
     );
     
     CREATE TRIGGER <name>
@@ -1913,9 +1913,9 @@ SELECT mit Statement-Muster
     __SQL__
     
     $stmt = $sql->select(
-        -stmt=>$select,
-        -select=>qw/sta_id sta_name par_id par_name/,
-        -orderBy=>qw/sta_name par_name/,
+        -stmt => $select,
+        -select => qw/sta_id sta_name par_id par_name/,
+        -orderBy => qw/sta_name par_name/,
     );
     =>
     SELECT
@@ -1968,10 +1968,10 @@ Werte leer, wird ein Null-Statement (Leerstring) geliefert.
 Normales INSERT, Schlüssel/Wert-Paare
 
     $stmt = $sql->insert('person',
-        per_id=>10,
-        per_vorname=>'Hanno',
-        per_nachname=>'Seitz',
-        per_geburtstag=>undef,
+        per_id => 10,
+        per_vorname => 'Hanno',
+        per_nachname => 'Seitz',
+        per_geburtstag => undef,
     );
     
     =>
@@ -2017,8 +2017,8 @@ Normales Insert, Schlüssel und Werte als getrennte Listen
 INSERT mit berechnetem Kolumnenwert
 
     $stmt = $sql->insert('objekt',
-        obj_id=>4711,
-        obj_letzteaenderung=>\'SYSDATE',
+        obj_id => 4711,
+        obj_letzteaenderung => \'SYSDATE',
     );
     
     =>
@@ -2045,10 +2045,10 @@ Null-Statements
     ''
     
     $stmt = $sql->insert('person',
-        per_id=>'',
-        per_vorname=>'',
-        per_nachname=>'',
-        per_geburtstag=>'',
+        per_id => '',
+        per_vorname => '',
+        per_nachname => '',
+        per_geburtstag => '',
     );
     
     =>
@@ -2060,10 +2060,10 @@ Null-Statements
 INSERT mit Platzhaltern
 
     $stmt = $sql->insert('person',
-        per_id=>\'?',
-        per_vorname=>\'?',
-        per_nachname=>\'?',
-        per_geburtstag=>\'?',
+        per_id => \'?',
+        per_vorname => \'?',
+        per_nachname => \'?',
+        per_geburtstag => \'?',
     );
     
     INSERT INTO person
@@ -2092,8 +2092,8 @@ INSERT mit Platzhaltern
 =head4 Example
 
     $stmt = $sql->update('person',
-        per_geburtstag=>'7.4.2000',
-        -where,per_id=>4711,
+        per_geburtstag => '7.4.2000',
+        -where,per_id => 4711,
     );
 
 =head3 delete() - Generiere DELETE Statement
@@ -2552,7 +2552,7 @@ Liefere NOT EXISTS Klausel.
             \'CASE %C WHEN 9685 THEN 24 WHEN 9684 THEN 26 WHEN 9687 THEN 28 END',
         ],
         't.product_ticket_type'=>'LOTTERY_CLUB_TICKET',
-        -limit=>100,
+        -limit => 100,
     );
 
 =head1 VERSION

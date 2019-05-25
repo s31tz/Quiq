@@ -171,8 +171,8 @@ sub new {
         if ($hash{$n}) {
             $class->throw(
                 'TIMELAPSE-00002: Duplicate image number',
-                Number=>$n,
-                File=>$img->path,
+                Number => $n,
+                File => $img->path,
             );
         }
         $hash{$n} = $img;
@@ -181,10 +181,10 @@ sub new {
     # Sequenz-Objekt instantiieren
 
     return $class->SUPER::new(
-        dir=>$dir,
-        imageA=>\@images,
-        imageH=>\%hash,
-        rangeDef=>Quiq::TimeLapse::RangeDef->new($dir),
+        dir => $dir,
+        imageA => \@images,
+        imageH => \%hash,
+        rangeDef => Quiq::TimeLapse::RangeDef->new($dir),
     );
 }
 
@@ -446,7 +446,7 @@ sub resolveFunctionExpression {
     else {
         $self->throw(
             'TIMELAPSE-00001: Unknown function',
-            Function=>$func,
+            Function => $func,
         );
     }
 
@@ -547,8 +547,8 @@ sub resolveIdentifier {
     else {
         $self->throw(
             'TIMELAPSE-00001: Unknown identifier',
-            Key=>$key,
-            Directory=>$self->dir,
+            Key => $key,
+            Directory => $self->dir,
         );
     }
 
@@ -690,7 +690,7 @@ sub image {
     if ($n !~ /^\d+$/) {
         $self->throw(
             'TIMELAPSE-00001: Not an integer',
-            Key=>!defined $n? 'undef': $n eq ''? "''": $n,
+            Key => !defined $n? 'undef': $n eq ''? "''": $n,
         );
     }
 
@@ -770,10 +770,10 @@ sub importImages {
     my $verbose = 1;
     
     Quiq::Option->extract(\@_,
-        -reorganize=>\$reorganize,
-        -sort=>\$sort,
-        -subdir=>\$subDir,
-        -verbose=>\$verbose,
+        -reorganize => \$reorganize,
+        -sort => \$sort,
+        -subdir => \$subDir,
+        -verbose => \$verbose,
     );
 
     # Operation ausführen
@@ -781,8 +781,8 @@ sub importImages {
     my $tdr = $class->new($dir);
         
     my @images = Quiq::Image->findImages(
-        -sort=>$sort,
-        -object=>'Quiq::File::Image',
+        -sort => $sort,
+        -object => 'Quiq::File::Image',
         $srcDir,
     );
 
@@ -795,7 +795,7 @@ sub importImages {
         if ($subDir =~ m|^/|) {
             $class->throw(
                 'TIMEPAPSE-00001: Path of subdir must be relative',
-                Subdir=>$subDir,
+                Subdir => $subDir,
             );
         }
 
@@ -813,7 +813,7 @@ sub importImages {
     my $mode = 'copy';
     
     my $pro = Quiq::Progress->new(scalar(@images),
-        -show=>$verbose,
+        -show => $verbose,
     );
     my $i = 0;
     for my $img (@images) {
@@ -823,7 +823,7 @@ sub importImages {
             $img->height,$img->type,-name=>$img->basename);
         print $pro->msg($i,'%s: i/n x% t/t(t) x/s: %s',$mode,$destFile);
         Quiq::Path->duplicate($mode,$img->path,$destFile,
-            -preserve=>1,
+            -preserve => 1,
         );
     }
     print $pro->msg;
@@ -899,7 +899,7 @@ sub reorganize {
     my $dryRun = 0;
     
     Quiq::Option->extract(\@_,
-        -dryRun=>\$dryRun,
+        -dryRun => \$dryRun,
     );
 
     my $subDirSize = 500;

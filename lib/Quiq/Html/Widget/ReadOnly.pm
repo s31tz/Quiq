@@ -79,14 +79,14 @@ sub new {
     # Defaultwerte
 
     my $self = $class->SUPER::new(
-        class=>undef,
-        disabled=>0,
-        hidden=>0,
-        id=>undef,
-        name=>undef,
-        style=>undef,
-        text=>undef,
-        value=>undef,
+        class => undef,
+        disabled => 0,
+        hidden => 0,
+        id => undef,
+        name => undef,
+        style => undef,
+        text => undef,
+        value => undef,
     );
 
     # Werte Konstruktoraufruf
@@ -133,11 +133,11 @@ sub html {
     return '' if !$name;
 
     my $str = $h->tag('input',
-        -nl=>0,
-        type=>'hidden',
-        name=>$name,
-        disabled=>$disabled,
-        value=>$value,
+        -nl => 0,
+        type => 'hidden',
+        name => $name,
+        disabled => $disabled,
+        value => $value,
     );
     $str .= $text;
 
@@ -145,9 +145,9 @@ sub html {
 
     if ($id || $class || $style) {
         $str = $h->tag('span',
-            id=>$id,
-            class=>$class,
-            style=>$style,
+            id => $id,
+            class => $class,
+            style => $style,
             '-',
             $str
         );

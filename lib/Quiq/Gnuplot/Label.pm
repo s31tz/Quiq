@@ -43,10 +43,10 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-        at=>[], # [$x,$y]
-        text=>undef,
-        textColor=>undef,
-        font=>undef,
+        at => [], # [$x,$y]
+        text => undef,
+        textColor => undef,
+        font => undef,
     );
     $self->set(@_);
     

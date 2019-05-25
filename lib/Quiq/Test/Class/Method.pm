@@ -156,8 +156,8 @@ sub name {
         }
         $self->throw(
             'TEST-00001: Test-Subroutine nicht gefunden',
-            Package=>$pkg,
-            Reference=>$ref,
+            Package => $pkg,
+            Reference => $ref,
         );
     }
 

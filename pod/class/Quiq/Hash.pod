@@ -741,22 +741,22 @@ Das Benchmark-Programm (bench-hash):
     
     my $i = 0;
     Benchmark::cmpthese(-10,{
-        A=>sub {
+        A => sub {
             $h1->{$i++%5};
         },
-        B=>sub {
+        B => sub {
             eval{$h1->{$i++%5}};
         },
-        C=>sub {
+        C => sub {
             $h2->{$i++%5};
         },
-        D=>sub {
+        D => sub {
             eval{$h2->{$i++%5}};
         },
-        E=>sub {
+        E => sub {
             $h3->{$i++%5};
         },
-        F=>sub {
+        F => sub {
             $h3->get($i++%5);
         },
     });

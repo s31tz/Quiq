@@ -95,8 +95,8 @@ Tabellen:
 Programm:
 
     my $mod = Quiq::ModelCache->new($db,
-        [person=>'per'],
-        [telefon=>'tel'],
+        [person => 'per'],
+        [telefon => 'tel'],
     );
     
     for my $per ($mod->all('person')) {

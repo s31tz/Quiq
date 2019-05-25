@@ -42,10 +42,10 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-        title=>undef,
-        with=>undef,
-        style=>undef,
-        data=>[],
+        title => undef,
+        with => undef,
+        style => undef,
+        data => [],
     );
     $self->set(@_);
     

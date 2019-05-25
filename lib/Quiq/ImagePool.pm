@@ -54,8 +54,8 @@ sub new {
     # Objekt instantiieren
 
     return $class->SUPER::new(
-        root=>$path,
-        directoryH=>{},
+        root => $path,
+        directoryH => {},
     );
 }
 
@@ -243,7 +243,7 @@ sub images {
     my $count = 0;
 
     Quiq::Option->extract(\@_,
-        -count=>\$count,
+        -count => \$count,
     );
 
     my @images;

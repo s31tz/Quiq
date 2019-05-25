@@ -60,7 +60,7 @@ dieses Objekt zurück.
 Generiere POD mit Einrückung 2:
 
     $pg = Quiq::Pod::Generator->new(
-        indentation=>2,
+        indentation => 2,
     );
 
 =cut
@@ -72,7 +72,7 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-        indentation=>4,
+        indentation => 4,
     );
     $self->set(@_);
 

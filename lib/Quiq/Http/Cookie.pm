@@ -126,12 +126,12 @@ sub new {
     # @_: @options
 
     my $self = $class->SUPER::new(
-        name=>$name,
-        value=>$value,
-        domain=>undef,
-        path=>undef,
-        expires=>undef,
-        secure=>0,
+        name => $name,
+        value => $value,
+        domain => undef,
+        path => undef,
+        expires => undef,
+        secure => 0,
     );
     $self->set(@_);
 

@@ -51,9 +51,9 @@ Siehe quiq-http-client
 =head2 POST-Request
 
     my $sMsg = Quiq::Http::Message->new(
-        contentType=>'text/plain',
-        contentLength=>-1,
-        body=>'Dies ist ein Test',
+        contentType => 'text/plain',
+        contentLength => -1,
+        body => 'Dies ist ein Test',
     );
     my $rMsg = Quiq::Http::Client->put($url,$sMsg);
     print $rMsg->asString;
@@ -125,8 +125,8 @@ sub sendReceive {
 
     if (@_) {
         Quiq::Option->extract([@_],
-            -debug=>\$debug,
-            -redirect=>\$redirect,
+            -debug => \$debug,
+            -redirect => \$redirect,
         );
     }
 
@@ -153,9 +153,9 @@ sub sendReceive {
 
     my $ua = 
     $sMsg->set(
-        host=>$hostPort,
-        userAgent=>'Perl HTTP Client',
-        connection=>'close',
+        host => $hostPort,
+        userAgent => 'Perl HTTP Client',
+        connection => 'close',
     );
 
     if ($user) {

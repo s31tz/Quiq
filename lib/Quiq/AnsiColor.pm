@@ -102,8 +102,8 @@ AnsiColor-Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere dieses zurück. Durch
-den Parameter $bool kann zwischen einer Ausgabe mit oder ohne
-ANSI Colorcodes umgeschaltet werden.
+den Parameter $bool wird entschieden, ob die Ausgabe mit oder ohne
+ANSI Colorcodes erfolgt.
 
 =cut
 

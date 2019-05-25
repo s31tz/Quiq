@@ -230,28 +230,28 @@ Subroutine liefert Platzhalter-Wert:
 
     my $tpl = Quiq::Template->new('xml',\$Order);
     $tpl->replace(
-        __CUSTNR__=>$kundenNr,
-        __LIEFERNAME__=>$vor->{'liefername'},
-        __LIEFERSTRASSE__=>$lieferstrasse,
-        __LIEFERHAUSNR__=>$lieferhausnr,
-        __LIEFERPLZ__=>$vor->{'lieferplz'},
-        __LIEFERORT__=>$vor->{'lieferort'},
-        __LIEFERLAND_ISO__=>$vor->{'lieferland_iso'},
-        __BESTELLDATUM__=>POSIX::strftime('%Y-%m',localtime),
-        __BESTELLNUMMER__=>$vor->{'vorgang_bestellnummer'},
-        __WAEHRUNG__=>$waehrung,
-        __ENVIRONMENT__=>$test? 'T': 'L',
-        __ORDERLINES__=>sub {
+        __CUSTNR__ => $kundenNr,
+        __LIEFERNAME__ => $vor->{'liefername'},
+        __LIEFERSTRASSE__ => $lieferstrasse,
+        __LIEFERHAUSNR__ => $lieferhausnr,
+        __LIEFERPLZ__ => $vor->{'lieferplz'},
+        __LIEFERORT__ => $vor->{'lieferort'},
+        __LIEFERLAND_ISO__ => $vor->{'lieferland_iso'},
+        __BESTELLDATUM__ => POSIX::strftime('%Y-%m',localtime),
+        __BESTELLNUMMER__ => $vor->{'vorgang_bestellnummer'},
+        __WAEHRUNG__ => $waehrung,
+        __ENVIRONMENT__ => $test? 'T': 'L',
+        __ORDERLINES__ => sub {
             my @arr;
             my $i = 0;
             for my $pos (@$posA) {
                 my $tpl = Quiq::Template->new('xml',\$OrderLine);
                 $tpl->replace(
-                    __I__=>$i++,
-                    __LIEFERNR__=>$pos->{'posten_liefernr'},
-                    __ARTBE__=>$pos->{'posten_artbe'},
-                    __ANZAHL__=>$pos->{'posten_anzahl'},
-                    __EPREIS__=>$pos->{'posten_epreis'},
+                    __I__ => $i++,
+                    __LIEFERNR__ => $pos->{'posten_liefernr'},
+                    __ARTBE__ => $pos->{'posten_artbe'},
+                    __ANZAHL__ => $pos->{'posten_anzahl'},
+                    __EPREIS__ => $pos->{'posten_epreis'},
                 );
                 push @arr,$tpl;
             }
@@ -363,8 +363,8 @@ sub replace {
  
             $self->throw(
                 'TMPL-00001: Platzhalter existiert nicht',
-                # Template=>$str,
-                Placeholder=>$key,
+                # Template => $str,
+                Placeholder => $key,
             );
         }
     }

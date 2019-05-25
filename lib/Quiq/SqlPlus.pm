@@ -205,13 +205,13 @@ sub script {
     my $help = 0;
 
     Quiq::Option->extract(\@_,
-        -author=>\$author,
-        -description=>\$description,
-        -commit=>\$commit,
-        -before=>\$before,
-        -beforeAndAfter=>\$beforeAndAfter,
-        -after=>\$after,
-        -help=>\$help,
+        -author => \$author,
+        -description => \$description,
+        -commit => \$commit,
+        -before => \$before,
+        -beforeAndAfter => \$beforeAndAfter,
+        -after => \$after,
+        -help => \$help,
     );
 
     my $template = Quiq::Unindent->string(q|

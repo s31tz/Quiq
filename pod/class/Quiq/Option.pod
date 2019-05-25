@@ -96,8 +96,8 @@ Instantiierung eines Options-Objekts:
         # @_: @args
     
         my $opt = Quiq::Option->extract(\@_,
-            -logLevel=>1,
-            -verbose=>0,
+            -logLevel => 1,
+            -verbose => 0,
         );
         ...
     
@@ -124,8 +124,8 @@ Setzen von Options-Variablen:
         my $verbose = 0;
     
         Quiq::Option->extract(\@_,
-            -logLevel=>\$logLevel,
-            -verbose=>\$verbose,
+            -logLevel => \$logLevel,
+            -verbose => \$verbose,
         );
         ...
     
@@ -212,10 +212,10 @@ Für das Hinzufügen einer Default-Option, siehe Beispiel.
     unshift @_,'-select'; # Default-Option
     
     Quiq::Option->extractMulti(\@_,
-        -select=>\@select,
-        -from=>\@from,
-        -where=>\@where,
-        -limit=>\$limit,
+        -select => \@select,
+        -from => \@from,
+        -where => \@where,
+        -limit => \$limit,
     );
     
     unless (@from) {

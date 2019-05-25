@@ -50,8 +50,8 @@ sub new {
     $fh->autoFlush;
 
     my $self = $class->SUPER::new(
-        debug=>0,
-        fh=>$fh,
+        debug => 0,
+        fh => $fh,
     );
     $self->set(@_);
     

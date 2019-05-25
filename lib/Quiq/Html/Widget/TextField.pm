@@ -91,17 +91,17 @@ sub new {
     # Defaultwerte
 
     my $self = $class->SUPER::new(
-        class=>undef,
-        disabled=>0,
-        hidden=>0,
-        id=>undef,
-        maxLength=>undef,
-        name=>undef,
-        onKeyUp=>undef,
-        size=>undef,
-        style=>undef,
-        title=>undef,
-        value=>undef,
+        class => undef,
+        disabled => 0,
+        hidden => 0,
+        id => undef,
+        maxLength => undef,
+        name => undef,
+        onKeyUp => undef,
+        size => undef,
+        style => undef,
+        title => undef,
+        value => undef,
     );
 
     # Werte Konstruktoraufruf
@@ -148,17 +148,17 @@ sub html {
     # Generierung
 
     return $h->tag('input',
-        type=>'text',
-        id=>$id,
-        class=>$class,
-        style=>$style,
-        name=>$name,
-        disabled=>$disabled,
-        onkeyup=>$onKeyUp,
-        size=>$size,
-        maxlength=>$maxLength,
-        value=>$value,
-        title=>$title,
+        type => 'text',
+        id => $id,
+        class => $class,
+        style => $style,
+        name => $name,
+        disabled => $disabled,
+        onkeyup => $onKeyUp,
+        size => $size,
+        maxlength => $maxLength,
+        value => $value,
+        title => $title,
     );    
 }
 

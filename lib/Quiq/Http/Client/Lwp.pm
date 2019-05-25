@@ -82,11 +82,11 @@ sub get {
 
     if (@_) {
         Quiq::Option->extract(\@_,
-            -debug=>\$debug,
-            -header=>\$header,
-            -redirect=>\$redirect,
-            -sloppy=>\$sloppy,
-            -timeout=>\$timeout,
+            -debug => \$debug,
+            -header => \$header,
+            -redirect => \$redirect,
+            -sloppy => \$sloppy,
+            -timeout => \$timeout,
         );
     }
 
@@ -105,8 +105,8 @@ sub get {
     if ($res->is_error && !$sloppy) {
         $class->throw(
             'HTTP-00001: GET Request failed',
-            Url=>$url,
-            StatusLine=>$res->status_line,
+            Url => $url,
+            StatusLine => $res->status_line,
         );
     }
 

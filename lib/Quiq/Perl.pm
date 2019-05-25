@@ -115,7 +115,7 @@ sub binmode {
     if (!defined $r) {
         $class->throw(
             'FH-00012: binmode fehlgeschlagen',
-            Errstr=>$!,
+            Errstr => $!,
         );
     }
 
@@ -161,7 +161,7 @@ sub print {
     unless (CORE::print $fh @_) {
         $class->throw(
             'PERL-00002: print fehlgeschlagen',
-            Errstr=>$!,
+            Errstr => $!,
         );
     }
 
@@ -202,8 +202,8 @@ sub use {
         $@ =~ s/ at .*//s; # unnütze/störende Information abschneiden
         $class->throw(
             'PERL-00001: use fehlgeschlagen',
-            Class=>$useClass,
-            Error=>$@,
+            Class => $useClass,
+            Error => $@,
         );
     }
 
@@ -252,17 +252,17 @@ sub perlDoFile {
     if ($@) {
         Quiq::Object->throw(
             'PERL-00001: Datei kann nicht von do() geparst werden',
-            File=>$file,
-            Cwd=>Cwd::getcwd,
-            InternalError=>$@,
+            File => $file,
+            Cwd => Cwd::getcwd,
+            InternalError => $@,
         );
     }
     elsif (@arr == 1 && !defined $arr[0]) {
         Quiq::Object->throw(
             'PERL-00002: Dateiladen per do() fehlgeschlagen',
-            File=>$file,
-            Cwd=>Cwd::getcwd,
-            Error=>$!,
+            File => $file,
+            Cwd => Cwd::getcwd,
+            Error => $!,
         );
     }
 
@@ -297,7 +297,7 @@ sub sigilToType {
 
     $this->throw(
         'PERL-00001: Ungültiger Sigil',
-        Sigil=>$sigil,
+        Sigil => $sigil,
     );
 }
 
@@ -471,8 +471,8 @@ sub createClass {
         if ($@) {
             $class->throw(
                 'PERL-00003: Klasse erzeugen fehlgeschlagen',
-                Code=>$code,
-                Error=>$@,
+                Code => $code,
+                Error => $@,
             );
         }
     }
@@ -979,7 +979,7 @@ sub getHash {
     if (!$ref) {
         $this->throw(
             'PERL-00001: Hash existiert nicht',
-            Error=>$@,
+            Error => $@,
         );
     }
 
@@ -1095,7 +1095,7 @@ sub getArray {
     if (!$ref) {
         $this->throw(
             'PERL-00001: Array existiert nicht',
-            Error=>$@,
+            Error => $@,
         );
     }
 
@@ -1371,7 +1371,7 @@ sub getVar {
     my $create = 0;
     if (@_) {
         Quiq::Option->extract(\@_,
-            -create=>\$create,
+            -create => \$create,
         );
     }
 

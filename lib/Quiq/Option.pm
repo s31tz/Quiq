@@ -111,8 +111,8 @@ Instantiierung eines Options-Objekts:
         # @_: @args
     
         my $opt = Quiq::Option->extract(\@_,
-            -logLevel=>1,
-            -verbose=>0,
+            -logLevel => 1,
+            -verbose => 0,
         );
         ...
     
@@ -139,8 +139,8 @@ Setzen von Options-Variablen:
         my $verbose = 0;
     
         Quiq::Option->extract(\@_,
-            -logLevel=>\$logLevel,
-            -verbose=>\$verbose,
+            -logLevel => \$logLevel,
+            -verbose => \$verbose,
         );
         ...
     
@@ -211,7 +211,7 @@ sub extract {
             }
             $class->throw(
                 'OPT-00002: Ungültige Methodenoption',
-                Option=>$key,
+                Option => $key,
             );
         }
     }
@@ -304,7 +304,7 @@ sub extract {
             }
             $class->throw(
                 'OPT-00001: Ungültige Option',
-                Option=>"$dashPrefix$key",
+                Option => "$dashPrefix$key",
             );
         };
 
@@ -410,10 +410,10 @@ Für das Hinzufügen einer Default-Option, siehe Beispiel.
     unshift @_,'-select'; # Default-Option
     
     Quiq::Option->extractMulti(\@_,
-        -select=>\@select,
-        -from=>\@from,
-        -where=>\@where,
-        -limit=>\$limit,
+        -select => \@select,
+        -from => \@from,
+        -where => \@where,
+        -limit => \$limit,
     );
     
     unless (@from) {
@@ -443,7 +443,7 @@ sub extractMulti {
         else {
             $this->throw(
                 'OPT-00004: Ungültige Option',
-                Option=>$key,
+                Option => $key,
             );
         }
     }
@@ -463,7 +463,7 @@ sub extractMulti {
             if (!defined $refType) {
                 $this->throw(
                     'OPT-00002: Ungültige Variablen-Referenz',
-                    Option=>$arg,
+                    Option => $arg,
                 );
             }
             splice @$arr,$i--,1;
@@ -476,7 +476,7 @@ sub extractMulti {
             if (!$sloppy) {
                 $this->throw(
                     'OPT-00001: Ungültige Option',
-                    Option=>$arg);
+                    Option => $arg);
             }
             $ref = undef;
             next;

@@ -69,9 +69,9 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-        class=>undef,
-        cssPrefix=>undef,
-        id=>undef,
+        class => undef,
+        cssPrefix => undef,
+        id => undef,
     );
     $self->unlockKeys;
     $self->set(@_); # Wir dürfen die Attribute beliebig erweitern

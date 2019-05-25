@@ -48,18 +48,18 @@ L<Tabs Widget Beispiele|http://jqueryui.com/tabs/>
 Perl:
 
     $html = Quiq::JQuery::Tabs->html($h,
-        id=>'tabs',
-        tabs=>[
+        id => 'tabs',
+        tabs => [
             {
-                label=>'A',
-                link=>'#a',
-                content=>$h->tag('p',
-                    -text=>1,
+                label => 'A',
+                link => '#a',
+                content => $h->tag('p',
+                    -text => 1,
                     'Text des Reiters A',
                 ),
             },{
-                label=>'B',
-                link=>'b',
+                label => 'B',
+                link => 'b',
             },
         ],
     );

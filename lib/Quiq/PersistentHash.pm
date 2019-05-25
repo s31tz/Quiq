@@ -72,7 +72,7 @@ sub new {
     else {
         $class->throw(
             'BDB-00001: Unbekannter Mode',
-            Mode=>$mode,
+            Mode => $mode,
         );
     }
 
@@ -82,9 +82,9 @@ sub new {
     unless ($ref) {
         $class->throw(
             'BDB-00001: Kann Persistenten Hash nicht öffnen',
-            File=>$file,
-            Mode=>$mode,
-            Errstr=>$!,
+            File => $file,
+            Mode => $mode,
+            Errstr => $!,
         );
     }
 
@@ -118,7 +118,7 @@ sub sync {
     if ($x->sync < 0) {
         $self->throw(
             'BDB-00003: Sync ist fehlgeschlagen',
-            Errstr=>$!,
+            Errstr => $!,
         );
     }
 

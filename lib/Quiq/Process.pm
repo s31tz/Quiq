@@ -72,8 +72,8 @@ sub cwd {
     CORE::chdir $dir or do {
         $this->throw(
             'PROC-00001: Cannot change directory',
-            Argument=>$dir,
-            CurrentWorkingDirectory=>Cwd::cwd,
+            Argument => $dir,
+            CurrentWorkingDirectory => Cwd::cwd,
         );
     };
 
@@ -129,10 +129,10 @@ sub euid {
     if ($> != $uid) {
         $this->throw(
             'PROC-00002: Cannot set EUID',
-            UID=>$<,
-            EUID=>$>,
-            NewEUID=>$uid,
-            Error=>"$!",
+            UID => $<,
+            EUID => $>,
+            NewEUID => $uid,
+            Error => "$!",
         );
     };
 

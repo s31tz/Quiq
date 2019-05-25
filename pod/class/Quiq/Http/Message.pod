@@ -29,8 +29,8 @@ als Basisklasse verwendet.
 =head2 Einfache HTTP-Nachricht
 
     my $msg = Quiq::Http::Message->new(
-        contentType=>'text/plain',
-        body=>"Hello world\n"
+        contentType => 'text/plain',
+        body => "Hello world\n"
     );
     print $msg->asString;
 
@@ -46,8 +46,8 @@ generiert auf STDOUT
     my $sock = Quiq::Socket->new($host,$port);
     
     my $msg = Quiq::Http::Message->new(
-        contentType=>'text/plain',
-        body=>"Hello world\n"
+        contentType => 'text/plain',
+        body => "Hello world\n"
     );
     
     print $sock $msg->asString;
@@ -157,18 +157,18 @@ Eigenschaften siehe L<new|"new() - Instantiiere ein HTTP Nachrichten-Objekt">().
 Ein HTTP-Request ohne Inhalt:
 
     $http->set(
-        host=>$host,
-        connection=>'close',
+        host => $host,
+        connection => 'close',
     );
 
 Eine HTTP-Response:
 
     $http->set(
-        contentType=>'text/html',
-        charset=>'utf-8',
-        setCookie=>[id=>4711],
-        setCookie=>[user=>'seitzf'],
-        body=>"Test\n",
+        contentType => 'text/html',
+        charset => 'utf-8',
+        setCookie => [id=>4711],
+        setCookie => [user=>'seitzf'],
+        body => "Test\n",
     );
 
 =head2 Kopfzeilen (Header)
@@ -357,8 +357,8 @@ Generiere Id und setze permanenten Cookie, der nach 5 Jahren abläuft:
 
     $id = Quiq::Converter->intToWord(time);
     $http->setCookie(
-        id=>$id,
-        expires=>'+5y',
+        id => $id,
+        expires => '+5y',
     );
 
 =head2 Rumpf (Body)

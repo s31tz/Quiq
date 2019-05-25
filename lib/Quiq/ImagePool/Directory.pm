@@ -51,9 +51,9 @@ sub new {
     my ($class,$path) = @_;
 
     return $class->SUPER::new(
-        path=>$path,
-        imageList=>Quiq::TimeLapse::Directory->new("$path/img"),
-        sequenceH=>{},
+        path => $path,
+        imageList => Quiq::TimeLapse::Directory->new("$path/img"),
+        sequenceH => {},
     );
 }
 

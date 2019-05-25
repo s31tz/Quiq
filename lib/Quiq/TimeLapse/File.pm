@@ -92,8 +92,8 @@ sub new {
 
     my $self = $class->SUPER::new($file);
     $self->add(
-        nam=>$nam,
-        rangeKey=>'',
+        nam => $nam,
+        rangeKey => '',
     );
 
     return $self;

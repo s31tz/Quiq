@@ -85,7 +85,7 @@ sub autoDecode {
         # Unerwarteter Fehler
         $class->throw(
             'PATH-00099: Zeichen-Dekodierung fehlgeschlagen',
-            Message=>$dec,
+            Message => $dec,
         );
     }
 
@@ -162,8 +162,8 @@ sub indent {
     my $strip = 0;
     if (@_) {
         Quiq::Option->extract(\@_,
-            -indentBlankLines=>\$indentBlankLines,
-            -strip=>\$strip,
+            -indentBlankLines => \$indentBlankLines,
+            -strip => \$strip,
         );
     }
 
@@ -277,8 +277,8 @@ sub reduceIndentation {
         if ($m < $n || $m%$n) {
             $class->throw(
                 'STRING-00001: Einrücktiefe kann nicht reduziert werden',
-                TextIndentation=>$m,
-                WantedIndentation=>$n,
+                TextIndentation => $m,
+                WantedIndentation => $n,
             );
         }
         elsif ($m > $n) {
@@ -402,7 +402,7 @@ sub removeIndentation {
 
     if (@_) {
         Quiq::Option->extract(\@_,
-            -addNL=>\$addNL,
+            -addNL => \$addNL,
         );
     } 
 
@@ -695,7 +695,7 @@ sub wrap {
     my $width = 70;
     if (@_) {
         Quiq::Option->extract(\@_,
-            -width=>\$width,
+            -width => \$width,
         );
     }
 

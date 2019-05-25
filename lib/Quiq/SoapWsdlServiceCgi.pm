@@ -197,12 +197,12 @@ sub run {
         # Generiere WSDL-Spezifikation und schreibe sie nach STDOUT
 
         my $wsdl = Pod::WSDL->new(
-            source=>$class, 
-            location=>$ENV{'SCRIPT_URI'} ||
+            source => $class, 
+            location => $ENV{'SCRIPT_URI'} ||
                 "$ENV{'REQUEST_SCHEME'}://$ENV{'SERVER_NAME'}".
                 "$ENV{'REQUEST_URI'}",
-            pretty=>1,
-            withDocumentation=>0,
+            pretty => 1,
+            withDocumentation => 0,
         );
         print "Content-Type: text/xml\n\n",$wsdl->WSDL;
     }

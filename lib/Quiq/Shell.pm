@@ -116,19 +116,19 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-        cmdPrefix=>'',
-        cmdAnsiColor=>undef, 
-        dryRun=>0,
-        dirStack=>[],
-        log=>0,
-        logDest=>*STDOUT,
-        logRewrite=>undef,
-        msgPrefix=>'',
-        quiet=>0,
-        time=>0,
-        timePrefix=>'',
-        timeSummary=>0,
-        t0=>Time::HiRes::gettimeofday,
+        cmdPrefix => '',
+        cmdAnsiColor => undef, 
+        dryRun => 0,
+        dirStack => [],
+        log => 0,
+        logDest => *STDOUT,
+        logRewrite => undef,
+        msgPrefix => '',
+        quiet => 0,
+        time => 0,
+        timePrefix => '',
+        timeSummary => 0,
+        t0 => Time::HiRes::gettimeofday,
     );
     $self->set(@_);
 
@@ -278,9 +278,9 @@ sub exec {
 
     if (@_) {
         Quiq::Option->extract(\@_,
-            -capture=>\$capture,
-            -quiet=>\$quiet,
-            -sloppy=>\$sloppy,
+            -capture => \$capture,
+            -quiet => \$quiet,
+            -sloppy => \$sloppy,
         );
     }
 
@@ -323,7 +323,7 @@ sub exec {
     else {
         $self->throw(
             'CMD-00004: Ungültiger Wert für -capture',
-            Capture=>$capture,
+            Capture => $capture,
         );
     }
 
@@ -525,8 +525,8 @@ sub checkError {
     elsif ($errCode == -1) {
         $this->throw(
             'CMD-00001: Kommando konnte nicht aufgerufen werden',
-            Command=>$cmd,
-            ErrorMessage=>$errMsg,
+            Command => $cmd,
+            ErrorMessage => $errMsg,
         );
     }
     elsif ($errCode & 127) {       # Abbruch mit Signal
@@ -534,18 +534,18 @@ sub checkError {
         my $core = $errCode & 128; # 8. Bit zeigt Coredump an
         $this->throw(
             'CMD-00003: Kommando wurde abgebrochen',
-            Signal=>$sig.($core? ' (Coredump)': ''),
-            Command=>$cmd,
-            ErrorMessage=>$errMsg,
+            Signal => $sig.($core? ' (Coredump)': ''),
+            Command => $cmd,
+            ErrorMessage => $errMsg,
         );
     }
     $errCode >>= 8;
     $this->throw(
         'CMD-00002: Kommando endete mit Fehler',
-        ExitCode=>$errCode,
-        Command=>$cmd,
-        Cwd=>Cwd::getcwd,
-        ErrorMessage=>$errMsg,
+        ExitCode => $errCode,
+        Command => $cmd,
+        Cwd => Cwd::getcwd,
+        ErrorMessage => $errMsg,
     );
 }
 

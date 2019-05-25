@@ -277,7 +277,7 @@ Existiert die Methode bereits, wird sie überschrieben.
 
 =head4 Example
 
-    MyClass->addMethod(myMethod=>sub {
+    MyClass->addMethod(myMethod => sub {
         my $self = shift;
         return 4711;
     });

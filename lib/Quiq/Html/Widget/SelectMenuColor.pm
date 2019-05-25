@@ -46,24 +46,24 @@ der Klasse Quiq::Color akzeptiert.
 Erzeuge Auswahlmenü mit farbigen Texten:
 
     $w = Quiq::Html::Widget::SelectMenuColor->new(
-        id=>'smc1',
-        name=>'smc1',
-        applyColorsTo=>'fg',
-        options=>[qw/Apfel Birne Orange/],
-        colors=>[qw/ff0000 006400 ff8c00/],
-        value=>'Birne',
+        id => 'smc1',
+        name => 'smc1',
+        applyColorsTo => 'fg',
+        options => [qw/Apfel Birne Orange/],
+        colors => [qw/ff0000 006400 ff8c00/],
+        value => 'Birne',
     );
     print $w->html($h);
 
 Erzeuge Auswahlmenü mit farbigen Hintergründen:
 
     $w = Quiq::Html::Widget::SelectMenuColor->new(
-        id=>'smc1',
-        name=>'smc1',
-        applyColorsTo=>'bg',
-        options=>[qw/Apfel Birne Orange/],
-        colors=>[qw/ff0000 006400 ff8c00/],
-        value=>'Birne',
+        id => 'smc1',
+        name => 'smc1',
+        applyColorsTo => 'bg',
+        options => [qw/Apfel Birne Orange/],
+        colors => [qw/ff0000 006400 ff8c00/],
+        value => 'Birne',
     );
     print $w->html($h);
 
@@ -89,8 +89,8 @@ sub new {
 
     my $self = $class->SUPER::new;
     $self->add(
-        applyColorsTo=>'fg', # 'bg' -or- 'fg'
-        colors=>[],
+        applyColorsTo => 'fg', # 'bg' -or- 'fg'
+        colors => [],
     );
 
     # Werte Konstruktoraufruf

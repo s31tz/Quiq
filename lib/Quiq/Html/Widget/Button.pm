@@ -90,17 +90,17 @@ sub new {
     # Defaultwerte
 
     my $self = $class->SUPER::new(
-        class=>undef,
-        content=>undef,
-        disabled=>0,
-        hidden=>0,
-        id=>undef,
-        name=>undef,
-        onClick=>undef,
-        style=>undef,
-        title=>undef,
-        type=>'button',
-        value=>undef,
+        class => undef,
+        content => undef,
+        disabled => 0,
+        hidden => 0,
+        id => undef,
+        name => undef,
+        onClick => undef,
+        style => undef,
+        title => undef,
+        type => 'button',
+        value => undef,
     );
     $self->set(@_);
 
@@ -139,14 +139,14 @@ sub html {
     }
 
     return $h->tag('button',
-        id=>$id,
-        name=>$name,
-        type=>$type,
-        class=>$class,
-        style=>$style,
-        value=>$value,
-        disabled=>$disabled,
-        onclick=>$onClick,
+        id => $id,
+        name => $name,
+        type => $type,
+        class => $class,
+        style => $style,
+        value => $value,
+        disabled => $disabled,
+        onclick => $onClick,
         $content || $value
     );
 }

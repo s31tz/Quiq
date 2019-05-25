@@ -90,7 +90,7 @@ sub new {
 
     my $sloppy = 0;
     Quiq::Option->extract(\@_,
-        -sloppy=>\$sloppy,
+        -sloppy => \$sloppy,
     );
 
     # Baue Verbindung auf
@@ -99,8 +99,8 @@ sub new {
     if (!$self && !$sloppy) {
         $class->throw(
             'SOCK-00001: Verbindungsaufbau fehlgeschlagen',
-            Host=>$host,
-            Port=>$port,
+            Host => $host,
+            Port => $port,
         );
     }
 

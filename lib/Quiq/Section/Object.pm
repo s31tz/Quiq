@@ -684,8 +684,8 @@ sub get {
         if (ref($val) && $key =~ /^[A-Z]/) {
             $self->throw(
                 'SECOBJ-00001: Schlüssel besitzt mehrere Werte',
-                Key=>$key,
-                Values=>'['.join(',',@$val).']',
+                Key => $key,
+                Values => '['.join(',',@$val).']',
             );
         }
         push @arr,$val;
@@ -787,11 +787,11 @@ sub getBool {
     else {
         $self->throw(
             'COTEDO-00001: Illegal attribute value. Only Yes/No allowed.',
-            Attribute=>$key,
-            Value=>$val,
-            File=>$self->file,
-            Line=>$self->line,
-            -stacktrace=>0,
+            Attribute => $key,
+            Value => $val,
+            File => $self->file,
+            Line => $self->line,
+            -stacktrace => 0,
         );
     }
 
@@ -836,10 +836,10 @@ sub getMandatory {
     if (!defined $val || $val eq '') { 
         $self->throw(
             'SECOBJ-00002: Attribute has no value',
-            Key=>$key,
-            File=>$self->file,
-            Line=>$self->line,
-            -stacktrace=>0,
+            Key => $key,
+            File => $self->file,
+            Line => $self->line,
+            -stacktrace => 0,
         );
     }
 
@@ -1069,10 +1069,10 @@ setze ihn auf den angegebenen Defaultwert.
 =head4 Example
 
     $sec->setDefault(
-        Width=>1000,
-        EntityMenuWidth=>345,
-        BorderWidth=>1,
-        PackageMenuHeight=>34,
+        Width => 1000,
+        EntityMenuWidth => 345,
+        BorderWidth => 1,
+        PackageMenuHeight => 34,
     );
 
 =cut
@@ -1249,11 +1249,11 @@ sub validate {
     if (!$contentAllowed && $self->[4] ne '' && $self->[4] ne '# eof') {
         $self->throw(
             'SECTION-00001: Inhalt ist nicht erlaubt',
-            Section=>$self->type,
-            Content=>$self->[4],
-            File=>$self->file,
-            Line=>$self->line,
-            -stacktrace=>0,
+            Section => $self->type,
+            Content => $self->[4],
+            File => $self->file,
+            Line => $self->line,
+            -stacktrace => 0,
         );
     }
 
@@ -1281,11 +1281,11 @@ sub validate {
 
         $self->throw(
             'SECTION-00001: Unknown section attributes',
-            Section=>$self->type,
-            Keys=>join(', ',@keys),
-            File=>$self->file,
-            Line=>$self->line,
-            -stacktrace=>0,
+            Section => $self->type,
+            Keys => join(', ',@keys),
+            File => $self->file,
+            Line => $self->line,
+            -stacktrace => 0,
         );
     }
 
@@ -1356,9 +1356,9 @@ sub error {
     $self->throw(
         $msg,
         @_,
-        File=>$self->file,
-        Line=>$self->line,
-        -stacktrace=>0,
+        File => $self->file,
+        Line => $self->line,
+        -stacktrace => 0,
     );
 }
 
@@ -1395,7 +1395,7 @@ sub AUTOLOAD {
     if (!ref $this) {
         $this->throw(
             'HASH-00002: Klassen-Methode existiert nicht',
-            Method=>$key,
+            Method => $key,
         );
     }
 
@@ -1404,8 +1404,8 @@ sub AUTOLOAD {
     if (!exists $this->[3]->{$key}) {
         $this->throw(
             'HASH-00001: Schlüssel existiert nicht',
-            Attribute=>$key,
-            Class=>ref($this)? ref($this): $this,
+            Attribute => $key,
+            Class => ref($this)? ref($this): $this,
         );
     }
 

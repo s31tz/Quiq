@@ -59,7 +59,7 @@ sub new {
     my $class = shift;
 
     return $class->SUPER::new(
-        cmd=>'',
+        cmd => '',
     );
 }
     

@@ -75,32 +75,32 @@ Liste der Widgets, die in das Layout eingesetzt werden.
 Der Code
 
     Quiq::Html::Form::Layout->html($h,
-        layout=>Quiq::Html::Table::Simple->html($h,
-            class=>'form',
-            rows=>[
+        layout => Quiq::Html::Table::Simple->html($h,
+            class => 'form',
+            rows => [
                 [['Vorname:'],['__VORNAME__']],
                 [['Nachname:'],['__NACHNAME__']],
                 [[''],['__AKTION__']],
             ],
         ),
-        widgets=>[
+        widgets => [
             Quiq::Html::Widget::Hidden->new(
-                name=>'id',
-                value=>'4711',
+                name => 'id',
+                value => '4711',
             ),
             Quiq::Html::Widget::TextField->new(
-                name=>'vorname',
-                value=>'Lieschen',
+                name => 'vorname',
+                value => 'Lieschen',
             ),
             Quiq::Html::Widget::TextField->new(
-                name=>'nachname',
-                value=>'Müller',
+                name => 'nachname',
+                value => 'Müller',
             ),
             Quiq::Html::Widget::Button->new(
-                id=>'speichern',
-                name=>'aktion',
-                value=>'speichern',
-                content=>'Speichern',
+                id => 'speichern',
+                name => 'aktion',
+                value => 'speichern',
+                content => 'Speichern',
             ),
         ],
     );

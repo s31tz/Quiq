@@ -72,7 +72,7 @@ sub filter {
     my $ignoreError = 0;
 
     Quiq::Option->extract(\@_,
-        -ignoreError=>\$ignoreError,
+        -ignoreError => \$ignoreError,
     );
     my $in = shift;
 
@@ -81,7 +81,7 @@ sub filter {
     unless ($pid) {
         $class->throw(
             'IPC-00001: Kann Filterkommando nicht forken',
-            Cmd=>$cmd,
+            Cmd => $cmd,
         );
     }
 

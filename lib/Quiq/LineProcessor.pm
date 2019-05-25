@@ -131,10 +131,10 @@ sub new {
 
     if (@_) {
         Quiq::Option->extract(\@_,
-            -encoding=>\$encoding,
-            -lineClass=>\$lineClass,
-            -lineContinuation=>\$lineContinuation,
-            -skip=>\$skip,
+            -encoding => \$encoding,
+            -lineClass => \$lineClass,
+            -lineContinuation => \$lineContinuation,
+            -skip => \$skip,
         );
     }
 
@@ -144,8 +144,8 @@ sub new {
     if ($@) {
         $class->throw(
             'TEXT-00001: Kann Zeilenklasse nicht laden',
-            LineClass=>$lineClass,
-            InternalError=>$@,
+            LineClass => $lineClass,
+            InternalError => $@,
         );
     }
 
@@ -199,7 +199,7 @@ sub new {
             else {
                 $class->throw(
                     'TEXT-00002: Ungüliger Wert für Option -lineContinuation',
-                    Value=>$lineContinuation,
+                    Value => $lineContinuation,
                 );
             }
         }
@@ -209,9 +209,9 @@ sub new {
     pop @lines while @lines && $lines[-1]->isEmpty;
 
     my $self = $class->SUPER::new(
-        input => $inputAsString, # Wir wollen die Bezeichnung
-        lineClass => $lineClass,
-        lineA => \@lines,
+        input  =>  $inputAsString, # Wir wollen die Bezeichnung
+        lineClass  =>  $lineClass,
+        lineA  =>  \@lines,
     );
 
     return $self;

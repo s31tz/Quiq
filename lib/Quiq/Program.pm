@@ -67,7 +67,7 @@ Optionen und Argumente:
 
     my ($error,$opt,$argA) = $self->options(
         ...
-        -help=>0,
+        -help => 0,
     );
     if ($error) {
         $self->help(10,"ERROR: $error");
@@ -577,8 +577,8 @@ sub options {
     }
 
     my $optH = eval{Quiq::Option->extract(
-        -simpleMessage=>1,
-        # -mode=>'sloppy',
+        -simpleMessage => 1,
+        # -mode => 'sloppy',
         $argA,
         @_
     )};
@@ -917,7 +917,7 @@ sub new {
         else {
             $class->throw(
                 'PROG-00001: Unbekannte Option',
-                Option=>$key,
+                Option => $key,
             );
         }
     }
@@ -932,11 +932,11 @@ sub new {
     # Objekt instantiieren
 
     return $class->SUPER::new(
-        encoding=>$encoding,
-        exitCode=>0,
-        logLevel=>0,
-        optH=>Quiq::Hash->new,
-        t0=>Time::HiRes::gettimeofday,
+        encoding => $encoding,
+        exitCode => 0,
+        logLevel => 0,
+        optH => Quiq::Hash->new,
+        t0 => Time::HiRes::gettimeofday,
     );
 }
 

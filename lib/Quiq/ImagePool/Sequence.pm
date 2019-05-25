@@ -81,9 +81,9 @@ sub new {
 
     my $oh = Quiq::OrderedHash->new;
     my $self = $class->SUPER::new(
-        file=>$file,
-        oHash=>$oh,
-        imageList=>$lst,
+        file => $file,
+        oHash => $oh,
+        imageList => $lst,
     );
 
     # Sequenz-Definitionen einlesen.
@@ -104,10 +104,10 @@ sub new {
             # Prüfe Dateiaufbau
             $self->throw(
                 'SEQ-00001: Falsche Kolumnen-Anzahl',
-                File=>$file,
-                Line=>$.,
-                MaxColumns=>3,
-                Columns=>scalar(@arr),
+                File => $file,
+                Line => $.,
+                MaxColumns => 3,
+                Columns => scalar(@arr),
             );
         }
         my $key = shift @arr;
@@ -203,8 +203,8 @@ sub def {
     my $arr = $self->oHash->get($key) || do {
         $self->throw(
             'IMGSET-00002: Schlüssel existiert nicht',
-            File=>$self->file,
-            Key=>$key,
+            File => $self->file,
+            Key => $key,
         );
     };
     return wantarray? @$arr: $arr;

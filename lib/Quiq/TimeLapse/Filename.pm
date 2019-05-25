@@ -162,7 +162,7 @@ sub new {
         # Einzelangaben
 
         Quiq::Option->extract(\@_,
-            -text=>\$text,
+            -text => \$text,
         );
         ($n,$width,$height,$ext) = @_;
     }
@@ -173,19 +173,19 @@ sub new {
     
         $class->throw(
             'SEQ-00001: Illegal image sequence filename',
-            number=>$n // 'undef',
-            width=>$width // 'undef',
-            height=>$height // 'undef',
-            extension=>$ext // 'undef',
+            number => $n // 'undef',
+            width => $width // 'undef',
+            height => $height // 'undef',
+            extension => $ext // 'undef',
         );
     }
     
     return $class->SUPER::new(
-        number=>$n,
-        width=>$width,
-        height=>$height,
-        text=>$text,
-        extension=>$ext,
+        number => $n,
+        width => $width,
+        height => $height,
+        text => $text,
+        extension => $ext,
     );
 }
 

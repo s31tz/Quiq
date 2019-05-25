@@ -253,8 +253,8 @@ sub new {
                 if ($clipH->exists($clip) || $rangeH->exists($clip)) {
                     $class->throw(
                         'TIMELAPSE-00003: Duplicate clip/range key',
-                        Key=>$clip,
-                        File=>$file,
+                        Key => $clip,
+                        File => $file,
                     );
                 }
 
@@ -264,10 +264,10 @@ sub new {
                 # Clip-Properties
 
                 my $h = Quiq::Hash->new(
-                    endFrames=>undef,
-                    framerate=>undef,
-                    pick=>undef,
-                    reverse=>undef,
+                    endFrames => undef,
+                    framerate => undef,
+                    pick => undef,
+                    reverse => undef,
                 );
                 if ($prop) {
                     $h->set(split /[=\s]/,$prop);
@@ -290,8 +290,8 @@ sub new {
                     if ($rangeH->exists($range) || $clipH->exists($range)) {
                         $class->throw(
                             'TIMELAPSE-00003: Duplicate range/clip key',
-                            Key=>$range,
-                            File=>$file,
+                            Key => $range,
+                            File => $file,
                         );
                     }
 
@@ -342,12 +342,12 @@ sub new {
     }
 
     return $class->SUPER::new(
-        dir=>$dir,
-        fileA=>\@files,
-        clipH=>$clipH,
-        clipPropertyH=>$clipPropertyH,
-        rangeH=>$rangeH,
-        junkExpr=>$junkExpr,
+        dir => $dir,
+        fileA => \@files,
+        clipH => $clipH,
+        clipPropertyH => $clipPropertyH,
+        rangeH => $rangeH,
+        junkExpr => $junkExpr,
     );
 }
 

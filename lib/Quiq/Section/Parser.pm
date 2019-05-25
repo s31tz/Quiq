@@ -144,16 +144,16 @@ sub new {
     # Objekt instantiieren
 
     my $self = $class->SUPER::new(
-        encoding=>undef,
-        defaultSection=>undef,
-        sectionRegex=>qr/^# (<\w+>|\[\w+\]|\(\w+\)|\{\w+\})/,
-        keyRegex=>qr/^(\w+):$/,
-        sourceNotNeeded=>0,
-        startLine=>"--BEGIN--\n",
-        parsedSections=>0,
-        parsedLines=>0,
-        parsedChars=>0,
-        parsedBytes=>0,
+        encoding => undef,
+        defaultSection => undef,
+        sectionRegex => qr/^# (<\w+>|\[\w+\]|\(\w+\)|\{\w+\})/,
+        keyRegex => qr/^(\w+):$/,
+        sourceNotNeeded => 0,
+        startLine => "--BEGIN--\n",
+        parsedSections => 0,
+        parsedLines => 0,
+        parsedChars => 0,
+        parsedBytes => 0,
     );
     $self->set(@_);
 
@@ -613,10 +613,10 @@ sub error {
     my ($self,$msg,$source,$file,$lineNumber) = @_;
 
     $self->throw($msg,
-        # Source=>$source,
+        # Source => $source,
         $msg !~ /^File:/m? (File=>$file): (),
         $msg !~ /^Line:/m? (Line=>$lineNumber): (),
-        -stacktrace=>0,
+        -stacktrace => 0,
     );
 }
 

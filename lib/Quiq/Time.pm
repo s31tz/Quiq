@@ -245,7 +245,7 @@ sub set {
         !defined $s || $s !~ /^\d+$/ || $s < 0 || $s > 60) {
         $self->throw(
             'TIME-00002: Ungültige Zeitangabe',
-            Time=>join(', ',@_),
+            Time => join(', ',@_),
         );
     }
 
@@ -253,8 +253,8 @@ sub set {
     if ($@) {
         $self->throw(
             'TIME-00002: Ungültige Zeitangabe',
-            Time=>join(',',@_),
-            InternalError=>$@,
+            Time => join(',',@_),
+            InternalError => $@,
         );
     }
 

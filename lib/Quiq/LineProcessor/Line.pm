@@ -374,7 +374,7 @@ sub dump {
 
     $self->throw(
         'LINE-00001: Ungültiges Ausgabeformat',
-        Format=>$format,
+        Format => $format,
     );
 }
 

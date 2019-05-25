@@ -105,8 +105,8 @@ sub findImages {
     my $sort = '';
 
     Quiq::Option->extract(-mode=>'sloppy',\@_,
-        -object=>\$object,
-        -sort=>\$sort,
+        -object => \$object,
+        -sort => \$sort,
     );
 
     my @arr;
@@ -317,8 +317,8 @@ sub type {
     my $sloppy = 0;
 
     Quiq::Option->extract(\@_,
-        -enum=>\$enum,
-        -sloppy=>\$sloppy,
+        -enum => \$enum,
+        -sloppy => \$sloppy,
     );
 
     # Operation ausführen
@@ -339,8 +339,8 @@ sub type {
     elsif (!$sloppy) {
         $class->throw(
             'IMG-00001: Unknown image type',
-            File=>$file,
-            Data=>$data,
+            File => $file,
+            Data => $data,
         );
     }
 

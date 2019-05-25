@@ -242,8 +242,8 @@ sub script {
         else {
             # sonst URL
             $scriptTags .= $h->tag('script',
-                type=>'text/javascript',
-                src=>$spec,
+                type => 'text/javascript',
+                src => $spec,
             );
         }
     }

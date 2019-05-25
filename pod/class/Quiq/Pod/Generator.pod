@@ -47,7 +47,7 @@ dieses Objekt zurück.
 Generiere POD mit Einrückung 2:
 
     $pg = Quiq::Pod::Generator->new(
-        indentation=>2,
+        indentation => 2,
     );
 
 =head2 Abschnitts-Kommandos

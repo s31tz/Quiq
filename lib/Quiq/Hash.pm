@@ -614,7 +614,7 @@ sub AUTOLOAD :lvalue {
     if (!ref $this) {
         $this->throw(
             'HASH-00002: Klassen-Methode existiert nicht',
-            Method=>$key,
+            Method => $key,
         );
     }
 
@@ -623,8 +623,8 @@ sub AUTOLOAD :lvalue {
     if (!exists $this->{$key}) {
         $this->throw(
             'HASH-00001: Hash-Schlüssel oder Methode existiert nicht',
-            Attribute=>$key,
-            Class=>ref($this)? ref($this): $this,
+            Attribute => $key,
+            Class => ref($this)? ref($this): $this,
         );
     }
 
@@ -736,7 +736,7 @@ sub validate {
         if (!exists $refH->{$key}) {
             $class->throw(
                 'HASH-00099: Unzulässiger Hash-Schlüssel',
-                Key=>$key,
+                Key => $key,
             );
         }
     }
@@ -1094,8 +1094,8 @@ sub arraySize {
     
     $self->throw(
         'HASH-00005: Keine Array-Referenz',
-        Key=>$key,
-        Class=>ref($self),
+        Key => $key,
+        Class => ref($self),
     );
 }
 
@@ -1420,22 +1420,22 @@ Das Benchmark-Programm (bench-hash):
     
     my $i = 0;
     Benchmark::cmpthese(-10,{
-        A=>sub {
+        A => sub {
             $h1->{$i++%5};
         },
-        B=>sub {
+        B => sub {
             eval{$h1->{$i++%5}};
         },
-        C=>sub {
+        C => sub {
             $h2->{$i++%5};
         },
-        D=>sub {
+        D => sub {
             eval{$h2->{$i++%5}};
         },
-        E=>sub {
+        E => sub {
             $h3->{$i++%5};
         },
-        F=>sub {
+        F => sub {
             $h3->get($i++%5);
         },
     });

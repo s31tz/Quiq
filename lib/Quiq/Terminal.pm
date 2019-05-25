@@ -134,15 +134,15 @@ sub askUser {
 
     if (@_) {
         Quiq::Option->extract(\@_,
-            -automatic=>\$automatic,
-            -color=>\$color,
-            -default=>\$default,
-            -inHandle=>\$in,
-            -outHandle=>\$out,
-            -timer=>\$timer,
-            -ttyIn=>\$ttyIn,
-            -ttyOut=>\$ttyOut,
-            -values=>\$values,
+            -automatic => \$automatic,
+            -color => \$color,
+            -default => \$default,
+            -inHandle => \$in,
+            -outHandle => \$out,
+            -timer => \$timer,
+            -ttyIn => \$ttyIn,
+            -ttyOut => \$ttyOut,
+            -values => \$values,
         );
     }
 

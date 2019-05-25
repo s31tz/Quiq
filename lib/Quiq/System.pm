@@ -208,8 +208,8 @@ sub user {
     return getpwuid($uid) // do {
         $this->throw(
             'SYS-00001: Benutzer existiert nicht',
-            Uid=>$uid,
-            Error=>"$!",
+            Uid => $uid,
+            Error => "$!",
         );
     };
 }
@@ -236,8 +236,8 @@ sub uid {
     return getpwnam($user) // do {
         $this->throw(
             'SYS-00001: Benutzer existiert nicht',
-            User=>$user,
-            Error=>"$!",
+            User => $user,
+            Error => "$!",
         );
     };
 }
@@ -274,7 +274,7 @@ sub searchProgram {
 
     if (@_) {
         Quiq::Option->extract(\@_,
-            -sloppy=>\$sloppy,
+            -sloppy => \$sloppy,
         );
     }
 
@@ -299,8 +299,8 @@ sub searchProgram {
 
     $class->throw(
         'PATH-00020: Programm/Skript nicht gefunden',
-        Program=>$program,
-        Paths=>$ENV{'PATH'},
+        Program => $program,
+        Paths => $ENV{'PATH'},
     );
 }
 

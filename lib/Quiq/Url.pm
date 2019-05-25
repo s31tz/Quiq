@@ -165,7 +165,7 @@ und das Kaufmannsund für die Konkatenation von Querystrings.
 Ist der Wert eines Schlüssels eine Arrayreferenz, wird für
 jedes Arrayelement ein eigenes Schlüssel/Wert-Paar erzeugt:
 
-    a=>[1,2,3]
+    a => [1,2,3]
 
 wird zu
 
@@ -346,8 +346,8 @@ sub split {
 
     if (@_) {
         Quiq::Option->extract(\@_,
-            -defaultSchema=>\$defaultSchema,
-            -debug=>\$debug,
+            -defaultSchema => \$defaultSchema,
+            -debug => \$debug,
         );
     }
 

@@ -129,15 +129,15 @@ sub new {
     my $class = shift;
 
     my $self = $class->SUPER::new(
-        api=>'',
-        dbms=>'',
-        db=>'',
-        user=>'',
-        password=>'',
-        host=>'',
-        port=>'',
+        api => '',
+        dbms => '',
+        db => '',
+        user => '',
+        password => '',
+        host => '',
+        port => '',
         # FIXME: auf Quiq::OrderedHash umstellen
-        options=>Quiq::Hash->new->unlockKeys,
+        options => Quiq::Hash->new->unlockKeys,
     );
     if (@_) {
         $self->udl(@_);
@@ -437,7 +437,7 @@ sub asString {
     my $secure = 0;
     
     Quiq::Option->extract(\@_,
-        -secure=>\$secure,
+        -secure => \$secure,
     );
 
     my $str = '';
@@ -562,7 +562,7 @@ sub dsn {
     if ($api ne 'dbi') {
         $self->throw(
             'UDL-00001: DSN nur für DBI API definiert',
-            API=>$api,
+            API => $api,
         );
     }
 
@@ -608,7 +608,7 @@ sub dsn {
     else {
         $self->throw(
             'UDL-00002: Nicht-unterstütztes DBMS',
-            Dbms=>$dbms,
+            Dbms => $dbms,
         );
     }
 

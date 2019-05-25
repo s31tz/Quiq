@@ -257,9 +257,9 @@ Die Methode tag() unterstützt data-* Attribute auf zwei Weisen:
 Einzelne Attribute:
 
     $h->tag('form',
-        'data-x'=>'a',
-        'data-y'=>'b',
-        'data-z'=>'c',
+        'data-x' => 'a',
+        'data-y' => 'b',
+        'data-z' => 'c',
          ...
     );
 
@@ -268,10 +268,10 @@ Einzelne Attribute:
 Liste von Attributen:
 
     $h->tag('form',
-        data=>[
-            x=>'a',
-            y=>'b',
-            z=>'c',
+        data => [
+            x => 'a',
+            y => 'b',
+            z => 'c',
         ],
         ...
     );
@@ -514,7 +514,7 @@ Ohne '-' wird allein das letzte Argument als Inhalt aufgefasst.
 Besteht der Inhalt aus mehreren Teilen, müssen die Teile
 dann konkateniert werden:
 
-    $h->tag('p',class=>'p1',
+    $h->tag('p',class => 'p1',
         'Ein '.$h->tag('b','kurzer').' Text.'
     );
 
@@ -549,9 +549,9 @@ wenn der HTML-Code inkrementell geschrieben wird und z.B. im Fehlerfall
 nur der Rest mit schließenden Tags generiert werden soll.
 
     my $html = $h->tag('html',
-        -endTagOnly=>1,
+        -endTagOnly => 1,
         $h->tag('body',
-            -endTagOnly=>1,
+            -endTagOnly => 1,
             '-',
             $h->tag('h1','Fatal Error'),
             $h->tag('pre',$msg),
@@ -693,15 +693,15 @@ Rücke den Tag um $n Leerzeichen ein.
 
 Anzahl NEWLINEs am Ende.
 
--nl=>0 (kein NEWLINE):
+-nl => 0 (kein NEWLINE):
 
     <TAG>CONTENT</TAG>
 
--nl=>1 (ein NEWLINE):
+-nl => 1 (ein NEWLINE):
 
     <TAG>CONTENT</TAG>\n
 
--nl=>2 (zwei NEWLINEs):
+-nl => 2 (zwei NEWLINEs):
 
     <TAG>CONTENT</TAG>\n\n
 
@@ -728,7 +728,7 @@ statt eigentlich beim Aufruf angegebenen td soll ein th-Tag
 gesetzt werden. Beispiel:
 
     $h->tag('td',
-        -tag=>'th',
+        -tag => 'th',
         ...
     );
 
@@ -793,9 +793,9 @@ explizit gesetzt werden müssen.
 
     Element Attribute
     
-    form    method=>'post', enctype=>'multipart/form-data'
-    script  type=>'text/javascript'
-    style   type=>'text/css'
+    form    method => 'post', enctype => 'multipart/form-data'
+    script  type => 'text/javascript'
+    style   type => 'text/css'
 
 =head3 wrapTag() - Umbreche langen Tag-String
 

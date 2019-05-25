@@ -339,7 +339,7 @@ sub fixtureDir {
 
     my $create = 0;
     Quiq::Option->extract(-mode=>'sloppy',\@_,
-        -create=>\$create,
+        -create => \$create,
     );
 
     my $dir = $this->testDir('fixture');
@@ -503,7 +503,7 @@ sub runTests {
             # FIXME: Erstmal rausbomben, später verbessern
             $class->throw(
                 'TEST-00005: Foreach-Testmethode fehlgeschlagen',
-                Error=>$@,
+                Error => $@,
             );
         }
     }
@@ -1140,7 +1140,7 @@ sub MODIFY_CODE_ATTRIBUTES {
         else {
             $class->throw(
                 'TEST-00001: Unbekanntes Code-Attribut',
-                Attribute=>$_,
+                Attribute => $_,
             );
         }
     }

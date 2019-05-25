@@ -43,12 +43,12 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-        from=>[], # [$x,$y]
-        to=>[],   # [$x,$y]
-        heads=>undef, # nohead, head, backhead, heads
-        lineType=>undef,
-        lineWidth=>undef,
-        lineStyle=>undef,
+        from => [], # [$x,$y]
+        to => [],   # [$x,$y]
+        heads => undef, # nohead, head, backhead, heads
+        lineType => undef,
+        lineWidth => undef,
+        lineStyle => undef,
     );
     $self->set(@_);
     
