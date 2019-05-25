@@ -21,6 +21,15 @@ Quiq::TableRow - Tabellenzeile
 
 L<Quiq::Object>
 
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert eine Tabellenzeile, bestehend aus
+einem Verweis auf die Tabelle (ein Objekt der Klasse Quiq::Table)
+und ein Verweis auf ein Array von Werten. Das Array muss keiner Klasse
+angehören, kann also ungeblesst sein. Eine Tabellenzeile wird
+typischerweise nicht direkt instantiiert, sondern von der Methode push()
+der Klasse Quiq::Table. Details siehe dort.
+
 =head1 METHODS
 
 =head2 Klassenmethoden
@@ -76,7 +85,7 @@ sub new {
 
 =head2 Objektmethoden
 
-=head3 get() - Kolumnenwert
+=head3 get() - Wert einer Kolumne
 
 =head4 Synopsis
 
@@ -88,18 +97,18 @@ sub new {
 
 =item $column
 
-Kolumnenname (String).
+Kolumnenname (String)
 
 =back
 
 =head4 Returns
 
-Kolumnenwert (String).
+Kolumnenwert (String)
 
 =head4 Description
 
-Liefere den Wert der Kolumne $column. Existiert die Kolumne in der
-Tabelle nicht, wird eine Exception geworfen.
+Liefere den Wert der Kolumne $column. Existiert die Kolumne nicht,
+wird eine Exception geworfen.
 
 =cut
 
