@@ -21,7 +21,6 @@ WriteMakefile(
         Net::SSH::Perl => 0,
         Pod::WSDL => 0,
         SOAP::Transport::HTTP => 0,
-        Stat::lsMode => 0,
         WWW::Mechanize => 0,
         XML::LibXML => 0,
         XML::Twig => 0,

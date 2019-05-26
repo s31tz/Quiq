@@ -26,7 +26,7 @@ L<Quiq::Hash>
 =head1 DESCRIPTION
 
 Ein Objekt der Klasse repräsentiert einen Gnuplot-Prozess.
-Der Gnuplot-Prozess erzeugt Plots.
+Ein Gnuplot-Prozess erzeugt Plots.
 
 =head1 METHODS
 
