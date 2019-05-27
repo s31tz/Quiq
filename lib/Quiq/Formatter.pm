@@ -125,11 +125,11 @@ sub readableNumber {
 
 =item $now
 
-Bezugszeitpunkt (Unix Epoch).
+Bezugszeitpunkt in Unix Epoch oder als ISO-Datum.
 
 =item $time
 
-Zeit (Unix Epoch).
+Zeit in Unix Epoch oder als ISO-Datum.
 
 =back
 
@@ -189,15 +189,31 @@ Alle Komponenten, bis auf die Sekunden, sind identisch:
 sub reducedIsoTime {
     my ($class,$now,$time) = @_;
 
-    my @now = localtime $now;
-    my @time = localtime $time;
+    my (@now,@time);
+    if ($now =~ /^\d+$/) {
+        @now = localtime $now;
+        $now[4]++;
+        $now[5] += 1900;
+    }
+    else {
+        @now = reverse split /\D+/,$now;
+    }
+
+    if ($time =~ /^\d+$/) {
+        @time = localtime $time;
+        $time[4]++;
+        $time[5] += 1900;
+    }
+    else {
+        @time = reverse split /\D+/,$time;
+    }
 
     my $str = '';
     if ($time[5] != $now[5]) {
-        $str .= $time[5]+1900;
+        $str .= $time[5];
     }
     if ($str || $time[4] != $now[4]) {
-        $str .= sprintf '%s%02d',$str? '-': '',$time[4]+1;
+        $str .= sprintf '%s%02d',$str? '-': '',$time[4];
     }
     if ($str || $time[3] != $now[3]) {
         $str .= sprintf '%s%02d',$str? '-': '',$time[3];

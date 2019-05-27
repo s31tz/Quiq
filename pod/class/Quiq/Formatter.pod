@@ -68,11 +68,11 @@ ersetzt.
 
 =item $now
 
-Bezugszeitpunkt (Unix Epoch).
+Bezugszeitpunkt in Unix Epoch oder als ISO-Datum.
 
 =item $time
 
-Zeit (Unix Epoch).
+Zeit in Unix Epoch oder als ISO-Datum.
 
 =back
 
