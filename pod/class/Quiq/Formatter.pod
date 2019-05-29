@@ -98,7 +98,7 @@ z.B. in einer Verzeichnisliste:
 
     $ quiq-ls ~/dvl
     | rwxr-xr-x | xv882js | rvgroup | 2018-07-07 07:08:17 |  | d | ~/dvl/.cotedo  |
-    | rwxr-xr-x | xv882js | rvgroup | 2018-06-29 11:06:38 |  | d | ~/dvl/.yeah    |
+    | rwxr-xr-x | xv882js | rvgroup | 2018-06-29 11:06:38 |  | d | ~/dvl/.jaz    |
     | rwxr-xr-x | xv882js | rvgroup |         17 07:29:51 |  | d | ~/dvl/Blob     |
     | rwxr-xr-x | xv882js | rvgroup |         17 07:29:52 |  | d | ~/dvl/Export   |
     | rwxr-xr-x | xv882js | rvgroup |         17 07:29:52 |  | d | ~/dvl/Language |

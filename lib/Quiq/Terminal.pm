@@ -267,15 +267,15 @@ B<Terminal-Eigenschaften>
 
 Rote Schrift:
 
-    Quiq::Terminal->ansiEsc('red');
+    $esc = Quiq::Terminal->ansiEsc('red');
 
 Fette weiße Schrift auf rotem Grund:
 
-    Quiq::Terminal->ansiEsc('bold white on_red');
+    $esc = Quiq::Terminal->ansiEsc('bold white on_red');
 
 Terminal in den Anfangszustand zurückversetzen:
 
-    Quiq::Terminal->ansiEsc('reset');
+    $esc = Quiq::Terminal->ansiEsc('reset');
 
 =cut
 

@@ -625,7 +625,7 @@ sub load {
         if (@paths) {
             # Wir laden die Dateien aus den angegebenen Pfaden. (Sub)Pfade,
             # die mit einem Punkt beginnen (.PATH) ignorieren wir in
-            # diesem Fall, damit .yeah, .cotedo nicht konsultiert werden.
+            # diesem Fall, damit .jaz, .cotedo nicht konsultiert werden.
 
             for my $path (@paths) {
                 if (-d $path) {

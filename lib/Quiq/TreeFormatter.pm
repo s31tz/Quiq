@@ -182,9 +182,9 @@ Ein Ausschnitt aus der produzierten Ausgabe:
        :   needsTest()
        :   needsUpdate()
        |
-       +--Yeah/Type
+       +--Jaz/Type
           |
-          +--Yeah/Type/Export
+          +--Jaz/Type/Export
           |  : Erzeugung
           |  :   create()
           |  : Entitäten
@@ -201,11 +201,11 @@ Ein Ausschnitt aus der produzierten Ausgabe:
           |  :   rewriteRules()
           |  :   export()
           |
-          +--Yeah/Type/Language
+          +--Jaz/Type/Language
           |
-          +--Yeah/Type/Library
+          +--Jaz/Type/Library
           |
-          +--Yeah/Type/Package
+          +--Jaz/Type/Package
           |  : Erzeugung
           |  :   create()
           |  : Eigenschaften
