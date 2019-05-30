@@ -486,12 +486,14 @@ sub edit {
     my $tmpFile = Quiq::TempFile->new;
     $this->copy($file,$tmpFile);
 
-    # Biete Datei zum Bearbeiten im Editor an
+    # Öffne Datei im Editor
 
     my $changed = 0;
     my $editor = $ENV{'EDITOR'} || 'vi';
     Quiq::Shell->exec("$editor $tmpFile");
     if ($this->compare($tmpFile,$file)) {
+        # Rückfrage an Benutzer
+
         my $answ = Quiq::Terminal->askUser(
             "Confirm changes?",
             -values => 'y/n',
