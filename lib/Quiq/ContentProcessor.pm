@@ -658,11 +658,11 @@ sub load {
 
 # -----------------------------------------------------------------------------
 
-=head3 fetch() - Hole Entitäts-Definitionen aus dem Storage
+=head3 fetchToDir() - Hole Entitäts-Definitionen aus dem Storage
 
 =head4 Synopsis
 
-    $cop = $cop->fetch($dir,$layout,@opt);
+    $cop = $cop->fetchToDir($dir,$layout,@opt);
 
 =head4 Arguments
 
@@ -716,7 +716,7 @@ werden, um andere Strukturen zu generieren.
 
 # -----------------------------------------------------------------------------
 
-sub fetch {
+sub fetchToDir {
     my ($self,$dir,$layout) = @_;
 
     $self->msg(1,'%T ==fetch==');
@@ -815,7 +815,7 @@ Array mit zweielementigen Arrays
 
 =head4 Description
 
-Liefere die Liste der Dateien, die von der Methode L<fetch|"fetch() - Hole Entitäts-Definitionen aus dem Storage">()
+Liefere die Liste der Dateien, die von der Methode [ANCHOR NOT FOUND]()
 geschrieben werden. Jede Datei wird durch ein zweielementiges
 Array repräsentiert, bestehend aus einem Datei-Pfad sowie dem
 Datei-Inhalt. Der Datei-Inhalt kann als String oder
