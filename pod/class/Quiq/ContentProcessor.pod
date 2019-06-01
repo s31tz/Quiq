@@ -382,7 +382,7 @@ ContentProcessor-Objekt (für Method-Chaining)
 =head4 Description
 
 Übertrage alle Entitäts-Definitionen in Verzeichnis $dir (oder
-STDOUT, s.u.) gemäß Layout $layout. Per Differenzbildung wird
+nach STDOUT, s.u.) gemäß Layout $layout. Per Differenzbildung wird
 dabei ein konsistenter Stand hergestellt. Existiert Verzeichnis
 $dir nicht, wird es angelegt. Andernfalls wird eine Rückfrage
 gestellt, ob das Verzeichnis überschrieben werden soll (siehe

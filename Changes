@@ -148,7 +148,7 @@ Link-Generierung für POD verbessert.
 [Quiq::Database::Connection]
 * DBMS MSSQL eingeführt.
 
-[Sdoc1::Node]
+[Sdoc2::Node]
 * Link-Generierung für POD korrigiert.
 
 [Quiq::Cascm]
@@ -286,7 +286,7 @@ Konstruktor-Option -warnings hinzugefügt.
 
 Methode loadPage() hinzugefügt.
 
-[Sdoc1::Code]
+[Sdoc2::Code]
 Kosmetik.
 
 [Quiq::AnsiColor]
@@ -304,7 +304,7 @@ Fehlermeldung bei nicht-existentem Schlüssel verbessert.
 [Quiq::Path]
 Methode checkFileSecurity() hinzugefügt.
 
-[Sdoc1]
+[Sdoc2]
 Methoden code(), paragraph() hinzugefügt.
 
 Methode section() verallgemeinert.
