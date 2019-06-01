@@ -1,3 +1,8 @@
+1.143 2019-06-01
+================
+[Quiq::Formatter]
+* Tests von Methode reducedIsoTime() verbessert
+
 1.142 2019-05-31
 ================
 [Quiq::Formatter]
