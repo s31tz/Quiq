@@ -7,6 +7,8 @@ use v5.10.0;
 
 our $VERSION = '1.143';
 
+use Quiq::Epoch;
+
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -196,9 +198,7 @@ sub reducedIsoTime {
 
         my @arr;
         if ($tm =~ /^\d+$/) {
-            @arr = localtime $tm;
-            $arr[4]++;
-            $arr[5] += 1900;
+            @arr = Quiq::Epoch->new($tm)->localtime;
         }
         else {
             @arr = reverse split /\D+/,$tm;

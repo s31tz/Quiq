@@ -41,6 +41,18 @@ sub test_epoch : Test(1) {
 
 # -----------------------------------------------------------------------------
 
+sub test_localtime : Test(4) {
+    my $self = shift;
+
+    my @arr = Quiq::Epoch->new(1559466751)->localtime;
+    $self->is($arr[0],31);
+    $self->is($arr[1],12);
+    $self->is($arr[4],6);
+    $self->is($arr[5],2019);
+}
+
+# -----------------------------------------------------------------------------
+
 sub test_as : Test(1) {
     my $self = shift;
 

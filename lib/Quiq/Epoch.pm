@@ -96,6 +96,44 @@ sub epoch {
 
 # -----------------------------------------------------------------------------
 
+=head3 localtime() - Zeitkomponenten in lokaler Zeit
+
+=head4 Synopsis
+
+    ($s,$mi,$h,$d,$m,$y) = $t->localtime;
+
+=head4 Description
+
+Liefere die Zeitkomponenten Sekunden, Minuten, Stunden, Tag, Monat, Jahr
+in lokaler Zeit. Im Unterschied zu localtime() aus dem Perl Core sind
+Monat ($m) und Jahr (y) "richtig" wiedergegeben. d.h die Komponente $m
+muss nicht inkrementiert und die Komponente $y muss nicht um 1900
+erhöht werden.
+
+=head4 Example
+
+    Quiq::Epoch->new(1559466751)->localtime;
+    =>
+    (31,12,11,2,6,2019) # 2019-06-02 11:12:31
+    
+    (in Zeitzone MESZ)
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub localtime {
+    my $self = shift;
+
+    my @arr = CORE::localtime $$self;
+    $arr[4]++;
+    $arr[5] += 1900;
+
+    return @arr;
+} 
+
+# -----------------------------------------------------------------------------
+
 =head3 as() - Erzeuge String-Darstellung
 
 =head4 Synopsis
@@ -128,7 +166,7 @@ sub as {
         $self->throw;
     }
     
-    return POSIX::strftime($strFmt,localtime $$self);
+    return POSIX::strftime($strFmt,CORE::localtime $$self);
 } 
 
 # -----------------------------------------------------------------------------
