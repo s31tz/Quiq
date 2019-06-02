@@ -150,12 +150,12 @@ führenden Zeitkomponenten fehlen, die zum Bezugszeitpunkt $now
 identisch sind.
 
 Diese Darstellung ist nützlich, um in einer Liste von Zeiten die
-nah am aktuellen Zeipunkt liegenden Zeiten erkennen zu können,
+nah am aktuellen Zeipunkt liegenden Zeiten leichter erkennen zu können,
 z.B. in einer Verzeichnisliste:
 
     $ quiq-ls ~/dvl
     | rwxr-xr-x | xv882js | rvgroup | 2018-07-07 07:08:17 |  | d | ~/dvl/.cotedo  |
-    | rwxr-xr-x | xv882js | rvgroup | 2018-06-29 11:06:38 |  | d | ~/dvl/.jaz    |
+    | rwxr-xr-x | xv882js | rvgroup | 2018-06-29 11:06:38 |  | d | ~/dvl/.jaz     |
     | rwxr-xr-x | xv882js | rvgroup |         17 07:29:51 |  | d | ~/dvl/Blob     |
     | rwxr-xr-x | xv882js | rvgroup |         17 07:29:52 |  | d | ~/dvl/Export   |
     | rwxr-xr-x | xv882js | rvgroup |         17 07:29:52 |  | d | ~/dvl/Language |
@@ -182,7 +182,7 @@ Alle Komponenten, bis auf die Sekunden, sind identisch:
     ==>
     48
 
-(alles bei MESZ)
+(alles in Zeitzone MESZ)
 
 =cut
 
@@ -191,24 +191,24 @@ Alle Komponenten, bis auf die Sekunden, sind identisch:
 sub reducedIsoTime {
     my ($class,$now,$time) = @_;
 
-    my (@now,@time);
-    if ($now =~ /^\d+$/) {
-        @now = localtime $now;
-        $now[4]++;
-        $now[5] += 1900;
-    }
-    else {
-        @now = reverse split /\D+/,$now;
-    }
+    my $toArray = sub {
+        my $tm = shift;
 
-    if ($time =~ /^\d+$/) {
-        @time = localtime $time;
-        $time[4]++;
-        $time[5] += 1900;
-    }
-    else {
-        @time = reverse split /\D+/,$time;
-    }
+        my @arr;
+        if ($tm =~ /^\d+$/) {
+            @arr = localtime $tm;
+            $arr[4]++;
+            $arr[5] += 1900;
+        }
+        else {
+            @arr = reverse split /\D+/,$tm;
+        }
+
+        return @arr;
+    };
+
+    my @now = $toArray->($now);
+    my @time = $toArray->($time);
 
     my $str = '';
     if ($time[5] != $now[5]) {
