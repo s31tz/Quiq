@@ -193,22 +193,8 @@ Alle Komponenten, bis auf die Sekunden, sind identisch:
 sub reducedIsoTime {
     my ($class,$now,$time) = @_;
 
-    my $toArray = sub {
-        my $tm = shift;
-
-        my @arr;
-        if ($tm =~ /^\d+$/) {
-            @arr = Quiq::Epoch->new($tm)->localtime;
-        }
-        else {
-            @arr = reverse split /\D+/,$tm;
-        }
-
-        return @arr;
-    };
-
-    my @now = $toArray->($now);
-    my @time = $toArray->($time);
+    my @now = Quiq::Epoch->new($now)->localtime;
+    my @time = Quiq::Epoch->new($time)->localtime;
 
     my $str = '';
     if ($time[5] != $now[5]) {

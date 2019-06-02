@@ -15,7 +15,7 @@ sub test_loadClass : Init(1) {
 
 # -----------------------------------------------------------------------------
 
-sub test_new : Test(3) {
+sub test_new : Test(4) {
     my $self = shift;
 
     # ohne Parameter
@@ -24,10 +24,15 @@ sub test_new : Test(3) {
     $self->is(ref($t),'Quiq::Epoch');
     $self->ok($$t >= time);
 
-    # mit Parameter
+    # mit Epoch-Wert
 
     $t = Quiq::Epoch->new(12345678);
     $self->is($$t,12345678);
+
+    # mit ISO-Zeitangabe
+
+    $t = Quiq::Epoch->new('2019-06-02 11:12:31');
+    $self->is($$t,1559466751);
 }
 
 # -----------------------------------------------------------------------------

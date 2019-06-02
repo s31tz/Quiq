@@ -35,6 +35,7 @@ Zeitpunkt ist hochauflösend, umfasst also auch Sekundenbruchteile.
 
     $t = $class->new;
     $t = $class->new($epoch);
+    $t = $class->new($iso);
 
 =head4 Description
 

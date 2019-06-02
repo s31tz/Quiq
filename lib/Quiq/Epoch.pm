@@ -8,6 +8,7 @@ use v5.10.0;
 our $VERSION = '1.143';
 
 use Time::HiRes ();
+use Time::Local ();
 use POSIX ();
 
 # -----------------------------------------------------------------------------
@@ -49,6 +50,7 @@ Zeitpunkt ist hochauflösend, umfasst also auch Sekundenbruchteile.
 
     $t = $class->new;
     $t = $class->new($epoch);
+    $t = $class->new($iso);
 
 =head4 Description
 
@@ -63,6 +65,15 @@ der aktuelle Zeitpunkt genommen.
 sub new {
     my $class = shift;
     my $epoch = shift // scalar(Time::HiRes::gettimeofday);
+
+    if ($epoch !~ /^[\d.]+$/) {
+        # ISO Zeitangabe
+
+        my @arr = reverse split /\D+/,$epoch;
+        $arr[4]--;
+        $epoch = Time::Local::timelocal(@arr);
+    }
+
     return bless \$epoch,$class;
 } 
 
