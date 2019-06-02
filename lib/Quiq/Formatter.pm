@@ -182,6 +182,8 @@ Alle Komponenten, bis auf die Sekunden, sind identisch:
     ==>
     48
 
+(alles bei MESZ)
+
 =cut
 
 # -----------------------------------------------------------------------------
