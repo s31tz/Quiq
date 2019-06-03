@@ -3480,6 +3480,10 @@ sub createView {
 
     $stmt = $sql->dropView($viewName);
 
+=head4 Description
+
+Generiere ein DROP VIEW Statement und liefere dieses zurück.
+
 =cut
 
 # -----------------------------------------------------------------------------

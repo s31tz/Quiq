@@ -68,10 +68,9 @@ Verzeichnis über einen Dienst wie FTP:
 
 =head4 Synopsis
 
-    [1] $cfg = $class->new($file,@opt);
-    [2] $cfg = $class->new(\@dirs,$file,@opt);
+    [1] $cfg = $class->new(@files,@opt);
     [3] $cfg = $class->new($str);
-    [4] $cfg = $class->new(@keyVal);
+    [4] $cfg = $class->new(\%keyVal);
 
 =head4 Options
 
@@ -91,21 +90,15 @@ ob die Datei nur für den Benutzer lesbar/schreibbar ist.
 
 =head4 Description
 
-[1] Instantiiere Konfigurationsobjekt aus Datei $file
+[1] Instantiiere Konfigurationsobjekt aus einer der Dateien @files
 und liefere eine Referenz auf dieses Objekt zurück. Beginnt $file
 mit einer Tilde (~), wird sie zum Homedir des rufenden Users
-expandiert.
+expandiert. Die erste gefundene Datei wird geöffnet.
 
-[2] Durchsuche die Verzeichnisse @dirs nach Datei $file. Beginnt
-ein Verzeichnisname mit einer Tilde (~), wird sie zum Homedir des
-rufenden Users expandiert. Die erste gefundene Datei wird
-geöffnet. Ein Leerstring '' in @dirs hat dieselbe Bedeutung wie
-'.' und steht für das aktuelle Verzeichnis.
-
-[3] Als Parameter ist der Konfigurationscode als Zeichenkette
+[2] Als Parameter ist der Konfigurationscode als Zeichenkette
 der Form "$key => $val, ..." angegeben.
 
-[4] Die Konfiguration ist inline angegeben.
+[3] Die Konfiguration ist inline durch Hash %keyVal angegeben.
 
 =head2 Werte abfragen
 

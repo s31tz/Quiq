@@ -1620,6 +1620,10 @@ Generiere ein CREATE VIEW Statement und liefere dieses zurück.
 
     $stmt = $sql->dropView($viewName);
 
+=head4 Description
+
+Generiere ein DROP VIEW Statement und liefere dieses zurück.
+
 =head2 Privileges
 
 =head3 grant() - Generiere GRANT Statement
