@@ -421,10 +421,10 @@ Array mit zweielementigen Arrays
 
 =head4 Description
 
-Liefere die Liste der Dateien, die von der Methode [ANCHOR NOT FOUND]()
-geschrieben werden. Jede Datei wird durch ein zweielementiges
-Array repräsentiert, bestehend aus einem Datei-Pfad sowie dem
-Datei-Inhalt. Der Datei-Inhalt kann als String oder
+Liefere die Liste der Dateien, die von den Methode L<fetchToDir|"fetchToDir() - Hole Entitäts-Definitionen aus dem Storage">()
+und [ANCHOR NOT FOUND]() geschrieben werden. Jede Datei wird durch ein
+zweielementiges Array repräsentiert, bestehend aus einem Datei-Pfad
+sowie dem Datei-Inhalt. Der Datei-Inhalt kann als String oder
 String-Referenz angegeben sein.
 
 Diese (Basisklassen-)Methode liefert für jede Entität die

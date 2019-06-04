@@ -1,3 +1,24 @@
+1.144 2019-06-04
+================
+[Quiq::Config]
+* Konstruktor umgeschrieben.
+
+[Quiq::ContentProcessor]
+* Methode fetch() durch fetchToDir(), fetchToFile() ersetzt.
+
+[Quiq::Epoch]
+* ISO-Zeitangabe als neues Konstruktorargument.
+* Methode loacaltime() hinzugefügt.
+
+[Quiq::Formatter]
+* Testcode verbessert.
+
+[Quiq::Path]
+* Methode checkFileSecurity() verbessert.
+
+[Quiq::Sql]
+* Doku bearbeitet.
+
 1.143 2019-06-01
 ================
 [Quiq::Formatter]
