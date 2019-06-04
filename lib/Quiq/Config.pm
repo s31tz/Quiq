@@ -158,19 +158,6 @@ sub new {
                 $cfgFile = $p->expandTilde($file);
             }
         }
-
-        if ($secure) {
-            $p->checkFileSecurity($cfgFile);
-        }
-
-        if (substr($cfgFile,0,1) ne '/') {
-            # Wenn der Dateiname kein absoluter Pfad ist,
-            # müssen wir ./ voranstellen, weil perlDoFile()
-            # die Datei sonst nicht findet. Warum?
-    
-            $cfgFile = "./$cfgFile";
-        }
-    
         if (!defined $cfgFile) {
             if (defined $create) {
                 # Wir speichern die Datei unter dem ersten Dateinamen,
@@ -184,6 +171,9 @@ sub new {
                 }
                 $create = Quiq::Unindent->trimNl($create);
                 $p->write($cfgFile,$create,-recursive=>1);
+                if ($secure) {
+                    $p->chmod($cfgFile,$secure? 0600: 0644);
+                }
             }
             else {
                 $class->throw(
@@ -192,6 +182,20 @@ sub new {
                 );
             }
         }
+
+        if ($secure) {
+            $p->checkFileSecurity($cfgFile);
+        }
+
+        if (substr($cfgFile,0,1) ne '/') {
+            # Wenn der Dateiname kein absoluter Pfad ist,
+            # müssen wir ./ voranstellen, weil perlDoFile()
+            # sonst @INC nach der Datei absucht (und sie
+            # dann nicht findet)
+    
+            $cfgFile = "./$cfgFile";
+        }
+    
         %cfg = Quiq::Perl->perlDoFile($cfgFile);
     }
 

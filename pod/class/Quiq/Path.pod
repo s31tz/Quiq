@@ -71,16 +71,37 @@ Locke die Datei während des Schreibens exklusiv.
 
 Hänge Daten $data an Datei $file an.
 
-=head3 checkFileSecurity() - Prüfe, ob Datei nur für Owner lesbar ist
+=head3 checkFileSecurity() - Prüfe, ob Datei geschützt ist
 
 =head4 Synopsis
 
-    $this->checkFileSecurity($file);
+    $this->checkFileSecurity($file); # nur Owner darf schreiben und lesen
+    $this->checkFileSecurity($file,$readableByOthers); # nur Owner darf schreiben
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Datei, deren Rechte geprüft werden.
+
+=item $readableByOthers
+
+Wenn wahr, dürfen auch andere die Datei lesen.
+
+=back
 
 =head4 Description
 
-Prüfe, ob die Datei $file nur für ihren Owner lesbar ist.
+Prüfe, ob die Datei $file vor unerlaubtem Zugriff geschützt ist.
 Wenn nicht, wirf eine Exception.
+
+Per Default darf die Datei nur für ihren Owner lesbar und schreibbar
+sein, muss also die Zugriffsrechte rw------- besitzen.
+
+Ist $readable wahr, darf die Datei von der Gruppe und anderen
+gelesen werden, darf also die Zugriffsrechte rw-r--r-- besitzen.
 
 =head3 compare() - Prüfe, ob Inhalt differiert
 
