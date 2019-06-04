@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = '1.143';
+our $VERSION = '1.144';
 
 use Quiq::Html::Table::Simple;
 
@@ -291,7 +291,7 @@ sub html {
 
 =head1 VERSION
 
-1.143
+1.144
 
 =head1 AUTHOR
 
