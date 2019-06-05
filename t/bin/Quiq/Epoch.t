@@ -6,6 +6,7 @@ use base qw/Quiq::Test::Class/;
 use strict;
 use warnings;
 use v5.10.0;
+use utf8;
 
 # -----------------------------------------------------------------------------
 
@@ -29,10 +30,10 @@ sub test_new : Test(4) {
     $t = Quiq::Epoch->new(12345678);
     $self->is($$t,12345678);
 
-    # mit ISO-Zeitangabe
+    # mit ISO-Zeitangabe (Wert hängt von lokaler Zeitzone ab)
 
     $t = Quiq::Epoch->new('2019-06-02 11:12:31');
-    $self->is($$t,1559466751);
+    $self->ok($$t > 1559400000);
 }
 
 # -----------------------------------------------------------------------------
