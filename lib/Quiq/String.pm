@@ -27,6 +27,54 @@ L<Quiq::Object>
 
 =head1 METHODS
 
+=head2 Eigenschaften
+
+=head3 maxLineLength() - Länge der längsten Zeile
+
+=head4 Synopsis
+
+    $len = $class->maxLineLength($text);
+
+=head4 Arguments
+
+=over 4
+
+=item $text
+
+Ein String, typischerweise mehrzeilig.
+
+=back
+
+=head4 Returns
+
+Länge der längsten Zeile (Integer)
+
+=head4 Description
+
+Ermittele die Länge der längsten Zeile und liefere diese zurück. Newline
+wird nicht mitgezählt.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub maxLineLength {
+    my ($class,$text) = @_;
+
+    my $maxLen = 0;
+    for (split /\n/,$text) {
+        chomp;
+        my $l = length;
+        if ($l > $maxLen) {
+            $maxLen = $l;
+        }
+    }
+
+    return $maxLen;
+}
+
+# -----------------------------------------------------------------------------
+
 =head2 Encoding
 
 =head3 autoDecode() - Auto-dekodiere Zeichenkette

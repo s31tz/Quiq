@@ -12,6 +12,7 @@ use Time::HiRes ();
 use Quiq::Option;
 use Quiq::FileHandle;
 use Quiq::Properties;
+use Quiq::String;
 use Quiq::Array;
 use Quiq::Duration;
 
@@ -815,7 +816,8 @@ sub asTable {
     # Statement
 
     if ($info >= 3 && (my $stmt = $self->stmt)) {
-        $str .= "$stmt\n\n";
+        $str .= sprintf "%s\n\n%s\n\n",$stmt,
+            '-' x Quiq::String->maxLineLength($stmt);
     }
     my @titles = $self->titles;
     if ($info >= 2) {
