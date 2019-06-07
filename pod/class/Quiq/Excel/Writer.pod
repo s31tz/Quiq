@@ -1,0 +1,74 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Excel::Writer - Erzeuge Datei im Excel 2007+ XLSX Format
+
+=head1 BASE CLASS
+
+Excel::Writer::XLSX
+
+=head1 DESCRIPTION
+
+Diese Klasse ist abgeleitet von Excel::Writer::XLSX.
+Sie erweitert ihre Basisklasse um
+
+    * Tilde-Expansion im Dateinamen
+    * Exceptions im Fehlerfall
+
+Dokumentation siehe Basisklasse.
+
+=head1 METHODS
+
+=head2 Klassenmethoden
+
+=head3 new() - Konstruktor
+
+=head4 Synopsis
+
+    $wkb = $class->new($file);
+    $wkb = $class->new($fh);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Name der .xslx Datei.
+
+=item $fh
+
+Filehandle, auf die geschrieben wird, z.B. \*STDOUT.
+
+=back
+
+=head4 Returns
+
+Workbook-Objekt
+
+=head4 Description
+
+Erzeuge ein Excel Workbook-Objekt und liefere eine Referenz auf
+dieses Objekt zurück.
+
+=head1 VERSION
+
+1.145
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Excel/Writer.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

@@ -193,6 +193,10 @@ L<Quiq::ExampleCode|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Exa
 
 =item *
 
+L<Quiq::Excel::Writer|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Excel/Writer.pod> - Erzeuge Datei im Excel 2007+ XLSX Format
+
+=item *
+
 L<Quiq::FFmpeg|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/FFmpeg.pod> - Konstruiere eine FFmpeg-Kommandozeile
 
 =item *
