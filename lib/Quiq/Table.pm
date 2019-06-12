@@ -88,9 +88,10 @@ L<Quiq::Hash>
 =head1 DESCRIPTION
 
 Ein Objekt der Klasse repräsentiert eine Tabelle, also eine Liste
-von gleichförmigen Zeilen. Die Namen der Kolumnen werden dem Konstruktor
-der Klasse übergeben. Sie bezeichnen die Komponenten der Zeilen. Die
-Zeilen sind Objekte der Klasse Quiq::TableRow.
+von gleichförmigen Zeilen. Die Zeilen sind Arrays identischer Größe.
+Die Namen der Kolumnen werden dem Konstruktor der Klasse übergeben.
+Sie bezeichnen die Komponenten der Zeilen. Die Zeilen sind Objekte
+der Klasse Quiq::TableRow.
 
 =head1 EXAMPLE
 

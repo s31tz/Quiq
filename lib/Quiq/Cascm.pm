@@ -248,6 +248,8 @@ sub edit {
             Package => $package,
         );
     }
+    # Wir bewegen das Package auf die unterste Stufe ("Entwicklung")
+    $self->movePackage($self->states->[0],$package);
 
     # Lokale Kopie der Datei erstellen
 
@@ -287,6 +289,9 @@ sub edit {
     my $backupFile = "$localFile.bak";
     $p->copy($localFile,$backupFile);
 
+    # Checke Datei aus
+    $output .= $self->checkout($package,$repoFile);
+
     my $editor = $ENV{'EDITOR'} || 'vi';
     Quiq::Shell->exec("$editor $localFile");
     if ($p->compare($localFile,$backupFile)) {
@@ -296,10 +301,11 @@ sub edit {
             -default => 'y',
         );
         if ($answ eq 'y') {
-            $self->movePackage($self->states->[0],$package);
-            my ($repoDir) = $p->split($repoFile);
-            $output = $self->putFiles($package,$repoDir,$localFile);
-            $self->movePackage($state,$package);
+            my $workspace = $self->workspace;
+            $p->copy($localFile,"$workspace/$repoFile",
+                -overwrite => 1,
+                -preserve => 1,
+            );
         }
     }
     elsif (!$p->compare($localFile,$origFile)) {
@@ -308,6 +314,13 @@ sub edit {
         $p->delete($origFile);
         $p->delete($localFile);
     }
+
+    # Checke Datei ein. Wenn sie nicht geändert wurde (kein Copy oben),
+    # wird keine neue Version erzeugt.
+    $output .= $self->checkin($package,$repoFile);
+
+    # Package zurückbewegen, falls wir es holen mussten
+    $self->movePackage($state,$package);
 
     # Die Backup-Datei löschen wir immer
     $p->delete($backupFile);
@@ -349,7 +362,7 @@ sub view {
     my ($self,$repoFile,$package) = @_;
 
     my $file = $self->repoFileToFile($repoFile);
-    Quiq::Shell->exec("vi -R $file");
+    Quiq::Shell->exec("less -R $file");
 
     return;
 }
