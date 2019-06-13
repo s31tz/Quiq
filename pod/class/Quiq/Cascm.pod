@@ -139,12 +139,16 @@ Ausgabe der CASCM-Kommandos (String)
 
 =head4 Description
 
-Öffne die Repository-Datei $repoFile im Editor. Nach dem Verlassen
-des Editors wird geprüft, ob die Datei (eine Kopie im lokalen Verzeichnis)
-verändert wurde. Falls ja, wird die Repository-Datei ausgecheckt und
-die gänderte lokale Datei unter einer neuen Versionsnummer eingecheckt.
-Das Package $package wird auf die unterste Stufe bewegt und wieder
-zurück bewegt, falls nötig.
+Checke die Repository-Datei $repoFile aus und öffne sie im Editor.
+Nach dem Verlassen des Editors wird geprüft, ob die Datei (eine Kopie
+im lokalen Verzeichnis) verändert wurde. Der Benutzer wird gefragt,
+ob er seine Änderungen ins Repository übertragen möchte oder nicht.
+Anschließend wird die Repository-Datei wieder eingecheckt. Dies
+geschieht, gleichgültig, ob sie geändert wurde oder nicht. CASCM
+vergibt nur dann eine neue Versionsnummer, wenn die Datei sich
+geändert hat. Das Package $package wird vorher auf die unterste Stufe
+bewegt, falls es sich dort nicht bereits befindet, und hinterher
+wieder zurück bewegt.
 
 =head3 view() - Repository-Datei ansehen
 

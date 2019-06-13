@@ -13,8 +13,8 @@ our $VERSION = '1.145';
 
 use Time::HiRes ();
 use Quiq::Option;
-use Quiq::Converter;
 use Quiq::Path;
+use Quiq::Converter;
 use Quiq::Process;
 use Cwd ();
 use Quiq::AnsiColor;
@@ -209,6 +209,14 @@ Liefere Ausgabe auf stdout und stderr getrennt.
 
 Für Beispiele siehe Abschnitt ""exec/Examples"".
 
+=item -logTo => $name
+
+Schreibe jegliche Ausgabe von $cmd auf stdout und stderr nach
+$name-NNNN.log. NNNN ist eine laufende Nummer, die mit jedem
+Programmaufruf um 1 erhöht wird. Beispiel:
+
+    perl -MQuiq::Shell -E 'Quiq::Shell->exec("echo hallo",-logTo=>"echo")'
+
 =item -quiet => $bool (Default: 0)
 
 Unterdrücke Programmausgabe auf stdout und stderr.
@@ -273,16 +281,20 @@ sub exec {
     # Optionen
 
     my $capture = undef;
+    my $logTo = undef;
     my $quiet = $self->get('quiet');
     my $sloppy = 0;
 
     if (@_) {
         Quiq::Option->extract(\@_,
             -capture => \$capture,
+            -logTo => \$logTo,
             -quiet => \$quiet,
             -sloppy => \$sloppy,
         );
     }
+
+    my $p = Quiq::Path->new;
 
     # Exception?
 
@@ -291,7 +303,15 @@ sub exec {
         $except = 0;
     }
 
-    # Umleitungen aufsetzen
+    # Umleitungen
+
+    if (my $name = $logTo) {
+        # Alle Ausgaben in Logdatei schreiben. Mit jedem Lauf wird
+        # die Nummmer der Logdatei inkrementiert.
+
+        my $logFile = $p->nextName($name,4,'log');
+        $cmd = "($cmd) 2>&1 | tee $logFile";
+    }
 
     if ($quiet) {
         $cmd = "($cmd) >/dev/null 2>&1";
@@ -299,11 +319,12 @@ sub exec {
     }
 
     my $qx = 0;
+    # FIXME: auf Quiq::TempFile umstellen
     my $stdoutFile = "/tmp/$$.stdout";
     my $stderrFile = "/tmp/$$.stderr";
 
     if (!$capture) {
-        # nichts tun
+        # keine Abwandlung des Kommandos
     }
     elsif ($capture eq 'stdout') {
         $cmd = "($cmd) 2>/dev/null";
@@ -326,10 +347,6 @@ sub exec {
             Capture => $capture,
         );
     }
-
-    #if ($quiet) {
-    #    $cmd = "($cmd) 1>/dev/null 2>/dev/null";
-    #}
 
     # Kommando protokollieren
 
@@ -356,7 +373,6 @@ sub exec {
         my $t1 = Time::HiRes::gettimeofday;
         if ($log && $self->{'time'}) {
             my $fd = $self->{'logDest'};
-            # printf $fd "/* %.2f */\n",$t1-$t0;
             printf "%s%s\n",$self->{'timePrefix'},
                 Quiq::Converter->epochToDuration($t1-$t0,1,3);
         }
@@ -371,8 +387,8 @@ sub exec {
 
     if ($capture) {
         if ($capture eq 'stderr+stdout') {
-            my $stdout = Quiq::Path->read($stdoutFile,-delete=>1);
-            my $stderr = Quiq::Path->read($stderrFile,-delete=>1);
+            my $stdout = $p->read($stdoutFile,-delete=>1);
+            my $stderr = $p->read($stderrFile,-delete=>1);
             return ($stdout,$stderr);
         }
         return $output;

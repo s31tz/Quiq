@@ -135,6 +135,14 @@ Liefere Ausgabe auf stdout und stderr getrennt.
 
 Für Beispiele siehe Abschnitt ""exec/Examples"".
 
+=item -logTo => $name
+
+Schreibe jegliche Ausgabe von $cmd auf stdout und stderr nach
+$name-NNNN.log. NNNN ist eine laufende Nummer, die mit jedem
+Programmaufruf um 1 erhöht wird. Beispiel:
+
+    perl -MQuiq::Shell -E 'Quiq::Shell->exec("echo hallo",-logTo=>"echo")'
+
 =item -quiet => $bool (Default: 0)
 
 Unterdrücke Programmausgabe auf stdout und stderr.
