@@ -366,7 +366,7 @@ sub view {
     my ($self,$repoFile,$package) = @_;
 
     my $file = $self->repoFileToFile($repoFile);
-    Quiq::Shell->exec("less -R $file");
+    Quiq::Shell->exec("emacs $file --eval '(setq buffer-read-only t)'");
 
     return;
 }

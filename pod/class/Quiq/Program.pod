@@ -208,11 +208,19 @@ Encodings gewandelt.
 
 =head4 Synopsis
 
-    ($argA,$opt) = $prg->parameters($minArgs,$maxArgs,@optVal);
+    [1] ($argA,$opt) = $prg->parameters($sloppy,$minArgs,$maxArgs,@optVal);
+    [2] $opt = $prg->parameters($sloppy,0,0,@optVal);
+    [3] $argA = $prg->parameters($sloppy,$minArgs,$maxArgs,@optVal);
 
 =head4 Arguments
 
 =over 4
+
+=item $sloppy
+
+Wirf keine Exception, wenn unerwartete Parameter (also Optionen und
+Arumente) in @ARGV enthalten sind. Diese Parameter bleiben in @ARGV
+stehen.
 
 =item $minArgs
 
@@ -245,9 +253,15 @@ $maxArgs Argumenten.
 
 =head4 Description
 
-Liefere die Argumente und Optionen des Programmaufs. Sind weniger als
-$minArgs oder mehr als $maxArgs Argumente übergeben oder nicht deklarierte
-Optionen übergeben worden, wird eine Exception geworfen.
+Liefere die Argumente und Optionen des Programmaufs. Werden weniger als
+$minArgs oder mehr als $maxArgs Argumente oder nicht deklarierte
+Optionen übergeben, wird eine Exception geworfen. Ist $sloppy gesetzt,
+wird im Falle überzähliger Parameter I<keine> Exception geworfen.
+Die überzähligen Parameter bleiben in @ARGV erhalten.
+
+Im Skalarkontext wird nur $opt geliefert, wenn keine Argumente erwartet
+werden ($minArgs und $maxArgs sind 0), andernfalls $argA. Letzteres
+ist nützlich, wenn C<-help> die einzige Option ist.
 
 =head2 Optionen
 

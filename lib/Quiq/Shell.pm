@@ -209,13 +209,13 @@ Liefere Ausgabe auf stdout und stderr getrennt.
 
 Für Beispiele siehe Abschnitt ""exec/Examples"".
 
-=item -logTo => $name
+=item -outputTo => $name
 
 Schreibe jegliche Ausgabe von $cmd auf stdout und stderr nach
 $name-NNNN.log. NNNN ist eine laufende Nummer, die mit jedem
 Programmaufruf um 1 erhöht wird. Beispiel:
 
-    perl -MQuiq::Shell -E 'Quiq::Shell->exec("echo hallo",-logTo=>"echo")'
+    perl -MQuiq::Shell -E 'Quiq::Shell->exec("echo hallo",-outputTo=>"echo")'
 
 =item -quiet => $bool (Default: 0)
 
@@ -281,14 +281,14 @@ sub exec {
     # Optionen
 
     my $capture = undef;
-    my $logTo = undef;
+    my $outputTo = undef;
     my $quiet = $self->get('quiet');
     my $sloppy = 0;
 
     if (@_) {
         Quiq::Option->extract(\@_,
             -capture => \$capture,
-            -logTo => \$logTo,
+            -outputTo => \$outputTo,
             -quiet => \$quiet,
             -sloppy => \$sloppy,
         );
@@ -305,11 +305,11 @@ sub exec {
 
     # Umleitungen
 
-    if (my $name = $logTo) {
+    if (my $name = $outputTo) {
         # Alle Ausgaben in Logdatei schreiben. Mit jedem Lauf wird
         # die Nummmer der Logdatei inkrementiert.
 
-        my $logFile = $p->nextName($name,4,'log');
+        my $logFile = $p->nextFile($name,4,'log');
         $cmd = "($cmd) 2>&1 | tee $logFile";
     }
 

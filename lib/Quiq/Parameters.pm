@@ -45,8 +45,8 @@ L<Quiq::Object>
 
 =item $varMode (0 oder 1)
 
-Der erste Parameter entscheidet, ob die Optionswerte an ein
-Optionsobjekt (0) oder an Variablen (1) zugewiesen werden.
+Legt fest, ob die Optionswerte an ein Optionsobjekt (0) oder an
+Variablen (1) zugewiesen werden.
 
 =item $properties (0 oder 1)
 

@@ -485,7 +485,7 @@ sub duplicate {
 
 =head4 Synopsis
 
-    $changed = $this->edit($file);
+    $changed = $this->edit($file,@opt);
 
 =head4 Arguments
 
@@ -695,11 +695,11 @@ sub newlineStr {
 
 # -----------------------------------------------------------------------------
 
-=head3 nextName() - Generiere nächsten Dateinamen
+=head3 nextFile() - Generiere nächsten Dateinamen
 
 =head4 Synopsis
 
-    $file = $this->nextName($name,$n,$ext);
+    $file = $this->nextFile($name,$n,$ext);
 
 =head4 Arguments
 
@@ -732,23 +732,23 @@ ermittelt und um 1 erhöht.
 
 =head4 Example
 
-    Es liegt noch keine Datei vor:
-    
-        $file = Quiq::Path->nextName('xxxx',3,'log');
-        =>
-        xxxx-000.log
-    
-    Die Datei mit der höchsten Nummer ist xxxx-031.log:
-    
-        $file = Quiq::Path->nextName('xxxx',3,'log');
-        =>
-        xxxx-032.log
+Es liegt noch keine Datei vor:
+
+    $file = Quiq::Path->nextFile('myfile',3,'log');
+    =>
+    myfile-001.log
+
+Die Datei mit der höchsten Nummer ist myfile-031.log:
+
+    $file = Quiq::Path->nextFile('myfile',3,'log');
+    =>
+    myfile-032.log
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub nextName {
+sub nextFile {
     my ($this,$name,$n,$ext) = @_;
 
     my @files = sort $this->glob("$name-*.$ext");
