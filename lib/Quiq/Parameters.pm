@@ -157,18 +157,21 @@ sub extract {
 
     my @args;
 
+    # Wir können sofort mit einer leeren Argumentliste zurückkehren,
+    # wenn die Parameterliste leer ist und wir im VarMode sind.
+
+    if (!@$paramA && $varMode) {
+        return \@args;
+    }
+
     # Hash mit allen angegebenen Optionen aufbauen. Wert ist entweder
     # eine Variablen-Referenz (VarMode) oder der Defaultwert der Option.
-    # Wir können uns die Initialisierung des Options-Hash ersparen,
-    # wenn wir im VarMode sind und die Parameterliste leer ist.
 
     my %opt;
-    if (!$varMode || @$paramA) {
-        while (@_) {
-            my $key = shift;
-            $key =~ s/^-+//; # führende Bindestriche entfernen
-            $opt{$key} = shift;
-        }
+    while (@_) {
+        my $key = shift;
+        $key =~ s/^-+//; # führende Bindestriche entfernen
+        $opt{$key} = shift;
     }
 
     # Parameterliste verarbeiten
