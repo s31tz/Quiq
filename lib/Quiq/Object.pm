@@ -208,7 +208,7 @@ Referenz auf diese Liste zurückgegeben.
             opt1 => \$opt1,
             opt2 => \$opt2,
         );
-        my ($arg1,$arg2,$arg3) = @$argA;
+        my ($arg1,$arg2,$arg3,$arg4) = @$argA;
     
         # ...
     }
