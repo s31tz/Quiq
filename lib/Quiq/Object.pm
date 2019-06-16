@@ -123,8 +123,8 @@ sub rebless {
 =item $sloppy
 
 Wirf keine Exception, wenn unerwartete Parameter (also Optionen und
-Arumente) in @param enthalten sind. Diese Parameter bleiben in @param
-stehen.
+Argumente) in @param enthalten sind. Diese Parameter werden aus @param
+nicht entfernt, bleiben also für eine weitere Verarbeitung stehen.
 
 =item $minArgs
 
@@ -134,9 +134,14 @@ Mindestanzahl an Argumenten.
 
 Maximale Anzahl an Argumenten.
 
+=item @params
+
+List der Parameter.
+
 =item @optRef
 
-Liste der Optionen und Referenzen auf die Optionsvariablen.
+Liste der erwarteten Optionen zusammen mit Referenzen auf die
+zugehörigen Optionsvariablen.
 
 =back
 
@@ -165,14 +170,14 @@ der Methodenaufruf ohne Optionen erfolgt kehrt parameters(), wie gesagt,
 sofort zurück.
 
     sub myMethod {
-        my ($self,$arg1,$arg2,$arg3) = splice @_,0,3;
+        my ($this,$arg1,$arg2,$arg3) = splice @_,0,3;
     
         # Optionen
     
         my $opt1 = 1;
         my $opt2 = 2;
     
-        $self->parameters(\@_,
+        $this->parameters(\@_,
             opt1 => \$opt1,
             opt2 => \$opt2,
         );
@@ -185,7 +190,7 @@ Parameter übergeben werden. Diese bleiben in @_ stehen. Dies ist nützlich,
 wenn die Methode zusätzliche Parameter empfängt und diese unbesehen
 an eine andere Methode weiterleitet.
 
-    $self->parameters(1,\@_,
+    $this->parameters(1,\@_,
         opt1 => \$opt1,
         opt2 => \$opt2,
     );
@@ -197,14 +202,14 @@ von parameters() aus der Parameterliste "herausgefischt" und eine
 Referenz auf diese Liste zurückgegeben.
 
     sub myMethod {
-        my $self = shift;
+        my $this = shift;
     
         # Optionen und Argumente
     
         my $opt1 = 1;
         my $opt2 = 2;
     
-        $argA = $self->parameters(0,\@_,
+        $argA = $this->parameters(0,\@_,
             opt1 => \$opt1,
             opt2 => \$opt2,
         );
