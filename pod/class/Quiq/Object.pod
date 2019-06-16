@@ -12,7 +12,7 @@ Quiq::Object - Basisklasse für alle Klassen der Klassenbibliothek
 
 =head1 METHODS
 
-=head2 Instantiierung
+=head2 Blessen
 
 =head3 bless() - Blesse Objekt auf Klasse
 
@@ -35,7 +35,7 @@ Der Aufruf ist äquivalent zu:
 
     $hash = Hash->bless({});
 
-=head3 rebless() - Blesse Objekt auf eine andere Klasse um
+=head3 rebless() - Blesse Objekt auf eine andere Klasse
 
 =head4 Synopsis
 
@@ -52,6 +52,111 @@ Der Aufruf ist äquivalent zu:
 =head4 Example
 
     $hash->rebless('MyClass');
+
+=head2 Parameterübergabe
+
+=head3 parameters() - Argumente und Optionen eines Methodenaufrufs
+
+=head4 Synopsis
+
+    [1] $this->parameters(\@param,@optRef);
+    [2] $this->parameters($sloppy,\@param,@optRef);
+    [3] $argA = $this->parameters($minArgs,$maxArgs,\@param,@optRef);
+    [4] $argA = $this->parameters($sloppy,$minArgs,$maxArgs,\@param,@optRef);
+
+=head4 Arguments
+
+=over 4
+
+=item $sloppy
+
+Wirf keine Exception, wenn unerwartete Parameter (also Optionen und
+Arumente) in @param enthalten sind. Diese Parameter bleiben in @param
+stehen.
+
+=item $minArgs
+
+Mindestanzahl an Argumenten.
+
+=item $maxArgs
+
+Maximale Anzahl an Argumenten.
+
+=item @optRef
+
+Liste der Optionen und Referenzen auf die Optionsvariablen.
+
+=back
+
+=head4 Returns
+
+=over 4
+
+=item $argA
+
+Referenz auf Array mit mindestens $minArgs und höchstens
+$maxArgs Argumenten.
+
+=back
+
+=head4 Description
+
+Liefere die Argumente und Optionen eines Methodenaufrufs. Die Methode
+kann eine Klassen- oder Objektmethode sein. Das Argument @params ist
+typischerweise @_.
+
+[1] Wenn die Methode eine feste Anzahl an Argumenten besitzt und diese
+selbst behandelt werden, ist die Nutzung am effizientesten. Denn werden
+keine Optionen beim Aufruf der Methode angegeben, kehrt parameters()
+sofort zurück.
+
+    sub myMethod {
+        my ($self,$arg1,$arg2,$arg3) = splice @_,0,3;
+    
+        # Optionen
+    
+        my $opt1 = 1;
+        my $opt2 = 2;
+    
+        $self->parameters(\@_,
+            opt1 => \$opt1,
+            opt2 => \$opt2,
+        );
+    
+        # ...
+    }
+
+[2] Wie [1], nur dass keine Exception geworfen wird, wenn unbekannte
+Parameter übergeben werden. Diese bleiben in @_ stehen. Dies ist nützlich,
+wenn die Methode zusätzliche Parameter empfängt und diese unbesehen
+an eine andere Methode weiterleitet.
+
+    $self->parameters(1,\@_,
+        opt1 => \$opt1,
+        opt2 => \$opt2,
+    );
+
+[3], [4] Wie [1] bzw. [2], nur dass parameters() zusätzlich die
+Argumente der Methode behandelt. Dies ist vor allem nützlich, wenn
+die Methode eine variable Anzahl an Argumenten hat. Diese werden
+von parameters() aus der Parameterliste "herausgefischt".
+
+    sub myMethod {
+        my $self = shift;
+    
+        # Optionen und Argumente
+    
+        my $opt1 = 1;
+        my $opt2 = 2;
+    
+        $argA = $self->parameters(0,\@_,
+            opt1 => \$opt1,
+            opt2 => \$opt2,
+        );
+        my ($arg1,$arg2,$arg3) = @$argA;
+    
+        # ...
+    }
 
 =head2 Exceptions
 
