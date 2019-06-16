@@ -160,14 +160,14 @@ $maxArgs Argumenten.
 
 Liefere die Argumente und Optionen eines Methodenaufrufs. Die Methode
 kann eine Klassen- oder Objektmethode sein. Das Argument @params ist
-typischerweise @_. Die Methode ist sehr effizient, wenn @params leer
-ist, denn dann kehrt sie sofort zurück.
+typischerweise @_. Parameters() behandelt den Fall sehr effizient,
+dass @params leer ist, denn dann kehrt parameters() sofort zurück.
 
 [1] Wenn die Methode eine feste Anzahl an Argumenten besitzt und diese
-selbst behandelt werden ist die Nutzung am effizientesten. Denn die
-Argumente müssen von parameters() dann nicht kopiert werden und wenn
-der Methodenaufruf ohne Optionen erfolgt kehrt parameters(), wie gesagt,
-sofort zurück.
+von ihr selbst behandelt werden, ist die Nutzung am effizientesten.
+Denn die Argumente müssen von parameters() dann nicht kopiert werden und
+wenn der Methodenaufruf ohne Optionen erfolgt, kehrt parameters(),
+wie bereits gesagt, sofort zurück. Beispiel:
 
     sub myMethod {
         my ($this,$arg1,$arg2,$arg3) = splice @_,0,3;
@@ -188,7 +188,8 @@ sofort zurück.
 [2] Wie [1], nur dass keine Exception geworfen wird, wenn unbekannte
 Parameter übergeben werden. Diese bleiben in @_ stehen. Dies ist nützlich,
 wenn die Methode zusätzliche Parameter empfängt und diese unbesehen
-an eine andere Methode weiterleitet.
+an eine andere Methode weiterleitet. Der Aufruf von parameters() ändert
+sich zu:
 
     $this->parameters(1,\@_,
         opt1 => \$opt1,
@@ -199,7 +200,7 @@ an eine andere Methode weiterleitet.
 Argumente der Methode behandelt. Dies ist nützlich, wenn die
 Methode eine I<variable> Anzahl an Argumenten hat. Diese werden
 von parameters() aus der Parameterliste "herausgefischt" und eine
-Referenz auf diese Liste zurückgegeben.
+Referenz auf diese Liste zurückgegeben. Beispiel:
 
     sub myMethod {
         my $this = shift;
