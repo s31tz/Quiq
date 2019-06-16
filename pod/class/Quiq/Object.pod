@@ -103,11 +103,13 @@ $maxArgs Argumenten.
 
 Liefere die Argumente und Optionen eines Methodenaufrufs. Die Methode
 kann eine Klassen- oder Objektmethode sein. Das Argument @params ist
-typischerweise @_.
+typischerweise @_. Die Methode ist sehr effizient, wenn @params leer
+ist, denn dann kehrt sie sofort zurück.
 
 [1] Wenn die Methode eine feste Anzahl an Argumenten besitzt und diese
-selbst behandelt werden, ist die Nutzung am effizientesten. Denn werden
-keine Optionen beim Aufruf der Methode angegeben, kehrt parameters()
+selbst behandelt werden ist die Nutzung am effizientesten. Denn die
+Argumente müssen von parameters() dann nicht kopiert werden und wenn
+der Methodenaufruf ohne Optionen erfolgt kehrt parameters(), wie gesagt,
 sofort zurück.
 
     sub myMethod {
@@ -137,9 +139,10 @@ an eine andere Methode weiterleitet.
     );
 
 [3], [4] Wie [1] bzw. [2], nur dass parameters() zusätzlich die
-Argumente der Methode behandelt. Dies ist vor allem nützlich, wenn
-die Methode eine variable Anzahl an Argumenten hat. Diese werden
-von parameters() aus der Parameterliste "herausgefischt".
+Argumente der Methode behandelt. Dies ist nützlich, wenn die
+Methode eine I<variable> Anzahl an Argumenten hat. Diese werden
+von parameters() aus der Parameterliste "herausgefischt" und eine
+Referenz auf diese Liste zurückgegeben.
 
     sub myMethod {
         my $self = shift;
