@@ -136,7 +136,7 @@ Maximale Anzahl an Argumenten.
 
 =item @params
 
-List der Parameter.
+Liste der Parameter, typischerweise @_.
 
 =item @optRef
 
@@ -233,11 +233,11 @@ sub parameters {
     if (ref $_[0]) {
         $sloppy = $minArgs = $maxArgs = 0;
     }
-    if (ref $_[1]) {
+    elsif (ref $_[1]) {
         $sloppy = shift;
         $minArgs = $maxArgs = 0;
     }
-    if (ref $_[3]) {
+    elsif (ref $_[2]) {
         $sloppy = 0;
         ($minArgs,$maxArgs) = splice @_,0,2;
     }
@@ -251,7 +251,7 @@ sub parameters {
     if (!@$paramA) {
         # Wenn die Parameterliste leer ist, kehren wir sofort mit einer
         # leeren Argumentliste zurück. Die Optionsvariblen behalten
-        # ihren Wert.
+        # einfach ihren Wert.
         return [];
     }
 
@@ -260,7 +260,9 @@ sub parameters {
     my $argA = Quiq::Parameters->extract(1,0,undef,$paramA,$maxArgs,@_);
     if (@$argA < $minArgs) {
         $this->throw(
-            'PARAM-00099: Missing arguments'
+            'PARAM-00099: Missing arguments',
+            MinArgs => $minArgs,
+            Arguments => "@$argA",
         );
     }
     elsif (@$paramA && !$sloppy) {

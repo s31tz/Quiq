@@ -84,7 +84,7 @@ Maximale Anzahl an Argumenten.
 
 =item @params
 
-List der Parameter.
+Liste der Parameter, typischerweise @_.
 
 =item @optRef
 
