@@ -412,11 +412,39 @@ sub editPage {
 
     # Seite speichern
 
-    return $self->send('POST','edit',
+    my $res = $self->send('POST','edit',
         token => $token,
         $arg =~ /^\d+$/? (pageid => $arg): (title => $arg),
         text => $text,
     );
+
+    # CAPTCHA behandeln. Wir behandeln den CAPTCH-Type "simple" automatisch.
+
+    if (my $h = $res->{'edit'}->{'captcha'}) {
+        my $captchaType = $h->{'type'};
+        if ($captchaType eq 'simple') {
+            my $captchaId = $h->{'id'};
+            my $captchaQuestion = $h->{'question'};
+
+            # Request mit gelöstem CAPTCHA wiederholen
+
+            $res = $self->send('POST','edit',
+                captchaid => $captchaId,
+                captchaword => eval "$captchaQuestion",
+                token => $token,
+                $arg =~ /^\d+$/? (pageid => $arg): (title => $arg),
+                text => $text,
+            );
+        }
+        else {
+            $self->throw(
+                'MEDIAWIKI-00099: Unknown CAPTCHA type',
+                CaptchaType => $captchaType,
+            );
+        }
+    }
+
+    return $res;
 }
 
 # -----------------------------------------------------------------------------
