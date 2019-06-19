@@ -4,6 +4,7 @@ use base qw/Quiq::Hash/;
 use strict;
 use warnings;
 use v5.10.0;
+use utf8;
 
 our $VERSION = '1.145';
 
@@ -1209,7 +1210,7 @@ sub showPackage {
     my $viewPath = $self->viewPath;
 
     my $tab = $self->runSql("
-        SELECT
+        SELECT DISTINCT -- Warum ist hier DISTINCT nötig?
             itm.itemobjid AS id
             , SYS_CONNECT_BY_PATH(itm.itemname,'/') AS item_path
             , itm.itemtype AS item_type
@@ -1223,8 +1224,8 @@ sub showPackage {
                 ON pkg.packageobjid = ver.packageobjid
             JOIN harenvironment env
                 ON env.envobjid = pkg.envobjid
-            JOIN harstate sta
-                ON sta.stateobjid = pkg.stateobjid
+            /* JOIN harstate sta
+                ON sta.stateobjid = pkg.stateobjid */
             JOIN haritems par
                 ON par.itemobjid = itm.parentobjid
             JOIN harrepository rep
