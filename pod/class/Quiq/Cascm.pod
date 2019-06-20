@@ -395,6 +395,8 @@ Dies geht nur, wenn sich diese Version auf der untersten Stufe
 =item $namePattern
 
 Name des Item (File oder Directory), SQL-Wildcards sind erlaubt.
+Der Name ist nicht verankert, wird intern also als '%$namePattern%'
+abgesetzt.
 
 =back
 

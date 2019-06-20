@@ -795,6 +795,8 @@ sub deleteVersion {
 =item $namePattern
 
 Name des Item (File oder Directory), SQL-Wildcards sind erlaubt.
+Der Name ist nicht verankert, wird intern also als '%$namePattern%'
+abgesetzt.
 
 =back
 
@@ -843,7 +845,7 @@ sub findItem {
                 ON rep.repositobjid = itm.repositobjid
         WHERE
             env.environmentname = '$projectContext'
-            AND itm.itemname LIKE '$namePattern'
+            AND itm.itemname LIKE '%$namePattern%'
         START WITH
             itm.itemname = '$viewPath'
             AND itm.repositobjid = rep.repositobjid
