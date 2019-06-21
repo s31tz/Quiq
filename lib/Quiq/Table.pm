@@ -28,17 +28,30 @@ L<Quiq::Hash>
 
 Ohne Kolumnennamen:
 
-    my @rows = (
+    use Quiq::Table;
+    
+    # Daten
+    
+    @rows = (
         [1,  'A',  76.253],
         [12, 'AB', 1.7   ],
         [123,'ABC',9999  ],
     );
     
-    my $tab = Quiq::Table->new(3,\@rows);
+    # Objekt instantiieren
+    $tab = Quiq::Table->new(3,\@rows);
+    
+    # Werte der Kolumne 1 (0-basierte Zählung)
+    
+    @values = $tab->values(1);
+    say "@values";
+    =>
+    A AB ABC
+    
+    # Ausgabe als Text-Tabelle
     
     print $tab->asText;
-    
-    __END__
+    =>
     |   1 | A   |   76.253 |
     |  12 | AB  |    1.700 |
     | 123 | ABC | 9999.000 |
@@ -59,10 +72,10 @@ Ohne Kolumnennamen:
     $columnA = $tab->columns;
     # ['a','b','c','d']
     
-    $i = $tab->index('c');
+    $i = $tab->pos('c');
     # 2
     
-    $i = $tab->index('z');
+    $i = $tab->pos('z');
     # Exception
     
     # Zeilen
@@ -136,7 +149,7 @@ Anzahl der Kolumnen (Integer).
 
 =item @columns
 
-Liste von Kolumnennamen (Strings).
+Liste von Kolumnennamen (Array of Strings).
 
 =item @rows
 
