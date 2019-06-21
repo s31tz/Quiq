@@ -10,6 +10,23 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 SYNOPSIS
 
+Ohne Kolumnennamen:
+
+    my @rows = (
+        [1,  'A',  76.253],
+        [12, 'AB', 1.7   ],
+        [123,'ABC',9999  ],
+    );
+    
+    my $tab = Quiq::Table->new(3,\@rows);
+    
+    print $tab->asText;
+    
+    __END__
+    |   1 | A   |   76.253 |
+    |  12 | AB  |    1.700 |
+    | 123 | ABC | 9999.000 |
+
     use Quiq::Table;
     
     # Objekt
@@ -71,10 +88,10 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 =head1 DESCRIPTION
 
 Ein Objekt der Klasse repräsentiert eine Tabelle, also eine Liste
-von gleichförmigen Zeilen. Die Zeilen sind Arrays identischer Größe.
-Die Namen der Kolumnen werden dem Konstruktor der Klasse übergeben.
-Sie bezeichnen die Komponenten der Zeilen. Die Zeilen sind Objekte
-der Klasse Quiq::TableRow.
+von Arrays identischer Größe. Die Kolumnen können über ihre Position
+oder ihren Namen (sofern definiert) angesprochen werden.
+Die Klasse ist insbesondere nützlich, wenn die Daten tabellarisch
+ausgegeben werden sollen.
 
 =head1 EXAMPLE
 
@@ -88,15 +105,26 @@ Siehe quiq-ls
 
 =head4 Synopsis
 
+    $tab = $class->new($width);
+    $tab = $class->new($width,\@rows);
     $tab = $class->new(\@columns);
+    $tab = $class->new(\@columns,\@rows);
 
 =head4 Arguments
 
 =over 4
 
+=item $width
+
+Anzahl der Kolumnen (Integer).
+
 =item @columns
 
-Liste der Kolumnennamen (Strings).
+Liste von Kolumnennamen (Strings).
+
+=item @rows
+
+Liste von Zeilen (Array of Arrays).
 
 =back
 
@@ -106,10 +134,8 @@ Referenz auf Tabellen-Objekt
 
 =head4 Description
 
-Instantiiere ein Tabellen-Objekt mit den Kolumnennamen @columns und
-liefere eine Referenz auf das Objekt zurück. Die Kolumnennamen werden
-nicht kopiert, die Referenz wird im Objekt gespeichert. Die
-Liste der Zeilen ist zunächst leer.
+Instantiiere ein Tabellen-Objekt und liefere eine Referenz auf dieses
+Objekt zurück.
 
 =head2 Objektmethoden
 
@@ -142,11 +168,12 @@ Integer
 
 Liefere die Anzahl der Zeilen der Tabelle.
 
-=head3 index() - Index einer Kolumne
+=head3 pos() - Position einer Kolumne
 
 =head4 Synopsis
 
-    $i = $tab->index($column);
+    $pos = $tab->pos($column);
+    $pos = $tab->pos($pos);
 
 =head4 Arguments
 
@@ -156,6 +183,10 @@ Liefere die Anzahl der Zeilen der Tabelle.
 
 Kolumnenname (String).
 
+=item $pos
+
+Kolumnenposition (Integer).
+
 =back
 
 =head4 Returns
@@ -164,13 +195,15 @@ Integer
 
 =head4 Description
 
-Liefere den Index der Kolumne $column. Der Index einer Kolumne ist ihre
-Position innerhalb des Kolumnen-Arrays.
+Liefere die Position der Kolumne $column in den Zeilen-Arrays.
+Die Position ist 0-basiert. Ist das Argument eine Zahl (Position),
+liefere diese unverändert zurück.
 
 =head3 properties() - Eigenschaften einer Kolumne
 
 =head4 Synopsis
 
+    $prp = $tab->properties($pos);
     $prp = $tab->properties($column);
 
 =head4 Arguments
@@ -238,6 +271,7 @@ Liefere die Liste der Zeilen der Tabelle.
 
 =head4 Synopsis
 
+    @values | $valueA = $tab->values($pos,@opt);
     @values | $valueA = $tab->values($column,@opt);
 
 =head4 Arguments
@@ -302,7 +336,7 @@ Callback-Funktion, die für jede Zelle gerufen wird und eine Termnal-Farbe
 für die jeweilige Zelle liefert. Die Funktion hat die Struktur:
 
     sub {
-        my ($tab,$row,$column,$val) = @_;
+        my ($tab,$row,$pos,$val) = @_;
         ...
         return $color;
     }

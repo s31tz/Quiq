@@ -69,7 +69,7 @@ Instantiiere ein Zeilen-Objekt für Tabelle $tab mit den Zeilendaten @arr.
 sub new {
     my ($class,$tab,$valueA) = @_;
 
-    if (@$valueA != @{$tab->{'columnA'}}) {
+    if (@$valueA != $tab->{'width'}) {
         $class->throw(
             'TABLE-00099: Unexpected array length',
             TableWidth => scalar @{$tab->{'columnA'}},
