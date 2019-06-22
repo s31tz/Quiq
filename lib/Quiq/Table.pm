@@ -45,82 +45,54 @@ Ohne Kolumnennamen:
     
     @values = $tab->values(1);
     say "@values";
-    =>
+    ==>
     A AB ABC
     
     # Ausgabe als Text-Tabelle
     
     print $tab->asText;
-    =>
+    ==>
     |   1 | A   |   76.253 |
     |  12 | AB  |    1.700 |
     | 123 | ABC | 9999.000 |
 
+Mit Kolumnennamen:
+
     use Quiq::Table;
     
-    # Objekt
-    $tab = Quiq::Table->new(['a','b','c','d']);
+    # Daten
     
-    # Kolumnen
+    @rows = (
+        [1,  'A',  76.253],
+        [12, 'AB', 1.7   ],
+        [123,'ABC',9999  ],
+    );
     
-    $width = $tab->width;
-    # 4
+    # Objekt instantiieren
+    $tab = Quiq::Table->new(['a','b','c'],\@rows);
     
-    @columns = $tab->columns;
-    # ('a','b','c','d')
+    # Werte der Kolumne b
     
-    $columnA = $tab->columns;
-    # ['a','b','c','d']
+    @values = $tab->values('b');
+    say "@values";
+    ==>
+    A AB ABC
     
-    $i = $tab->pos('c');
-    # 2
+    # Ausgabe als Text-Tabelle
     
-    $i = $tab->pos('z');
-    # Exception
-    
-    # Zeilen
-    
-    @rows = $tab->rows;
-    # ()
-    
-    $rowA = $tab->rows;
-    # []
-    
-    $count = $tab->count;
-    # 0
-    
-    $tab->push([1,2,3,4]);
-    $tab->push([5,6,7,8]);
-    $tab->push([1,9,10,11]);
-    $count = $tab->count;
-    # 3
-    
-    # Über alle Zeilen und Kolumnen iterieren
-    
-    for my $row ($tab->rows) {
-        for my $value ($row->values) {
-            # ...
-        }
-    }
-    
-    # Werte
-    
-    @values = $tab->values('a');
-    # (1,5,1)
-    
-    $valueA = $tab->values('a');
-    # [1,5,1]
-    
-    @values = $tab->values('a',-distinct=>1);
-    # (1,5)
+    print $tab->asText;
+    ==>
+    |   1 | A   |   76.253 |
+    |  12 | AB  |    1.700 |
+    | 123 | ABC | 9999.000 |
 
 =head1 DESCRIPTION
 
 Ein Objekt der Klasse repräsentiert eine Tabelle, also eine Liste
 von Arrays identischer Größe. Die Kolumnen können über ihre Position
 oder ihren Namen (sofern definiert) angesprochen werden.
-Die Klasse ist insbesondere nützlich, wenn die Daten tabellarisch
-ausgegeben werden sollen.
+Die Klasse kann die Daten in verschiedenen Formaten tabellarisch
+ausgegeben.
 
 =head1 EXAMPLE
 
