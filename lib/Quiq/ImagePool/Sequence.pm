@@ -6,7 +6,7 @@ use warnings;
 use v5.10.0;
 use utf8;
 
-our $VERSION = '1.146';
+our $VERSION = '1.147';
 
 use Quiq::OrderedHash;
 use Quiq::FileHandle;
@@ -378,7 +378,7 @@ sub images {
 
 =head1 VERSION
 
-1.146
+1.147
 
 =head1 AUTHOR
 
