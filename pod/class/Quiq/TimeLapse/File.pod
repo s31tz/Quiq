@@ -131,7 +131,7 @@ Liefere den Text des Dateinamens.
 
 =head1 VERSION
 
-1.147
+1.148
 
 =head1 SOURCE
 

@@ -5,9 +5,8 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = '1.147';
+our $VERSION = '1.148';
 
-use Quiq::Option;
 use Quiq::Math;
 
 # -----------------------------------------------------------------------------
@@ -72,7 +71,7 @@ sub isNumber {
 
     my $name = undef;
     
-    Quiq::Option->extract(\@_,
+    $class->parameters(\@_,
         -name => \$name,
     );
 
@@ -141,7 +140,7 @@ sub notNull {
 
     my $name = undef;
     
-    Quiq::Option->extract(\@_,
+    $class->parameters(\@_,
         -name => \$name,
     );
 
@@ -149,8 +148,8 @@ sub notNull {
 
     if (!defined($val) || $val eq '') {
         $class->throw(
-            defined $name? (Name => $name): (),
             'ASSERT-00002: Value is null',
+            defined $name? (Name => $name): (),
         );
     }
 
@@ -161,7 +160,7 @@ sub notNull {
 
 =head1 VERSION
 
-1.147
+1.148
 
 =head1 AUTHOR
 

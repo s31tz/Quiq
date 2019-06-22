@@ -17,6 +17,10 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 Anzahl der Sekunden seit 1.1.1970, 0 Uhr UTC in hoher Auflösung,
 also mit Nachkommastellen.
 
+=item ISO-Zeitangabe
+
+Zeitangabe in der Darstellung C<YYYY-MM-DD HH:MI:SS.X>.
+
 =back
 
 =head1 DESCRIPTION
@@ -39,8 +43,9 @@ Zeitpunkt ist hochauflösend, umfasst also auch Sekundenbruchteile.
 
 =head4 Description
 
-Instantiiere ein Zeitpunkt-Objekt für Epoch-Wert $epoch und
-liefere dieses zurück. Ist kein Epoch-Wert angegeben, wird
+Instantiiere ein Zeitpunkt-Objekt für Epoch-Wert $epoch bzw.
+ISO-Zeitangabe $iso, interpretiert in der lokalen Zeitzone, und
+liefere dieses Objekt zurück. Ist kein Argument angegeben, wird
 der aktuelle Zeitpunkt genommen.
 
 =head2 Externe Repräsentation
@@ -102,7 +107,7 @@ Zeitpunkt wird in der lokalen Zeitzone interpretiert.
 
 =head1 VERSION
 
-1.147
+1.148
 
 =head1 SOURCE
 

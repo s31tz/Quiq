@@ -141,7 +141,7 @@ Zeichenketten-Repäsentation dieser Perl-Datenstruktur.
 
 =head1 VERSION
 
-1.147
+1.148
 
 =head1 SOURCE
 
