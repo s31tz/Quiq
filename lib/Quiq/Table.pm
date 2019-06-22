@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = '1.145';
+our $VERSION = '1.146';
 
 use Quiq::Hash;
 use Quiq::Properties;
@@ -26,36 +26,6 @@ L<Quiq::Hash>
 
 =head1 SYNOPSIS
 
-Ohne Kolumnennamen:
-
-    use Quiq::Table;
-    
-    # Daten
-    
-    @rows = (
-        [1,  'A',  76.253],
-        [12, 'AB', 1.7   ],
-        [123,'ABC',9999  ],
-    );
-    
-    # Objekt instantiieren
-    $tab = Quiq::Table->new(3,\@rows);
-    
-    # Werte der Kolumne 1 (0-basierte Zählung)
-    
-    @values = $tab->values(1);
-    say "@values";
-    ==>
-    A AB ABC
-    
-    # Ausgabe als Text-Tabelle
-    
-    print $tab->asText;
-    ==>
-    |   1 | A   |   76.253 |
-    |  12 | AB  |    1.700 |
-    | 123 | ABC | 9999.000 |
-
 Mit Kolumnennamen:
 
     use Quiq::Table;
@@ -74,6 +44,36 @@ Mit Kolumnennamen:
     # Werte der Kolumne b
     
     @values = $tab->values('b');
+    say "@values";
+    ==>
+    A AB ABC
+    
+    # Ausgabe als Text-Tabelle
+    
+    print $tab->asText;
+    ==>
+    |   1 | A   |   76.253 |
+    |  12 | AB  |    1.700 |
+    | 123 | ABC | 9999.000 |
+
+Ohne Kolumnennamen:
+
+    use Quiq::Table;
+    
+    # Daten
+    
+    @rows = (
+        [1,  'A',  76.253],
+        [12, 'AB', 1.7   ],
+        [123,'ABC',9999  ],
+    );
+    
+    # Objekt instantiieren
+    $tab = Quiq::Table->new(3,\@rows);
+    
+    # Werte der Kolumne 1 (0-basierte Zählung)
+    
+    @values = $tab->values(1);
     say "@values";
     ==>
     A AB ABC
@@ -588,7 +588,7 @@ sub asText {
 
 =head1 VERSION
 
-1.145
+1.146
 
 =head1 AUTHOR
 

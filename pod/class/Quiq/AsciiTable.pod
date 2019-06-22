@@ -365,7 +365,7 @@ Liefere die Tabelle als Zeichenkette, wie sie dem Konstruktor
 
 =head1 VERSION
 
-1.145
+1.146
 
 =head1 SOURCE
 

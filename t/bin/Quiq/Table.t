@@ -19,7 +19,7 @@ sub test_loadClass : Init(1) {
 
 # Ohne Kolumnennamen
 
-sub test_unitTest_noColumns : Test(2) {
+sub test_unitTest_noColumns : Test(3) {
     my $self = shift;
 
     my @rows = (
@@ -32,6 +32,37 @@ sub test_unitTest_noColumns : Test(2) {
 
     my $tab = Quiq::Table->new(3,\@rows);
     $self->is(ref($tab),'Quiq::Table');
+
+    my @values = $tab->values(1);
+    $self->isDeeply(\@values,['A','AB','ABC']);
+
+    my $str = $tab->asText;
+    my $expected = Quiq::Unindent->string(q~
+        |   1 | A   |   76.253 |
+        |  12 | AB  |    1.700 |
+        | 123 | ABC | 9999.000 |
+    ~);
+    $self->is($str,$expected);
+}
+
+# Mit Kolumnennamen
+
+sub test_unitTest_columns : Test(3) {
+    my $self = shift;
+
+    my @rows = (
+        [1,  'A',    76.253],
+        [12, 'AB',    1.7  ],
+        [123,'ABC',9999    ],
+    );
+
+    # new()
+
+    my $tab = Quiq::Table->new(['a','b','c'],\@rows);
+    $self->is(ref($tab),'Quiq::Table');
+
+    my @values = $tab->values('b');
+    $self->isDeeply(\@values,['A','AB','ABC']);
 
     my $str = $tab->asText;
     my $expected = Quiq::Unindent->string(q~

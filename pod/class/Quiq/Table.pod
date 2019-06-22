@@ -10,36 +10,6 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 SYNOPSIS
 
-Ohne Kolumnennamen:
-
-    use Quiq::Table;
-    
-    # Daten
-    
-    @rows = (
-        [1,  'A',  76.253],
-        [12, 'AB', 1.7   ],
-        [123,'ABC',9999  ],
-    );
-    
-    # Objekt instantiieren
-    $tab = Quiq::Table->new(3,\@rows);
-    
-    # Werte der Kolumne 1 (0-basierte Zählung)
-    
-    @values = $tab->values(1);
-    say "@values";
-    ==>
-    A AB ABC
-    
-    # Ausgabe als Text-Tabelle
-    
-    print $tab->asText;
-    ==>
-    |   1 | A   |   76.253 |
-    |  12 | AB  |    1.700 |
-    | 123 | ABC | 9999.000 |
-
 Mit Kolumnennamen:
 
     use Quiq::Table;
@@ -58,6 +28,36 @@ Mit Kolumnennamen:
     # Werte der Kolumne b
     
     @values = $tab->values('b');
+    say "@values";
+    ==>
+    A AB ABC
+    
+    # Ausgabe als Text-Tabelle
+    
+    print $tab->asText;
+    ==>
+    |   1 | A   |   76.253 |
+    |  12 | AB  |    1.700 |
+    | 123 | ABC | 9999.000 |
+
+Ohne Kolumnennamen:
+
+    use Quiq::Table;
+    
+    # Daten
+    
+    @rows = (
+        [1,  'A',  76.253],
+        [12, 'AB', 1.7   ],
+        [123,'ABC',9999  ],
+    );
+    
+    # Objekt instantiieren
+    $tab = Quiq::Table->new(3,\@rows);
+    
+    # Werte der Kolumne 1 (0-basierte Zählung)
+    
+    @values = $tab->values(1);
     say "@values";
     ==>
     A AB ABC
@@ -337,7 +337,7 @@ Text-Tabelle (String)
 
 =head1 VERSION
 
-1.145
+1.146
 
 =head1 SOURCE
 
