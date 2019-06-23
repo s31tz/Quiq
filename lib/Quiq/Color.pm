@@ -47,13 +47,12 @@ L<Quiq::Object>
 =head1 DESCRIPTION
 
 Ein Objekt der Klasse repräsentiert eine Farbe des RGB-Farbraums,
-also ein Tripel (R, G, B).
-
-Das Objekt kann aus verschiedenen externen Repräsentationen
-instantiiert werden und kann seinerseits verschiedene externe
-Repräsentationen liefern. Ferner kann die Helligkeit der Farbe
-ermittelt werden, was für eine Fontauswahl nützlich sein kann.
-Außerdem kann der Farbe ein Name zugewiesen werden.
+also ein Tripel (R, G, B). Das Objekt kann aus verschiedenen
+externen Repräsentationen instantiiert werden und seinerseits
+verschiedene externe Repräsentationen liefern. Ferner kann die
+Helligkeit der Farbe ermittelt werden, was für eine Fontauswahl
+nützlich sein kann. Außerdem kann der Farbe ein Name zugewiesen
+werden.
 
 =head1 METHODS
 
