@@ -654,6 +654,30 @@ B<MySQL>
 
     USE <schema>
 
+=head3 setSearchPath() - Generiere Statement zum Setzen des Search Path
+
+=head4 Synopsis
+
+    $stmt = $class->setSearchPath(@schemas);
+
+=head4 Description
+
+B<Oracle>
+
+    <not implemented>
+
+B<PostgreSQL>
+
+    SET search_path TO SCHEMA, ...
+
+B<SQLite>
+
+    <not implemented>
+
+B<MySQL>
+
+    <not implemented>
+
 =head3 setEncoding() - Generiere Statement zum Setzen des Client-Encodings
 
 =head4 Synopsis

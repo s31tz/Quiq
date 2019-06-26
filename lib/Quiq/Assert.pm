@@ -44,9 +44,11 @@ Methode zurück, im Fehlerfall wirft sie eine Exception.
 
 =head1 EXAMPLE
 
-    $ perl -MQuiq::Assert -E '$a = Quiq::Assert->new; $a->isNotNull("")'
+    $ perl -MQuiq::Assert -E 'Quiq::Assert->isNotNull("",-name=>'x')'
     Exception:
         ASSERT-00002: Value is null
+    Name:
+        x
     Stacktrace:
         Quiq::Assert::isNotNull() [+1 -e]
           Quiq::Object::throw() [+210 .../Quiq/Assert.pm]
@@ -158,8 +160,8 @@ sub isEnumValue {
         $this->throw(
             'ASSERT-00001: Not an enum value',
             defined $name? (Name => $name): (),
-            Enum => join(', ',map {"'$_'"} @$valueA),
             Value => $val,
+            Allowed => join(', ',map {"'$_'"} @$valueA),
         );
     }
 

@@ -1437,7 +1437,7 @@ sub sql {
 
     if ($log) {
         $self->timeToLog(sprintf '%.6f sec, %s rows%s',$execTime,
-            $apiCur? $apiCur->hits: 0,$@? ' ERROR': '');
+            $hits,$@? ' ERROR': '');
     }
 
     # Exception nach Log-Protokollierung werfen
@@ -1652,6 +1652,42 @@ sub setNumberFormat {
 
     my $cur;
     for my $stmt ($self->stmt->setNumberFormat) {
+        $cur = $self->sqlAtomic($stmt);
+    }
+
+    return $cur;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 setSearchPath() - Setze Schema-Suchpfad
+
+=head4 Synopsis
+
+    $cur = $db->setSearchPath(@schemas);
+
+=head4 Description
+
+Setze den Schema-Suchpfad und liefere einen Cursor mit dem Ergebnis
+der Statementausführung zurück.
+
+B<PostgreSQL / Greenplum>
+
+Der Schema-Suchpfad wird von PostgreSQL genutzt, um Datenbank-Objekte
+zu finden, die nicht mit einem Schema-Präfix qualifiziert sind.
+Das erste Schema der Liste ist gleichzeitig das Default-Schema, in
+dem Datenbank-Objekte erzeugt werden (unabhängig davon, ob sie
+sich in einem anderen Schema des Suchpfads befinden).
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub setSearchPath {
+    my ($self,@schemas) = @_;
+
+    my $cur;
+    for my $stmt ($self->stmt->setSearchPath(@schemas)) {
         $cur = $self->sqlAtomic($stmt);
     }
 

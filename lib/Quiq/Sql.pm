@@ -1329,6 +1329,63 @@ sub setSchema {
 
 # -----------------------------------------------------------------------------
 
+=head3 setSearchPath() - Generiere Statement zum Setzen des Search Path
+
+=head4 Synopsis
+
+    $stmt = $class->setSearchPath(@schemas);
+
+=head4 Description
+
+B<Oracle>
+
+    <not implemented>
+
+B<PostgreSQL>
+
+    SET search_path TO SCHEMA, ...
+
+B<SQLite>
+
+    <not implemented>
+
+B<MySQL>
+
+    <not implemented>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub setSearchPath {
+    my ($self,@schemas) = @_;
+
+    my ($oracle,$postgresql,$sqlite,$mysql) = $self->dbmsTestVector;
+
+    # Statement generieren
+
+    my $stmt;
+    if ($oracle) {
+        $self->throw('Not implemented');
+    }
+    elsif ($postgresql) {
+        $stmt = sprintf 'SET search_path TO %s',join(', ',@schemas);
+    }
+    elsif ($sqlite) {
+        $self->throw('Not implemented');
+    }
+    elsif ($mysql) {
+        $self->throw('Not implemented');
+    }
+    else {
+        $self->throw('Not implemented');
+    }
+
+    return $stmt;
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 setEncoding() - Generiere Statement zum Setzen des Client-Encodings
 
 =head4 Synopsis
@@ -1363,7 +1420,7 @@ B<MySQL>
 # -----------------------------------------------------------------------------
 
 sub setEncoding {
-    my ($self,$charset) = shift;
+    my ($self,$charset) = @_;
 
     my ($oracle,$postgresql,$sqlite,$mysql) = $self->dbmsTestVector;
 

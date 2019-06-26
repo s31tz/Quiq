@@ -698,6 +698,25 @@ Null-Operationen.
 
     $cur = $db->setNumberFormat;
 
+=head3 setSearchPath() - Setze Schema-Suchpfad
+
+=head4 Synopsis
+
+    $cur = $db->setSearchPath(@schemas);
+
+=head4 Description
+
+Setze den Schema-Suchpfad und liefere einen Cursor mit dem Ergebnis
+der Statementausführung zurück.
+
+B<PostgreSQL / Greenplum>
+
+Der Schema-Suchpfad wird von PostgreSQL genutzt, um Datenbank-Objekte
+zu finden, die nicht mit einem Schema-Präfix qualifiziert sind.
+Das erste Schema der Liste ist gleichzeitig das Default-Schema, in
+dem Datenbank-Objekte erzeugt werden (unabhängig davon, ob sie
+sich in einem anderen Schema des Suchpfads befinden).
+
 =head2 Transactions
 
 =head3 begin() - Beginne Transaktion
