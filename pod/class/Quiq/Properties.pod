@@ -21,7 +21,7 @@ soll.
 
 =item type
 
-Typ der Wertemenge: s (Text), f (Float), d (Integer).
+Typ der Wertemenge: s (String), f (Float), d (Integer).
 
 =item width
 
@@ -41,6 +41,11 @@ vom Typ f (Float).
 =item align
 
 Ausrichtung der Werte der Wertemenge: l (left), r (right).
+
+=item multiLine
+
+Boolscher Wert, der angibt, ob die Wertemenge wenigstens einen
+mehrzeiligen Wert enthält.
 
 =back
 
@@ -86,7 +91,7 @@ Erzeuge eine formatierte Liste von Float-Werten:
 
 =item @arr
 
-Array von skalaren Werten (Integers, Floats, Strings)
+Array von skalaren Werten (Integers, Floats, String)
 
 =back
 
@@ -140,6 +145,22 @@ Eine Wertemenge vom Typ s hat per Default die Ausrichtung l,
 die aber auf r geändert werden werden kann.
 
 =back
+
+=head3 multiLine() - Mehrzeilige Werte?
+
+=head4 Synopsis
+
+    $bool = $prp->multiLine;
+
+=head4 Returns
+
+Boolean
+
+=head4 Description
+
+Liefere wahr (1), wenn die Wertemenge mehrzeilige Werte enthält,
+andernfalls falsch (0). Kann nur für eine Wertemenge vom Typ s
+wahr sein.
 
 =head3 scale() - Maximale Anzahl Nachkommastellen
 
@@ -209,8 +230,13 @@ Liefere die Länge des längsten Werts.
 
 =item *
 
-Die Breite einer Wertemenge des Typs d oder s ist die Länge des
+Die Breite einer Wertemenge des Typs d ist die Länge des
 längsten Werts.
+
+=item *
+
+Die Breite einer Wertemenge des Typs s ist die Länge der
+längsten Zeile eines Werts.
 
 =item *
 
