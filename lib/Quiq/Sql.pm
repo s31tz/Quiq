@@ -12,6 +12,7 @@ use Quiq::Hash;
 use Quiq::Option;
 use Quiq::String;
 use Scalar::Util ();
+use Quiq::Unindent;
 use Quiq::Reference;
 
 # -----------------------------------------------------------------------------
@@ -4505,6 +4506,73 @@ sub insert {
     chop $values;
 
     return "INSERT INTO $table ($titles\n)\nVALUES ($values\n)";
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 insertMulti() - Generiere INSERT-Statement mit mehreren Zeilen
+
+=head4 Synopsis
+
+    $stmt = $sql->insertMulti($table,\@keys,[
+            [@vals1],
+            [@vals2],
+            ...
+        ]
+    );
+
+=head4 Description
+
+Generiere ein INSERT-Statement für Tabelle $table mit den Kolumnen
+@keys  und den Datensätzen @records. @records ist eine Liste von
+Arrays mit gleich vielen Elementen wie @keys.
+
+=head4 Example
+
+    $stmt = $sql->insertMulti('person',
+        [qw/per_id per_vorname per_nachname per_geburtstag/],[
+            [qw/1 Linus Seitz 2002-11-11/],
+            [qw/2 Hanno Seitz 2000-04-07/],
+            [qw/3 Emily Philippi 1997-05-05/],
+        ]
+    );
+    =>
+    INSERT INTO person
+        (per_id, per_vorname, per_nachname, per_geburtstag)
+    VALUES
+        ('1', 'Linus', 'Seitz', '2002-11-11'),
+        ('2', 'Hanno', 'Seitz', '2000-04-07')
+        ('3', 'Emily', 'Philippi', '1997-05-05')
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub insertMulti {
+    my ($self,$table,$keyA,$recA) = @_;
+
+    if (!@$recA) {
+        # Keine Daten => kein Statement
+        return '';
+    }
+
+    my $sql = sprintf Quiq::Unindent->string('
+        INSERT INTO %s
+            (%s)
+        VALUES
+    '),$table,join(', ',@$keyA);
+
+    my $i = 0;
+    my $fmt = sprintf '    (%s)',join ', ',('%s') x @$keyA;
+    for my $rec (@$recA) {
+        if ($i++) {
+            $sql .= ",\n";
+        }
+        $sql .= sprintf $fmt,map {$self->valExpr($_)} @$rec;
+    }
+    $sql .= "\n";    
+
+    return $sql;
 }
 
 # -----------------------------------------------------------------------------

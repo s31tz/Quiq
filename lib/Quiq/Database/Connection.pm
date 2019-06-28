@@ -2642,6 +2642,56 @@ sub insertRows {
 
 # -----------------------------------------------------------------------------
 
+=head3 insertMulti() - Füge mehrere Datensätze zu Tabelle hinzu
+
+=head4 Synopsis
+
+    $cur = $db->insertMulti($table,\@keys,[
+            [@vals1],
+            [@vals2],
+            ...
+        ]
+    );
+
+=head4 Description
+
+Füge mehrere Datensätze zu Tabelle $table hinzu. Die Datensätze
+haben die Kolumnen @keys und die Werte @valsI. Die Methode liefert
+das Resultat der Ausführung (Cursor) zurück.
+Im Unterschied zur Methode $db->L<insertRows|"insertRows() - Füge mehrere Datensätze zu Tabelle hinzu">() führt diese
+Methode ein einziges INSERT-Statement mit allen Daten aus, à la
+
+    INSERT INTO person
+        (per_id, per_vorname, per_nachname, per_geburtstag)
+    VALUES
+        ('1', 'Linus', 'Seitz', '2002-11-11'),
+        ('2', 'Hanno', 'Seitz', '2000-04-07')
+        ('3', 'Emily', 'Philippi', '1997-05-05')
+        ...
+
+=head4 Example
+
+    $db->insertMulti('person',
+        [qw/per_id per_vorname per_nachname per_geburtstag/],[
+            [qw/1 Linus Seitz 2002-11-11/],
+            [qw/2 Hanno Seitz 2000-04-07/],
+            [qw/3 Emily Philippi 1997-05-05/],
+        ]
+    );
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub insertMulti {
+    my $self = shift;
+    # @_: $table,$keyA,$recordA
+    my $stmt = $self->stmt->insertMulti(@_);
+    return $self->sql($stmt);
+}
+
+# -----------------------------------------------------------------------------
+
 =head2 Update Operation
 
 =head3 update() - Aktualisiere Datensätze
