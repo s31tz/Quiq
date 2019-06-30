@@ -199,7 +199,7 @@ Mit vereinbarten Kolumnenpräfix für $type lautet der Name
 
 =head1 VERSION
 
-1.148
+1.149
 
 =head1 SOURCE
 

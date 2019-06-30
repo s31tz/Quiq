@@ -323,7 +323,7 @@ Im Skalarkontext liefere ein ResultSet-Objekt mit den Datensätzen.
 
 =head1 VERSION
 
-1.148
+1.149
 
 =head1 SOURCE
 

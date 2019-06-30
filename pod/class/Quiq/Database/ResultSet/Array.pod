@@ -74,7 +74,7 @@ Wird durch Basisklasse getestet
 
 =head1 VERSION
 
-1.148
+1.149
 
 =head1 SOURCE
 

@@ -106,7 +106,7 @@ Buch L<jQuery in Action, Third Edition|https://www.manning.com/books/jquery-in-a
 
 =head1 VERSION
 
-1.148
+1.149
 
 =head1 SOURCE
 
