@@ -821,7 +821,7 @@ sub findItem {
     my $viewPath = $self->viewPath;
 
     my $tab = $self->runSql("
-        SELECT
+        SELECT DISTINCT -- Warum ist hier DISTINCT nötig?
             itm.itemobjid AS id
             , SYS_CONNECT_BY_PATH(itm.itemname,'/') AS item_path
             , itm.itemtype AS item_type
