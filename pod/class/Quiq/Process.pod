@@ -6,7 +6,7 @@ Quiq::Process - Information über den laufenden Prozess
 
 =head1 BASE CLASS
 
-L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+L<Quiq::System|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/System.pod>
 
 =head1 METHODS
 

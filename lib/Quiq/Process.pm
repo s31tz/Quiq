@@ -1,5 +1,5 @@
 package Quiq::Process;
-use base qw/Quiq::Object/;
+use base qw/Quiq::System/;
 
 use strict;
 use warnings;
@@ -20,7 +20,7 @@ Quiq::Process - Information über den laufenden Prozess
 
 =head1 BASE CLASS
 
-L<Quiq::Object>
+L<Quiq::System>
 
 =head1 METHODS
 
