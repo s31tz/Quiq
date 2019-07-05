@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = '1.149';
+our $VERSION = '1.150';
 
 use Quiq::FileHandle;
 
@@ -145,7 +145,7 @@ sub increment {
 
 =head1 VERSION
 
-1.149
+1.150
 
 =head1 AUTHOR
 

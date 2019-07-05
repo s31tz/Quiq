@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = '1.149';
+our $VERSION = '1.150';
 
 use Quiq::Math;
 
@@ -313,7 +313,7 @@ sub isNumber {
 
 =head1 VERSION
 
-1.149
+1.150
 
 =head1 AUTHOR
 
