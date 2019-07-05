@@ -44,7 +44,7 @@ Methode zurück, im Fehlerfall wirft sie eine Exception.
 
 =head1 EXAMPLE
 
-    $ perl -MQuiq::Assert -E 'Quiq::Assert->isNotNull("",-name=>'x')'
+    $ perl -MQuiq::Assert -E 'Quiq::Assert->isNotNull("",-name=>"x")'
     Exception:
         ASSERT-00002: Value is null
     Name:
