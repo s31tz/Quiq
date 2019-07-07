@@ -2619,7 +2619,7 @@ Liefere NOT EXISTS Klausel.
 
 =head1 VERSION
 
-1.150
+1.151
 
 =head1 SOURCE
 

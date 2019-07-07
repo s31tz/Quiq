@@ -6,7 +6,7 @@ use warnings;
 use v5.10.0;
 use utf8;
 
-our $VERSION = '1.150';
+our $VERSION = '1.151';
 
 use Test::Builder ();
 use Quiq::Option;
@@ -1136,7 +1136,7 @@ sub MODIFY_CODE_ATTRIBUTES {
 
 =head1 VERSION
 
-1.150
+1.151
 
 =head1 AUTHOR
 

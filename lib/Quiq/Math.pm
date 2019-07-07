@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = '1.150';
+our $VERSION = '1.151';
 
 use 5.010;
 use Quiq::Formatter;
@@ -648,7 +648,7 @@ sub spikeValue {
 
 =head1 VERSION
 
-1.150
+1.151
 
 =head1 AUTHOR
 
