@@ -16,7 +16,7 @@ sub initMethod : Init(2) {
 
     eval {require GD};
     if ($@) {
-        $self->skipAllTests('GD nicht installiert');
+        $self->skipAllTests('GD not installed');
         return;
     }
     $self->ok(1);
@@ -33,9 +33,7 @@ sub test_new_ttf : Test(2) {
     $self->like($@,qr/GDFONT-00001/);
 
     # TrueType-Font - wir brauchen den absoluten Pfad
-
-    my $file = $self->fixtureDir('pala.ttf');
-    # $file = Quiq::Process->cwd($file);
+    my $file = Quiq::Test::Class->testPath('quiq/test/data/font/pala.ttf');
 
     my $fnt = Quiq::GD::Font->new($file,20);
     $self->is(ref($fnt),'Quiq::GD::Font');

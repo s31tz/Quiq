@@ -1,3 +1,17 @@
+1.150 2019-07-07
+================
+[Quiq::Assert]
+* Doku bearbeitet
+
+[Quiq::Debug]
+* Doku bearbeitet
+
+[Quiq::GD::Font]
+* Klasse hinzugefügt
+
+[Quiq::GD::Image]
+* Klasse hinzugefügt
+
 1.149 2019-07-05
 ================
 [Quiq::Assert]

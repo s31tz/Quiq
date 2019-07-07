@@ -38,11 +38,11 @@ L<Quiq::Object>
 
 =head1 SYNOPSIS
 
-    1: use Quiq::GD::Image;
-    2: 
-    3: my $img = Quiq::GD::Image->new(100,100);
-    4: $img->background('#ffffff');
-    5: print $img->jpg;
+    use Quiq::GD::Image;
+    
+    my $img = Quiq::GD::Image->new(100,100);
+    $img->background('#ffffff');
+    print $img->jpg;
 
 =head1 DESCRIPTION
 
@@ -120,21 +120,21 @@ Anwendung testen. Sie sollte fehlerfrei laufen.
 
 =head2 Text in ein existierendes Bild schreiben
 
-    1: use Quiq::GD::Font;
-    2: use Quiq::GD::Image;
-    3: use Quiq::Path;
-    4: 
-    5: my $fnt = Quiq::GD::Font->new('gdMediumBoldFont');
-    6: my $img = Quiq::GD::Image->new('bild.jpg');
-    7: my $color = $img->color(255,0,0);
-    8: $img->string($fnt,10,10,'TEST',$color);
-    9: Quiq::Path->write('bild.jpg',$img->jpeg);
+    use Quiq::GD::Font;
+    use Quiq::GD::Image;
+    use Quiq::Path;
+    
+    my $fnt = Quiq::GD::Font->new('gdMediumBoldFont');
+    my $img = Quiq::GD::Image->new('bild.jpg');
+    my $color = $img->color(255,0,0);
+    $img->string($fnt,10,10,'TEST',$color);
+    Quiq::Path->write('bild.jpg',$img->jpeg);
 
 =head2 Hintergrund transparent machen
 
-    1: my $img = Quiq::GD::Image->new($width,$height);
-    2: my $white = $img->background(255,255,255);
-    3: $img->transparent($white);
+    my $img = Quiq::GD::Image->new($width,$height);
+    my $white = $img->background(255,255,255);
+    $img->transparent($white);
 
 =head1 METHODS
 
