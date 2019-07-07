@@ -22,13 +22,28 @@ L<Quiq::Object>
 
 =head1 METHODS
 
-=head2 Datenstruktur ausgeben
+=head2 Datenstrukturen
 
 =head3 dump() - Liefere Datenstruktur in lesbarer Form
 
 =head4 Synopsis
 
     $str = $this->dump($ref,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $ref
+
+Referenz auf eine Datenstruktur.
+
+=item @opt
+
+Optionen der Funktion np() des Moduls Data::Printer. Dokumentation siehe
+dort.
+
+=back
 
 =head4 Description
 

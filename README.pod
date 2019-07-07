@@ -221,6 +221,14 @@ L<Quiq::Formatter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Forma
 
 =item *
 
+L<Quiq::GD::Font|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/GD/Font.pod> - GD- oder TrueType-Font
+
+=item *
+
+L<Quiq::GD::Image|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/GD/Image.pod> - Schnittstelle zur GD Graphics Library
+
+=item *
+
 L<Quiq::Gnuplot::Arrow|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gnuplot/Arrow.pod> - Gnuplot-Arrow
 
 =item *

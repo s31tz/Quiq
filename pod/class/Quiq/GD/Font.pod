@@ -1,0 +1,360 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::GD::Font - GD- oder TrueType-Font
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+Abstraktion für GD- und TrueType-Fonts, die von GD nicht gemacht wird.
+
+=head2 Geometrie der (monospaced) GD-Fonts
+
+    Name             Breite Höhe
+    ---------------- ------ ----
+    gdTinyFont         5      8
+    gdSmallFont        6     13
+    gdMediumBoldFont   7     13
+    gdLargeFont        8     16
+    gdGiantFont        9     15
+
+=head1 EXAMPLES
+
+=over 2
+
+=item *
+
+GD-Font instantiieren
+
+    $fnt = Quiq::GD::Font->new('gdSmallFont');
+
+=item *
+
+TrueType-Font instantiieren
+
+    $fnt = Quiq::GD::Font->new('/opt/fonts/pala.ttf',20);
+
+=back
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere GD- oder TrueType-Font
+
+=head4 Synopsis
+
+    $fnt = $class->new($name);
+    $fnt = $class->new($name,$pt);
+    $fnt = $class->new("$name,$pt");
+    $fnt = $class->new($fnt);
+
+=head4 Description
+
+Instantiiere GD- oder TrueType-Font und liefere eine Referenz auf
+dieses Objekt zurück. Wird bei einem TrueType-Font keine Fontgröße
+angegeben, wird 10pt angenommen.
+
+Ein TrueType-Font kann auch mit einem einzigen Argument - als
+Arrayreferenz [$name,$pt] - angegeben werden.
+
+Wird ein bereits instantiiertes Font-Objekt als Parameter übergeben,
+wird dieses einfach zurückgeliefert.
+
+=head2 Primitive Operationen
+
+=head3 name() - Name des Font
+
+=head4 Synopsis
+
+    $name = $fnt->name;
+
+=head4 Description
+
+Liefere den Namen des Font. Bei einem GD-Font ist dies der Name, wie er
+beim Konstruktor angegeben wurde. Bei einem TrueType-Font ist es der
+Grundname der Datei, also ohne Pfad und Endung C<.ttf>.
+
+=head3 pt() - Größe des Font
+
+=head4 Synopsis
+
+    $pt = $fnt->pt;
+
+=head4 Description
+
+Liefere die Größe des Font. Bei einem GD-Font C<undef>, bei einem
+TrueType-Font die Größe in pt.
+
+=head3 isTrueType() - Prüfe auf TrueType-Font
+
+=head4 Synopsis
+
+    $bool = $fnt->isTrueType;
+
+=head4 Description
+
+Liefere 1 wenn der Font ein TrueType-Font ist, liefere 0, wenn er
+ein GD-Font ist.
+
+=head3 stringGeometry() - Liefere den Platzbedarf einer Zeichenkette
+
+=head4 Synopsis
+
+    ($width,$height,$xOffset,$yOffset) = $fnt->stringGeometry($str,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -up => $bool (Default: 0)
+
+Schreibe den Text aufrecht.
+
+=item -debug => $bool (Default: 0)
+
+Gib Informationen auf STDDER aus.
+
+=back
+
+=head4 Description
+
+Liefere den Platzbedarf (Breite, Höhe) und den x- und y-Offset
+der Zeichenkette $str.
+
+B<Geometrie>
+
+TrueType-Fonts können um einen beliebigen Winkel gedreht werden.
+
+            4,5
+            /\
+           /  \
+          /  T \ 2,3
+         /  X  /
+    6,7 /  E  /
+        \ T  /
+         \  /
+          \/
+          0,1
+    
+    $width = $bounds[2]-$bounds[6]
+    $height = $bounds[1]-$bounds[5]
+    $xOffset = -$bounds[6]
+    $yOffset = $up? 0: -$bounds[5]
+
+Von dieser Möglichkeit machen wir allerdings keinen Gebrauch. Wir
+lassen lediglich 0 und 90 Grad zu. Das sind die Möglichkeiten, die
+die GD-Fonts erlauben.
+
+=head3 charWidth() - Liefere (maximale) Breite eines Fontzeichens
+
+=head4 Synopsis
+
+    $width = $fnt->charWidth(@opt);
+
+=head4 Alias
+
+width()
+
+=head4 Options
+
+=over 4
+
+=item -up => $bool (Default: 0)
+
+Vertikaler Text.
+
+=back
+
+=head4 Description
+
+Liefere die maximale Breite eines Fontzeichens.
+
+Da die GD-Fonts fixed/monospaced Fonts sind, ist die Breite aller
+Zeichen gleich.
+
+Bei TrueType-Fonts wird die Breite der Zeichenkette "M" ermittelt.
+
+=head3 charHeight() - Liefere (maximale) Höhe eines Fontzeichens
+
+=head4 Synopsis
+
+    $height = $fnt->charHeight(@opt);
+
+=head4 Alias
+
+height()
+
+=head4 Options
+
+=over 4
+
+=item -up => $bool (Default: 0)
+
+Vertikaler Text.
+
+=back
+
+=head4 Description
+
+Liefere die maximale Höhe eines Fontzeichnes.
+
+Da die GD-Fonts fixed/monospaced Fonts sind, ist die Höhe
+aller Zeichen gleich.
+
+Ist der Font ein TrueType-Font wird die Höhe der Zeichenkette
+"Xy" bestimmt.
+
+=head3 digitWidth() - Liefere Breite einer Ziffer
+
+=head4 Synopsis
+
+    $width = $fnt->digitWidth(@opt);
+
+=head4 Options
+
+=over 4
+
+=item -up => $bool (Default: 0)
+
+Vertikaler Text.
+
+=back
+
+=head4 Description
+
+Liefere die Breite einer Ziffer. Alle Ziffern eines Font sollten
+dieselbe Breite haben. Für GD-Fonts ist dies ohnehin der Fall.
+Bei TrueType-Fonts ermitteln wir die Breite der "0".
+
+=head3 digitHeight() - Liefere Höhe einer Ziffer
+
+=head4 Synopsis
+
+    $height = $fnt->digitHeight(@opt);
+
+=head4 Options
+
+=over 4
+
+=item -up => $bool (Default: 0)
+
+Vertikaler Text.
+
+=back
+
+=head4 Description
+
+Liefere die Höhe einer Ziffer. Alle Ziffern eines Font sollten
+dieselbe Höhe haben. Für GD-Fonts ist dies ohnehin der Fall.
+Bei TrueType-Fonts ermitteln wir die Höhe der "0".
+
+=head3 stringWidth() - Horizontaler Platzbedarf einer Zeichenkette
+
+=head4 Synopsis
+
+    $n = $fnt->stringWidth($str,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -up => $bool (Default: 0)
+
+Vertikaler Text.
+
+=back
+
+=head4 Description
+
+Liefere den horizontalen Platzbedarf der Zeichenkette $str.
+
+=head3 stringHeight() - Vertikaler Platzbedarf einer Zeichenkette
+
+=head4 Synopsis
+
+    $n = $fnt->stringHeight($str,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -up => $bool (Default: 0)
+
+Vertikaler Text.
+
+=back
+
+=head4 Description
+
+Liefere den horizontalen Platzbedarf der Zeichenkette $str.
+
+=head2 Alignment
+
+Die folgenden Methoden liefern den Offset, der benötigt wird, wenn
+ein Text eng an eine rechte oder obere Grenze ausgerichtet werden soll,
+wie z.B. bei der Beschriftung einer X- oder Y-Achse.
+
+Die Offsets sind Font-abhängig. Für die GD-Fonts und den TrueType-Font
+pala bis 20pt ist der Offset ausgearbeitet. Für andere TrueType-Fonts
+und Fontgrößen müssen die Methoden u.U. erweitert werden.
+
+=head3 alignRightOffset() - Korrektur-Offset für Ausrichtung an rechten Rand
+
+=head4 Synopsis
+
+    $n = $g->alignRightOffset;
+
+=head4 Description
+
+Der Korrektur-Offset ist so bemessen, dass der Text möglichst
+dicht an einen rechten Rand angrenzt, z.B. das Label an den Tick
+einer Y-Achse.
+
+=head3 alignTopOffset() - Korrektur-Offset für Ausrichtung an oberen Rand
+
+=head4 Synopsis
+
+    $n = $g->alignTopOffset;
+
+=head4 Description
+
+Der Korrektur-Offset ist so bemessen, dass der Text möglichst
+dicht an einen oberen Rand angrenzt, z.B. das Label an den Tick
+einer X-Achse.
+
+=head3 hCenterOffset() - Korrektur für horizontal zentrierten Text
+
+=head4 Synopsis
+
+    $n = $fnt->hCenterOffset;
+
+=head4 Description
+
+Bei horizontal zentriertem Text ist manchmal eine Korrektur nötig,
+die diese Methode liefert.
+
+=head1 VERSION
+
+1.150
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/GD/Font.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
