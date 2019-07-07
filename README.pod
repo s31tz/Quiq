@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq - Perl class library for rapid development
+Quiq - Perl class library for rapid development (Documention in German)
 
 =head1 DESCRIPTION
 
