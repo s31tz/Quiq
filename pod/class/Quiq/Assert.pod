@@ -73,7 +73,7 @@ Objektmethode aufgerufen werden.
 
 =head4 Synopsis
 
-    $val = $this->isEnumValue($val,\@values,@opt);
+    $bool = $this->isEnumValue($val,\@values,@opt);
 
 =head4 Arguments
 
@@ -99,11 +99,17 @@ Name, der bei Verletzung der Bedingung als Teil der Fehlermeldung
 ausgegeben wird. Dies kann der Name der geprüften Variable,
 des geprüften Parameters o.ä. sein.
 
+=item -sloppy => $bool
+
+Wirf keine Exception, sondern zeige über den Returnwert an, ob die
+Bedingung erfüllt ist. Liefere 1, wenn die Bedingung erfüllt ist,
+andernfalls 0. Ist der Wert leer, liefere C<undef>.
+
 =back
 
 =head4 Returns
 
-Geprüften Wert (Skalar)
+Boolean oder C<undef>
 
 =head4 Description
 
@@ -115,7 +121,7 @@ Ist dies nicht der Fall, wirf eine Exception.  Ein leerer Wert wird
 
 =head4 Synopsis
 
-    $val = $this->isNotNull($val,@opt);
+    $bool = $this->isNotNull($val,@opt);
 
 =head4 Arguments
 
@@ -137,11 +143,17 @@ Name, der bei Verletzung der Bedingung als Teil der Fehlermeldung
 ausgegeben wird. Dies kann der Name der geprüften Variable,
 des geprüften Parameters o.ä. sein.
 
+=item -sloppy => $bool
+
+Wirf keine Exception, sondern zeige über den Returnwert an, ob die
+Bedingung erfüllt ist. Liefere 1, wenn die Bedingung erfüllt ist,
+andernfalls 0. Ist der Wert leer, liefere CL<lt>undef>.
+
 =back
 
 =head4 Returns
 
-Geprüften Wert (nichtleerer Skalar)
+Boolean oder C<undef>
 
 =head4 Description
 
@@ -153,7 +165,7 @@ eine Exception.
 
 =head4 Synopsis
 
-    $val = $this->isNumber($val,@opt);
+    $bool = $this->isNumber($val,@opt);
 
 =head4 Arguments
 
@@ -175,11 +187,17 @@ Name, der bei Verletzung der Bedingung als Teil der Fehlermeldung
 ausgegeben wird. Dies kann der Name der geprüften Variable,
 des geprüften Parameters o.ä. sein.
 
+=item -sloppy => $bool
+
+Wirf keine Exception, sondern zeige über den Returnwert an, ob die
+Bedingung erfüllt ist. Liefere 1, wenn die Bedingung erfüllt ist,
+andernfalls 0. Ist der Wert leer, liefere CL<lt>undef>.
+
 =back
 
 =head4 Returns
 
-Geprüften Wert (Number)
+Boolean oder C<undef>
 
 =head4 Description
 

@@ -126,10 +126,10 @@ sub new {
 
         my $meth = ucfirst $1;
         return $class->SUPER::new(
-            trueType=>0,
-            name=>$name,
-            font=>GD::Font->$meth,
-            pt=>undef,
+            trueType => 0,
+            name => $name,
+            font => GD::Font->$meth,
+            pt => undef,
         );
     }
 
@@ -143,8 +143,8 @@ sub new {
     if (!-e $path) {
         $class->throw(
             'GDFONT-00001: Font existiert nicht',
-            Error=>$@,
-            Font=>$path,
+            Error => $@,
+            Font => $path,
         );
     }
 
@@ -155,10 +155,10 @@ sub new {
     $name .= $pt;
 
     return $class->SUPER::new(
-        trueType=>1,
-        name=>$name,
-        font=>$path,
-        pt=>$pt,
+        trueType => 1,
+        name => $name,
+        font => $path,
+        pt => $pt,
     );
 }
 
@@ -329,8 +329,8 @@ sub stringGeometry {
         unless (@a) {
             $self->throw(
                 'GDFONT-00002: String kann nicht gerendert werden',
-                Error=>$@,
-                Font=>$font,
+                Error => $@,
+                Font => $font,
             );
         }
 

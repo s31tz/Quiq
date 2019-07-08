@@ -6,6 +6,7 @@ use base qw/Quiq::Test::Class/;
 use strict;
 use warnings;
 use v5.10.0;
+use utf8;
 
 # -----------------------------------------------------------------------------
 
@@ -182,8 +183,8 @@ sub test_charWidth_ttf : Test(1) {
     my $self = shift;
 
     my $fnt = $self->get('ttFont');
-    # $self->is($fnt->charWidth,26);
-    $self->is($fnt->charWidth,23);
+    # Verschiedene Ergebnisse möglich, je nach Font oder libgd-Version
+    $self->in($fnt->charWidth,[20,23,26]);
 }
 
 sub test_charWidth_gd : Test(5) {
@@ -211,8 +212,8 @@ sub test_charHeight_ttf : Test(1) {
     my $self = shift;
 
     my $fnt = $self->get('ttFont');
-    # $self->is($fnt->charHeight,28);
-    $self->is($fnt->charHeight,27);
+    # Verschiedene Ergebnisse möglich, je nach Font oder libgd-Version
+    $self->in($fnt->charHeight,[27,28]);
 }
 
 sub test_charHeight_gd : Test(5) {
@@ -240,8 +241,8 @@ sub test_digitWidth_ttf : Test(1) {
     my $self = shift;
 
     my $fnt = $self->get('ttFont');
-    # $self->is($fnt->digitWidth,14);
-    $self->is($fnt->digitWidth,18);
+    # Verschiedene Ergebnisse möglich, je nach Font oder libgd-Version
+    $self->in($fnt->digitWidth,[14,16,18]);
 }
 
 sub test_digitWidth_gd : Test(5) {

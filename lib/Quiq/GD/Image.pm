@@ -200,7 +200,7 @@ sub new {
         #else {
         #    $class->throw(
         #        'GD-00005: Unbekannter Dateityp',
-        #        File=>$file,
+        #        File => $file,
         #    );
         #}
     }
@@ -221,7 +221,7 @@ sub new {
     unless ($self) {
         $class->throw(
             'GD-00001: Konstruktoraufruf fehlgeschlagen',
-            # ConstructorArguments=>"[@args]",
+            # ConstructorArguments => "[@args]",
         );
     }
 
@@ -313,7 +313,7 @@ sub color {
     else {
         $self->throw(
             'GD-00003: Unerlaubte Farbangabe',
-            Color=>join(',',@_),
+            Color => join(',',@_),
         );
     }
 
@@ -321,7 +321,7 @@ sub color {
     if ($color < 0) {
         $self->throw(
             'GD-00002: Kann Farbtabelleneintrag nicht allozieren',
-            RGB=>join(',',@_),
+            RGB => join(',',@_),
         );
     }
 
@@ -473,7 +473,7 @@ sub string {
 
     if (@_) {
         Quiq::Option->extract(\@_,
-            -up=>\$up,
+            -up => \$up,
         );
     }
 
@@ -519,7 +519,8 @@ sub string {
         # TrueType Font
 
         my (undef,undef,$xOffset,$yOffset) = $font->stringGeometry($string,
-            -up=>$up);
+            -up => $up,
+        );
         $x += $xOffset;
         $y += $yOffset;
 
@@ -634,13 +635,13 @@ sub rainbowColors {
     if ($n % 4) {
         $self->throw(
             'GD-00007: Anzahl Farben muss durch 4 teilbar sein',
-            N=>$n,
+            N => $n,
         );
     }
     if (256 % ($n/4)) {
         $self->throw(
             'GD-00008: Unzulässige Anzahl Farben',
-            N=>$n,
+            N => $n,
         );
     }
 

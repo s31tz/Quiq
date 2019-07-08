@@ -15,6 +15,7 @@ use Quiq::Object;
 use Quiq::Converter;
 use Test::More ();
 use Quiq::System;
+use Quiq::Assert;
 use Quiq::Test::Class::Method;
 
 # -----------------------------------------------------------------------------
@@ -803,6 +804,40 @@ sub ok {
 {
     no warnings 'once';
     *okTest = \&ok;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 in() - Prüfe, ob Wert dem erwarteten Wert entspricht
+
+=head4 Synopsis
+
+    $bool = $test->in($got,\@expected);
+    $bool = $test->in($got,\@expected,$text);
+
+=head4 Alias
+
+inTest()
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub in {
+    my ($self,$got,$expectedA,$text) = @_;
+
+    my $ok = Quiq::Assert->isEnumValue($got,$expectedA,-sloppy=>1);
+
+    # Um Warnungen à la "does not map to ascii" zu verhindern
+    $text = Quiq::Converter->umlautToAscii($text);
+
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    return Test::More::ok($ok,$text);    
+}
+
+{
+    no warnings 'once';
+    *inTest = \&in;
 }
 
 # -----------------------------------------------------------------------------

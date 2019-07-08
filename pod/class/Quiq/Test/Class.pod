@@ -367,6 +367,17 @@ nichts
 
 okTest()
 
+=head3 in() - Prüfe, ob Wert dem erwarteten Wert entspricht
+
+=head4 Synopsis
+
+    $bool = $test->in($got,\@expected);
+    $bool = $test->in($got,\@expected,$text);
+
+=head4 Alias
+
+inTest()
+
 =head3 is() - Prüfe, ob Wert dem erwarteten Wert entspricht
 
 =head4 Synopsis
