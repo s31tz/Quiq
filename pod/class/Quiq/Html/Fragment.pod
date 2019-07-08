@@ -90,7 +90,7 @@ erzeugt und mit den Attributen @keyVal instantiiert.
 
 =head1 VERSION
 
-1.151
+1.152
 
 =head1 SOURCE
 

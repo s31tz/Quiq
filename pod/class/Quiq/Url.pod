@@ -197,7 +197,7 @@ wie Trennzeichen usw., spielt keine Rolle.
 
 =head1 VERSION
 
-1.151
+1.152
 
 =head1 SOURCE
 
