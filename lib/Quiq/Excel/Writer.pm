@@ -57,7 +57,7 @@ Dokumentation siehe Basisklasse.
 
 =item $file
 
-Name der .xslx Datei.
+Pfad der .xslx Datei, auf die geschrieben wird.
 
 =item $fh
 
