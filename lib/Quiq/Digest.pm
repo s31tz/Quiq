@@ -11,6 +11,8 @@ use Digest::MD5 ();
 
 # -----------------------------------------------------------------------------
 
+=encoding utf8
+
 =head1 NAME
 
 Quiq::Digest - Erzeuge Digest
@@ -27,7 +29,26 @@ L<Quiq::Object>
 
 =head4 Synopsis
 
-    $md5 = $class->md5($str);
+    $md5 = $class->md5(@data);
+
+=head4 Arguments
+
+=over 4
+
+=item @data
+
+Skalare Werte beliebiger Anzahl und Länge.
+
+=back
+
+=head4 Returns
+
+32 Zeichen Hex-String.
+
+=head4 Description
+
+Erzeuge einen MD5 Message Digest für die Daten @data und liefere diesen
+als 32 Zeichen langen Hex-String zurück.
 
 =cut
 
@@ -35,8 +56,8 @@ L<Quiq::Object>
 
 sub md5 {
     my $class = shift;
-    # @_: $str
-    return Digest::MD5::md5_hex($_[0]);
+    # @_: @data
+    return Digest::MD5::md5_hex(@_);
 }
 
 # -----------------------------------------------------------------------------

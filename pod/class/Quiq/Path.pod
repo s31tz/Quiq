@@ -793,6 +793,32 @@ Ist $path ein relativer Pfad, expandiere ihn zu einem absolutem Pfad
 und liefere diesen zurück. Ist $path bereits absolut, liefere ihn
 unverändert.
 
+=head3 age() - Alter der letzten Modifikation
+
+=head4 Synopsis
+
+    $duration = $this->age($path);
+
+=head4 Arguments
+
+=over 4
+
+=item $path
+
+Pfad.
+
+=back
+
+=head4 Returns
+
+Anzahl Sekunden (Integer)
+
+=head4 Description
+
+Ermittele das Alter der letzten Modifiktion des Pfad-Objekts in
+Sekunden und liefere diesen Wert zurück. Existiert der Pfad nicht,
+wird eine Exception geworfen.
+
 =head3 basename() - Grundname eines Pfads
 
 =head4 Synopsis

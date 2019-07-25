@@ -1818,6 +1818,52 @@ sub absolute {
 
 # -----------------------------------------------------------------------------
 
+=head3 age() - Alter der letzten Modifikation
+
+=head4 Synopsis
+
+    $duration = $this->age($path);
+
+=head4 Arguments
+
+=over 4
+
+=item $path
+
+Pfad.
+
+=back
+
+=head4 Returns
+
+Anzahl Sekunden (Integer)
+
+=head4 Description
+
+Ermittele das Alter der letzten Modifiktion des Pfad-Objekts in
+Sekunden und liefere diesen Wert zurück. Existiert der Pfad nicht,
+wird eine Exception geworfen.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub age {
+    my $this = shift;
+    my $path = $this->expandTilde(shift);
+
+    if (!-e $path) {
+        $this->throw(
+            'PATH-00099: Path does not exist',
+            Path => $path,
+        );
+    }
+
+    return time-$this->mtime($path);
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 basename() - Grundname eines Pfads
 
 =head4 Synopsis
