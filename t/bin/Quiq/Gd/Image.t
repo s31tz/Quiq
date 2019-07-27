@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Quiq::GD::Image::Test;
+package Quiq::Gd::Image::Test;
 use base qw/Quiq::Test::Class/;
 
 use strict;
@@ -21,14 +21,14 @@ sub initMethod : Init(2) {
     }
     $self->ok(1);
 
-    $self->useOk('Quiq::GD::Image');
+    $self->useOk('Quiq::Gd::Image');
 }
 
 sub test_unitTest : Test(4) {
     my $self = shift;
 
-    my $img = Quiq::GD::Image->new(100,100);
-    $self->is(ref($img),'Quiq::GD::Image','new');
+    my $img = Quiq::Gd::Image->new(100,100);
+    $self->is(ref($img),'Quiq::Gd::Image','new');
 
     my $white = $img->background(255,255,255);
     $self->ok($white >= 0,'background');
@@ -45,7 +45,7 @@ sub test_unitTest : Test(4) {
 sub test_color_truecolor : Test(9) {
     my $self = shift;
 
-    my $img = Quiq::GD::Image->new(100,100); # TrueColor
+    my $img = Quiq::Gd::Image->new(100,100); # TrueColor
     my $black = $img->color('#000000');
     my $white = $img->color('#ffffff');
     $self->isnt($white,$black);
@@ -84,7 +84,7 @@ sub test_color_truecolor : Test(9) {
 sub test_color_palette : Test(7) {
     my $self = shift;
 
-    my $img = Quiq::GD::Image->new(100,100,10); # TrueColor
+    my $img = Quiq::Gd::Image->new(100,100,10); # TrueColor
     my $black = $img->color('#000000');
     my $white = $img->color('#ffffff');
     $self->isnt($white,$black);
@@ -118,7 +118,7 @@ sub test_rainbowColors : Test(9) {
     my $self = shift;
 
     for my $n (4,8,16,32,64,128,256,512,1024) {
-        my $img = Quiq::GD::Image->new(500,20);
+        my $img = Quiq::Gd::Image->new(500,20);
         my @colors = $img->rainbowColors($n);
         $self->is(scalar(@colors),$n,"rainbowColors: $n colors");
     }
@@ -127,6 +127,6 @@ sub test_rainbowColors : Test(9) {
 # -----------------------------------------------------------------------------
 
 package main;
-Quiq::GD::Image::Test->runTests;
+Quiq::Gd::Image::Test->runTests;
 
 # eof

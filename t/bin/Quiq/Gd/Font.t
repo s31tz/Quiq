@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Quiq::GD::Font::Test;
+package Quiq::Gd::Font::Test;
 use base qw/Quiq::Test::Class/;
 
 use strict;
@@ -22,7 +22,7 @@ sub initMethod : Init(2) {
     }
     $self->ok(1);
 
-    $self->useOk('Quiq::GD::Font');
+    $self->useOk('Quiq::Gd::Font');
 }
 
 # -----------------------------------------------------------------------------
@@ -30,14 +30,14 @@ sub initMethod : Init(2) {
 sub test_new_ttf : Test(2) {
     my $self = shift;
 
-    eval {Quiq::GD::Font->new('/tmp/abcd.ttf',20)};
+    eval {Quiq::Gd::Font->new('/tmp/abcd.ttf',20)};
     $self->like($@,qr/GDFONT-00001/);
 
     # TrueType-Font - wir brauchen den absoluten Pfad
     my $file = Quiq::Test::Class->testPath('quiq/test/data/font/pala.ttf');
 
-    my $fnt = Quiq::GD::Font->new($file,20);
-    $self->is(ref($fnt),'Quiq::GD::Font');
+    my $fnt = Quiq::Gd::Font->new($file,20);
+    $self->is(ref($fnt),'Quiq::Gd::Font');
 
     $self->set(ttFont=>$fnt);
 }
@@ -47,24 +47,24 @@ sub test_new_gd : Test(5) {
 
     # die 5 Standard-GD-Fonts
 
-    my $fnt = Quiq::GD::Font->new('gdTinyFont');
-    $self->is(ref($fnt),'Quiq::GD::Font');
+    my $fnt = Quiq::Gd::Font->new('gdTinyFont');
+    $self->is(ref($fnt),'Quiq::Gd::Font');
     $self->set(gdTinyFont=>$fnt);
 
-    $fnt = Quiq::GD::Font->new('gdSmallFont');
-    $self->is(ref($fnt),'Quiq::GD::Font');
+    $fnt = Quiq::Gd::Font->new('gdSmallFont');
+    $self->is(ref($fnt),'Quiq::Gd::Font');
     $self->set(gdSmallFont=>$fnt);
 
-    $fnt = Quiq::GD::Font->new('gdMediumBoldFont');
-    $self->is(ref($fnt),'Quiq::GD::Font');
+    $fnt = Quiq::Gd::Font->new('gdMediumBoldFont');
+    $self->is(ref($fnt),'Quiq::Gd::Font');
     $self->set(gdMediumBoldFont=>$fnt);
 
-    $fnt = Quiq::GD::Font->new('gdLargeFont');
-    $self->is(ref($fnt),'Quiq::GD::Font');
+    $fnt = Quiq::Gd::Font->new('gdLargeFont');
+    $self->is(ref($fnt),'Quiq::Gd::Font');
     $self->set(gdLargeFont=>$fnt);
 
-    $fnt = Quiq::GD::Font->new('gdGiantFont');
-    $self->is(ref($fnt),'Quiq::GD::Font');
+    $fnt = Quiq::Gd::Font->new('gdGiantFont');
+    $self->is(ref($fnt),'Quiq::Gd::Font');
     $self->set(gdGiantFont=>$fnt);
 }
 
@@ -296,6 +296,6 @@ sub test_digitHeight_gd : Test(5) {
 # -----------------------------------------------------------------------------
 
 package main;
-Quiq::GD::Font::Test->runTests;
+Quiq::Gd::Font::Test->runTests;
 
 # eof

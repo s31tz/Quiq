@@ -15,6 +15,22 @@ sub test_loadClass : Init(1) {
 
 # -----------------------------------------------------------------------------
 
+sub test_diff : Test(1) {
+    my $self = shift;
+
+    my $expected = Quiq::Unindent->string(q~
+        2c2
+        < B
+        ---
+        > D
+    ~);
+
+    my $diff = Quiq::Diff->diff("A\nB\nC\n","A\nD\nC\n");
+    $self->is($diff,$expected);
+}
+
+# -----------------------------------------------------------------------------
+
 package main;
 Quiq::Diff::Test->runTests;
 

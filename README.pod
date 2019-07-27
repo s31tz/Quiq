@@ -225,11 +225,11 @@ L<Quiq::Formatter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Forma
 
 =item *
 
-L<Quiq::GD::Font|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/GD/Font.pod> - GD- oder TrueType-Font
+L<Quiq::Gd::Font|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Font.pod> - GD- oder TrueType-Font
 
 =item *
 
-L<Quiq::GD::Image|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/GD/Image.pod> - Schnittstelle zur GD Graphics Library
+L<Quiq::Gd::Image|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Image.pod> - Schnittstelle zur GD Graphics Library
 
 =item *
 

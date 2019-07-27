@@ -1,4 +1,4 @@
-package Quiq::GD::Font;
+package Quiq::Gd::Font;
 use base qw/Quiq::Hash/;
 
 use strict;
@@ -17,7 +17,7 @@ use Quiq::Math;
 
 =head1 NAME
 
-Quiq::GD::Font - GD- oder TrueType-Font
+Quiq::Gd::Font - GD- oder TrueType-Font
 
 =head1 BASE CLASS
 
@@ -45,13 +45,13 @@ Abstraktion für GD- und TrueType-Fonts, die von GD nicht gemacht wird.
 
 GD-Font instantiieren
 
-    $fnt = Quiq::GD::Font->new('gdSmallFont');
+    $fnt = Quiq::Gd::Font->new('gdSmallFont');
 
 =item *
 
 TrueType-Font instantiieren
 
-    $fnt = Quiq::GD::Font->new('/opt/fonts/pala.ttf',20);
+    $fnt = Quiq::Gd::Font->new('/opt/fonts/pala.ttf',20);
 
 =back
 
@@ -64,7 +64,7 @@ TrueType-Font instantiieren
 
 my $r = GD::Image->new(1,1)->useFontConfig(1);
 unless ($r) {
-    Quiq::GD::Font->throw(
+    Quiq::Gd::Font->throw(
         'GD-00006: FontConfig-Unterstützung fehlt',
     );
 }

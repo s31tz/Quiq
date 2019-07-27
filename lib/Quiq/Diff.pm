@@ -7,7 +7,6 @@ use v5.10.0;
 
 our $VERSION = '1.153';
 
-use Quiq::Path;
 use Quiq::TempFile;
 use Quiq::Shell;
 
@@ -54,7 +53,12 @@ Differenzen (String)
 =head4 Description
 
 Vergleiche die Zeichenketten $str1 und $str2 per diff(1) und liefere
-das Ergebnis zurück.
+das Ergebnis zurück. Unterschiede im Umfang an Whitespace werden
+ignoriert (diff-Option C<--ignore-space-change> ist gesetzt).
+
+=head4 See Also
+
+diff(1)
 
 =cut
 
@@ -63,13 +67,8 @@ das Ergebnis zurück.
 sub diff {
     my ($class,$str1,$str2) = @_;
 
-    my $p = Quiq::Path->new;
-
-    my $file1 = Quiq::TempFile->new(-unlink=>0);
-    $p->write($file1,$str1);
-
-    my $file2 = Quiq::TempFile->new(-unlink=>0);
-    $p->write($file2,$str2);
+    my $file1 = Quiq::TempFile->new($str1);
+    my $file2 = Quiq::TempFile->new($str2);
 
     return Quiq::Shell->exec("diff --ignore-space-change $file1 $file2",
         -capture => 'stdout',

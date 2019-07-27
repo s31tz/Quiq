@@ -1,4 +1,4 @@
-package Quiq::GD::Image;
+package Quiq::Gd::Image;
 use base qw/GD::Image Quiq::Object/;
 
 use strict;
@@ -20,7 +20,7 @@ use Quiq::Math;
 
 =head1 NAME
 
-Quiq::GD::Image - Schnittstelle zur GD Graphics Library
+Quiq::Gd::Image - Schnittstelle zur GD Graphics Library
 
 =head1 BASE CLASSES
 
@@ -38,9 +38,9 @@ L<Quiq::Object>
 
 =head1 SYNOPSIS
 
-    use Quiq::GD::Image;
+    use Quiq::Gd::Image;
     
-    my $img = Quiq::GD::Image->new(100,100);
+    my $img = Quiq::Gd::Image->new(100,100);
     $img->background('#ffffff');
     print $img->jpg;
 
@@ -51,12 +51,12 @@ Die Klasse  ist eine Überdeckung der Klasse GD::Image. Sie
 weitere Methoden.
 
 Die Klasse kann überall verwendet werden, wo GD::Image verwendet wird.
-Alle Methoden von GD::Image sind auch auf Quiq::GD::Image-Objekte
+Alle Methoden von GD::Image sind auch auf Quiq::Gd::Image-Objekte
 anwendbar.
 
 =head2 Vorteile
 
-Die Klasse Quiq::GD::Image bietet folgende Vorteile:
+Die Klasse Quiq::Gd::Image bietet folgende Vorteile:
 
 =over 2
 
@@ -96,7 +96,7 @@ Dies Portabilität wird von der Methode L<color|"color() - Alloziere Farbe">() s
 
 Konstruktor-Aufruf ersetzen:
 
-    $img = Quiq::GD::Image->new($width,$height);
+    $img = Quiq::Gd::Image->new($width,$height);
 
 statt
 
@@ -120,19 +120,19 @@ Anwendung testen. Sie sollte fehlerfrei laufen.
 
 =head2 Text in ein existierendes Bild schreiben
 
-    use Quiq::GD::Font;
-    use Quiq::GD::Image;
+    use Quiq::Gd::Font;
+    use Quiq::Gd::Image;
     use Quiq::Path;
     
-    my $fnt = Quiq::GD::Font->new('gdMediumBoldFont');
-    my $img = Quiq::GD::Image->new('bild.jpg');
+    my $fnt = Quiq::Gd::Font->new('gdMediumBoldFont');
+    my $img = Quiq::Gd::Image->new('bild.jpg');
     my $color = $img->color(255,0,0);
     $img->string($fnt,10,10,'TEST',$color);
     Quiq::Path->write('bild.jpg',$img->jpeg);
 
 =head2 Hintergrund transparent machen
 
-    my $img = Quiq::GD::Image->new($width,$height);
+    my $img = Quiq::Gd::Image->new($width,$height);
     my $white = $img->background(255,255,255);
     $img->transparent($white);
 
@@ -435,7 +435,7 @@ Nichts
 Zeichne Zeichenkette $string an Position ($x,$y). Die Zeichenkette
 kann mehrzeilig sein.
 
-Der Font ist ein C<< Quiq::GD::Font >>-Objekt. Diese Klasse
+Der Font ist ein C<< Quiq::Gd::Font >>-Objekt. Diese Klasse
 vereinheitlicht GD- und TrueType-Fonts. GD-Fonts können nicht
 in beliebigem Winkel, sondern nur horizontal und vertikal geschrieben
 werden, daher erlaubt die Methode nur diese beiden Ausrichtungen.

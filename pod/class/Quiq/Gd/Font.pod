@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::GD::Font - GD- oder TrueType-Font
+Quiq::Gd::Font - GD- oder TrueType-Font
 
 =head1 BASE CLASS
 
@@ -30,13 +30,13 @@ Abstraktion für GD- und TrueType-Fonts, die von GD nicht gemacht wird.
 
 GD-Font instantiieren
 
-    $fnt = Quiq::GD::Font->new('gdSmallFont');
+    $fnt = Quiq::Gd::Font->new('gdSmallFont');
 
 =item *
 
 TrueType-Font instantiieren
 
-    $fnt = Quiq::GD::Font->new('/opt/fonts/pala.ttf',20);
+    $fnt = Quiq::Gd::Font->new('/opt/fonts/pala.ttf',20);
 
 =back
 
@@ -344,7 +344,7 @@ die diese Methode liefert.
 
 =head1 SOURCE
 
-L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/GD/Font.pm>
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Gd/Font.pm>
 
 =head1 AUTHOR
 
