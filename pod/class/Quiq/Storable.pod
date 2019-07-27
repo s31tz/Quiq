@@ -40,7 +40,7 @@ Storable, speziell für die Funktionen freeze(), thaw(), clone().
 =head4 Synopsis
 
     $ref = Quiq::Storable->memoize($file,$sub);
-    $ref = Quiq::Storable->memoize($file,$duration,$sub);
+    $ref = Quiq::Storable->memoize($file,$timeout,$sub);
 
 =head4 Arguments
 
@@ -50,7 +50,7 @@ Storable, speziell für die Funktionen freeze(), thaw(), clone().
 
 Pfad der Cachedatei.
 
-=item $duration
+=item $timeout
 
 Dauer in Sekunden, die die Cachdatei gültig ist. Falls nicht angegeben
 oder C<undef>, ist die Cachdatei unbegrenzt lange gültig.
