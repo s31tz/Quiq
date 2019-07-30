@@ -1318,7 +1318,7 @@ Die Reihenfolge der Dateien ist undefiniert.
 
 sub find {
     my $class = shift;
-    my $dir = shift;
+    my $dir = $class->expandTilde(shift);
     # @_: @opt
 
     # Optionen
