@@ -430,6 +430,29 @@ Pfad der Datei.
 Kürze Datei $file auf Länge 0, falls sie existiert. Existiert die
 Datei nicht, geschieht nichts.
 
+=head3 unindent() - Entferne Einrückung
+
+=head4 Synopsis
+
+    $this->unindent($file);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Pfad der Datei.
+
+=back
+
+=head4 Description
+
+Lies den Inhalt der Datei $file, entferne dessen Einrückung (per
+Quiq::Unindent->hereDoc) und schreibe den uneingerückten Inhalt auf
+die Datei zurück. Besitzt der Dateiinhalt keine Einrückung, findet keine
+Änderung des Dateiinhalts statt.
+
 =head3 write() - Schreibe Datei
 
 =head4 Synopsis
