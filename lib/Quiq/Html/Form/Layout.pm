@@ -227,7 +227,7 @@ sub html {
             $hidden .= $w->html($h);
             next;
         }
-        push @keyVal,sprintf('__%s__',uc($w->name//$w->id)),$w->html($h);
+        push @keyVal,sprintf('__%s__',uc $w->name),$w->html($h);
     }
 
     $layout = $h->tag('form',
