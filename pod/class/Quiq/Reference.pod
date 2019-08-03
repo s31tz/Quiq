@@ -84,7 +84,7 @@ standardm‰ﬂig zu der Klasse Regex.
 
 =head1 VERSION
 
-1.153
+1.154
 
 =head1 SOURCE
 

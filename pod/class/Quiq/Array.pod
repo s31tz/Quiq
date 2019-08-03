@@ -496,7 +496,7 @@ in ein Array-Objekt und liefere dieses zurück.
 
 =head1 VERSION
 
-1.153
+1.154
 
 =head1 SOURCE
 
