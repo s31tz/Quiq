@@ -148,6 +148,26 @@ sub test_read : Test(4) {
 
 # -----------------------------------------------------------------------------
 
+sub test_tempFile: Test(4) {
+    my $self = shift;
+
+    my $path;
+    {
+        my $file = Quiq::Path->tempFile;
+        $path = "$file";
+        my $tempDir = $ENV{'TMPDIR'};
+        if (!defined($tempDir) || !-d $tempDir) {
+            $tempDir = '/tmp';
+        }
+        $self->ok(-f $file);
+        $self->like($file,qr|^$tempDir/|);
+        $self->like(sprintf('%s',$file),qr|^$tempDir/|);
+    }
+    $self->ok(!-d $path);
+}
+
+# -----------------------------------------------------------------------------
+
 sub test_unindent : Test(3) {
     my $self = shift;
 
@@ -264,6 +284,26 @@ sub test_mkdir : Test(2) {
     $self->ok(-e $path);
 
     Quiq::Path->delete("/tmp/mkdir$$");
+}
+
+# -----------------------------------------------------------------------------
+
+sub test_tempDir: Test(4) {
+    my $self = shift;
+
+    my $path;
+    {
+        my $dir = Quiq::Path->tempDir;
+        $path = "$dir";
+        my $tempDir = $ENV{'TMPDIR'};
+        if (!defined($tempDir) || !-d $tempDir) {
+            $tempDir = '/tmp';
+        }
+        $self->ok(-d $dir);
+        $self->like($dir,qr|^$tempDir/|);
+        $self->like(sprintf('%s',$dir),qr|^$tempDir/|);
+    }
+    $self->ok(!-d $path);
 }
 
 # -----------------------------------------------------------------------------
