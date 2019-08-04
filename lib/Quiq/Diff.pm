@@ -7,7 +7,7 @@ use v5.10.0;
 
 our $VERSION = '1.154';
 
-use Quiq::TempFile;
+use Quiq::Path;
 use Quiq::Shell;
 
 # -----------------------------------------------------------------------------
@@ -67,8 +67,9 @@ diff(1)
 sub diff {
     my ($class,$str1,$str2) = @_;
 
-    my $file1 = Quiq::TempFile->new($str1);
-    my $file2 = Quiq::TempFile->new($str2);
+    my $p = Quiq::Path->new;
+    my $file1 = $p->tempFile($str1);
+    my $file2 = $p->tempFile($str2);
 
     return Quiq::Shell->exec("diff --ignore-space-change $file1 $file2",
         -capture => 'stdout',
