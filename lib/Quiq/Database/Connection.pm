@@ -20,7 +20,6 @@ use Quiq::Array;
 use Quiq::String;
 use Quiq::Path;
 use Quiq::Digest;
-use Quiq::TempFile;
 use Quiq::Database::Cursor;
 use Time::HiRes ();
 use Quiq::Parameters;
@@ -1374,7 +1373,7 @@ sub sql {
             # richtige Cache-Datei um, siehe $cur->fetch().
 
             $cacheOp = 'w';
-            $cacheFile = Quiq::TempFile->new(-dir=>$cacheDir);
+            $cacheFile = $p->tempFile(-dir=>$cacheDir);
         }
     }
 

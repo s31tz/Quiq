@@ -69,7 +69,7 @@ Dateinamen-Template, z.B. 'tmpfileXXXXX'.
 
 =item -unlink => $bool (Default: 1)
 
-Lösche die Datei, wenn das Objekt aus den Skope geht.
+Lösche die Datei, wenn das Objekt aus dem Scope geht.
 
 =back
 

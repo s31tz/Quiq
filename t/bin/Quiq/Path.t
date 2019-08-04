@@ -39,7 +39,7 @@ sub test_checkFileSecurity : Test(4) {
 
     my $p = Quiq::Path->new;
 
-    my $file = Quiq::TempFile->new;
+    my $file = $p->tempFile;
 
     $p->chmod($file,0600);
 
@@ -166,7 +166,7 @@ sub test_unindent : Test(3) {
     # Einrückung entfernen
 
     my $expected = Quiq::Unindent->hereDoc($original);
-    my $file = Quiq::TempFile->new($original);
+    my $file = $p->tempFile($original);
     $p->unindent($file);
     my $data = $p->read($file);
     $self->is($data,$expected,'Einrückung wurde entfernt');

@@ -430,6 +430,40 @@ Pfad der Datei.
 Kürze Datei $file auf Länge 0, falls sie existiert. Existiert die
 Datei nicht, geschieht nichts.
 
+=head3 tempFile() - Erzeuge temporäre Datei
+
+=head4 Synopsis
+
+    $file = $this->tempFile(@opt);
+    $file = $this->tempFile($data,@opt);
+
+=head4 Arguments
+
+Daten, die in die temporäre Datei geschrieben werden.
+
+=head4 Options
+
+Siehe Quiq::TempFile->new().
+
+=head4 Returns
+
+=over 4
+
+=item $file
+
+Tempdatei-Objekt
+
+=back
+
+=head4 Description
+
+Erzeuge eine temporäre Datei, beschreibe sie mit den Daten $data und
+liefere eine Referenz auf das Objekt zurück.
+
+=head4 See Also
+
+Quiq::TempFile
+
 =head3 unindent() - Entferne Einrückung
 
 =head4 Synopsis
@@ -797,6 +831,31 @@ nichts
 
 Lösche Verzeichnis $dir, falls dieses leer ist. Kann das
 Verzeichnis nicht gelöscht werden, wird eine Exception ausgelöst.
+
+=head3 tempDir() - Erzeuge temporäres Verzeichnis
+
+=head4 Synopsis
+
+    $dir = $this->tempDir(@opt);
+
+=head4 Returns
+
+=over 4
+
+=item $dir
+
+Tempdir-Objekt
+
+=back
+
+=head4 Description
+
+Erzeuge ein temporäres Verzeichnis und liefere eine Referenz auf
+das Objekt zurück.
+
+=head4 See Also
+
+Quiq::TempDir
 
 =head2 Pfad-Operationen
 
