@@ -816,8 +816,9 @@ sub asTable {
     # Statement
 
     if ($info >= 3 && (my $stmt = $self->stmt)) {
-        $str .= sprintf "%s\n\n%s\n\n",$stmt,
-            '-' x Quiq::String->maxLineLength($stmt);
+        #$str .= sprintf "%s\n\n%s\n\n",$stmt,
+        #    '-' x Quiq::String->maxLineLength($stmt);
+        $str .= sprintf "%s\n\n",$stmt;
     }
     my @titles = $self->titles;
     if ($info >= 2) {
