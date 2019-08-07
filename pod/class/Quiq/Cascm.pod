@@ -356,7 +356,7 @@ Ausgabe des Kommandos (String)
 Ermittele die Versionsinformation über Datei $repoFile und liefere
 diese zurück.
 
-=head3 deleteVersion() - Lösche Repository-Datei
+=head3 deleteVersion() - Lösche höchste Version von Repository-Datei
 
 =head4 Synopsis
 
@@ -381,6 +381,37 @@ Ausgabe des Kommandos (String)
 Lösche die höchste Version der Repository-Datei (Item) $repoFile.
 Dies geht nur, wenn sich diese Version auf der untersten Stufe
 (Entwicklung) befindet.
+
+=head3 deleteAllVersions() - Lösche alle Versionen einer Repository-Datei
+
+=head4 Synopsis
+
+    $output = $scm->deleteAllVersions($repoFile,$backupDir);
+
+=head4 Arguments
+
+=over 4
+
+=item $repoFile
+
+Der Pfad der zu löschenden Repository-Datei.
+
+=item $backupDir
+
+Verzeichnis, in das die Repository-Datei nach dem Löschen der
+letzten Version gesichert wird.
+
+=back
+
+=head4 Returns
+
+Ausgabe des Kommandos (String)
+
+=head4 Description
+
+Lösche alle Versionen der Repository-Datei $repoFile. Dies setzt
+voraus, dass alle Versionen in einem (oder mehreren) Paketen
+auf I<Entwicklung> enthalten sind.
 
 =head3 findItem() - Zeige Information über Item an
 
