@@ -27,7 +27,7 @@ L<Quiq::Html::Base>
 
     use Quiq::Html::Page;
     
-    $h = Quiq::Html::Tag->new;
+    $h = Quiq::Html::Producer->new;
     
     $obj = Quiq::Html::Page->new(
         body => 'hello world!',
@@ -188,27 +188,12 @@ sub html {
         $self->get(qw/body comment encoding head load noNewline placeholders
         title javaScript javaScriptToHead styleSheet topIndentation/);
 
-    # CSS- und JavaScript-Dateien laden
+    # CSS- und JavaScript-Dateien laden (Test auf @$loadA wg. der
+    # neuen Klasse Quiq::Html::Construct - bei Feher $h auf
+    # Quiq::Html::Producer instantiieren)
 
-    my $loadTags = '';
-    for (my $i = 0; $i < @$loadA; $i++) {
-        my $arg = $loadA->[$i];
-        if ($arg eq 'css' || $arg =~ /\.css$/) {
-            if ($arg eq 'css') {
-                $i++;
-            }
-            $loadTags .= Quiq::Css->style($h,$loadA->[$i]);
-        }
-        elsif ($arg eq 'js' || $arg =~ /\.js$/) {
-            if ($arg eq 'js') {
-                $i++;
-            }
-            $loadTags .= Quiq::JavaScript->script($h,$loadA->[$i]);
-        }
-        else {
-            $this->throw;
-        }
-    }
+    # my $loadTags = @$loadA? $h->loadFiles(@$loadA): '';
+    my $loadTags = $h->loadFiles(@$loadA);
 
     # Stylesheet-Defininition(en)
     my $styleTags = Quiq::Css->style($h,$styleSheet);

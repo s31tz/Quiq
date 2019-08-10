@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-use Quiq::Html::Tag;
+use Quiq::Html::Producer;
 
 # -----------------------------------------------------------------------------
 
@@ -20,7 +20,7 @@ sub test_loadClass : Init(1) {
 sub test_html : Test(5) {
     my $self = shift;
 
-    my $h = Quiq::Html::Tag->new;
+    my $h = Quiq::Html::Producer->new;
 
     my $html = Quiq::Html::Page->html($h);
     $self->like($html,qr/DOCTYPE/,'html: DOCTYPE');
@@ -46,7 +46,7 @@ sub test_html_2 : Test(2) {
     </html>
     ~);
 
-    my $h = Quiq::Html::Tag->new;
+    my $h = Quiq::Html::Producer->new;
 
     my $html = Quiq::Html::Page->html($h,
         load => [
