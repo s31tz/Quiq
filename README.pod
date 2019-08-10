@@ -257,6 +257,10 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod> 
 
 =item *
 
+L<Quiq::Html|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html.pod> - Generierung von Tags und Tag-Konstrukten
+
+=item *
+
 L<Quiq::Html::Base|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Base.pod> - Basisklasse für HTML-Komponenten
 
 =item *
@@ -266,6 +270,10 @@ L<Quiq::Html::Form::Layout|https://github.com/s31tz/Quiq/tree/master/pod/class/Q
 =item *
 
 L<Quiq::Html::Fragment|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Fragment.pod> - Fragment aus HTML-, CSS- und JavaScript-Code
+
+=item *
+
+L<Quiq::Html::Helper|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Helper.pod> - Generierung von einfachen Tag-Konstrukten
 
 =item *
 
