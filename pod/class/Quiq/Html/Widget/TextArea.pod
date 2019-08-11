@@ -75,7 +75,7 @@ Anfänglicher Wert des Felds.
 
 =head1 VERSION
 
-1.154
+1.155
 
 =head1 SOURCE
 
