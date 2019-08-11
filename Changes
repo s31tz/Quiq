@@ -1,3 +1,23 @@
+1.154 2019-08-11
+================
+[Quiq::Database::Connection]
+* Tempdatei-Erzeugung auf Quiq::Path umgestellt
+
+[Quiq::Database::ResultSet]
+* Ausgabe von asTable() geändert
+
+[Quiq::Html::Construct]
+* Klasse hinzugefügt
+
+[Quiq::Html::Fragment]
+* Komponente html auf mehrere Abschnitte ausgedehnt
+
+[Quiq::Html::Page]
+* Attribut load hinzugefügt
+
+[Quiq::Html::Producer]
+* Klasse hinzugefügt
+
 1.153 2019-08-03
 ================
 [Quiq::Diff]

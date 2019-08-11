@@ -598,8 +598,7 @@ instantiiert. Aufbau:
 sub instantiate {
     my ($self,$json) = @_;
 
-    my ($id,$arguments,$instantiate) =
-        $self->get(qw/id arguments instantiate/);
+    my ($id,$arguments) = $self->get(qw/id arguments/);
 
     $arguments = Quiq::Unindent->string($arguments);
     $arguments .= Quiq::Unindent->string($json);
