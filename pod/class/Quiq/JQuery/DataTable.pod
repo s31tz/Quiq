@@ -39,8 +39,9 @@ JSON-Code der das DataTable-Objekt in JavaScript instantiiert. Die
 Kolumnendefinitionen (DataTables-Attribut columns:) wird intern
 generiert und zu diesem Code hinzugefügt.
 
-=item class => $class (Default: undef)
+=item class => $class (Default: "compact stripe hover cell-border nowrap \
 
+order-column")
 CSS-Klasse der DataTable (des Table-Elements).
 
 =item columns => \@columns (Default: [])
@@ -77,11 +78,17 @@ DOM-Id der DataTable (des Table-Elements).
 Füge die Instantiierung des DataTable-Objektes (JavaScript) zum
 HTML-Code der Methode html() hinzu.
 
-=item rowCallback => $sub (Default: s.u.)
+=item rowsAreArrays => $bool (Default: 0)
 
-Referenz auf eine Subroutine, die für jedes Row-Objekt die
-darzustellende Zeileninformation (für tr- und td-Tag) liefert
-(siehe Quiq::Html::Table::List). Default:
+Die Row-Objekte sind einfache Arrays. Als rowCallback wird
+(per Default) verwendet:
+
+    rowCallback => sub {
+        my ($row,$i,$columnA) = @_;
+        return (undef,@$row);
+    }
+
+Wenn nicht gesetzt, wird (per Default) als rowCallback verwendet:
 
     rowCallback => sub {
         my ($row,$i,$columnA) = @_;
@@ -94,6 +101,13 @@ darzustellende Zeileninformation (für tr- und td-Tag) liefert
     
         return (undef,@arr);
     };
+
+=item rowCallback => $sub (Default: s. Attribut rowsAreArrays)
+
+Referenz auf eine Subroutine, die für jedes Row-Objekt die
+darzustellende Zeileninformation (für tr- und td-Tag) liefert
+(siehe Quiq::Html::Table::List). Der Default hängt vom
+Wert des Attributs rowsAreArrays ab. Siehe dort.
 
 =item rows => \@rows (Default: [])
 
