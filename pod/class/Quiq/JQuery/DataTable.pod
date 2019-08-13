@@ -57,6 +57,7 @@ Kolumnen-Spezifikation ist ein Hash mit den Komponenten:
         orderable => $bool,   # 0|1 (Default: 1)
         searchable => $bool,  # 0|1 (Default: 1)
         visible => $bool,     # 0|1 (Default: 1)
+        width => $width,      # s. DtaTables Doku
     }
 
 Nicht benötigte Komponenten können weggelassen werden.
