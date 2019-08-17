@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::PersistentHash - Persistenter Hash
+Quiq::Hash::Db - Persistenter Hash
 
 =head1 BASE CLASS
 
@@ -73,7 +73,7 @@ dem Scope geht.
 
 =head1 SOURCE
 
-L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/PersistentHash.pm>
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Hash/Db.pm>
 
 =head1 AUTHOR
 

@@ -16,7 +16,7 @@ use Quiq::DestinationTree;
 use Quiq::Terminal;
 use Quiq::Section::Parser;
 use Quiq::Section::Object;
-use Quiq::PersistentHash;
+use Quiq::Hash::Db;
 use Quiq::Formatter;
 
 # -----------------------------------------------------------------------------
@@ -1247,7 +1247,7 @@ sub needsTestDb {
         my ($self,$key) = @_;
         
         my $file = $self->storage('db/entity-needsTest.db');
-        return Quiq::PersistentHash->new($file,'rw');
+        return Quiq::Hash::Db->new($file,'rw');
     });
 }
 
@@ -1279,7 +1279,7 @@ sub needsUpdateDb {
         my ($self,$key) = @_;
         
         my $file = $self->storage('db/entity-needsUpdate.db');
-        return Quiq::PersistentHash->new($file,'rw');
+        return Quiq::Hash::Db->new($file,'rw');
     });
 }
 

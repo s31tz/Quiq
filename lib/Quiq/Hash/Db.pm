@@ -1,4 +1,4 @@
-package Quiq::PersistentHash;
+package Quiq::Hash::Db;
 use base qw/Quiq::Hash/;
 
 use strict;
@@ -17,7 +17,7 @@ use DB_File ();
 
 =head1 NAME
 
-Quiq::PersistentHash - Persistenter Hash
+Quiq::Hash::Db - Persistenter Hash
 
 =head1 BASE CLASS
 

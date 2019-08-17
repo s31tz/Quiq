@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Quiq::PersistentHash::Test;
+package Quiq::Hash::Db::Test;
 use base qw/Quiq::Test::Class/;
 
 use strict;
@@ -13,7 +13,7 @@ use Quiq::Path;
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
-    shift->useOk('Quiq::PersistentHash');
+    shift->useOk('Quiq::Hash::Db');
 }
 
 # -----------------------------------------------------------------------------
@@ -26,8 +26,8 @@ sub test_unitTest : Test(4) {
 
     # Persistenten Hash erzeugen
 
-    my $h = Quiq::PersistentHash->new($file,'rw');
-    $self->is(ref($h),'Quiq::PersistentHash');
+    my $h = Quiq::Hash::Db->new($file,'rw');
+    $self->is(ref($h),'Quiq::Hash::Db');
 
     # Daten schreiben
 
@@ -42,7 +42,7 @@ sub test_unitTest : Test(4) {
 
     # erneut öffnen, die Daten müssen noch da sein
 
-    $h = Quiq::PersistentHash->new($file,'rw');
+    $h = Quiq::Hash::Db->new($file,'rw');
     @arr = $h->get(qw/a b/);
     $self->isDeeply(\@arr,[1,2]);
 
@@ -52,6 +52,6 @@ sub test_unitTest : Test(4) {
 # -----------------------------------------------------------------------------
 
 package main;
-Quiq::PersistentHash::Test->runTests;
+Quiq::Hash::Db::Test->runTests;
 
 # eof
