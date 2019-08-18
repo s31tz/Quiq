@@ -44,6 +44,10 @@ Daten, die in die temporäre Datei geschrieben werden.
 
 Verzeichnis, in dem die temporäre Datei erzeugt wird.
 
+=item -pathOnly => $bool
+
+Erzeuge nur den Pfad, lösche die Datei sofort.
+
 =item -suffix => $suffix
 
 Dateienendung, z.B. '.dat'.
