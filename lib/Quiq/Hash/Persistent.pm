@@ -33,6 +33,7 @@ Konstruktorargumente):
         my $class = shift;
         ...
         return $class->SUPER::new($file,$timeout,sub {
+            my $class = shift;
             ...
             return $class->Quiq::Hash::new(
                 ...
@@ -75,11 +76,25 @@ Referenz auf Hash-Objekt.
 
 =head4 Description
 
-Instantiiere einen Hash aus Datei $file und liefere eine Referenz auf
-dieses Objekt zurück. Existiert Datei $file nicht oder liegt ihr
-letzter Änderungszeitpunkt mehr als abs($timeout) Sekunden zurück,
-rufe $sub auf, um den Hash neu zu erzeugen und speichere ihn
-persistent in Datei $file.
+Instantiiere einen Hash aus Datei $file und liefere eine Referenz
+auf dieses Objekt zurück. Existiert Datei $file nicht oder liegt
+ihr letzter Änderungszeitpunkt mehr als abs($timeout) Sekunden
+zurück, rufe $sub auf, um den Hash zu erzeugen und speichere ihn
+persistent in Datei $file. Der Hash wird um die Komponenten
+
+=over 2
+
+=item *
+
+cacheFile
+
+=item *
+
+cacheTimeout
+
+=back
+
+erweitert.
 
 =cut
 
@@ -89,7 +104,7 @@ sub new {
     my ($class,$file,$timeout,$sub) = @_;
 
     return Quiq::Storable->memoize($file,$timeout,sub {
-        my $h = $sub->();
+        my $h = $sub->($class);
         $h->add(
             cacheFile => $file,
             cacheTimeout => $timeout,
