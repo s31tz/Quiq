@@ -21,6 +21,25 @@ Quiq::Hash::Persistent - Persistente Hash-Datenstruktur
 
 L<Quiq::Hash>
 
+=head1 DESCRIPTION
+
+Definition des Konstruktors in einer abgeleiteten Klasse (ohne
+Konstruktorargumente):
+
+    package MyClass;
+    use base qw/Quiq::Hash::Persistent/;
+    
+    sub new {
+        my $class = shift;
+        ...
+        return $class->SUPER::new($file,$timeout,sub {
+            ...
+            return $class->Quiq::Hash::new(
+                ...
+            );
+        };
+    }
+
 =head1 METHODS
 
 =head2 Klassenmethoden
@@ -80,6 +99,36 @@ sub new {
 }
 
 # -----------------------------------------------------------------------------
+
+=head2 Objektmethoden
+
+=head3 cacheFile() - Pfad der Cachedatei
+
+=head4 Synopsis
+
+    $file = $self->cacheFile;
+
+=head4 Returns
+
+Pfad (String)
+
+=head4 Description
+
+Liefere den Pfad der Cachedatei.
+
+=head3 cacheTimeout() - Cache-Timeout
+
+=head4 Synopsis
+
+    $timeout = $self->cacheTimeout;
+
+=head4 Returns
+
+Anzahl Sekunden (Integer oder undef)
+
+=head4 Description
+
+Liefere das für die Cachedatei definierte Timeout.
 
 =head1 VERSION
 
