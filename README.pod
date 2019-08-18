@@ -261,6 +261,10 @@ L<Quiq::Hash::Db|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash/D
 
 =item *
 
+L<Quiq::Hash::Persistent|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash/Persistent.pod> - Persistente Hash-Datenstruktur
+
+=item *
+
 L<Quiq::Html::Base|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Base.pod> - Basisklasse für HTML-Komponenten
 
 =item *

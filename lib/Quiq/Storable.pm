@@ -150,8 +150,11 @@ sub memoize {
 
     my $ref;
     if ($p->exists($file) && (!defined($timeout) ||
-            Quiq::Path->age($file) <= $timeout)) {
+            Quiq::Path->age($file) <= abs $timeout)) {
         $ref = $class->thaw($p->read($file));
+        if (defined($timeout) && $timeout < 0) {
+            $p->touch($file);
+        }
     }
     else {
         $ref = $sub->();
