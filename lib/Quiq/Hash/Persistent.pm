@@ -23,8 +23,8 @@ L<Quiq::Hash>
 
 =head1 DESCRIPTION
 
-Definition des Konstruktors in einer abgeleiteten Klasse (ohne
-Konstruktorargumente):
+Definition des Konstruktors in einer abgeleiteten Klasse (in diesem
+Fall ohne Konstruktorargumente):
 
     package MyClass;
     use base qw/Quiq::Hash::Persistent/;
@@ -40,6 +40,31 @@ Konstruktorargumente):
             );
         };
     }
+
+=over 2
+
+=item *
+
+Die Klasse (hier MyClass) wird von Quiq::Hash::Persistent abgeleitet
+
+=item *
+
+Der Konstruktor der Klasse kann eine beliebige Signatur haben
+
+=item *
+
+Aus den aktuellen Parametern ergibt sich u.U. der Cache-Dateiname
+
+=item *
+
+Der gesamte oder zumindest der "teure" Anteil des Konstruktors
+wird in der anonymen Subroutine sub{} imlementiert
+
+=item *
+
+Die anonyme Subroutine liefert einen Hash der Klasse Quiq::Hash
+
+=back
 
 =head1 METHODS
 
