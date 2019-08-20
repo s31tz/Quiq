@@ -1175,6 +1175,59 @@ zurück.
 Für eine Komponente, die nicht existiert, wird ein Leerstring
 geliefert.
 
+=head3 stat() - Statusinformation eines Pfads
+
+=head4 Synopsis
+
+    @arr = $class->%METHOD($path);
+
+=head4 Arguments
+
+=over 4
+
+=item $path
+
+Datei- oder Verzeichnispfad.
+
+=back
+
+=head4 Returns
+
+Statusinformation (List)
+
+=head4 Description
+
+Ermittele die Statusinformation eines Pfads und liefere diese
+Information als 13-elementige Liste zurück.
+
+Der Aufruf ist äquivalent zu
+
+    stat $path
+
+mit dem Unterschied, dass
+
+=over 2
+
+=item *
+
+eine Tilde-Expansion stattfindet
+
+=item *
+
+eine Exception geworfen, wird, wenn $path nicht existiert
+
+=back
+
+=head4 See Also
+
+=over 2
+
+=item *
+
+perldoc -f stat
+
+=back
+
 =head3 symlink() - Erzeuge Symlink
 
 =head4 Synopsis
@@ -1259,6 +1312,16 @@ Modifikationszeit in Unix Epoch (Integer)
 
 Setze den Zeitpunkt der letzten Modifikation (mtime) des Pfades $path
 auf den aktuellen Zeitpunkt.
+
+=head3 uid() - UID des Owners der Datei
+
+=head4 Synopsis
+
+    $uid = $this->%METHOD($path);
+
+=head4 Description
+
+Ermittele die UID des Owners der Datei und liefere diese zurück.
 
 =head1 VERSION
 

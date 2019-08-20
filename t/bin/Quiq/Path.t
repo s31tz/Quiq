@@ -715,6 +715,17 @@ sub test_touch : Test(1) {
 
 # -----------------------------------------------------------------------------
 
+sub test_uid : Test(1) {
+    my $self = shift;
+
+    my $p = Quiq::Path->new;
+    my $file = $p->tempFile;
+    my $uid = $p->uid($file);
+    $self->is($uid,$<);
+}
+
+# -----------------------------------------------------------------------------
+
 package main;
 Quiq::Path::Test->runTests;
 

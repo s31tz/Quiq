@@ -10,7 +10,7 @@ L<Quiq::System|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/System.p
 
 =head1 METHODS
 
-=head2 Prozess-Eigenschaften
+=head2 Klassen/Objektmethoden
 
 =head3 cwd() - Aktuelles Verzeichnis (Liefern/Setzen)
 
@@ -43,8 +43,8 @@ Wechsele Verzeichnis:
 
 =head4 Synopsis
 
-    $uid = $class->euid;
-    $class->euid($uid);
+    $uid = $this->euid;
+    $this->euid($uid);
 
 =head4 Description
 
@@ -64,6 +64,18 @@ Setze EUID:
 
     Quiq::Process->euid(1000);
 
+=head3 uid() - UID des Prozesses oder eines Benutzres
+
+=head4 Synopsis
+
+    $uid = $this->uid;
+    $uid = $this->uid($user);
+
+=head4 Description
+
+Liefere die reale User-Id des Prozesses. Ist Parameter $user
+angegeben, liefere die User-Id des betreffenden Benutzers.
+
 =head3 user() - Benutzername
 
 =head4 Synopsis
@@ -79,8 +91,8 @@ Prozess ausgeführt wird.
 
 =head4 Synopsis
 
-    $path = $class->homeDir;
-    $path = $class->homeDir($subPath);
+    $path = $this->homeDir;
+    $path = $this->homeDir($subPath);
 
 =head4 Description
 
