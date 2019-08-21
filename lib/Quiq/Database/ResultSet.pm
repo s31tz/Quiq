@@ -844,7 +844,9 @@ sub asTable {
         if ($info) {
             # Kolumnenzeile
 
-            $str .= "\n";
+            if ($info > 1) {
+                $str .= "\n";
+            }
             for (my $i = 0; $i < @fmt; $i++) {
                 my $numWidth = length $i+1;
                 my $width = abs($fmt[$i]->width)+3;
@@ -881,9 +883,9 @@ sub asTable {
     if ($msg) {
         $str .= $msg;
     }
-    if ($info || $msg) {
-        $str .= "\n";
-    }
+    #if ($info || $msg) {
+    #    $str .= "\n";
+    #}
 
     return $str;
 }
