@@ -52,6 +52,16 @@ JavaScript-Code bei Änderung der Auswahl ausgeführt wird.
 
 Liste der möglichen Werte.
 
+=item optionPairs => \@pairs (Default: [])
+
+Liste der möglichen Werte und ihrer Anzeigetexte. Beispiel:
+
+    optionPairs => [
+        0 => 'Nein',
+        1 => 'Ja',
+        2 => 'Vielleicht',
+    ]
+
 =item texts => \@text (Default: [])
 
 Liste der angezeigten Werte. Wenn nicht angegeben, wird die Liste der
