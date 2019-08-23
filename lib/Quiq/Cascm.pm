@@ -455,7 +455,7 @@ sub putFiles {
         );
 
         # Checke Workspace-Datei ins Repository ein
-        $output .= $self->checkin($package,$repoFile);
+        $output .= $self->checkin($package,$repoFile);  
     }
 
     return $output;
