@@ -117,6 +117,10 @@ L<Quiq::Database::Api::Dbi::Cursor|https://github.com/s31tz/Quiq/tree/master/pod
 
 =item *
 
+L<Quiq::Database::Config|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/Config.pod> - Datenbank-Konfiguration
+
+=item *
+
 L<Quiq::Database::Connection|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/Connection.pod> - Verbindung zu einer Relationalen Datenbank
 
 =item *
