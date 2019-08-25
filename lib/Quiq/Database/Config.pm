@@ -58,6 +58,8 @@ dieser Klasse zum Lesen der Konfigurationseinträge genutzt werden.
 
 =head1 EXAMPLE
 
+    use Quiq::Database::Config;
+    
     $cfg = Quiq::Database::Config->new('~/project/ocean/database.conf');
     $udl = $cfg->udl('test_db');
 
