@@ -42,6 +42,10 @@ anderweitig verarbeitet werden können. Da das Skript sukzessive gelesen
 wird, können auch sehr große SQL-Skripte, z.B. von Datenbank-Dumps,
 durch die Klasse verarbeitet werden.
 
+=head1 CAVEATS
+
+Mehrere SQL-Statements I<auf einer Zeile> beherrscht die Klasse nicht.
+
 =head1 METHODS
 
 =head2 Klassenmethoden
@@ -210,10 +214,6 @@ sub nextStmt {
 }
 
 # -----------------------------------------------------------------------------
-
-=head1 CAVEATS
-
-Mehrere SQL-Statements I<auf einer Zeile> beherrscht die Klasse nicht.
 
 =head1 VERSION
 
