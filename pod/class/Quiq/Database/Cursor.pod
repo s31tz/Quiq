@@ -168,11 +168,15 @@ andernfalls falsch.
 
     $time = $cur->execTime;
 
-=head3 time() - Liefere Dauer seit Start der Statement-Ausführung
+=head3 elapsed() - Liefere Dauer seit Start der Statement-Ausführung
 
 =head4 Synopsis
 
-    $time = $cur->time;
+    $time = $cur->elapsed;
+
+=head4 Alias
+
+time()
 
 =head2 Bind
 

@@ -176,7 +176,7 @@ sub new {
 
             unless (open $self,$mode,$path) {
                 $class->throw(
-                    'FH-00001: Kann Datei nicht öffnen',
+                    'FH-00001: Can\'t open file',
                     Path=>$path,
                     Errstr=>$!,
                 );

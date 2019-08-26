@@ -384,19 +384,28 @@ sub execTime {
 
 # -----------------------------------------------------------------------------
 
-=head3 time() - Liefere Dauer seit Start der Statement-Ausführung
+=head3 elapsed() - Liefere Dauer seit Start der Statement-Ausführung
 
 =head4 Synopsis
 
-    $time = $cur->time;
+    $time = $cur->elapsed;
+
+=head4 Alias
+
+time()
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub time {
+sub elapsed {
     my $self = shift;
     return Time::HiRes::gettimeofday-$self->{'startTime'};
+}
+
+{
+    no warnings 'once';
+    *time = \&elapsed;
 }
 
 # -----------------------------------------------------------------------------

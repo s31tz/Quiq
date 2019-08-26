@@ -883,9 +883,9 @@ sub asTable {
     if ($msg) {
         $str .= $msg;
     }
-    #if ($info || $msg) {
-    #    $str .= "\n";
-    #}
+    if ($info || $msg) {
+        $str .= "\n";
+    }
 
     return $str;
 }
