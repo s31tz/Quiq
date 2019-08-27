@@ -30,6 +30,7 @@ WriteMakefile(
     ABSTRACT_FROM => 'lib/Quiq.pm',
     AUTHOR => 'Frank Seitz <fs@fseitz.de>',
     LICENSE => 'perl_5',
+    clean => { FILES => 'Quiq-*' },
     test => {
         RECURSIVE_TEST_FILES => 1,
     },
