@@ -30,7 +30,7 @@ _RETURN $string
 
 =head1 VERSION
 
-1.155
+1.156
 
 =head1 SOURCE
 

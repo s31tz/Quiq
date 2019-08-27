@@ -163,27 +163,6 @@ werden über die Klasse selbst aufgelöst. Wenn die Klasse eine
 AUTOLOAD-Methode besitzt, funktioniert diese genau so wie ohne
 I<< Quiq::ClassLoader >>.
 
-=head1 METHODS
-
-=head2 Autoload-Methode
-
-=head3 AUTOLOAD() - Lade Klassen-Modul
-
-=head4 Synopsis
-
-    $this->AUTOLOAD;
-
-=head4 Description
-
-Die Methode lädt fehlende Klassen-Module und führt ihren ersten
-Methodenaufruf durch. Die Argumente und der Returnwert entsprechen
-denen der gerufenen Methode. Schlägt das Laden des Klassen-Moduls fehl,
-löst die Methode eine Exception aus (siehe oben).
-
-Die AUTOLOAD-Methode implementiert die Funktionalität des
-Moduls Quiq::ClassLoader. Sie wird nicht direkt, sondern vom
-Perl-Interpreter gerufen, wenn eine Methode nicht gefunden wird.
-
 =head1 CAVEATS
 
 =over 2
@@ -218,9 +197,30 @@ werden kann.
 
 =back
 
+=head1 METHODS
+
+=head2 Autoload-Methode
+
+=head3 AUTOLOAD() - Lade Klassen-Modul
+
+=head4 Synopsis
+
+    $this->AUTOLOAD;
+
+=head4 Description
+
+Die Methode lädt fehlende Klassen-Module und führt ihren ersten
+Methodenaufruf durch. Die Argumente und der Returnwert entsprechen
+denen der gerufenen Methode. Schlägt das Laden des Klassen-Moduls fehl,
+löst die Methode eine Exception aus (siehe oben).
+
+Die AUTOLOAD-Methode implementiert die Funktionalität des
+Moduls Quiq::ClassLoader. Sie wird nicht direkt, sondern vom
+Perl-Interpreter gerufen, wenn eine Methode nicht gefunden wird.
+
 =head1 VERSION
 
-1.155
+1.156
 
 =head1 SOURCE
 

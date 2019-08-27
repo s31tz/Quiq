@@ -736,7 +736,7 @@ Schreibe den Text $text unter der Überschrift $title nach STDERR.
 
 =head1 VERSION
 
-1.155
+1.156
 
 =head1 SOURCE
 
