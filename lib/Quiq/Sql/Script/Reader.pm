@@ -7,7 +7,7 @@ use v5.10.0;
 
 our $VERSION = '1.155';
 
-use Quiq::Sql;
+use Quiq::Sql::Analyzer;
 use Quiq::FileHandle;
 
 # -----------------------------------------------------------------------------
@@ -91,13 +91,14 @@ Zeichenkette $str und liefere eine Referenz auf dieses Objekt zurück.
 sub new {
     my ($class,$dbms,$input) = @_;
 
-    # DBMS-Namen überprüfen
-    my $sql = Quiq::Sql->new($dbms);
+    # SQL-Analyzer instantiieren (mit Namensprüfung)
+    my $aly = Quiq::Sql::Analyzer->new($dbms);
 
     my $fh = Quiq::FileHandle->new('<',$input);
+    $fh->setEncoding('utf-8');
 
     return $class->SUPER::new(
-        sql => $sql,
+        analyzer => $aly,
         fh => $fh,
     );
 }
@@ -150,7 +151,7 @@ Liefere das nächste SQL-Statement des Skripts. Leere Statements werden
 sub nextStmt {
     my $self = shift;
 
-    my ($fh,$sql) = $self->get('fh','sql');
+    my ($fh,$aly) = $self->get('fh','analyzer');
 
     my $stmt;
     while (<$fh>) {
@@ -161,8 +162,10 @@ sub nextStmt {
                 $stmt = undef;
                 next;
             }
-            if ($sql->isPostgreSQL &&
-                    $stmt =~ /CREATE\s+(OR\s+REPLACE\s+)?FUNCTION\s+/i) {
+            #if ($sql->isPostgreSQL &&
+            #        $stmt =~ /CREATE\s+(OR\s+REPLACE\s+)?FUNCTION\s+/i) {
+
+            if ($aly->isCreateFunction($stmt)) {
 
                 # Im Falle von CREATE FUNCTION oder CREATE OR REPLACE
                 # FUNCTIONbei PostgreSQL endet das Statement nicht unbedingt

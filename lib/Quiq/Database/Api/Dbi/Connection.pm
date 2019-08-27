@@ -418,7 +418,7 @@ Resultat-Objekt $cur und liefere eine Referenz auf dieses Objekt
 zurück.
 
 Ist Parameter $forceExec angegeben und wahr, wird die Ausführung
-des Statement forciert. Dies kann bei Oracle PL/SQL Code notwendig
+des Statements forciert. Dies kann bei Oracle PL/SQL Code notwendig
 sein (siehe Doku zu Quiq::Database::Connection/sql).
 
 =cut

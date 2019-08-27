@@ -581,12 +581,12 @@ sub fetch {
 
 =head4 Synopsis
 
-    @rows | $tab = $cur->fetchAll($autoClose);
+    @rows | $tab = $cur->fetchAll($autoClose,$limit);
 
 =head4 Description
 
 Liefere die Ergebnismenge als Liste von Datensätzen oder als
-Tabelle. Ist der Parameter $autoCloase angegeben und "wahr" schließe
+Tabelle. Ist der Parameter $autoClose angegeben und "wahr" schließe
 den Cursor automatisch.
 
 =cut
@@ -594,8 +594,7 @@ den Cursor automatisch.
 # -----------------------------------------------------------------------------
 
 sub fetchAll {
-    my $self = shift;
-    my $autoClose = shift;
+    my ($self,$autoClose,$limit) = @_;
 
     # Alle Datensätze fetchen
 

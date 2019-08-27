@@ -2475,7 +2475,7 @@ B<Anmerkungen>
 
 =item *
 
-Die Select-Liste des Statement sollte sinnvollerweise aus
+Die Select-Liste des Statements sollte sinnvollerweise aus
 einer Kolumne bestehen. Mehr als eine Kolumne ist zulässig,
 allerdings ist dies eine Verschwendung von Platz und Zeit, denn
 auch wenn mehrere Kolumnen angegeben sind, wird nur der Wert der
@@ -4561,7 +4561,7 @@ Die Dauer der Statementausführung
 
 =item 3.
 
-Die Zeit, die seit Start des Statement vergangen ist
+Die Zeit, die seit Start des Statements vergangen ist
 
 =back
 

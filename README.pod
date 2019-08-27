@@ -169,6 +169,10 @@ L<Quiq::Database::Tree|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/
 
 =item *
 
+L<Quiq::Dbms|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Dbms.pod> - Datenbanksystem
+
+=item *
+
 L<Quiq::Debug|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Debug.pod> - Hilfe beim Debuggen von Programmen
 
 =item *
@@ -582,6 +586,10 @@ L<Quiq::Socket|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Socket.p
 =item *
 
 L<Quiq::Sql|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sql.pod> - Klasse zur Generierung von SQL
+
+=item *
+
+L<Quiq::Sql::Analyzer|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sql/Analyzer.pod> - Analyse von SQL-Code
 
 =item *
 

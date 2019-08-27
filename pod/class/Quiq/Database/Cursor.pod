@@ -210,12 +210,12 @@ Ergebnismenge erreicht, liefere undef.
 
 =head4 Synopsis
 
-    @rows | $tab = $cur->fetchAll($autoClose);
+    @rows | $tab = $cur->fetchAll($autoClose,$limit);
 
 =head4 Description
 
 Liefere die Ergebnismenge als Liste von Datens‰tzen oder als
-Tabelle. Ist der Parameter $autoCloase angegeben und "wahr" schlieﬂe
+Tabelle. Ist der Parameter $autoClose angegeben und "wahr" schlieﬂe
 den Cursor automatisch.
 
 =head1 VERSION
