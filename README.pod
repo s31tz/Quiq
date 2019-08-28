@@ -549,7 +549,7 @@ L<Quiq::Properties|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Prop
 
 =item *
 
-L<Quiq::Range|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Range.pod> - Bereich von Integern
+L<Quiq::Range|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Range.pod> - Liste von Integern
 
 =item *
 

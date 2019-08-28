@@ -13,7 +13,7 @@ our $VERSION = '1.156';
 
 =head1 NAME
 
-Quiq::Range - Bereich von Integern
+Quiq::Range - Liste von Integern
 
 =head1 BASE CLASS
 
@@ -24,15 +24,21 @@ L<Quiq::Hash>
     use Quiq::Range;
     
     # Instantiierung
-    my $rng = Quiq::Range->new($rangeSpec);
+    my $rng = Quiq::Range->new($spec);
     
-    # Range als Array von Integern
+    # Übersetzung in ein Array von Integern
     my @arr = Quiq::Range->numbers;
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen Bereich. Ein Bereich ist eine
-Aufzählung von Integer-Werten der Art
+Ein Objekt der Klasse repräsentiert eine Liste von Integern.
+Diese wird vom Nutzer der Klasse spezifiziert als eine Aufzählung
+von Bereichsangaben
+
+    N     einzelner Integer
+    N-M   Bereich von Integern
+
+die durch Komma getrennt sind. Beispiele:
 
     1,2,3,4
     1-4
@@ -42,13 +48,13 @@ Aufzählung von Integer-Werten der Art
 
 =over 4
 
-=item rangeSpec => $rangeSpec
+=item spec => $spec
 
-Bereichs-Spezifikation, die dem Konstruktur übergeben wurde.
+Die Spezifikation, die dem Konstruktur übergeben wurde.
 
 =item numberA => \@numbers
 
-Der Bereich als Array von Integer-Werten.
+Die Übersetzung der Spezifikation in ein Array von Integern.
 
 =back
 
@@ -60,13 +66,13 @@ Der Bereich als Array von Integer-Werten.
 
 =head4 Synopsis
 
-    $rng = $class->new($rangeSpec);
+    $rng = $class->new($spec);
 
 =head4 Arguments
 
 =over 4
 
-=item $rangeSpec
+=item $spec
 
 Spezifikation des Bereichs.
 
@@ -78,8 +84,8 @@ Range-Objekt
 
 =head4 Description
 
-Instantiiere ein Range-Objekt für Bereichsspezifikation $rangeSpec und
-liefere eine Referenz auf dieses Objekt zurück.
+Instantiiere ein Objekt gemäß Spezifikation $spec und liefere eine
+Referenz auf dieses Objekt zurück.
 
 =cut
 
@@ -87,10 +93,10 @@ liefere eine Referenz auf dieses Objekt zurück.
 
 sub new {
     my $class = shift;
-    my $rangeSpec = shift // '';
+    my $spec = shift // '';
 
     my @arr;
-    for (split /,/,$rangeSpec) {
+    for (split /,/,$spec) {
         my ($min,$max) = split /-/;
         push @arr,$max? ($min..$max): $_;
     }
@@ -98,8 +104,8 @@ sub new {
     # Objekt instantiieren
 
     return $class->SUPER::new(
-        rangeSpec => $rangeSpec,
-        numberA => \@arr,
+        spec => $spec,
+        integerA => \@arr,
     );
 }
 
@@ -116,12 +122,12 @@ sub new {
 
 =head4 Returns
 
-Liste von Nummern (Array of Integers). Im Skalarkontext eine Referenz
+Liste von Nummern (Array of Numbers). Im Skalarkontext eine Referenz
 auf die Liste.
 
 =head4 Description
 
-Liefere die Liste der Nummern des Bereichs.
+Liefere die Liste der Integers.
 
 =cut
 
@@ -129,7 +135,8 @@ Liefere die Liste der Nummern des Bereichs.
 
 sub numbers {
     my $self = ref $_[0]? shift: shift->new(shift);
-    my $arr = $self->{'numberA'};
+    my $arr = $self->{'integerA'};
+
     return wantarray? @$arr: $arr;
 }
 
