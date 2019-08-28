@@ -31,17 +31,17 @@ L<Quiq::Hash>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine Liste von Integern.
-Diese wird vom Nutzer der Klasse spezifiziert als eine Aufzählung
-von Bereichsangaben
+Ein Objekt der Klasse repräsentiert eine Liste von Integern. Diese wird
+vom Nutzer spezifiziert als eine Aufzählung von Angaben der Art
 
     N     einzelner Integer
     N-M   Bereich von Integern
 
-die durch Komma getrennt sind. Beispiele:
+die durch Komma getrennt aufgezählt werden können. Beispiele:
 
-    1,2,3,4
+    7
     1-4
+    1,2,3,4
     3,5,7-10,16,81-89,101
 
 =head1 ATTRIBUTES
@@ -74,13 +74,13 @@ Die Übersetzung der Spezifikation in ein Array von Integern.
 
 =item $spec
 
-Spezifikation des Bereichs.
+Spezifikation der Integer-Liste in oben beschiebener Syntax.
 
 =back
 
 =head4 Returns
 
-Range-Objekt
+Objekt
 
 =head4 Description
 
@@ -118,7 +118,7 @@ sub new {
 =head4 Synopsis
 
     @numbers | $numberA = $rng->numbers;
-    @numbers | $numberA = $class->numbers($rangeSpec);
+    @numbers | $numberA = $class->numbers($spec);
 
 =head4 Returns
 
@@ -127,7 +127,8 @@ auf die Liste.
 
 =head4 Description
 
-Liefere die Liste der Integers.
+Liefere die Liste der Integers. Die Methode kann als Klassen- oder
+Objektmethode gerufen werden.
 
 =cut
 
@@ -136,7 +137,6 @@ Liefere die Liste der Integers.
 sub numbers {
     my $self = ref $_[0]? shift: shift->new(shift);
     my $arr = $self->{'integerA'};
-
     return wantarray? @$arr: $arr;
 }
 
