@@ -549,6 +549,10 @@ L<Quiq::Properties|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Prop
 
 =item *
 
+L<Quiq::Range|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Range.pod> - Bereich von Integern
+
+=item *
+
 L<Quiq::Record|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Record.pod> - Verarbeitung von Text-Records
 
 =item *

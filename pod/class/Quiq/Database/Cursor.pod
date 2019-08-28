@@ -210,7 +210,29 @@ Ergebnismenge erreicht, liefere undef.
 
 =head4 Synopsis
 
+    @rows | $tab = $cur->fetchAll;
+    @rows | $tab = $cur->fetchAll($autoClose);
     @rows | $tab = $cur->fetchAll($autoClose,$limit);
+
+=head4 Arguments
+
+=over 4
+
+=item $autoClose (Default: 0)
+
+Ist Parameter $autoClose angegeben und wahr, schlieﬂe den Cursor
+automatisch.
+
+=item $limit (Default: 0)
+
+Fetche maximal $limit Datens‰tze. Falls 0, fetche alle Datens‰tze.
+
+=back
+
+=head4 Returns
+
+Liste der Datens‰tze (List-Kontext) der ein Resultset-Objekt
+(Skalar-Kontect).
 
 =head4 Description
 

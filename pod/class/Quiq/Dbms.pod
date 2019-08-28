@@ -18,10 +18,10 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
     # Namen der bekannten Datensysteme
     my @names = Quiq::Dbms->dbmsNames;
     
-    # Boolsche Werte für Tests
+    # Boolsche Variable für Tests
     ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) = $d->dbmsVector;
     
-    # Testmethoden
+    # Test-Methoden
     
     $bool = $d->isOracle;
     $bool = $d->isPostgreSQL;
@@ -114,9 +114,9 @@ Liefere folgende Liste von DBMS-Namen (in dieser Reihenfolge):
 
 =head4 Description
 
-Liefere einen Vektor von boolschen Werten, von denen genau einer den
-Wert "wahr" besitzt, und zwar der, der dem DBMS entspricht,
-auf den das Objekt instantiiert ist.
+Liefere einen Vektor von boolschen Werten, von denen genau einer
+wahr ist, und zwar derjenige, der dem DBMS entspricht, auf den das
+Objekt instantiiert ist.
 
 Die Methode ist für Programmcode nützlich, der DBMS-spezifische
 Unterscheidungen macht. Der Code braucht dann lediglich auf den
@@ -135,11 +135,21 @@ durchzuführen
 
     $bool = $d->isOracle;
 
+=head4 Description
+
+Prüfe, ob das Datenbanksystem Oracle ist. Wenn ja, liefere wahr,
+sonst falsch.
+
 =head3 isPostgreSQL() - Teste auf PostgreSQL
 
 =head4 Synopsis
 
     $bool = $d->isPostgreSQL;
+
+=head4 Description
+
+Prüfe, ob das Datenbanksystem PostgreSQL ist. Wenn ja, liefere wahr,
+sonst falsch.
 
 =head3 isSQLite() - Teste auf SQLite
 
@@ -147,11 +157,21 @@ durchzuführen
 
     $bool = $d->isSQLite;
 
+=head4 Description
+
+Prüfe, ob das Datenbanksystem SQLite ist. Wenn ja, liefere wahr,
+sonst falsch.
+
 =head3 isMySQL() - Teste auf MySQL
 
 =head4 Synopsis
 
     $bool = $d->isMySQL;
+
+=head4 Description
+
+Prüfe, ob das Datenbanksystem MySQL ist. Wenn ja, liefere wahr,
+sonst falsch.
 
 =head3 isAccess() - Teste auf Access
 
@@ -159,11 +179,21 @@ durchzuführen
 
     $bool = $d->isAccess;
 
+=head4 Description
+
+Prüfe, ob das Datenbanksystem Access ist. Wenn ja, liefere wahr,
+sonst falsch.
+
 =head3 isMSSQL() - Teste auf MSSQL
 
 =head4 Synopsis
 
     $bool = $d->isMSSQL;
+
+=head4 Description
+
+Prüfe, ob das Datenbanksystem MSSQL ist. Wenn ja, liefere wahr,
+sonst falsch.
 
 =head1 VERSION
 
