@@ -155,6 +155,10 @@ sub nextStmt {
 
     my $stmt;
     while (<$fh>) {
+        if (s/^---+$//) {
+            # Eine Trennlinie übergehen wir
+            next;
+        }
         $stmt .= $_;
         if (/;\s*$/) {
             if ($stmt =~ /^[\s;]*$/) {

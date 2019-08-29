@@ -700,7 +700,8 @@ Table-Klasse keine Row-Klasse explizit angegeben wurde.
 # -----------------------------------------------------------------------------
 
 sub defaultRowClass {
-    return $_[1]? 'Quiq::Database::Row::Array': 'Quiq::Database::Row::Object';
+    return $_[1]? 'Quiq::Database::Row::Array':
+        'Quiq::Database::Row::Object';
 }
 
 # -----------------------------------------------------------------------------
