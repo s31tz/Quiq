@@ -10,6 +10,7 @@ our $VERSION = '1.156';
 
 use Quiq::Database::Row::Array;
 use Quiq::Shell;
+use Quiq::AnsiColor;
 use Quiq::Path;
 use Quiq::Terminal;
 use Quiq::CommandLine;
@@ -17,7 +18,6 @@ use Quiq::Array;
 use Quiq::Stopwatch;
 use Quiq::TempFile;
 use Quiq::Unindent;
-use Quiq::AnsiColor;
 use Quiq::Database::Connection;
 use Quiq::Database::ResultSet::Array;
 
@@ -186,6 +186,131 @@ sub new {
     $self->set(sh=>$sh);
 
     return $self;
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Datei bearbeiten
+
+=head3 abstract() - Übersicht über Inhalt von Packages
+
+=head4 Synopsis
+
+    $abstract = $scm->abstract($regex);
+
+=head4 Arguments
+
+=over 4
+
+=item $regex
+
+Regex, der die Packages matcht, deren Inhalt angezeigt werden soll
+
+=back
+
+=head4 Returns
+
+Übersicht (String)
+
+=head4 Description
+
+Erzeuge eine Übersicht über die Packages, deren Name den Regex $regex
+matcht, und ihren Inhalt.
+
+=head4 Example
+
+    $ ruv-dss-repo abstract Seitz_X
+    S6800_0_Seitz_X_Deployment TTEST
+        tools/post_deployment/deploy_ddl.pl 34
+        tools/post_deployment/deploy_udf.pl 28
+    
+    S6800_0_Seitz_X_Deployment_Test TTEST
+        ddl/table/test_table.sql 4
+        ddl/udf/lib/test_function.sql 1
+    
+    S6800_0_Seitz_X_Fahrstuhl_1 Entwicklung
+    
+    S6800_0_Seitz_X_Fahrstuhl_2 Entwicklung
+    
+    S6800_0_Seitz_X_MetaData TTEST
+        ddl/udf/lib/rv_create_dbobject_ddl.sql 5
+        lib/zenmod/DSS/MetaData.pm 14
+    
+    S6800_0_Seitz_X_Portierte_Programme Entwicklung
+        bin/stichtag.pl 1
+        bin/verd_prd_zuord_dim.pl 24
+        bin/vertr_kms_progn_hist.pl 4
+        lib/zenmod/Sparhist.pm 37
+        tab_clone.pl 4
+        tools/wasMussIchTesten.pl 1
+    
+    S6800_0_Seitz_X_Portierte_Tabellen TTEST
+        ddl/table/q12b067.sql 0
+        ddl/table/q98b3s33.sql 0
+        ddl/table/sf_ga_liste_online_renta.sql 1
+        ddl/table/sf_kredu_meldw_dz_zlms_vol_wkv.sql 6
+        ddl/table/sf_vden_agt_liste.sql 1
+    
+    S6800_0_Seitz_X_Session TTEST
+        ddl/udf/lib/rv_stage.sql 2
+        lib/zenmod/DSS/Session.pm 2
+    
+    S6800_0_Seitz_X_ZenMods TTEST
+        lib/zenmod/DSSDB/Greenplum.pm 108
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub abstract {
+    my ($self,$regex) = @_;
+
+    my $a = Quiq::AnsiColor->new(-t STDOUT);
+
+    # Packages und ihre Stage bestimmen
+
+    my %package;
+    for my $row ($self->listPackages->rows) {
+        my ($package,$state) = @$row;
+        if ($package =~ qr/$regex/) {
+            $package{$package} = [$state,{}];
+        }
+    }
+
+    # Items der Packages
+
+    my %item;
+    for my $row ($self->showPackage(keys %package)) {
+        my $package = $row->[5];
+        my $item = $row->[1];
+        my $version = $row->[3];
+
+        my $maxVersion = $package{$package}[1]{$item} //= -1;
+        if ($version > $maxVersion) {
+            $package{$package}[1]{$item} = $version;
+        }
+    }    
+
+    my $str = '';
+    my $i = 0;
+    for my $package (sort keys %package) {
+        my ($state,$itemH) = @{$package{$package}};
+
+        if ($i++) {
+            $str .= "\n";
+        }
+
+        $str .= sprintf "%s %s\n",
+            $a->str('red',$package),
+            $a->str('green',$state);
+
+        for my $item (sort keys %$itemH) {
+            $str .= sprintf "    %s %s\n",$item,
+                $a->str('green',$itemH->{$item});
+        }
+    }
+
+    return $str;
 }
 
 # -----------------------------------------------------------------------------
@@ -1110,19 +1235,19 @@ sub createPackage {
 
 # -----------------------------------------------------------------------------
 
-=head3 deletePackage() - Lösche Package
+=head3 deletePackages() - Lösche Package
 
 =head4 Synopsis
 
-    $output = $scm->deletePackage($package);
+    $output = $scm->deletePackages(@packages);
 
 =head4 Arguments
 
 =over 4
 
-=item $packge
+=item @package
 
-Name des Package, das gelöscht werden soll.
+Namen der Packages, die gelöscht werden sollwn.
 
 =back
 
@@ -1132,29 +1257,36 @@ Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Lösche Package $package und liefere die Ausgabe des Kommandos zurück.
+Lösche die Packages @packages und liefere die Ausgabe der
+Kommandos zurück.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub deletePackage {
-    my ($self,$package) = @_;
+sub deletePackages {
+    my ($self,@packages) = @_;
 
-    # Anmerkung: Das Kommando hdlp kann auch mehrere Packages auf
-    # einmal löschen. Es ist jedoch nicht gut, es so zu
-    # nutzen, da dann nicht-existente Packages nicht bemängelt
-    # werden, wenn mindestens ein Package existiert.
+    my $output = '';
+    for my $package (@packages) {
+        # Anmerkung: Das Kommando hdlp kann auch mehrere Packages auf
+        # einmal löschen. Es ist jedoch nicht gut, es so zu
+        # nutzen, da dann nicht-existente Packages nicht bemängelt
+        # werden, wenn mindestens ein Package existiert. Daher löschen
+        # wir hier jedes Paket einzeln.
 
-    my $c = Quiq::CommandLine->new;
-    $c->addOption(
-        $self->credentialsOptions,
-        -b => $self->broker,
-        -en => $self->projectContext,
-        -pkgs => $package,
-    );
+        my $c = Quiq::CommandLine->new;
+        $c->addOption(
+            $self->credentialsOptions,
+            -b => $self->broker,
+            -en => $self->projectContext,
+            -pkgs => $package,
+        );
 
-    return $self->runCmd('hdlp',$c);
+        $output .= $self->runCmd('hdlp',$c);
+    }
+
+    return $output;
 }
 
 # -----------------------------------------------------------------------------
@@ -1213,11 +1345,12 @@ sub renamePackage {
 
 =head4 Synopsis
 
-    $tab = $scm->showPackage($package);
+    @rows | $tab = $scm->showPackage($package);
 
 =head4 Returns
 
-Ergebnismengen-Objekt (Quiq::Database::ResultSet::Array)
+Datensätze oder Ergebnismengen-Objekt
+(Quiq::Database::ResultSet::Array)
 
 =head4 Description
 
@@ -1288,10 +1421,11 @@ und liefere diese Ergebnismenge zurück.
 # -----------------------------------------------------------------------------
 
 sub showPackage {
-    my ($self,$package) = @_;
+    my ($self,@packages) = @_;
 
     my $projectContext = $self->projectContext;
     my $viewPath = $self->viewPath;
+    my $packages = join ', ',map {"'$_'"} @packages;
 
     my $tab = $self->runSql("
         SELECT DISTINCT -- Warum ist hier DISTINCT nötig?
@@ -1300,6 +1434,7 @@ sub showPackage {
             , itm.itemtype AS item_type
             , ver.mappedversion AS version
             , ver.versiondataobjid
+            , pkg.packagename
         FROM
             haritems itm
             JOIN harversions ver
@@ -1316,7 +1451,7 @@ sub showPackage {
                 ON rep.repositobjid = itm.repositobjid
         WHERE
             env.environmentname = '$projectContext'
-            AND pkg.packagename = '$package'
+            AND pkg.packagename IN ($packages)
         START WITH
             itm.itemname = '$viewPath'
             AND itm.repositobjid = rep.repositobjid
@@ -1334,7 +1469,7 @@ sub showPackage {
         $row->[1] =~ s|^/\Q$viewPath\E/||;
     }
 
-    return $tab;
+    return wantarray? $tab->rows: $tab;
 }
 
 # -----------------------------------------------------------------------------

@@ -112,6 +112,74 @@ dieses Objekt zurück.
 
 =head2 Datei bearbeiten
 
+=head3 abstract() - Übersicht über Inhalt von Packages
+
+=head4 Synopsis
+
+    $abstract = $scm->abstract($regex);
+
+=head4 Arguments
+
+=over 4
+
+=item $regex
+
+Regex, der die Packages matcht, deren Inhalt angezeigt werden soll
+
+=back
+
+=head4 Returns
+
+Übersicht (String)
+
+=head4 Description
+
+Erzeuge eine Übersicht über die Packages, deren Name den Regex $regex
+matcht, und ihren Inhalt.
+
+=head4 Example
+
+    $ ruv-dss-repo abstract Seitz_X
+    S6800_0_Seitz_X_Deployment TTEST
+        tools/post_deployment/deploy_ddl.pl 34
+        tools/post_deployment/deploy_udf.pl 28
+    
+    S6800_0_Seitz_X_Deployment_Test TTEST
+        ddl/table/test_table.sql 4
+        ddl/udf/lib/test_function.sql 1
+    
+    S6800_0_Seitz_X_Fahrstuhl_1 Entwicklung
+    
+    S6800_0_Seitz_X_Fahrstuhl_2 Entwicklung
+    
+    S6800_0_Seitz_X_MetaData TTEST
+        ddl/udf/lib/rv_create_dbobject_ddl.sql 5
+        lib/zenmod/DSS/MetaData.pm 14
+    
+    S6800_0_Seitz_X_Portierte_Programme Entwicklung
+        bin/stichtag.pl 1
+        bin/verd_prd_zuord_dim.pl 24
+        bin/vertr_kms_progn_hist.pl 4
+        lib/zenmod/Sparhist.pm 37
+        tab_clone.pl 4
+        tools/wasMussIchTesten.pl 1
+    
+    S6800_0_Seitz_X_Portierte_Tabellen TTEST
+        ddl/table/q12b067.sql 0
+        ddl/table/q98b3s33.sql 0
+        ddl/table/sf_ga_liste_online_renta.sql 1
+        ddl/table/sf_kredu_meldw_dz_zlms_vol_wkv.sql 6
+        ddl/table/sf_vden_agt_liste.sql 1
+    
+    S6800_0_Seitz_X_Session TTEST
+        ddl/udf/lib/rv_stage.sql 2
+        lib/zenmod/DSS/Session.pm 2
+    
+    S6800_0_Seitz_X_ZenMods TTEST
+        lib/zenmod/DSSDB/Greenplum.pm 108
+
+=head2 Datei bearbeiten
+
 =head3 edit() - Bearbeite Repository-Datei
 
 =head4 Synopsis
@@ -523,19 +591,19 @@ Ausgabe des Kommandos (String)
 
 Erzeuge Package $package und liefere die Ausgabe des Kommandos zurück.
 
-=head3 deletePackage() - Lösche Package
+=head3 deletePackages() - Lösche Package
 
 =head4 Synopsis
 
-    $output = $scm->deletePackage($package);
+    $output = $scm->deletePackages(@packages);
 
 =head4 Arguments
 
 =over 4
 
-=item $packge
+=item @package
 
-Name des Package, das gelöscht werden soll.
+Namen der Packages, die gelöscht werden sollwn.
 
 =back
 
@@ -545,7 +613,8 @@ Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Lösche Package $package und liefere die Ausgabe des Kommandos zurück.
+Lösche die Packages @packages und liefere die Ausgabe der
+Kommandos zurück.
 
 =head3 renamePackage() - Benenne Package um
 
@@ -580,11 +649,12 @@ des Kommandos zurück.
 
 =head4 Synopsis
 
-    $tab = $scm->showPackage($package);
+    @rows | $tab = $scm->showPackage($package);
 
 =head4 Returns
 
-Ergebnismengen-Objekt (Quiq::Database::ResultSet::Array)
+Datensätze oder Ergebnismengen-Objekt
+(Quiq::Database::ResultSet::Array)
 
 =head4 Description
 
