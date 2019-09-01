@@ -281,6 +281,14 @@ Die Schlüssel/Wert-Paare haben die Form:
 
     $key="$val"
 
+oder
+
+    $key='$val'
+
+oder
+
+    $key={$val}
+
 Wenn $val kein Whitespace enthält, können die Anführungsstriche
 weggelassen werden:
 
