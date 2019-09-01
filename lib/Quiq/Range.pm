@@ -39,10 +39,12 @@ vom Nutzer spezifiziert als eine Aufzählung von Angaben der Art
 
 die durch Komma getrennt aufgezählt werden können. Beispiele:
 
-    7
-    1-4
-    1,2,3,4
-    3,5,7-10,16,81-89,101
+    Spezfikation          Array von Integern
+    --------------------- ----------------------------------
+    7                     7
+    1-4                   1 2 3 4
+    1,2,3,4               1 2 3 4
+    3,5,7-10,16,81-85,101 3 5 7 8 9 10 16 81 82 83 84 85 101
 
 =head1 ATTRIBUTES
 
