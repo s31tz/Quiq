@@ -424,6 +424,85 @@ Ausgabe des Kommandos (String)
 Ermittele die Versionsinformation über Datei $repoFile und liefere
 diese zurück.
 
+=head3 getVersion() - Speichere Version einer Datei
+
+=head4 Synopsis
+
+    $file = $scm->getVersion($repoFile,$version,$destDir);
+
+=head4 Arguments
+
+=over 4
+
+=item $repoFile
+
+Repository-Datei, die gespeichert werden soll.
+
+=item $version
+
+Version der Repository-Datei.
+
+=item $destDir
+
+Zielverzeichnis, in dem die Repository-Datei gespeichert wird.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -sloppy => $bool (Default: 0)
+
+Prüfe nicht, ob die angegebene Version existiert. Dies spart
+einen CASCM Aufruf und ist sinnvoll, wenn die Richtigkeit der
+Versionsnummer gesichert ist, siehe deleteToVersion().
+
+=back
+
+=head4 Returns
+
+Pfad der Datei (String)
+
+=head4 Description
+
+Speichere die Repository-Datei $repoFile der Version $version in
+Verzeichnis $destDir und liefere den Pfad der Datei zurück.
+
+=head3 diff() - Differenz zwischen zwei Versionen
+
+=head4 Synopsis
+
+    $diff = $scm->diff($repoFile,$version1,$version2);
+
+=head4 Arguments
+
+=over 4
+
+=item $repoFile
+
+Repository-Datei, deren Versionen verglichen werden.
+
+=item $version1
+
+Erste zu vergleichende Version der Repository-Datei.
+
+=item $version2
+
+Zweite zu vergleichende Version der Repository-Datei.
+
+=back
+
+=head4 Returns
+
+Differenz (String)
+
+=head4 Description
+
+Ermittele die Differenz zwischen den beiden Versionen $version1 und
+$version2 der Repository-Datei $repoFile und liefere das Ergebnis
+zurück.
+
 =head3 deleteVersion() - Lösche höchste Version von Repository-Datei
 
 =head4 Synopsis
@@ -449,6 +528,38 @@ Ausgabe des Kommandos (String)
 Lösche die höchste Version der Repository-Datei (Item) $repoFile.
 Dies geht nur, wenn sich diese Version auf der untersten Stufe
 (Entwicklung) befindet.
+
+=head3 deleteToVersion() - Lösche alle Versionen oberhalb einer Version
+
+=head4 Synopsis
+
+    $scm->deleteToVersion($repoFile,$version,$backupDir);
+
+=head4 Arguments
+
+=over 4
+
+=item $repoFile
+
+Der Pfad der zu löschenden Repository-Datei.
+
+=item $version
+
+Version, oberhalb welcher alle anderen Versionen gelöscht werden,
+d.h. diese Version I<bleibt stehen>.
+
+=item $backupDir
+
+Verzeichnis, in das alle gelöschten Versionen gesichert werden.
+
+=back
+
+=head4 Description
+
+Lösche alle Versionen der Repository-Datei $repoFile oberhalb der
+Version $version. Dies setzt voraus, dass alle diese Versionen in einem
+(oder mehreren) Paketen auf I<Entwicklung> enthalten sind. Jede gelöschte
+Version wird in Verzeichnis $backupDir gesichert.
 
 =head3 deleteAllVersions() - Lösche alle Versionen einer Repository-Datei
 

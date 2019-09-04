@@ -14,6 +14,7 @@ use Quiq::AnsiColor;
 use Quiq::Path;
 use Quiq::Terminal;
 use Quiq::CommandLine;
+use Quiq::TempDir;
 use Quiq::Array;
 use Quiq::Stopwatch;
 use Quiq::TempFile;
@@ -856,6 +857,164 @@ sub versionInfo {
 
 # -----------------------------------------------------------------------------
 
+=head3 getVersion() - Speichere Version einer Datei
+
+=head4 Synopsis
+
+    $file = $scm->getVersion($repoFile,$version,$destDir);
+
+=head4 Arguments
+
+=over 4
+
+=item $repoFile
+
+Repository-Datei, die gespeichert werden soll.
+
+=item $version
+
+Version der Repository-Datei.
+
+=item $destDir
+
+Zielverzeichnis, in dem die Repository-Datei gespeichert wird.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -sloppy => $bool (Default: 0)
+
+Prüfe nicht, ob die angegebene Version existiert. Dies spart
+einen CASCM Aufruf und ist sinnvoll, wenn die Richtigkeit der
+Versionsnummer gesichert ist, siehe deleteToVersion().
+
+=back
+
+=head4 Returns
+
+Pfad der Datei (String)
+
+=head4 Description
+
+Speichere die Repository-Datei $repoFile der Version $version in
+Verzeichnis $destDir und liefere den Pfad der Datei zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub getVersion {
+    my $self = shift;
+
+    # Optionen und Argumente
+
+    my $sloppy = 0;
+
+    my $argA = $self->parameters(3,3,\@_,
+        -sloppy => \$sloppy,
+    );
+    my ($repoFile,$version,$destDir) = @$argA;
+
+    # Operation ausführen
+
+    if (!$sloppy) {
+        my $repoVersion = $self->versionNumber($repoFile);
+        if ($version > $repoVersion) {
+            $self->throw(
+                'CASCM-00099: Version does not exist',
+                Version => $version,
+                RepoFile => $repoFile,
+            );
+        }
+    }
+
+    my $p = Quiq::Path->new;
+    my $tempDir = $p->tempDir;
+
+    my $c = Quiq::CommandLine->new;
+    $c->addArgument($repoFile);
+    $c->addOption(
+        $self->credentialsOptions,
+        -b => $self->broker,
+        -en => $self->projectContext,
+        -st => $self->states->[0],
+        -vp => $self->viewPath,
+        -cp => $tempDir,
+        -vn => $version,
+    );
+    $c->addBoolOption(
+        -br => 1,
+        -r => 1,
+    );
+    my $output = $self->runCmd('hco',$c);
+
+    my $srcFile = "$tempDir/$repoFile";
+    my $destFile = sprintf '%s/%s.%s',$destDir,$p->filename($repoFile),
+        $version;
+    $p->copy($srcFile,$destFile);
+
+    return $destFile;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 diff() - Differenz zwischen zwei Versionen
+
+=head4 Synopsis
+
+    $diff = $scm->diff($repoFile,$version1,$version2);
+
+=head4 Arguments
+
+=over 4
+
+=item $repoFile
+
+Repository-Datei, deren Versionen verglichen werden.
+
+=item $version1
+
+Erste zu vergleichende Version der Repository-Datei.
+
+=item $version2
+
+Zweite zu vergleichende Version der Repository-Datei.
+
+=back
+
+=head4 Returns
+
+Differenz (String)
+
+=head4 Description
+
+Ermittele die Differenz zwischen den beiden Versionen $version1 und
+$version2 der Repository-Datei $repoFile und liefere das Ergebnis
+zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub diff {
+    my ($self,$repoFile,$version1,$version2) = @_;
+
+    my $tempDir = Quiq::TempDir->new;
+
+    my $file1 = $self->getVersion($repoFile,$version1,$tempDir);
+    my $file2 = $self->getVersion($repoFile,$version2,$tempDir);
+
+    return Quiq::Shell->exec("diff $file1 $file2",
+        -capture => 'stdout',
+        -sloppy => 1,
+    );
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 deleteVersion() - Lösche höchste Version von Repository-Datei
 
 =head4 Synopsis
@@ -907,6 +1066,65 @@ sub deleteVersion {
 
 # -----------------------------------------------------------------------------
 
+=head3 deleteToVersion() - Lösche alle Versionen oberhalb einer Version
+
+=head4 Synopsis
+
+    $scm->deleteToVersion($repoFile,$version,$backupDir);
+
+=head4 Arguments
+
+=over 4
+
+=item $repoFile
+
+Der Pfad der zu löschenden Repository-Datei.
+
+=item $version
+
+Version, oberhalb welcher alle anderen Versionen gelöscht werden,
+d.h. diese Version I<bleibt stehen>.
+
+=item $backupDir
+
+Verzeichnis, in das alle gelöschten Versionen gesichert werden.
+
+=back
+
+=head4 Description
+
+Lösche alle Versionen der Repository-Datei $repoFile oberhalb der
+Version $version. Dies setzt voraus, dass alle diese Versionen in einem
+(oder mehreren) Paketen auf I<Entwicklung> enthalten sind. Jede gelöschte
+Version wird in Verzeichnis $backupDir gesichert.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub deleteToVersion {
+    my ($self,$repoFile,$version,$backupDir) = @_;
+
+    my $repoVersion = $self->versionNumber($repoFile);
+    if ($version >= $repoVersion) {
+        $self->throw(
+            'CASCM-00099: Delete-To-Version must be less than repository version',
+            Version => $version,
+            RepoVersion => $repoVersion,
+            RepoFile => $repoFile,
+        );
+    }
+
+    for (my $v = $repoVersion; $v > $version; $v--) {
+        $self->getVersion($repoFile,$v,$backupDir,-sloppy=>1);
+        $self->deleteVersion($repoFile);
+    }
+
+    return;
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 deleteAllVersions() - Lösche alle Versionen einer Repository-Datei
 
 =head4 Synopsis
@@ -952,7 +1170,6 @@ sub deleteAllVersions {
             'CASCM-00099: Backup directory does not exist',
             BackupDir => $backupDir,
         );
-        
     }
 
     my $output;
