@@ -1734,6 +1734,13 @@ Ausgabe des Kommandos (String)
 sub switchPackage {
     my ($self,$stage,$fromPackage,$toPackage,@files) = @_;
 
+    # Pfade müssen wir auf den Dateinamen reduzieren
+
+    my $p = Quiq::Path->new;
+    @files = map {$p->filename($_)} @files;
+
+    # CASCM-Operation ausführen
+
     my $c = Quiq::CommandLine->new;
     $c->addOption(
         $self->credentialsOptions,
