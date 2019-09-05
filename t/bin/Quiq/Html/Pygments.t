@@ -49,6 +49,7 @@ sub test_unitTest : Test(4) {
     if ($@) {
         # "pygmentize -L" wird nicht verstanden. Kommt bei CPAN-Testern vor.
         $self->skipAllTests('pygmentize -L fails');
+        return;
     }
 
     my $n = 0;
