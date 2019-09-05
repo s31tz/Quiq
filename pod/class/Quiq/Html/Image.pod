@@ -197,7 +197,7 @@ mit den Attributen @keyVal instantiiert.
 
 =head1 VERSION
 
-1.156
+1.157
 
 =head1 SOURCE
 
