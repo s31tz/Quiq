@@ -44,9 +44,9 @@ Zeitpunkt ist hochauflˆsend, umfasst also auch Sekundenbruchteile.
 =head4 Description
 
 Instantiiere ein Zeitpunkt-Objekt f¸r Epoch-Wert $epoch bzw.
-ISO-Zeitangabe $iso, interpretiert in der lokalen Zeitzone, und
-liefere dieses Objekt zur¸ck. Ist kein Argument angegeben, wird
-der aktuelle Zeitpunkt genommen.
+ISO-Zeitangabe $iso, letztere interpretiert in der lokalen
+Zeitzone, und liefere dieses Objekt zur¸ck. Ist kein Argument
+angegeben, wird der aktuelle Zeitpunkt genommen.
 
 =head2 Externe Repr‰sentation
 
@@ -77,7 +77,7 @@ Liefere den Epoch-Wert des Zeitpunkts.
 Liefere die Zeitkomponenten Sekunden, Minuten, Stunden, Tag, Monat, Jahr
 in lokaler Zeit. Im Unterschied zu localtime() aus dem Perl Core sind
 Monat ($m) und Jahr (y) "richtig" wiedergegeben. d.h die Komponente $m
-muss nicht inkrementiert und die Komponente $y muss nicht um 1900
+muss nicht um 1 erhˆht und die Komponente $y muss nicht um 1900
 erhˆht werden.
 
 =head4 Example
@@ -88,16 +88,38 @@ erhˆht werden.
     
     (in Zeitzone MESZ)
 
-=head3 as() - Erzeuge String-Darstellung
+=head3 as() - Erzeuge externe Darstellung
 
 =head4 Synopsis
 
     $str = $t->as($fmt);
 
+=head4 Arguments
+
+=over 4
+
+=item $fmt
+
+Formatangabe. Folgende Formate sind definiert:
+
+=over 4
+
+=item YYYY-MM-DD HH:MI:SS
+
+Zeit in ISO-Darstellung.
+
+=back
+
+=back
+
+=head4 Returns
+
+Zeit-Darstellung (String)
+
 =head4 Description
 
-Liefere eine externe Repr‰sentation gem‰ﬂ Formatangabe $fmt. Der
-Zeitpunkt wird in der lokalen Zeitzone interpretiert.
+Liefere eine externe Darstellung des Zeitpunkts gem‰ﬂ Formatangabe $fmt.
+Der Zeitpunkt wird in der lokalen Zeitzone interpretiert.
 
 =head4 Example
 
