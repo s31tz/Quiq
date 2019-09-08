@@ -49,17 +49,17 @@ String
 
 =head4 Description
 
-Ist Bedingung $bool falsch, liefere einen Leerstring. Andernfalls
-konkateniere die Werte der Ausdrücke $expr, ... und liefere das
-Resultat zurück. Evaluiert ein Ausdruck $expr zu C<undef>, wird
+Ist Bedingung C<$bool> falsch, liefere einen Leerstring. Andernfalls
+konkateniere die Werte der Ausdrücke C<$expr, ...> und liefere das
+Resultat zurück. Evaluiert ein Ausdruck C<$expr> zu C<undef>, wird
 der Wert durch einen Leerstring ersetzt.
 
 Die Methode ist logisch äquivalent zu
 
     $str = !$bool? '': join '',$expr // '', ...;
 
-Sie vermeidet jedoch, dass $expr // '', ... berechnet werden muss,
-wenn $bool falsch ist.
+Sie vermeidet jedoch, dass C<$expr // '', ...> berechnet werden muss,
+wenn C<$bool> falsch ist.
 
 =head4 Example
 
@@ -72,7 +72,8 @@ B<Konkatenation bei zutreffender Bedingung>
         undef,
         'Test',
     });
-    # 'DiesisteinTest'
+    ==>
+    'DiesisteinTest'
 
 =cut
 
