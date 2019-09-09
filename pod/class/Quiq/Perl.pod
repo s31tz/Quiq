@@ -126,6 +126,8 @@ Laden einer Konfigurationsdatei:
 
 Inhalt Konfigurationsdatei:
 
+    use strict;
+    
     host => 'localhost',
     datenbank => 'entw1',
     benutzer => ['sys','system']

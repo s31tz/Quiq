@@ -104,11 +104,12 @@ sub new {
     my $self = $class->SUPER::new($file,
         -secure => 1,
     );
-    $self->set(configFile=>$file);
 
     for (keys %$self) {
         $self->{$_} = Quiq::Hash->new($self->{$_})->unlockKeys;
     }
+
+    $self->set(configFile=>$file);
 
     return $self;
 }
