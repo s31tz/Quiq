@@ -533,6 +533,10 @@ L<Quiq::Pod::Generator|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/
 
 =item *
 
+L<Quiq::PostgreSql::CopyFormat|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PostgreSql/CopyFormat.pod> - Erzeuge Daten für PostgreSQL COPY-Kommando
+
+=item *
+
 L<Quiq::Process|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Process.pod> - Information über den laufenden Prozess
 
 =item *
