@@ -19,6 +19,10 @@ Objekt instantiieren:
     my $udlStr = 'dbi#oracle:xyz%xyz_admin:koala3@pluto.gaga.de:1521';
     my $udl = Quiq::Udl->new($udlStr);
 
+UDL aus Konfigurationsdatei:
+
+    my $udl = Quiq::Udl->new('test-db');
+
 UDL-Komponenten:
 
     print $udl->api,"\n";      # dbi
@@ -93,17 +97,40 @@ Referenz auf Hash mit optionalen Angaben.
 
 =head2 Konstruktor
 
-=head3 new() - Konstruktor
+=head3 new() - Instantiiere UDL-Objekt
 
 =head4 Synopsis
 
     $udl = $class->new;
     $udl = $class->new($udlStr);
     $udl = $class->new(@keyVal);
+    $udl = $class->new($name);
+
+=head4 Arguments
+
+=over 4
+
+=item $udlStr
+
+UDL als Zeichenkette.
+
+=item @keyVal
+
+UDL-Komponenten.
+
+=item $name
+
+Name aus Konfigurationsdatei C<~/.db.conf>.
+
+=back
+
+=head4 Returns
+
+UDL-Objekt
 
 =head4 Description
 
-Instantiiere ein Udl-Objekt und liefere eine Referenz auf
+Instantiiere ein UDL-Objekt und liefere eine Referenz auf
 dieses Objekt zurück.
 
 =head2 Akzessoren

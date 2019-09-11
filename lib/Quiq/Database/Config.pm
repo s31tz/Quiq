@@ -7,6 +7,7 @@ use v5.10.0;
 
 our $VERSION = '1.157';
 
+use Quiq::Path;
 use Quiq::Hash;
 
 # -----------------------------------------------------------------------------
@@ -60,7 +61,7 @@ dieser Klasse zum Lesen der Konfigurationseinträge genutzt werden.
 
     use Quiq::Database::Config;
     
-    $cfg = Quiq::Database::Config->new('~/project/ocean/database.conf');
+    $cfg = Quiq::Database::Config->new('~/project/ocean/db.conf');
     $udl = $cfg->udl('test_db');
 
 =head1 METHODS
@@ -78,9 +79,19 @@ dieser Klasse zum Lesen der Konfigurationseinträge genutzt werden.
 
 =over 4
 
-=item $file (Default: '~/.database.conf')
+=item $file (Default: '~/.db.conf')
 
 Konfigurationsdatei
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -sloppy => $bool (Default: 0)
+
+Liefere C<undef>, wenn Datei C<$file> nicht existiert.
 
 =back
 
@@ -99,16 +110,29 @@ Objekt zurück.
 
 sub new {
     my $class = shift;
-    my $file = shift // '~/.database.conf';
+    # @_: $file,@opt
+
+    # Optionen
+
+    my $sloppy = 0;
+
+    my $argA = $class->parameters(0,1,\@_,
+        -sloppy => \$sloppy,
+    );
+    my $file = shift @$argA // '~/.db.conf';
+
+    if (!Quiq::Path->exists($file) && $sloppy) {
+        return undef;
+    }
+
+    # Objekt instantiieren
 
     my $self = $class->SUPER::new($file,
         -secure => 1,
     );
-
     for (keys %$self) {
         $self->{$_} = Quiq::Hash->new($self->{$_})->unlockKeys;
     }
-
     $self->set(configFile=>$file);
 
     return $self;
@@ -151,15 +175,15 @@ sub udl {
     my ($self,$database) = @_;
 
     my $h = $self->try($database) // $self->throw(
-        'CONFIG-00001: Database not defined in config file',
-        ConfigFile => $self->configFile,
+        'CONFIG-00001: Database not defined',
         Database => $database,
+        ConfigFile => $self->configFile,
     );
 
     my $udl = $h->try('udl') // $self->throw(
-        'CONFIG-00002: UDL not defined for database',
-        ConfigFile => $self->configFile,
+        'CONFIG-00002: No UDL',
         Database => $database,
+        ConfigFile => $self->configFile,
     );
 
     return $udl;

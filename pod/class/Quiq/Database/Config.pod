@@ -47,7 +47,7 @@ dieser Klasse zum Lesen der Konfigurationseinträge genutzt werden.
 
     use Quiq::Database::Config;
     
-    $cfg = Quiq::Database::Config->new('~/project/ocean/database.conf');
+    $cfg = Quiq::Database::Config->new('~/project/ocean/db.conf');
     $udl = $cfg->udl('test_db');
 
 =head1 METHODS
@@ -65,9 +65,19 @@ dieser Klasse zum Lesen der Konfigurationseinträge genutzt werden.
 
 =over 4
 
-=item $file (Default: '~/.database.conf')
+=item $file (Default: '~/.db.conf')
 
 Konfigurationsdatei
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -sloppy => $bool (Default: 0)
+
+Liefere C<undef>, wenn Datei C<$file> nicht existiert.
 
 =back
 

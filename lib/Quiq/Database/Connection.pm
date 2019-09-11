@@ -163,11 +163,11 @@ sub new {
     my $udl = @_? shift: $ENV{'UDL'};
 
     if (!defined $udl || $udl eq '') {
-        $class->throw('DB-00002: Kein UDL');
+        $class->throw('DB-00002: No UDL');
     }
     elsif (@_) {
         $class->throw(
-            'DB-00002: Zu viele Parameter',
+            'DB-00002: Too many parameters',
             Parameters => join(',',@_),
         );
     }
