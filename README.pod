@@ -537,6 +537,10 @@ L<Quiq::PostgreSql::CopyFormat|https://github.com/s31tz/Quiq/tree/master/pod/cla
 
 =item *
 
+L<Quiq::PostgreSql::Psql|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PostgreSql/Psql.pod> - Wrapper für psql
+
+=item *
+
 L<Quiq::Process|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Process.pod> - Information über den laufenden Prozess
 
 =item *

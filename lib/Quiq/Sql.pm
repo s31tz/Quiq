@@ -4327,7 +4327,6 @@ sub insertMulti {
         }
         $sql .= sprintf $fmt,map {$self->valExpr($_)} @$rec;
     }
-    $sql .= "\n";    
 
     return $sql;
 }
