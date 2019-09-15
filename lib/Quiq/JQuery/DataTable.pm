@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use v5.10.0;
 
-our $VERSION = '1.157';
+our $VERSION = '1.158';
 
 use Quiq::Html::Table::List;
 use Quiq::Unindent;
@@ -715,7 +715,7 @@ sub getColumns {
 
 =head1 VERSION
 
-1.157
+1.158
 
 =head1 AUTHOR
 
