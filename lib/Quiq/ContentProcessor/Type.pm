@@ -1,9 +1,9 @@
 package Quiq::ContentProcessor::Type;
 use base qw/Quiq::ContentProcessor::BaseType/;
 
+use v5.10.0;
 use strict;
 use warnings;
-use v5.10.0;
 
 our $VERSION = '1.158';
 

@@ -1,9 +1,9 @@
 package Quiq::MediaWiki::Markup;
 use base qw/Quiq::Hash/;
 
+use v5.10.0;
 use strict;
 use warnings;
-use v5.10.0;
 use utf8;
 
 our $VERSION = '1.158';

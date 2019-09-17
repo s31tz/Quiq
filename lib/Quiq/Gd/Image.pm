@@ -1,9 +1,9 @@
 package Quiq::Gd::Image;
 use base qw/GD::Image Quiq::Object/;
 
+use v5.10.0;
 use strict;
 use warnings;
-use v5.10.0;
 use utf8;
 
 our $VERSION = '1.158';

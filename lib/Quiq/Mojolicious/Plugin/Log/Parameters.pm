@@ -1,9 +1,9 @@
 package Quiq::Mojolicious::Plugin::Log::Parameters;
 use base qw/Mojolicious::Plugin/;
 
+use v5.10.0;
 use strict;
 use warnings;
-use v5.10.0;
 
 our $VERSION = '1.158';
 
