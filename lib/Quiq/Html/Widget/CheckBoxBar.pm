@@ -89,7 +89,7 @@ aktiviert.
 
 =head4 Synopsis
 
-    $e = $class->new(@keyVal);
+  $e = $class->new(@keyVal);
 
 =head4 Description
 
@@ -134,8 +134,8 @@ sub new {
 
 =head4 Synopsis
 
-    $html = $e->html($h);
-    $html = $class->html($h,@keyVal);
+  $html = $e->html($h);
+  $html = $class->html($h,@keyVal);
 
 =head4 Description
 

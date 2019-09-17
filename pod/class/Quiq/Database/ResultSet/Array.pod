@@ -21,7 +21,7 @@ Datensätzen in Array-Repräsentation.
 
 =head4 Synopsis
 
-    $idx = $tab->columnIndex($title);
+  $idx = $tab->columnIndex($title);
 
 =head4 Description
 
@@ -32,7 +32,7 @@ Kolumne nicht, löse eine Exception aus.
 
 =head4 Synopsis
 
-    $rowClass = $class->defaultRowClass;
+  $rowClass = $class->defaultRowClass;
 
 =head4 Description
 
@@ -48,7 +48,7 @@ explizit angegeben wurde.
 
 =head4 Synopsis
 
-    $row = $tab->lookupSub($key=>$val);
+  $row = $tab->lookupSub($key=>$val);
 
 =head4 Description
 
@@ -64,13 +64,13 @@ Wird durch Basisklasse getestet
 
 =head4 Synopsis
 
-    @vals|$valA = $tab->values($key);
+  @vals|$valA = $tab->values($key);
 
 =head3 index() - Indiziere Tabelle nach Kolumne
 
 =head4 Synopsis
 
-    %idx|$idxH = $tab->index($key);
+  %idx|$idxH = $tab->index($key);
 
 =head1 VERSION
 

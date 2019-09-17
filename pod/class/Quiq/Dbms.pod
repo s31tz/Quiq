@@ -10,25 +10,25 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 SYNOPSIS
 
-    use Quiq::Dbms;
-    
-    # Instantiierung
-    my $d = Quiq::Dbms->new($dbms);
-    
-    # Namen der bekannten Datensysteme
-    my @names = Quiq::Dbms->dbmsNames;
-    
-    # Boolsche Variable für Tests
-    ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) = $d->dbmsVector;
-    
-    # Test-Methoden
-    
-    $bool = $d->isOracle;
-    $bool = $d->isPostgreSQL;
-    $bool = $d->isSQLite;
-    $bool = $d->isMySQL;
-    $bool = $d->isAccess;
-    $bool = $d->isMSSQL;
+  use Quiq::Dbms;
+  
+  # Instantiierung
+  my $d = Quiq::Dbms->new($dbms);
+  
+  # Namen der bekannten Datensysteme
+  my @names = Quiq::Dbms->dbmsNames;
+  
+  # Boolsche Variable für Tests
+  ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) = $d->dbmsVector;
+  
+  # Test-Methoden
+  
+  $bool = $d->isOracle;
+  $bool = $d->isPostgreSQL;
+  $bool = $d->isSQLite;
+  $bool = $d->isMySQL;
+  $bool = $d->isAccess;
+  $bool = $d->isMSSQL;
 
 =head1 DESCRIPTION
 
@@ -60,8 +60,8 @@ Versionsnummer des DBMS.
 
 =head4 Synopsis
 
-    $d = $class->new($dbms);
-    $d = $class->new($dbms,$version);
+  $d = $class->new($dbms);
+  $d = $class->new($dbms,$version);
 
 =head4 Arguments
 
@@ -91,18 +91,18 @@ DBMSe siehe $class->L<dbmsNames|"dbmsNames() - Liste der Namen der unterstützten
 
 =head4 Synopsis
 
-    $namesA | @names = $this->dbmsNames;
+  $namesA | @names = $this->dbmsNames;
 
 =head4 Description
 
 Liefere folgende Liste von DBMS-Namen (in dieser Reihenfolge):
 
-    Oracle
-    PostgreSQL
-    SQLite
-    MySQL
-    Access
-    MSSQL
+  Oracle
+  PostgreSQL
+  SQLite
+  MySQL
+  Access
+  MSSQL
 
 =head2 Objektmethoden
 
@@ -110,7 +110,7 @@ Liefere folgende Liste von DBMS-Namen (in dieser Reihenfolge):
 
 =head4 Synopsis
 
-    ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) = $d->dbmsTestVector;
+  ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) = $d->dbmsTestVector;
 
 =head4 Description
 
@@ -122,18 +122,18 @@ Die Methode ist für Programmcode nützlich, der DBMS-spezifische
 Unterscheidungen macht. Der Code braucht dann lediglich auf den
 Wert einer Variable prüfen
 
-    if ($oracle) ...
+  if ($oracle) ...
 
 statt einen umständlichen und fehleranfälligen Stringvergleich
 durchzuführen
 
-    if ($dbms eq 'Oracle') ...
+  if ($dbms eq 'Oracle') ...
 
 =head3 isOracle() - Teste auf Oracle
 
 =head4 Synopsis
 
-    $bool = $d->isOracle;
+  $bool = $d->isOracle;
 
 =head4 Description
 
@@ -144,7 +144,7 @@ sonst falsch.
 
 =head4 Synopsis
 
-    $bool = $d->isPostgreSQL;
+  $bool = $d->isPostgreSQL;
 
 =head4 Description
 
@@ -155,7 +155,7 @@ sonst falsch.
 
 =head4 Synopsis
 
-    $bool = $d->isSQLite;
+  $bool = $d->isSQLite;
 
 =head4 Description
 
@@ -166,7 +166,7 @@ sonst falsch.
 
 =head4 Synopsis
 
-    $bool = $d->isMySQL;
+  $bool = $d->isMySQL;
 
 =head4 Description
 
@@ -177,7 +177,7 @@ sonst falsch.
 
 =head4 Synopsis
 
-    $bool = $d->isAccess;
+  $bool = $d->isAccess;
 
 =head4 Description
 
@@ -188,7 +188,7 @@ sonst falsch.
 
 =head4 Synopsis
 
-    $bool = $d->isMSSQL;
+  $bool = $d->isMSSQL;
 
 =head4 Description
 

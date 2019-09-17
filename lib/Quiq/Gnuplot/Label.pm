@@ -32,7 +32,7 @@ positionierbaren Text.
 
 =head4 Synopsis
 
-    $lab = Quiq::Gnuplot::Label->new(@keyVal);
+  $lab = Quiq::Gnuplot::Label->new(@keyVal);
 
 =cut
 

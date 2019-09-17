@@ -10,14 +10,14 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 SYNOPSIS
 
-    # Klasse laden
-    use %CLASS;
-    
-    # Instantiiere Sequence-Objekt
-    $tsq = Quiq::TimeLapse::Sequence->new(\@images);
-    
-    # Exportiere Bilddateien in Verzeichnis
-    $tsq->export($dir);
+  # Klasse laden
+  use %CLASS;
+  
+  # Instantiiere Sequence-Objekt
+  $tsq = Quiq::TimeLapse::Sequence->new(\@images);
+  
+  # Exportiere Bilddateien in Verzeichnis
+  $tsq->export($dir);
 
 =head1 METHODS
 
@@ -27,7 +27,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head4 Synopsis
 
-    $tsq = $class->new(\@images);
+  $tsq = $class->new(\@images);
 
 =head4 Arguments
 
@@ -54,7 +54,7 @@ liefere eine Referenz auf dieses Objekt zurück.
 
 =head4 Synopsis
 
-    $n = $tsq->count;
+  $n = $tsq->count;
 
 =head4 Returns
 
@@ -68,7 +68,7 @@ Liefere die Anzahl der in der Sequenz enthaltenen Bilddateien.
 
 =head4 Synopsis
 
-    $duration = $tsq->duration($framerate);
+  $duration = $tsq->duration($framerate);
 
 =head4 Returns
 
@@ -84,7 +84,7 @@ dem Format C<HhMmS.XXXs> (drei Nachkommastellen).
 
 =head4 Synopsis
 
-    $tsq->export($destDir);
+  $tsq->export($destDir);
 
 =head4 Arguments
 
@@ -110,7 +110,7 @@ die Bildsequenz angehängt.
 
 =head4 Synopsis
 
-    $tsq->morph($n,$destDir);
+  $tsq->morph($n,$destDir);
 
 =head4 Arguments
 
@@ -141,7 +141,7 @@ angehängt.
 
 =head4 Synopsis
 
-    $tsq->generate($file,@opt);
+  $tsq->generate($file,@opt);
 
 =head4 Arguments
 
@@ -207,7 +207,7 @@ Erzeuge aus der Bildsequenz das Video $file.
 
 =head4 Synopsis
 
-    @images|$imageA = $tsq->images;
+  @images|$imageA = $tsq->images;
 
 =head4 Returns
 
@@ -221,7 +221,7 @@ Liefere die Liste der Bilddatei-Objekte der Sequenz.
 
 =head4 Synopsis
 
-    $sha1 = $tsq->sha1(@keyVal);
+  $sha1 = $tsq->sha1(@keyVal);
 
 =head4 Returns
 
@@ -243,7 +243,7 @@ der Bildsequenz stattgefunden hat und eine teure Operation wie das
 
 =head4 Synopsis
 
-    $tsq = $tsq->pick($n);
+  $tsq = $tsq->pick($n);
 
 =head4 Returns
 
@@ -258,7 +258,7 @@ d.h. entferne alle anderen
 
 =head4 Synopsis
 
-    $tsq = $tsq->reverse;
+  $tsq = $tsq->reverse;
 
 =head4 Returns
 

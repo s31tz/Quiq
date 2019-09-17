@@ -29,15 +29,15 @@ L<Quiq::SoapWsdlServiceCgi>
 
 =head4 Synopsis
 
-    $time = $class->serverTime;
+  $time = $class->serverTime;
 
 =head4 Wsdl
 
-    _RETURN $string
+  _RETURN $string
 
 =begin WSDL
 
-_RETURN $string
+  _RETURN $string
 
 =end WSDL
 

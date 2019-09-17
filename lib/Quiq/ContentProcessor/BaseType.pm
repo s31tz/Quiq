@@ -42,7 +42,7 @@ ihrer Subklassen.
 
 =head4 Synopsis
 
-    @attributes | $attributeA = $class->attributes;
+  @attributes | $attributeA = $class->attributes;
 
 =head4 Returns
 
@@ -79,7 +79,7 @@ sub attributes {
 
 =head4 Synopsis
 
-    $bool = $class->contentAllowed;
+  $bool = $class->contentAllowed;
 
 =head4 Returns
 

@@ -25,7 +25,7 @@ der Klasse Quiq::Table. Details siehe dort.
 
 =head4 Synopsis
 
-    $row = $class->new($tab,\@arr);
+  $row = $class->new($tab,\@arr);
 
 =head4 Arguments
 
@@ -55,7 +55,7 @@ Instantiiere ein Zeilen-Objekt für Tabelle $tab mit den Zeilendaten @arr.
 
 =head4 Synopsis
 
-    $value = $row->get($column);
+  $value = $row->get($column);
 
 =head4 Arguments
 
@@ -80,7 +80,7 @@ wird eine Exception geworfen.
 
 =head4 Synopsis
 
-    @values | $valueA = $row->values;
+  @values | $valueA = $row->values;
 
 =head4 Returns
 

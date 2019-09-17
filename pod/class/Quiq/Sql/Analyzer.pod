@@ -10,10 +10,10 @@ L<Quiq::Dbms|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Dbms.pod>
 
 =head1 SYNOPSIS
 
-    use Quiq::Sql::Analyzer;
-    
-    my $aly = Quiq::Sql::Analyzer->new($dbms);
-    my $aly = Quiq::Sql::Analyzer->new($dbms,$version);
+  use Quiq::Sql::Analyzer;
+  
+  my $aly = Quiq::Sql::Analyzer->new($dbms);
+  my $aly = Quiq::Sql::Analyzer->new($dbms,$version);
 
 =head1 METHODS
 
@@ -23,7 +23,7 @@ L<Quiq::Dbms|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Dbms.pod>
 
 =head4 Synopsis
 
-    $bool = $aly->isCreateFunction($stmt);
+  $bool = $aly->isCreateFunction($stmt);
 
 =head4 Arguments
 

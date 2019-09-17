@@ -14,13 +14,13 @@ Abstraktion für GD- und TrueType-Fonts, die von GD nicht gemacht wird.
 
 =head2 Geometrie der (monospaced) GD-Fonts
 
-    Name             Breite Höhe
-    ---------------- ------ ----
-    gdTinyFont         5      8
-    gdSmallFont        6     13
-    gdMediumBoldFont   7     13
-    gdLargeFont        8     16
-    gdGiantFont        9     15
+  Name             Breite Höhe
+  ---------------- ------ ----
+  gdTinyFont         5      8
+  gdSmallFont        6     13
+  gdMediumBoldFont   7     13
+  gdLargeFont        8     16
+  gdGiantFont        9     15
 
 =head1 EXAMPLES
 
@@ -30,13 +30,13 @@ Abstraktion für GD- und TrueType-Fonts, die von GD nicht gemacht wird.
 
 GD-Font instantiieren
 
-    $fnt = Quiq::Gd::Font->new('gdSmallFont');
+  $fnt = Quiq::Gd::Font->new('gdSmallFont');
 
 =item *
 
 TrueType-Font instantiieren
 
-    $fnt = Quiq::Gd::Font->new('/opt/fonts/pala.ttf',20);
+  $fnt = Quiq::Gd::Font->new('/opt/fonts/pala.ttf',20);
 
 =back
 
@@ -48,10 +48,10 @@ TrueType-Font instantiieren
 
 =head4 Synopsis
 
-    $fnt = $class->new($name);
-    $fnt = $class->new($name,$pt);
-    $fnt = $class->new("$name,$pt");
-    $fnt = $class->new($fnt);
+  $fnt = $class->new($name);
+  $fnt = $class->new($name,$pt);
+  $fnt = $class->new("$name,$pt");
+  $fnt = $class->new($fnt);
 
 =head4 Description
 
@@ -71,7 +71,7 @@ wird dieses einfach zurückgeliefert.
 
 =head4 Synopsis
 
-    $name = $fnt->name;
+  $name = $fnt->name;
 
 =head4 Description
 
@@ -83,7 +83,7 @@ Grundname der Datei, also ohne Pfad und Endung C<.ttf>.
 
 =head4 Synopsis
 
-    $pt = $fnt->pt;
+  $pt = $fnt->pt;
 
 =head4 Description
 
@@ -94,7 +94,7 @@ TrueType-Font die Größe in pt.
 
 =head4 Synopsis
 
-    $bool = $fnt->isTrueType;
+  $bool = $fnt->isTrueType;
 
 =head4 Description
 
@@ -105,7 +105,7 @@ ein GD-Font ist.
 
 =head4 Synopsis
 
-    ($width,$height,$xOffset,$yOffset) = $fnt->stringGeometry($str,@opt);
+  ($width,$height,$xOffset,$yOffset) = $fnt->stringGeometry($str,@opt);
 
 =head4 Options
 
@@ -130,21 +130,21 @@ B<Geometrie>
 
 TrueType-Fonts können um einen beliebigen Winkel gedreht werden.
 
-            4,5
-            /\
-           /  \
-          /  T \ 2,3
-         /  X  /
-    6,7 /  E  /
-        \ T  /
-         \  /
-          \/
-          0,1
-    
-    $width = $bounds[2]-$bounds[6]
-    $height = $bounds[1]-$bounds[5]
-    $xOffset = -$bounds[6]
-    $yOffset = $up? 0: -$bounds[5]
+          4,5
+          /\
+         /  \
+        /  T \ 2,3
+       /  X  /
+  6,7 /  E  /
+      \ T  /
+       \  /
+        \/
+        0,1
+  
+  $width = $bounds[2]-$bounds[6]
+  $height = $bounds[1]-$bounds[5]
+  $xOffset = -$bounds[6]
+  $yOffset = $up? 0: -$bounds[5]
 
 Von dieser Möglichkeit machen wir allerdings keinen Gebrauch. Wir
 lassen lediglich 0 und 90 Grad zu. Das sind die Möglichkeiten, die
@@ -154,7 +154,7 @@ die GD-Fonts erlauben.
 
 =head4 Synopsis
 
-    $width = $fnt->charWidth(@opt);
+  $width = $fnt->charWidth(@opt);
 
 =head4 Alias
 
@@ -183,7 +183,7 @@ Bei TrueType-Fonts wird die Breite der Zeichenkette "M" ermittelt.
 
 =head4 Synopsis
 
-    $height = $fnt->charHeight(@opt);
+  $height = $fnt->charHeight(@opt);
 
 =head4 Alias
 
@@ -213,7 +213,7 @@ Ist der Font ein TrueType-Font wird die Höhe der Zeichenkette
 
 =head4 Synopsis
 
-    $width = $fnt->digitWidth(@opt);
+  $width = $fnt->digitWidth(@opt);
 
 =head4 Options
 
@@ -235,7 +235,7 @@ Bei TrueType-Fonts ermitteln wir die Breite der "0".
 
 =head4 Synopsis
 
-    $height = $fnt->digitHeight(@opt);
+  $height = $fnt->digitHeight(@opt);
 
 =head4 Options
 
@@ -257,7 +257,7 @@ Bei TrueType-Fonts ermitteln wir die Höhe der "0".
 
 =head4 Synopsis
 
-    $n = $fnt->stringWidth($str,@opt);
+  $n = $fnt->stringWidth($str,@opt);
 
 =head4 Options
 
@@ -277,7 +277,7 @@ Liefere den horizontalen Platzbedarf der Zeichenkette $str.
 
 =head4 Synopsis
 
-    $n = $fnt->stringHeight($str,@opt);
+  $n = $fnt->stringHeight($str,@opt);
 
 =head4 Options
 
@@ -307,7 +307,7 @@ und Fontgrößen müssen die Methoden u.U. erweitert werden.
 
 =head4 Synopsis
 
-    $n = $g->alignRightOffset;
+  $n = $g->alignRightOffset;
 
 =head4 Description
 
@@ -319,7 +319,7 @@ einer Y-Achse.
 
 =head4 Synopsis
 
-    $n = $g->alignTopOffset;
+  $n = $g->alignTopOffset;
 
 =head4 Description
 
@@ -331,7 +331,7 @@ einer X-Achse.
 
 =head4 Synopsis
 
-    $n = $fnt->hCenterOffset;
+  $n = $fnt->hCenterOffset;
 
 =head4 Description
 

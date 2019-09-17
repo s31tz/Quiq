@@ -31,7 +31,7 @@ Ein Objekt der Klasse repräsentiert einen Graph.
 
 =head4 Synopsis
 
-    $gph = Quiq::Gnuplot::Graph->new(@keyVal);
+  $gph = Quiq::Gnuplot::Graph->new(@keyVal);
 
 =cut
 
@@ -60,7 +60,7 @@ sub new {
 
 =head4 Synopsis
 
-    $bool = $gph->hasData;
+  $bool = $gph->hasData;
 
 =cut
 

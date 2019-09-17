@@ -10,13 +10,13 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 SYNOPSIS
 
-    use Quiq::DirHandle;
-    
-    my $dh = Quiq::DirHandle->new($dir);
-    while (my $entry = $dh->next) {
-        say $entry;
-    }
-    $dh->close;
+  use Quiq::DirHandle;
+  
+  my $dh = Quiq::DirHandle->new($dir);
+  while (my $entry = $dh->next) {
+      say $entry;
+  }
+  $dh->close;
 
 =head1 DESCRIPTION
 
@@ -32,7 +32,7 @@ ein Verzeichnis geöffnet und über seine Einträge iteriert werden.
 
 =head4 Synopsis
 
-    $dh = $class->new($dir);
+  $dh = $class->new($dir);
 
 =head4 Description
 
@@ -43,7 +43,7 @@ eine Referenz auf dieses Objekt zurück.
 
 =head4 Synopsis
 
-    $dh->close;
+  $dh->close;
 
 =head4 Description
 
@@ -55,7 +55,7 @@ Schließe das Verzeichnis. Die Methode liefert keinen Wert zurück.
 
 =head4 Synopsis
 
-    $entry = $dh->next;
+  $entry = $dh->next;
 
 =head4 Description
 

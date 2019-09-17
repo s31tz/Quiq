@@ -21,7 +21,7 @@ Statement-Ausführung auf einer Relationalen Datenbank.
 
 =head4 Synopsis
 
-    $cur = $class->new(@keyVal);
+  $cur = $class->new(@keyVal);
 
 =head4 Description
 
@@ -32,7 +32,7 @@ und liefere dieses zurück.
 
 =head4 Synopsis
 
-    $cur->close;
+  $cur->close;
 
 =head4 Alias
 
@@ -48,26 +48,26 @@ Schließe Cursor. Die Methode liefert keinen Wert zurück.
 
 =head4 Synopsis
 
-    $n = $cur->bindVars;
+  $n = $cur->bindVars;
 
 =head3 bindTypes() - Setze/Liefere Datentypen der Bind-Variablen
 
 =head4 Synopsis
 
-    @arr|$arr = $cur->bindTypes(@dataTypes);
-    @arr|$arr = $cur->bindTypes;
+  @arr|$arr = $cur->bindTypes(@dataTypes);
+  @arr|$arr = $cur->bindTypes;
 
 =head3 db() - Liefere Datenbankverbindung
 
 =head4 Synopsis
 
-    $db = $cur->db;
+  $db = $cur->db;
 
 =head3 hits() - Liefere Anzahl der getroffenen Datensätze
 
 =head4 Synopsis
 
-    $n = $cur->hits;
+  $n = $cur->hits;
 
 =head4 Description
 
@@ -78,7 +78,7 @@ getroffenen Datesätze.
 
 =head4 Synopsis
 
-    $id = $cur->id;
+  $id = $cur->id;
 
 =head4 Alias
 
@@ -92,7 +92,7 @@ Liefere den Wert der Autoinkrement-Kolumne nach einem INSERT.
 
 =head4 Synopsis
 
-    $op = $cur->rowOperation;
+  $op = $cur->rowOperation;
 
 =head4 Description
 
@@ -103,13 +103,13 @@ oder 'D'.
 
 =head4 Synopsis
 
-    $rowClass = $cur->rowClass;
+  $rowClass = $cur->rowClass;
 
 =head3 stmt() - Liefere SQL-Statement
 
 =head4 Synopsis
 
-    $stmt = $cur->stmt;
+  $stmt = $cur->stmt;
 
 =head4 Description
 
@@ -123,7 +123,7 @@ anwendet wurden.
 
 =head4 Synopsis
 
-    @titles | $titlesA = $cur->titles;
+  @titles | $titlesA = $cur->titles;
 
 =head4 Description
 
@@ -136,7 +136,7 @@ eine Referenz auf die Liste.
 
 =head4 Synopsis
 
-    $bool = $cur->fromCache;
+  $bool = $cur->fromCache;
 
 =head4 Description
 
@@ -147,7 +147,7 @@ andernfalls falsch.
 
 =head4 Synopsis
 
-    $bool = $cur->isSelect;
+  $bool = $cur->isSelect;
 
 =head4 Description
 
@@ -160,19 +160,19 @@ andernfalls falsch.
 
 =head4 Synopsis
 
-    $time = $cur->startTime;
+  $time = $cur->startTime;
 
 =head3 execTime() - Liefere Dauer der Statement-Ausführung
 
 =head4 Synopsis
 
-    $time = $cur->execTime;
+  $time = $cur->execTime;
 
 =head3 elapsed() - Liefere Dauer seit Start der Statement-Ausführung
 
 =head4 Synopsis
 
-    $time = $cur->elapsed;
+  $time = $cur->elapsed;
 
 =head4 Alias
 
@@ -184,7 +184,7 @@ time()
 
 =head4 Synopsis
 
-    $cur2 = $cur->bind(@vals);
+  $cur2 = $cur->bind(@vals);
 
 =head4 Description
 
@@ -199,7 +199,7 @@ Bind-Variablen sein.
 
 =head4 Synopsis
 
-    $row = $cur->fetch;
+  $row = $cur->fetch;
 
 =head4 Description
 
@@ -210,9 +210,9 @@ Ergebnismenge erreicht, liefere undef.
 
 =head4 Synopsis
 
-    @rows | $tab = $cur->fetchAll;
-    @rows | $tab = $cur->fetchAll($autoClose);
-    @rows | $tab = $cur->fetchAll($autoClose,$limit);
+  @rows | $tab = $cur->fetchAll;
+  @rows | $tab = $cur->fetchAll($autoClose);
+  @rows | $tab = $cur->fetchAll($autoClose,$limit);
 
 =head4 Arguments
 

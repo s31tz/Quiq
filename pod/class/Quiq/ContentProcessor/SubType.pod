@@ -16,7 +16,7 @@ L<Quiq::ContentProcessor::BaseType|https://github.com/s31tz/Quiq/tree/master/pod
 
 =head4 Synopsis
 
-    $sty = $class->create($sec,$parent);
+  $sty = $class->create($sec,$parent);
 
 =head4 Arguments
 
@@ -46,7 +46,7 @@ Erweitere Abschnitts-Objekt $sec und blesse es zu einem Subtyp-Objekt.
 
 =head4 Synopsis
 
-    $name = $sty->name;
+  $name = $sty->name;
 
 =head4 Description
 

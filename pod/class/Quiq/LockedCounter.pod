@@ -10,11 +10,11 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 SYNOPSIS
 
-    use Quiq::LockedCounter;
-    
-    $cnt = Quiq::LockedCounter->new($file)->increment;
-    ...
-    $n = $cnt->count;
+  use Quiq::LockedCounter;
+  
+  $cnt = Quiq::LockedCounter->new($file)->increment;
+  ...
+  $n = $cnt->count;
 
 =head1 DESCRIPTION
 
@@ -31,7 +31,7 @@ gehalten.
 
 =head4 Synopsis
 
-    $ctr = Quiq::LockedCounter->new($file);
+  $ctr = Quiq::LockedCounter->new($file);
 
 =head4 Returns
 
@@ -43,7 +43,7 @@ Objekt
 
 =head4 Synopsis
 
-    $n = $ctr->count;
+  $n = $ctr->count;
 
 =head4 Returns
 
@@ -53,7 +53,7 @@ Zählerstand (Integer)
 
 =head4 Synopsis
 
-    $file = $ctr->file;
+  $file = $ctr->file;
 
 =head4 Returns
 
@@ -63,7 +63,7 @@ Dateipfad (String)
 
 =head4 Synopsis
 
-    $ctr = $ctr->increment;
+  $ctr = $ctr->increment;
 
 =head4 Returns
 

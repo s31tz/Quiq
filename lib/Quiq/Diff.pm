@@ -30,7 +30,7 @@ L<Quiq::Object>
 
 =head4 Synopsis
 
-    $diff = $class->diff($str1,$str2);
+  $diff = $class->diff($str1,$str2);
 
 =head4 Arguments
 

@@ -17,7 +17,7 @@ um den Grundtyp einer Referenz zu ermitteln.
 
 =head4 Synopsis
 
-    $refType = $class->refType($ref);
+  $refType = $class->refType($ref);
 
 =head4 Alias
 
@@ -30,13 +30,13 @@ keine Referenz, liefere einen Leerstring.
 
 Grundtypen sind:
 
-    SCALAR
-    ARRAY
-    HASH
-    CODE
-    GLOB
-    IO
-    REF
+  SCALAR
+  ARRAY
+  HASH
+  CODE
+  GLOB
+  IO
+  REF
 
 Details siehe: C<perldoc -f ref>.
 
@@ -44,7 +44,7 @@ Details siehe: C<perldoc -f ref>.
 
 =head4 Synopsis
 
-    $bool = $class->isBlessedRef($ref);
+  $bool = $class->isBlessedRef($ref);
 
 =head4 Alias
 
@@ -54,25 +54,25 @@ isBlessed()
 
 =head4 Synopsis
 
-    $bool = $class->isArrayRef($ref);
+  $bool = $class->isArrayRef($ref);
 
 =head3 isHashRef() - Teste auf Hash-Referenz
 
 =head4 Synopsis
 
-    $bool = $class->isHashRef($ref);
+  $bool = $class->isHashRef($ref);
 
 =head3 isCodeRef() - Teste auf Code-Referenz
 
 =head4 Synopsis
 
-    $bool = $class->isCodeRef($ref);
+  $bool = $class->isCodeRef($ref);
 
 =head3 isRegexRef() - Teste auf Regex-Referenz
 
 =head4 Synopsis
 
-    $bool = $class->isRegexRef($ref);
+  $bool = $class->isRegexRef($ref);
 
 =head4 Caveats
 

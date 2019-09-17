@@ -16,7 +16,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head4 Synopsis
 
-    $ipl = $class->new($path);
+  $ipl = $class->new($path);
 
 =head4 Arguments
 
@@ -34,8 +34,8 @@ Pfad zum Pool-Verzeichnises.
 
 =head4 Synopsis
 
-    $path = $ipl->root;
-    $path = $ipl->root($subPath);
+  $path = $ipl->root;
+  $path = $ipl->root($subPath);
 
 =head4 Description
 
@@ -47,9 +47,9 @@ hinzu.
 
 Mit Subpfad:
 
-    $ipl->root('cache');
-    =>
-    <POOLDIR>/cache
+  $ipl->root('cache');
+  =>
+  <POOLDIR>/cache
 
 =head2 Verzeichnisse
 
@@ -57,7 +57,7 @@ Mit Subpfad:
 
 =head4 Synopsis
 
-    $dir = $ipl->directory($name);
+  $dir = $ipl->directory($name);
 
 =head4 Arguments
 
@@ -81,7 +81,7 @@ Exception geworfen.
 
 =head4 Synopsis
 
-    $path = $ipl->cacheFile($img,$op,@args);
+  $path = $ipl->cacheFile($img,$op,@args);
 
 =head4 Arguments
 
@@ -108,7 +108,7 @@ mit den Argumenten @args und liefere diesen zurück.
 
 =head4 Synopsis
 
-    @images|$imageA = $ipl->images($key,@opt);
+  @images|$imageA = $ipl->images($key,@opt);
 
 =head4 Arguments
 

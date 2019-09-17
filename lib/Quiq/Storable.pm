@@ -35,7 +35,7 @@ Storable, speziell für die Funktionen freeze(), thaw(), clone().
 
 =head4 Synopsis
 
-    $cloneRef = Quiq::Storable->clone($ref);
+  $cloneRef = Quiq::Storable->clone($ref);
 
 =cut
 
@@ -53,7 +53,7 @@ sub clone {
 
 =head4 Synopsis
 
-    $str = Quiq::Storable->freeze($ref);
+  $str = Quiq::Storable->freeze($ref);
 
 =cut
 
@@ -71,7 +71,7 @@ sub freeze {
 
 =head4 Synopsis
 
-    $ref = Quiq::Storable->thaw($str);
+  $ref = Quiq::Storable->thaw($str);
 
 =cut
 
@@ -89,8 +89,8 @@ sub thaw {
 
 =head4 Synopsis
 
-    $ref = Quiq::Storable->memoize($file,$sub);
-    $ref = Quiq::Storable->memoize($file,$timeout,$sub);
+  $ref = Quiq::Storable->memoize($file,$sub);
+  $ref = Quiq::Storable->memoize($file,$timeout,$sub);
 
 =head4 Arguments
 
@@ -129,15 +129,15 @@ zuvor zu löschen.
 
 Cache Hash (hier mit zyklischer Struktur):
 
-    my $cacheFile = '~/tmp/test5674';
-    my $objectH = Quiq::Storable->memoize($cacheFile,sub {
-        my $h;
-        $h->{'A'} = [1,undef];
-        $h->{'B'} = [2,undef];
-        $h->{'A'}[1] = \$h->{'B'};
-        $h->{'B'}[1] = \$h->{'A'};
-        return $h;
-    });
+  my $cacheFile = '~/tmp/test5674';
+  my $objectH = Quiq::Storable->memoize($cacheFile,sub {
+      my $h;
+      $h->{'A'} = [1,undef];
+      $h->{'B'} = [2,undef];
+      $h->{'A'}[1] = \$h->{'B'};
+      $h->{'B'}[1] = \$h->{'A'};
+      return $h;
+  });
 
 =cut
 

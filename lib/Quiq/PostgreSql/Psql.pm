@@ -25,9 +25,9 @@ L<Quiq::Object>
 
 =head1 SYNOPSIS
 
-    use Quiq::PostgreSql::Psql;
-    
-    Quiq::PostgreSql::Psql->psql($database);
+  use Quiq::PostgreSql::Psql;
+  
+  Quiq::PostgreSql::Psql->psql($database);
 
 =head1 DESCRIPTION
 
@@ -41,7 +41,7 @@ Die Klasse stellt einen Wrapper für den PostgreSQL-Client psql dar.
 
 =head4 Synopsis
 
-    $class->run($database);
+  $class->run($database);
 
 =head4 Arguments
 
@@ -63,15 +63,15 @@ wurde.
 
 =head4 Example
 
-    $ perl -MQuiq::PostgreSql::Psql -E 'Quiq::PostgreSql::Psql->run("test")'
-    Password for user xv882js:
-    Pager usage is off.
-    Timing is on.
-    psql (8.2.15)
-    SSL connection (cipher: DHE-RSA-AES256-SHA, bits: 256)
-    Type "help" for help.
-    
-    dsstest=>
+  $ perl -MQuiq::PostgreSql::Psql -E 'Quiq::PostgreSql::Psql->run("test")'
+  Password for user xv882js:
+  Pager usage is off.
+  Timing is on.
+  psql (8.2.15)
+  SSL connection (cipher: DHE-RSA-AES256-SHA, bits: 256)
+  Type "help" for help.
+  
+  dsstest=>
 
 =cut
 

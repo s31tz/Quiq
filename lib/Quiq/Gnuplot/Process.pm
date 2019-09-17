@@ -36,7 +36,7 @@ Ein Gnuplot-Prozess erzeugt Plots.
 
 =head4 Synopsis
 
-    $gnu = Quiq::Gnuplot::Process->new;
+  $gnu = Quiq::Gnuplot::Process->new;
 
 =cut
 
@@ -66,8 +66,8 @@ sub new {
 
 =head4 Synopsis
 
-    $gnu->render($plt);
-    $img = $gnu->render($plt); # funktioniert nicht
+  $gnu->render($plt);
+  $img = $gnu->render($plt); # funktioniert nicht
 
 =head4 Description
 
@@ -306,7 +306,7 @@ sub render {
 
 =head4 Synopsis
 
-    $gnu->print(@data);
+  $gnu->print(@data);
 
 =cut
 

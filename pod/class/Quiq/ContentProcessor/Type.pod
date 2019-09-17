@@ -19,15 +19,15 @@ Die Plugin-Klassen bilden eine Hierarchie von Klassen, an deren
 Spitze eine allgemeine, abstrakte Klasse steht (stehen sollte),
 die von der dieser Klasse abgeleitet ist:
 
-    package Jaz::Type;
-    use base qw/Quiq::ContentProcessor::Type/;
-    
-    __PACKAGE__->def(
-        ContentAllowed => 0,
-        Attributes => [qw/
-            Name
-        /],
-    );
+  package Jaz::Type;
+  use base qw/Quiq::ContentProcessor::Type/;
+  
+  __PACKAGE__->def(
+      ContentAllowed => 0,
+      Attributes => [qw/
+          Name
+      /],
+  );
 
 Ob der Abschnitt eines Typs einen Inhalt zulässt und welches die
 zulässigen Attribute sind, wird mit den Klassen-Attributen
@@ -45,22 +45,22 @@ für den ContentProcessor essentiellen Attribute (siehe Code der
 Methode). Die Methode wird in der Typ-Klasse überschrieben und von
 dort aus gerufen:
 
-    package Jaz::Type::Program::Shell;
-    use base qw/Jaz::Type::Program/;
-    
-    __PACKAGE__->def(
-        Attributes => [qw/
-            <Spezifische Attribute des Typs>
-        /],
-    );
-    
-    sub create {
-        my ($class,$sec,$cop,$plg) = @_;
-    
-        return $class->SUPER::create($sec,$cop,$plg,
-            <Eigenschaften der Entität>
-        );
-    }
+  package Jaz::Type::Program::Shell;
+  use base qw/Jaz::Type::Program/;
+  
+  __PACKAGE__->def(
+      Attributes => [qw/
+          <Spezifische Attribute des Typs>
+      /],
+  );
+  
+  sub create {
+      my ($class,$sec,$cop,$plg) = @_;
+  
+      return $class->SUPER::create($sec,$cop,$plg,
+          <Eigenschaften der Entität>
+      );
+  }
 
 =head2 Standard-Attribute
 
@@ -143,7 +143,7 @@ C<undef>. Die Methode wird überschrieben.
 
 =head4 Synopsis
 
-    $ent = $class->create($sec,$cop,$plg,@keyVal);
+  $ent = $class->create($sec,$cop,$plg,@keyVal);
 
 =head4 Arguments
 
@@ -181,7 +181,7 @@ Erweitere Abschnitts-Objekt $sec und blesse es zu einer Entität.
 
 =head4 Synopsis
 
-    $entityId = $ent->entityId;
+  $entityId = $ent->entityId;
 
 =head4 Description
 
@@ -191,7 +191,7 @@ Liefere einen eindeutigen Bezeichner für die Entität.
 
 =head4 Synopsis
 
-    $entityType = $ent->entityType;
+  $entityType = $ent->entityType;
 
 =head4 Returns
 
@@ -206,7 +206,7 @@ der Entitäts-Klasse angegeben wurde.
 
 =head4 Synopsis
 
-    $name = $ent->name;
+  $name = $ent->name;
 
 =head4 Description
 
@@ -230,8 +230,8 @@ werden durch einen Slash (C</>) ersetzt
 
 =head4 Synopsis
 
-    $file = $ent->entityFile;
-    $file = $ent->entityFile($dir);
+  $file = $ent->entityFile;
+  $file = $ent->entityFile($dir);
 
 =head4 Arguments
 
@@ -260,7 +260,7 @@ Dateinamen der Pfad $dir vorangestellt.
 
 =head4 Synopsis
 
-    $source = $ent->fileSource;
+  $source = $ent->fileSource;
 
 =head4 Returns
 
@@ -276,7 +276,7 @@ Sub-Entitäten.
 
 =head4 Synopsis
 
-    $sourceR = $ent->fileSourceRef;
+  $sourceR = $ent->fileSourceRef;
 
 =head4 Returns
 
@@ -291,7 +291,7 @@ Quelltext geliefert wird.
 
 =head4 Synopsis
 
-    $ent->appendFileSource($sec);
+  $ent->appendFileSource($sec);
 
 =head4 Returns
 
@@ -307,7 +307,7 @@ Ergänze Attribut fileSource um den Quelltext des Abschnitts $sec.
 
 =head4 Synopsis
 
-    $str = $ent->pureCode;
+  $str = $ent->pureCode;
 
 =head2 Dateierzeugung
 
@@ -315,7 +315,7 @@ Ergänze Attribut fileSource um den Quelltext des Abschnitts $sec.
 
 =head4 Synopsis
 
-    @files = $ent->outputFiles;
+  @files = $ent->outputFiles;
 
 =head4 Description
 
@@ -329,8 +329,8 @@ Subklassen überschrieben.
 
 =head4 Synopsis
 
-    $needsTest = $ent->needsTest;
-    $needsTest = $ent->needsTest($state);
+  $needsTest = $ent->needsTest;
+  $needsTest = $ent->needsTest($state);
 
 =head4 Arguments
 
@@ -383,8 +383,8 @@ den Test-Status, wobei dieser persistent gespeichert wird.
 
 =head4 Synopsis
 
-    $needsUpdate = $ent->needsUpdate;
-    $needsUpdate = $ent->needsUpdate($state);
+  $needsUpdate = $ent->needsUpdate;
+  $needsUpdate = $ent->needsUpdate($state);
 
 =head4 Arguments
 

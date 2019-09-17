@@ -24,18 +24,18 @@ L<Quiq::Object>
 
 =head1 SYNOPSIS
 
-    use Quiq::Rsync;
-    
-    # /src/dir => /dest/dir (gleicher Verzeichnisname)
-    
-    Quiq::Rsync->exec('/src/dir','/dest');
-    Quiq::Rsync->exec('/src/dir/','/dest/dir');
-    
-    # /src/dir1 => /dest/dir2 (unterschiedlicher Verzeichnisname)
-    Quiq::Rsync->exec('/src/dir1/','/dest/dir2');
-    
-    # Änderungen anzeigen, aber nicht durchführen
-    Quiq::Rsync->exec($src,$dest,-dryRun=>1);
+  use Quiq::Rsync;
+  
+  # /src/dir => /dest/dir (gleicher Verzeichnisname)
+  
+  Quiq::Rsync->exec('/src/dir','/dest');
+  Quiq::Rsync->exec('/src/dir/','/dest/dir');
+  
+  # /src/dir1 => /dest/dir2 (unterschiedlicher Verzeichnisname)
+  Quiq::Rsync->exec('/src/dir1/','/dest/dir2');
+  
+  # Änderungen anzeigen, aber nicht durchführen
+  Quiq::Rsync->exec($src,$dest,-dryRun=>1);
 
 =head1 DESCRIPTION
 
@@ -70,8 +70,8 @@ die statistische Ausgabe von rsync unterbleibt
 
 =head4 Synopsis
 
-    $output = $class->exec($src,$dest,@opt);
-    ($output,$cmd) = $class->exec($src,$dest,@opt);
+  $output = $class->exec($src,$dest,@opt);
+  ($output,$cmd) = $class->exec($src,$dest,@opt);
 
 =head4 Arguments
 
@@ -115,7 +115,7 @@ List-Kontext liefere zusätzlich das ausgeführte rsync-Kommando
 Führe rsync(1) für Quellpfad $src und Zielpfad $dest aus.
 Ohne Angabe von Optionen wird als Kommandozeile ausgeführt:
 
-    rsync --archive --verbose --delete SRC DEST
+  rsync --archive --verbose --delete SRC DEST
 
 D.h. $src und $dest werden als Verzeichnisse angesehen, wobei
 Verzeichnis $dest auf exakt den gleichen Stand wie $src gebracht wird.
@@ -127,10 +127,10 @@ wobei einige Zeilen entfernt werden, so dass eine Ausgabe nur
 dann erscheint, wenn Änderungen durchgeführt wurden, d.h. die
 Zeilen über und unter PROTOKOLL werden entfernt:
 
-    sending incremental file list
-    PROTOKOLL
-    sent X bytes  received X bytes  X.00 bytes/sec
-    total size is X speedup is X.X
+  sending incremental file list
+  PROTOKOLL
+  sent X bytes  received X bytes  X.00 bytes/sec
+  total size is X speedup is X.X
 
 Im Dry-Run-Modus wird am Ende (DRY RUN) angezeigt.
 

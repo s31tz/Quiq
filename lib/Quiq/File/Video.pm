@@ -31,7 +31,7 @@ L<Quiq::Hash>
 
 =head4 Synopsis
 
-    $vid = $class->new($file,@opt);
+  $vid = $class->new($file,@opt);
 
 =head4 Options
 
@@ -86,7 +86,7 @@ sub new {
 
 =head4 Synopsis
 
-    $file = $vid->file;
+  $file = $vid->file;
 
 =head4 Description
 
@@ -96,7 +96,7 @@ Liefere den Dateinamen (Pfad) der Video-Datei.
 
 =head4 Synopsis
 
-    $width = $vid->width;
+  $width = $vid->width;
 
 =head4 Description
 
@@ -122,7 +122,7 @@ sub width {
 
 =head4 Synopsis
 
-    $height = $vid->height;
+  $height = $vid->height;
 
 =head4 Description
 
@@ -148,7 +148,7 @@ sub height {
 
 =head4 Synopsis
 
-    ($width,$height) = $vid->size;
+  ($width,$height) = $vid->size;
 
 =head4 Description
 
@@ -169,7 +169,7 @@ sub size {
 
 =head4 Synopsis
 
-    $aspectRatio = $vid->aspectRatio;
+  $aspectRatio = $vid->aspectRatio;
 
 =head4 Description
 
@@ -201,7 +201,7 @@ sub aspectRatio {
 
 =head4 Synopsis
 
-    $bitrate = $vid->bitrate;
+  $bitrate = $vid->bitrate;
 
 =head4 Description
 
@@ -227,7 +227,7 @@ sub bitrate {
 
 =head4 Synopsis
 
-    $duration = $vid->duration;
+  $duration = $vid->duration;
 
 =head4 Description
 
@@ -254,7 +254,7 @@ sub duration {
 
 =head4 Synopsis
 
-    $frames = $vid->frames;
+  $frames = $vid->frames;
 
 =head4 Description
 
@@ -282,7 +282,7 @@ sub frames {
 
 =head4 Synopsis
 
-    $vid->analyzeFile;
+  $vid->analyzeFile;
 
 =head4 Description
 

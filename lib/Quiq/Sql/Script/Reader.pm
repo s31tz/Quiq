@@ -24,13 +24,13 @@ L<Quiq::Hash>
 
 =head1 SYNOPSIS
 
-    use Quiq::Sql::Script::Reader;
-    
-    my $rd = Quiq::Sql::Script::Reader->new($dbms,$file);
-    while (my $stmt = $rd->nextStmt) {
-        # irgendwas mit dem SQL-Statement machen
-    }
-    $rd->close;
+  use Quiq::Sql::Script::Reader;
+  
+  my $rd = Quiq::Sql::Script::Reader->new($dbms,$file);
+  while (my $stmt = $rd->nextStmt) {
+      # irgendwas mit dem SQL-Statement machen
+  }
+  $rd->close;
 
 =head1 DESCRIPTION
 
@@ -54,8 +54,8 @@ Mehrere SQL-Statements I<auf einer Zeile> beherrscht die Klasse nicht.
 
 =head4 Synopsis
 
-    $rd = $class->new($dbms,$file);
-    $rd = $class->new($dbms,\$str);
+  $rd = $class->new($dbms,$file);
+  $rd = $class->new($dbms,\$str);
 
 =head4 Arguments
 
@@ -111,7 +111,7 @@ sub new {
 
 =head4 Synopsis
 
-    $rd->close;
+  $rd->close;
 
 =head4 Description
 
@@ -133,7 +133,7 @@ sub close {
 
 =head4 Synopsis
 
-    $stmt = $rd->nextStmt;
+  $stmt = $rd->nextStmt;
 
 =head4 Returns
 

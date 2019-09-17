@@ -34,7 +34,7 @@ und den Gruppen-Regex, sofern vorhanden.
 
 =head4 Synopsis
 
-    $meth = $class->new($pkg,$ref,$type,$n,$group);
+  $meth = $class->new($pkg,$ref,$type,$n,$group);
 
 =head4 Description
 
@@ -68,7 +68,7 @@ sub new {
 
 =head4 Synopsis
 
-    $class = $meth->class;
+  $class = $meth->class;
 
 =head4 Description
 
@@ -88,7 +88,7 @@ sub class {
 
 =head4 Synopsis
 
-    $ref = $meth->code;
+  $ref = $meth->code;
 
 =head4 Description
 
@@ -108,7 +108,7 @@ sub code {
 
 =head4 Synopsis
 
-    $regex = $meth->group;
+  $regex = $meth->group;
 
 =head4 Description
 
@@ -128,7 +128,7 @@ sub group {
 
 =head4 Synopsis
 
-    $name = $meth->name;
+  $name = $meth->name;
 
 =head4 Description
 
@@ -170,7 +170,7 @@ sub name {
 
 =head4 Synopsis
 
-    $n = $meth->tests;
+  $n = $meth->tests;
 
 =head4 Description
 
@@ -190,7 +190,7 @@ sub tests {
 
 =head4 Synopsis
 
-    $type = $meth->type;
+  $type = $meth->type;
 
 =head4 Description
 

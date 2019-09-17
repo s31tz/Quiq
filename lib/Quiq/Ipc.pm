@@ -31,10 +31,10 @@ L<Quiq::Object>
 
 =head4 Synopsis
 
-    $out = Quiq::Ipc->filter($cmd,$in,@opt);
-    ($out,$err) = Quiq::Ipc->filter($cmd,$in,@opt);
-    $out = Quiq::Ipc->filter($cmd,@opt);
-    ($out,$err) = Quiq::Ipc->filter($cmd,@opt);
+  $out = Quiq::Ipc->filter($cmd,$in,@opt);
+  ($out,$err) = Quiq::Ipc->filter($cmd,$in,@opt);
+  $out = Quiq::Ipc->filter($cmd,@opt);
+  ($out,$err) = Quiq::Ipc->filter($cmd,@opt);
 
 =head4 Options
 

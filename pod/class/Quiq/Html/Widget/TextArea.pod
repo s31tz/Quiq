@@ -62,7 +62,7 @@ Anfänglicher Wert des Felds.
 
 =head4 Synopsis
 
-    $e = $class->new(@keyVal);
+  $e = $class->new(@keyVal);
 
 =head2 Objektmethoden
 
@@ -70,8 +70,8 @@ Anfänglicher Wert des Felds.
 
 =head4 Synopsis
 
-    $html = $e->html;
-    $html = $class->html(@keyVal);
+  $html = $e->html;
+  $html = $class->html(@keyVal);
 
 =head1 VERSION
 

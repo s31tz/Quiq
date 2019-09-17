@@ -16,7 +16,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head4 Synopsis
 
-    $img = $class->new($path);
+  $img = $class->new($path);
 
 =head4 Description
 
@@ -29,7 +29,7 @@ dieses Objekt zurück.
 
 =head4 Synopsis
 
-    $path = $img->path;
+  $path = $img->path;
 
 =head4 Description
 
@@ -39,7 +39,7 @@ Liefere den Dateinamen einschl. Pfad der Bild-Datei.
 
 =head4 Synopsis
 
-    $filename = $img->filename;
+  $filename = $img->filename;
 
 =head4 Description
 
@@ -50,7 +50,7 @@ z.B. '000456.jpg'.
 
 =head4 Synopsis
 
-    $basename = $img->basename;
+  $basename = $img->basename;
 
 =head4 Description
 
@@ -60,7 +60,7 @@ Liefere den Dateinamen ohne Verzeichnis und Extension, z.B. '000456'.
 
 =head4 Synopsis
 
-    $ext = $img->extension;
+  $ext = $img->extension;
 
 =head4 Description
 
@@ -70,7 +70,7 @@ Liefere die Extentsion der Datei, z.B. 'png'.
 
 =head4 Synopsis
 
-    $mtime = $img->mtime;
+  $mtime = $img->mtime;
 
 =head4 Description
 
@@ -81,7 +81,7 @@ das letzte Mal geändert wurde.
 
 =head4 Synopsis
 
-    $type = $img->type;
+  $type = $img->type;
 
 =head4 Description
 
@@ -91,7 +91,7 @@ Liefere den Datei-Typ des Bildes, z.B. 'jpg'.
 
 =head4 Synopsis
 
-    $width = $img->width;
+  $width = $img->width;
 
 =head4 Description
 
@@ -101,7 +101,7 @@ Liefere die Breite des Bildes in Pixeln, z.B. 1920.
 
 =head4 Synopsis
 
-    $height = $img->height;
+  $height = $img->height;
 
 =head4 Description
 
@@ -111,35 +111,35 @@ Liefere die Höhe des Bildes in Pixeln, z.B. 1080.
 
 =head4 Synopsis
 
-    $size = $img->size;
-    ($width,$height) = $img->size;
+  $size = $img->size;
+  ($width,$height) = $img->size;
 
 =head4 Description
 
 Liefere die Breite und Höhe des Bildes in Pixeln. Im Skalarkontext
 werden die Breite und Höhe in einem String zusammengefasst geliefert:
 
-    'WIDTHxHEIGHT'
+  'WIDTHxHEIGHT'
 
 =head4 Examples
 
 List-Kontext:
 
-    $img->size;
-    =>
-    (1920,1080)
+  $img->size;
+  =>
+  (1920,1080)
 
 Skalar-Kontext:
 
-    $img->size;
-    =>
-    '1920x1080'
+  $img->size;
+  =>
+  '1920x1080'
 
 =head3 scaleFactor() - Skalierungsfaktor für andere Breite, Höhe
 
 =head4 Synopsis
 
-    $scale = $img->scaleFactor($width,$height);
+  $scale = $img->scaleFactor($width,$height);
 
 =head4 Description
 
@@ -154,14 +154,14 @@ liefere von beiden den kleineren Wert.
 Das Bild hat die Größe 249 x 249 und soll skaliert werden auf
 die Größe 83 x 83:
 
-    $scale = $img->scaleFactor(83,83);
-    # 0.333333333333333
+  $scale = $img->scaleFactor(83,83);
+  # 0.333333333333333
 
 =head3 aspectRatio() - Seitenverhältnis
 
 =head4 Synopsis
 
-    $aspectRatio = $img->aspectRatio;
+  $aspectRatio = $img->aspectRatio;
 
 =head4 Description
 
@@ -173,8 +173,8 @@ Liefere das Seitenverhältnis des Bildes, z.B. '16:9'.
 
 =head4 Synopsis
 
-    $h = $img->property;
-    $h = $img->property(\%hash);
+  $h = $img->property;
+  $h = $img->property(\%hash);
 
 =head4 Description
 
@@ -191,11 +191,11 @@ Property-Hash leer.
 
 Setze Eigenschaft:
 
-    $img->property->set(sizeFill=>[1440,1080]);
+  $img->property->set(sizeFill=>[1440,1080]);
 
 Eigenschaft abfragen:
 
-    ($width,$height) = $img->property->getArray('sizeFill');
+  ($width,$height) = $img->property->getArray('sizeFill');
 
 =head2 Interne Methoden
 
@@ -203,7 +203,7 @@ Eigenschaft abfragen:
 
 =head4 Synopsis
 
-    $img->analyzeFile;
+  $img->analyzeFile;
 
 =head4 Description
 

@@ -33,14 +33,14 @@ Diese Klasse erweitert das jQuery-Objekt um nützliche Funktionen.
 
 =head4 Synopsis
 
-    $javaScript = $class->formatDate;
+  $javaScript = $class->formatDate;
 
 =head4 Description
 
 Die JavaScript-Funktion formatiert ein JavaScript Datums-Objekt
 gemäß dem angegebenen Muster:
 
-    str = $.formatDate(d,fmt);
+  str = $.formatDate(d,fmt);
 
 =over 4
 

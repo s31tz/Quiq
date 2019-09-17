@@ -66,8 +66,8 @@ Zeilennummer in Quelldatei.
 
 =head4 Synopsis
 
-    $sec = $class->new($type,$keyValH);
-    $sec = $class->new($type,$keyValH,$keyA,$content,$source,$file,$line);
+  $sec = $class->new($type,$keyValH);
+  $sec = $class->new($type,$keyValH,$keyA,$content,$source,$file,$line);
 
 =head4 Arguments
 
@@ -120,8 +120,8 @@ auf das Objekt zurück.
 
 =head4 Synopsis
 
-    $type = $sec->type;
-    $type = $sec->type($type);
+  $type = $sec->type;
+  $type = $sec->type($type);
 
 =head4 Returns
 
@@ -136,8 +136,8 @@ den Abschnittsbezeichner auf diesen Wert.
 
 =head4 Synopsis
 
-    $brackets = $sec->brackets;
-    $brackets = $sec->brackets($brackets);
+  $brackets = $sec->brackets;
+  $brackets = $sec->brackets($brackets);
 
 =head4 Returns
 
@@ -159,7 +159,7 @@ ist also "[]", "<>" oder "()" oder "{}".
 
 =head4 Synopsis
 
-    $fullType = $sec->fullType;
+  $fullType = $sec->fullType;
 
 =head4 Description
 
@@ -170,7 +170,7 @@ der Klammern.
 
 =head4 Synopsis
 
-    $keyA|@keys = $sec->keys;
+  $keyA|@keys = $sec->keys;
 
 =head4 Description
 
@@ -181,7 +181,7 @@ Referenz auf die Liste.
 
 =head4 Synopsis
 
-    $hash|@arr = $sec->keyValHash;
+  $hash|@arr = $sec->keyValHash;
 
 =head4 Returns
 
@@ -192,8 +192,8 @@ Im Arraykontext liefere die Liste der Attribut/Wert-Paare.
 
 =head4 Synopsis
 
-    $content = $sec->content;
-    $content = $sec->content($content);
+  $content = $sec->content;
+  $content = $sec->content($content);
 
 =head4 Returns
 
@@ -203,7 +203,7 @@ Inhalt (String)
 
 =head4 Synopsis
 
-    $ref = $sec->contentRef;
+  $ref = $sec->contentRef;
 
 =head4 Returns
 
@@ -213,7 +213,7 @@ Referenz auf Inhalt (String-Referenz)
 
 =head4 Synopsis
 
-    $contentN = $sec->contentNL;
+  $contentN = $sec->contentNL;
 
 =head4 Returns
 
@@ -223,7 +223,7 @@ Inhalt mit Newline (String)
 
 =head4 Synopsis
 
-    $file = $sec->file;
+  $file = $sec->file;
 
 =head4 Returns
 
@@ -233,7 +233,7 @@ Dateiname (String)
 
 =head4 Synopsis
 
-    $mtime = $sec->mtime;
+  $mtime = $sec->mtime;
 
 =head4 Returns
 
@@ -243,7 +243,7 @@ Integer (Epoch-Wert)
 
 =head4 Synopsis
 
-    $n = $sec->line;
+  $n = $sec->line;
 
 =head4 Returns
 
@@ -253,7 +253,7 @@ Zeilennummer (Integer)
 
 =head4 Synopsis
 
-    ($file,$line) = $sec->fileInfo;
+  ($file,$line) = $sec->fileInfo;
 
 =head4 Returns
 
@@ -265,7 +265,7 @@ Dateiname (String) und Zeilennummer (Integer)
 
 =head4 Synopsis
 
-    $source = $sec->source;
+  $source = $sec->source;
 
 =head4 Returns
 
@@ -275,7 +275,7 @@ Quelltext (String)
 
 =head4 Synopsis
 
-    $ref = $sec->sourceRef;
+  $ref = $sec->sourceRef;
 
 =head4 Returns
 
@@ -285,7 +285,7 @@ Skalar-Referenz
 
 =head4 Synopsis
 
-    $sec->deleteSource;
+  $sec->deleteSource;
 
 =head4 Returns
 
@@ -295,7 +295,7 @@ nichts
 
 =head4 Synopsis
 
-    $sec->transferSource;
+  $sec->transferSource;
 
 =head4 Returns
 
@@ -311,7 +311,7 @@ diesen gelöscht.
 
 =head4 Synopsis
 
-    $sec->removeEofMarker;
+  $sec->removeEofMarker;
 
 =head4 Returns
 
@@ -323,7 +323,7 @@ nichts
 
 =head4 Synopsis
 
-    $val = $sec->append($key=>$str);
+  $val = $sec->append($key=>$str);
 
 =head4 Arguments
 
@@ -348,8 +348,8 @@ und liefere den resultierenden Wert zurück.
 
 =head4 Synopsis
 
-    $val = $sec->get($key);
-    @vals = $sec->get(@keys);
+  $val = $sec->get($key);
+  @vals = $sec->get(@keys);
 
 =head4 Arguments
 
@@ -376,7 +376,7 @@ Solche Schlüssel müssen mit $obj->L<getArray|"getArray() - Liefere Wertliste zu 
 
 =head4 Synopsis
 
-    $arr|@arr = $sec->getArray($key);
+  $arr|@arr = $sec->getArray($key);
 
 =head4 Arguments
 
@@ -400,8 +400,8 @@ Liefere die Wertliste von Schlüssel $key.
 
 =head4 Synopsis
 
-    $bool = $sec->getBool($key);
-    $bool = $sec->getBool($key,$default);
+  $bool = $sec->getBool($key);
+  $bool = $sec->getBool($key,$default);
 
 =head4 Arguments
 
@@ -429,7 +429,7 @@ Liefere boolschen Wert zu Schlüssel $key.
 
 =head4 Synopsis
 
-    $val = $sec->getMandatory($key);
+  $val = $sec->getMandatory($key);
 
 =head4 Arguments
 
@@ -454,13 +454,13 @@ wird eine Exception geworfen.
 
 =head4 Synopsis
 
-    $ref = $sec->getRef($key);
+  $ref = $sec->getRef($key);
 
 =head3 search() - Suche Attributwert
 
 =head4 Synopsis
 
-    ($key,$val) = $sec->search(\@sections,\@keys);
+  ($key,$val) = $sec->search(\@sections,\@keys);
 
 =head4 Description
 
@@ -474,8 +474,8 @@ definierter Wert außer Kraft gesetzt werden.
 
 =head4 Synopsis
 
-    $val = $sec->try($key);
-    @vals = $sec->try(@keys);
+  $val = $sec->try($key);
+  @vals = $sec->try(@keys);
 
 =head4 Description
 
@@ -486,7 +486,7 @@ keine Exception geworfen, sondern C<undef> geliefert wird.
 
 =head4 Synopsis
 
-    $val = $sec->memoize($key,$sub);
+  $val = $sec->memoize($key,$sub);
 
 =head4 Description
 
@@ -501,21 +501,21 @@ gerechnet werden soll.
 
 =head4 Example
 
-    sub name {
-        return shift->memoize('name',sub {
-            my ($self,$key) = @_;
-            my $name = $self->get(ucfirst $key);
-            $name =~ s/^\W+//;
-            $name =~ s|\W+|/|g;
-            return $name;
-        });
-    }
+  sub name {
+      return shift->memoize('name',sub {
+          my ($self,$key) = @_;
+          my $name = $self->get(ucfirst $key);
+          $name =~ s/^\W+//;
+          $name =~ s|\W+|/|g;
+          return $name;
+      });
+  }
 
 =head3 memoizeWeaken() - Ermittele schwache Referenz
 
 =head4 Synopsis
 
-    $val = $sec->memoizeWeaken($key,$sub);
+  $val = $sec->memoizeWeaken($key,$sub);
 
 =head4 Description
 
@@ -527,7 +527,7 @@ gemacht wird.
 
 =head4 Synopsis
 
-    $sec->set(@keyVal);
+  $sec->set(@keyVal);
 
 =head4 Arguments
 
@@ -547,7 +547,7 @@ nichts
 
 =head4 Synopsis
 
-    $sec->setDefault(@keyVal);
+  $sec->setDefault(@keyVal);
 
 =head4 Arguments
 
@@ -570,18 +570,18 @@ setze ihn auf den angegebenen Defaultwert.
 
 =head4 Example
 
-    $sec->setDefault(
-        Width => 1000,
-        EntityMenuWidth => 345,
-        BorderWidth => 1,
-        PackageMenuHeight => 34,
-    );
+  $sec->setDefault(
+      Width => 1000,
+      EntityMenuWidth => 345,
+      BorderWidth => 1,
+      PackageMenuHeight => 34,
+  );
 
 =head3 add() - Füge Schlüssel und Wert hinzu
 
 =head4 Synopsis
 
-    $sec->add(@keyVal);
+  $sec->add(@keyVal);
 
 =head4 Arguments
 
@@ -601,7 +601,7 @@ nichts
 
 =head4 Synopsis
 
-    $sec->push($key,$val);
+  $sec->push($key,$val);
 
 =head4 Arguments
 
@@ -626,8 +626,8 @@ Wert zurück.
 
 =head4 Synopsis
 
-    $ref = $sec->weaken($key);
-    $ref = $sec->weaken($key=>$ref);
+  $ref = $sec->weaken($key);
+  $ref = $sec->weaken($key=>$ref);
 
 =head4 Description
 
@@ -639,7 +639,7 @@ setze die Referenz zuvor.
 
 =head4 Synopsis
 
-    $sec->validate($contentAllowed,\@keys);
+  $sec->validate($contentAllowed,\@keys);
 
 =head4 Arguments
 
@@ -686,7 +686,7 @@ Sie fügt Schlüssel aus @keys zum Objekt hinzu, die das Objekt nicht hat.
 
 =head4 Synopsis
 
-    $sec->lockKeys;
+  $sec->lockKeys;
 
 =head2 Fehler
 
@@ -694,7 +694,7 @@ Sie fügt Schlüssel aus @keys zum Objekt hinzu, die das Objekt nicht hat.
 
 =head4 Synopsis
 
-    $sec->error($msg,@keyVal);
+  $sec->error($msg,@keyVal);
 
 =head4 Arguments
 
@@ -727,8 +727,8 @@ Abschnitts ergnzt. Die Exception beinhaltet keinen Stacktrace.
 
 =head4 Synopsis
 
-    $val = $this->AUTOLOAD;
-    $val = $this->AUTOLOAD($val);
+  $val = $this->AUTOLOAD;
+  $val = $this->AUTOLOAD($val);
 
 =head4 Description
 

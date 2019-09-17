@@ -32,7 +32,7 @@ zwischen zwei Punkten mit optionaler Dekoration.
 
 =head4 Synopsis
 
-    $aow = Quiq::Gnuplot::Arrow->new(@keyVal);
+  $aow = Quiq::Gnuplot::Arrow->new(@keyVal);
 
 =cut
 

@@ -35,8 +35,8 @@ Dokumentation siehe Basisklasse.
 
 =head4 Synopsis
 
-    $wkb = $class->new($file);
-    $wkb = $class->new($fh);
+  $wkb = $class->new($file);
+  $wkb = $class->new($fh);
 
 =head4 Arguments
 

@@ -21,11 +21,11 @@ Mojolicious::Plugin
 
 =head1 SYNOPSIS
 
-    # Mojolicious
-    $app->plugin('Quiq::Mojolicious::Plugin::Log::Parameters');
-    
-    # Mojolicious::Lite
-    plugin 'Quiq::Mojolicious::Plugin::Log::Parameters';
+  # Mojolicious
+  $app->plugin('Quiq::Mojolicious::Plugin::Log::Parameters');
+  
+  # Mojolicious::Lite
+  plugin 'Quiq::Mojolicious::Plugin::Log::Parameters';
 
 =head1 DESCRIPTION
 
@@ -45,7 +45,7 @@ empfängt.
 
 =head4 Synopsis
 
-    $plugin->register($app,$conf);
+  $plugin->register($app,$conf);
 
 =head4 Description
 

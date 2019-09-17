@@ -16,7 +16,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head4 Synopsis
 
-    $aspectRatio = $this->aspectRatio($width,$height);
+  $aspectRatio = $this->aspectRatio($width,$height);
 
 =head4 Description
 
@@ -28,8 +28,8 @@ anderen Seitenverhltnissen) der Quotient $width/$height.
 
 =head4 Synopsis
 
-    @files|$fileA = $class->findImages(@filesAndDirs);
-    @images|$imageA = $class->findImages(@filesAndDirs,-objects=>1);
+  @files|$fileA = $class->findImages(@filesAndDirs);
+  @images|$imageA = $class->findImages(@filesAndDirs,-objects=>1);
 
 =head4 Options
 
@@ -61,7 +61,7 @@ um eine Bild-Datei handelt.
 
 =head4 Synopsis
 
-    $standardName = $class->standardName($n,$width,$height,$extension,@opt);
+  $standardName = $class->standardName($n,$width,$height,$extension,@opt);
 
 =head4 Options
 
@@ -78,7 +78,7 @@ Ergänzender Text zum Bild.
 Erzeuge einen Standard-Bild-Namen und liefere diesen zurück.
 Ein Standard-Bild-Name hat den Aufbau:
 
-    NNNNNN-WIDTHxHEIGHT[-NAME].EXT
+  NNNNNN-WIDTHxHEIGHT[-NAME].EXT
 
 Hierbei ist:
 
@@ -113,7 +113,7 @@ z.B. 'jpg', 'png', 'gif' usw.
 
 =head4 Synopsis
 
-    $type = $class->type($file,@opt);
+  $type = $class->type($file,@opt);
 
 =head4 Options
 

@@ -76,8 +76,8 @@ L<http://lxv0103.ruv.de:8080/api.php>
 
 =head4 Synopsis
 
-    $mw = $class->new($url,@opt);
-    $mw = $class->new($url,$user,$password,@opt);
+  $mw = $class->new($url,@opt);
+  $mw = $class->new($url,$user,$password,@opt);
 
 =head4 Arguments
 
@@ -141,7 +141,7 @@ wird die gesamte Kommunikation auf STDERR protokolliert.
 
 =head4 Synopsis
 
-    $res = $mw->login($user,$password);
+  $res = $mw->login($user,$password);
 
 =head4 Arguments
 
@@ -169,13 +169,13 @@ möglich, was eleganter ist. Siehe Konstruktor.
 
 =head4 Example
 
-    $ perl -MQuiq::MediaWiki::Client -E 'Quiq::MediaWiki::Client->new("http://lxv0103.ruv.de:8080/api.php",-debug=>1)->login("XV882JS","<PASSWORD>")'
+  $ perl -MQuiq::MediaWiki::Client -E 'Quiq::MediaWiki::Client->new("http://lxv0103.ruv.de:8080/api.php",-debug=>1)->login("XV882JS","<PASSWORD>")'
 
 =head3 getToken() - Besorge Token für Operation
 
 =head4 Synopsis
 
-    $token = $mw->getToken($action);
+  $token = $mw->getToken($action);
 
 =head4 Arguments
 
@@ -201,8 +201,8 @@ ist, cachen wir die Tokens, so dass nur eine Serveranfrage nötig ist.
 
 =head4 Synopsis
 
-    $res = $mw->editPage($pageId,$text); # [1]
-    $res = $mw->editPage($title,$text);  # [2]
+  $res = $mw->editPage($pageId,$text); # [1]
+  $res = $mw->editPage($title,$text);  # [2]
 
 =head4 Arguments
 
@@ -260,8 +260,8 @@ Aufruf vom Wiki-Server ignoriert.
 
 =head4 Synopsis
 
-    $pag = $mw->getPage($pageId,@opt);
-    $pag = $mw->getPage($title,@opt);
+  $pag = $mw->getPage($pageId,@opt);
+  $pag = $mw->getPage($title,@opt);
 
 =head4 Arguments
 
@@ -364,8 +364,8 @@ user
 
 =head4 Synopsis
 
-    $res = $mw->movePage($pageId,$newTitle,@opt);
-    $res = $mw->movePage($oldTitle,$newTitle,@opt);
+  $res = $mw->movePage($pageId,$newTitle,@opt);
+  $res = $mw->movePage($oldTitle,$newTitle,@opt);
 
 =head4 Arguments
 
@@ -415,8 +415,8 @@ Seite ein, sofern beim Aufruf nicht -redirect => 0 angegeben wird.
 
 =head4 Synopsis
 
-    $res = $mw->siteInfo;
-    $res = $mw->siteInfo(@properties);
+  $res = $mw->siteInfo;
+  $res = $mw->siteInfo(@properties);
 
 =head4 Arguments
 
@@ -441,13 +441,13 @@ bekannten) Properties abgefragt.
 
 =head4 Example
 
-    $ quiq-mediawiki ruv statistics --debug
+  $ quiq-mediawiki ruv statistics --debug
 
 =head3 uploadFile() - Lade Mediendatei hoch
 
 =head4 Synopsis
 
-    $res = $mw->uploadFile($file);
+  $res = $mw->uploadFile($file);
 
 =head4 Arguments
 
@@ -513,7 +513,7 @@ L<File Upload per LWP|http://lwp.interglacial.com/ch05_07.htm>
 
 =head4 Synopsis
 
-    $version = $mw->version;
+  $version = $mw->version;
 
 =head4 Description
 
@@ -526,7 +526,7 @@ diese zurück. Die Information wird im Objekt gecached.
 
 =head4 Synopsis
 
-    $mw->load($cacheDir,$file,@opt);
+  $mw->load($cacheDir,$file,@opt);
 
 =head4 Arguments
 
@@ -630,7 +630,7 @@ automatisch im Wiki umbenannt.
 
 =head4 Synopsis
 
-    $res = $mw->send($method,$action,@keyVal);
+  $res = $mw->send($method,$action,@keyVal);
 
 =head4 Arguments
 
@@ -673,8 +673,8 @@ Response $res sind es ebenfalls.
 
 =head4 Synopsis
 
-    $pag = $mw->reduceToPage($res);
-    $pag = $mw->reduceToPage($res,$sloppy);
+  $pag = $mw->reduceToPage($res);
+  $pag = $mw->reduceToPage($res,$sloppy);
 
 =head4 Arguments
 
@@ -699,22 +699,22 @@ Reduzierte Response
 Reduziere die Server-Response $res mit einer einelementigen
 Seitenliste der Art
 
-    {
-        query => {
-            pages => {
-                $pageId => {
-                     @keyVal
-                },
-                ...
-            },
-        }
-    }
+  {
+      query => {
+          pages => {
+              $pageId => {
+                   @keyVal
+              },
+              ...
+          },
+      }
+  }
 
 auf
 
-    {
-        @keyVal
-    }
+  {
+      @keyVal
+  }
 
 also auf ein Element und liefere dieses zurück.
 
@@ -728,7 +728,7 @@ Exception geworfen.
 
 =head4 Synopsis
 
-    $mw->log($title,$text);
+  $mw->log($title,$text);
 
 =head4 Description
 

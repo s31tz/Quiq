@@ -29,7 +29,7 @@ L<Quiq::Object>
 
 =head4 Synopsis
 
-    $md5 = $class->md5(@data);
+  $md5 = $class->md5(@data);
 
 =head4 Arguments
 

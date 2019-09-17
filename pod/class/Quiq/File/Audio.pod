@@ -16,7 +16,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head4 Synopsis
 
-    $aud = $class->new($file);
+  $aud = $class->new($file);
 
 =head4 Description
 
@@ -29,7 +29,7 @@ dieses Objekt zurück.
 
 =head4 Synopsis
 
-    $artist = $aud->artist;
+  $artist = $aud->artist;
 
 =head4 Description
 
@@ -43,7 +43,7 @@ L<extractMetaData|"extractMetaData() - Ermittele Künstler und Titel">()
 
 =head4 Synopsis
 
-    $title = $aud->title;
+  $title = $aud->title;
 
 =head4 Description
 
@@ -59,7 +59,7 @@ L<extractMetaData|"extractMetaData() - Ermittele Künstler und Titel">()
 
 =head4 Synopsis
 
-    $bitrate = $aud->bitrate;
+  $bitrate = $aud->bitrate;
 
 =head4 Description
 
@@ -69,7 +69,7 @@ Liefere die Bitrate der Audion-Datei (z.Zt. als Zeichenkette).
 
 =head4 Synopsis
 
-    $duration = $aud->duration;
+  $duration = $aud->duration;
 
 =head4 Description
 
@@ -80,7 +80,7 @@ Liefere die Länge (Dauer) der Audio-Datei in Sekunden
 
 =head4 Synopsis
 
-    $ext = $aud->extension;
+  $ext = $aud->extension;
 
 =head4 Description
 
@@ -94,7 +94,7 @@ L<extractMetaData|"extractMetaData() - Ermittele Künstler und Titel">()
 
 =head4 Synopsis
 
-    $file = $aud->file;
+  $file = $aud->file;
 
 =head4 Description
 
@@ -106,7 +106,7 @@ Liefere den Dateinamen (Pfad) der Audio-Datei.
 
 =head4 Synopsis
 
-    $aud->analyzeFile;
+  $aud->analyzeFile;
 
 =head4 Description
 
@@ -117,7 +117,7 @@ Eigenschaften an die betreffenden Attribute des Objektes zu.
 
 =head4 Synopsis
 
-    $aud->extractMetaData;
+  $aud->extractMetaData;
 
 =head4 Description
 
@@ -126,7 +126,7 @@ und weise sie den betreffenden Objektattributen zu.
 
 Es wird vorausgesetzt, dass der Dateiname folgenden Aufbau hat:
 
-    <Path>/<Artist> - <Title>.<Extension>
+  <Path>/<Artist> - <Title>.<Extension>
 
 Die Methode liefert keinen Wert zurück.
 

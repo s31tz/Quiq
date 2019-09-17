@@ -30,7 +30,7 @@ L<Quiq::Hash>
 
 =head4 Synopsis
 
-    $aud = $class->new($file);
+  $aud = $class->new($file);
 
 =head4 Description
 
@@ -62,7 +62,7 @@ sub new {
 
 =head4 Synopsis
 
-    $artist = $aud->artist;
+  $artist = $aud->artist;
 
 =head4 Description
 
@@ -92,7 +92,7 @@ sub artist {
 
 =head4 Synopsis
 
-    $title = $aud->title;
+  $title = $aud->title;
 
 =head4 Description
 
@@ -124,7 +124,7 @@ sub title {
 
 =head4 Synopsis
 
-    $bitrate = $aud->bitrate;
+  $bitrate = $aud->bitrate;
 
 =head4 Description
 
@@ -150,7 +150,7 @@ sub bitrate {
 
 =head4 Synopsis
 
-    $duration = $aud->duration;
+  $duration = $aud->duration;
 
 =head4 Description
 
@@ -177,7 +177,7 @@ sub duration {
 
 =head4 Synopsis
 
-    $ext = $aud->extension;
+  $ext = $aud->extension;
 
 =head4 Description
 
@@ -207,7 +207,7 @@ sub extension {
 
 =head4 Synopsis
 
-    $file = $aud->file;
+  $file = $aud->file;
 
 =head4 Description
 
@@ -219,7 +219,7 @@ Liefere den Dateinamen (Pfad) der Audio-Datei.
 
 =head4 Synopsis
 
-    $aud->analyzeFile;
+  $aud->analyzeFile;
 
 =head4 Description
 
@@ -271,7 +271,7 @@ sub analyzeFile {
 
 =head4 Synopsis
 
-    $aud->extractMetaData;
+  $aud->extractMetaData;
 
 =head4 Description
 
@@ -280,7 +280,7 @@ und weise sie den betreffenden Objektattributen zu.
 
 Es wird vorausgesetzt, dass der Dateiname folgenden Aufbau hat:
 
-    <Path>/<Artist> - <Title>.<Extension>
+  <Path>/<Artist> - <Title>.<Extension>
 
 Die Methode liefert keinen Wert zurück.
 

@@ -75,7 +75,7 @@ Anfänglicher Wert des Felds.
 
 =head4 Synopsis
 
-    $e = $class->new(@keyVal);
+  $e = $class->new(@keyVal);
 
 =cut
 
@@ -114,8 +114,8 @@ sub new {
 
 =head4 Synopsis
 
-    $html = $e->html;
-    $html = $class->html(@keyVal);
+  $html = $e->html;
+  $html = $class->html(@keyVal);
 
 =cut
 

@@ -16,7 +16,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head4 Synopsis
 
-    $n = $this->numberOfCpus;
+  $n = $this->numberOfCpus;
 
 =head4 Description
 
@@ -29,8 +29,8 @@ unbekannten Systems liefert die Methode 1.
 
 =head4 Synopsis
 
-    $hostname = $this->hostname;
-    $hostname = $this->hostname($ip);
+  $hostname = $this->hostname;
+  $hostname = $this->hostname($ip);
 
 =head4 Description
 
@@ -45,8 +45,8 @@ Sys::Hostname
 
 =head4 Synopsis
 
-    $ip = $this->ip;
-    $ip = $this->ip($hostname);
+  $ip = $this->ip;
+  $ip = $this->ip($hostname);
 
 =head4 Description
 
@@ -62,7 +62,7 @@ den Quiq::System->hostname() liefert.
 
 =head4 Synopsis
 
-    $encoding = $this->encoding;
+  $encoding = $this->encoding;
 
 =head4 Description
 
@@ -80,9 +80,9 @@ Pragma encoding
 
 Gib non-ASCII-Zeichen im Encoding der Umgebung auf STDOUT aus:
 
-    my $encoding = Quiq::System->encoding;
-    binmode STDOUT,":encoding($encoding)";
-    print "äöüßÄÖÜ\n";
+  my $encoding = Quiq::System->encoding;
+  binmode STDOUT,":encoding($encoding)";
+  print "äöüßÄÖÜ\n";
 
 =head2 User
 
@@ -90,8 +90,8 @@ Gib non-ASCII-Zeichen im Encoding der Umgebung auf STDOUT aus:
 
 =head4 Synopsis
 
-    $user = $this->user;
-    $user = $this->user($uid);
+  $user = $this->user;
+  $user = $this->user($uid);
 
 =head4 Description
 
@@ -103,7 +103,7 @@ Prozesses.
 
 =head4 Synopsis
 
-    $uid = $this->uid($user);
+  $uid = $this->uid($user);
 
 =head4 Description
 
@@ -115,7 +115,7 @@ Liefere die User-Id (UID) des Benutzers mit dem Namen $user.
 
 =head4 Synopsis
 
-    $path = $class->searchProgram($program);
+  $path = $class->searchProgram($program);
 
 =head4 Options
 

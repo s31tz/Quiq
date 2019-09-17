@@ -48,7 +48,7 @@ Id nach INSERT in Tabelle mit AUTOINCREMENT-Kolumne (MySQL, SQLite)
 
 =head4 Synopsis
 
-    $cur = $class->new(@keyVal);
+  $cur = $class->new(@keyVal);
 
 =head4 Description
 
@@ -59,7 +59,7 @@ und liefere dieses zurück.
 
 =head4 Synopsis
 
-    $cur->destroy;
+  $cur->destroy;
 
 =head4 Description
 
@@ -72,7 +72,7 @@ Die Methode liefert keinen Wert zurück.
 
 =head4 Synopsis
 
-    $n = $cur->bindVars;
+  $n = $cur->bindVars;
 
 =head4 Description
 
@@ -83,14 +83,14 @@ waren.
 
 =head4 Synopsis
 
-    @arr|$arr = $cur->bindTypes(@dataTypes);
-    @arr|$arr = $cur->bindTypes;
+  @arr|$arr = $cur->bindTypes(@dataTypes);
+  @arr|$arr = $cur->bindTypes;
 
 =head3 hits() - Liefere die Anzahl der getroffenen Datensätze
 
 =head4 Synopsis
 
-    $n = $cur->hits;
+  $n = $cur->hits;
 
 =head4 Description
 
@@ -102,13 +102,13 @@ Anzahl der (bislang) gelesenen Datensätze.
 
 =head4 Synopsis
 
-    $id = $cur->id;
+  $id = $cur->id;
 
 =head3 titles() - Liefere eine Referenz auf Liste der Kolumnentitel
 
 =head4 Synopsis
 
-    $titlesA = $cur->titles;
+  $titlesA = $cur->titles;
 
 =head2 Objektmethoden
 
@@ -116,7 +116,7 @@ Anzahl der (bislang) gelesenen Datensätze.
 
 =head4 Synopsis
 
-    $cur = $cur->bind(@vals);
+  $cur = $cur->bind(@vals);
 
 =head4 Description
 
@@ -127,7 +127,7 @@ das Resultat der Statement-Ausführung zurück.
 
 =head4 Synopsis
 
-    $row = $cur->fetch;
+  $row = $cur->fetch;
 
 =head4 Description
 

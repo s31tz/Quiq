@@ -31,7 +31,7 @@ L<Quiq::Object>
 
 =head4 Synopsis
 
-    $data = $class->get($url,@opt);
+  $data = $class->get($url,@opt);
 
 =head4 Options
 

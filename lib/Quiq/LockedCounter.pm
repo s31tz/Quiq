@@ -23,11 +23,11 @@ L<Quiq::Object>
 
 =head1 SYNOPSIS
 
-    use Quiq::LockedCounter;
-    
-    $cnt = Quiq::LockedCounter->new($file)->increment;
-    ...
-    $n = $cnt->count;
+  use Quiq::LockedCounter;
+  
+  $cnt = Quiq::LockedCounter->new($file)->increment;
+  ...
+  $n = $cnt->count;
 
 =head1 DESCRIPTION
 
@@ -44,7 +44,7 @@ gehalten.
 
 =head4 Synopsis
 
-    $ctr = Quiq::LockedCounter->new($file);
+  $ctr = Quiq::LockedCounter->new($file);
 
 =head4 Returns
 
@@ -81,7 +81,7 @@ sub new {
 
 =head4 Synopsis
 
-    $n = $ctr->count;
+  $n = $ctr->count;
 
 =head4 Returns
 
@@ -101,7 +101,7 @@ sub count {
 
 =head4 Synopsis
 
-    $file = $ctr->file;
+  $file = $ctr->file;
 
 =head4 Returns
 
@@ -121,7 +121,7 @@ sub file {
 
 =head4 Synopsis
 
-    $ctr = $ctr->increment;
+  $ctr = $ctr->increment;
 
 =head4 Returns
 

@@ -55,7 +55,7 @@ Wert (vom Anwender nicht änderbar).
 
 =head4 Synopsis
 
-    $e = $class->new(@keyVal);
+  $e = $class->new(@keyVal);
 
 =head2 Objektmethoden
 
@@ -63,8 +63,8 @@ Wert (vom Anwender nicht änderbar).
 
 =head4 Synopsis
 
-    $html = $e->html($h);
-    $html = $class->html($h,@keyVal);
+  $html = $e->html($h);
+  $html = $class->html($h,@keyVal);
 
 =head1 VERSION
 

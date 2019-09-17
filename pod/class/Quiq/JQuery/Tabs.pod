@@ -47,36 +47,36 @@ L<Tabs Widget Beispiele|http://jqueryui.com/tabs/>
 
 Perl:
 
-    $html = Quiq::JQuery::Tabs->html($h,
-        id => 'tabs',
-        tabs => [
-            {
-                label => 'A',
-                link => '#a',
-                content => $h->tag('p',
-                    -text => 1,
-                    'Text des Reiters A',
-                ),
-            },{
-                label => 'B',
-                link => 'b',
-            },
-        ],
-    );
+  $html = Quiq::JQuery::Tabs->html($h,
+      id => 'tabs',
+      tabs => [
+          {
+              label => 'A',
+              link => '#a',
+              content => $h->tag('p',
+                  -text => 1,
+                  'Text des Reiters A',
+              ),
+          },{
+              label => 'B',
+              link => 'b',
+          },
+      ],
+  );
 
 HTML:
 
-    <div id="tabs">
-      <ul>
-        <li><a href="#a">A</a></li>
-        <li><a href="b">B</a></li>
-      </ul>
-      <div id="a">
-        <p>
-          Text des Reiters A
-        </p>
-      </div>
+  <div id="tabs">
+    <ul>
+      <li><a href="#a">A</a></li>
+      <li><a href="b">B</a></li>
+    </ul>
+    <div id="a">
+      <p>
+        Text des Reiters A
+      </p>
     </div>
+  </div>
 
 =head1 METHODS
 
@@ -86,7 +86,7 @@ HTML:
 
 =head4 Synopsis
 
-    $obj = $class->new(@keyVal);
+  $obj = $class->new(@keyVal);
 
 =head4 Description
 
@@ -99,8 +99,8 @@ Referenz auf dieses Objekt zurück.
 
 =head4 Synopsis
 
-    $html = $obj->html($h);
-    $html = $class->html($h,@keyVal);
+  $html = $obj->html($h);
+  $html = $class->html($h,@keyVal);
 
 =head4 Description
 

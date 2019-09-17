@@ -16,7 +16,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head4 Synopsis
 
-    $fil = $class->new($ent,@keyVal);
+  $fil = $class->new($ent,@keyVal);
 
 =head2 Generierung
 
@@ -24,7 +24,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head4 Synopsis
 
-    $data = $fil->generate;
+  $data = $fil->generate;
 
 =head1 VERSION
 

@@ -27,7 +27,7 @@ L<Quiq::Hash>
 
 =head4 Synopsis
 
-    $fil = $class->new($ent,@keyVal);
+  $fil = $class->new($ent,@keyVal);
 
 =cut
 
@@ -60,7 +60,7 @@ sub new {
 
 =head4 Synopsis
 
-    $data = $fil->generate;
+  $data = $fil->generate;
 
 =cut
 

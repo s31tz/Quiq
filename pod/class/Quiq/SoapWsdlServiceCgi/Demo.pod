@@ -16,15 +16,15 @@ L<Quiq::SoapWsdlServiceCgi|https://github.com/s31tz/Quiq/tree/master/pod/class/Q
 
 =head4 Synopsis
 
-    $time = $class->serverTime;
+  $time = $class->serverTime;
 
 =head4 Wsdl
 
-    _RETURN $string
+  _RETURN $string
 
 =begin WSDL
 
-_RETURN $string
+  _RETURN $string
 
 =end WSDL
 

@@ -10,16 +10,16 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 SYNOPSIS
 
-    use Quiq::DestinationTree;
-    
-    $dt = Quiq::DestinationTree->(@dirs);
-    ...
-    # Dateien und Verzeichnisse erzeugen
-    $dt->addFile($file,$content);
-    $dt->addDir($dir);
-    ...
-    # Überzählige Dateien und Verzeichnisse entfernen
-    $dt->cleanup;
+  use Quiq::DestinationTree;
+  
+  $dt = Quiq::DestinationTree->(@dirs);
+  ...
+  # Dateien und Verzeichnisse erzeugen
+  $dt->addFile($file,$content);
+  $dt->addDir($dir);
+  ...
+  # Überzählige Dateien und Verzeichnisse entfernen
+  $dt->cleanup;
 
 =head1 DESCRIPTION
 
@@ -36,7 +36,7 @@ kontrollieren.
 
 =head4 Synopsis
 
-    $tree = $class->new(@dirs,@opt);
+  $tree = $class->new(@dirs,@opt);
 
 =head4 Options
 
@@ -66,7 +66,7 @@ erzeugt noch entfernt).
 
 Liste von Einzeldateien. Beispiel:
 
-    -files=>[glob '*_1.sql'],
+  -files=>[glob '*_1.sql'],
 
 =item -force => $bool (Default: 0)
 
@@ -115,7 +115,7 @@ die Dateien (nicht die Verzeichnisse) in DIR werden verwaltet.
 
 =head4 Synopsis
 
-    $bool = $tree->addDir($dir);
+  $bool = $tree->addDir($dir);
 
 =head4 Description
 
@@ -135,7 +135,7 @@ von Verzeichnisrechten.
 
 =head4 Synopsis
 
-    @paths | $pathA = $tree->paths;
+  @paths | $pathA = $tree->paths;
 
 =head4 Description
 
@@ -155,27 +155,27 @@ Die Liste enthält sowohl Verzeichnisse also auch Dateien.
 
 Sortierung herstellen:
 
-    @paths = sort $tree->paths;
+  @paths = sort $tree->paths;
 
 Nur Dateien erhalten:
 
-    @paths = grep {!-d} $tree->paths;
+  @paths = grep {!-d} $tree->paths;
 
 =head3 addFile() - Füge Datei zum Dateibaum hinzu
 
 =head4 Synopsis
 
-    $bool = $tree->addFile($file,$data,@opt);
-    $bool = $tree->addFile($file,\$data,@opt);
-    $bool = $tree->addFile($file,@opt);
-    $bool = $tree->addFile($file,
-        -generate => $bool,
-        -onGenerate => sub {
-            ...
-            return $data;
-        },
-        @opt
-    );
+  $bool = $tree->addFile($file,$data,@opt);
+  $bool = $tree->addFile($file,\$data,@opt);
+  $bool = $tree->addFile($file,@opt);
+  $bool = $tree->addFile($file,
+      -generate => $bool,
+      -onGenerate => sub {
+          ...
+          return $data;
+      },
+      @opt
+  );
 
 =head4 Options
 
@@ -248,7 +248,7 @@ Dateirechten.
 
 =head4 Synopsis
 
-    @arr | $arr = $tree->obsoletePaths;
+  @arr | $arr = $tree->obsoletePaths;
 
 =head4 Description
 
@@ -261,7 +261,7 @@ kommt. Dies ist aber nicht garantiert, da Punkt "." und Bindestrich
 
 =head4 Synopsis
 
-    $bool = $tree->removePath($path);
+  $bool = $tree->removePath($path);
 
 =head4 Description
 
@@ -275,9 +275,9 @@ das Verzeichnis leer ist. Dateien werden grundsätzlich gelöscht.
 
 =head4 Synopsis
 
-    $n|@paths = $tree->cleanup;
-    $n|@paths = $tree->cleanup($ask);
-    $n|@paths = $tree->cleanup($ask,\$timer);
+  $n|@paths = $tree->cleanup;
+  $n|@paths = $tree->cleanup($ask);
+  $n|@paths = $tree->cleanup($ask,\$timer);
 
 =head4 Returns
 
@@ -301,7 +301,7 @@ des Benutzers auf dessen Wert aufaddiert.
 
 =head4 Synopsis
 
-    $dt->close;
+  $dt->close;
 
 =head4 Description
 
@@ -312,7 +312,7 @@ nicht mehr verwendet werden. Die Methode liefert keinen Wert zurück.
 
 =head4 Synopsis
 
-    $text = $tree->getText($textDe);
+  $text = $tree->getText($textDe);
 
 =head4 Returns
 

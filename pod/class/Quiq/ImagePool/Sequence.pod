@@ -34,7 +34,7 @@ Liste aller Bilder.
 
 =head4 Synopsis
 
-    $ims = $class->new($file,$lst);
+  $ims = $class->new($file,$lst);
 
 =head4 Arguments
 
@@ -61,7 +61,7 @@ Bildliste $lst und liefere eine Referenz auf dieses Objekt zurück.
 
 =head4 Synopsis
 
-    $n = $ims->count;
+  $n = $ims->count;
 
 =head4 Description
 
@@ -71,7 +71,7 @@ Liefere die Anzahl der Range-Definitionen.
 
 =head4 Synopsis
 
-    @keys|$keyA = $ims->keys;
+  @keys|$keyA = $ims->keys;
 
 =head4 Description
 
@@ -82,7 +82,7 @@ eine Referenz auf die Liste.
 
 =head4 Synopsis
 
-    $bool = $ims->exists($key);
+  $bool = $ims->exists($key);
 
 =head4 Description
 
@@ -92,7 +92,7 @@ Prüfe, ob Range $key existiert. Wenn ja, liefere 1, sonst 0.
 
 =head4 Synopsis
 
-    @def|$defA = $ims->def($key);
+  @def|$defA = $ims->def($key);
 
 =head4 Description
 
@@ -102,7 +102,7 @@ Liefere die Definition ($spec,$modifier) des Range $key.
 
 =head4 Synopsis
 
-    $range = $ims->spec($key);
+  $range = $ims->spec($key);
 
 =head4 Description
 
@@ -112,7 +112,7 @@ Liefere die Spezifikation (Aufzählung der Bildnummern) für Range $key.
 
 =head4 Synopsis
 
-    @images|$imageA = $ims->specImages($key);
+  @images|$imageA = $ims->specImages($key);
 
 =head4 Arguments
 
@@ -133,8 +133,8 @@ eine Referenz auf die Liste.
 
 =head4 Synopsis
 
-    $modifier = $ims->modifier($key);
-    $modifier = $ims->modifier($key=>$modifier);
+  $modifier = $ims->modifier($key);
+  $modifier = $ims->modifier($key=>$modifier);
 
 =head4 Description
 
@@ -146,8 +146,8 @@ Liefere oder setze den Modifier für Range $key.
 
 =head4 Synopsis
 
-    @images|$imageA = $ims->images;
-    @images|$imageA = $ims->images($key);
+  @images|$imageA = $ims->images;
+  @images|$imageA = $ims->images($key);
 
 =head4 Arguments
 

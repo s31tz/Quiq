@@ -53,26 +53,26 @@ mehrzeiligen Wert enthält.
 
 Erzeuge eine formatierte Liste von Float-Werten:
 
-    my @values = (
-        234.567,
-          5.45,
-      92345.6,
-         42.56739,
-    );
-    
-    my $prp = Quiq::Properties->new(\@values);
-    
-    my $text;
-    for (@values) {
-        $text .= $prp->format('text',$_)."\n";
-    }
-    print $text;
-    
-    __END__
-      234.56700
-        5.45000
-    92345.60000
-       42.56739
+  my @values = (
+      234.567,
+        5.45,
+    92345.6,
+       42.56739,
+  );
+  
+  my $prp = Quiq::Properties->new(\@values);
+  
+  my $text;
+  for (@values) {
+      $text .= $prp->format('text',$_)."\n";
+  }
+  print $text;
+  
+  __END__
+    234.56700
+      5.45000
+  92345.60000
+     42.56739
 
 =head1 METHODS
 
@@ -82,8 +82,8 @@ Erzeuge eine formatierte Liste von Float-Werten:
 
 =head4 Synopsis
 
-    $prp = $class->new(@opt);
-    $prp = $class->new(\@values,@opt);
+  $prp = $class->new(@opt);
+  $prp = $class->new(\@values,@opt);
 
 =head4 Arguments
 
@@ -121,8 +121,8 @@ angegeben, werden dessen Werte analysiert.
 
 =head4 Synopsis
 
-    $align = $prp->align;
-    $align = $prp->align($align);
+  $align = $prp->align;
+  $align = $prp->align($align);
 
 =head4 Returns
 
@@ -150,7 +150,7 @@ die aber auf r geändert werden werden kann.
 
 =head4 Synopsis
 
-    $bool = $prp->multiLine;
+  $bool = $prp->multiLine;
 
 =head4 Returns
 
@@ -166,7 +166,7 @@ wahr sein.
 
 =head4 Synopsis
 
-    $scale = $prp->scale;
+  $scale = $prp->scale;
 
 =head4 Returns
 
@@ -181,8 +181,8 @@ hat nur im Falle des Typs f (Float) eine Bedeutung.
 
 =head4 Synopsis
 
-    $type = $prp->type;
-    $type = $prp->type($type);
+  $type = $prp->type;
+  $type = $prp->type($type);
 
 =head4 Returns
 
@@ -216,7 +216,7 @@ besteht oder wenigsténs einen nichtnumerischen Wert enthält.
 
 =head4 Synopsis
 
-    $width = $prp->width;
+  $width = $prp->width;
 
 =head4 Returns
 
@@ -252,7 +252,7 @@ maximalen Anzahl an Zeichen vor und einschließlich des Kommas.
 
 =head4 Synopsis
 
-    $prp->analyze($value);
+  $prp->analyze($value);
 
 =head4 Arguments
 
@@ -274,7 +274,7 @@ Leerstring) ändert die Eigenschaften nicht.
 
 =head4 Synopsis
 
-    $str = $prp->format($format,$val);
+  $str = $prp->format($format,$val);
 
 =head4 Arguments
 
@@ -299,7 +299,7 @@ Formatiere Wert $val gemäß Format $format und liefere das Resultat zurück.
 
 =head4 Synopsis
 
-    $prp->set($type,$align);
+  $prp->set($type,$align);
 
 =head4 Arguments
 

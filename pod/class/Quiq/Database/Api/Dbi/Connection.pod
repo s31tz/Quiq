@@ -35,7 +35,7 @@ Name des DBMS, für DBMS-spezifische Fallunterscheidungen.
 
 =head4 Synopsis
 
-    $db = $class->new($udlObj);
+  $db = $class->new($udlObj);
 
 =head4 Description
 
@@ -46,7 +46,7 @@ auf dieses Objekt zurück.
 
 =head4 Synopsis
 
-    $db->destroy;
+  $db->destroy;
 
 =head4 Description
 
@@ -58,8 +58,8 @@ Schließe die Datenbankverbindung. Die Methode liefert keinen Wert zurück.
 
 =head4 Synopsis
 
-    $bool = $db->strict;
-    $bool = $db->strict($bool);
+  $bool = $db->strict;
+  $bool = $db->strict($bool);
 
 =head4 Description
 
@@ -71,8 +71,8 @@ oder stellt den ursprüngliche Modus wieder her.
 
 =head4 Synopsis
 
-    $n = $db->maxBlobSize;
-    $n = $db->maxBlobSize($n);
+  $n = $db->maxBlobSize;
+  $n = $db->maxBlobSize($n);
 
 =head4 Description
 
@@ -91,7 +91,7 @@ Returnwert ist immer 0.
 
 =head4 Synopsis
 
-    $cur = $db->sql($stmt,$forceExec);
+  $cur = $db->sql($stmt,$forceExec);
 
 =head4 Description
 

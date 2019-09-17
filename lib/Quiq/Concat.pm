@@ -27,7 +27,7 @@ L<Quiq::Object>
 
 =head4 Synopsis
 
-    $str = $class->catIf($bool,sub {$expr,...});
+  $str = $class->catIf($bool,sub {$expr,...});
 
 =head4 Arguments
 
@@ -56,7 +56,7 @@ der Wert durch einen Leerstring ersetzt.
 
 Die Methode ist logisch äquivalent zu
 
-    $str = !$bool? '': join '',$expr // '', ...;
+  $str = !$bool? '': join '',$expr // '', ...;
 
 Sie vermeidet jedoch, dass C<$expr // '', ...> berechnet werden muss,
 wenn C<$bool> falsch ist.
@@ -65,15 +65,15 @@ wenn C<$bool> falsch ist.
 
 B<Konkatenation bei zutreffender Bedingung>
 
-    Quiq::Concat->catIf(1,sub {
-        'Dies',
-        'ist',
-        'ein',
-        undef,
-        'Test',
-    });
-    ==>
-    'DiesisteinTest'
+  Quiq::Concat->catIf(1,sub {
+      'Dies',
+      'ist',
+      'ein',
+      undef,
+      'Test',
+  });
+  ==>
+  'DiesisteinTest'
 
 =cut
 

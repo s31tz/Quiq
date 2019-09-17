@@ -29,8 +29,8 @@ L<Quiq::Hash>
 
 =head4 Synopsis
 
-    $xtl = $class->new;
-    $xtl = $class->new($program);
+  $xtl = $class->new;
+  $xtl = $class->new($program);
 
 =head4 Arguments
 
@@ -76,7 +76,7 @@ sub new {
 
 =head4 Synopsis
 
-    $xtl->launch($x,$y,$width,$height,$cmdLine);
+  $xtl->launch($x,$y,$width,$height,$cmdLine);
 
 =head4 Arguments
 
@@ -139,7 +139,7 @@ sub launch {
 
 =head4 Synopsis
 
-    $program = $xtl->program;
+  $program = $xtl->program;
 
 =head1 VERSION
 

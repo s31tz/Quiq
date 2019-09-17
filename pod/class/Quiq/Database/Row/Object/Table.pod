@@ -39,7 +39,7 @@ L<primaryKey|"primaryKey() - Liefere Namen der Primärschlüssel-Kolumne">() gelie
 
 =head4 Synopsis
 
-    $tableName = $this->tableName;
+  $tableName = $this->tableName;
 
 =head4 Alias
 
@@ -58,13 +58,13 @@ und liefere diesen zurück.
 
 Tabellenname wird aus Klassenname abgeleitet:
 
-    Adb::Table::Person => person
-    Adb::Person => person
-    Person => person
+  Adb::Table::Person => person
+  Adb::Person => person
+  Person => person
 
 Tabellenname per Klassenvariable definieren:
 
-    our $TableName = 'adb.person';
+  our $TableName = 'adb.person';
 
 =head4 Details
 
@@ -74,7 +74,7 @@ letzte Komponente des Klassennamens.
 Abweichend vom Default kann die Datensatzklasse den Tabellennamen
 über die Klassenvariable
 
-    our $TableName = '...';
+  our $TableName = '...';
 
 festlegen.
 
@@ -86,7 +86,7 @@ Schemapräfix aus einer weiteren Klassennamen-Komponente hinzuzufügen.
 
 =head4 Synopsis
 
-    $title = $this->primaryKey($db);
+  $title = $this->primaryKey($db);
 
 =head4 Description
 
@@ -110,7 +110,7 @@ erste Kolumne der Ergebnistabelle angenommen.
 
 =head4 Synopsis
 
-    @where = $row->primaryKeyWhere($db);
+  @where = $row->primaryKeyWhere($db);
 
 =head4 Description
 
@@ -125,7 +125,7 @@ auf dem Datensatz.
 
 =head4 Synopsis
 
-    $row = $class->nullRow($db);
+  $row = $class->nullRow($db);
 
 =head2 Statement-Generierung
 
@@ -133,25 +133,25 @@ auf dem Datensatz.
 
 =head4 Synopsis
 
-    $stmt = $class->selectStmt($db,@select);
+  $stmt = $class->selectStmt($db,@select);
 
 =head3 insertStmt() - Liefere Insert-Statement für Datensatz
 
 =head4 Synopsis
 
-    $stmt = $row->insertStmt($db);
+  $stmt = $row->insertStmt($db);
 
 =head3 updateStmt() - Liefere Update-Statement für Datensatz
 
 =head4 Synopsis
 
-    $stmt = $row->updateStmt($db);
+  $stmt = $row->updateStmt($db);
 
 =head3 deleteStmt() - Liefere Delete-Statement für Datensatz
 
 =head4 Synopsis
 
-    $stmt = $row->deleteStmt($db);
+  $stmt = $row->deleteStmt($db);
 
 =head2 Datenbank-Operationen
 
@@ -159,7 +159,7 @@ auf dem Datensatz.
 
 =head4 Synopsis
 
-    $row = $class->load($db,$pkValue);
+  $row = $class->load($db,$pkValue);
 
 =head4 Description
 
@@ -174,7 +174,7 @@ oder existierenden Datensatz zu versorgen.
 
 =head4 Synopsis
 
-    $cur = $row->insert($db);
+  $cur = $row->insert($db);
 
 =head4 Description
 
@@ -187,7 +187,7 @@ Nach der Ausführung hat der Datensatz den Rowstatus 0.
 
 =head4 Synopsis
 
-    $cur = $row->update($db);
+  $cur = $row->update($db);
 
 =head4 Description
 
@@ -200,7 +200,7 @@ Nach der Ausführung hat der Datensatz den Rowstatus 0.
 
 =head4 Synopsis
 
-    $cur = $row->delete($db);
+  $cur = $row->delete($db);
 
 =head4 Description
 

@@ -16,7 +16,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head4 Synopsis
 
-    $dir = $class->new($path);
+  $dir = $class->new($path);
 
 =head4 Arguments
 
@@ -34,7 +34,7 @@ Verzeichnis-Pfad.
 
 =head4 Synopsis
 
-    $seq = $dir->sequence($name,@opt);
+  $seq = $dir->sequence($name,@opt);
 
 =head4 Arguments
 
@@ -69,7 +69,7 @@ geworfen, es sei denn, die Option -sloppy ist gesetzt.
 
 =head4 Synopsis
 
-    @images|$imageA = $dir->images($key);
+  @images|$imageA = $dir->images($key);
 
 =head4 Description
 
@@ -96,7 +96,7 @@ Range-Bezeichner SEQUENCE/RANGE
 
 =head4 Synopsis
 
-    $img = $dir->image($n);
+  $img = $dir->image($n);
 
 =head1 VERSION
 

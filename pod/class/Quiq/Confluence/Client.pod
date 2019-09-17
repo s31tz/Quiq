@@ -28,7 +28,7 @@ erweitert.
 
 =head4 Synopsis
 
-    $cli = $class->new(@keyVal);
+  $cli = $class->new(@keyVal);
 
 =head4 Arguments
 
@@ -65,12 +65,12 @@ Instantiiere einen Client für Confluence mit den Eigenschaften
 
 Client für Atlassian Demo-Instanz:
 
-    $cli = Quiq::Confluence::Client->new(
-        url => 'https://<name>.atlassian.net',
-        user => 'admin',
-        password => '<password>',
-        verbose => 1,
-    );
+  $cli = Quiq::Confluence::Client->new(
+      url => 'https://<name>.atlassian.net',
+      user => 'admin',
+      password => '<password>',
+      verbose => 1,
+  );
 
 =head2 Confluence Operationen
 
@@ -78,7 +78,7 @@ Client für Atlassian Demo-Instanz:
 
 =head4 Synopsis
 
-    $pag = $cli->createPage($parentId,$title,$markup,@opts);
+  $pag = $cli->createPage($parentId,$title,$markup,@opts);
 
 =head4 Arguments
 
@@ -127,7 +127,7 @@ Die erzeugte Seite ist (notwendigerweise) demselben Space wie die
 
 =head4 Synopsis
 
-    $pag = $cli->deletePage($pageId);
+  $pag = $cli->deletePage($pageId);
 
 =head4 Arguments
 
@@ -151,7 +151,7 @@ Lösche die Confluence-Seite mit der Seiten-Id $pageId.
 
 =head4 Synopsis
 
-    $pag = $cli->getPage($pageId);
+  $pag = $cli->getPage($pageId);
 
 =head4 Arguments
 
@@ -176,7 +176,7 @@ ein Seiten-Objekt vom Typ Quiq::Confluence::Page zurück.
 
 =head4 Synopsis
 
-    $cli->updatePage($pageId,$markup,@opts);
+  $cli->updatePage($pageId,$markup,@opts);
 
 =head4 Arguments
 
@@ -251,7 +251,7 @@ wird.
 
 =head4 Synopsis
 
-    $pag = $cli->createAttachment($parentId,$file);
+  $pag = $cli->createAttachment($parentId,$file);
 
 =head4 Arguments
 
@@ -286,8 +286,8 @@ gerufen.
 
 =head4 Synopsis
 
-    $res = $cli->send($method,$path);
-    $res = $cli->send($method,$path,$contentType,$content);
+  $res = $cli->send($method,$path);
+  $res = $cli->send($method,$path,$contentType,$content);
 
 =head4 Arguments
 
@@ -309,10 +309,10 @@ Der Content-Type des HTTP-Body, z.B. 'application/json'.
 
 Der Inhalt des HTTP-Body, z.B. (auf die Toplevel-Attribute umbrochen)
 
-    {"version":{"number":24},
-    "body":{"storage":{"representation":"wiki","value":"{cheese}"}},
-    "title":"Testseite",
-    "type":"page"}
+  {"version":{"number":24},
+  "body":{"storage":{"representation":"wiki","value":"{cheese}"}},
+  "title":"Testseite",
+  "type":"page"}
 
 =back
 
@@ -331,8 +331,8 @@ wirft die Methode eine Exception.
 
 =head4 Synopsis
 
-    $url = $cli->url;
-    $url = $cli->url($path);
+  $url = $cli->url;
+  $url = $cli->url($path);
 
 =head4 Arguments
 
@@ -359,15 +359,15 @@ Ohne Argument wird der Server-URL geliefert.
 
 Der Code
 
-    $cli = Quiq::Confluence::Client->new(
-        url => 'https://<name>.atlassian.net',
-        ...
-    );
-    $url = $cli->url('wiki/rest/api/content/32788');
+  $cli = Quiq::Confluence::Client->new(
+      url => 'https://<name>.atlassian.net',
+      ...
+  );
+  $url = $cli->url('wiki/rest/api/content/32788');
 
 liefert
 
-    https://<name>.atlassian.net/wiki/rest/api/content/32788
+  https://<name>.atlassian.net/wiki/rest/api/content/32788
 
 =head1 VERSION
 

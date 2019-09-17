@@ -29,8 +29,8 @@ L<Quiq::Object>
 
 =head4 Synopsis
 
-    $class->insertDurationBytes(\$html,$t0);
-    $html2 = $class->insertDurationBytes($html1,$t0);
+  $class->insertDurationBytes(\$html,$t0);
+  $html2 = $class->insertDurationBytes($html1,$t0);
 
 =cut
 

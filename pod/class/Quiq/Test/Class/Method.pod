@@ -23,7 +23,7 @@ und den Gruppen-Regex, sofern vorhanden.
 
 =head4 Synopsis
 
-    $meth = $class->new($pkg,$ref,$type,$n,$group);
+  $meth = $class->new($pkg,$ref,$type,$n,$group);
 
 =head4 Description
 
@@ -38,7 +38,7 @@ Liefere eine Referenz auf dieses Objekt zurück.
 
 =head4 Synopsis
 
-    $class = $meth->class;
+  $class = $meth->class;
 
 =head4 Description
 
@@ -48,7 +48,7 @@ Liefere den Namen der getesteten Klasse.
 
 =head4 Synopsis
 
-    $ref = $meth->code;
+  $ref = $meth->code;
 
 =head4 Description
 
@@ -58,7 +58,7 @@ Liefere Codereferenz.
 
 =head4 Synopsis
 
-    $regex = $meth->group;
+  $regex = $meth->group;
 
 =head4 Description
 
@@ -68,7 +68,7 @@ Liefere Gruppen-Regex.
 
 =head4 Synopsis
 
-    $name = $meth->name;
+  $name = $meth->name;
 
 =head4 Description
 
@@ -78,7 +78,7 @@ Liefere den Methodennamen.
 
 =head4 Synopsis
 
-    $n = $meth->tests;
+  $n = $meth->tests;
 
 =head4 Description
 
@@ -88,7 +88,7 @@ Liefere die Anzahl der Tests in der Testmethode.
 
 =head4 Synopsis
 
-    $type = $meth->type;
+  $type = $meth->type;
 
 =head4 Description
 

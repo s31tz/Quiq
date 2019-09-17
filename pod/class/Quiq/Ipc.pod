@@ -16,10 +16,10 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head4 Synopsis
 
-    $out = Quiq::Ipc->filter($cmd,$in,@opt);
-    ($out,$err) = Quiq::Ipc->filter($cmd,$in,@opt);
-    $out = Quiq::Ipc->filter($cmd,@opt);
-    ($out,$err) = Quiq::Ipc->filter($cmd,@opt);
+  $out = Quiq::Ipc->filter($cmd,$in,@opt);
+  ($out,$err) = Quiq::Ipc->filter($cmd,$in,@opt);
+  $out = Quiq::Ipc->filter($cmd,@opt);
+  ($out,$err) = Quiq::Ipc->filter($cmd,@opt);
 
 =head4 Options
 

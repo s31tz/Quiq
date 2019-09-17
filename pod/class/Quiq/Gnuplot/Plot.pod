@@ -20,7 +20,7 @@ Ein Objekt der Klasse repräsentiert einen Plot.
 
 =head4 Synopsis
 
-    $plt = Quiq::Gnuplot::Plot->new;
+  $plt = Quiq::Gnuplot::Plot->new;
 
 =head2 Objektmethoden
 
@@ -28,15 +28,15 @@ Ein Objekt der Klasse repräsentiert einen Plot.
 
 =head4 Synopsis
 
-    $title = $plt->title;
-    $title = $plt->title($title);
+  $title = $plt->title;
+  $title = $plt->title($title);
 
 =head3 addGraph() - Füge Graph zum Plot-Objekt hinzu
 
 =head4 Synopsis
 
-    $plt->addGraph($gph);
-    $plt->addGraph(@keyVal);
+  $plt->addGraph($gph);
+  $plt->addGraph(@keyVal);
 
 =head4 Alias
 
@@ -52,8 +52,8 @@ das Quiq::Gnuplot::Graph-Objekt.
 
 =head4 Synopsis
 
-    $plt->addArrow($arw);
-    $plt->addArrow(@keyVal);
+  $plt->addArrow($arw);
+  $plt->addArrow(@keyVal);
 
 =head4 Description
 
@@ -65,8 +65,8 @@ selbst das Quiq::Gnuplot::Arrow-Objekt.
 
 =head4 Synopsis
 
-    $plt->addLabel($lab);
-    $plt->addLabel(@keyVal);
+  $plt->addLabel($lab);
+  $plt->addLabel(@keyVal);
 
 =head4 Description
 
@@ -78,7 +78,7 @@ selbst das Quiq::Gnuplot::Label-Objekt.
 
 =head4 Synopsis
 
-    @gph | $gphA = $plt->graphsWithData;
+  @gph | $gphA = $plt->graphsWithData;
 
 =head1 VERSION
 

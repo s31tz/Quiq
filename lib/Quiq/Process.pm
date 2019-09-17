@@ -30,8 +30,8 @@ L<Quiq::System>
 
 =head4 Synopsis
 
-    $dir = $this->cwd;
-    $this->cwd($dir);
+  $dir = $this->cwd;
+  $this->cwd($dir);
 
 =head4 Alias
 
@@ -47,11 +47,11 @@ Verzeichnis.
 
 Liefere aktuelles Verzeichnis:
 
-    $dir = Quiq::Process->cwd;
+  $dir = Quiq::Process->cwd;
 
 Wechsele Verzeichnis:
 
-    Quiq::Process->cwd('/tmp');
+  Quiq::Process->cwd('/tmp');
 
 =cut
 
@@ -91,8 +91,8 @@ sub cwd {
 
 =head4 Synopsis
 
-    $uid = $this->euid;
-    $this->euid($uid);
+  $uid = $this->euid;
+  $this->euid($uid);
 
 =head4 Description
 
@@ -106,11 +106,11 @@ Perl-Variable $> abgefragt werden.
 
 Liefere aktuelle EUID:
 
-    $uid = Quiq::Process->euid;
+  $uid = Quiq::Process->euid;
 
 Setze EUID:
 
-    Quiq::Process->euid(1000);
+  Quiq::Process->euid(1000);
 
 =cut
 
@@ -145,8 +145,8 @@ sub euid {
 
 =head4 Synopsis
 
-    $uid = $this->uid;
-    $uid = $this->uid($user);
+  $uid = $this->uid;
+  $uid = $this->uid($user);
 
 =head4 Description
 
@@ -168,7 +168,7 @@ sub uid {
 
 =head4 Synopsis
 
-    $user = $this->user;
+  $user = $this->user;
 
 =head4 Description
 
@@ -190,8 +190,8 @@ sub user {
 
 =head4 Synopsis
 
-    $path = $this->homeDir;
-    $path = $this->homeDir($subPath);
+  $path = $this->homeDir;
+  $path = $this->homeDir($subPath);
 
 =head4 Description
 

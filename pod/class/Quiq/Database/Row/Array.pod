@@ -24,8 +24,8 @@ keine weitere Information über Titel, Datensatz-Status usw.
 
 =head4 Synopsis
 
-    $row = $class->new(\@values);
-    $row = $class->new(\@titles,\@values);
+  $row = $class->new(\@values);
+  $row = $class->new(\@titles,\@values);
 
 =head4 Description
 
@@ -46,7 +46,7 @@ kopieren wir das Array, da DBI das Array wiederbenutzt
 
 =head4 Synopsis
 
-    $arr|@arr = $row->asArray;
+  $arr|@arr = $row->asArray;
 
 =head4 Description
 
@@ -61,8 +61,8 @@ Array-Rows einheitlich behandelt werden können.
 
 =head4 Synopsis
 
-    $str = $row->asString;
-    $str = $row->asString($colSep);
+  $str = $row->asString;
+  $str = $row->asString($colSep);
 
 =head4 Description
 
@@ -74,13 +74,13 @@ werden.
 
 =head4 Synopsis
 
-    $newRow = $row->copy;
+  $newRow = $row->copy;
 
 =head3 isRaw() - Liefere, ob Klasse Raw-Datensätze repräsentiert
 
 =head4 Synopsis
 
-    $bool = $row->isRaw;
+  $bool = $row->isRaw;
 
 =head1 VERSION
 

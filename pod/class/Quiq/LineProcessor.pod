@@ -20,22 +20,22 @@ Methoden zur Manipulation des Arrays von Zeilen zur Verfügung.
 Für eine Fehlerbehandlung können die Methoden $par->input()
 und $line->number() genutzt werden:
 
-    $class->throw(
-        'SDOC-00001: K\{} and k\{} are not supported anymore',
-        Input => ''.$par->input,
-        Line => $line->number,
-    );
+  $class->throw(
+      'SDOC-00001: K\{} and k\{} are not supported anymore',
+      Input => ''.$par->input,
+      Line => $line->number,
+  );
 
 produziert (z.B.)
 
-    Exception:
-        SDOC-00001: K{} and k{} is not supported anymore
-    Input:
-        /tmp/test.sdoc
-    Line:
-        20
-    Stacktrace:
-        ...
+  Exception:
+      SDOC-00001: K{} and k{} is not supported anymore
+  Input:
+      /tmp/test.sdoc
+  Line:
+      20
+  Stacktrace:
+      ...
 
 =head1 METHODS
 
@@ -45,9 +45,9 @@ produziert (z.B.)
 
 =head4 Synopsis
 
-    $par = $class->new($file,@opt);
-    $par = $class->new(\$str,@opt);
-    $par = $class->new(\@lines,@opt);
+  $par = $class->new($file,@opt);
+  $par = $class->new(\$str,@opt);
+  $par = $class->new(\@lines,@opt);
 
 =head4 Options
 
@@ -104,7 +104,7 @@ auf dieses Objekt zurück.
 
 =head4 Synopsis
 
-    $input = $par->input;
+  $input = $par->input;
 
 =head4 Description
 
@@ -115,7 +115,7 @@ oder eine stringifizierte String- oder Arrayreferenz sein.
 
 =head4 Synopsis
 
-    $lineClass = $par->lineClass;
+  $lineClass = $par->lineClass;
 
 =head4 Description
 
@@ -125,7 +125,7 @@ Liefere die Zeilen-Klasse.
 
 =head4 Synopsis
 
-    @lines | $lineA = $par->lines(\@lines);
+  @lines | $lineA = $par->lines(\@lines);
 
 =head4 Description
 
@@ -138,7 +138,7 @@ eine Referenz auf die Liste.
 
 =head4 Synopsis
 
-    $line = $par->shiftLine;
+  $line = $par->shiftLine;
 
 =head4 Description
 
@@ -148,7 +148,7 @@ Entferne die erste Zeile aus dem Dokument und liefere diese zurück.
 
 =head4 Synopsis
 
-    $line = $par->shiftLineIfEq($str);
+  $line = $par->shiftLineIfEq($str);
 
 =head4 Description
 
@@ -159,7 +159,7 @@ sofern ihr Inhalt eq $str ist.
 
 =head4 Synopsis
 
-    $par->removeEmptyLines;
+  $par->removeEmptyLines;
 
 =head4 Description
 
@@ -172,8 +172,8 @@ keinen Wert zurück.
 
 =head4 Synopsis
 
-    $str = $par->dump($format);
-    $str = $par->dump;
+  $str = $par->dump($format);
+  $str = $par->dump;
 
 =head4 Description
 

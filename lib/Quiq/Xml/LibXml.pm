@@ -34,7 +34,7 @@ um zusätzliche Funktionalität.
 
 =head4 Synopsis
 
-    $node = $doc->lookup($xpath);
+  $node = $doc->lookup($xpath);
 
 =head4 Returns
 
@@ -64,7 +64,7 @@ Knoten
 
 =head4 Synopsis
 
-    $str = $doc->toFormattedString;
+  $str = $doc->toFormattedString;
 
 =head4 Returns
 
@@ -117,7 +117,7 @@ toString() des Dokuments - im Gegensatz zu anderen Knoten
 
 =head4 Synopsis
 
-    $nod->removeNode;
+  $nod->removeNode;
 
 =head4 Returns
 

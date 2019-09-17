@@ -16,7 +16,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head4 Synopsis
 
-    $pi = $class->pi;
+  $pi = $class->pi;
 
 =head2 Rundung
 
@@ -24,8 +24,8 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head4 Synopsis
 
-    $y = $class->roundTo($x,$n);
-    $y = $class->roundTo($x,$n,$normalize);
+  $y = $class->roundTo($x,$n);
+  $y = $class->roundTo($x,$n,$normalize);
 
 =head4 Description
 
@@ -36,7 +36,7 @@ normalizeNumber() normalisiert.
 
 Bei $n > 0 rundet die Methode mittels
 
-    $y = sprintf '%.*f',$n,$x;
+  $y = sprintf '%.*f',$n,$x;
 
 bei $n == 0 mittels roundToInt().
 
@@ -44,7 +44,7 @@ bei $n == 0 mittels roundToInt().
 
 =head4 Synopsis
 
-    $n = $class->roundToInt($x);
+  $n = $class->roundToInt($x);
 
 =head4 Description
 
@@ -56,19 +56,19 @@ Für negative $x ist es umgekehrt.
 
 Folgender Ansatz funktioniert nicht
 
-    $n = sprintf '%.0f',$x;
+  $n = sprintf '%.0f',$x;
 
 denn dieser gibt inkonsistente Ergebnisse
 
-    0.5 => 0
-    1.5 => 2
-    2.5 => 2
+  0.5 => 0
+  1.5 => 2
+  2.5 => 2
 
 =head3 roundMinMax() - Runde Breichsgrenzen auf nächsten geeigneten Wert
 
 =head4 Synopsis
 
-    ($minRounded,$maxRounded) = $class->roundMinMax($min,$max);
+  ($minRounded,$maxRounded) = $class->roundMinMax($min,$max);
 
 =head4 Description
 
@@ -93,7 +93,7 @@ $max-$min her.
 
 =head4 Synopsis
 
-    $gcd = $class->gcd($a,b);
+  $gcd = $class->gcd($a,b);
 
 =head4 Description
 
@@ -107,13 +107,13 @@ zurück. Die Methode ist nach dem L<Euklidschen Algorithmus|https://de.wikipedia.
 
 =head4 Synopsis
 
-    $rad = $class->degreeToRad($degree);
+  $rad = $class->degreeToRad($degree);
 
 =head3 radToDegree() - Wandele Bogenmaß (rad) in Grad
 
 =head4 Synopsis
 
-    $degree = $class->radToDegree($rad);
+  $degree = $class->radToDegree($rad);
 
 =head2 Geo-Koordinaten
 
@@ -121,7 +121,7 @@ zurück. Die Methode ist nach dem L<Euklidschen Algorithmus|https://de.wikipedia.
 
 =head4 Synopsis
 
-    ($latitude,$longitude) = $class->geoMidpoint(\@coordinates);
+  ($latitude,$longitude) = $class->geoMidpoint(\@coordinates);
 
 =head4 Arguments
 
@@ -151,7 +151,7 @@ L<http://www.geomidpoint.com/example.html>
 
 =head4 Synopsis
 
-    $dezDeg = $class->geoToDegree($deg,$min,$sec,$dir);
+  $dezDeg = $class->geoToDegree($deg,$min,$sec,$dir);
 
 =head4 Description
 
@@ -160,14 +160,14 @@ Himmelsrichtung in eine dezimale Gradzahl und liefere diese zurück.
 
 =head4 Example
 
-    50 6 44 N -> 50.11222
-    50 6 44 S -> -50.11222
+  50 6 44 N -> 50.11222
+  50 6 44 S -> -50.11222
 
 =head3 geoDistance() - Entfernung zw. zwei Punkten auf der Erdoberfäche
 
 =head4 Synopsis
 
-    $km = $class->geoDistance($lat1,$lon1,$lat2,$lon2);
+  $km = $class->geoDistance($lat1,$lon1,$lat2,$lon2);
 
 =head4 Description
 
@@ -177,10 +177,10 @@ der Geokoordinaten ist in Grad.
 
 Der Berechnung liegt die Formel zugrunde:
 
-    km = 1.852*60*180/pi*acos(
-        sin($lat1*pi/180)*sin($lat2*pi/180)+
-        cos($lat1*pi/180)*cos($lat2*pi/180)*cos(($lon2-$lon1)*pi/180)
-    )
+  km = 1.852*60*180/pi*acos(
+      sin($lat1*pi/180)*sin($lat2*pi/180)+
+      cos($lat1*pi/180)*cos($lat2*pi/180)*cos(($lon2-$lon1)*pi/180)
+  )
 
 =head4 See Also
 
@@ -200,19 +200,19 @@ L<Blog Martin Kompf - Entfernungsberechnung|http://www.kompf.de/gps/distcalc.htm
 
 Abstand zw. zwei Längengraden (359. und 360.) am Äquator:
 
-    sprintf '%.2f',Quiq::Math->geoDistance(0,359,0,360);
-    # -> 111.12
+  sprintf '%.2f',Quiq::Math->geoDistance(0,359,0,360);
+  # -> 111.12
 
 Abstand zw. zwei Längengraden am Pol:
 
-    Quiq::Math->geoDistance(90,359,90,360);
-    # -> 0
+  Quiq::Math->geoDistance(90,359,90,360);
+  # -> 0
 
 =head3 latitudeDistance() - Abstand zwischen zwei Längengraden
 
 =head4 Synopsis
 
-    $km = $class->latitudeDistance($lat);
+  $km = $class->latitudeDistance($lat);
 
 =head4 Description
 
@@ -227,7 +227,7 @@ Wilhelm Petersen.
 
 =head4 Synopsis
 
-    $factor = $class->valueToPixelFactor($length,$min,$max)
+  $factor = $class->valueToPixelFactor($length,$min,$max)
 
 =head4 Returns
 
@@ -244,7 +244,7 @@ entsprechen.
 
 =head4 Synopsis
 
-    $factor = $class->pixelToValueFactor($length,$min,$max);
+  $factor = $class->pixelToValueFactor($length,$min,$max);
 
 =head4 Returns
 
@@ -260,7 +260,7 @@ dem Werteberich $min und $max entsprechen.
 
 =head4 Synopsis
 
-    $x = $class->valueToPixelX($width,$xMin,$xMax,$xVal);
+  $x = $class->valueToPixelX($width,$xMin,$xMax,$xVal);
 
 =head4 Alias
 
@@ -276,7 +276,7 @@ ist $xMax. Die gelieferten Werte liegen im Bereich 0 .. $width-1.
 
 =head4 Synopsis
 
-    $y = $class->valueToPixelY($height,$yMin,$yMax,$yVal);
+  $y = $class->valueToPixelY($height,$yMin,$yMax,$yVal);
 
 =head4 Description
 
@@ -290,7 +290,7 @@ ist $yMax. Die gelieferten Werte liegen im Bereich $height-1 .. 0.
 
 =head4 Synopsis
 
-    $y = $class->interpolate($x0,$y0,$x1,$y1,$x);
+  $y = $class->interpolate($x0,$y0,$x1,$y1,$x);
 
 =head4 Returns
 
@@ -309,7 +309,7 @@ Siehe: L<http://de.wikipedia.org/wiki/Interpolation_%28Mathematik%29#Lineare_Int
 
 =head4 Synopsis
 
-    $bool = $class->isNumber($str);
+  $bool = $class->isNumber($str);
 
 =head2 Spike Test
 
@@ -317,13 +317,13 @@ Siehe: L<http://de.wikipedia.org/wiki/Interpolation_%28Mathematik%29#Lineare_Int
 
 =head4 Synopsis
 
-    $val = $class->spikeValue($v1,$v2,$v3,$t1,$t3);
+  $val = $class->spikeValue($v1,$v2,$v3,$t1,$t3);
 
 =head4 Description
 
 Berechnung gemäß der Mail von Wilhelm Petersen vom 2017-05-03:
 
-    $v = (abs($v2-($v3+$v1)/2)-abs(($v3-$v1)/2))/($t3/60-$t1/60);
+  $v = (abs($v2-($v3+$v1)/2)-abs(($v3-$v1)/2))/($t3/60-$t1/60);
 
 Die Parameter $t1 und $t2 werden in Sekunden angeben, die
 Funktion rechnet jedoch in Minuten, daher die Division durch 60.

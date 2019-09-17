@@ -28,24 +28,24 @@ ein Wert ein beliebiger einzeiliger oder mehrzeiliger Text ist.
 
 Stringrepräsentation:
 
-    Schlüssel1:
-        Wert1
-    Schlüssel2:
-        Wert2
-    ...
+  Schlüssel1:
+      Wert1
+  Schlüssel2:
+      Wert2
+  ...
 
 oder
 
-    Schlüssel1: Wert1
-    Schlüssel2: Wert2
-    ...
+  Schlüssel1: Wert1
+  Schlüssel2: Wert2
+  ...
 
 oder ein Mischung aus beidem oder
 
-    @@Schlüssel@@
-    Wert1
-    @@Schlüsse2@@
-    Wert2
+  @@Schlüssel@@
+  Wert1
+  @@Schlüsse2@@
+  Wert2
 
 Um die dritte Repräsentation (mit @@Schlüssel@@) zu erzeugen, muss
 als Option -format => '@' angegeben werden.
@@ -58,8 +58,8 @@ als Option -format => '@' angegeben werden.
 
 =head4 Synopsis
 
-    @keyVal | $keyValA = $class->fromString($str);
-    @keyVal | $keyValA = $class->fromString(\$str);
+  @keyVal | $keyValA = $class->fromString($str);
+  @keyVal | $keyValA = $class->fromString(\$str);
 
 =head4 Description
 
@@ -86,7 +86,7 @@ allen Zeilen eines mehrzeiligen Werts gemeinsam ist.
 
 =head4 Synopsis
 
-    @keyVal | $keyValA = $class->fromFile($file,@opt);
+  @keyVal | $keyValA = $class->fromFile($file,@opt);
 
 =head4 Arguments
 
@@ -116,8 +116,8 @@ Wie L<fromString|"fromString() - Lies Schlüssel/Wert-Paare aus String">, nur das
 
 =head4 Synopsis
 
-    $str = $class->toString(@keyVal,@opt);
-    $str = $class->toString(\@keyVal,@opt);
+  $str = $class->toString(@keyVal,@opt);
+  $str = $class->toString(\@keyVal,@opt);
 
 =head4 Options
 
@@ -127,13 +127,13 @@ Wie L<fromString|"fromString() - Lies Schlüssel/Wert-Paare aus String">, nur das
 
 Im Falle von ':' erzeuge das Format:
 
-    <KEY>:
-        <VAL>
+  <KEY>:
+      <VAL>
 
 Im Falle von '@' erzeuge das Format:
 
-    @@<KEY>@@
-    <VAL>
+  @@<KEY>@@
+  <VAL>
 
 =item -indent => $n (Default: 4)
 
@@ -162,8 +162,8 @@ Repräsentation und liefere diese zurück.
 
 =head4 Synopsis
 
-    $class->toFile($file,@keyVal,@opt);
-    $class->toFile($file,\@keyVal,@opt);
+  $class->toFile($file,@keyVal,@opt);
+  $class->toFile($file,\@keyVal,@opt);
 
 =head4 Options
 

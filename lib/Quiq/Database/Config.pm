@@ -33,11 +33,11 @@ nur für den Owner lesbar/schreibbar sein.
 
 =head2 Aufbau der Konfigurationsdatei
 
-    '<database>' => {
-        udl => '<udl>',
-        ...
-    },
-    ...
+  '<database>' => {
+      udl => '<udl>',
+      ...
+  },
+  ...
 
 =over 2
 
@@ -59,10 +59,10 @@ dieser Klasse zum Lesen der Konfigurationseinträge genutzt werden.
 
 =head1 EXAMPLE
 
-    use Quiq::Database::Config;
-    
-    $cfg = Quiq::Database::Config->new('~/project/ocean/db.conf');
-    $udl = $cfg->udl('test_db');
+  use Quiq::Database::Config;
+  
+  $cfg = Quiq::Database::Config->new('~/project/ocean/db.conf');
+  $udl = $cfg->udl('test_db');
 
 =head1 METHODS
 
@@ -72,8 +72,8 @@ dieser Klasse zum Lesen der Konfigurationseinträge genutzt werden.
 
 =head4 Synopsis
 
-    $cfg = $class->new;
-    $cfg = $class->new($file);
+  $cfg = $class->new;
+  $cfg = $class->new($file);
 
 =head4 Arguments
 
@@ -146,7 +146,7 @@ sub new {
 
 =head4 Synopsis
 
-    $udl = $class->udl($database);
+  $udl = $class->udl($database);
 
 =head4 Arguments
 
