@@ -13,6 +13,7 @@ WriteMakefile(
         DBD::SQLite => 0,
         DBI => 0,
         Excel::Writer::XLSX => 0,
+        Expect => 0,
         File::Rsync => 0.49,
         GD => 0,
         HTTP::Request => 0,
