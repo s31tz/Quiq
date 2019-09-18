@@ -1,7 +1,7 @@
 package Quiq::Database::Row::Object::Table;
 use base qw/Quiq::Database::Row::Object Quiq::ClassConfig/;
 
-use v5.10.0;
+use v5.10;
 use strict;
 use warnings;
 use utf8;

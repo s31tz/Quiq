@@ -1,7 +1,7 @@
 package Quiq::Database::ResultSet::Array;
 use base qw/Quiq::Database::ResultSet/;
 
-use v5.10.0;
+use v5.10;
 use strict;
 use warnings;
 

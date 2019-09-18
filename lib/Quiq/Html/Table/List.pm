@@ -1,7 +1,7 @@
 package Quiq::Html::Table::List;
 use base qw/Quiq::Html::Table::Base/;
 
-use v5.10.0;
+use v5.10;
 use strict;
 use warnings;
 

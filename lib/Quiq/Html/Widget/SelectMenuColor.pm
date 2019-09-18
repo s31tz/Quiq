@@ -1,7 +1,7 @@
 package Quiq::Html::Widget::SelectMenuColor;
 use base qw/Quiq::Html::Widget::SelectMenu/;
 
-use v5.10.0;
+use v5.10;
 use strict;
 use warnings;
 

@@ -3,7 +3,7 @@
 package Quiq::Gd::Font::Test;
 use base qw/Quiq::Test::Class/;
 
-use v5.10.0;
+use v5.10;
 use strict;
 use warnings;
 use utf8;

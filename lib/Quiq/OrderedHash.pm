@@ -1,7 +1,7 @@
 package Quiq::OrderedHash;
 use base qw/Quiq::Object/;
 
-use v5.10.0;
+use v5.10;
 use strict;
 use warnings;
 

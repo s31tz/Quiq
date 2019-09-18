@@ -1,7 +1,7 @@
 package Quiq::Html::Producer;
 use base qw/Quiq::Html::Construct/;
 
-use v5.10.0;
+use v5.10;
 use strict;
 use warnings;
 

@@ -1,7 +1,7 @@
 package Quiq::ContentProcessor::Type;
 use base qw/Quiq::ContentProcessor::BaseType/;
 
-use v5.10.0;
+use v5.10;
 use strict;
 use warnings;
 

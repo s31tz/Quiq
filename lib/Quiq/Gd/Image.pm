@@ -1,7 +1,7 @@
 package Quiq::Gd::Image;
 use base qw/GD::Image Quiq::Object/;
 
-use v5.10.0;
+use v5.10;
 use strict;
 use warnings;
 use utf8;

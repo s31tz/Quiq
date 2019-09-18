@@ -1,6 +1,6 @@
 package Quiq::Object;
 
-use v5.10.0;
+use v5.10;
 use strict;
 use warnings;
 

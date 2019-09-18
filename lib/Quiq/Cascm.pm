@@ -1,7 +1,7 @@
 package Quiq::Cascm;
 use base qw/Quiq::Hash/;
 
-use v5.10.0;
+use v5.10;
 use strict;
 use warnings;
 use utf8;
@@ -12,6 +12,7 @@ use Quiq::Database::Row::Array;
 use Quiq::Shell;
 use Quiq::AnsiColor;
 use Quiq::Path;
+use Quiq::Converter;
 use Quiq::Terminal;
 use Quiq::CommandLine;
 use Quiq::TempDir;
@@ -335,7 +336,10 @@ Datei mit Repository-Pfadangabe.
 =item $package
 
 Package, dem die ausgecheckte Datei (mit reservierter Version)
-beim Einchecken zugeordnet wird.
+beim Einchecken zugeordnet wird. Das Package muss I<nicht> auf der
+untersten Stufe stehen. Befindet es sich auf einer höheren Stufe, wird
+intern ein Transportpackage erzeugt, das die Dateien zu der Stufe
+des Package bewegt.
 
 =back
 
@@ -352,9 +356,7 @@ ob er seine Änderungen ins Repository übertragen möchte oder nicht.
 Anschließend wird die Repository-Datei wieder eingecheckt. Dies
 geschieht, gleichgültig, ob sie geändert wurde oder nicht. CASCM
 vergibt nur dann eine neue Versionsnummer, wenn die Datei sich
-geändert hat. Das Package $package wird vorher auf die unterste Stufe
-bewegt, falls es sich dort nicht bereits befindet, und hinterher
-wieder zurück bewegt.
+geändert hat.
 
 =cut
 
@@ -370,7 +372,7 @@ sub edit {
     # Vollständigen Pfad der Repository-Datei ermitteln
     my $file = $self->repoFileToFile($repoFile);
 
-    # Prüfe, ob Package existiert
+    # Ermittele die Stufe des Package
 
     my $state = $self->packageState($package);
     if (!$state) {
@@ -379,8 +381,16 @@ sub edit {
             Package => $package,
         );
     }
-    # Wir bewegen das Package auf die unterste Stufe ("Entwicklung")
-    $self->movePackage($self->states->[0],$package);
+
+    # Erzeuge ein Transportpackage, falls sich das Zielpackage
+    # nicht auf der untersten Stufe befindet
+
+    my $transportPackage;
+    if ($state ne $self->states->[0]) {
+        my $name = Quiq::Converter->intToWord(time);
+        $transportPackage = "S6800_0_Seitz_Lift_$name";
+        $output .= $self->createPackage($transportPackage);
+    }
 
     # Lokale Kopie der Datei erstellen
 
@@ -421,8 +431,9 @@ sub edit {
     $p->copy($localFile,$backupFile);
 
     # Checke Datei aus
-    $output .= $self->checkout($package,$repoFile);
+    $output .= $self->checkout($transportPackage || $package,$repoFile);
 
+    my $fileChanged = 0;
     my $editor = $ENV{'EDITOR'} || 'vi';
     Quiq::Shell->exec("$editor $localFile");
     if ($p->compare($localFile,$backupFile)) {
@@ -437,6 +448,7 @@ sub edit {
                 -overwrite => 1,
                 -preserve => 1,
             );
+            $fileChanged = 1;
         }
     }
     elsif (!$p->compare($localFile,$origFile)) {
@@ -448,10 +460,16 @@ sub edit {
 
     # Checke Datei ein. Wenn sie nicht geändert wurde (kein Copy oben),
     # wird keine neue Version erzeugt.
-    $output .= $self->checkin($package,$repoFile);
-
-    # Package zurückbewegen, falls wir es holen mussten
-    $self->movePackage($state,$package);
+    $output .= $self->checkin($transportPackage || $package,$repoFile);
+    
+    if ($transportPackage) {
+        if ($fileChanged) {
+            $output .= $self->movePackage($state,$transportPackage);
+            $output .= $self->switchPackage($state,$transportPackage,
+                $package,$repoFile);
+        }
+        $output .= $self->deletePackages($transportPackage);
+    }
 
     # Die Backup-Datei löschen wir immer
     $p->delete($backupFile);
@@ -514,7 +532,10 @@ sub view {
 
 =item $package
 
-Package, dem die Dateien innerhalb von CASCM zugeordnet werden.
+Package, dem die Dateien innerhalb von CASCM zugeordnet werden. Das
+Package muss I<nicht> auf der untersten Stufe stehen. Befindet es sich
+auf einer höheren Stufe, wird intern ein Transportpackage erzeugt,
+das die Dateien zu der Stufe des Package bewegt.
 
 =item $repoDir
 
@@ -554,6 +575,28 @@ sub putFiles {
     my $p = Quiq::Path->new;
 
     my $output = '';
+
+    # Ermittele die Stufe des Package
+
+    my $state = $self->packageState($package);
+    if (!$state) {
+        $self->throw(
+            'CASCM-00099: Package does not exist',
+            Package => $package,
+        );
+    }
+
+    # Erzeuge ein Transportpackage, falls sich das Zielpackage
+    # nicht auf der untersten Stufe befindet
+
+    my $transportPackage;
+    if ($state ne $self->states->[0]) {
+        my $name = Quiq::Converter->intToWord(time);
+        $transportPackage = "S6800_0_Seitz_Lift_$name";
+        $output .= $self->createPackage($transportPackage);
+    }
+
+    my @items;
     for my $srcFile (@files) {
         my (undef,$file) = $p->split($srcFile);
         my $repoFile = sprintf '%s/%s',$repoDir,$file;
@@ -569,7 +612,9 @@ sub putFiles {
             }
 
             # Checke Repository-Datei aus
-            $output .= $self->checkout($package,$repoFile);
+
+            $output .= $self->checkout($transportPackage ||
+                $package,$repoFile);
         }
 
         # Kopiere externe Datei in den Workspace. Entweder ist
@@ -581,7 +626,18 @@ sub putFiles {
         );
 
         # Checke Workspace-Datei ins Repository ein
-        $output .= $self->checkin($package,$repoFile);  
+        $output .= $self->checkin($transportPackage || $package,$repoFile);  
+
+        # Liste der Items im Packate (nur relevant
+        # im Falle eines Transportpackage)
+        push @items,$file;
+    }
+
+    if ($transportPackage) {
+        $output .= $self->movePackage($state,$transportPackage);
+        $output .= $self->switchPackage($state,$transportPackage,
+            $package,@items);
+        $output .= $self->deletePackages($transportPackage);
     }
 
     return $output;
@@ -1868,7 +1924,7 @@ sub demote {
 
 =head4 Synopsis
 
-  $scm->movePackage($state,$package);
+  $output = $scm->movePackage($state,$package);
 
 =head4 Arguments
 

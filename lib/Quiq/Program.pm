@@ -1,7 +1,7 @@
 package Quiq::Program;
 use base qw/Quiq::Process Quiq::Hash/;
 
-use v5.10.0;
+use v5.10;
 use strict;
 use warnings;
 

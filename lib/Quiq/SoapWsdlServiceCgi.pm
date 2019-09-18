@@ -2,7 +2,7 @@ package Quiq::SoapWsdlServiceCgi;
 use base qw/Quiq::Object/;
 push our @ISA,qw/SOAP::Server::Parameters/;
 
-use v5.10.0;
+use v5.10;
 use strict;
 use warnings;
 

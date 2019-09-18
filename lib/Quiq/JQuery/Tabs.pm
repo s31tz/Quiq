@@ -1,7 +1,7 @@
 package Quiq::JQuery::Tabs;
 use base qw/Quiq::Hash/;
 
-use v5.10.0;
+use v5.10;
 use strict;
 use warnings;
 

@@ -197,7 +197,10 @@ Datei mit Repository-Pfadangabe.
 =item $package
 
 Package, dem die ausgecheckte Datei (mit reservierter Version)
-beim Einchecken zugeordnet wird.
+beim Einchecken zugeordnet wird. Das Package muss I<nicht> auf der
+untersten Stufe stehen. Befindet es sich auf einer höheren Stufe, wird
+intern ein Transportpackage erzeugt, das die Dateien zu der Stufe
+des Package bewegt.
 
 =back
 
@@ -214,9 +217,7 @@ ob er seine Änderungen ins Repository übertragen möchte oder nicht.
 Anschließend wird die Repository-Datei wieder eingecheckt. Dies
 geschieht, gleichgültig, ob sie geändert wurde oder nicht. CASCM
 vergibt nur dann eine neue Versionsnummer, wenn die Datei sich
-geändert hat. Das Package $package wird vorher auf die unterste Stufe
-bewegt, falls es sich dort nicht bereits befindet, und hinterher
-wieder zurück bewegt.
+geändert hat.
 
 =head3 view() - Repository-Datei ansehen
 
@@ -256,7 +257,10 @@ nichts
 
 =item $package
 
-Package, dem die Dateien innerhalb von CASCM zugeordnet werden.
+Package, dem die Dateien innerhalb von CASCM zugeordnet werden. Das
+Package muss I<nicht> auf der untersten Stufe stehen. Befindet es sich
+auf einer höheren Stufe, wird intern ein Transportpackage erzeugt,
+das die Dateien zu der Stufe des Package bewegt.
 
 =item $repoDir
 
@@ -929,7 +933,7 @@ Stufe, und liefere die Ausgabe des Kommandos zurück.
 
 =head4 Synopsis
 
-  $scm->movePackage($state,$package);
+  $output = $scm->movePackage($state,$package);
 
 =head4 Arguments
 

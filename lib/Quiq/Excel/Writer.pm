@@ -1,7 +1,7 @@
 package Quiq::Excel::Writer;
 use base qw/Excel::Writer::XLSX/;
 
-use v5.10.0;
+use v5.10;
 use strict;
 use warnings;
 

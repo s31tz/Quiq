@@ -1,7 +1,7 @@
 package Quiq::Database::Row::Array;
 use base qw/Quiq::Database::Row/;
 
-use v5.10.0;
+use v5.10;
 use strict;
 use warnings;
 
