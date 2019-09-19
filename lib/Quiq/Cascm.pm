@@ -9,8 +9,8 @@ use utf8;
 our $VERSION = '1.158';
 
 use Quiq::Database::Row::Array;
-use Quiq::Shell;
 use Quiq::AnsiColor;
+use Quiq::Shell;
 use Quiq::Path;
 use Quiq::Converter;
 use Quiq::Terminal;
@@ -168,6 +168,7 @@ sub new {
         # Private Attribute
         db => undef,                  # wenn DB-Zugriff über UDL
         sh => undef,
+        a => Quiq::AnsiColor->new(-t STDOUT),
         @_,
     );
 
@@ -267,7 +268,7 @@ matcht, und ihren Inhalt.
 sub abstract {
     my ($self,$regex) = @_;
 
-    my $a = Quiq::AnsiColor->new(-t STDOUT);
+    my $a = $self->a;
 
     # Packages und ihre Stage bestimmen
 
@@ -307,8 +308,9 @@ sub abstract {
             $a->str('green',$state);
 
         for my $item (sort keys %$itemH) {
-            $str .= sprintf "    %s %s\n",$item,
-                $a->str('green',$itemH->{$item});
+            (my $realItem = $item) =~ s|/zenmod/|/|;
+            my $version = $itemH->{$item};
+            $str .= sprintf "    %s %s\n",$realItem,$a->str('green',$version);
         }
     }
 
@@ -405,7 +407,7 @@ sub edit {
                 'Local file exists and differs from repository file.'.
                     ' Which file: l=local, r=repository, q=quit?',
                 -values => 'l/r/q',
-                -default => 'l',
+                -default => 'r',
             );
             if ($which eq 'q') {
                 return $output;
@@ -435,27 +437,54 @@ sub edit {
 
     my $fileChanged = 0;
     my $editor = $ENV{'EDITOR'} || 'vi';
-    Quiq::Shell->exec("$editor $localFile");
-    if ($p->compare($localFile,$backupFile)) {
-        my $answ = Quiq::Terminal->askUser(
-            "Save changes to repository?",
-            -values => 'y/n',
-            -default => 'y',
-        );
-        if ($answ eq 'y') {
-            my $workspace = $self->workspace;
-            $p->copy($localFile,"$workspace/$repoFile",
-                -overwrite => 1,
-                -preserve => 1,
+    while (1) {
+        Quiq::Shell->exec("$editor $localFile");
+        if ($p->compare($localFile,$backupFile)) {
+            # Im Falle von Perl-Code diesen auf Syntaxfehler hin überprüfen
+
+            my $sytaxError = 0;
+            my $ext = $p->extension($localFile);
+            if ($ext eq 'pm' || $ext eq 'pl') {
+                my $out = $self->sh->exec("perl -c $localFile",
+                    -capture => 'stdout+stderr',
+                    -sloppy => 1,
+                );
+                print $self->a->str('red',$out);
+                if ($out !~ /syntax OK/) {
+                    $sytaxError = 1;
+                }
+            }
+
+            # Rückfrage an Benutzer
+
+            my $answ = Quiq::Terminal->askUser(
+                "Save changes to repository (y=yes, n=no, e=edit)?",
+                -values => 'y/n/e',
+                -default => $sytaxError? 'e': 'y',
             );
-            $fileChanged = 1;
+            if ($answ eq 'y') {
+                my $workspace = $self->workspace;
+                $p->copy($localFile,"$workspace/$repoFile",
+                    -overwrite => 1,
+                    -preserve => 1,
+                );
+                $fileChanged = 1;
+            }
+            elsif ($answ eq 'e') {
+                redo;
+            }
         }
+        elsif (!$p->compare($localFile,$origFile)) {
+            # Wir löschen die Lokale Datei und Original-Datei, wenn sie
+            # nach dem Verlassen des Editors identisch sind
+            $p->delete($origFile);
+            $p->delete($localFile);
+        }
+        last;
     }
-    elsif (!$p->compare($localFile,$origFile)) {
-        # Wir löschen die Lokale Datei und Original-Datei, wenn sie
-        # nach dem Verlassen des Editors identisch sind
-        $p->delete($origFile);
-        $p->delete($localFile);
+
+    if (!$fileChanged) {
+        say $self->a->str('green','NO CHANGE');
     }
 
     # Checke Datei ein. Wenn sie nicht geändert wurde (kein Copy oben),
@@ -2379,7 +2408,7 @@ sub runSql {
 
     $sql = Quiq::Unindent->trimNl($sql);
     if ($self->verbose > 1) {
-        my $a = Quiq::AnsiColor->new;
+        my $a = $self->a;
         (my $sql = $sql) =~ s/^(.*)/'> '.$a->str('bold',$1)/meg;
         if (!$udl) {
             $sql .= "\n";
