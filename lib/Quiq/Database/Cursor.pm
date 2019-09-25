@@ -537,6 +537,7 @@ sub fetch {
 
                 my $p = Quiq::Path->new;
                 my $cacheFile = $self->{'cacheFile'};
+
                 my ($dir) = $p->split($cacheFile);
                 my $newCacheFile = $dir.'/'.
                     Quiq::Digest->md5($self->{'stmt'});

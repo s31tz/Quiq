@@ -1358,7 +1358,7 @@ sub sql {
         if ((my $exists = $p->exists($cacheFile)) &&
                 ($cache == 0 || CORE::time-$p->mtime($cacheFile) < $cache)) {
             # Cachedatei existiert und ist noch gültig (0 = ewige
-            # Gültigkeit), d.h. wir lesen die Datensätze aud dem Cache.
+            # Gültigkeit), d.h. wir lesen die Datensätze aus dem Cache.
             $cacheOp = 'r';
         }
         else {
