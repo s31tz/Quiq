@@ -41,6 +41,10 @@ L<Quiq::Cascm|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Cascm.pod
 
 =item *
 
+L<Quiq::ChartJs::TimeSeries|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ChartJs/TimeSeries.pod> - Zeitreihen-Plot via Chart.js
+
+=item *
+
 L<Quiq::ClassConfig|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ClassConfig.pod> - Verwalte Information auf Klassenebene
 
 =item *
@@ -530,6 +534,10 @@ L<Quiq::Perl|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Perl.pod> 
 =item *
 
 L<Quiq::Pod::Generator|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Pod/Generator.pod> - POD-Generator
+
+=item *
+
+L<Quiq::PostgreSql::Catalog|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PostgreSql/Catalog.pod> - PostgreSQL Catalog-Operationen
 
 =item *
 

@@ -1,0 +1,90 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::ChartJs::TimeSeries - Zeitreihen-Plot via Chart.js
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+Erzeuge einen Zeitreihen-Plot via Chart.js.
+
+=head1 SEE ALSO
+
+=over 2
+
+=item *
+
+L<https://www.chartjs.org>
+
+=back
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+  $ch = $class->new($name,@attVal);
+
+=head4 Attributes
+
+=over 4
+
+=item name
+
+Name der Chart-Instanz. Der Name wird als CSS-Id für die Zeichenfläche
+(Canvas) und als Variablenname für die Instanz verwendet.
+
+=back
+
+=head4 Returns
+
+Objekt
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
+dieses Objekt zurück.
+
+=head2 Objektmethoden
+
+=head3 javaScript() - JavaScript-Code
+
+=head4 Synopsis
+
+  $ch = $ch->javaScript;
+
+=head4 Returns
+
+JavaScript-Code (String)
+
+=head4 Description
+
+Liefere den JavaScript-Code der Chart-Instanz.
+
+=head1 VERSION
+
+1.159
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/ChartJs/TimeSeries.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
