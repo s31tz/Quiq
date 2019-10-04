@@ -604,7 +604,7 @@ eine Referenz auf die Liste.
 
 Ermittele die Einträge des Verzeichnisses $dir und liefere diese
 als Liste zurück. Die Liste umfasst alle Verzeichniseinträge
-außer C<.> und C<..>.
+außer "." und "..".
 
 =head3 find() - Liefere Pfade innerhalb eines Verzeichnisses
 
@@ -1159,6 +1159,51 @@ Ausgangslage: Unterhalb von /tmp existieren weder a noch x.
 
 Nach Ausführung existiert der der Pfad /tmp/x/b/c/d/f, aber der Pfad
 /tmp/a nicht mehr.
+
+=head3 numberPaths() - Nummeriere Pfade
+
+=head4 Synopsis
+
+  $this->numberPaths(\@paths,$width,$step,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item @path
+
+Die Pfade, die zu nummerieren sind.
+
+=item $width
+
+Die Breite (Anzahl der Stellen) der Nummer.
+
+=item $step
+
+Die Schrittweite der Nummerierung.
+
+=back
+
+=head4 Description
+
+Nummeriere die Pfade @paths, gemäß ihrer gegebenen Reihenfolge.
+
+=head4 Example
+
+Der Aufruf
+
+  $ perl -MQuiq::Path -E '$p = Quiq::Path->new; $p->numberPaths([$p->glob("*")],5,10)'
+
+benennt alle Dateien, gleichgültig wie sie heißen, im aktuellen
+Verzeichnis um in
+
+  00010.EXT
+  00020.EXT
+  00030.EXT
+  ...
+
+wobei EXT die Extension ist, die die Datei vorher hatte, d.h. diese
+bleibt als einziges vom ursprünglichen Dateinamen erhalten.
 
 =head3 split() - Zerlege Pfad in seine Komponenten
 
