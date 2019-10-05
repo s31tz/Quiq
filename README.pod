@@ -41,7 +41,7 @@ L<Quiq::Cascm|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Cascm.pod
 
 =item *
 
-L<Quiq::ChartJs::TimeSeries|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ChartJs/TimeSeries.pod> - Zeitreihen-Plot via Chart.js
+L<Quiq::ChartJs::TimeSeries|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ChartJs/TimeSeries.pod> - Zeitreihen-Plot mittels Chart.js
 
 =item *
 
@@ -743,7 +743,7 @@ L<Quiq::Xml::LibXml|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Xml
 
 =head1 VERSION
 
-1.159
+1.160
 
 =head1 AUTHOR
 

@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::ChartJs::TimeSeries - Zeitreihen-Plot via Chart.js
+Quiq::ChartJs::TimeSeries - Zeitreihen-Plot mittels Chart.js
 
 =head1 BASE CLASS
 
@@ -10,7 +10,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Erzeuge einen Zeitreihen-Plot via Chart.js.
+Erzeuge einen Zeitreihen-Plot mittels Chart.js.
 
 =head1 SEE ALSO
 
@@ -70,7 +70,7 @@ Liefere den JavaScript-Code der Chart-Instanz.
 
 =head1 VERSION
 
-1.159
+1.160
 
 =head1 SOURCE
 
