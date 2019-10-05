@@ -23,7 +23,7 @@ sub test_unitTest: Test(2) {
     $self->is(ref($ch),'Quiq::ChartJs::TimeSeries');
     $self->is($ch->name,$name);
 
-    warn $ch->javaScript;
+    # warn $ch->javaScript;
 }
 
 # -----------------------------------------------------------------------------
