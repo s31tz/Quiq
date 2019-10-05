@@ -9,6 +9,8 @@ our $VERSION = '1.159';
 
 # -----------------------------------------------------------------------------
 
+=encoding utf8
+
 =head1 NAME
 
 Quiq::PostgreSql::Catalog - PostgreSQL Catalog-Operationen
@@ -42,6 +44,13 @@ geliefert wurde.
 
 Umgeschriebenes CREATE FUNCTION Statement (String)
 
+=head4 Description
+
+PostgreSQL stellt die Funktion pg_get_functiondef() zur Verfügung,
+die den Quelltext einer Datenbankfunktion liefert. Leider ist
+der Quelltext manchmal fehlerbehaftet, zumindest in der Version 8.3.
+Diese Methode korrigiert diese Fehler.
+
 =cut
 
 # -----------------------------------------------------------------------------
@@ -49,25 +58,17 @@ Umgeschriebenes CREATE FUNCTION Statement (String)
 sub correctFunctionDef {
     my ($class,$sql) = @_;
 
-    # Enthält die Prozedur lediglich ein SELECT, wird plpgsql als
-    # Language-Bezeichnung gesetzt, sie muss aber sql lauten.
-
-    #if ($sql =~ m{\$BODY\$\s*(/\*.*?\*/)?\s*(WITH|SELECT)}si) {
-    #    # falsche LANGUAGE-Bezeichnung. Wieso?
-    #    $sql =~ s/plpgsql/sql/;
-    #}
-
-    # Enthält die Prozedur kein BEGIN, setzen wird sql
-    # statt plpgsql als Sprache
+    # 1) LANGUAGE korrigieren: Enthält der Quelltext kein BEGIN,
+    # setzen wird sql statt plpgsql als Sprache.
 
     if ($sql !~ /BEGIN/) {
-        # LANGUAGE-Bezeichnung korrigieren
         $sql =~ s/plpgsql/sql/;
     }
 
-    # Der von pg_get_functiondef() erzeugte Code enthält gelegentlich
-    # den Ausdruck VOLATILESECURITY, dieser muss aber lauten
-    # VOLATILE SECURITY, also aus zwei Worten bestehen.
+    # 2) VOLATILESECURITY korrigieren: Der erzeugte Code enthält
+    # gelegentlich den Ausdruck Q{VOLATILESECURITY}. Dieser ist syntaktisch
+    # falsch, es muss Q{VOLATILE SECURITY} (zwei Worte) lauten.
+    
     $sql =~ s/VOLATILESECURITY/VOLATILE SECURITY/i;
 
     # $sql =~ s/character varying\(-4\)/character varying(4)/ig;
