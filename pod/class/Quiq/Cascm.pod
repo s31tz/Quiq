@@ -687,14 +687,19 @@ und liefere diesen zurück.
 =head4 Synopsis
 
   $output = $scm->createPackage($package);
+  $output = $scm->createPackage($package,$state);
 
 =head4 Arguments
 
 =over 4
 
-=item $packge
+=item $package
 
 Name des Package, das erzeugt werden soll.
+
+=item $state (Default: I<unterste Stufe>)
+
+State, auf dem das Package erzeugt werden soll.
 
 =back
 
@@ -704,7 +709,8 @@ Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Erzeuge Package $package und liefere die Ausgabe des Kommandos zurück.
+Erzeuge Package $package auf Stufe $state und liefere die Ausgabe
+des Kommandos zurück.
 
 =head3 deletePackages() - Lösche Package
 
@@ -839,15 +845,11 @@ und liefere diese Ergebnismenge zurück.
 
 =head4 Synopsis
 
-  $output = $scm->switchPackage($stage,$fromPackage,$toPackage,@files);
+  $output = $scm->switchPackage($fromPackage,$toPackage,@files);
 
 =head4 Arguments
 
 =over 4
-
-=item $stage
-
-Stufe (stage), auf der sich die Packete befinden.
 
 =item $fromPackage
 
@@ -933,7 +935,7 @@ Stufe, und liefere die Ausgabe des Kommandos zurück.
 
 =head4 Synopsis
 
-  $output = $scm->movePackage($state,$package);
+  $output = $scm->movePackage($state,$package,@opt);
 
 =head4 Arguments
 
@@ -946,6 +948,16 @@ Stufe, auf die das Package gebracht werden soll.
 =item $packge
 
 Package, das bewegt werden soll.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -askUser => $bool (Default: 0)
+
+Frage den Benutzer, ob er die Post-Deployment-Bestätigung erhalten hat.
 
 =back
 

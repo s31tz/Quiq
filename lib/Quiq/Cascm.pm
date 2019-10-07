@@ -377,12 +377,12 @@ sub edit {
     # Ermittele die Stufe des Package
 
     my $state = $self->packageState($package);
-    if (!$state) {
-        $self->throw(
-            'CASCM-00099: Package does not exist',
-            Package => $package,
-        );
-    }
+    #if (!$state) {
+    #    $self->throw(
+    #        'CASCM-00099: Package does not exist',
+    #        Package => $package,
+    #    );
+    #}
 
     # Erzeuge ein Transportpackage, falls sich das Zielpackage
     # nicht auf der untersten Stufe befindet
@@ -487,14 +487,16 @@ sub edit {
         say $self->a->str('green','NO CHANGE');
     }
 
-    # Checke Datei ein. Wenn sie nicht geändert wurde (kein Copy oben),
-    # wird keine neue Version erzeugt.
+    # Checke Datei ein. Wenn sie nicht geändert wurde (d.h. kein Copy
+    # oben), wird keine neue Version erzeugt.
     $output .= $self->checkin($transportPackage || $package,$repoFile);
     
     if ($transportPackage) {
         if ($fileChanged) {
-            $output .= $self->movePackage($state,$transportPackage);
-            $output .= $self->switchPackage($state,$transportPackage,
+            $output .= $self->movePackage($state,$transportPackage,
+                -askUser => 1,
+            );
+            $output .= $self->switchPackage($transportPackage,
                 $package,$repoFile);
         }
         $output .= $self->deletePackages($transportPackage);
@@ -608,12 +610,12 @@ sub putFiles {
     # Ermittele die Stufe des Package
 
     my $state = $self->packageState($package);
-    if (!$state) {
-        $self->throw(
-            'CASCM-00099: Package does not exist',
-            Package => $package,
-        );
-    }
+    #if (!$state) {
+    #    $self->throw(
+    #        'CASCM-00099: Package does not exist',
+    #        Package => $package,
+    #    );
+    #}
 
     # Erzeuge ein Transportpackage, falls sich das Zielpackage
     # nicht auf der untersten Stufe befindet
@@ -663,8 +665,10 @@ sub putFiles {
     }
 
     if ($transportPackage) {
-        $output .= $self->movePackage($state,$transportPackage);
-        $output .= $self->switchPackage($state,$transportPackage,
+        $output .= $self->movePackage($state,$transportPackage,
+            -askUser => 1,
+        );
+        $output .= $self->switchPackage($transportPackage,
             $package,@items);
         $output .= $self->deletePackages($transportPackage);
     }
@@ -1497,14 +1501,19 @@ sub repoFileToFile {
 =head4 Synopsis
 
   $output = $scm->createPackage($package);
+  $output = $scm->createPackage($package,$state);
 
 =head4 Arguments
 
 =over 4
 
-=item $packge
+=item $package
 
 Name des Package, das erzeugt werden soll.
+
+=item $state (Default: I<unterste Stufe>)
+
+State, auf dem das Package erzeugt werden soll.
 
 =back
 
@@ -1514,14 +1523,17 @@ Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Erzeuge Package $package und liefere die Ausgabe des Kommandos zurück.
+Erzeuge Package $package auf Stufe $state und liefere die Ausgabe
+des Kommandos zurück.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
 sub createPackage {
-    my ($self,$package) = @_;
+    my $self = shift;
+    my $package = shift;
+    my $state = shift // $self->states->[0];
 
     my $c = Quiq::CommandLine->new;
     $c->addArgument($package);
@@ -1531,8 +1543,13 @@ sub createPackage {
         -en => $self->projectContext,
         -st => $self->states->[0],
     );
+    my $output = $self->runCmd('hcp',$c);
 
-    return $self->runCmd('hcp',$c);
+    if ($state ne $self->states->[0]) {
+        $output .= $self->movePackage($state,$package);
+    }
+
+    return $output;
 }
 
 # -----------------------------------------------------------------------------
@@ -1780,15 +1797,11 @@ sub showPackage {
 
 =head4 Synopsis
 
-  $output = $scm->switchPackage($stage,$fromPackage,$toPackage,@files);
+  $output = $scm->switchPackage($fromPackage,$toPackage,@files);
 
 =head4 Arguments
 
 =over 4
-
-=item $stage
-
-Stufe (stage), auf der sich die Packete befinden.
 
 =item $fromPackage
 
@@ -1817,7 +1830,28 @@ Ausgabe des Kommandos (String)
 # -----------------------------------------------------------------------------
 
 sub switchPackage {
-    my ($self,$stage,$fromPackage,$toPackage,@files) = @_;
+    my ($self,$fromPackage,$toPackage,@files) = @_;
+
+    my $output;
+
+    # Ermittele die Stufen der Packages
+
+    my $fromState = $self->packageState($fromPackage);
+    my $toState = $self->packageState($toPackage);
+
+    # Wenn die Stufen verschieden sind, bewegen wir die Items über
+    # ein Transportpackage auf die Zielstufe
+
+    my $transportPackage;
+    if ($fromState ne $toState) {
+        my $name = Quiq::Converter->intToWord(time);
+        $transportPackage = "S6800_0_Seitz_Lift_$name";
+        $output .= $self->createPackage($transportPackage,$fromState);
+        $output .= $self->switchPackage($fromPackage,$transportPackage,@files);
+        $output .= $self->movePackage($toState,$transportPackage,
+            -askUser => 1,
+        );
+    }
 
     # Pfade müssen wir auf den Dateinamen reduzieren
 
@@ -1831,8 +1865,8 @@ sub switchPackage {
         $self->credentialsOptions,
         -b => $self->broker,
         -en => $self->projectContext,
-        -st => $stage,
-        -fp => $fromPackage,
+        -st => $toState,
+        -fp => $transportPackage // $fromPackage,
         -tp => $toPackage,
     );
     $c->addBoolOption(
@@ -1840,7 +1874,13 @@ sub switchPackage {
     );
     $c->addArgument(@files);
 
-    return $self->runCmd('hspp',$c);
+    $output .= $self->runCmd('hspp',$c);
+
+    if ($transportPackage) {
+        $output .= $self->deletePackages($transportPackage);
+    }
+
+    return $output;
 }
 
 # -----------------------------------------------------------------------------
@@ -1953,7 +1993,7 @@ sub demote {
 
 =head4 Synopsis
 
-  $output = $scm->movePackage($state,$package);
+  $output = $scm->movePackage($state,$package,@opt);
 
 =head4 Arguments
 
@@ -1966,6 +2006,16 @@ Stufe, auf die das Package gebracht werden soll.
 =item $packge
 
 Package, das bewegt werden soll.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -askUser => $bool (Default: 0)
+
+Frage den Benutzer, ob er die Post-Deployment-Bestätigung erhalten hat.
 
 =back
 
@@ -1984,7 +2034,15 @@ $state und liefere die Ausgabe des Kommandos zurück. Liegt die Zielstufe
 # -----------------------------------------------------------------------------
 
 sub movePackage {
-    my ($self,$state,$package) = @_;
+    my ($self,$state,$package) = splice @_,0,3;
+
+    # Optionen
+
+    my $askUser = 0;
+
+    $self->parameters(\@_,
+        -askUser => \$askUser,
+    );
 
     my @states = $self->states;
     my $i = Quiq::Array->index(\@states,$state);
@@ -1999,16 +2057,30 @@ sub movePackage {
     my $j = Quiq::Array->index(\@states,$currState);    
 
     my $output = '';
+    my $op;
     if ($i > $j) {
+        $op = 'promote';
         for (my $k = $j; $k < $i; $k++) {
-            $self->promote($states[$k],$package);
+            $output .= $self->promote($states[$k],$package);
         }
     } 
     elsif ($i < $j) {
+        $op = 'demote';
         for (my $k = $j; $k > $i; $k--) {
-            $self->demote($states[$k],$package);
+            $output .= $self->demote($states[$k],$package);
         }
     } 
+
+    if ($askUser) {
+        my $answ = Quiq::Terminal->askUser(
+            sprintf("Package %s successfully %sd?",$package,$op),
+            -values => 'y/n',
+            -default => 'y',
+        );
+        if ($answ ne 'y') {
+            return undef; # Abbruch
+        }
+    }
 
     return $output;
 }
@@ -2069,7 +2141,15 @@ sub packageState {
             AND pkg.packagename = '$package'
     ");
 
-    return $tab->count? $tab->rows->[0]->[0]: '';
+    if ($tab->count == 0) {
+        $self->throw(
+            'CASCM-00099: Package does not exist',
+            Package => $package,
+        );
+    }
+
+    # return $tab->count? $tab->rows->[0]->[0]: '';
+    return $tab->rows->[0]->[0];
 }
 
 # -----------------------------------------------------------------------------
