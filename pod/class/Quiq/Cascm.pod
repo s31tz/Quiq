@@ -512,6 +512,7 @@ zurück.
 =head4 Synopsis
 
   $output = $scm->deleteVersion($repoFile);
+  $output = $scm->deleteVersion($repoFile,$version);
 
 =head4 Arguments
 
@@ -521,6 +522,10 @@ zurück.
 
 Der Pfad der zu löschenden Repository-Datei.
 
+=item $version (Default: I<höchste Versionsnummer>)
+
+Version der Datei, die gelöscht werden soll.
+
 =back
 
 =head4 Returns
@@ -529,9 +534,25 @@ Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Lösche die höchste Version der Repository-Datei (Item) $repoFile.
-Dies geht nur, wenn sich diese Version auf der untersten Stufe
-(Entwicklung) befindet.
+Lösche die höchste Version oder bis zur Version $version die
+Repository-Datei $repoFile. Befinden sich davon eine oder mehrere
+Versionen nicht auf der untersten Stufe, wird ein temporäres
+Transport-Package erzeugt und die Versionen darüber vor dem Löschen
+auf die unterste Ebene bewegt.
+
+=head4 Examples
+
+Höchste Version der Datei C<lib/MetaData.pm> löschen:
+
+  $scm->deleteVersion('lib/MetaData.pm');
+
+Alle Versionen der Datei C<lib/MetaData.pm> löschen:
+
+  $scm->deleteVersion('lib/MetaData.pm',0);
+
+Die Versionen bis 110 der Datei C<lib/MetaData.pm> löschen:
+
+  $scm->deleteVersion('lib/MetaData.pm',110);
 
 =head3 deleteToVersion() - Lösche alle Versionen oberhalb einer Version
 
@@ -601,6 +622,7 @@ auf I<Entwicklung> enthalten sind.
 =head4 Synopsis
 
   $tab = $scm->findItem($namePattern);
+  $tab = $scm->findItem($namePattern,$minVersion);
 
 =head4 Arguments
 
@@ -611,6 +633,10 @@ auf I<Entwicklung> enthalten sind.
 Name des Item (File oder Directory), SQL-Wildcards sind erlaubt.
 Der Name ist nicht verankert, wird intern also als '%$namePattern%'
 abgesetzt.
+
+=item $minVersion (Default: 0)
+
+Die Item-Version muss mindestens $minVersion sein.
 
 =back
 

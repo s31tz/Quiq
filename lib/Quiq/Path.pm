@@ -27,6 +27,7 @@ use Quiq::Parameters;
 use File::Find ();
 use Quiq::TempDir;
 use Cwd ();
+use Quiq::Time;
 use Quiq::Process;
 
 # -----------------------------------------------------------------------------
@@ -2443,6 +2444,49 @@ sub mtime {
     }
 
     return (stat($path))[9] || 0;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 mtimePaths() - Setze mtime inkrementierend
+
+=head4 Synopsis
+
+  $this->mtimePaths(\@paths,$startTime,$step);
+
+=head4 Arguments
+
+=over 4
+
+=item @path
+
+Die Pfade, die zu nummerieren sind.
+
+=item $startTime
+
+Startzeitpunkt im Format "YYYY-MM-DD HH:MM:SS".
+
+=item $step
+
+Schrittweite in Sekunden.
+
+=back
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub mtimePaths {
+    my ($this,$pathA,$startTime,$step) = splice @_,0,4;
+
+    my $mtime = Quiq::Time->new(ymdhms=>$startTime)->epoch;
+
+    for my $path (@$pathA) {
+         $this->mtime($path,$mtime);
+         $mtime += $step;
+    }
+
+    return;
 }
 
 # -----------------------------------------------------------------------------

@@ -1075,6 +1075,30 @@ Pfad nicht existiert, liefere 0.
 Ist ein zweiter Parameter $mtime angegeben, setze die Zeit auf den
 angegebenen Wert. In dem Fall muss der Pfad existieren.
 
+=head3 mtimePaths() - Setze mtime inkrementierend
+
+=head4 Synopsis
+
+  $this->mtimePaths(\@paths,$startTime,$step);
+
+=head4 Arguments
+
+=over 4
+
+=item @path
+
+Die Pfade, die zu nummerieren sind.
+
+=item $startTime
+
+Startzeitpunkt im Format "YYYY-MM-DD HH:MM:SS".
+
+=item $step
+
+Schrittweite in Sekunden.
+
+=back
+
 =head3 newer() - Vergleiche Modifikationsdatum zweier Pfade
 
 =head4 Synopsis
