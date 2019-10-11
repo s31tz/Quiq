@@ -281,7 +281,8 @@ sub percent {
         return '';
     }
 
-    return sprintf '%.0f',$self->{'i'}/$n*100;
+    # return sprintf '%.0f',$self->{'i'}/$n*100;
+    return int $self->{'i'}/$n*100; # ungerundet
 }
 
 # -----------------------------------------------------------------------------
