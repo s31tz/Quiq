@@ -126,11 +126,24 @@ Aufrufreihenfolge.
 Datei, in der die Ausgaben aller Prozesse (chronologische
 Aufrufreihenfolge) zusammengefasst werden. Dies geschieht nach
 Beendigung des letzten Prozesses. Wird '-' als Dateiname angegeben,
-wird die Ausgabe nach STDOUT geschrieben.
+wird die Ausgabe nach STDOUT geschrieben. ACHTUNG: Bricht das
+steuernde Programm ab, wird keine Ausgabe produziert. Die
+Ausgabedateien verschwinden mit dem temporären Verzeichnis,
+in dem sie gespeichert werden.
 
 =item -progressMeter => $bool (Default: 1)
 
 Zeige Fortschrittsanzeige an.
+
+=item -progressNameSub => sub {}
+
+Liefere die Bezeichnung des Elements für die Fortschrittsanzeige.
+Dies ist erforderlich, wenn das Element ein Objekt ist. Beispiel:
+
+  -progressNameSub => sub {
+      my $obj = shift;
+      return $obj->bezeichnung;
+  },
 
 =back
 
