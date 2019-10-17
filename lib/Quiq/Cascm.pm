@@ -2201,6 +2201,7 @@ sub movePackage {
         my $answ = Quiq::Terminal->askUser(
             sprintf("Package %s %sd?",$package,$op),
             -values => 'y',
+            -default => 'y',
         );
         if ($answ ne 'y') {
             return undef; # Abbruch

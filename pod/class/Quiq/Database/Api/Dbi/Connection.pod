@@ -35,7 +35,21 @@ Name des DBMS, für DBMS-spezifische Fallunterscheidungen.
 
 =head4 Synopsis
 
-  $db = $class->new($udlObj);
+  $db = $class->new($udlObj,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -autoCommit => $bool (Default: 0)
+
+Öffne die Verbindung im Autocommit-Modus.
+
+=item -handle => $handle
+
+=item utf8 => $bool (Default: 0)
+
+=back
 
 =head4 Description
 
