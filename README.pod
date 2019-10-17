@@ -581,6 +581,10 @@ L<Quiq::Rsync|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Rsync.pod
 
 =item *
 
+L<Quiq::Sdoc::Producer|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sdoc/Producer.pod> - Sdoc-Generator
+
+=item *
+
 L<Quiq::Section::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Section/Object.pod> - Abschnitts-Objekt
 
 =item *
