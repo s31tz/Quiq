@@ -339,6 +339,11 @@ Wert von $pi->timePerStep.
 
 =back
 
+Beginnt $fmt mit einem Doppelpunkt (:) werden alle obigen Formatelemente
+an den Anfang gesetzt. Beispiel:
+
+  $pi->msg($i,': %s',$name);
+
 =item @args
 
 Ausgabe-Zeichenketten oder Argumente für sprintf-Platzhalter.
@@ -426,7 +431,7 @@ erscheint:
 
 =head1 VERSION
 
-1.160
+1.161
 
 =head1 SOURCE
 

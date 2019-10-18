@@ -703,8 +703,8 @@ Anzahl NEWLINEs am Ende.
 
 -nl => 2 (zwei NEWLINEs):
 
-  <TAG>CONTENT</TAG>\n\n
-
+     <TAG>CONTENT</TAG>\n\n
+  
   usw.
 
 =item -placeholders => \@keyVal (Default: undef)
@@ -1033,7 +1033,7 @@ Die Methode liefert keinen Wert zurück.
 
 =head1 VERSION
 
-1.160
+1.161
 
 =head1 SOURCE
 

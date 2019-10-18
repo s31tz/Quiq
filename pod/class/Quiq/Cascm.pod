@@ -302,6 +302,7 @@ braucht sich um die Unterscheidung nicht zu kümmern.
 =item $package
 
 Package, dem die Dateien innerhalb von CASCM zugeordnet werden.
+Das Package sollte sich auf der untersten Stufe befinden.
 
 =item $dir
 
@@ -319,7 +320,7 @@ Konkatenierte Ausgabe der der checkout- und checkin-Kommandos (String)
 =head4 Description
 
 Füge alle Dateien in Verzeichnis $dir via Methode put()
-zum Repository hinzu bzw. aktualisiere sie. Details siehe dort.
+zum Repository hinzu bzw. aktualisiere sie.
 
 =head2 Workspace-Dateien
 
@@ -432,7 +433,7 @@ diese zurück.
 
 =head4 Synopsis
 
-  $file = $scm->getVersion($repoFile,$version,$destDir);
+  $file = $scm->getVersion($repoFile,$version,$destDir,@opt);
 
 =head4 Arguments
 
@@ -461,6 +462,10 @@ Zielverzeichnis, in dem die Repository-Datei gespeichert wird.
 Prüfe nicht, ob die angegebene Version existiert. Dies spart
 einen CASCM Aufruf und ist sinnvoll, wenn die Richtigkeit der
 Versionsnummer gesichert ist, siehe deleteToVersion().
+
+=item -versionSuffix => $bool (Default: 1)
+
+Hänge die Version an den Dateinamen an.
 
 =back
 
@@ -554,11 +559,11 @@ Die Versionen bis 110 der Datei C<lib/MetaData.pm> löschen:
 
   $scm->deleteVersion('lib/MetaData.pm',110);
 
-=head3 deleteToVersion() - Lösche alle Versionen oberhalb einer Version
+=head3 passVersion() - Überhole die aktuelle mit der vorigen Version
 
 =head4 Synopsis
 
-  $scm->deleteToVersion($repoFile,$version,$backupDir);
+  $output = $scm->passVersion($repoFile);
 
 =head4 Arguments
 
@@ -567,43 +572,6 @@ Die Versionen bis 110 der Datei C<lib/MetaData.pm> löschen:
 =item $repoFile
 
 Der Pfad der zu löschenden Repository-Datei.
-
-=item $version
-
-Version, oberhalb welcher alle anderen Versionen gelöscht werden,
-d.h. diese Version I<bleibt stehen>.
-
-=item $backupDir
-
-Verzeichnis, in das alle gelöschten Versionen gesichert werden.
-
-=back
-
-=head4 Description
-
-Lösche alle Versionen der Repository-Datei $repoFile oberhalb der
-Version $version. Dies setzt voraus, dass alle diese Versionen in einem
-(oder mehreren) Paketen auf I<Entwicklung> enthalten sind. Jede gelöschte
-Version wird in Verzeichnis $backupDir gesichert.
-
-=head3 deleteAllVersions() - Lösche alle Versionen einer Repository-Datei
-
-=head4 Synopsis
-
-  $output = $scm->deleteAllVersions($repoFile,$backupDir);
-
-=head4 Arguments
-
-=over 4
-
-=item $repoFile
-
-Der Pfad der zu löschenden Repository-Datei.
-
-=item $backupDir
-
-Verzeichnis, in das die Repository-Datei nach dem Löschen der
-letzten Version gesichert wird.
 
 =back
 
@@ -613,9 +581,39 @@ Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Lösche alle Versionen der Repository-Datei $repoFile. Dies setzt
-voraus, dass alle Versionen in einem (oder mehreren) Paketen
-auf I<Entwicklung> enthalten sind.
+Erzeuge eine neue Version von $repoFile mit dem Stand I<vor> der aktuellen
+Version. Dies ist nützlich, wenn an einem vorherigen Stand "vorbeigezogen"
+werden soll.
+
+=head3 package() - Package einer Version
+
+=head4 Synopsis
+
+  $package = $scm->package($repoFile,$version);
+
+=head4 Arguments
+
+=over 4
+
+=item $repoFile
+
+Pfad der Repository-Datei (String).
+
+=item $version
+
+Version der Repository-Datei (Integer).
+
+=back
+
+=head4 Returns
+
+=over 4
+
+=item $package
+
+Package-Name (String).
+
+=back
 
 =head3 findItem() - Zeige Information über Item an
 
@@ -796,7 +794,7 @@ des Kommandos zurück.
 
 =head4 Synopsis
 
-  @rows | $tab = $scm->showPackage($package);
+  @rows | $tab = $scm->showPackage(@packages,@opt);
 
 =head4 Returns
 
@@ -1197,7 +1195,7 @@ wird die Selektion direkt auf der Datenbank ausgeführt, andernfalls
 
 =head1 VERSION
 
-1.160
+1.161
 
 =head1 SOURCE
 
