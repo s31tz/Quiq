@@ -22,11 +22,15 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 Die Klasse implementiert einen Leser von SQL-Skripten. Ein SQL-Skript
 ist eine Folge von SQL-Statements, die mit Semikolon I<am Ende einer
-Zeile> voneinander abgegrenzt sind. Eine Instanz der Klasse liefert
-nacheinander die einzelnen Statements, die ausgeführt oder
-anderweitig verarbeitet werden können. Da das Skript sukzessive gelesen
-wird, können auch sehr große SQL-Skripte, z.B. von Datenbank-Dumps,
-durch die Klasse verarbeitet werden.
+Zeile> (also vor einem Newline) voneinander getrennt sind. Eine Instanz
+der Klasse liefert nacheinander die einzelnen Statements, die ausgeführt
+oder anderweitig verarbeitet werden können. Da das Skript sukzessive
+gelesen wird, können auch sehr große SQL-Skripte, z.B. von
+Datenbank-Dumps, durch die Klasse verarbeitet werden.
+
+Leerzeilen am Anfang eines Statements werden entfernt, außerdem
+das abschließende Semikolon und darauffolgender Whitespace bis
+zum Zeilenende.
 
 =head1 CAVEATS
 
