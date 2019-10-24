@@ -836,7 +836,11 @@ Verzeichnis nicht gelöscht werden, wird eine Exception ausgelöst.
 
 =head4 Synopsis
 
-  $dir = $this->tempDir;
+  $dir = $this->tempDir(@opt);
+
+=head4 Options
+
+I<< siehe Quiq::TempDir >>
 
 =head4 Returns
 

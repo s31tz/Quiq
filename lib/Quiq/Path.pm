@@ -1876,7 +1876,11 @@ sub rmdir {
 
 =head4 Synopsis
 
-  $dir = $this->tempDir;
+  $dir = $this->tempDir(@opt);
+
+=head4 Options
+
+I<< siehe Quiq::TempDir >>
 
 =head4 Returns
 
@@ -1903,7 +1907,7 @@ Quiq::TempDir
 
 sub tempDir {
     my $this = shift;
-    return Quiq::TempDir->new;
+    return Quiq::TempDir->new(@_);
 }
 
 # -----------------------------------------------------------------------------
@@ -2100,7 +2104,7 @@ sub delete {
     $path = $class->expandTilde($path);
 
     if (!defined($path) || $path eq '' || !-e $path && !-l $path) {
-        # bei Nichtexistenz nichts tun, aber nur, wenn es
+        # Bei Nichtexistenz nichts tun, aber nur, wenn es
         # kein Symlink ist. Bei Symlinks schlägt -e fehl, wenn
         # das Ziel nicht existiert!
     }
