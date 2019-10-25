@@ -325,6 +325,7 @@ sub abstract {
 
 =head4 Synopsis
 
+  $output = $scm->edit($repoFile);
   $output = $scm->edit($repoFile,$package);
 
 =head4 Arguments
@@ -374,15 +375,12 @@ sub edit {
     # Vollständigen Pfad der Repository-Datei ermitteln
     my $file = $self->repoFileToFile($repoFile);
 
-    # Ermittele die Stufe des Package
+    if (!$package) {
+        $package = $self->package($repoFile);
+    }
 
+    # Ermittele die Stufe des Package
     my $state = $self->packageState($package);
-    #if (!$state) {
-    #    $self->throw(
-    #        'CASCM-00099: Package does not exist',
-    #        Package => $package,
-    #    );
-    #}
 
     # Erzeuge ein Transportpackage, falls sich das Zielpackage
     # nicht auf der untersten Stufe befindet
@@ -1344,6 +1342,7 @@ sub passVersion {
 
 =head4 Synopsis
 
+  $package = $scm->package($repoFile);
   $package = $scm->package($repoFile,$version);
 
 =head4 Arguments
@@ -1379,6 +1378,10 @@ sub package {
 
     my $projectContext = $self->projectContext;
     my $viewPath = $self->viewPath;
+
+    if (!defined $version) {
+        $version = $self->versionNumber($repoFile);
+    }
 
     my $tab = $self->runSql("
         SELECT

@@ -184,6 +184,7 @@ matcht, und ihren Inhalt.
 
 =head4 Synopsis
 
+  $output = $scm->edit($repoFile);
   $output = $scm->edit($repoFile,$package);
 
 =head4 Arguments
@@ -589,6 +590,7 @@ werden soll.
 
 =head4 Synopsis
 
+  $package = $scm->package($repoFile);
   $package = $scm->package($repoFile,$version);
 
 =head4 Arguments

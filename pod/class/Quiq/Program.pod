@@ -263,6 +263,36 @@ Im Skalarkontext wird nur $opt geliefert, wenn keine Argumente erwartet
 werden ($minArgs und $maxArgs sind 0), andernfalls $argA. Letzteres
 ist nützlich, wenn C<-help> die einzige Option ist.
 
+=head2 Zusicherungen
+
+=head3 assert() - Prüfe Werte
+
+=head4 Synopsis
+
+  $prg->assert(sub {...});
+
+=head4 Description
+
+Prüfe Werte durch Methoden der Klasse Quiq::Assert. Ist eine
+Zusicherung verletzt, wird die betreffende Exception in die
+Ausgabe der Programm-Hilfeseite umgesetzt. Die Subroutine
+erhält als Argument ein instantiiertes Quiq::Assert-Objekt.
+
+=head4 Example
+
+  Prüfe die Werte der Variablen $system und $user gegen eine Menge
+  möglicher Werte:
+  
+      $self->assert(sub {
+          my $a = shift;
+          $a->isEnumValue($system,['test','prod'],
+              -name=>'SYSTEM',
+          );
+          $a->isEnumValue($user,[qw/etlt etls etlr etlp/],
+              -name=>'USER',
+          );
+      });
+
 =head2 Optionen
 
 =head3 options() - Verarbeite Programmoptionen (DEPRECATED)
