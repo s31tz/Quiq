@@ -629,7 +629,7 @@ Sprache $lang. Default für $lang ist 'en'.
 
 =head1 VERSION
 
-1.161
+1.162
 
 =head1 SOURCE
 

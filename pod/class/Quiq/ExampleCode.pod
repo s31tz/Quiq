@@ -235,7 +235,7 @@ Der Text nach '=>' ist der gelieferte Wert $cmd.
 
 =head1 VERSION
 
-1.161
+1.162
 
 =head1 SOURCE
 
