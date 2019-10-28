@@ -306,6 +306,27 @@ sub titles {
 
 # -----------------------------------------------------------------------------
 
+=head3 width() - Anzahl der Kolumnen
+
+=head4 Synopsis
+
+  $width = $cur->width;
+
+=head4 Description
+
+Liefere die Anzahl der Kolumnen.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub width {
+    my $self = shift;
+    return scalar @{$self->{'titles'}};
+}
+
+# -----------------------------------------------------------------------------
+
 =head2 Tests
 
 =head3 fromCache() - Liefert der Cursor Datensätze aus dem Cache?
