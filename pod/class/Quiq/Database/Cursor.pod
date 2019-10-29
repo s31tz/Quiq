@@ -164,7 +164,7 @@ andernfalls falsch.
 Liefere wahr, wenn der Cursor Datensätze liefert,
 andernfalls falsch.
 
-=head2 Time Measurement
+=head2 Zeitmessung
 
 =head3 startTime() - Liefere Startzeitpunkt der Statement-Ausführung
 
@@ -204,6 +204,42 @@ Datenbank aus. Die Anzahl der Werte muß ein Vielfaches der Anzahl der
 Bind-Variablen sein.
 
 =head2 Fetch
+
+=head3 export() - Schreibe Datensätze in Datei
+
+=head4 Synopsis
+
+  $cur->export($file,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Pfad der Datei. Im Falle von '-' STDOUT.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -limit => $n (Default: 0)
+
+Schreibe maximal $n Datensätze. 0 = Keine Begrenzung.
+
+=item -titles => $bool (Default: 0)
+
+Schreibe als erste Zeile die Kolumentitel.
+
+=back
+
+=head4 Description
+
+Exportiere die Datenesätze des Cursors in Datei $file. Die Datensätze
+werden im COPY-Format geschrieben, d.h. Kolumnentrenner ist C<\t> und
+Zeilentrenner ist C<\n>.
 
 =head3 fetch() - Liefere nächsten Datensatz der Ergebnismenge
 

@@ -13,6 +13,8 @@ use Quiq::Database::ResultSet::Array;
 use Quiq::Database::ResultSet::Object;
 use Time::HiRes ();
 use Quiq::Database::Cursor;
+use Quiq::FileHandle;
+use Quiq::PostgreSql::CopyFormat;
 use Quiq::Path;
 use Quiq::Digest;
 use Encode ();
@@ -371,7 +373,7 @@ sub isSelect {
 
 # -----------------------------------------------------------------------------
 
-=head2 Time Measurement
+=head2 Zeitmessung
 
 =head3 startTime() - Liefere Startzeitpunkt der Statement-Ausführung
 
@@ -483,6 +485,86 @@ sub bind {
 # -----------------------------------------------------------------------------
 
 =head2 Fetch
+
+=head3 export() - Schreibe Datensätze in Datei
+
+=head4 Synopsis
+
+  $cur->export($file,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Pfad der Datei. Im Falle von '-' STDOUT.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -limit => $n (Default: 0)
+
+Schreibe maximal $n Datensätze. 0 = Keine Begrenzung.
+
+=item -titles => $bool (Default: 0)
+
+Schreibe als erste Zeile die Kolumentitel.
+
+=back
+
+=head4 Description
+
+Exportiere die Datenesätze des Cursors in Datei $file. Die Datensätze
+werden im COPY-Format geschrieben, d.h. Kolumnentrenner ist C<\t> und
+Zeilentrenner ist C<\n>.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub export {
+    my ($self,$file) = splice @_,0,2;
+
+    # Optionen
+
+    my $limit = 0;
+    my $titles = 0;
+
+    $self->parameters(\@_,
+        -limit => \$limit,
+        -titles => \$titles,
+    );
+
+    # Operation ausführen
+
+    my $fh = Quiq::FileHandle->new('>',$file);
+    if ($self->db->utf8) {
+        $fh->setEncoding('utf8');
+    }
+
+    my $cpy = Quiq::PostgreSql::CopyFormat->new($self->width);
+
+    if ($titles) {
+        my $titleA = $self->titles;
+        print $fh $cpy->arrayToLine($titleA),"\n";
+    }
+    my $i = 0;
+    while (my $row = $self->fetch) {
+        print $cpy->arrayToLine($row),"\n";
+        if (++$i == $limit) {
+            last;
+        }
+    }
+    $fh->close;
+
+    return;    
+}
+
+# -----------------------------------------------------------------------------
 
 =head3 fetch() - Liefere nächsten Datensatz der Ergebnismenge
 
@@ -652,10 +734,10 @@ sub fetchAll {
         }
     }
 
-    # Table-Objekt instantiieren, wenn !wantarray
+    # Table-Objekt instantiieren, wenn skalarer Wert erwartet wird
 
     my $tab;
-    if (!wantarray) {
+    if (!wantarray && defined wantarray) {
         my $rowClass = $self->{'rowClass'};
         my $tableClass = $self->{'tableClass'};
 

@@ -330,6 +330,10 @@ Kolumnentrenner (Default: "\n").
 
 =over 4
 
+=item -color => $bool
+
+Erzeuge eine farbige Ausgabe mit ANSI Colors.
+
 =item -info => $n (Default: 3)
 
 Umfang an Information, die über die Daten hinaus ausgegeben wird:
