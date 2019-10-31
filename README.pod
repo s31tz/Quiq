@@ -29,11 +29,23 @@ L<Quiq::Array|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Array.pod
 
 =item *
 
-L<Quiq::AsciiTable|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/AsciiTable.pod> - ASCII-Tabelle parsen
+L<Quiq::AsciiTable|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/AsciiTable.pod> - Parse ASCII-Tabelle
 
 =item *
 
 L<Quiq::Assert|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Assert.pod> - Zusicherungen
+
+=item *
+
+L<Quiq::Axis|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Axis.pod> - Definition einer Plot-Achse (abstrakte Basisklasse)
+
+=item *
+
+L<Quiq::Axis::Numeric|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Axis/Numeric.pod> - Definition einer numerischen Plot-Achse
+
+=item *
+
+L<Quiq::AxisTick|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/AxisTick.pod> - Tick einer Plot-Achse
 
 =item *
 
@@ -238,6 +250,22 @@ L<Quiq::Formatter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Forma
 =item *
 
 L<Quiq::Gd::Font|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Font.pod> - GD- oder TrueType-Font
+
+=item *
+
+L<Quiq::Gd::Graphic|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic.pod> - Basisklasse aller Quiq::Gd::Graphic-Klassen (abstrakt)
+
+=item *
+
+L<Quiq::Gd::Graphic::Axis|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/Axis.pod> - Grafik einer Achse eines XY-Plot
+
+=item *
+
+L<Quiq::Gd::Graphic::ColorBar|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/ColorBar.pod> - Rechteck mit einem Farbverlauf
+
+=item *
+
+L<Quiq::Gd::Graphic::ColorLegend|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/ColorLegend.pod> - Legende zu einem Farb-Plot
 
 =item *
 

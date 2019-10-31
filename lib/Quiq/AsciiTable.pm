@@ -15,7 +15,7 @@ use Quiq::Unindent;
 
 =head1 NAME
 
-Quiq::AsciiTable - ASCII-Tabelle parsen
+Quiq::AsciiTable - Parse ASCII-Tabelle
 
 =head1 BASE CLASS
 

@@ -1,0 +1,155 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Axis::Numeric - Definition einer numerischen Plot-Achse
+
+=head1 BASE CLASS
+
+L<Quiq::Axis|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Axis.pod>
+
+=head1 SYNOPSIS
+
+  $ax = Quiq::Axis::Numeric->new(
+      orientation => $str, # 'x', 'y'
+      font => $font,
+      length => $int,
+      min => $float,
+      max => $float,
+      logarithmic => $bool,
+      minTickGap => $int,
+      debug => $bool,
+  );
+  
+  # Haupt-Ticks
+  @ticks = $ax->ticks;
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert die Definition einer numerischen
+Achse eines XY-Plots. Die Achse kann eine X- oder eine Y-Achse sein.
+Die Klasse berechnet eine geeignete Einteilung der Achse in Ticks
+und Unter-Ticks unter Berücksichtigung der echten Breite/Höhe der
+Tick-Label. Die betreffenden Tick-Objekte werden von den Methoden
+$ax->ticks() und $ax->subTicks() geliefert.
+
+=head2 Font-Klasse
+
+Die Achseneinteilung kann für beliebige Fonts berechnet werden. Es
+wird lediglich vorausgesetzt, dass die Font-Klasse zwei Methoden zur
+Berechnung der Label-Breite und der Label-Höhe implementiert:
+
+  $n = $fnt->stringWidth($str);
+  $n = $fnt->stringHeight($str);
+
+=head1 ATTRIBUTES
+
+=over 4
+
+=item orientation => 'x'|'y' (Default: 'x')
+
+Orientierung der Achse: 'x' oder 'y'.
+
+=item font => $font (Default: keiner)
+
+Font für die Tick-Label.
+
+=item length => $int (Default: keiner)
+
+Länge der Achse.
+
+=item min => $float (Default: keiner)
+
+Kleinster Wert auf der Achse.
+
+=item max => $float (Default: keiner)
+
+Größter Wert auf der Achse.
+
+=item logarithmic => $bool (Default: 0)
+
+Die Achse erhält eine logarithmische Einteilung (Basis 10).
+
+=item minTickGap => $int (Default: 5)
+
+Mindestabstand zwischen zwei Ticks: C<< LABELL<lt>--minTickGap-->LABEL >>
+
+=item debug => $bool (Default: 0)
+
+Gib Information über die Tickberechnung auf STDERR aus.
+
+=back
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Achsen-Objekt
+
+=head4 Synopsis
+
+  $ax = Quiq::Axis::Numeric->new(@keyVal);
+
+=head4 Description
+
+Instantiiere ein Achsen-Objekt auf Basis der Angaben @keyVal,
+berechne die beste Achseneinteilung, und liefere eine Referenz auf
+das Objekt zurück.
+
+=head2 Objektmethoden
+
+Siehe Basisklasse
+
+=head2 Hilfsmethoden
+
+=head3 firstTick() - Wert des ersten Tick
+
+=head4 Synopsis
+
+  $val = $ax->firstTick($step);
+
+=head4 Description
+
+Liefere für Schrittweite $step den ersten Tick in Weltkoordinaten.
+
+=head3 labelSize() - Tickgröße in Pixeln
+
+=head4 Synopsis
+
+  $n = $ax->labelSize($val);
+
+=head4 Description
+
+Liefere für Wert $val den Platzbedarf des Label in Pixeln.
+FIXME: Wert in Label wandeln.
+
+=head3 label() - Liefere Achsenlabel zu Wert
+
+=head4 Synopsis
+
+  $label = $ax->label($val);
+
+=head4 Description
+
+Liefere das Achsenlabel für Wert $val.
+
+=head1 VERSION
+
+1.163
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Axis/Numeric.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

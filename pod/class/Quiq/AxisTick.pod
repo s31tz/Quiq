@@ -1,0 +1,137 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::AxisTick - Tick einer Plot-Achse
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+Ein Tick-Objekt repräsentiert eine Postion auf einer Plot-Achse, an
+der eine Markierung - mit oder ohne Label - gesetzt wird.
+Das Tick-Objekt ist einem Achsen-Objekt zugeordnet.
+Über das Tick-Objekt gelangt eine Klasse, die eine Plot-Achse zeichnet,
+an alle Information, die zum Zeichnen des Tick nötig ist.
+
+=head1 ATTRIBUTES
+
+=over 4
+
+=item axis => $axis (Default: undef)
+
+Referenz auf das Achsen-Objekt.
+
+=item value => $val (Default: undef)
+
+Wert des Tick.
+
+=back
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Tick-Objekt
+
+=head4 Synopsis
+
+  $tik = Quiq::AxisTick->new($axis,$val);
+
+=head4 Arguments
+
+=over 4
+
+=item $axis
+
+Referenz auf das Plot-Achsen-Objekt.
+
+=item $val
+
+Wert des Tick.
+
+=back
+
+=head4 Description
+
+Instantiiere ein Tick-Objekt und liefere eine Referenz auf dieses
+Objekt zurück.
+
+=head2 Attributmethoden
+
+=head3 value() - Wert des Tick
+
+=head4 Synopsis
+
+  $val = $tik->value;
+
+=head4 Description
+
+Liefere den Wert des Tick.
+
+=head2 Objektmethoden
+
+=head3 position() - Pixel-Position auf der Achse
+
+=head4 Synopsis
+
+  $pos = $tik->position;
+
+=head4 Description
+
+Liefere die Pixel-Position des Tick auf der Achse.
+
+=head3 label() - Tick-Label
+
+=head4 Synopsis
+
+  $label = $tik->label;
+
+=head4 Description
+
+Liefere das Tick-Label, also die Achsenbeschriftung.
+
+=head3 width() - Breite des Tick
+
+=head4 Synopsis
+
+  $width = $tik->width;
+
+=head4 Description
+
+Liefere die Breite des Tick. Bei einem Tick mit Label wird die Breite
+des Tick von seinem Label bestimmt.
+
+=head3 height() - Höhe des Tick
+
+=head4 Synopsis
+
+  $height = $tik->height;
+
+=head4 Description
+
+Liefere die Höhe des Tick. Bei einem Tick mit Label wird die Höhe
+des Tick von seinem Label bestimmt.
+
+=head1 VERSION
+
+1.163
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/AxisTick.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
