@@ -61,7 +61,7 @@ Wenn ja, liefert die Methode 1, andernfalls 0.
 
 =head1 VERSION
 
-1.162
+1.163
 
 =head1 SOURCE
 

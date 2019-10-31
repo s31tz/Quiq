@@ -28,7 +28,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 VERSION
 
-1.162
+1.163
 
 =head1 SOURCE
 
