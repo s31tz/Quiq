@@ -13,7 +13,7 @@ our $VERSION = '1.163';
 
 =head1 NAME
 
-Quiq::Gd::Graphic - Basisklasse aller Quiq::Gd::Graphic-Klassen (abstrakt)
+Quiq::Gd::Graphic - Basisklasse aller Graphic-Klassen (abstrakt)
 
 =head1 BASE CLASS
 
@@ -89,9 +89,10 @@ Grafik-Objekts aufgerufen wird.
 Liefere die Referenz auf das Grafik-Objekt. Die Methode
 self() wird in den render()-Methoden der abgeleiteten Klassen
 genutzt. Denn diese können sowohl als Objekt- wie auch als
-Klassenmethode aufgerufen werden. Ferner sind Attributsetzungen
-möglich. Diese Funktionalität wird durch die Methode self()
-realisiert.
+Klassenmethode aufgerufen werden. Die Methode sorgt dafür, dass
+das Objekt im Falle eines Aufrufs als Klassenmethode mit den
+Attributen @keyVal instantiiert wird. Andernfalls werden die
+Attribute auf dem bestehenden Objekt gesetzt.
 
 Das Gerüst der Methode render() in den abgeleiteten Klassen sieht
 unter Verwendung der Methode self() so aus:
@@ -148,8 +149,7 @@ sub self {
 =head4 Description
 
 Liefere die Breite der Grafik. Diese Basisklassenmethode liefert den
-Wert des Attributs C<width>. Muss die Breite berechnet werden,
-überschreibt die Subklasse die Methode.
+Wert des Attributs C<width>.
 
 =cut
 
@@ -169,8 +169,8 @@ sub width {
 
 =head4 Description
 
-Liefere die Höhe der Grafik. Es gilt dasselbe wie für die Methode
-L<width|"width() - Breite der Grafik">().
+Liefere die Höhe der Grafik. Muss die Höhe berechnet werden,
+überschreibt die Subklasse die Methode.
 
 =cut
 

@@ -253,7 +253,7 @@ L<Quiq::Gd::Font|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Fon
 
 =item *
 
-L<Quiq::Gd::Graphic|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic.pod> - Basisklasse aller Quiq::Gd::Graphic-Klassen (abstrakt)
+L<Quiq::Gd::Graphic|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic.pod> - Basisklasse aller Graphic-Klassen (abstrakt)
 
 =item *
 
@@ -266,6 +266,14 @@ L<Quiq::Gd::Graphic::ColorBar|https://github.com/s31tz/Quiq/tree/master/pod/clas
 =item *
 
 L<Quiq::Gd::Graphic::ColorLegend|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/ColorLegend.pod> - Legende zu einem Farb-Plot
+
+=item *
+
+L<Quiq::Gd::Graphic::Graph|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/Graph.pod> - Polyline-Grafik für XY-Plot
+
+=item *
+
+L<Quiq::Gd::Graphic::PointGraph|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/PointGraph.pod> - Polyline-Grafik für XY-Plot mit farbigen Punkten
 
 =item *
 
