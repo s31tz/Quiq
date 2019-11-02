@@ -261,6 +261,10 @@ L<Quiq::Gd::Graphic::Axis|https://github.com/s31tz/Quiq/tree/master/pod/class/Qu
 
 =item *
 
+L<Quiq::Gd::Graphic::BlockDiagram|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/BlockDiagram.pod> - Farbige Blöcke in einer Fläche
+
+=item *
+
 L<Quiq::Gd::Graphic::ColorBar|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/ColorBar.pod> - Rechteck mit einem Farbverlauf
 
 =item *
