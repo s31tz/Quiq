@@ -7,6 +7,8 @@ use warnings;
 
 our $VERSION = '1.163';
 
+use Quiq::Hash;
+
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -94,22 +96,42 @@ sub new {
     # jedem Objekt einen (temporären) Eintrag bestehend
     # aus [$begin,$end,$obj] erzeugen.
 
-    my @arr;
+    my (@arr,$minTime,$maxTime);
     for my $obj (@$processA) {
-        push @arr,[$sub->($obj),$obj];
+        my ($begin,$end) = $sub->($obj);
+        if (!$begin || !$end) {
+            # Objekte ohne Anfangs- oder Ende-Zeitpunkt übergehen wir
+            next;
+        }
+        if (!defined $minTime || $begin < $minTime) {
+            $minTime = $begin;
+        }
+        if (!defined $maxTime || $end > $maxTime) {
+            $maxTime = $end;
+        }
+        push @arr,Quiq::Hash->new(
+            timeline => undef,
+            begin => $begin,
+            end => $end,
+            object => $obj,
+        );
     }
 
     # Einträge auf die Zeitschienen verteilen
 
     my @timelines;
-    for my $e (sort {$a->[0] <=> $b->[0]} @arr) {
+    for my $e (sort {$a->{'begin'} <=> $b->{'begin'}} @arr) {
         for (my $i = 0; $i <= @timelines; $i++) {
-            if ($timelines[$i] && $e->[0] < $timelines[$i]->[-1]->[1]) {
+            if ($timelines[$i] &&
+                    $e->{'begin'} < $timelines[$i]->[-1]->{'end'}) {
                 # Zeitschiene ist durch einen anderen Prozess belegt.
                 # Wir versuchen es mit der nächsten Zeitschiene.
                 next;
             }
+
             # Freie Zeitschiene gefunden, Eintrag hinzufügen
+
+            $e->{'timeline'} = $i;
             push @{$timelines[$i]},$e;
             last;
         }
@@ -118,7 +140,9 @@ sub new {
     # Matrix-Objekt instantiieren
 
     return $class->SUPER::new(
-        timelineA => \@timelines,
+         minTime => $minTime,
+         maxTime => $maxTime,
+         timelineA => \@timelines,
     );
 }
 
@@ -126,26 +150,65 @@ sub new {
 
 =head2 Objektmethoden
 
-=head3 width() - Breite der Matrix
+=head3 entries() - Einträge der Prozess-Matrix
 
 =head4 Synopsis
 
-  $width = $mtx->width;
+  @entries | $entryA = $mtx->entries;
+  @entries | $entryA = $mtx->entries($i);
 
 =head4 Returns
 
-Integer
+Liste von Prozess-Matrix-Einträgen (Array of Quiq::Hash). Im
+Skalarkontext eine Referenz auf die Liste.
 
 =head4 Description
 
-Liefere die Anzahl der Kolumnen der Matrix.
+Liefere die Liste der Einträge in der Prozess-Matrix. Ist $i
+angegeben, nur die Einträge der Zeitleiste $i. Ein Eintrag ist
+ein Quiq:Hash-Objekt mit den Attributen:
+
+=over 4
+
+=item timeline
+
+Index der Zeitleiste.
+
+=item begin
+
+Anfangszeitpunkt in Unix Epoch.
+
+=item end
+
+Ende-Zeitpunkt in Unix Epoch.
+
+=item object
+
+Referenz auf das ursprüngliche Objekt.
+
+=back
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub width {
-    return scalar @{shift->{'timelineA'}};
+sub entries {
+    my ($self,$i) = @_;
+
+    my $timelineA = $self->{'timelineA'};
+
+    my $arr;
+    if (defined $i) {
+        $arr = $timelineA->[$i];
+    }
+    else {
+        my $width = $self->width;
+        for (my $i = 0; $i < $width; $i++) {
+            push @$arr,@{$timelineA->[$i]};
+        }
+    }
+
+    return wantarray? @$arr: $arr;
 }
 
 # -----------------------------------------------------------------------------
@@ -184,6 +247,78 @@ sub maxLength {
     }
 
     return $maxLength;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 minTime() - Frühester Anfangs-Zeitpunkt
+
+=head4 Synopsis
+
+  $epoch = $mtx->minTime;
+
+=head4 Returns
+
+Float
+
+=head4 Description
+
+Liefere den frühesten Anfangs-Zeitpunkt über allen Objekten.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub minTime {
+    return shift->{'minTime'};
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 maxTime() - Spätester Ende-Zeitpunkt
+
+=head4 Synopsis
+
+  $epoch = $mtx->maxTime;
+
+=head4 Returns
+
+Float
+
+=head4 Description
+
+Liefere den spätesten Ende-Zeitpunkt  über allen Objekten.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub maxTime {
+    return shift->{'maxTime'};
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 width() - Breite der Matrix
+
+=head4 Synopsis
+
+  $width = $mtx->width;
+
+=head4 Returns
+
+Integer
+
+=head4 Description
+
+Liefere die Anzahl der Kolumnen der Matrix.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub width {
+    return scalar @{shift->{'timelineA'}};
 }
 
 # -----------------------------------------------------------------------------
