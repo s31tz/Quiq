@@ -440,8 +440,10 @@ sub render {
 
     my (@x,@y,@c);
     for (my $i = 0; $i < @$xA; $i++) {
-        push @x,$x+Quiq::Math->valueToPixelX($width,$xMin,$xMax,$xA->[$i]);
-        push @y,$y+Quiq::Math->valueToPixelY($height,$yMin,$yMax,$yA->[$i]);
+        push @x,$x+Quiq::Math->valueToPixelX($width,$xMin,$xMax,
+            $xA->[$i]);
+        push @y,$y+Quiq::Math->valueToPixelY($height,$yMin,$yMax,
+            $yA->[$i]);
         if ($colorA) {
             push @c,$img->color($colorA->[$i]);
         }

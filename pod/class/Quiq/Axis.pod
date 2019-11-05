@@ -46,7 +46,7 @@ Referenz auf die Liste.
 Liefere die Liste der Unter-Ticks der Achse. Im Skalarkontext liefere eine
 Referenz auf die Liste.
 
-=head3 width() - Breite des breitesten Label
+=head3 width() - Breite des breitesten Labels
 
 =head4 Synopsis
 
@@ -57,7 +57,7 @@ Referenz auf die Liste.
 Ermittele die Breite des breitesten Label in Pixeln und liefere
 diesen Wert zurück.
 
-=head3 height() - Höhe des höchsten Label
+=head3 height() - Höhe des höchsten Labels
 
 =head4 Synopsis
 

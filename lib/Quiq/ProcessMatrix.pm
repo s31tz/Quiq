@@ -25,7 +25,7 @@ L<Quiq::Hash>
 
 Ordne eine Menge von zeitlichen Vorgängen (z.B. gelaufene Prozesse)
 in einer Reihe von Zeitschienen (Matrix) an. Finden Vorgänge parallel
-(also zeitlich überlappend) statt, hat die Matrix mehr als eine
+statt (also zeitlich überlappend), hat die Matrix mehr als eine
 Zeitschiene.
 
 =head1 METHODS
@@ -99,14 +99,10 @@ sub new {
     my (@arr,$minTime,$maxTime);
     for my $obj (@$processA) {
         my ($begin,$end) = $sub->($obj);
-        if (!$begin || !$end) {
-            # Objekte ohne Anfangs- oder Ende-Zeitpunkt übergehen wir
-            next;
-        }
-        if (!defined $minTime || $begin < $minTime) {
+        if (!defined($minTime) || $begin && $begin < $minTime) {
             $minTime = $begin;
         }
-        if (!defined $maxTime || $end > $maxTime) {
+        if (!defined($maxTime) || $end && $end > $maxTime) {
             $maxTime = $end;
         }
         push @arr,Quiq::Hash->new(
@@ -115,6 +111,15 @@ sub new {
             end => $end,
             object => $obj,
         );
+    }
+
+    # Fehlt ein Ende-Zeitpunkt, setzen wir diesen auf $maxTime
+
+    for my $e (@arr) {
+        my $end = $e->{'end'};
+        if (!defined($end) || $end eq '') {
+            $e->end($maxTime);
+        }
     }
 
     # Einträge auf die Zeitschienen verteilen
@@ -206,6 +211,7 @@ sub entries {
         for (my $i = 0; $i < $width; $i++) {
             push @$arr,@{$timelineA->[$i]};
         }
+        @$arr = sort {$a->begin <=> $b->begin} @$arr;
     }
 
     return wantarray? @$arr: $arr;

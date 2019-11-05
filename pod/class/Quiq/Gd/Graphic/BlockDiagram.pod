@@ -6,7 +6,54 @@ Quiq::Gd::Graphic::BlockDiagram - Farbige Blöcke in einer Fläche
 
 =head1 BASE CLASS
 
-L<Quiq::Gd::Graphic::Graph|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/Graph.pod>
+L<Quiq::Gd::Graphic|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic.pod>
+
+=head1 ATTRIBUTES
+
+Fett hervorgehobene Attribute sind Pflichtangaben beim Konstruktor-Aufruf.
+
+=over 4
+
+=item B<< width => $int >> (Default: keiner)
+
+Breite der Grafik in Pixeln.
+
+=item B<< height => $int >> (Default: keiner)
+
+Höhe der Grafik in Pixeln.
+
+=item xMin => $f (Default: Minimum der X-Werte)
+
+Anfang des X-Wertebereichs (Weltkoodinate).
+
+=item xMax => $f (Default: Maximum der X-Werte)
+
+Ende des X-Wertebereichs (Weltkoodinate).
+
+=item yMin => $f (Default: Minimum der Y-Werte)
+
+Anfang des Y-Wertebereichs (Weltkoodinate).
+
+=item yMax => $f (Default: Maximum der Y-Werte)
+
+Ende des Y-Wertebereichs (Weltkoodinate).
+
+=item objects => \@objects (Default: [])
+
+Liste der Objekte, die die Blockinformation liefern.
+
+=item objectCallback => $sub (Default: sub {})
+
+Subroutine, die aus einem Objekt die Block-Information liefert,
+mit der Signatur.
+
+  sub {
+      my $obj = shift;
+      ...
+      return ($x,$y,$width,$height,$color);
+  }
+
+=back
 
 =head1 METHODS
 
@@ -21,7 +68,7 @@ L<Quiq::Gd::Graphic::Graph|https://github.com/s31tz/Quiq/tree/master/pod/class/Q
 =head4 Description
 
 Instantiiere ein Blockdiagramm-Objekt mit den Eigenschaften @keyVal
-(s. Abschnitt [ANCHOR NOT FOUND]) und liefere eine Referenz auf das Objekt
+(s. Abschnitt L<ATTRIBUTES|"ATTRIBUTES">) und liefere eine Referenz auf das Objekt
 zurück.
 
 =head2 Zeichnen

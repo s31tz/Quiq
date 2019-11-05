@@ -1,5 +1,5 @@
 package Quiq::Gd::Graphic::BlockDiagram;
-use base qw/Quiq::Gd::Graphic::Graph/;
+use base qw/Quiq::Gd::Graphic/;
 
 use v5.10;
 use strict;
@@ -8,6 +8,7 @@ use warnings;
 our $VERSION = '1.163';
 
 use POSIX ();
+use Quiq::Math;
 
 # -----------------------------------------------------------------------------
 
@@ -19,7 +20,54 @@ Quiq::Gd::Graphic::BlockDiagram - Farbige Blöcke in einer Fläche
 
 =head1 BASE CLASS
 
-L<Quiq::Gd::Graphic::Graph>
+L<Quiq::Gd::Graphic>
+
+=head1 ATTRIBUTES
+
+Fett hervorgehobene Attribute sind Pflichtangaben beim Konstruktor-Aufruf.
+
+=over 4
+
+=item B<< width => $int >> (Default: keiner)
+
+Breite der Grafik in Pixeln.
+
+=item B<< height => $int >> (Default: keiner)
+
+Höhe der Grafik in Pixeln.
+
+=item xMin => $f (Default: Minimum der X-Werte)
+
+Anfang des X-Wertebereichs (Weltkoodinate).
+
+=item xMax => $f (Default: Maximum der X-Werte)
+
+Ende des X-Wertebereichs (Weltkoodinate).
+
+=item yMin => $f (Default: Minimum der Y-Werte)
+
+Anfang des Y-Wertebereichs (Weltkoodinate).
+
+=item yMax => $f (Default: Maximum der Y-Werte)
+
+Ende des Y-Wertebereichs (Weltkoodinate).
+
+=item objects => \@objects (Default: [])
+
+Liste der Objekte, die die Blockinformation liefern.
+
+=item objectCallback => $sub (Default: sub {})
+
+Subroutine, die aus einem Objekt die Block-Information liefert,
+mit der Signatur.
+
+  sub {
+      my $obj = shift;
+      ...
+      return ($x,$y,$width,$height,$color);
+  }
+
+=back
 
 =head1 METHODS
 
@@ -34,7 +82,7 @@ L<Quiq::Gd::Graphic::Graph>
 =head4 Description
 
 Instantiiere ein Blockdiagramm-Objekt mit den Eigenschaften @keyVal
-(s. Abschnitt [ANCHOR NOT FOUND]) und liefere eine Referenz auf das Objekt
+(s. Abschnitt L<ATTRIBUTES|"ATTRIBUTES">) und liefere eine Referenz auf das Objekt
 zurück.
 
 =cut
@@ -45,7 +93,17 @@ sub new {
     my $class = shift;
     # @_: @keyVal
 
-    my $self = $class->SUPER::new(@_);
+    my $self = $class->SUPER::new(
+        width => undef,
+        height => undef,
+        xMin => undef,
+        xMax => undef,
+        yMin => undef,
+        yMax => undef,
+        objects => [],
+        objectCallback => sub {},
+    );
+    $self->set(@_);
 
     return $self;
 }
@@ -79,10 +137,33 @@ sub render {
 
     my $self = $this->self(@_);
 
-    # Zeichnen (übernimmt die Basisklasse)
+    # Attribute
 
-    $self->SUPER::render($img,$x,$y,
-    );
+    my $width = $self->{'width'};
+    my $height = $self->{'height'};
+    my $xMin = $self->{'xMin'};
+    my $xMax = $self->{'xMax'};
+    my $yMin = $self->{'yMin'};
+    my $yMax = $self->{'yMax'};
+    my $objectA = $self->{'objects'};
+    my $objectCallback = $self->{'objectCallback'};
+
+    # Zeichnen
+
+    my $xFactor = Quiq::Math->valueToPixelFactor($width,$xMin,$xMax);
+    my $yFactor = Quiq::Math->valueToPixelFactor($height,$yMin,$yMax);
+
+    my $black = $img->color('#000000');
+    for my $obj (@$objectA) {
+        my ($oX,$oY,$oW,$oH,$rgb) = $objectCallback->($obj);
+        my $pX = $x+Quiq::Math->valueToPixelX($width,$xMin,$xMax,$oX);
+        my $pY = $y+Quiq::Math->valueToPixelYTop($height,$yMin,$yMax,$oY);
+        my $pW = $oW*$xFactor;
+        my $pH = $oH*$yFactor;
+        my $color = $img->color($rgb);
+        $img->filledRectangle($pX,$pY,$pX+$pW,$pY+$pH,$color);
+        $img->rectangle($pX,$pY,$pX+$pW,$pY+$pH,$black);
+    }
 
     return;
 }

@@ -12,7 +12,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 Ordne eine Menge von zeitlichen Vorgängen (z.B. gelaufene Prozesse)
 in einer Reihe von Zeitschienen (Matrix) an. Finden Vorgänge parallel
-(also zeitlich überlappend) statt, hat die Matrix mehr als eine
+statt (also zeitlich überlappend), hat die Matrix mehr als eine
 Zeitschiene.
 
 =head1 METHODS

@@ -93,7 +93,7 @@ sub subTicks {
 
 # -----------------------------------------------------------------------------
 
-=head3 width() - Breite des breitesten Label
+=head3 width() - Breite des breitesten Labels
 
 =head4 Synopsis
 
@@ -111,24 +111,24 @@ diesen Wert zurück.
 sub width {
     my $self = shift;
 
-    my $max = 0;
+    my $width = 0;
     for my $tik ($self->ticks) {
         my $n = $tik->width;
-        if ($n > $max) {
-            $max = $n;
+        if ($n > $width) {
+            $width = $n;
         }
     }
-    if ($max == 0) {
+    if ($width == 0) {
         # Keine Ticks. Wir nehmen stattdessen den Wert min.
-        $max = Quiq::AxisTick->new($self,$self->get('min'))->width;
+        $width = Quiq::AxisTick->new($self,$self->get('min'))->width;
     }
 
-    return $max;
+    return $width;
 }
 
 # -----------------------------------------------------------------------------
 
-=head3 height() - Höhe des höchsten Label
+=head3 height() - Höhe des höchsten Labels
 
 =head4 Synopsis
 
@@ -146,19 +146,19 @@ diesen Wert zurück.
 sub height {
     my $self = shift;
 
-    my $max = 0;
+    my $height = 0;
     for my $tik ($self->ticks) {
         my $n = $tik->height;
-        if ($n > $max) {
-            $max = $n;
+        if ($n > $height) {
+            $height = $n;
         }
     }
-    if ($max == 0) {
+    if ($height == 0) {
         # Keine Ticks. Wir nehmen stattdessen den Wert min.
-        $max = Quiq::AxisTick->new($self,$self->get('min'))->height;
+        $height = Quiq::AxisTick->new($self,$self->get('min'))->height;
     }
 
-    return $max;
+    return $height;
 }
 
 # -----------------------------------------------------------------------------
