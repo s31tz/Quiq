@@ -149,15 +149,17 @@ sub render {
     my $objectCallback = $self->{'objectCallback'};
 
     # Zeichnen
+    
+    my $m = Quiq::Math->new;
 
-    my $xFactor = Quiq::Math->valueToPixelFactor($width,$xMin,$xMax);
-    my $yFactor = Quiq::Math->valueToPixelFactor($height,$yMin,$yMax);
+    my $xFactor = $m->valueToPixelFactor($width,$xMin,$xMax);
+    my $yFactor = $m->valueToPixelFactor($height,$yMin,$yMax);
 
     my $black = $img->color('#000000');
     for my $obj (@$objectA) {
         my ($oX,$oY,$oW,$oH,$rgb) = $objectCallback->($obj);
-        my $pX = $x+Quiq::Math->valueToPixelX($width,$xMin,$xMax,$oX);
-        my $pY = $y+Quiq::Math->valueToPixelYTop($height,$yMin,$yMax,$oY);
+        my $pX = $x+$m->valueToPixelX($width,$xMin,$xMax,$oX);
+        my $pY = $y+$m->valueToPixelYTop($height,$yMin,$yMax,$oY);
         my $pW = $oW*$xFactor;
         my $pH = $oH*$yFactor;
         my $color = $img->color($rgb);

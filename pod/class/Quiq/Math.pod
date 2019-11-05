@@ -10,13 +10,32 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 METHODS
 
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+  $m = $class->new;
+
+=head4 Returns
+
+Math-Objekt
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
+dieses Objekt zurück. Da die Klasse ausschließlich Klassenmethoden
+enthält, hat das Objekt nur die Funktion, eine abkürzende
+Aufrufschreibweise zu ermöglichen.
+
 =head2 Konstanten
 
 =head3 pi() - Liefere PI
 
 =head4 Synopsis
 
-  $pi = $class->pi;
+  $pi = $this->pi;
 
 =head2 Rundung
 
@@ -24,8 +43,8 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head4 Synopsis
 
-  $y = $class->roundTo($x,$n);
-  $y = $class->roundTo($x,$n,$normalize);
+  $y = $this->roundTo($x,$n);
+  $y = $this->roundTo($x,$n,$normalize);
 
 =head4 Description
 
@@ -44,7 +63,7 @@ bei $n == 0 mittels roundToInt().
 
 =head4 Synopsis
 
-  $n = $class->roundToInt($x);
+  $n = $this->roundToInt($x);
 
 =head4 Description
 
@@ -68,7 +87,7 @@ denn dieser gibt inkonsistente Ergebnisse
 
 =head4 Synopsis
 
-  ($minRounded,$maxRounded) = $class->roundMinMax($min,$max);
+  ($minRounded,$maxRounded) = $this->roundMinMax($min,$max);
 
 =head4 Description
 
@@ -93,7 +112,7 @@ $max-$min her.
 
 =head4 Synopsis
 
-  $gcd = $class->gcd($a,b);
+  $gcd = $this->gcd($a,b);
 
 =head4 Description
 
@@ -107,13 +126,13 @@ zurück. Die Methode ist nach dem L<Euklidschen Algorithmus|https://de.wikipedia.
 
 =head4 Synopsis
 
-  $rad = $class->degreeToRad($degree);
+  $rad = $this->degreeToRad($degree);
 
 =head3 radToDegree() - Wandele Bogenmaß (rad) in Grad
 
 =head4 Synopsis
 
-  $degree = $class->radToDegree($rad);
+  $degree = $this->radToDegree($rad);
 
 =head2 Geo-Koordinaten
 
@@ -121,7 +140,7 @@ zurück. Die Methode ist nach dem L<Euklidschen Algorithmus|https://de.wikipedia.
 
 =head4 Synopsis
 
-  ($latitude,$longitude) = $class->geoMidpoint(\@coordinates);
+  ($latitude,$longitude) = $this->geoMidpoint(\@coordinates);
 
 =head4 Arguments
 
@@ -151,7 +170,7 @@ L<http://www.geomidpoint.com/example.html>
 
 =head4 Synopsis
 
-  $dezDeg = $class->geoToDegree($deg,$min,$sec,$dir);
+  $dezDeg = $this->geoToDegree($deg,$min,$sec,$dir);
 
 =head4 Description
 
@@ -167,7 +186,7 @@ Himmelsrichtung in eine dezimale Gradzahl und liefere diese zurück.
 
 =head4 Synopsis
 
-  $km = $class->geoDistance($lat1,$lon1,$lat2,$lon2);
+  $km = $this->geoDistance($lat1,$lon1,$lat2,$lon2);
 
 =head4 Description
 
@@ -212,7 +231,7 @@ Abstand zw. zwei Längengraden am Pol:
 
 =head4 Synopsis
 
-  $km = $class->latitudeDistance($lat);
+  $km = $this->latitudeDistance($lat);
 
 =head4 Description
 
@@ -227,7 +246,7 @@ Wilhelm Petersen.
 
 =head4 Synopsis
 
-  $factor = $class->valueToPixelFactor($length,$min,$max)
+  $factor = $this->valueToPixelFactor($length,$min,$max)
 
 =head4 Returns
 
@@ -244,7 +263,7 @@ entsprechen.
 
 =head4 Synopsis
 
-  $factor = $class->pixelToValueFactor($length,$min,$max);
+  $factor = $this->pixelToValueFactor($length,$min,$max);
 
 =head4 Returns
 
@@ -260,7 +279,7 @@ dem Werteberich $min und $max entsprechen.
 
 =head4 Synopsis
 
-  $x = $class->valueToPixelX($width,$xMin,$xMax,$xVal);
+  $x = $this->valueToPixelX($width,$xMin,$xMax,$xVal);
 
 =head4 Alias
 
@@ -276,7 +295,7 @@ ist $xMax. Die gelieferten Werte liegen im Bereich 0 .. $width-1.
 
 =head4 Synopsis
 
-  $y = $class->valueToPixelY($height,$yMin,$yMax,$yVal);
+  $y = $this->valueToPixelY($height,$yMin,$yMax,$yVal);
 
 =head4 Description
 
@@ -290,7 +309,7 @@ also von einem Ursprung I<unten links> aus.
 
 =head4 Synopsis
 
-  $y = $class->valueToPixelYTop($height,$yMin,$yMax,$yVal);
+  $y = $this->valueToPixelYTop($height,$yMin,$yMax,$yVal);
 
 =head4 Description
 
@@ -304,7 +323,7 @@ ist $yMax. Die gelieferten Werte liegen im Bereich $height-1 .. 0.
 
 =head4 Synopsis
 
-  $y = $class->interpolate($x0,$y0,$x1,$y1,$x);
+  $y = $this->interpolate($x0,$y0,$x1,$y1,$x);
 
 =head4 Returns
 
@@ -323,7 +342,7 @@ Siehe: L<http://de.wikipedia.org/wiki/Interpolation_%28Mathematik%29#Lineare_Int
 
 =head4 Synopsis
 
-  $bool = $class->isNumber($str);
+  $bool = $this->isNumber($str);
 
 =head2 Spike Test
 
@@ -331,7 +350,7 @@ Siehe: L<http://de.wikipedia.org/wiki/Interpolation_%28Mathematik%29#Lineare_Int
 
 =head4 Synopsis
 
-  $val = $class->spikeValue($v1,$v2,$v3,$t1,$t3);
+  $val = $this->spikeValue($v1,$v2,$v3,$t1,$t3);
 
 =head4 Description
 
