@@ -1,3 +1,49 @@
+1.163 2019-11-06
+================
+
+[Quiq::AsciiTable]
+* Doku bearbeitet
+
+[Quiq::Axis]
+* Klasse hinzugefügt
+
+[Quiq::AxisTick]
+* Klasse hinzugefügt
+
+[Quiq::Axis::Numeric]
+* Klasse hinzugefügt
+
+[Quiq::Gd::Graphic]
+* Klasse hinzugefügt
+
+[Quiq::Gd::Graphic::Axis]
+* Klasse hinzugefügt
+
+[Quiq::Gd::Graphic::BlockDiagram]
+* Klasse hinzugefügt
+
+[Quiq::Gd::Graphic::ColorBar]
+* Klasse hinzugefügt
+
+[Quiq::Gd::Graphic::ColorLegend]
+* Klasse hinzugefügt
+
+[Quiq::Gd::Graphic::Graph]
+* Klasse hinzugefügt
+
+[Quiq::Gd::Graphic::PointGraph]
+* Klasse hinzugefügt
+
+[Quiq::Gd::Image]
+* Doku bearbeitet
+
+[Quiq::Math]
+* Konstruktor hinzugefügt
+* valueToPixelYTop() - hinzugefügt
+
+[Quiq::Schedule]
+* ehedem Quiq::ProcessMatrix
+
 1.162 2019-10-31
 ================
 

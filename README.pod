@@ -593,10 +593,6 @@ L<Quiq::Process|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Process
 
 =item *
 
-L<Quiq::ProcessMatrix|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ProcessMatrix.pod> - Matrix von zeitlichen Vorgängen
-
-=item *
-
 L<Quiq::Program|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Program.pod> - Basisklasse für Programme
 
 =item *
@@ -622,6 +618,10 @@ L<Quiq::Reference|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Refer
 =item *
 
 L<Quiq::Rsync|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Rsync.pod> - Aufruf von rsync von Perl aus
+
+=item *
+
+L<Quiq::Schedule|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Schedule.pod> - Matrix von zeitlichen Vorgängen
 
 =item *
 

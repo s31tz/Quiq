@@ -1,4 +1,4 @@
-package Quiq::ProcessMatrix;
+package Quiq::Schedule;
 use base qw/Quiq::Hash/;
 
 use v5.10;
@@ -15,7 +15,7 @@ use Quiq::Hash;
 
 =head1 NAME
 
-Quiq::ProcessMatrix - Matrix von zeitlichen Vorgängen
+Quiq::Schedule - Matrix von zeitlichen Vorgängen
 
 =head1 BASE CLASS
 

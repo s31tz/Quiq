@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Quiq::ProcessMatrix::Test;
+package Quiq::Schedule::Test;
 use base qw/Quiq::Test::Class/;
 
 use v5.10;
@@ -10,7 +10,7 @@ use utf8;
 
 use Quiq::Test::Class;
 use Quiq::FileHandle;
-use Quiq::ProcessMatrix;
+use Quiq::Schedule;
 use Quiq::Epoch;
 use Quiq::Gd::Graphic::BlockDiagram;
 use Quiq::Axis::Numeric;
@@ -22,7 +22,7 @@ use Quiq::Path;
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
-    shift->useOk('Quiq::ProcessMatrix');
+    shift->useOk('Quiq::Schedule');
 }
 
 # -----------------------------------------------------------------------------
@@ -46,7 +46,7 @@ sub test_unitTest : Test(7) {
 
     # Prozess-Matrix erzeugen
 
-    my $mtx = Quiq::ProcessMatrix->new(\@objects,sub {
+    my $mtx = Quiq::Schedule->new(\@objects,sub {
         my $obj = shift;
         return (
             Quiq::Epoch->new($obj->[4])->epoch,
@@ -57,7 +57,7 @@ sub test_unitTest : Test(7) {
     # Klasse, Anzahl Zeitschienen, Anzahl Einträge auf der
     # längsten Zeitschiene
 
-    $self->is(ref $mtx,'Quiq::ProcessMatrix');
+    $self->is(ref $mtx,'Quiq::Schedule');
     $self->is($mtx->width,396);
     $self->is($mtx->maxLength,162);
 
@@ -148,6 +148,6 @@ sub test_unitTest : Test(7) {
 # -----------------------------------------------------------------------------
 
 package main;
-Quiq::ProcessMatrix::Test->runTests;
+Quiq::Schedule::Test->runTests;
 
 # eof

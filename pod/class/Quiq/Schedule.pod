@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::ProcessMatrix - Matrix von zeitlichen Vorgängen
+Quiq::Schedule - Matrix von zeitlichen Vorgängen
 
 =head1 BASE CLASS
 
@@ -174,7 +174,7 @@ Liefere die Anzahl der Kolumnen der Matrix.
 
 =head1 SOURCE
 
-L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/ProcessMatrix.pm>
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Schedule.pm>
 
 =head1 AUTHOR
 
