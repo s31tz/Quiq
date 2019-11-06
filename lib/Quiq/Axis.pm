@@ -27,7 +27,7 @@ L<Quiq::Hash>
 
 Die folgenden Methoden sind allen Subklassen gemeinsam.
 
-=head3 font() - Lebel-Font
+=head3 font() - Label-Font
 
 =head4 Synopsis
 

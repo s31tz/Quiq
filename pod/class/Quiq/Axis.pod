@@ -14,7 +14,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 Die folgenden Methoden sind allen Subklassen gemeinsam.
 
-=head3 font() - Lebel-Font
+=head3 font() - Label-Font
 
 =head4 Synopsis
 

@@ -1,4 +1,4 @@
-package Quiq::Axis::Numeric;
+package Quiq::Axis::Time;
 use base qw/Quiq::Axis/;
 
 use v5.10;
@@ -18,7 +18,7 @@ use POSIX ();
 
 =head1 NAME
 
-Quiq::Axis::Numeric - Definition einer numerischen Plot-Achse
+Quiq::Axis::Time - Definition einer Zeit-Achse
 
 =head1 BASE CLASS
 
@@ -26,13 +26,12 @@ L<Quiq::Axis>
 
 =head1 SYNOPSIS
 
-  $ax = Quiq::Axis::Numeric->new(
+  $ax = Quiq::Axis::Time->new(
       orientation => $str, # 'x', 'y'
       font => $font,
       length => $int,
       min => $float,
       max => $float,
-      logarithmic => $bool,
       minTickGap => $int,
       debug => $bool,
   );
@@ -42,8 +41,8 @@ L<Quiq::Axis>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert die Definition einer numerischen
-Achse eines XY-Plots. Die Achse kann eine X- oder eine Y-Achse sein.
+Ein Objekt der Klasse repräsentiert die Definition einer Zeit-Achse
+eines XY-Plots. Die Achse kann eine X- oder eine Y-Achse sein.
 Die Klasse berechnet eine geeignete Einteilung der Achse in Ticks
 und Unter-Ticks unter Berücksichtigung der echten Breite/Höhe der
 Tick-Label. Die betreffenden Tick-Objekte werden von den Methoden
@@ -82,10 +81,6 @@ Kleinster Wert auf der Achse.
 
 Größter Wert auf der Achse.
 
-=item logarithmic => $bool (Default: 0)
-
-Die Achse erhält eine logarithmische Einteilung (Basis 10).
-
 =item minTickGap => $int (Default: 5)
 
 Mindestabstand zwischen zwei Ticks: C<< LABELL<lt>--minTickGap-->LABEL >>
@@ -104,7 +99,7 @@ Gib Information über die Tickberechnung auf STDERR aus.
 
 =head4 Synopsis
 
-  $ax = Quiq::Axis::Numeric->new(@keyVal);
+  $ax = Quiq::Axis::Time->new(@keyVal);
 
 =head4 Description
 
@@ -120,13 +115,14 @@ sub new {
     my $class = shift;
     # @_: @keyVal
 
+    # Attribute
+
     my $self = $class->SUPER::new(
         orientation => 'x',
         font => undef,
         length => undef,
         min => undef,
         max => undef,
-        logarithmic => 0,
         minTickGap => undef,
         debug => 0,
         # ---
@@ -136,8 +132,6 @@ sub new {
     );
     $self->set(@_);
 
-    # * Prüfe Attributwerte *
-
     # Default minTickGap
 
     my $minTickGap = $self->get('minTickGap');
@@ -146,15 +140,10 @@ sub new {
         $self->set(minTickGap=>$minTickGap);
     }
 
-    # * Berechne Ticks *
+    # Berechne Ticks
 
     my ($length,$min,$max,$logarithmic,$debug) =
-        $self->get(qw/length min max logarithmic debug/);
-
-    if ($logarithmic) {
-        $min = POSIX::log10($min);
-        $max = POSIX::log10($max);
-    }
+        $self->get(qw/length min max debug/);
 
     my $minTickSize = $self->labelSize(int $min); # min. Breite bzw. Höhe
     my $maxTicks = $length/$minTickSize;
@@ -169,13 +158,6 @@ sub new {
     for my $exp (-10 .. 10) { # Exponent
         LOOP_BASE:
         for my $base (1,2,5) { # Basiswert
-            if ($logarithmic && ($base != 1 || $exp != 0)) {
-                # Im Falle von Logarithmus-Werten ist die Einteilung auf
-                # jeden Fall in 1er-Schritten. Alle anderen Schrittweiten
-                # übergehen wir.
-                next;
-            }
-
             my $step = $base*10**$exp; # Schrittweite
 
             if ($step < $minStep) {
@@ -270,8 +252,6 @@ sub new {
 
     if (!@candidates) {
         # Keine Ticks, wir haben Keine passende Schrittweite gefunden.
-        # Dies kann bei einer logarithmischen Achse passieren, wenn
-        # innerhalb des Wertebereichs kein ganzahliger Logarithmus vorkommt.
         return $self;
     }
 
@@ -306,37 +286,22 @@ sub new {
     my ($step,$base,$tickDistance) = $stp->get(qw/step base tickDistance/);
 
     my $subTickA = $self->subTicks;
-    if ($self->get('logarithmic')) {
-        for my $log ($values[0]-1,@values) {
-            my $val = 10**$log;
-            my $subStep = $val;
-            for my $i (1..8) {
-                $val += $subStep;
-                my $log = POSIX::log10($val);
-                if ($log >= $min && $log <= $max) {
-                    push @$subTickA,Quiq::AxisTick->new($self,$log);
-                }
-            }
-        }
+    my $numSubSteps;
+    if ($base == 1 || $base == 2) {
+        $numSubSteps = 1;
     }
-    else {
-        my $numSubSteps;
-        if ($base == 1 || $base == 2) {
-            $numSubSteps = 1;
-        }
-        elsif ($base == 5 && $tickDistance >= 40) {
-            $numSubSteps = 4;
-        }
+    elsif ($base == 5 && $tickDistance >= 40) {
+        $numSubSteps = 4;
+    }
 
-        if (defined $numSubSteps) {
-            my $subStep = $step/($numSubSteps+1);
+    if (defined $numSubSteps) {
+        my $subStep = $step/($numSubSteps+1);
 
-            for my $tickVal ($values[0]-$step,@values) {
-                for my $i (1..$numSubSteps) {
-                    my $val = $tickVal+$i*$subStep;
-                    if ($val >= $min && $val <= $max) {
-                        push @$subTickA,Quiq::AxisTick->new($self,$val);
-                    }
+        for my $tickVal ($values[0]-$step,@values) {
+            for my $i (1..$numSubSteps) {
+                my $val = $tickVal+$i*$subStep;
+                if ($val >= $min && $val <= $max) {
+                    push @$subTickA,Quiq::AxisTick->new($self,$val);
                 }
             }
         }
@@ -372,10 +337,7 @@ sub firstTick {
 
     my $val;
 
-    my ($min,$logarithmic) = $self->get('min','logarithmic');
-    if ($logarithmic) {
-        $min = POSIX::log10($min);
-    }
+    my $min = $self->get('min');
     if ($min < 0) {
         $val = POSIX::ceil($min/$step)*$step;
         if ($val >= $min) {
@@ -434,8 +396,7 @@ sub labelSize {
 
 =head4 Description
 
-Liefere das Achsenlabel für Wert $val. Das Label $label kann vom
-Wert $val verschieden sein, wenn die Darstellung logarithmisch ist.
+Liefere das Achsenlabel für Wert $val.
 
 =cut
 
@@ -443,10 +404,6 @@ Wert $val verschieden sein, wenn die Darstellung logarithmisch ist.
 
 sub label {
     my ($self,$val) = @_;
-
-    if ($self->get('logarithmic')) {
-        return 10**$val;
-    }
 
     return $val;
 }

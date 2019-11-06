@@ -8,6 +8,7 @@ use warnings;
 our $VERSION = '1.164';
 
 use Quiq::Math;
+use POSIX ();
 
 # -----------------------------------------------------------------------------
 
@@ -132,7 +133,7 @@ sub position {
 
     my $ax = $self->{'axis'};
     my $length = $ax->{'length'};
-    my $logarithmic = $ax->{'logarithmic'};
+    my $logarithmic = $ax->try('logarithmic'); # nur bei numerischer Achse
     my $min = $ax->{'min'};
     if ($logarithmic) {
         $min = POSIX::log10($min);

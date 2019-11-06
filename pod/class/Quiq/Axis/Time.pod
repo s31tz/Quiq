@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Axis::Numeric - Definition einer numerischen Plot-Achse
+Quiq::Axis::Time - Definition einer Zeit-Achse
 
 =head1 BASE CLASS
 
@@ -10,13 +10,12 @@ L<Quiq::Axis|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Axis.pod>
 
 =head1 SYNOPSIS
 
-  $ax = Quiq::Axis::Numeric->new(
+  $ax = Quiq::Axis::Time->new(
       orientation => $str, # 'x', 'y'
       font => $font,
       length => $int,
       min => $float,
       max => $float,
-      logarithmic => $bool,
       minTickGap => $int,
       debug => $bool,
   );
@@ -26,8 +25,8 @@ L<Quiq::Axis|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Axis.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert die Definition einer numerischen
-Achse eines XY-Plots. Die Achse kann eine X- oder eine Y-Achse sein.
+Ein Objekt der Klasse repräsentiert die Definition einer Zeit-Achse
+eines XY-Plots. Die Achse kann eine X- oder eine Y-Achse sein.
 Die Klasse berechnet eine geeignete Einteilung der Achse in Ticks
 und Unter-Ticks unter Berücksichtigung der echten Breite/Höhe der
 Tick-Label. Die betreffenden Tick-Objekte werden von den Methoden
@@ -66,10 +65,6 @@ Kleinster Wert auf der Achse.
 
 Größter Wert auf der Achse.
 
-=item logarithmic => $bool (Default: 0)
-
-Die Achse erhält eine logarithmische Einteilung (Basis 10).
-
 =item minTickGap => $int (Default: 5)
 
 Mindestabstand zwischen zwei Ticks: C<< LABELL<lt>--minTickGap-->LABEL >>
@@ -88,7 +83,7 @@ Gib Information über die Tickberechnung auf STDERR aus.
 
 =head4 Synopsis
 
-  $ax = Quiq::Axis::Numeric->new(@keyVal);
+  $ax = Quiq::Axis::Time->new(@keyVal);
 
 =head4 Description
 
@@ -131,8 +126,7 @@ FIXME: Wert in Label wandeln.
 
 =head4 Description
 
-Liefere das Achsenlabel für Wert $val. Das Label $label kann vom
-Wert $val verschieden sein, wenn die Darstellung logarithmisch ist.
+Liefere das Achsenlabel für Wert $val.
 
 =head1 VERSION
 
@@ -140,7 +134,7 @@ Wert $val verschieden sein, wenn die Darstellung logarithmisch ist.
 
 =head1 SOURCE
 
-L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Axis/Numeric.pm>
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Axis/Time.pm>
 
 =head1 AUTHOR
 

@@ -7,6 +7,8 @@ use warnings;
 
 our $VERSION = '1.164';
 
+use Quiq::Assert;
+
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -66,9 +68,19 @@ Farbe der Achse.
 
 Farbe der Schrift.
 
+=item subTickColor => $color (Default: Farbe der Achse)
+
+Farbe der Sub-Ticks.
+
 =item tickColor => $color (Default: Farbe der Achse)
 
 Farbe der Ticks.
+
+=item tickDirection => $direction (Default: 'd' bei X-Achse, 'l' bei Y-Achse)
+
+Richtung, die die Ticks der Achse sowie die Label gezeichnet werden.
+Mögliche Werte bei einer X-Achse: 'u' (up), 'd' (down). Mögliche Werte
+bei einer Y-Achse: 'l' (left), 'r' (right).
 
 =item tickLabelGap => $n (Default: 1)
 
@@ -77,10 +89,6 @@ Abstand zwischen Tick und Label.
 =item tickLength => $n (Default: 4)
 
 Länge eines beschrifteten Tick.
-
-=item subTickColor => $color (Default: Farbe der Achse)
-
-Farbe der Sub-Ticks.
 
 =back
 
@@ -134,10 +142,11 @@ sub new {
         axis => undef,
         axisColor => '000000',
         labelColor => undef,
+        subTickColor => undef,
         tickColor => undef,
+        tickDirection => undef,
         tickLabelGap => 1,
         tickLength => 4,
-        subTickColor => undef,
     );
     $self->set(@_);
 
@@ -184,12 +193,12 @@ sub render {
 
     my $self = $this->self(@_);
 
-    # * Attribute *
+    # Attribute
 
     my ($ax,$axisColor,$labelColor,$subTickColor,$tickColor,
-        $tickLabelGap,$tickLength) =
+        $tickDirection,$tickLabelGap,$tickLength) =
         $self->get(qw/axis axisColor labelColor subTickColor tickColor
-        tickLabelGap tickLength/);
+        tickDirection tickLabelGap tickLength/);
 
     $axisColor = $img->color($axisColor);
     if (!defined $labelColor) {
@@ -202,13 +211,13 @@ sub render {
         $subTickColor = $tickColor;
     }
 
-    # * Achseninformation *
+    # Achseninformation
 
     my $orientation = $ax->get('orientation');
     my $length = $ax->get('length');
     my $fnt = $ax->font;
 
-    # * Zeichne *
+    # Zeichnen
 
     # Achsenlinie
 
@@ -221,35 +230,58 @@ sub render {
 
     # Ticks und Label
 
+    if (!$tickDirection) {
+        # Defaultwert tickDirection
+        $tickDirection = $orientation eq 'y'? 'l': 'd';
+    }
+    Quiq::Assert->isEnumValue($tickDirection,[qw/d u l r/]);
+
     my @ticks = $ax->ticks;
     if (!@ticks) {
         # Keine Tick-Einteilung
 
         if ($orientation eq 'y') {
             # Noch nicht implementiert
-            #$img->stringCentered($fnt,'v',
-            #    $x-$tickLength-$tik->width-$tickLabelGap+$fnt->alignRightOffset,
+            #$img->stringCentered($fnt,'v',$x-$tickLength-$tik->width-
+            #    $tickLabelGap+$fnt->alignRightOffset,
             #    $y-$pos,$tik->label,$labelColor);
         }
         else {
-            $img->stringCentered($fnt,'h',
-                $x+($length/2),$y+$tickLength+$tickLabelGap+$fnt->alignTopOffset,
+            $img->stringCentered($fnt,'h',$x+($length/2),
+                $y+$tickLength+$tickLabelGap+$fnt->alignTopOffset,
                 'no ticks',$labelColor);
         }
     }
     for my $tik (@ticks) {
         my $pos = $tik->position;
         if ($orientation eq 'y') {
-            $img->line($x-$tickLength,$y-$pos,$x-1,$y-$pos,$tickColor);
-            $img->stringCentered($fnt,'v',
-                $x-$tickLength-$tik->width-$tickLabelGap+$fnt->alignRightOffset,
-                $y-$pos,$tik->label,$labelColor);
+            if ($tickDirection eq 'r') {
+                $img->line($x+$tickLength,$y-$pos,$x+1,$y-$pos,$tickColor);
+                $img->stringCentered($fnt,'v',$x+$tickLength+
+                        $tickLabelGap+$fnt->alignRightOffset,
+                        $y-$pos,$tik->label,$labelColor);
+            }
+            else { # 'l'
+                $img->line($x-$tickLength,$y-$pos,$x-1,$y-$pos,$tickColor);
+                $img->stringCentered($fnt,'v',$x-$tickLength-
+                        $tik->width-$tickLabelGap+$fnt->alignRightOffset,
+                        $y-$pos,$tik->label,$labelColor);
+            }
         }
         else {
-            $img->line($x+$pos,$y,$x+$pos,$y+$tickLength,$tickColor);
-            $img->stringCentered($fnt,'h',
-                $x+$pos,$y+$tickLength+$tickLabelGap+$fnt->alignTopOffset,
-                $tik->label,$labelColor);
+            if ($tickDirection eq 'u') {
+                $img->line($x+$pos,$y,$x+$pos,$y-$tickLength,$tickColor);
+                $img->stringCentered($fnt,'h',
+                    $x+$pos,$y-$tickLength-$tickLabelGap-
+                    $fnt->alignTopOffset-$fnt->digitHeight,
+                    $tik->label,$labelColor);
+            }
+            else { # 'd'
+                $img->line($x+$pos,$y,$x+$pos,$y+$tickLength,$tickColor);
+                $img->stringCentered($fnt,'h',
+                    $x+$pos,$y+$tickLength+$tickLabelGap+$fnt->alignTopOffset,
+                    $tik->label,$labelColor);
+            }
         }
     }
 
@@ -259,10 +291,22 @@ sub render {
     for my $tik ($ax->subTicks) {
         my $pos = $tik->position;
         if ($orientation eq 'y') {
-            $img->line($x-$subTickLength,$y-$pos,$x-1,$y-$pos,$subTickColor);
+            if ($tickDirection eq 'r') {
+                $img->line($x+$subTickLength,$y-$pos,$x+1,$y-$pos,
+                    $subTickColor);
+            }
+            else { # 'l'
+                $img->line($x-$subTickLength,$y-$pos,$x-1,$y-$pos,
+                    $subTickColor);
+            }
         }
         else {
-            $img->line($x+$pos,$y,$x+$pos,$y+$subTickLength,$subTickColor);
+            if ($tickDirection eq 'u') {
+                $img->line($x+$pos,$y,$x+$pos,$y-$subTickLength,$subTickColor);
+            }
+            else { # 'd'
+                $img->line($x+$pos,$y,$x+$pos,$y+$subTickLength,$subTickColor);
+            }
         }
     }
 

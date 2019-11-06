@@ -55,9 +55,19 @@ Farbe der Achse.
 
 Farbe der Schrift.
 
+=item subTickColor => $color (Default: Farbe der Achse)
+
+Farbe der Sub-Ticks.
+
 =item tickColor => $color (Default: Farbe der Achse)
 
 Farbe der Ticks.
+
+=item tickDirection => $direction (Default: 'd' bei X-Achse, 'l' bei Y-Achse)
+
+Richtung, die die Ticks der Achse sowie die Label gezeichnet werden.
+Mögliche Werte bei einer X-Achse: 'u' (up), 'd' (down). Mögliche Werte
+bei einer Y-Achse: 'l' (left), 'r' (right).
 
 =item tickLabelGap => $n (Default: 1)
 
@@ -66,10 +76,6 @@ Abstand zwischen Tick und Label.
 =item tickLength => $n (Default: 4)
 
 Länge eines beschrifteten Tick.
-
-=item subTickColor => $color (Default: Farbe der Achse)
-
-Farbe der Sub-Ticks.
 
 =back
 

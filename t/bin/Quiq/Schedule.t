@@ -16,6 +16,7 @@ use Quiq::Gd::Graphic::BlockDiagram;
 use Quiq::Axis::Numeric;
 use Quiq::Gd::Font;
 use Quiq::Gd::Graphic::Axis;
+use Quiq::Axis::Time;
 use Quiq::Gd::Image;
 use Quiq::Path;
 
@@ -118,25 +119,30 @@ sub test_unitTest : Test(7) {
         min => 0.5,
         max => $mtx->width,
     );
-    my $gAx = Quiq::Gd::Graphic::Axis->new(axis=>$ax);
+    my $gAx = Quiq::Gd::Graphic::Axis->new(
+        axis => $ax,
+        tickDirection => 'u',
+    );
     my $axHeight = $gAx->height;
 
-    my $ay = Quiq::Axis::Numeric->new(
+    my $ay = Quiq::Axis::Time->new(
         orientation => 'y',
         font => Quiq::Gd::Font->new('gdSmallFont'),
         length => $height,
         min => $mtx->minTime,
         max => $mtx->maxTime,
     );
-    my $gAy = Quiq::Gd::Graphic::Axis->new(axis=>$ay);
+    my $gAy = Quiq::Gd::Graphic::Axis->new(
+        axis => $ay,
+    );
     my $ayWidth = $gAy->width;
 
     my $img = Quiq::Gd::Image->new($width+$ayWidth,$height+$axHeight);
     $img->background('#ffffff');
 
-    $g->render($img,$ayWidth,0);
-    $gAx->render($img,$ayWidth,$height);
-    $gAy->render($img,$ayWidth,$height);
+    $g->render($img,$ayWidth,$axHeight);
+    $gAx->render($img,$ayWidth,$axHeight);
+    $gAy->render($img,$ayWidth,$height+$axHeight);
 
     # my $file = Quiq::Path->tempFile(-unlink=>0);
     my $file = '/tmp/blockdiagram.png';

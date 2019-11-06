@@ -45,6 +45,10 @@ L<Quiq::Axis::Numeric|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/A
 
 =item *
 
+L<Quiq::Axis::Time|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Axis/Time.pod> - Definition einer Zeit-Achse
+
+=item *
+
 L<Quiq::AxisTick|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/AxisTick.pod> - Tick einer Plot-Achse
 
 =item *
