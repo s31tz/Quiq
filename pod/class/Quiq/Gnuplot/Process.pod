@@ -46,7 +46,7 @@ wird die Bilddatei automatisch gelöscht.
 
 =head1 VERSION
 
-1.163
+1.164
 
 =head1 SOURCE
 

@@ -736,7 +736,7 @@ Generiere Attributmethode, rufe diese auf und liefere den Attributwert.
 
 =head1 VERSION
 
-1.163
+1.164
 
 =head1 SOURCE
 
