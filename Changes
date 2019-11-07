@@ -1,3 +1,36 @@
+1.164 2019-11-07
+================
+
+[Quiq::AnsiColor]
+* Doku bearbeitet
+
+[Quiq::Axis]
+* Doku bearbeitet
+
+[Quiq::AxisTick]
+* Erweitert für nicht-numerische Achsen
+
+[Quiq::Time]
+* Modul POSIX entfernt
+
+[Quiq::Axis::Numeric]
+* Doku bearbeitet
+
+[Quiq::Axis::Time]
+* Klasse hinzugefügt (unfertig)
+
+[Quiq::Gd::Graphic::Axis]
+* Attribut tickDirection (Achsenbeschriftung links, rechts, oben, unten)
+
+[Quiq::Gd::Graphic::BlockDiagram]
+* Modul POSIX entfernt
+
+[Quiq::Gd::Graphic::ColorBar]
+* Modul POSIX entfernt
+
+[Quiq::Schedule]
+* Test robust gegen verschiedene Zeitzonen gemacht
+
 1.163 2019-11-06
 ================
 

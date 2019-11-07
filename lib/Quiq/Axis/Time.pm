@@ -142,8 +142,22 @@ sub new {
 
     # Berechne Ticks
 
-    my ($length,$min,$max,$logarithmic,$debug) =
-        $self->get(qw/length min max debug/);
+    my ($length,$min,$max,$debug) = $self->get(qw/length min max debug/);
+
+    my @stepList = (
+        1,          # 1 Sekunde
+        5,          # 5 Sekunden
+        10,         # 10 Sekunden
+        30,         # 30 Sekunden
+        60,         # 1 Minute
+        300,        # 5 Minuten
+        600,        # 10 Minuten
+        1_800,      # eine halbe Stunde
+        3_600,      # eine Stunde
+        86_400,     # ein Tag
+        2_592_000,  # ungefähr ein Monat (30 Tage)
+        31_536_000, # ungefähr ein Jahr (365 Tage)
+    );
 
     my $minTickSize = $self->labelSize(int $min); # min. Breite bzw. Höhe
     my $maxTicks = $length/$minTickSize;

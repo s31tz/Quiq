@@ -74,8 +74,11 @@ sub test_unitTest : Test(7) {
 
     # Zeitgrenzen
 
-    $self->is($mtx->minTime,'1572371670.3300000');
-    $self->is($mtx->maxTime,'1572444527.0130000');
+    my $t = Quiq::Epoch->new($mtx->minTime)->as('YYYY-MM-DD HH:MI:SS');
+    $self->is($t,'2019-10-29 18:54:30');
+
+    $t = Quiq::Epoch->new($mtx->maxTime)->as('YYYY-MM-DD HH:MI:SS');
+    $self->is($t,'2019-10-30 15:08:47');
 
     # Grafik erzeugen
 
@@ -144,8 +147,8 @@ sub test_unitTest : Test(7) {
     $gAx->render($img,$ayWidth,$axHeight);
     $gAy->render($img,$ayWidth,$height+$axHeight);
 
-    # my $file = Quiq::Path->tempFile(-unlink=>0);
-    my $file = '/tmp/blockdiagram.png';
+    my $file = Quiq::Path->tempFile;
+    # my $file = '/tmp/blockdiagram.png';
     Quiq::Path->write($file,$img->png);
 
     return;

@@ -13,7 +13,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
   use Quiq::AnsiColor;
   
   my $a = Quiq::AnsiColor->new(-t STDOUT);
-  printf "%s\n",$a->str('bold white on_cyan','Hello, world!');
+  say $a->str('bold white on_cyan','Hello, world!');
 
 =head1 DESCRIPTION
 
