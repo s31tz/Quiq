@@ -104,7 +104,7 @@ Liefere das nächste SQL-Statement des Skripts. Leere Statements werden
 
 =head1 VERSION
 
-1.164
+1.165
 
 =head1 SOURCE
 
