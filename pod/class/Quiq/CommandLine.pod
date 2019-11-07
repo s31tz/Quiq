@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::CommandLine - Konstruiere eine Unix-Kommandozeile
+Quiq::CommandLine - Erstelle eine Unix-Kommandozeile
 
 =head1 BASE CLASS
 
@@ -34,10 +34,10 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Die Klasse stellt Methoden zur Verfügung, um eine
-Unix-Kommandozeile zu konstruieren. Die Klasse ist hilfreich, wenn
-einzelne Bestandteile der Kommandozeile nicht statisch sind,
-sondern variieren können.
+Die Klasse stellt Methoden zur Verfügung, um eine Unix-Kommandozeile
+zu konstruieren. Die Klasse ist hilfreich, wenn einzelne Bestandteile
+der Kommandozeile nicht statisch sind, sondern von Variablenwerten
+und Bedingungen abhängen.
 
 =head1 METHODS
 

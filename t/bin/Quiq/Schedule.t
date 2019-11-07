@@ -134,9 +134,11 @@ sub test_unitTest : Test(7) {
         length => $height,
         min => $mtx->minTime,
         max => $mtx->maxTime,
+        debug => 1,
     );
     my $gAy = Quiq::Gd::Graphic::Axis->new(
         axis => $ay,
+        reverse => 1,
     );
     my $ayWidth = $gAy->width;
 
@@ -145,10 +147,10 @@ sub test_unitTest : Test(7) {
 
     $g->render($img,$ayWidth,$axHeight);
     $gAx->render($img,$ayWidth,$axHeight);
-    $gAy->render($img,$ayWidth,$height+$axHeight);
+    $gAy->render($img,$ayWidth,$axHeight);
 
-    my $file = Quiq::Path->tempFile;
-    # my $file = '/tmp/blockdiagram.png';
+    # my $file = Quiq::Path->tempFile;
+    my $file = '/tmp/blockdiagram.png';
     Quiq::Path->write($file,$img->png);
 
     return;

@@ -192,10 +192,12 @@ des Tick von seinem Label bestimmt.
 sub width {
     my $self = shift;
 
-    my $fnt = $self->{'axis'}->font;
+    my $ax = $self->{'axis'};
+    my $fnt = $ax->font;
     my $val = $self->{'value'};
+    my $label = $ax->label($val);
 
-    return $fnt->stringWidth($val);
+    return $fnt->stringWidth($label);
 }
 
 # -----------------------------------------------------------------------------
@@ -218,10 +220,12 @@ des Tick von seinem Label bestimmt.
 sub height {
     my $self = shift;
 
-    my $fnt = $self->{'axis'}->font;
+    my $ax = $self->{'axis'};
+    my $fnt = $ax->font;
     my $val = $self->{'value'};
+    my $label = $ax->label($val);
 
-    return $fnt->stringHeight($val);
+    return $fnt->stringHeight($label);
 }
 
 # -----------------------------------------------------------------------------

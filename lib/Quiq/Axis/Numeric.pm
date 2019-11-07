@@ -18,7 +18,7 @@ use POSIX ();
 
 =head1 NAME
 
-Quiq::Axis::Numeric - Definition einer numerischen Plot-Achse
+Quiq::Axis::Numeric - Definition einer numerischen Achse
 
 =head1 BASE CLASS
 

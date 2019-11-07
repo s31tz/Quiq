@@ -142,6 +142,7 @@ sub new {
         axis => undef,
         axisColor => '000000',
         labelColor => undef,
+        reverse => 0,
         subTickColor => undef,
         tickColor => undef,
         tickDirection => undef,
@@ -195,10 +196,10 @@ sub render {
 
     # Attribute
 
-    my ($ax,$axisColor,$labelColor,$subTickColor,$tickColor,
+    my ($ax,$axisColor,$labelColor,$reverse,$subTickColor,$tickColor,
         $tickDirection,$tickLabelGap,$tickLength) =
-        $self->get(qw/axis axisColor labelColor subTickColor tickColor
-        tickDirection tickLabelGap tickLength/);
+        $self->get(qw/axis axisColor labelColor reverse subTickColor
+        tickColor tickDirection tickLabelGap tickLength/);
 
     $axisColor = $img->color($axisColor);
     if (!defined $labelColor) {
@@ -222,7 +223,14 @@ sub render {
     # Achsenlinie
 
     if ($orientation eq 'y') {
-        $img->line($x,$y,$x,$y-$length+1,$axisColor);
+        if ($reverse) {
+            # Der Achsenursprung liegt immer beim kleinsten Wert, d.h.
+            # bei reverse=>1 zeichnen wir die Achse von oben nach unten.
+            $img->line($x,$y,$x,$y+$length+1,$axisColor);
+        }
+        else {
+            $img->line($x,$y,$x,$y-$length+1,$axisColor);
+        }
     }
     else {
         $img->line($x,$y,$x+$length-1,$y,$axisColor);
@@ -255,17 +263,18 @@ sub render {
     for my $tik (@ticks) {
         my $pos = $tik->position;
         if ($orientation eq 'y') {
+            my $yPos = $reverse? $y+$pos: $y-$pos;
             if ($tickDirection eq 'r') {
-                $img->line($x+$tickLength,$y-$pos,$x+1,$y-$pos,$tickColor);
+                $img->line($x+$tickLength,$yPos,$x+1,$yPos,$tickColor);
                 $img->stringCentered($fnt,'v',$x+$tickLength+
                         $tickLabelGap+$fnt->alignRightOffset,
-                        $y-$pos,$tik->label,$labelColor);
+                        $yPos,$tik->label,$labelColor);
             }
             else { # 'l'
-                $img->line($x-$tickLength,$y-$pos,$x-1,$y-$pos,$tickColor);
+                $img->line($x-$tickLength,$yPos,$x-1,$yPos,$tickColor);
                 $img->stringCentered($fnt,'v',$x-$tickLength-
                         $tik->width-$tickLabelGap+$fnt->alignRightOffset,
-                        $y-$pos,$tik->label,$labelColor);
+                        $yPos,$tik->label,$labelColor);
             }
         }
         else {

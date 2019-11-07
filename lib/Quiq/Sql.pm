@@ -41,25 +41,27 @@ Das Programm
       ['per_nachname',type=>'STRING(30)',notNull=>1],
   );
   
-  print $stmt,"\n";
+  say $stmt;
 
 generiert das CREATE TABLE Statement
 
   CREATE TABLE person (
       per_id NUMBER PRIMARY KEY,
-      per_vorname STRING2(30),
-      per_nachname STRING2(30) NOT NULL
+      per_vorname VARCHAR2(30),
+      per_nachname VARCHAR2(30) NOT NULL
   )
 
 (man beachte die Abbildung der Kolumnentypen)
+
+Die Klasse stellt
 
 =head1 DESCRIPTION
 
 =head2 Zweck der Klasse
 
-Die Klasse unterstützt die Entwicklung von portablen
-Datenbankanwendungen, d.h. Anwendungen, die unter mehreren DBMSen
-lauffähig sind, indem sie Methoden zur Verfügung stellt, die zum
+Die Klasse unterstützt die Entwicklung von portablen Datenbankanwendungen,
+d.h. Anwendungen, die unter mehreren DBMSen lauffähig sein sollen. Dies
+wird erreicht, indem die Klasse Methoden zur Verfügung stellt, die zum
 DBMS den passenden SQL-Code erzeugen.
 
 =head2 Unterstützte Datenbanksysteme

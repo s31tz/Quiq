@@ -41,7 +41,7 @@ L<Quiq::Axis|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Axis.pod> 
 
 =item *
 
-L<Quiq::Axis::Numeric|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Axis/Numeric.pod> - Definition einer numerischen Plot-Achse
+L<Quiq::Axis::Numeric|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Axis/Numeric.pod> - Definition einer numerischen Achse
 
 =item *
 
@@ -73,7 +73,7 @@ L<Quiq::Color|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Color.pod
 
 =item *
 
-L<Quiq::CommandLine|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/CommandLine.pod> - Konstruiere eine Unix-Kommandozeile
+L<Quiq::CommandLine|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/CommandLine.pod> - Erstelle eine Unix-Kommandozeile
 
 =item *
 
