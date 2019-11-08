@@ -226,7 +226,7 @@ sub render {
         if ($reverse) {
             # Der Achsenursprung liegt immer beim kleinsten Wert, d.h.
             # bei reverse=>1 zeichnen wir die Achse von oben nach unten.
-            $img->line($x,$y,$x,$y+$length+1,$axisColor);
+            $img->line($x,$y,$x,$y+$length,$axisColor);
         }
         else {
             $img->line($x,$y,$x,$y-$length+1,$axisColor);

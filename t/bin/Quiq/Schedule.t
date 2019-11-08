@@ -17,6 +17,7 @@ use Quiq::Axis::Numeric;
 use Quiq::Gd::Font;
 use Quiq::Gd::Graphic::Axis;
 use Quiq::Axis::Time;
+use Quiq::Gd::Graphic::Grid;
 use Quiq::Gd::Image;
 use Quiq::Path;
 
@@ -41,6 +42,9 @@ sub test_unitTest : Test(7) {
     while (<$fh>) {
         chomp;
         my $prc = [split /\t/];
+if ($prc->[4] le '2019-10-30 08') {
+    next;
+}
         push @objects,$prc;
     }
     $fh->close;
@@ -49,6 +53,9 @@ sub test_unitTest : Test(7) {
 
     my $mtx = Quiq::Schedule->new(\@objects,sub {
         my $obj = shift;
+
+        my $begin = 
+
         return (
             Quiq::Epoch->new($obj->[4])->epoch,
             defined $obj->[5]? Quiq::Epoch->new($obj->[5])->epoch: undef,
@@ -82,49 +89,67 @@ sub test_unitTest : Test(7) {
 
     # Grafik erzeugen
 
-    my $width = $mtx->width * 10;
+    my $width = $mtx->width * 12;
     my $height = ($mtx->maxTime-$mtx->minTime)/30; # 1 Pixel == 30s
 
     my $g = Quiq::Gd::Graphic::BlockDiagram->new(
         width => $width,
         height => $height,
         xMin => 0,
-        xMax => $mtx->width-1,
+        xMax => $mtx->width, # Wegen der Blockdarstellung +1
         yMin => $mtx->minTime,
         yMax => $mtx->maxTime,
         objects => \@entries,
         objectCallback => sub {
             my $obj = shift;
+
             my $color;
-            if ($obj->object->[1] eq 'STRT') {
-                $color = '#0000ff';
+            my $height = $obj->end-$obj->begin;
+            my $border = 1;
+            if ($obj->object->[1] eq 'FAIL') {
+                $color = '#ff0000';
+                if ($height <= 90) {
+                    $border = 0;
+                }
+            }
+            elsif ($obj->object->[1] eq 'STRT') {
+                $color = '#1c4de1';
             }
             elsif ($obj->object->[0] eq 'UOW') {
-                $color = '#ffff00';
+                # $color = '#ffff00';
+                $color = '#ffd700';
             }
-            else {
-                $color = '#ff0000';
+            else { # PE
+                # $color = '#00ff00';
+                $color = '#0dcc1e';
             }
+
             return (
-                $obj->timeline,        # x-Position
-                $obj->begin,           # y-Position
-                1,                     # Block-Breite
-                $obj->end-$obj->begin, # Block-Höhe
-                $color,                # Block-Farbe
+                $obj->timeline, # x-Position
+                $obj->begin,    # y-Position
+                1,              # Block-Breite
+                $height,        # Block-Höhe
+                $color,         # Block-Farbe
+                $border,
             ),
         },
     );
 
+    my $labelOffset = 12/11/2;
     my $ax = Quiq::Axis::Numeric->new(
         orientation => 'x',
         font => Quiq::Gd::Font->new('gdSmallFont'),
         length => $width,
-        min => 0.5,
-        max => $mtx->width,
+        min => $labelOffset,
+        max => $mtx->width + $labelOffset,
     );
     my $gAx = Quiq::Gd::Graphic::Axis->new(
         axis => $ax,
         tickDirection => 'u',
+    );
+    my $gAx2 = Quiq::Gd::Graphic::Axis->new(
+        axis => $ax,
+        tickDirection => 'd',
     );
     my $axHeight = $gAx->height;
 
@@ -134,20 +159,33 @@ sub test_unitTest : Test(7) {
         length => $height,
         min => $mtx->minTime,
         max => $mtx->maxTime,
-        debug => 1,
+        debug => 0,
     );
     my $gAy = Quiq::Gd::Graphic::Axis->new(
         axis => $ay,
         reverse => 1,
     );
+    my $gAy2 = Quiq::Gd::Graphic::Axis->new(
+        axis => $ay,
+        tickDirection => 'r',
+        reverse => 1,
+    );
     my $ayWidth = $gAy->width;
 
-    my $img = Quiq::Gd::Image->new($width+$ayWidth,$height+$axHeight);
+    my $grid = Quiq::Gd::Graphic::Grid->new(
+        xAxis => $ax,
+        yAxis => $ay,
+    );
+
+    my $img = Quiq::Gd::Image->new($width+2*$ayWidth,$height+2*$axHeight);
     $img->background('#ffffff');
 
-    $g->render($img,$ayWidth,$axHeight);
     $gAx->render($img,$ayWidth,$axHeight);
+    $gAx2->render($img,$ayWidth,$axHeight+$height-1);
     $gAy->render($img,$ayWidth,$axHeight);
+    $gAy2->render($img,$ayWidth+$width-1,$axHeight);
+    $grid->render($img,$ayWidth,$axHeight);
+    $g->render($img,$ayWidth,$axHeight);
 
     # my $file = Quiq::Path->tempFile;
     my $file = '/tmp/blockdiagram.png';

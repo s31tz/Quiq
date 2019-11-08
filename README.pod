@@ -281,6 +281,10 @@ L<Quiq::Gd::Graphic::Graph|https://github.com/s31tz/Quiq/tree/master/pod/class/Q
 
 =item *
 
+L<Quiq::Gd::Graphic::Grid|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/Grid.pod> - Gitter eines XY-Plot
+
+=item *
+
 L<Quiq::Gd::Graphic::PointGraph|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/PointGraph.pod> - Polyline-Grafik für XY-Plot mit farbigen Punkten
 
 =item *

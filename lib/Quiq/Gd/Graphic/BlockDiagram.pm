@@ -156,14 +156,16 @@ sub render {
 
     my $black = $img->color('#000000');
     for my $obj (@$objectA) {
-        my ($oX,$oY,$oW,$oH,$rgb) = $objectCallback->($obj);
+        my ($oX,$oY,$oW,$oH,$rgb,$border) = $objectCallback->($obj);
         my $pX = $x+$m->valueToPixelX($width,$xMin,$xMax,$oX);
         my $pY = $y+$m->valueToPixelYTop($height,$yMin,$yMax,$oY);
-        my $pW = $oW*$xFactor;
+        my $pW = $oW*$xFactor-1;
         my $pH = $oH*$yFactor;
         my $color = $img->color($rgb);
         $img->filledRectangle($pX,$pY,$pX+$pW,$pY+$pH,$color);
-        $img->rectangle($pX,$pY,$pX+$pW,$pY+$pH,$black);
+        if ($border) {
+            $img->rectangle($pX,$pY,$pX+$pW,$pY+$pH,$black);
+        }
     }
 
     return;
