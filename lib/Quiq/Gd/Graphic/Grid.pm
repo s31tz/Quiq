@@ -8,7 +8,6 @@ use warnings;
 our $VERSION = '1.165';
 
 use GD ();
-use GD ();
 
 # -----------------------------------------------------------------------------
 
@@ -24,8 +23,8 @@ L<Quiq::Gd::Graphic>
 
 =head1 DESCRIPTION
 
-Ein  Objekt der Klasse definiert ein Gitter für den Hintergrund
-(oder Vordergrund, wenn es als letztes gezeichnet wird) eines
+Ein Objekt der Klasse definiert ein Gitter für den Hintergrund
+(oder Vordergrund, je nach Reihenfolge beim Zeichnen) eines
 XY-Plot. Das Gitter besteht aus gepunkteten Linien an den
 Haupt-Ticks der X- und der Y-Achse.
 
@@ -109,14 +108,13 @@ Code:
   );
   $img->background('#ffffff');
   
-  # Achsen und Grid zeichnen
+  # Grid und Achsen zeichnen
   
+  $grid->render($img,$ayWidth,$axHeight);
   $gAx->render($img,$ayWidth,$axHeight);
   $gAx->render($img,$ayWidth,$axHeight+$height-1,tickDirection=>'d');
   $gAy->render($img,$ayWidth,$axHeight);
   $gAy->render($img,$ayWidth+$width-1,$axHeight,tickDirection=>'r');
-  $grid->render($img,$ayWidth,$axHeight);
-  # $grid->render($img);
 
 Grafik:
 

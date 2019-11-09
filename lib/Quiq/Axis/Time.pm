@@ -211,7 +211,7 @@ sub new {
              valueA => \@values, # Liste der Ticks
              # Pixelkoordinaten
              tickDistance => Quiq::Math->valueToPixel($length,$min,
-                 $max,$step),
+                 $max,$min+$step),
              minGap => $minGap, # kleinster Pixelabstand zw. Ticks
              minPos => $minPos, # erste Pixelposition (kann < 0 sein)
              maxPos => $maxPos, # letzte Pixelposition
@@ -258,8 +258,40 @@ sub new {
 
     # subTick
 
-    # Aktuell keine Subticks -> s. %<Quiq::Axis::Numeric
+    my ($step,$tickDistance) = $stp->get(qw/step tickDistance/);
 
+    if ($step > 1 && $step <= 86400) {
+        my @numSubSteps;
+        if ($step == 60) {
+            @numSubSteps = (4,2);
+        }
+        elsif ($step == 3600) {
+            @numSubSteps = (4,2);
+        }
+        elsif ($step == 86400) {
+            @numSubSteps = (4,2);
+        }
+        my ($subStep,$numSubSteps);
+        for my $n (@numSubSteps) {
+            if ($tickDistance/$n > 4) {
+                $subStep = $step/$n;
+                $numSubSteps = $n;
+                last;
+            }
+        }
+        if ($subStep) {
+            my $subTickA = $self->subTicks;
+            for my $tickVal ($values[0]-$step,@values) {
+                for my $i (1..$numSubSteps) {
+                    my $val = $tickVal+$i*$subStep;
+                    if ($val >= $min && $val <= $max) {
+                        push @$subTickA,Quiq::AxisTick->new($self,$val);
+                    }
+                }
+            }
+        }
+    }
+    
     return $self;
 }
 

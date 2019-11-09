@@ -15,7 +15,7 @@ use Quiq::Assert;
 
 =head1 NAME
 
-Quiq::Gd::Graphic::Axis - Grafik einer Achse eines XY-Plot
+Quiq::Gd::Graphic::Axis - Achse eines XY-Plot
 
 =head1 BASE CLASS
 
@@ -300,12 +300,13 @@ sub render {
     for my $tik ($ax->subTicks) {
         my $pos = $tik->position;
         if ($orientation eq 'y') {
+            my $yPos = $reverse? $y+$pos: $y-$pos;
             if ($tickDirection eq 'r') {
-                $img->line($x+$subTickLength,$y-$pos,$x+1,$y-$pos,
+                $img->line($x+$subTickLength,$yPos,$x+1,$yPos,
                     $subTickColor);
             }
             else { # 'l'
-                $img->line($x-$subTickLength,$y-$pos,$x-1,$y-$pos,
+                $img->line($x-$subTickLength,$yPos,$x-1,$yPos,
                     $subTickColor);
             }
         }

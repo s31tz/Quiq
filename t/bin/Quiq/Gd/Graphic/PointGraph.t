@@ -33,7 +33,8 @@ sub test_unitTest_no_arguments : Test(4) {
         adaptPlotRegion => 1,
         x => [1,2,3,4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
         y => [1,4,9,16,25,36,49,64,81,100,121,144,169,196,225,256],
-        z => [16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1], # umgekehrter Farbverlauf
+        z => [16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1], # umgekehrter
+                                                       # Farbverlauf
         zLogarithmic => 0,
     );
     $self->is(ref $g,'Quiq::Gd::Graphic::PointGraph');

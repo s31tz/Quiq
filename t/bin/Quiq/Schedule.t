@@ -42,9 +42,9 @@ sub test_unitTest : Test(7) {
     while (<$fh>) {
         chomp;
         my $prc = [split /\t/];
-if ($prc->[4] le '2019-10-30 08') {
-    next;
-}
+#if ($prc->[4] le '2019-10-30 08') {
+#    next;
+#}
         push @objects,$prc;
     }
     $fh->close;

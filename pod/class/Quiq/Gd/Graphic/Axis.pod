@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Gd::Graphic::Axis - Grafik einer Achse eines XY-Plot
+Quiq::Gd::Graphic::Axis - Achse eines XY-Plot
 
 =head1 BASE CLASS
 

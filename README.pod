@@ -261,7 +261,7 @@ L<Quiq::Gd::Graphic|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/
 
 =item *
 
-L<Quiq::Gd::Graphic::Axis|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/Axis.pod> - Grafik einer Achse eines XY-Plot
+L<Quiq::Gd::Graphic::Axis|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/Axis.pod> - Achse eines XY-Plot
 
 =item *
 
@@ -277,7 +277,7 @@ L<Quiq::Gd::Graphic::ColorLegend|https://github.com/s31tz/Quiq/tree/master/pod/c
 
 =item *
 
-L<Quiq::Gd::Graphic::Graph|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/Graph.pod> - Polyline-Grafik für XY-Plot
+L<Quiq::Gd::Graphic::Graph|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/Graph.pod> - Polyline-Graph
 
 =item *
 
@@ -285,7 +285,7 @@ L<Quiq::Gd::Graphic::Grid|https://github.com/s31tz/Quiq/tree/master/pod/class/Qu
 
 =item *
 
-L<Quiq::Gd::Graphic::PointGraph|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/PointGraph.pod> - Polyline-Grafik für XY-Plot mit farbigen Punkten
+L<Quiq::Gd::Graphic::PointGraph|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/PointGraph.pod> - Polyline-Graph mit Farbpunkten
 
 =item *
 

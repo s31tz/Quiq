@@ -17,7 +17,7 @@ use POSIX ();
 
 =head1 NAME
 
-Quiq::Gd::Graphic::PointGraph - Polyline-Grafik für XY-Plot mit farbigen Punkten
+Quiq::Gd::Graphic::PointGraph - Polyline-Graph mit Farbpunkten
 
 =head1 BASE CLASS
 

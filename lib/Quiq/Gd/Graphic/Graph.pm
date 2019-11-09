@@ -16,7 +16,7 @@ use Quiq::Math;
 
 =head1 NAME
 
-Quiq::Gd::Graphic::Graph - Polyline-Grafik für XY-Plot
+Quiq::Gd::Graphic::Graph - Polyline-Graph
 
 =head1 BASE CLASS
 
