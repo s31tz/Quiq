@@ -100,7 +100,7 @@ sub new {
         yMin => undef,
         yMax => undef,
         objects => [],
-        objectCallback => sub {},
+        objectCallback => undef,
     );
     $self->set(@_);
 
