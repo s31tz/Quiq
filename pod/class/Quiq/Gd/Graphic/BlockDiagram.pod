@@ -42,13 +42,24 @@ Ende des Y-Wertebereichs (Weltkoodinate).
 
 Liste der Objekte, die die Blockinformation liefern.
 
-=item objectCallback => $sub (Default: sub {})
+=item objectCallback => $sub
 
-Subroutine, die aus einem Objekt die Block-Information liefert,
-mit der Signatur.
+Subroutine, die aus einem Objekt die Block-Information liefert.
+Signatur:
 
   sub {
       my $obj = shift;
+      ...
+      return ($x,$y,$width,$height,$color);
+  }
+
+=item blockCallback => $sub
+
+Subroutine, die für jeden gezeichneten Block aufgerufen wird.
+Signatur:
+
+  sub {
+      my $ = shift;
       ...
       return ($x,$y,$width,$height,$color);
   }

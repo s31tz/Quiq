@@ -50,7 +50,16 @@ besitzen.
 =item $sub
 
 Subroutine, die den Anfangs- und den Ende-Zeitpunkt des
-Objektes in Unix-Epoch liefert.
+Objektes in Unix-Epoch liefert. Signatur:
+
+  sub {
+      my $obj = shift;
+  
+      my $epoch1 = ...;
+      my $epoch2 = ...;
+  
+      return ($epoch1,$epoch2);
+  }
 
 =back
 

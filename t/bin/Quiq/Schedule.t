@@ -55,7 +55,7 @@ sub test_unitTest : Test(7) {
     my $mtx = Quiq::Schedule->new(\@objects,sub {
         my $obj = shift;
 
-        my $begin = 
+        # my $begin = 
 
         return (
             Quiq::Epoch->new($obj->[4])->epoch,

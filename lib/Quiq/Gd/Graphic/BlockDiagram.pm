@@ -55,13 +55,24 @@ Ende des Y-Wertebereichs (Weltkoodinate).
 
 Liste der Objekte, die die Blockinformation liefern.
 
-=item objectCallback => $sub (Default: sub {})
+=item objectCallback => $sub
 
-Subroutine, die aus einem Objekt die Block-Information liefert,
-mit der Signatur.
+Subroutine, die aus einem Objekt die Block-Information liefert.
+Signatur:
 
   sub {
       my $obj = shift;
+      ...
+      return ($x,$y,$width,$height,$color);
+  }
+
+=item blockCallback => $sub
+
+Subroutine, die für jeden gezeichneten Block aufgerufen wird.
+Signatur:
+
+  sub {
+      my $ = shift;
       ...
       return ($x,$y,$width,$height,$color);
   }
@@ -101,6 +112,7 @@ sub new {
         yMax => undef,
         objects => [],
         objectCallback => undef,
+        blockCallback => undef,
     );
     $self->set(@_);
 
@@ -146,6 +158,7 @@ sub render {
     my $yMax = $self->{'yMax'};
     my $objectA = $self->{'objects'};
     my $objectCallback = $self->{'objectCallback'};
+    my $blockCallback = $self->{'blockCallback'};
 
     # Zeichnen
     
@@ -159,12 +172,17 @@ sub render {
         my ($oX,$oY,$oW,$oH,$rgb,$border) = $objectCallback->($obj);
         my $pX = $x+$m->valueToPixelX($width,$xMin,$xMax,$oX);
         my $pY = $y+$m->valueToPixelYTop($height,$yMin,$yMax,$oY);
-        my $pW = $oW*$xFactor-1;
+        # my $pW = $m->roundToInt($oW*$xFactor)-1; # Lücke zwischen den Blöcken
+        # my $pH = $m->roundToInt($oH*$yFactor);
+        my $pW = $oW*$xFactor-1; # Lücke zwischen den Blöcken
         my $pH = $oH*$yFactor;
         my $color = $img->color($rgb);
         $img->filledRectangle($pX,$pY,$pX+$pW,$pY+$pH,$color);
         if ($border) {
             $img->rectangle($pX,$pY,$pX+$pW,$pY+$pH,$black);
+        }
+        if ($blockCallback) {
+            $blockCallback->($obj,$pX,$pY,$pX+$pW,$pY+$pH);
         }
     }
 
