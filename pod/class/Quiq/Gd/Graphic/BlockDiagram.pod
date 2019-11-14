@@ -53,17 +53,6 @@ Signatur:
       return ($x,$y,$width,$height,$color);
   }
 
-=item blockCallback => $sub
-
-Subroutine, die für jeden gezeichneten Block aufgerufen wird.
-Signatur:
-
-  sub {
-      my $ = shift;
-      ...
-      return ($x,$y,$width,$height,$color);
-  }
-
 =back
 
 =head1 METHODS
@@ -88,9 +77,19 @@ zurück.
 
 =head4 Synopsis
 
-  $g->render($img);
-  $g->render($img,$x,$y,@keyVal);
-  $class->render($img,$x,$y,@keyVal);
+  @blocks | $blockA = $g->render($img);
+  @blocks | $blockA = $g->render($img,$x,$y,@keyVal);
+  @blocks | $blockA = $class->render($img,$x,$y,@keyVal);
+
+=head4 Returns
+
+Liste der gezeichneten Blöcke. Im Skalarkontext eine Referenz auf
+die Liste. Ein Listenelement hat die Komponenten:
+
+  [$obj,$x1,$y1,$x2,$y2]
+
+Ein Element gibt zu jedem Objekt die Pixelkoordinaten des Blocks
+im Bild $img an.
 
 =head4 Description
 

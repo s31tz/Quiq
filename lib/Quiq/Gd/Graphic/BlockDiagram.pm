@@ -66,17 +66,6 @@ Signatur:
       return ($x,$y,$width,$height,$color);
   }
 
-=item blockCallback => $sub
-
-Subroutine, die für jeden gezeichneten Block aufgerufen wird.
-Signatur:
-
-  sub {
-      my $ = shift;
-      ...
-      return ($x,$y,$width,$height,$color);
-  }
-
 =back
 
 =head1 METHODS
@@ -112,7 +101,6 @@ sub new {
         yMax => undef,
         objects => [],
         objectCallback => undef,
-        blockCallback => undef,
     );
     $self->set(@_);
 
@@ -127,9 +115,19 @@ sub new {
 
 =head4 Synopsis
 
-  $g->render($img);
-  $g->render($img,$x,$y,@keyVal);
-  $class->render($img,$x,$y,@keyVal);
+  @blocks | $blockA = $g->render($img);
+  @blocks | $blockA = $g->render($img,$x,$y,@keyVal);
+  @blocks | $blockA = $class->render($img,$x,$y,@keyVal);
+
+=head4 Returns
+
+Liste der gezeichneten Blöcke. Im Skalarkontext eine Referenz auf
+die Liste. Ein Listenelement hat die Komponenten:
+
+  [$obj,$x1,$y1,$x2,$y2]
+
+Ein Element gibt zu jedem Objekt die Pixelkoordinaten des Blocks
+im Bild $img an.
 
 =head4 Description
 
@@ -158,7 +156,6 @@ sub render {
     my $yMax = $self->{'yMax'};
     my $objectA = $self->{'objects'};
     my $objectCallback = $self->{'objectCallback'};
-    my $blockCallback = $self->{'blockCallback'};
 
     # Zeichnen
     
@@ -167,26 +164,29 @@ sub render {
     my $xFactor = $m->valueToPixelFactor($width,$xMin,$xMax);
     my $yFactor = $m->valueToPixelFactor($height,$yMin,$yMax);
 
+    my @blocks;
     my $black = $img->color('#000000');
     for my $obj (@$objectA) {
         my ($oX,$oY,$oW,$oH,$rgb,$border) = $objectCallback->($obj);
+
+        my $color = $img->color($rgb);
+
         my $pX = $x+$m->valueToPixelX($width,$xMin,$xMax,$oX);
         my $pY = $y+$m->valueToPixelYTop($height,$yMin,$yMax,$oY);
-        # my $pW = $m->roundToInt($oW*$xFactor)-1; # Lücke zwischen den Blöcken
-        # my $pH = $m->roundToInt($oH*$yFactor);
-        my $pW = $oW*$xFactor-1; # Lücke zwischen den Blöcken
+        my $pW = $oW*$xFactor-1; # -1 -> 1 Pixel Lücke zwischen den Blöcken
         my $pH = $oH*$yFactor;
-        my $color = $img->color($rgb);
-        $img->filledRectangle($pX,$pY,$pX+$pW,$pY+$pH,$color);
+
+        my ($x1,$y1,$x2,$y2) = ($pX,$pY,$pX+$pW,$pY+$pH);
+
+        $img->filledRectangle($x1,$y1,$x2,$y2,$color);
         if ($border) {
-            $img->rectangle($pX,$pY,$pX+$pW,$pY+$pH,$black);
+            $img->rectangle($x1,$y1,$x2,$y2,$black);
         }
-        if ($blockCallback) {
-            $blockCallback->($obj,$pX,$pY,$pX+$pW,$pY+$pH);
-        }
+
+        push @blocks,[$obj,$x1,$y1,$x2,$y2];
     }
 
-    return;
+    return wantarray? @blocks: \@blocks;
 }
 
 # -----------------------------------------------------------------------------
