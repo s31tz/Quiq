@@ -53,6 +53,10 @@ L<Quiq::AxisTick|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/AxisTi
 
 =item *
 
+L<Quiq::Cache|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Cache.pod> - Cache Daten in Datei
+
+=item *
+
 L<Quiq::Cascm|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Cascm.pod> - Schnittstelle zu CA Harvest SCM
 
 =item *

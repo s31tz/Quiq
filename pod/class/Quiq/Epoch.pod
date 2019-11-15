@@ -48,7 +48,52 @@ ISO-Zeitangabe $iso, letztere interpretiert in der lokalen
 Zeitzone, und liefere dieses Objekt zurück. Ist kein Argument
 angegeben, wird der aktuelle Zeitpunkt genommen.
 
-=head2 Arithmetik
+=head2 Zeitkomponenten
+
+=head3 dayOfWeek() - Wochentagsnummer
+
+=head4 Synopsis
+
+  $i = $t->dayOfWeek;
+
+=head4 Returns
+
+Integer
+
+=head4 Description
+
+Liefere Wochentagsnummer im Bereich 0-6, 0 = Sonntag.
+
+=head3 dayAbbr() - Abgekürzter Wochentagsname
+
+=head4 Synopsis
+
+  $abbr = $ti->dayAbbr;
+
+=head4 Returns
+
+String
+
+=head4 Description
+
+Liefere abgekürzten Wochentagsnamen (So, Mo, Di, Mi, Do, Fr, Sa).
+
+=head3 dayName() - Wochentagsname
+
+=head4 Synopsis
+
+  $name = $ti->dayName;
+
+=head4 Returns
+
+String
+
+=head4 Description
+
+Liefere Wochentagsname (Sonntag, Montag, Dienstag, Mittwoch, Donnerstag,
+Freitag, Samstag).
+
+=head2 Zeit-Arithmetik
 
 =head3 minus() - Verschiebe Zeitpunkt in Vergangenheit
 
