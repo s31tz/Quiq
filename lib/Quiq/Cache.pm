@@ -27,6 +27,7 @@ L<Quiq::Hash>
 
   use Quiq::Cache;
   
+  
   my $c = Quiq::Cache->new($cacheDir,$duration,\@key)
       -inactive => $condition,
   );
@@ -34,7 +35,7 @@ L<Quiq::Hash>
       return $ref; # liefere Datenstruktur aus Cache
   }
   
-  # ... berechne Daten ...
+  # ... baue Datenstruktur auf ...
   
   $c->write($ref); # schreibe Datenstuktur auf Cache
   
@@ -44,16 +45,14 @@ L<Quiq::Hash>
 
 Ein Objekt der Klasse verwaltet einen Cache. Der Cache ist ein Verzeichnis
 (C<$cacheDir>) im Dateisystem. Eine Cachedatei speichert eine beliebige
-Datenstruktur. Die Datenstruktur kann ein Objekt (d.h. geblesst) sein.
-Es ist auch kein Problem, wenn die Datenstruktur zirkulär ist.
-Zur Speicherung nutzt die Klasse das Modul C<Storable>.
+Datenstruktur. Diese wird von C<Storable> geschrieben und gelesen.
+Die Datenstruktur darf ein Objekt (also geblesst) oder zirkulär sein.
+Die Cachdatei ist $duration Sekunden gültig. Danach ist sie
+ungültig und wird neu berechnet.
 
-Die Cachdatei ist $duration Sekunden gültig (valid). Danach ist sie
-ungültig (invalid), die Datenstruktur wird neu berechnet und
-auf die Cachedatei geschrieben.
-
-Kein Caching findet statt, d.h. es wird weder aus dem Cache gelesen
-noch wird dieser geschrieben, wenn C<$condition> wahr ist.
+Die Aufrufe L<read|"read() - Lies Daten aus Cachdatei">() und L<write|"write() - Schreibe Daten auf Cachdatei">() haben keine Wirkung, wenn
+C<$condition> wahr ist. Damit kann das Caching für bestimmte
+Fälle abgschaltet werden.
 
 Das Array @key besteht aus ein oder mehr einzelnen Werten, die zusammen
 den Schlüssel für die Cachdatei bilden. Der interne Schüssel ist der
