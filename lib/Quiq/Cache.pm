@@ -30,15 +30,13 @@ L<Quiq::Hash>
   my $c = Quiq::Cache->new($cacheDir,$duration,\@key)
       -inactive => $condition,
   );
-  if ($c->isValid) {
-      return $c->read; # liefere Datenstruktur aus Cache
+  if (my $ref = $c->read) {
+      return $ref; # liefere Datenstruktur aus Cache
   }
   
   # ... berechne Daten ...
   
-  if ($c->isInvalid) {
-      $c->write($ref); # schreibe Datenstuktur auf Cache
-  }
+  $c->write($ref); # schreibe Datenstuktur auf Cache
   
   return $ref;
 
@@ -68,18 +66,16 @@ Cachen einer HTML-Seite, die von einem einzigen Parameter $day abhängt:
   my $day = $self->param('day') // $today;
   
   my $c = Quiq::Cache->new('~/var/html-cache',43_200,[$day],
-      -inactive => $day eq $today? 1: 0,
+      -inactive => $day eq $today,
   );
-  if ($c->isValid) {
-      $self->render(text=>${$c->read});
+  if (my $ref = $c->read) {
+      $self->render(text=>$$ref);
       return;
   }
   
   my $html = ...
   
-  if ($c->isInvalid) {
-      $c->write(\$html);
-  }
+  $c->write(\$html);
 
 =head1 METHODS
 
@@ -117,7 +113,7 @@ Die zur Bildung des Hash herangezogenen Werte.
 =item -inactive => $bool (default: 0)
 
 Wenn wahr, ist der Cache inaktiv, d.h. beide Testmethoden
-$c->L<isValid|"isValid() - Prüfe, ob Cache-Inhalt gelesen werden kann">() und $c->L<isInvalid|"isInvalid() - Prüfe, ob Cache-Datei geschrieben werden muss">() liefern I<false>.
+$c->[ANCHOR NOT FOUND]() und $c->[ANCHOR NOT FOUND]() liefern I<false>.
 
 =item -prefix => $str (Default: '')
 
@@ -162,75 +158,6 @@ sub new {
 
 =head2 Objektmethoden
 
-=head3 isValid() - Prüfe, ob Cache-Inhalt gelesen werden kann
-
-=head4 Synopsis
-
-  $bool = $c->isValid;
-
-=head4 Returns
-
-Boolean
-
-=head4 Description
-
-Prüfe, ob die Cachdatei gelesen werden kann. Dies ist der Fall,
-wenn der Cache aktiv ist und die Datei existiert und entweder ewig
-gültig ist ($duration == 0) oder seit dem letzten Schreiben weniger
-als $duration Sekunden vergangen sind.
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub isValid {
-    my $self = shift;
-
-    if ($self->{'inactive'}) {
-        # Wenn der Cache inaktiv ist, liefern wir immer 0
-        return 0;
-    }
-
-    my ($file,$duration) = @$self{qw/file duration/};
-    my $p = Quiq::Path->new;
-
-    return $p->exists($file) && ($duration == 0 || $p->age($file) < $duration);
-}
-
-# -----------------------------------------------------------------------------
-
-=head3 isInvalid() - Prüfe, ob Cache-Datei geschrieben werden muss
-
-=head4 Synopsis
-
-  $bool = $c->isInvalid;
-
-=head4 Returns
-
-Boolean
-
-=head4 Description
-
-Prüfe, ob die Cachdatei geschrieben werden muss. Dies ist der Fall,
-wenn der Cache aktiv ist und die Cachdatei nicht .
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub isInvalid {
-    my $self = shift;
-
-    if ($self->{'inactive'}) {
-        # Wenn der Cache inaktiv ist, liefern wir immer 0
-        return 0;
-    }
-
-    return !$self->isValid;
-}
-
-# -----------------------------------------------------------------------------
-
 =head3 read() - Lies Daten aus Cachdatei
 
 =head4 Synopsis
@@ -239,11 +166,28 @@ sub isInvalid {
 
 =head4 Returns
 
-Referenz auf Datenstruktur
+Referenz auf Datenstruktur oder C<undef>
 
 =head4 Description
 
-Lies den Inhalt aus der Cachdatei
+Liefere eine Referenz auf die Datenstruktur in der Cachdatei oder
+C<undef>. Wir liefern C<undef>, wenn
+
+=over 2
+
+=item *
+
+der Cache inaktiv ist
+
+=item *
+
+die Cachdatei nicht existiert
+
+=item *
+
+die Cachdatei exisiert, aber älter ist als die Gültigkeitsdauer
+
+=back
 
 =cut
 
@@ -253,10 +197,16 @@ sub read {
     my $self = shift;
 
     if ($self->{'inactive'}) {
-        $self->throw;
+        return $ref;
     }
 
-    return Quiq::Storable->thaw(Quiq::Path->read($self->{'file'}));
+    my $p = Quiq::Path->new;
+    my ($file,$duration) = @{$self}{qw/file duration/};
+    if (!$p->exists($file) || $duration && $p->age($file) > $duration) {
+        return undef;
+    }
+
+    return Quiq::Storable->thaw(Quiq::Path->read($file));
 }
 
 # -----------------------------------------------------------------------------
@@ -288,13 +238,10 @@ Schreibe Datenstruktur $ref auf die Cachedatei.
 sub write {
     my ($self,$ref) = @_;
 
-    if ($self->{'inactive'}) {
-        $self->throw;
+    if (!$self->{'inactive'}) {
+        my $file = $self->{'file'};
+        Quiq::Path->write($file,Quiq::Storable->freeze($ref));
     }
-
-    my $file = $self->{'file'};
-    my $data = Quiq::Storable->freeze($ref);
-    Quiq::Path->write($file,$data);
 
     return;
 }
