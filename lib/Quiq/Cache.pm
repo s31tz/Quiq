@@ -72,7 +72,7 @@ Cachen einer HTML-Seite, die von einem einzigen Parameter $day abhängt:
       return;
   }
   
-  my $html = ...
+  my $html = ...HTML erzeugen...
   
   $c->write(\$html);
 
