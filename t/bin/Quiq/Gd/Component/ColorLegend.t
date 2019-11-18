@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Quiq::Gd::Graphic::BlockDiagram::Test;
+package Quiq::Gd::Component::ColorLegend::Test;
 use base qw/Quiq::Test::Class/;
 
 use v5.10;
@@ -10,12 +10,12 @@ use warnings;
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
-    shift->useOk('Quiq::Gd::Graphic::BlockDiagram');
+    shift->useOk('Quiq::Gd::Component::ColorLegend');
 }
 
 # -----------------------------------------------------------------------------
 
 package main;
-Quiq::Gd::Graphic::BlockDiagram::Test->runTests;
+Quiq::Gd::Component::ColorLegend::Test->runTests;
 
 # eof

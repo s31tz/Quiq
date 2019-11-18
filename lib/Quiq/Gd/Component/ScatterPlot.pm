@@ -1,5 +1,5 @@
-package Quiq::Gd::Graphic::PointGraph;
-use base qw/Quiq::Gd::Graphic::Graph/;
+package Quiq::Gd::Component::ScatterPlot;
+use base qw/Quiq::Gd::Component::Graph/;
 
 use v5.10;
 use strict;
@@ -17,15 +17,15 @@ use POSIX ();
 
 =head1 NAME
 
-Quiq::Gd::Graphic::PointGraph - Polyline-Graph mit Farbpunkten
+Quiq::Gd::Component::ScatterPlot - Fläche mit Farbpunkten
 
 =head1 BASE CLASS
 
-L<Quiq::Gd::Graphic::Graph>
+L<Quiq::Gd::Component::Graph>
 
 =head1 DESCRIPTION
 
-Die Klasse erweitert die Basisklasse Quiq::Gd::Graphic::Graph um
+Die Klasse erweitert die Basisklasse Quiq::Gd::Component::Graph um
 eine Z-Komponente. Die Werte dieser Komponente werden in Farbwerte
 übersetzt und in den Positionen der X,Y-Komponenten abgetragen.
 
@@ -66,7 +66,7 @@ Farbe für Z-Werte, die zMax überschreiten.
 Code:
 
   use Quiq::Gd::Image;
-  use Quiq::Gd::Graphic::PointGraph;
+  use Quiq::Gd::Component::ScatterPlot;
   
   # Konfiguration
   
@@ -86,7 +86,7 @@ Code:
   
   # Grafik-Objekt instantiieren
   
-  my $g = Quiq::Gd::Graphic::PointGraph->new(
+  my $g = Quiq::Gd::Component::ScatterPlot->new(
       width=>$width,
       height=>$height,
       pointSize=>$pointSize,

@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Quiq::Gd::Graphic::ColorBar::Test;
+package Quiq::Gd::Component::ColorBar::Test;
 use base qw/Quiq::Test::Class/;
 
 use v5.10;
@@ -13,7 +13,7 @@ use Quiq::Path;
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
-    shift->useOk('Quiq::Gd::Graphic::ColorBar');
+    shift->useOk('Quiq::Gd::Component::ColorBar');
 }
 
 # -----------------------------------------------------------------------------
@@ -24,11 +24,11 @@ sub test_unitTest_no_arguments : Test(1) {
     my $width = 300;
     my $height = 50;
 
-    my $g = Quiq::Gd::Graphic::ColorBar->new(
+    my $g = Quiq::Gd::Component::ColorBar->new(
         width => $width,
         height => $height,
     );
-    $self->is(ref $g,'Quiq::Gd::Graphic::ColorBar');
+    $self->is(ref $g,'Quiq::Gd::Component::ColorBar');
 
     my $img = Quiq::Gd::Image->new($width,$height);
     $img->background('ffffff');
@@ -43,11 +43,11 @@ sub test_unitTest_colors : Test(2) {
     my $width = 300;
     my $height = 50;
 
-    my $g = Quiq::Gd::Graphic::ColorBar->new(
+    my $g = Quiq::Gd::Component::ColorBar->new(
         width => $width,
         height => $height,
     );
-    $self->is(ref $g,'Quiq::Gd::Graphic::ColorBar');
+    $self->is(ref $g,'Quiq::Gd::Component::ColorBar');
 
     my $img = Quiq::Gd::Image->new($width,$height);
     $img->background('ffffff');
@@ -68,6 +68,6 @@ sub test_unitTest_colors : Test(2) {
 # -----------------------------------------------------------------------------
 
 package main;
-Quiq::Gd::Graphic::ColorBar::Test->runTests;
+Quiq::Gd::Component::ColorBar::Test->runTests;
 
 # eof

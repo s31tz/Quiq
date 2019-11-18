@@ -1,5 +1,5 @@
-package Quiq::Gd::Graphic::ColorLegend;
-use base qw/Quiq::Gd::Graphic/;
+package Quiq::Gd::Component::ColorLegend;
+use base qw/Quiq::Gd::Component/;
 
 use v5.10;
 use strict;
@@ -8,8 +8,8 @@ use warnings;
 our $VERSION = '1.165';
 
 use Quiq::Axis::Numeric;
-use Quiq::Gd::Graphic::Axis;
-use Quiq::Gd::Graphic::ColorBar;
+use Quiq::Gd::Component::Axis;
+use Quiq::Gd::Component::ColorBar;
 
 # -----------------------------------------------------------------------------
 
@@ -17,11 +17,11 @@ use Quiq::Gd::Graphic::ColorBar;
 
 =head1 NAME
 
-Quiq::Gd::Graphic::ColorLegend - Legende zu einem Farb-Plot
+Quiq::Gd::Component::ColorLegend - Legende zu einem Farb-Plot
 
 =head1 BASE CLASS
 
-L<Quiq::Gd::Graphic>
+L<Quiq::Gd::Component>
 
 =head1 DESCRIPTION
 
@@ -114,7 +114,7 @@ bei der Instantiierung des Grafik-Objekts noch nicht existiert.
 
   my $width = 400;
   
-  my $g = Quiq::Gd::Graphic::ColorLegend->new(
+  my $g = Quiq::Gd::Component::ColorLegend->new(
       title => 'Test',
       titleFont => Quiq::Gd::Font->new('Blob/font/pala.ttf,14'),
       labelFont => Quiq::Gd::Font->new('Blob/font/pala.ttf,10'),
@@ -205,7 +205,7 @@ sub new {
         debug => 0,
     );
 
-    my $g = Quiq::Gd::Graphic::Axis->new(
+    my $g = Quiq::Gd::Component::Axis->new(
        axis => $ax,
     );
     $self->set(axis=>$g);
@@ -281,7 +281,7 @@ sub render {
 
     # 3. Gradient
 
-    my $g = Quiq::Gd::Graphic::ColorBar->new(
+    my $g = Quiq::Gd::Component::ColorBar->new(
         width => $ax->length,
         height => $blockHeight,
     );

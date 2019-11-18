@@ -2,11 +2,11 @@
 
 =head1 NAME
 
-Quiq::Gd::Graphic::BlockDiagram - Farbige Blöcke in einer Fläche
+Quiq::Gd::Component::BlockDiagram - Farbige Blöcke in einer Fläche
 
 =head1 BASE CLASS
 
-L<Quiq::Gd::Graphic|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic.pod>
+L<Quiq::Gd::Component|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Component.pod>
 
 =head1 ATTRIBUTES
 
@@ -101,7 +101,7 @@ Zeichne die Grafik in Bild $img an Position ($x,$y).
 
 =head1 SOURCE
 
-L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Gd/Graphic/BlockDiagram.pm>
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Gd/Component/BlockDiagram.pm>
 
 =head1 AUTHOR
 

@@ -2,11 +2,11 @@
 
 =head1 NAME
 
-Quiq::Gd::Graphic::Axis - Achse eines XY-Plot
+Quiq::Gd::Component::Axis - Achse eines XY-Plot
 
 =head1 BASE CLASS
 
-L<Quiq::Gd::Graphic|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic.pod>
+L<Quiq::Gd::Component|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Component.pod>
 
 =head1 SYNOPSIS
 
@@ -22,7 +22,7 @@ Numerische X-Achse definieren:
 
 Achsengrafik-Objekt erzeugen:
 
-  $g = Quiq::Gd::Graphic::Axis->new(axis=>$ax);
+  $g = Quiq::Gd::Component::Axis->new(axis=>$ax);
 
 Vertikalen Platzbedarf der Achsengrafik ermitteln:
 
@@ -184,7 +184,7 @@ oben und unten höher sein als die Länge der Achse.
 
 =head1 SOURCE
 
-L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Gd/Graphic/Axis.pm>
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Gd/Component/Axis.pm>
 
 =head1 AUTHOR
 

@@ -1,5 +1,5 @@
-package Quiq::Gd::Graphic::Grid;
-use base qw/Quiq::Gd::Graphic/;
+package Quiq::Gd::Component::Grid;
+use base qw/Quiq::Gd::Component/;
 
 use v5.10;
 use strict;
@@ -15,11 +15,11 @@ use GD ();
 
 =head1 NAME
 
-Quiq::Gd::Graphic::Grid - Gitter eines XY-Plot
+Quiq::Gd::Component::Grid - Gitter eines XY-Plot
 
 =head1 BASE CLASS
 
-L<Quiq::Gd::Graphic>
+L<Quiq::Gd::Component>
 
 =head1 DESCRIPTION
 
@@ -54,7 +54,7 @@ Farbe der Gitterlinien.
 Code:
 
   use Quiq::Gd::Image;
-  use Quiq::Gd::Graphic::Grid;
+  use Quiq::Gd::Component::Grid;
   use Quiq::Axis::Numeric;
   use Quiq::Axis::Time;
   
@@ -69,7 +69,7 @@ Code:
       min => 0,
       max => 20,
   );
-  my $gAx = Quiq::Gd::Graphic::Axis->new(
+  my $gAx = Quiq::Gd::Component::Axis->new(
       axis => $ax,
       tickDirection => 'u',
   );
@@ -82,14 +82,14 @@ Code:
       max => Quiq::Epoch->new('2019-11-08 16:00:00')->epoch,
       debug => 0,
   );
-  my $gAy = Quiq::Gd::Graphic::Axis->new(
+  my $gAy = Quiq::Gd::Component::Axis->new(
       axis => $ay,
       reverse => 1,
   );
   
   # Gitter definieren
   
-  my $grid = Quiq::Gd::Graphic::Grid->new(
+  my $grid = Quiq::Gd::Component::Grid->new(
       xAxis => $ax,
       yAxis => $ay,
       color => '#ff0000',

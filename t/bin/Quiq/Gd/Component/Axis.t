@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Quiq::Gd::Graphic::ColorLegend::Test;
+package Quiq::Gd::Component::Axis::Test;
 use base qw/Quiq::Test::Class/;
 
 use v5.10;
@@ -10,12 +10,12 @@ use warnings;
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
-    shift->useOk('Quiq::Gd::Graphic::ColorLegend');
+    shift->useOk('Quiq::Gd::Component::Axis');
 }
 
 # -----------------------------------------------------------------------------
 
 package main;
-Quiq::Gd::Graphic::ColorLegend::Test->runTests;
+Quiq::Gd::Component::Axis::Test->runTests;
 
 # eof

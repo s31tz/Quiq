@@ -2,11 +2,11 @@
 
 =head1 NAME
 
-Quiq::Gd::Graphic::Graph - Polyline-Graph
+Quiq::Gd::Component::Graph - Polyline-Graph
 
 =head1 BASE CLASS
 
-L<Quiq::Gd::Graphic|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic.pod>
+L<Quiq::Gd::Component|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Component.pod>
 
 =head1 DESCRIPTION
 
@@ -331,7 +331,7 @@ Konstruktoraufruf gesetzt oder aus den Daten ermittelt wurde.
 
 =head1 SOURCE
 
-L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Gd/Graphic/Graph.pm>
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Gd/Component/Graph.pm>
 
 =head1 AUTHOR
 

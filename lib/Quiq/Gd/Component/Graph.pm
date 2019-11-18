@@ -1,5 +1,5 @@
-package Quiq::Gd::Graphic::Graph;
-use base qw/Quiq::Gd::Graphic/;
+package Quiq::Gd::Component::Graph;
+use base qw/Quiq::Gd::Component/;
 
 use v5.10;
 use strict;
@@ -16,11 +16,11 @@ use Quiq::Math;
 
 =head1 NAME
 
-Quiq::Gd::Graphic::Graph - Polyline-Graph
+Quiq::Gd::Component::Graph - Polyline-Graph
 
 =head1 BASE CLASS
 
-L<Quiq::Gd::Graphic>
+L<Quiq::Gd::Component>
 
 =head1 DESCRIPTION
 

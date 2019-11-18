@@ -1,5 +1,5 @@
-package Quiq::Gd::Graphic::Axis;
-use base qw/Quiq::Gd::Graphic/;
+package Quiq::Gd::Component::Axis;
+use base qw/Quiq::Gd::Component/;
 
 use v5.10;
 use strict;
@@ -15,11 +15,11 @@ use Quiq::Assert;
 
 =head1 NAME
 
-Quiq::Gd::Graphic::Axis - Achse eines XY-Plot
+Quiq::Gd::Component::Axis - Achse eines XY-Plot
 
 =head1 BASE CLASS
 
-L<Quiq::Gd::Graphic>
+L<Quiq::Gd::Component>
 
 =head1 SYNOPSIS
 
@@ -35,7 +35,7 @@ Numerische X-Achse definieren:
 
 Achsengrafik-Objekt erzeugen:
 
-  $g = Quiq::Gd::Graphic::Axis->new(axis=>$ax);
+  $g = Quiq::Gd::Component::Axis->new(axis=>$ax);
 
 Vertikalen Platzbedarf der Achsengrafik ermitteln:
 

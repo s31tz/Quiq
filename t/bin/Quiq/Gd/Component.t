@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Quiq::Gd::Graphic::Axis::Test;
+package Quiq::Gd::Component::Test;
 use base qw/Quiq::Test::Class/;
 
 use v5.10;
@@ -10,12 +10,12 @@ use warnings;
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
-    shift->useOk('Quiq::Gd::Graphic::Axis');
+    shift->useOk('Quiq::Gd::Component');
 }
 
 # -----------------------------------------------------------------------------
 
 package main;
-Quiq::Gd::Graphic::Axis::Test->runTests;
+Quiq::Gd::Component::Test->runTests;
 
 # eof

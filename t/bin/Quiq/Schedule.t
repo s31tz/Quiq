@@ -12,12 +12,12 @@ use Quiq::Test::Class;
 use Quiq::FileHandle;
 use Quiq::Schedule;
 use Quiq::Epoch;
-use Quiq::Gd::Graphic::BlockDiagram;
+use Quiq::Gd::Component::BlockDiagram;
 use Quiq::Axis::Numeric;
 use Quiq::Gd::Font;
-use Quiq::Gd::Graphic::Axis;
+use Quiq::Gd::Component::Axis;
 use Quiq::Axis::Time;
-use Quiq::Gd::Graphic::Grid;
+use Quiq::Gd::Component::Grid;
 use Quiq::Gd::Image;
 use Quiq::Path;
 
@@ -93,7 +93,7 @@ sub test_unitTest : Test(7) {
     my $width = $mtx->width * 12;
     my $height = ($mtx->maxTime-$mtx->minTime)/30; # 1 Pixel == 30s
 
-    my $g = Quiq::Gd::Graphic::BlockDiagram->new(
+    my $g = Quiq::Gd::Component::BlockDiagram->new(
         width => $width,
         height => $height,
         xMin => 0,
@@ -144,11 +144,11 @@ sub test_unitTest : Test(7) {
         min => $labelOffset,
         max => $mtx->width + $labelOffset,
     );
-    my $gAx = Quiq::Gd::Graphic::Axis->new(
+    my $gAx = Quiq::Gd::Component::Axis->new(
         axis => $ax,
         tickDirection => 'u',
     );
-    my $gAx2 = Quiq::Gd::Graphic::Axis->new(
+    my $gAx2 = Quiq::Gd::Component::Axis->new(
         axis => $ax,
         tickDirection => 'd',
     );
@@ -162,18 +162,18 @@ sub test_unitTest : Test(7) {
         max => $mtx->maxTime,
         debug => 0,
     );
-    my $gAy = Quiq::Gd::Graphic::Axis->new(
+    my $gAy = Quiq::Gd::Component::Axis->new(
         axis => $ay,
         reverse => 1,
     );
-    my $gAy2 = Quiq::Gd::Graphic::Axis->new(
+    my $gAy2 = Quiq::Gd::Component::Axis->new(
         axis => $ay,
         tickDirection => 'r',
         reverse => 1,
     );
     my $ayWidth = $gAy->width;
 
-    my $grid = Quiq::Gd::Graphic::Grid->new(
+    my $grid = Quiq::Gd::Component::Grid->new(
         xAxis => $ax,
         yAxis => $ay,
     );

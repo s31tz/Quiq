@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Quiq::Gd::Graphic::Graph::Test;
+package Quiq::Gd::Component::Graph::Test;
 use base qw/Quiq::Test::Class/;
 
 use v5.10;
@@ -14,7 +14,7 @@ use Quiq::Path;
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
-    shift->useOk('Quiq::Gd::Graphic::Graph');
+    shift->useOk('Quiq::Gd::Component::Graph');
 }
 
 # -----------------------------------------------------------------------------
@@ -22,11 +22,11 @@ sub test_loadClass : Init(1) {
 sub test_unitTest_no_arguments : Test(5) {
     my $self = shift;
 
-    my $g = Quiq::Gd::Graphic::Graph->new(
+    my $g = Quiq::Gd::Component::Graph->new(
         width => 100,
         height => 100,
     );
-    $self->is(ref $g,'Quiq::Gd::Graphic::Graph');
+    $self->is(ref $g,'Quiq::Gd::Component::Graph');
 
     my $val = $g->xMin;
     $self->is($val,-1);
@@ -49,7 +49,7 @@ sub test_unitTest_simple : Test(5) {
 
     # Grafikobjekt instantiieren
 
-    my $g = Quiq::Gd::Graphic::Graph->new(
+    my $g = Quiq::Gd::Component::Graph->new(
         width => $width,
         height => $height,
         x => [-1,0,1],
@@ -83,6 +83,6 @@ sub test_unitTest_simple : Test(5) {
 # -----------------------------------------------------------------------------
 
 package main;
-Quiq::Gd::Graphic::Graph::Test->runTests;
+Quiq::Gd::Component::Graph::Test->runTests;
 
 # eof

@@ -1,18 +1,29 @@
+package Quiq::Gd::Component;
+use base qw/Quiq::Hash/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.165';
+
+# -----------------------------------------------------------------------------
+
 =encoding utf8
 
 =head1 NAME
 
-Quiq::Gd::Graphic - Basisklasse aller Graphic-Klassen (abstrakt)
+Quiq::Gd::Component - Basisklasse aller Component-Klassen (abstrakt)
 
 =head1 BASE CLASS
 
-L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+L<Quiq::Hash>
 
 =head1 DESCRIPTION
 
 Die von dieser Klasse abgeleiteten Klassen realisieren Grafiken oder
 Grafik-Elemente, die mittels GD auf ein Rasterbild gezeichnet werden
-können. Dies geschieht in zwei Schritten:
+kÃ¶nnen. Dies geschieht in zwei Schritten:
 
 =over 4
 
@@ -26,10 +37,10 @@ Zeichnen der Grafik
 
 =back
 
-Diese Aufteilung hat gegenüber einem direkten Zeichnen den Vorteil,
+Diese Aufteilung hat gegenÃ¼ber einem direkten Zeichnen den Vorteil,
 dass nach Schritt 1 Eigenschaften des Grafik-Objekts abgefragt werden
-können, die u.U. schwer zu ermitteln sind, wie z.B. die Breite
-und die Höhe. Grafiken mit dynamischen Eigenschaften können dann
+kÃ¶nnen, die u.U. schwer zu ermitteln sind, wie z.B. die Breite
+und die HÃ¶he. Grafiken mit dynamischen Eigenschaften kÃ¶nnen dann
 leichter zu einem resultierenden Ganzen kombiniert werden.
 
 Beispiel: Eine Plot-Grafik, bestehend aus Graphen, Achsen,
@@ -51,15 +62,15 @@ Beschriftungen, einem Gitter usw.
 
   $g->render($img,$x,$y,@keyVal); # $x,$y,@keyVal sind optional
 
-Als Eigenschaften @keyVal können hier Eigenschaften des Bildes $img,
+Als Eigenschaften @keyVal kÃ¶nnen hier Eigenschaften des Bildes $img,
 wie z.B. Farben, gesetzt werden. Diese sind u.U. zum Zeitpunkt der
-Instantiierung des Grafik-Objektes noch nicht verfügbar.
+Instantiierung des Grafik-Objektes noch nicht verfÃ¼gbar.
 
 =head3 Unmittelbares Zeichnen
 
   $class->render($img,$x,$y,@keyVal);
 
-Ein unmittelbares Zeichnen ist auch möglich, indem die Methode C<render()>
+Ein unmittelbares Zeichnen ist auch mÃ¶glich, indem die Methode C<render()>
 als Klassenmethode unter Angabe aller Eigenschaften @keyVal des
 Grafik-Objekts aufgerufen wird.
 
@@ -77,13 +88,13 @@ Grafik-Objekts aufgerufen wird.
 
 Liefere die Referenz auf das Grafik-Objekt. Die Methode
 self() wird in den render()-Methoden der abgeleiteten Klassen
-genutzt. Denn diese können sowohl als Objekt- wie auch als
-Klassenmethode aufgerufen werden. Die Methode sorgt dafür, dass
+genutzt. Denn diese kÃ¶nnen sowohl als Objekt- wie auch als
+Klassenmethode aufgerufen werden. Die Methode sorgt dafÃ¼r, dass
 das Objekt im Falle eines Aufrufs als Klassenmethode mit den
 Attributen @keyVal instantiiert wird. Andernfalls werden die
 Attribute auf dem bestehenden Objekt gesetzt.
 
-Das Gerüst der Methode render() in den abgeleiteten Klassen sieht
+Das GerÃ¼st der Methode render() in den abgeleiteten Klassen sieht
 unter Verwendung der Methode self() so aus:
 
   sub render {
@@ -101,6 +112,32 @@ unter Verwendung der Methode self() so aus:
       return;
   }
 
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub self {
+    my $this = shift;
+    # @_: @keyVal
+
+    my $self;
+    if (ref $this) {
+        # Das Objekt ist bereits instantiiert. Wir setzen die angegebenen
+        # Attribute, falls vorhanden.
+
+        $self = $this;
+        $self->set(@_);
+    }
+    else {
+        # Wir instantiieren das Objekt mit den angegebenen Attributen
+        $self = $this->new(@_);
+    }
+
+    return $self;
+}
+
+# -----------------------------------------------------------------------------
+
 =head2 Objektmethoden
 
 =head3 width() - Breite der Grafik
@@ -114,7 +151,17 @@ unter Verwendung der Methode self() so aus:
 Liefere die Breite der Grafik. Diese Basisklassenmethode liefert den
 Wert des Attributs C<width>.
 
-=head3 height() - Höhe der Grafik
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub width {
+    return shift->{'width'};
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 height() - HÃ¶he der Grafik
 
 =head4 Synopsis
 
@@ -122,16 +169,22 @@ Wert des Attributs C<width>.
 
 =head4 Description
 
-Liefere die Höhe der Grafik. Muss die Höhe berechnet werden,
-überschreibt die Subklasse die Methode.
+Liefere die HÃ¶he der Grafik. Muss die HÃ¶he berechnet werden,
+Ã¼berschreibt die Subklasse die Methode.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub height {
+    return shift->{'height'};
+}
+
+# -----------------------------------------------------------------------------
 
 =head1 VERSION
 
 1.165
-
-=head1 SOURCE
-
-L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Gd/Graphic.pm>
 
 =head1 AUTHOR
 
@@ -145,3 +198,11 @@ Copyright (C) 2019 Frank Seitz
 
 This code is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+1;
+
+# eof

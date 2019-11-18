@@ -1,5 +1,5 @@
-package Quiq::Gd::Graphic::BlockDiagram;
-use base qw/Quiq::Gd::Graphic/;
+package Quiq::Gd::Component::BlockDiagram;
+use base qw/Quiq::Gd::Component/;
 
 use v5.10;
 use strict;
@@ -15,11 +15,11 @@ use Quiq::Math;
 
 =head1 NAME
 
-Quiq::Gd::Graphic::BlockDiagram - Farbige Blöcke in einer Fläche
+Quiq::Gd::Component::BlockDiagram - Farbige Blöcke in einer Fläche
 
 =head1 BASE CLASS
 
-L<Quiq::Gd::Graphic>
+L<Quiq::Gd::Component>
 
 =head1 ATTRIBUTES
 

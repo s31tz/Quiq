@@ -257,39 +257,39 @@ L<Quiq::Formatter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Forma
 
 =item *
 
+L<Quiq::Gd::Component|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Component.pod> - Basisklasse aller Component-Klassen (abstrakt)
+
+=item *
+
+L<Quiq::Gd::Component::Axis|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Component/Axis.pod> - Achse eines XY-Plot
+
+=item *
+
+L<Quiq::Gd::Component::BlockDiagram|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Component/BlockDiagram.pod> - Farbige Blöcke in einer Fläche
+
+=item *
+
+L<Quiq::Gd::Component::ColorBar|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Component/ColorBar.pod> - Rechteck mit einem Farbverlauf
+
+=item *
+
+L<Quiq::Gd::Component::ColorLegend|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Component/ColorLegend.pod> - Legende zu einem Farb-Plot
+
+=item *
+
+L<Quiq::Gd::Component::Graph|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Component/Graph.pod> - Polyline-Graph
+
+=item *
+
+L<Quiq::Gd::Component::Grid|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Component/Grid.pod> - Gitter eines XY-Plot
+
+=item *
+
+L<Quiq::Gd::Component::ScatterPlot|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Component/ScatterPlot.pod> - Fläche mit Farbpunkten
+
+=item *
+
 L<Quiq::Gd::Font|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Font.pod> - GD- oder TrueType-Font
-
-=item *
-
-L<Quiq::Gd::Graphic|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic.pod> - Basisklasse aller Graphic-Klassen (abstrakt)
-
-=item *
-
-L<Quiq::Gd::Graphic::Axis|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/Axis.pod> - Achse eines XY-Plot
-
-=item *
-
-L<Quiq::Gd::Graphic::BlockDiagram|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/BlockDiagram.pod> - Farbige Blöcke in einer Fläche
-
-=item *
-
-L<Quiq::Gd::Graphic::ColorBar|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/ColorBar.pod> - Rechteck mit einem Farbverlauf
-
-=item *
-
-L<Quiq::Gd::Graphic::ColorLegend|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/ColorLegend.pod> - Legende zu einem Farb-Plot
-
-=item *
-
-L<Quiq::Gd::Graphic::Graph|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/Graph.pod> - Polyline-Graph
-
-=item *
-
-L<Quiq::Gd::Graphic::Grid|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/Grid.pod> - Gitter eines XY-Plot
-
-=item *
-
-L<Quiq::Gd::Graphic::PointGraph|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic/PointGraph.pod> - Polyline-Graph mit Farbpunkten
 
 =item *
 

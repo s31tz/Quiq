@@ -2,11 +2,11 @@
 
 =head1 NAME
 
-Quiq::Gd::Graphic::ColorLegend - Legende zu einem Farb-Plot
+Quiq::Gd::Component::ColorLegend - Legende zu einem Farb-Plot
 
 =head1 BASE CLASS
 
-L<Quiq::Gd::Graphic|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Graphic.pod>
+L<Quiq::Gd::Component|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Component.pod>
 
 =head1 DESCRIPTION
 
@@ -99,7 +99,7 @@ bei der Instantiierung des Grafik-Objekts noch nicht existiert.
 
   my $width = 400;
   
-  my $g = Quiq::Gd::Graphic::ColorLegend->new(
+  my $g = Quiq::Gd::Component::ColorLegend->new(
       title => 'Test',
       titleFont => Quiq::Gd::Font->new('Blob/font/pala.ttf,14'),
       labelFont => Quiq::Gd::Font->new('Blob/font/pala.ttf,10'),
@@ -175,7 +175,7 @@ Liefere die Höhe der Legende. Die Höhe wird aus den Komponenten berechnet.
 
 =head1 SOURCE
 
-L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Gd/Graphic/ColorLegend.pm>
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Gd/Component/ColorLegend.pm>
 
 =head1 AUTHOR
 
