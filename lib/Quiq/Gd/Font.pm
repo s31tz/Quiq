@@ -29,13 +29,13 @@ Abstraktion für GD- und TrueType-Fonts, die von GD nicht gemacht wird.
 
 =head2 Geometrie der (monospaced) GD-Fonts
 
-  Name             Breite Höhe
-  ---------------- ------ ----
-  gdTinyFont         5      8
-  gdSmallFont        6     13
-  gdMediumBoldFont   7     13
-  gdLargeFont        8     16
-  gdGiantFont        9     15
+  Name             Kurzname   Breite Höhe
+  ---------------- ---------- ------ ----
+  gdTinyFont       Tiny         5      8
+  gdSmallFont      Small        6     13
+  gdMediumBoldFont MediumBold   7     13
+  gdLargeFont      Large        8     16
+  gdGiantFont      Giant        9     15
 
 =head1 EXAMPLES
 
@@ -121,7 +121,8 @@ sub new {
 
     # * Fontobjekt instantiieren *
 
-    if ($name =~ /^gd(.*)Font$/) {
+    if ($name =~ /^gd(.*)Font$/ ||
+            $name =~ /^(Tiny|Small|MediumBold|Large|Giant)$/) {
         # * GD-Font *
 
         my $meth = ucfirst $1;

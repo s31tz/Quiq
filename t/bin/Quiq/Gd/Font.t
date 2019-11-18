@@ -42,7 +42,7 @@ sub test_new_ttf : Test(2) {
     $self->set(ttFont=>$fnt);
 }
 
-sub test_new_gd : Test(5) {
+sub test_new_gd : Test(6) {
     my $self = shift;
 
     # die 5 Standard-GD-Fonts
@@ -66,6 +66,11 @@ sub test_new_gd : Test(5) {
     $fnt = Quiq::Gd::Font->new('gdGiantFont');
     $self->is(ref($fnt),'Quiq::Gd::Font');
     $self->set(gdGiantFont=>$fnt);
+
+    # Name in Kurzform
+
+    $fnt = Quiq::Gd::Font->new('Tiny');
+    $self->is(ref($fnt),'Quiq::Gd::Font');
 }
 
 # -----------------------------------------------------------------------------

@@ -111,8 +111,8 @@ Die zur Bildung des Hash herangezogenen Werte.
 
 =item -inactive => $bool (default: 0)
 
-Wenn wahr, ist der Cache inaktiv, d.h. beide Testmethoden
-$c->[ANCHOR NOT FOUND]() und $c->[ANCHOR NOT FOUND]() liefern I<false>.
+Wenn wahr, ist der Cache inaktiv, d.h. $c->L<read|"read() - Lies Daten aus Cachdatei">() liefert immer
+C<undef> und $c->L<write|"write() - Schreibe Daten auf Cachdatei">() hat keine Wirkung.
 
 =item -prefix => $str (Default: '')
 
@@ -196,7 +196,7 @@ sub read {
     my $self = shift;
 
     if ($self->{'inactive'}) {
-        return $ref;
+        return undef;
     }
 
     my $p = Quiq::Path->new;

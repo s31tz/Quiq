@@ -193,7 +193,7 @@ sub render {
 
     my $gdTransparent = GD->gdTransparent;
     my $gdStyled = GD->gdStyled;
-    $img->setStyle($color,$gdTransparent);
+    $img->setStyle($color,$gdTransparent); # Pixel+Transparent = Punktlinie
 
     # Grid zur X-Achse
 
