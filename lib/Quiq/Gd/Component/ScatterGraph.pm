@@ -1,4 +1,4 @@
-package Quiq::Gd::Component::ScatterPlot;
+package Quiq::Gd::Component::ScatterGraph;
 use base qw/Quiq::Gd::Component::Graph/;
 
 use v5.10;
@@ -17,7 +17,7 @@ use POSIX ();
 
 =head1 NAME
 
-Quiq::Gd::Component::ScatterPlot - Fläche mit Farbpunkten
+Quiq::Gd::Component::ScatterGraph - Farbpunkte in einer Fläche
 
 =head1 BASE CLASS
 

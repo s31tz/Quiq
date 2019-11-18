@@ -285,7 +285,7 @@ L<Quiq::Gd::Component::Grid|https://github.com/s31tz/Quiq/tree/master/pod/class/
 
 =item *
 
-L<Quiq::Gd::Component::ScatterPlot|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Component/ScatterPlot.pod> - Fläche mit Farbpunkten
+L<Quiq::Gd::Component::ScatterGraph|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Component/ScatterGraph.pod> - Farbpunkte in einer Fläche
 
 =item *
 

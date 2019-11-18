@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Gd::Component::ScatterPlot - Fläche mit Farbpunkten
+Quiq::Gd::Component::ScatterGraph - Farbpunkte in einer Fläche
 
 =head1 BASE CLASS
 
@@ -162,7 +162,7 @@ Konstruktoraufruf gesetzt oder aus den Daten ermittelt wurde.
 
 =head1 SOURCE
 
-L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Gd/Component/ScatterPlot.pm>
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Gd/Component/ScatterGraph.pm>
 
 =head1 AUTHOR
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Quiq::Gd::Component::ScatterPlot::Test;
+package Quiq::Gd::Component::ScatterGraph::Test;
 use base qw/Quiq::Test::Class/;
 
 use v5.10;
@@ -13,7 +13,7 @@ use Quiq::Path;
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
-    shift->useOk('Quiq::Gd::Component::ScatterPlot');
+    shift->useOk('Quiq::Gd::Component::ScatterGraph');
 }
 
 # -----------------------------------------------------------------------------
@@ -24,7 +24,7 @@ sub test_unitTest_no_arguments : Test(4) {
     my $width = 200;
     my $height = 400;
 
-    my $g = Quiq::Gd::Component::ScatterPlot->new(
+    my $g = Quiq::Gd::Component::ScatterGraph->new(
         width => $width,
         height => $height,
         pointSize => 11,
@@ -37,7 +37,7 @@ sub test_unitTest_no_arguments : Test(4) {
                                                        # Farbverlauf
         zLogarithmic => 0,
     );
-    $self->is(ref $g,'Quiq::Gd::Component::ScatterPlot');
+    $self->is(ref $g,'Quiq::Gd::Component::ScatterGraph');
 
     $self->is($g->zMin,1);
     $self->is($g->zMax,16);
@@ -63,6 +63,6 @@ sub test_unitTest_no_arguments : Test(4) {
 # -----------------------------------------------------------------------------
 
 package main;
-Quiq::Gd::Component::ScatterPlot::Test->runTests;
+Quiq::Gd::Component::ScatterGraph::Test->runTests;
 
 # eof
