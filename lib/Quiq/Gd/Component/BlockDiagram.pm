@@ -21,16 +21,6 @@ Quiq::Gd::Component::BlockDiagram - Farbige Blöcke in einer Fläche
 
 L<Quiq::Gd::Component>
 
-=head1 DESCRIPTION
-
-=begin html
-
-<p class="sdoc-fig-p">
-  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/img/quiq-gd-component-blockdiagram.png" width="430" height="887" alt="" />
-</p>
-
-=end html
-
 =head1 ATTRIBUTES
 
 Fett hervorgehobene Attribute sind Pflichtangaben beim Konstruktor-Aufruf.
@@ -77,6 +67,16 @@ Signatur:
   }
 
 =back
+
+=head1 EXAMPLE
+
+=begin html
+
+<p class="sdoc-fig-p">
+  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/img/quiq-gd-component-blockdiagram.png" width="430" height="887" alt="" />
+</p>
+
+=end html
 
 =head1 METHODS
 
