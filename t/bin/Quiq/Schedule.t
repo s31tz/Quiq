@@ -20,6 +20,7 @@ use Quiq::Axis::Time;
 use Quiq::Gd::Component::Grid;
 use Quiq::Gd::Image;
 use Quiq::Path;
+use Quiq::File::Image;
 
 # -----------------------------------------------------------------------------
 
@@ -29,7 +30,7 @@ sub test_loadClass : Init(1) {
 
 # -----------------------------------------------------------------------------
 
-sub test_unitTest : Test(7) {
+sub test_unitTest : Test(8) {
     my $self = shift;
 
     # Daten einlesen und Prozess-Objekte erzeugen
@@ -190,9 +191,17 @@ sub test_unitTest : Test(7) {
     $grid->render($img,$ayWidth,$axHeight);
     $g->render($img,$ayWidth,$axHeight);
 
-    my $file = Quiq::Path->tempFile;
-    # my $file = '/tmp/blockdiagram.png';
-    Quiq::Path->write($file,$img->png);
+    my $p = Quiq::Path->new;
+    my $file = $p->tempFile;
+    $p->write($file,$img->png);
+
+    my $obj = Quiq::File::Image->new("$file");
+    $self->ok(scalar $obj->size);
+
+    my $blobFile = 'Blob/doc-image/quiq-gd-component-blockdiagram.png';
+    if ($p->exists('Blob/doc-image') && $p->compare("$file",$blobFile)) {
+        $p->copy("$file",$blobFile);
+    }
 
     return;
 }
