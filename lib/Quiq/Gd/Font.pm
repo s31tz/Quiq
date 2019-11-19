@@ -29,13 +29,13 @@ Abstraktion für GD- und TrueType-Fonts, die von GD nicht gemacht wird.
 
 =head2 Geometrie der (monospaced) GD-Fonts
 
-  Name             Kurzname   Breite Höhe
-  ---------------- ---------- ------ ----
-  gdTinyFont       Tiny         5      8
-  gdSmallFont      Small        6     13
-  gdMediumBoldFont MediumBold   7     13
-  gdLargeFont      Large        8     16
-  gdGiantFont      Giant        9     15
+  Name             Breite Höhe
+  ---------------- ------ ----
+  gdTinyFont         5      8
+  gdSmallFont        6     13
+  gdMediumBoldFont   7     13
+  gdLargeFont        8     16
+  gdGiantFont        9     15
 
 =head1 EXAMPLES
 
@@ -121,8 +121,7 @@ sub new {
 
     # * Fontobjekt instantiieren *
 
-    if ($name =~ /^gd(.*)Font$/ ||
-            $name =~ /^(Tiny|Small|MediumBold|Large|Giant)$/) {
+    if ($name =~ /^gd(.*)Font$/) {
         # * GD-Font *
 
         my $meth = ucfirst $1;
@@ -635,6 +634,51 @@ einer Y-Achse.
 # -----------------------------------------------------------------------------
 
 sub alignRightOffset {
+    my $self = shift;
+
+    if (!$self->isTrueType) {
+        # Offset für alle GD-Fonts
+        return 1;
+    }
+    else {
+        my $xOffset = 2;
+
+        my $pt = $self->pt;
+        if ($pt < 10) {
+            $xOffset = 2;
+        }
+        elsif ($pt <= 20) {
+            $xOffset = 3;
+        }
+        elsif ($pt <= 30) {
+            $xOffset = 4;
+        }
+
+        return $xOffset;
+    }
+
+    # not reached
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 alignLeftOffset() - Korrektur-Offset für Ausrichtung an linkem Rand
+
+=head4 Synopsis
+
+  $n = $g->alignLeftOffset;
+
+=head4 Description
+
+Der Korrektur-Offset ist so bemessen, dass der Text möglichst
+dicht an einen linken Rand angrenzt, z.B. das Label an den Tick
+einer Y-Achse auf der rechten Seite.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub alignLeftOffset {
     my $self = shift;
 
     if (!$self->isTrueType) {

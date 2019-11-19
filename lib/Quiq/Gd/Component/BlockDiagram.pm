@@ -176,7 +176,7 @@ sub render {
         my $pW = $oW*$xFactor-1; # -1 -> 1 Pixel Lücke zw. den Blöcken
         my $pH = $oH*$yFactor;
 
-        my ($x1,$y1,$x2,$y2) = (int $pX,int $pY,int $pX+$pW,int $pY+$pH);
+        my ($x1,$y1,$x2,$y2) = (int($pX),int($pY),int($pX+$pW),int($pY+$pH));
 
         $img->filledRectangle($x1,$y1,$x2,$y2,$color);
         if ($border) {

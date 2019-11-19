@@ -226,7 +226,7 @@ sub render {
         if ($reverse) {
             # Der Achsenursprung liegt immer beim kleinsten Wert, d.h.
             # bei reverse=>1 zeichnen wir die Achse von oben nach unten.
-            $img->line($x,$y,$x,$y+$length,$axisColor);
+            $img->line($x,$y,$x,$y+$length-1,$axisColor);
         }
         else {
             $img->line($x,$y,$x,$y-$length+1,$axisColor);
@@ -267,14 +267,14 @@ sub render {
             if ($tickDirection eq 'r') {
                 $img->line($x+$tickLength,$yPos,$x+1,$yPos,$tickColor);
                 $img->stringCentered($fnt,'v',$x+$tickLength+
-                        $tickLabelGap+$fnt->alignRightOffset,
-                        $yPos,$tik->label,$labelColor);
+                    $tickLabelGap+$fnt->alignLeftOffset,
+                    $yPos,$tik->label,$labelColor);
             }
             else { # 'l'
                 $img->line($x-$tickLength,$yPos,$x-1,$yPos,$tickColor);
-                $img->stringCentered($fnt,'v',$x-$tickLength-
-                        $tik->width-$tickLabelGap+$fnt->alignRightOffset,
-                        $yPos,$tik->label,$labelColor);
+                $img->stringCentered($fnt,'v',$x-$tickLength-$tickLabelGap-
+                    $tik->width+1+$fnt->alignRightOffset,
+                    $yPos,$tik->label,$labelColor);
             }
         }
         else {

@@ -123,13 +123,13 @@ dass die Datenpunkte auch am Rand vollständig gezeichnet werden.
 Code:
 
   require Quiq::Gd::Image;
-  require Quiq::Gd::Graphic::Graph;
+  require Quiq::Gd::Component::Graph;
   
   my ($width,$height) = (500,100);
   
   $img = Quiq::Gd::Image->new($width,$height);
   $img->background('#ffffff');
-  my $g = Quiq::Gd::Graphic::Graph->new(
+  my $g = Quiq::Gd::Component::Graph->new(
       width=>$width,
       height=>$height,
       x=>[0, 1, 2,   3, 4,   5, 6, 7,   8,   9],
@@ -146,7 +146,7 @@ Im Browser:
 Code:
 
   require Quiq::Gd::Image;
-  require Quiq::Gd::Graphic::Graph;
+  require Quiq::Gd::Component::Graph;
   
   my ($width,$height) = (500,100);
   
@@ -154,7 +154,7 @@ Code:
   $img->background('#ffffff');
   $img->border('#d0d0d0');
   
-  my $g = Quiq::Gd::Graphic::Graph->new(
+  my $g = Quiq::Gd::Component::Graph->new(
       width=>$width,
       height=>$height,
       x=>[0, 1, 2,   3, 4,   5, 6, 7,   8,   9],
@@ -176,7 +176,7 @@ abgeschnitten, da ein Teil von ihnen außerhalb des Bildes liegt.
 Code:
 
   require Quiq::Gd::Image;
-  require Quiq::Gd::Graphic::Graph;
+  require Quiq::Gd::Component::Graph;
   
   my ($width,$height) = (504,104);
   
@@ -184,7 +184,7 @@ Code:
   $img->background('#ffffff');
   $img->border('#d0d0d0');
   
-  my $g = Quiq::Gd::Graphic::Graph->new(
+  my $g = Quiq::Gd::Component::Graph->new(
       width=>$width-4,
       height=>$height-4,
       x=>[0, 1, 2,   3, 4,   5, 6, 7,   8,   9],
@@ -225,7 +225,7 @@ breiter und höher gemacht haben als den Plotbereich.
 Code:
 
   require Quiq::Gd::Image;
-  require Quiq::Gd::Graphic::Graph;
+  require Quiq::Gd::Component::Graph;
   
   my ($width,$height) = (504,104);
   
@@ -233,7 +233,7 @@ Code:
   $img->background('#ffffff');
   $img->border('#d0d0d0');
   
-  my $g = Quiq::Gd::Graphic::Graph->new(
+  my $g = Quiq::Gd::Component::Graph->new(
       width=>$width,
       height=>$height,
       pointSize=>5,
@@ -352,7 +352,7 @@ sub new {
         # Wertebereich in X- und Y-Richtung erweitern, so dass 
         # Platz für die vollständige Darstellung der Punkte ist
 
-        my $pixel = int $pointSize/2; # zusätzliche Pixel pro Seite
+        my $pixel = int($pointSize/2); # zusätzliche Pixel pro Seite
 
         my $valPerPixelX = ($xMax-$xMin)/($self->{'width'}-2*$pixel);
         $xMin -= $pixel*$valPerPixelX;

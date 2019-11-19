@@ -14,13 +14,13 @@ Abstraktion für GD- und TrueType-Fonts, die von GD nicht gemacht wird.
 
 =head2 Geometrie der (monospaced) GD-Fonts
 
-  Name             Kurzname   Breite Höhe
-  ---------------- ---------- ------ ----
-  gdTinyFont       Tiny         5      8
-  gdSmallFont      Small        6     13
-  gdMediumBoldFont MediumBold   7     13
-  gdLargeFont      Large        8     16
-  gdGiantFont      Giant        9     15
+  Name             Breite Höhe
+  ---------------- ------ ----
+  gdTinyFont         5      8
+  gdSmallFont        6     13
+  gdMediumBoldFont   7     13
+  gdLargeFont        8     16
+  gdGiantFont        9     15
 
 =head1 EXAMPLES
 
@@ -314,6 +314,18 @@ und Fontgrößen müssen die Methoden u.U. erweitert werden.
 Der Korrektur-Offset ist so bemessen, dass der Text möglichst
 dicht an einen rechten Rand angrenzt, z.B. das Label an den Tick
 einer Y-Achse.
+
+=head3 alignLeftOffset() - Korrektur-Offset für Ausrichtung an linkem Rand
+
+=head4 Synopsis
+
+  $n = $g->alignLeftOffset;
+
+=head4 Description
+
+Der Korrektur-Offset ist so bemessen, dass der Text möglichst
+dicht an einen linken Rand angrenzt, z.B. das Label an den Tick
+einer Y-Achse auf der rechten Seite.
 
 =head3 alignTopOffset() - Korrektur-Offset für Ausrichtung an oberen Rand
 

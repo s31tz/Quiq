@@ -204,8 +204,8 @@ sub new {
                 push @values,$val;
                 my $pos = Quiq::Math->valueToPixel($length,$min,$max,$val);
                 my $size = $self->labelSize($val); # Größe Tick
-                my $pos0 = int $pos-$size/2; # Anfangsposition Tick
-                my $pos1 = int $pos+$size/2; # Endposition Tick
+                my $pos0 = int($pos-$size/2); # Anfangsposition Tick
+                my $pos1 = int($pos+$size/2); # Endposition Tick
                 
                 if ($debug) {
                     print STDERR " $val($pos0/$pos/$pos1)";

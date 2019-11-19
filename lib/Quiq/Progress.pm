@@ -282,7 +282,7 @@ sub percent {
     }
 
     # return sprintf '%.0f',$self->{'i'}/$n*100;
-    return int $self->{'i'}/$n*100; # immer abrunden
+    return int($self->{'i'}/$n*100); # immer abrunden
 }
 
 # -----------------------------------------------------------------------------

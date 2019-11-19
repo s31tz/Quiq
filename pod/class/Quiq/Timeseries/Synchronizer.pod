@@ -84,7 +84,7 @@ legt das Zeitraster auf 5, 15, 25, 35, 45, 55 Minuten.
 
 =item -geoCoordinates => $bool (Default: 0)
 
-Die Messerwerte haben zustzlich zur Zeit eine Ortskoordinate.
+Die Messerwerte haben zusätzlich zur Zeit eine Ortskoordinate.
 Wenn gesetzt, erwartet die Methode L<add|"add() - Füge Parameterwerte hinzu">() zusätzlich die
 Ortsangaben $latitude und $longitude.
 

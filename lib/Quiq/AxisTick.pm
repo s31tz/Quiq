@@ -197,7 +197,7 @@ sub width {
     my $val = $self->{'value'};
     my $label = $ax->label($val);
 
-    return $fnt->stringWidth($label);
+    return $fnt->stringWidth($label)+1; # +1 für zusätzlichen Leerraum
 }
 
 # -----------------------------------------------------------------------------

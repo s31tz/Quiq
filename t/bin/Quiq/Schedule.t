@@ -42,10 +42,12 @@ sub test_unitTest : Test(7) {
     while (<$fh>) {
         chomp;
         my $prc = [split /\t/];
-# Einschränkung auf einen kleineren Teil
-#if ($prc->[4] le '2019-10-30 08') {
-#    next;
-#}
+
+        # Einschränkung auf einen kleineren Teil
+        # if ($prc->[4] le '2019-10-30 08') {
+        #     next;
+        # }
+
         push @objects,$prc;
     }
     $fh->close;
@@ -188,8 +190,8 @@ sub test_unitTest : Test(7) {
     $grid->render($img,$ayWidth,$axHeight);
     $g->render($img,$ayWidth,$axHeight);
 
-    # my $file = Quiq::Path->tempFile;
-    my $file = '/tmp/blockdiagram.png';
+    my $file = Quiq::Path->tempFile;
+    # my $file = '/tmp/blockdiagram.png';
     Quiq::Path->write($file,$img->png);
 
     return;
