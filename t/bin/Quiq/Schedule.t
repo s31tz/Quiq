@@ -45,9 +45,9 @@ sub test_unitTest : Test(8) {
         my $prc = [split /\t/];
 
         # Einschränkung auf einen kleineren Teil
-        # if ($prc->[4] le '2019-10-30 08') {
-        #     next;
-        # }
+        if ($prc->[4] le '2019-10-30 08') {
+            next;
+        }
 
         push @objects,$prc;
     }
@@ -70,23 +70,28 @@ sub test_unitTest : Test(8) {
     # längsten Zeitschiene
 
     $self->is(ref $mtx,'Quiq::Schedule');
-    $self->is($mtx->width,396);
-    $self->is($mtx->maxLength,162);
+    # $self->is($mtx->width,396);
+    $self->is($mtx->width,30);
+    # $self->is($mtx->maxLength,162);
+    $self->is($mtx->maxLength,36);
 
     # Einträge auf der ersten Zeitschiene
     
     my @entries = $mtx->entries(0);
-    $self->is(scalar @entries,162);
+    # $self->is(scalar @entries,162);
+    $self->is(scalar @entries,29);
 
     # Einträge auf allen Zeitschienen zusammen
 
     @entries = $mtx->entries;
-    $self->is(scalar @entries,3126);
+    ## $self->is(scalar @entries,3126);
+    $self->is(scalar @entries,203);
 
     # Zeitgrenzen
 
     my $t = Quiq::Epoch->new($mtx->minTime)->as('YYYY-MM-DD HH:MI:SS');
-    $self->is($t,'2019-10-29 18:54:30');
+    # $self->is($t,'2019-10-29 18:54:30');
+    $self->is($t,'2019-10-30 08:00:10');
 
     $t = Quiq::Epoch->new($mtx->maxTime)->as('YYYY-MM-DD HH:MI:SS');
     $self->is($t,'2019-10-30 15:08:47');
