@@ -23,6 +23,25 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 Liefere den "Namen" einer Newline-Zeichenkette, also "LF", "CRLF"
 oder "CR".
 
+=head3 camelCaseToSnakeCase() - Wandele Camel Case nach Snake Case
+
+=head4 Synopsis
+
+  $snake = $this->camelCaseToSnakeCase($camel);
+
+=head4 Description
+
+Wandele einen in Camel Case geschriebenen Bezeichner in einen
+Snake Case Bezeichner und liefere diesen zurück.
+
+Camel Case:
+
+  imsApplyDeltaRowByRow
+
+Snake Case:
+
+  ims-apply-delta-row-by-row
+
 =head3 snakeCaseToCamelCase() - Wandele Snake Case nach Camel Case
 
 =head4 Synopsis

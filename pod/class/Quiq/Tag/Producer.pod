@@ -1,0 +1,190 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Tag::Producer - Erzeuge Markup-Code gemäß XML-Regeln
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 SYNOPSIS
+
+=head2 Beispiele
+
+=head3 Modul laden und Objekt instantiieren
+
+  use Quiq::Tag::Producer;
+  
+  my $p = Quiq::Tag::Producer->new;
+
+=head3 Tag ohne Content
+
+  $code = $p->tag('person',
+      firstName => 'Lieschen',
+      lastName => 'Müller',
+  );
+
+liefert
+
+  <person first-name="Lieschen" last-name="Müller" />
+
+Die Attribute C<firstName> und C<lastName> werden von Camel- nach
+SnakeCase gewandelt. Dadurch ist kein Quoting nötig.
+
+=head3 Tag mit Content
+
+  $code = $p->tag('bold','sehr schön');
+
+liefert
+
+  <bold>sehr schön</bold>
+
+Enthält der Content, wie hier, keine Zeilenumbrüche, werden Begin-
+und End-Tag unmittelbar um den Content gesetzt. Andernfalls wird
+der Content eingerückt mehrzeilig zwischen Begin- und End-Tag
+gesetzt. Siehe nächstes Beispiel.
+
+=head3 Tag mit Unterstruktur
+
+  $code = $p->tag('person','-',
+      $p->tag('first-name','Lieschen'),
+      $p->tag('last-name','Müller'),
+  );
+
+liefert
+
+  <person>
+    <first-name>Lieschen</first-name>
+    <last-name>Müller</last-name>
+  </person>
+
+Das Bindestrich-Argument (C<'-'>) bewirkt, dass die nachfolgenden
+Argumente zum Content des Tag konkateniert werden. Die umständlichere
+Formulierung wäre:
+
+  $code = $p->tag('person',$p->cat(
+      $p->tag('first-name','Lieschen'),
+      $p->tag('last-name','Müller'),
+  ));
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse erzeugt Markup-Code gemäß den Regeln für XML.
+Mittels der beiden Methoden L<tag|"tag() - Erzeuge Tag-Code">() und L<cat|"cat() - Füge Sequenz zusammen">() kann Markup-Code
+beliebiger Komplexität erzeugt werden. Element- und Attributbezeichner
+können in CamelCase geschrieben werden. Sie werden automatisch in
+SnakeCase gewandelt. Dies ist vor allem bei Attribut/Wert-Paaren
+nützlich, da der Attributname dann nicht gequotet werden muss.
+
+=head1 METHODS
+
+=head2 Instantiierung
+
+=head3 new() - Konstruktor
+
+=head4 Synopsis
+
+  $p = $class->new;
+
+=head4 Returns
+
+Objekt
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere eine Referenz
+auf dieses Objekt zurück.
+
+=head2 Generierung
+
+=head3 tag() - Erzeuge Tag-Code
+
+=head4 Synopsis
+
+  $code = $p->tag($elem,@opts,@attrs);
+  $code = $p->tag($elem,@opts,@attrs,$content);
+  $code = $p->tag($elem,@opts,@attrs,'-',@content);
+
+=head4 Arguments
+
+=over 4
+
+=item $elem
+
+Name des Elements.
+
+=item @opts
+
+Optionen. Siehe unten.
+
+=item @attrs
+
+Element-Attribute und ihre Werte.
+
+=item $content
+
+Inhalt des Tag.
+
+=item @contents
+
+Sequenz von Inhalten.
+
+=back
+
+=head4 Description
+
+Erzeuge den Code eines Tag und liefere diesen zurück.
+
+=head3 cat() - Füge Sequenz zusammen
+
+=head4 Synopsis
+
+  $code = $p->cat(@opt,@args);
+
+=head4 Arguments
+
+=over 4
+
+=item @args
+
+Sequenz von Werten.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -placeholders => \@keyVal (Default: undef)
+
+Ersetze im generierten Code die angegebenen Platzhalter durch
+die angegebenen Werte.
+
+=back
+
+=head4 Description
+
+Füge die Arguments @args zusammen und liefere den resultierenden
+Code zurück.
+
+=head1 VERSION
+
+1.165
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Tag/Producer.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
