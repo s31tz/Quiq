@@ -64,7 +64,7 @@ ergibt
 
 =head2 Methode cat()
 
-Die Elemente eines HTML-Dokuments können syntaktisch ntürlich
+Die Elemente eines HTML-Dokuments können syntaktisch natürlich
 nicht nur geschachtelt auftreten, sie können auch
 aufeinanderfolgen. Die Methode cat() fügt aufeinanderfolgende
 HTML-Elemente zusammen.
@@ -559,7 +559,7 @@ nur der Rest mit schließenden Tags generiert werden soll.
   );
   $http->append($html);
 
-=item -fmt => 'e'|'m'|'p'|'v'|'i' (Default: richtet sich nach $tag)
+=item -fmt => 'c'|'e'|'E'|'m'|'M'|'p'|'P'|'v'|'i' (Default: gemäß $elem)
 
 Art der Content-Formatierung.
 
@@ -754,7 +754,7 @@ und dem Inhalt $content und liefere das Resultat zurück [2].
 Der Inhalt kann auch fehlen [1] oder sich über mehrere Argumente
 erstrecken [3].
 
-B<Attribut C{style}>
+B<Attribut style>
 
 Als Wert des Attributs C<style> kann eine Array-Referenz mit
 CSS-Regeln angegeben werden. Diese werden von der

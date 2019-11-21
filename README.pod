@@ -701,6 +701,10 @@ L<Quiq::String|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/String.p
 
 =item *
 
+L<Quiq::Svg::Graphic|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Svg/Graphic.pod> - Erzeuge SVG-Grafik
+
+=item *
+
 L<Quiq::System|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/System.pod> - Information über das System und seine Umgebung
 
 =item *
