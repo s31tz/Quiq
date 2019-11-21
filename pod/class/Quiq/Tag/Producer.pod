@@ -10,8 +10,6 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 SYNOPSIS
 
-=head2 Beispiele
-
 =head3 Modul laden und Objekt instantiieren
 
   use Quiq::Tag::Producer;
@@ -30,7 +28,7 @@ liefert
   <person first-name="Lieschen" last-name="Müller" />
 
 Die Attribute C<firstName> und C<lastName> werden von Camel- nach
-SnakeCase gewandelt. Dadurch ist kein Quoting nötig.
+SnakeCase gewandelt. Dadurch ist kein Quoting im Perlcode nötig.
 
 =head3 Tag mit Content
 
@@ -70,7 +68,7 @@ Formulierung wäre:
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse erzeugt Markup-Code gemäß den Regeln für XML.
+Ein Objekt der Klasse erzeugt Markup-Code gemäß den Regeln von XML.
 Mittels der beiden Methoden L<tag|"tag() - Erzeuge Tag-Code">() und L<cat|"cat() - Füge Sequenz zusammen">() kann Markup-Code
 beliebiger Komplexität erzeugt werden. Element- und Attributbezeichner
 können in CamelCase geschrieben werden. Sie werden automatisch in
