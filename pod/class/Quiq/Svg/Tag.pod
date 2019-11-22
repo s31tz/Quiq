@@ -37,14 +37,16 @@ erzeugt SVG-Code
   <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
   <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
   
-  <svg width="140" height="170" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <circle cx="70" cy="95" r="50" style="stroke: black; fill: none" />
+  <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <circle cx="50" cy="50" r="49" style="stroke: black; fill: yellow" />
   </svg>
+
+mit der Darstellung
 
 =begin html
 
 <p class="sdoc-fig-p">
-  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/img/quiq-svg-tag-01.svg" alt="" />
+  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/img/quiq-svg-tag-01.png" alt="" />
 </p>
 
 =end html
