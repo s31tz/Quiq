@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Quiq::Tag::Producer::Test;
+package Quiq::Tag::Test;
 use base qw/Quiq::Test::Class/;
 
 use v5.10;
@@ -13,7 +13,7 @@ use Quiq::Unindent;
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
-    shift->useOk('Quiq::Tag::Producer');
+    shift->useOk('Quiq::Tag');
 }
 
 # -----------------------------------------------------------------------------
@@ -23,8 +23,8 @@ sub test_unitTest : Test(5) {
 
     # Instantiierung
 
-    my $p = Quiq::Tag::Producer->new;
-    $self->is(ref $p,'Quiq::Tag::Producer');
+    my $p = Quiq::Tag->new;
+    $self->is(ref $p,'Quiq::Tag');
 
     # Generierung
 
@@ -68,6 +68,6 @@ sub test_unitTest : Test(5) {
 # -----------------------------------------------------------------------------
 
 package main;
-Quiq::Tag::Producer::Test->runTests;
+Quiq::Tag::Test->runTests;
 
 # eof

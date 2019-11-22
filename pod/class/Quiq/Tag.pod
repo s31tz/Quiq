@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Tag::Producer - Erzeuge Markup-Code gemäß XML-Regeln
+Quiq::Tag - Erzeuge Markup-Code gemäß XML-Regeln
 
 =head1 BASE CLASS
 
@@ -12,9 +12,9 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head3 Modul laden und Objekt instantiieren
 
-  use Quiq::Tag::Producer;
+  use Quiq::Tag;
   
-  my $p = Quiq::Tag::Producer->new;
+  my $p = Quiq::Tag->new;
 
 =head3 Tag ohne Content
 
@@ -130,6 +130,41 @@ Sequenz von Inhalten.
 
 =back
 
+=head4 Options
+
+=over 4
+
+=item -defaults => \@keyVals (Default: undef)
+
+Liste der Default-Attribute und ihrer Werte. Ein Attribut in
+@keyVals, das nicht unter den Attributen @attrs des Aufrufs
+vorkommt, wird auf den angegebenen Defaultwert gesetzt.
+
+=item -nl => $n (Default: 1)
+
+Anzahl Newlines am Ende.
+
+-nl => 0 (kein Newline):
+
+  <TAG>CONTENT</TAG>
+
+-nl => 1 (ein Newline):
+
+  <TAG>CONTENT</TAG>\n
+
+-nl => 2 (zwei Newlines):
+
+  <TAG>CONTENT</TAG>\n\n
+
+usw.
+
+=item -placeholders => \@keyVal (Default: undef)
+
+Ersetze im erzeugten Code die angegebenen Platzhalter
+durch ihre Werte.
+
+=back
+
 =head4 Description
 
 Erzeuge den Code eines Tag und liefere diesen zurück.
@@ -154,7 +189,7 @@ Sequenz von Werten.
 
 =over 4
 
-=item -placeholders => \@keyVal (Default: undef)
+=item -placeholders => \@keyVal
 
 Ersetze im generierten Code die angegebenen Platzhalter durch
 die angegebenen Werte.
@@ -172,7 +207,7 @@ Code zurück.
 
 =head1 SOURCE
 
-L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Tag/Producer.pm>
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Tag.pm>
 
 =head1 AUTHOR
 

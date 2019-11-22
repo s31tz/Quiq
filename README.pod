@@ -701,6 +701,10 @@ L<Quiq::String|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/String.p
 
 =item *
 
+L<Quiq::Svg::Tag|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Svg/Tag.pod> - Erzeuge SVG Markup-Code
+
+=item *
+
 L<Quiq::System|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/System.pod> - Information über das System und seine Umgebung
 
 =item *
@@ -713,7 +717,7 @@ L<Quiq::TableRow|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/TableR
 
 =item *
 
-L<Quiq::Tag::Producer|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Tag/Producer.pod> - Erzeuge Markup-Code gemäß XML-Regeln
+L<Quiq::Tag|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Tag.pod> - Erzeuge Markup-Code gemäß XML-Regeln
 
 =item *
 

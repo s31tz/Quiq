@@ -1,4 +1,4 @@
-package Quiq::Tag::Producer;
+package Quiq::Tag;
 use base qw/Quiq::Hash/;
 
 use v5.10;
@@ -17,7 +17,7 @@ use Quiq::Template;
 
 =head1 NAME
 
-Quiq::Tag::Producer - Erzeuge Markup-Code gemäß XML-Regeln
+Quiq::Tag - Erzeuge Markup-Code gemäß XML-Regeln
 
 =head1 BASE CLASS
 
@@ -27,9 +27,9 @@ L<Quiq::Hash>
 
 =head3 Modul laden und Objekt instantiieren
 
-  use Quiq::Tag::Producer;
+  use Quiq::Tag;
   
-  my $p = Quiq::Tag::Producer->new;
+  my $p = Quiq::Tag->new;
 
 =head3 Tag ohne Content
 
@@ -156,6 +156,41 @@ Sequenz von Inhalten.
 
 =back
 
+=head4 Options
+
+=over 4
+
+=item -defaults => \@keyVals (Default: undef)
+
+Liste der Default-Attribute und ihrer Werte. Ein Attribut in
+@keyVals, das nicht unter den Attributen @attrs des Aufrufs
+vorkommt, wird auf den angegebenen Defaultwert gesetzt.
+
+=item -nl => $n (Default: 1)
+
+Anzahl Newlines am Ende.
+
+-nl => 0 (kein Newline):
+
+  <TAG>CONTENT</TAG>
+
+-nl => 1 (ein Newline):
+
+  <TAG>CONTENT</TAG>\n
+
+-nl => 2 (zwei Newlines):
+
+  <TAG>CONTENT</TAG>\n\n
+
+usw.
+
+=item -placeholders => \@keyVal (Default: undef)
+
+Ersetze im erzeugten Code die angegebenen Platzhalter
+durch ihre Werte.
+
+=back
+
 =head4 Description
 
 Erzeuge den Code eines Tag und liefere diesen zurück.
@@ -172,56 +207,113 @@ sub tag {
     # Quiq::Html::Tag. Etwaige Ergänzungen, die hier gebraucht
     # werden, von dort übernehmen.
 
-    my $ind = 2;
+    # Optionen
 
-    my $code = "<$elem";
+    my $defaultA = undef;
+    my $ind = 2;
+    my $nl = 1;
+    my $placeholderA = undef;
+
+    # Attribute
+    my @attrs;
+
+    # Parameter verarbeiten
+
     while (@_) {
         if (@_ == 1) {
-            # Letztes Argument ist Content. Dieser Test muss als erstes
+            # Letzter Parameter ist Content. Dieser Test muss als erstes
             # kommen, damit '-' als Content nicht unter den Tisch fällt.
             last;
         }
         elsif (defined $_[0] && $_[0] eq '-') {
-            # explizites Ende der Options- und Attributliste
+            # Explizites Ende der Options- und Attributliste
             shift; # '-' konsumieren
             last;
         }
 
-        my $key = Quiq::Converter->camelCaseToSnakeCase(shift);
-        my $val = shift;
+        # Optionen
 
-        if (defined $val) {
-            $val =~ s/"/&quot;/g;
-            $code .= qq| $key="$val"|;
+        my $key = shift;
+        if (substr($key,0,1) eq '-') {
+            if ($key eq '-defaults') {
+                $defaultA = shift;
+            }
+            elsif ($key eq '-nl') {
+                $nl = shift;
+            }
+            elsif ($key eq '-placeholders') {
+                $placeholderA = shift;
+            }
+            else {
+                $self->throw(
+                    'TAG-00001: Unknown option',
+                    Option => $key,
+                );
+            }
+            next;
+        }
+
+        # Attribute
+        push @attrs,Quiq::Converter->camelCaseToSnakeCase($key),shift;
+    }
+
+    # Defaultattribute setzen
+
+    if ($defaultA) {
+        # Hash der Defaultattribute erstellen
+        my %defaults = @$defaultA;
+
+        # Gesetzte Attribute aus der Betrachtung nehmen
+
+        for (my $i = 0; $i < @attrs; $i += 2) {
+            delete $defaults{$attrs[$i]};
+        }
+
+        # Defaultattribute setzen
+
+        for (my $i = 0; $i < @$defaultA; $i += 2) {
+            if (exists $defaults{$defaultA->[$i]}) {
+                push @attrs,$defaultA->[$i],$defaultA->[$i+1];
+            }
         }
     }
 
-    # Content bestimmen
+    # Content
+
     my $content = $self->cat(@_);
-
-    # Content bearbeiten
-
     $content = Quiq::Unindent->trim($content);
+
     if ($content =~ /\n/ && $ind) {
         # Mehrzeiligen Content einrücken. Wir berücksichtigen,
-        # dass wir enthaltene Leerzeilen nicht einrücken.
+        # dass enthaltene Leerzeilen nicht eingerückt werden.
 
         my $space = ' ' x $ind;
         $content =~ s/^(?!$)/$space/gm;
         $content = "\n$content\n";
     }
 
-    # End-Tag
+    # Tag erzeugen
 
-    if ($content ne '') {
-        $code .= ">$content</$elem>";
+    my $code = "<$elem";
+    while (@attrs) {
+        my ($key,$val) = splice @attrs,0,2;
+        if (defined $val) {
+            $val =~ s/"/&quot;/g;
+            $code .= qq| $key="$val"|;
+        }
     }
-    else {
-        $code .= ' />';
+    $code .= $content ne ''? ">$content</$elem>": ' />';
+
+    # Platzhalter ersetzen
+
+    if ($placeholderA) {
+        my $tpl = Quiq::Template->new('text',\$code);
+        $tpl->replace(@$placeholderA);
+        $code = $tpl->asString;
     }
 
     # Newlinw
-    $code .= "\n";
+    $code .= "\n" x $nl;
 
     return $code;
 }
@@ -248,7 +340,7 @@ Sequenz von Werten.
 
 =over 4
 
-=item -placeholders => \@keyVal (Default: undef)
+=item -placeholders => \@keyVal
 
 Ersetze im generierten Code die angegebenen Platzhalter durch
 die angegebenen Werte.
