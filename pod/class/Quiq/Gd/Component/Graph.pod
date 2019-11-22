@@ -327,7 +327,7 @@ Konstruktoraufruf gesetzt oder aus den Daten ermittelt wurde.
 
 =head1 VERSION
 
-1.165
+1.166
 
 =head1 SOURCE
 

@@ -5,7 +5,7 @@ use v5.10;
 use strict;
 use warnings;
 
-our $VERSION = '1.165';
+our $VERSION = '1.166';
 
 use Quiq::Unindent;
 use Quiq::Template;
@@ -127,7 +127,7 @@ sub javaScript {
 
 =head1 VERSION
 
-1.165
+1.166
 
 =head1 AUTHOR
 

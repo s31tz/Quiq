@@ -693,7 +693,7 @@ L<Quiq::Stopwatch|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Stopw
 
 =item *
 
-L<Quiq::Storable|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Storable.pod> - Persistenz für Perl-Datenstrukturen
+L<Quiq::Storable|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Storable.pod> - Perl-Datenstrukturen persistent speichern
 
 =item *
 
@@ -811,7 +811,7 @@ L<Quiq::Xml::LibXml|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Xml
 
 =head1 VERSION
 
-1.165
+1.166
 
 =head1 AUTHOR
 

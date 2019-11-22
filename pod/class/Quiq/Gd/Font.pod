@@ -352,7 +352,7 @@ die diese Methode liefert.
 
 =head1 VERSION
 
-1.165
+1.166
 
 =head1 SOURCE
 

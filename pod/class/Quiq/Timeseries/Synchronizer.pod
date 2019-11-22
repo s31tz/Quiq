@@ -230,7 +230,7 @@ am dichtesten am Rasterpunkt gelegenen Wert hat.
 
 =head1 VERSION
 
-1.165
+1.166
 
 =head1 SOURCE
 

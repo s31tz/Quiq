@@ -5,7 +5,7 @@ use v5.10;
 use strict;
 use warnings;
 
-our $VERSION = '1.165';
+our $VERSION = '1.166';
 
 use Quiq::Unindent;
 use Quiq::String;
@@ -62,7 +62,7 @@ gesetzt. Siehe nächstes Beispiel.
       $p->tag('lastname','Müller'),
   );
 
-liefert
+erzeugt
 
   <person>
     <firstname>Lieschen</firstname>
@@ -81,7 +81,7 @@ Formulierung wäre:
 =head1 DESCRIPTION
 
 Ein Objekt der Klasse erzeugt Markup-Code gemäß den Regeln von XML.
-Mittels der beiden Methoden L<tag|"tag() - Erzeuge Tag-Code">() und L<cat|"cat() - Füge Sequenz zusammen">() kann Markup-Code
+Mit den beiden Methoden L<tag|"tag() - Erzeuge Tag-Code">() und L<cat|"cat() - Füge Sequenz zusammen">() kann Markup-Code
 beliebiger Komplexität erzeugt werden.
 
 =head1 METHODS
@@ -539,7 +539,7 @@ sub cat {
 
 =head1 VERSION
 
-1.165
+1.166
 
 =head1 AUTHOR
 

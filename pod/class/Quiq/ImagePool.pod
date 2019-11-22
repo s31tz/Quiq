@@ -132,7 +132,7 @@ Liefere maximal $n Bilder.
 
 =head1 VERSION
 
-1.165
+1.166
 
 =head1 SOURCE
 

@@ -5,7 +5,7 @@ use v5.10;
 use strict;
 use warnings;
 
-our $VERSION = '1.165';
+our $VERSION = '1.166';
 
 # -----------------------------------------------------------------------------
 
@@ -43,7 +43,7 @@ L<Quiq::Tag>
       ),
   );
 
-erzeugt SVG-Code
+erzeugt
 
   <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
   <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
@@ -52,7 +52,7 @@ erzeugt SVG-Code
     <circle cx="40" cy="40" r="39" style="stroke: black; fill: yellow" />
   </svg>
 
-mit der Darstellung
+wird darstellt als
 
 =begin html
 
@@ -160,6 +160,14 @@ sub preamble {
   $svg = $p->tag($elem,@opts,@attrs,$content);
   $svg = $p->tag($elem,@opts,@attrs,'-',@content);
 
+=head4 Arguments
+
+I<< Siehe Quiq::Tag->tag() >>
+
+=head4 Options
+
+I<< Siehe Quiq::Tag->tag() >>
+
 =head4 Returns
 
 SVG-Code (String)
@@ -167,10 +175,10 @@ SVG-Code (String)
 =head4 Description
 
 Erzeuge einen SVG-Tag und liefere diesen zurück. Die Methode
-ruft die gleichnamige Basisklassenmethode, übergibt aber zusätzlich die
-SVG-spezifischen Element-Definitionen per Option C<-elements>.
-Diese legen je SVG-Element dessen Default-Formatierung und
-Default-Attribute fest. Details siehe Quiq::Tag->tag().
+ruft die gleichnamige Basisklassenmethode auf und übergibt
+die SVG-spezifischen Element-Definitionen per Option C<-elements>.
+Diese definieren die Default-Formatierung und die Default-Attribute
+einzelner SVG-Elemente. Details siehe Quiq::Tag->tag().
 
 =cut
 
@@ -185,7 +193,7 @@ sub tag {
 
 =head1 VERSION
 
-1.165
+1.166
 
 =head1 AUTHOR
 
