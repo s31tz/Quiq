@@ -31,10 +31,10 @@ sub test_unitTest : Test(5) {
     # 1.
 
     my $code = $p->tag('person',
-        firstName => 'Lieschen',
-        lastName => 'Müller',
+        firstname => 'Lieschen',
+        lastname => 'Müller',
     );
-    $self->is($code,qq|<person first-name="Lieschen" last-name="Müller" />\n|);
+    $self->is($code,qq|<person firstname="Lieschen" lastname="Müller" />\n|);
 
     # 2.
 
@@ -54,13 +54,13 @@ sub test_unitTest : Test(5) {
     # 4.
 
     $code = $p->tag('person','-',
-        $p->tag('firstName','Lieschen'),
-        $p->tag('lastName','Müller'),
+        $p->tag('firstname','Lieschen'),
+        $p->tag('lastname','Müller'),
     );
     $self->is($code,Quiq::Unindent->trimNl(q~
         <person>
-          <first-name>Lieschen</first-name>
-          <last-name>Müller</last-name>
+          <firstname>Lieschen</firstname>
+          <lastname>Müller</lastname>
         </person>
     ~));
 }

@@ -7,8 +7,8 @@ use warnings;
 
 our $VERSION = '1.165';
 
-use Quiq::Converter;
 use Quiq::Unindent;
+use Quiq::String;
 use Quiq::Template;
 
 # -----------------------------------------------------------------------------
@@ -34,16 +34,13 @@ L<Quiq::Hash>
 =head3 Tag ohne Content
 
   $code = $p->tag('person',
-      firstName => 'Lieschen',
-      lastName => 'Müller',
+      firstname => 'Lieschen',
+      lastname => 'Müller',
   );
 
 liefert
 
-  <person first-name="Lieschen" last-name="Müller" />
-
-Die Attribute C<firstName> und C<lastName> werden von Camel- nach
-SnakeCase gewandelt. Dadurch ist kein Quoting im Perlcode nötig.
+  <person firstname="Lieschen" lastname="Müller" />
 
 =head3 Tag mit Content
 
@@ -61,15 +58,15 @@ gesetzt. Siehe nächstes Beispiel.
 =head3 Tag mit Unterstruktur
 
   $code = $p->tag('person','-',
-      $p->tag('first-name','Lieschen'),
-      $p->tag('last-name','Müller'),
+      $p->tag('firstname','Lieschen'),
+      $p->tag('lastname','Müller'),
   );
 
 liefert
 
   <person>
-    <first-name>Lieschen</first-name>
-    <last-name>Müller</last-name>
+    <firstname>Lieschen</firstname>
+    <lastname>Müller</lastname>
   </person>
 
 Das Bindestrich-Argument (C<'-'>) bewirkt, dass die nachfolgenden
@@ -77,18 +74,15 @@ Argumente zum Content des Tag konkateniert werden. Die umständlichere
 Formulierung wäre:
 
   $code = $p->tag('person',$p->cat(
-      $p->tag('first-name','Lieschen'),
-      $p->tag('last-name','Müller'),
+      $p->tag('firstname','Lieschen'),
+      $p->tag('lastname','Müller'),
   ));
 
 =head1 DESCRIPTION
 
 Ein Objekt der Klasse erzeugt Markup-Code gemäß den Regeln von XML.
 Mittels der beiden Methoden L<tag|"tag() - Erzeuge Tag-Code">() und L<cat|"cat() - Füge Sequenz zusammen">() kann Markup-Code
-beliebiger Komplexität erzeugt werden. Element- und Attributbezeichner
-können in CamelCase geschrieben werden. Sie werden automatisch in
-SnakeCase gewandelt. Dies ist vor allem bei Attribut/Wert-Paaren
-nützlich, da der Attributname dann nicht gequotet werden muss.
+beliebiger Komplexität erzeugt werden.
 
 =head1 METHODS
 
@@ -166,6 +160,111 @@ Liste der Default-Attribute und ihrer Werte. Ein Attribut in
 @keyVals, das nicht unter den Attributen @attrs des Aufrufs
 vorkommt, wird auf den angegebenen Defaultwert gesetzt.
 
+=item -elements => \%elements (Default: undef)
+
+Hash, der die Default-Formatierung und Default-Attribute von
+Elementen definiert. Aufbau:
+
+  %elements = (
+      $elem => [$fmt,\@keyVals],
+      ...
+  )
+
+Der Hash muss nicht jedes Element definieren. Nicht-vorkommende
+Elemente gemäß Default-Formatierung formatiert (siehe -fmt)
+besitzen keine Default-Attribute.
+
+=item -fmt => 'c'|'e'|'E'|'i'|'m'|'p'|'P'|'v' (Default: gemäß $elem)
+
+Art der Content-Formatierung.
+
+=over 4
+
+=item 'c' (cdata):
+
+Wie 'm', nur dass der Content in CDATA eingefasst wird
+(in HTML: script):
+
+  <TAG ...>
+    // <![CDATA[
+    CONTENT
+    // ]]>
+  </TAG>\n
+
+=item 'e' (empty):
+
+Element hat keinen Content (in HTML: br, hr, ...):
+
+  <TAG ... />\n
+
+=item 'E' (empty, kein Newline):
+
+Wie 'e', nur ohne Newline am Ende (in HTML: img, input, ...):
+
+  <TAG ... />
+
+=item 'i' (inline):
+
+Der Content wird belassen wie er ist. Dies ist nützlich für
+Tags, die in Fließtext eingesetzt werden. Ein Newline wird
+nicht angehängt.
+
+  Text Text <TAG ...>Text Text
+  Text</TAG> Text Text
+
+(in HTML: a, b, span, ...)
+
+=item 'm' (multiline):
+
+Content wird auf eigene Zeile(n) zwischen Begin- und End-Tag
+gesetzt und um -ind=>$n Leerzeichen eingerückt:
+
+  <TAG ...>
+    CONTENT
+  </TAG>\n
+
+Ist der Content leer, wird nur ein End-Tag gesetzt:
+
+  <TAG ... />\n
+
+=item 'M' (multiline, ohne Einrückung):
+
+Wie 'm', nur ohne Einrückung (in HTML: html, ...):
+
+  <TAG ...>
+  CONTENT
+  </TAG>\n
+
+=item 'p' (protect):
+
+Der Content wird geschützt, indem dieser einzeilig gemacht
+(LF und CR werden durch &#10; und &#13; ersetzt) und unmittelbar
+zwischen Begin- und End-Tag gesetzt wird
+(in HTML: pre, textarea, ...):
+
+  <TAG ...>CONTENT</TAG>\n
+
+=item 'P' (protect, Einrückung entfernen):
+
+Wie 'p', nur dass die Einrückung des Content entfernt wird.
+
+=item 'v' (variable) = Default-Formatierung:
+
+Ist der Content einzeilig, wird er unmittelbar zwischen Begin-
+und End-Tag gesetzt:
+
+  <TAG ...>CONTENT</TAG>\n
+
+Ist der Content mehrzeilig, wird er eingerückt:
+
+  <TAG ...>
+    CONTENT
+  </TAG>\n
+
+(in HTML: title, h1-h6, ...)
+
+=back
+
 =item -nl => $n (Default: 1)
 
 Anzahl Newlines am Ende.
@@ -200,8 +299,7 @@ Erzeuge den Code eines Tag und liefere diesen zurück.
 # -----------------------------------------------------------------------------
 
 sub tag {
-    my $self = shift;
-    my $elem = Quiq::Converter->camelCaseToSnakeCase(shift);
+    my ($self,$elem) = splice @_,0,2;
 
     # MEMO: Dies ist eine abgespeckte Variante der Methode tag() in
     # Quiq::Html::Tag. Etwaige Ergänzungen, die hier gebraucht
@@ -209,7 +307,9 @@ sub tag {
 
     # Optionen
 
+    my $contentInd = undef;
     my $defaultA = undef;
+    my $fmt = 'v';
     my $ind = 2;
     my $nl = 1;
     my $placeholderA = undef;
@@ -235,8 +335,16 @@ sub tag {
 
         my $key = shift;
         if (substr($key,0,1) eq '-') {
-            if ($key eq '-defaults') {
+            if ($key eq '-elements') {
+                if (my $defA = shift->{$elem}) {
+                    ($fmt,$defaultA) = @$defA;
+                }
+            }
+            elsif ($key eq '-defaults') {
                 $defaultA = shift;
+            }
+            elsif ($key eq '-fmt') {
+                $fmt = shift;
             }
             elsif ($key eq '-nl') {
                 $nl = shift;
@@ -254,7 +362,7 @@ sub tag {
         }
 
         # Attribute
-        push @attrs,Quiq::Converter->camelCaseToSnakeCase($key),shift;
+        push @attrs,$key,shift;
     }
 
     # Defaultattribute setzen
@@ -281,15 +389,48 @@ sub tag {
     # Content
 
     my $content = $self->cat(@_);
-    $content = Quiq::Unindent->trim($content);
 
-    if ($content =~ /\n/ && $ind) {
-        # Mehrzeiligen Content einrücken. Wir berücksichtigen,
-        # dass enthaltene Leerzeilen nicht eingerückt werden.
-
-        my $space = ' ' x $ind;
-        $content =~ s/^(?!$)/$space/gm;
-        $content = "\n$content\n";
+    if ($fmt eq 'p' || $fmt eq 'P') {
+        if ($fmt eq 'P') {
+            $content = Quiq::Unindent->trim($content);
+        }
+        $content =~ s/\x0a/&#10;/g;
+        $content =~ s/\x0d/&#13;/g;
+    }
+    elsif ($fmt eq 'e' || $fmt eq 'E') {
+        if (length $content) {
+            $self->throw(
+                'TAG-00003: No content expected',
+                Content => $content,
+            );
+        }
+    }
+    elsif ($fmt eq 'i' || $fmt eq 'v' && $content !~ /\n/) {
+        # nichts tun
+    }
+    elsif ($fmt eq 'v' || $fmt eq 'm' || $fmt eq 'c') {
+        $content = Quiq::Unindent->trim($content);
+        if ($contentInd) {
+            # Bringe Einrückung des Content auf Tiefe $contendInd
+            Quiq::String->reduceIndentation($contentInd,\$content);
+        }
+        if ($fmt eq 'c' && $content =~ tr/&<>//) {
+            # Script-Code in CDATA einfassen, wenn &, < oder > enthalten sind
+            $content = "// <![CDATA[\n$content\n// ]]>";
+        }
+        if ($ind) {
+            my $space = ' ' x $ind;
+            $content =~ s/^(?!$)/$space/gm; # Leerzeilen nicht einrücken
+        }
+        if ($content ne '') {
+            $content = "\n$content\n";
+        }
+    }
+    else {
+        $self->throw(
+            'TAG-00004: Unknown format (-fmt)',
+            Value => $fmt,
+        );
     }
 
     # Tag erzeugen

@@ -27,11 +27,11 @@ L<Quiq::Tag>
   
   my $p = Quiq::Svg::Tag->new;
 
-=head3 Dokument erzeugen
+=head3 SVG-Dokument erzeugen
 
   $svg = $p->cat(
       $p->preamble,
-      $p->svg(
+      $p->tag('svg',
           width => 80,
           height => 80,
           $p->tag('circle',
@@ -48,8 +48,8 @@ erzeugt SVG-Code
   <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
   <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
   
-  <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <circle cx="50" cy="50" r="49" style="stroke: black; fill: yellow" />
+  <svg width="80" height="80" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <circle cx="40" cy="40" r="39" style="stroke: black; fill: yellow" />
   </svg>
 
 mit der Darstellung
@@ -57,7 +57,7 @@ mit der Darstellung
 =begin html
 
 <p class="sdoc-fig-p">
-  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/img/quiq-svg-tag-01.png" alt="" />
+  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/img/quiq-svg-tag-01.png" width="80" height="80" alt="" />
 </p>
 
 =end html
@@ -72,13 +72,25 @@ Ein Objekt der Klasse erzeugt SVG Markup-Code beliebiger Komplexität.
 
 =item *
 
-L<SVG Element Reference|https://developer.mozilla.org/en-US/docs/Web/SVG/Element>
+L<Mozilla SVG Element Reference|https://developer.mozilla.org/en-US/docs/Web/SVG/Element>
 
 =back
 
 =head1 METHODS
 
 =head2 Instantiierung
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+my %Elements = (
+    svg => ['m',[xmlns => 'http://www.w3.org/2000/svg',
+        'xmlns:svg' => 'http://www.w3.org/2000/svg',
+        'xmlns:xlink' => 'http://www.w3.org/1999/xlink']],
+);
+
+# -----------------------------------------------------------------------------
 
 =head3 new() - Konstruktor
 
@@ -116,7 +128,7 @@ sub new {
 
 =head4 Returns
 
-String
+SVG-Vorspann (String)
 
 =head4 Description
 
@@ -140,11 +152,13 @@ sub preamble {
 
 # -----------------------------------------------------------------------------
 
-=head3 svg() - Tag <svg>
+=head3 tag() - SVG-Tag
 
 =head4 Synopsis
 
-  $svg = $p->svg(@params,$content);
+  $svg = $p->tag($elem,@opts,@attrs);
+  $svg = $p->tag($elem,@opts,@attrs,$content);
+  $svg = $p->tag($elem,@opts,@attrs,'-',@content);
 
 =head4 Returns
 
@@ -152,21 +166,19 @@ SVG-Code (String)
 
 =head4 Description
 
-Erzeuge einen <svg> Tag und liefere diesen zurück.
+Erzeuge einen SVG-Tag und liefere diesen zurück. Die Methode
+ruft die gleichnamige Basisklassenmethode, übergibt aber zusätzlich die
+SVG-spezifischen Element-Definitionen per Option C<-elements>.
+Diese legen je SVG-Element dessen Default-Formatierung und
+Default-Attribute fest. Details siehe Quiq::Tag->tag().
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-my @SvgDefaults = (
-    xmlns => 'http://www.w3.org/2000/svg',
-    'xmlns:svg' => 'http://www.w3.org/2000/svg',
-    'xmlns:xlink' => 'http://www.w3.org/1999/xlink',
-);
-
-sub svg {
-    my $self = shift;
-    return $self->tag('svg',-defaults=>\@SvgDefaults,@_);
+sub tag {
+    my ($self,$elem) = splice @_,0,2;
+    return $self->SUPER::tag($elem,-elements=>\%Elements,@_);
 }
 
 # -----------------------------------------------------------------------------

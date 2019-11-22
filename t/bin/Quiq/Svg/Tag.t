@@ -32,17 +32,16 @@ sub test_unitTest : Test(5) {
     my $svg = $t->preamble;
     $self->like($svg,qr/<!DOCTYPE/);
 
-    $svg = $t->svg(width=>400,height=>300);
+    $svg = $t->tag('svg',width=>400,height=>300);
     $self->like($svg,qr/width="400"/);
     $self->like($svg,qr/height="300"/);
     $self->like($svg,qr{\Qxmlns:xlink="http://www.w3.org/1999/xlink"});
 
     $svg = $t->cat(
         $t->preamble,
-        $t->svg(
+        $t->tag('svg',
             width => 80,
             height => 80,
-            '-',
             $t->tag('circle',
                 cx => 40,
                 cy => 40,
