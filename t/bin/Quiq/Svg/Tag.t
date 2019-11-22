@@ -9,6 +9,7 @@ use warnings;
 use utf8;
 
 use Quiq::Path;
+use Quiq::Shell;
 
 # -----------------------------------------------------------------------------
 
@@ -39,22 +40,28 @@ sub test_unitTest : Test(5) {
     $svg = $t->cat(
         $t->preamble,
         $t->svg(
-            width => 100,
-            height => 100,
+            width => 80,
+            height => 80,
             '-',
             $t->tag('circle',
-                cx => 50,
-                cy => 50,
-                r => 49,
+                cx => 40,
+                cy => 40,
+                r => 39,
                 style => 'stroke: black; fill: yellow',
             ),
         ),
     );
 
+    # SVG-Datei ins Blob-Verzeichnis schreiben
+
     my $p = Quiq::Path->new;
-    my $blobFile = 'Blob/doc-image/quiq-svg-tag-01.svg';
-    if ($p->exists('Blob/doc-image') && $p->compareData("$blobFile",$svg)) {
-        $p->write("$blobFile",$svg);
+    my $sh = Quiq::Shell->new(log=>1,logDest=>*STDERR);
+
+    my $svgFile = 'Blob/doc-image/quiq-svg-tag-01.svg';
+    if ($p->exists('Blob/doc-image') && $p->compareData("$svgFile",$svg)) {
+        $p->write("$svgFile",$svg);
+        my $pngFile = $p->newExtension($svgFile,'png');
+        $sh->exec("convert -transparent white $svgFile $pngFile");
     }
 }
 

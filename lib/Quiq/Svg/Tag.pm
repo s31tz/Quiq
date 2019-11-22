@@ -32,12 +32,12 @@ L<Quiq::Tag>
   $svg = $p->cat(
       $p->preamble,
       $p->svg(
-          width => 140,
-          height => 170,
+          width => 80,
+          height => 80,
           $p->tag('circle',
-              cx => 70,
-              cy => 95,
-              r => 50,
+              cx => 40,
+              cy => 40,
+              r => 39,
               style => 'stroke: black; fill: none',
           ),
       ),
