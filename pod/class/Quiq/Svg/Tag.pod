@@ -16,7 +16,7 @@ L<Quiq::Tag|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Tag.pod>
   
   my $p = Quiq::Svg::Tag->new;
 
-=head3 SVG-Dokument erzeugen
+=head3 Ein einfaches SVG-Dokument
 
   $svg = $p->cat(
       $p->preamble,
@@ -41,7 +41,7 @@ erzeugt
     <circle cx="40" cy="40" r="39" style="stroke: black; fill: yellow" />
   </svg>
 
-wird darstellt als
+was darstellt wird als
 
 =begin html
 
@@ -51,9 +51,14 @@ wird darstellt als
 
 =end html
 
+Anstelle des Kreises kann natürlich jeder andere SVG-Code erzeugt werden.
+
 =head1 DESCRIPTION
 
 Ein Objekt der Klasse erzeugt SVG Markup-Code beliebiger Komplexität.
+Dies geschieht durch systematische Anwendung der Methode $p->tag(),
+die in der Basisklasse Quiq::Tag definiert ist und hier
+zur Erzeugung von SVG Markup überschrieben ist.
 
 =head1 SEE ALSO
 
