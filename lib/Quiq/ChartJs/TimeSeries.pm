@@ -86,11 +86,11 @@ sub new {
 
 =head2 Objektmethoden
 
-=head3 javaScript() - JavaScript-Code
+=head3 js() - JavaScript-Code
 
 =head4 Synopsis
 
-  $ch = $ch->javaScript;
+  $ch = $ch->js;
 
 =head4 Returns
 
@@ -104,7 +104,7 @@ Liefere den JavaScript-Code der Chart-Instanz.
 
 # -----------------------------------------------------------------------------
 
-sub javaScript {
+sub js {
     my $self = shift;
 
     my $template = Quiq::Unindent->string(q~
@@ -115,7 +115,6 @@ sub javaScript {
     ~);
 
     my $tpl = Quiq::Template->new('text',\$template);
-
     $tpl->replace(
         __NAME__ => $self->get('name'),
     );

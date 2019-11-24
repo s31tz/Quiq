@@ -54,11 +54,11 @@ dieses Objekt zurück.
 
 =head2 Objektmethoden
 
-=head3 javaScript() - JavaScript-Code
+=head3 js() - JavaScript-Code
 
 =head4 Synopsis
 
-  $ch = $ch->javaScript;
+  $ch = $ch->js;
 
 =head4 Returns
 
