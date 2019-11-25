@@ -2792,6 +2792,20 @@ sub numberPaths {
     if ($moveA) {
         my ($after,$from,$to) = @$moveA;
 
+        # Prüfe Angaben
+
+        scalar $this->glob("$after.*");
+        my $fromPath = $this->glob("$from.*");
+        my $toPath =  $this->glob("$to.*");
+
+        if ($fromPath gt $toPath) {
+            $this->throw(
+                'PATH-00099: fromPath must be less than toPath',
+                FromPath => $fromPath,
+                ToPath => $toPath,
+            );
+        }
+
         # Pfadliste neu aufbauen
         my @paths = @$pathA;
 
