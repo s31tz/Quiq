@@ -1196,7 +1196,7 @@ Nach Ausführung existiert der der Pfad /tmp/x/b/c/d/f, aber der Pfad
 
 =head4 Synopsis
 
-  $this->numberPaths(\@paths,$width,$step);
+  $this->numberPaths(\@paths,$width,$step,@opts);
 
 =head4 Arguments
 
@@ -1213,6 +1213,19 @@ Die Breite (Anzahl der Stellen) der Nummer.
 =item $step
 
 Die Schrittweite der Nummerierung.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -move => [$after,$from,$to]
+
+Ordne alle Pfade von $from bis $to (lexikalisch sortiert) nach der
+Datei $after ein. Ist $after leer (Leerstring oder undef), werden
+die Pfade an den Anfang gestellt. Alle Angaben I<vor> der
+(Re-)Nummerierung.
 
 =back
 
