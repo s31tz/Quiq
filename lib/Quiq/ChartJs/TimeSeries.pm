@@ -16,7 +16,7 @@ use Quiq::Template;
 
 =head1 NAME
 
-Quiq::ChartJs::TimeSeries - Zeitreihen-Plot mittels Chart.js
+Quiq::ChartJs::TimeSeries - Erzeuge Zeitreihen-Plot auf Basis von Chart.js
 
 =head1 BASE CLASS
 
@@ -24,7 +24,9 @@ L<Quiq::Hash>
 
 =head1 DESCRIPTION
 
-Erzeuge einen Zeitreihen-Plot mittels Chart.js.
+Erzeuge einen Zeitreihen-Plot auf Basis von Chart.js. Chart.js ist
+eine JavaScript-Bibliothek zum Plotten von Diagrammen auf einen
+HTML5 <canvas>.
 
 =head1 SEE ALSO
 
@@ -33,6 +35,10 @@ Erzeuge einen Zeitreihen-Plot mittels Chart.js.
 =item *
 
 L<https://www.chartjs.org>
+
+=item *
+
+L<https://github.com/chartjs/Chart.js>
 
 =back
 
@@ -44,13 +50,13 @@ L<https://www.chartjs.org>
 
 =head4 Synopsis
 
-  $ch = $class->new($name,@attVal);
+  $ch = $class->new(@attVal);
 
 =head4 Attributes
 
 =over 4
 
-=item name
+=item name => $name (Default:
 
 Name der Chart-Instanz. Der Name wird als CSS-Id für die Zeichenfläche
 (Canvas) und als Variablenname für die Instanz verwendet.
@@ -71,11 +77,11 @@ dieses Objekt zurück.
 # -----------------------------------------------------------------------------
 
 sub new {
-    my ($class,$name) = splice @_,0,2;
+    my $class = shift;
     # @_: @attVal
 
     my $self = $class->SUPER::new(
-        name => $name,
+        name => 'timeseries',
     );
     $self->set(@_);
 

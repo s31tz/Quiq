@@ -62,14 +62,15 @@ was darstellt wird als
 
 =end html
 
-Anstelle des Kreises kann natürlich jeder andere SVG-Code erzeugt werden.
+Anstelle eines Kreises kann jeder andere SVG-Code
+erzeugt werden.
 
 =head1 DESCRIPTION
 
 Ein Objekt der Klasse erzeugt SVG Markup-Code beliebiger Komplexität.
 Dies geschieht durch systematische Anwendung der Methode $p->tag(),
-die in der Basisklasse Quiq::Tag definiert ist und hier
-zur Erzeugung von SVG Markup überschrieben ist.
+die in der Basisklasse Quiq::Tag definiert ist und hier in
+Quiq::Svg::Tag zur Erzeugung von SVG Markup überschrieben wurde.
 
 =head1 SEE ALSO
 
@@ -183,7 +184,7 @@ Erzeuge einen SVG-Tag und liefere diesen zurück. Die Methode
 ruft die gleichnamige Basisklassenmethode auf und übergibt
 die SVG-spezifischen Element-Definitionen per Option C<-elements>.
 Diese definieren die Default-Formatierung und die Default-Attribute
-einzelner SVG-Elemente. Details siehe Quiq::Tag->tag().
+einzelner SVG-Elemente. Details zur Methode siehe Quiq::Tag->tag().
 
 =cut
 

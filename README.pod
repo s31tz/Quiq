@@ -29,7 +29,7 @@ L<Quiq::Array|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Array.pod
 
 =item *
 
-L<Quiq::AsciiTable|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/AsciiTable.pod> - Parse ASCII-Tabelle
+L<Quiq::AsciiTable|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/AsciiTable.pod> - Analysiere ASCII-Tabelle
 
 =item *
 
@@ -61,7 +61,7 @@ L<Quiq::Cascm|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Cascm.pod
 
 =item *
 
-L<Quiq::ChartJs::TimeSeries|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ChartJs/TimeSeries.pod> - Zeitreihen-Plot mittels Chart.js
+L<Quiq::ChartJs::TimeSeries|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ChartJs/TimeSeries.pod> - Erzeuge Zeitreihen-Plot auf Basis von Chart.js
 
 =item *
 

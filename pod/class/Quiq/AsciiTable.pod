@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::AsciiTable - Parse ASCII-Tabelle
+Quiq::AsciiTable - Analysiere ASCII-Tabelle
 
 =head1 BASE CLASS
 
@@ -12,9 +12,8 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 Ein Objekt der Klasse repräsentiert eine Tabelle, die in Form
 eines ASCII-Texts gegeben ist. Diese Darstellung wird an den
-Konstruktor übergeben, von diesem geparst und inhaltlich
-analysiert. Die Klasse stellt Methoden zur Verfügung, um die
-Eigenschaften der Tabelle abzufragen.
+Konstruktor übergeben und von diesem analysiert. Die Klasse stellt
+Methoden zur Verfügung, um die Eigenschaften der Tabelle abzufragen.
 
 =head2 Aufbau einer ASCII-Tabelle
 

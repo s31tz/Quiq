@@ -18,10 +18,9 @@ sub test_loadClass : Init(1) {
 sub test_unitTest: Test(2) {
     my $self = shift;
 
-    my $name = 'plot7';
-    my $ch = Quiq::ChartJs::TimeSeries->new($name);
+    my $ch = Quiq::ChartJs::TimeSeries->new;
     $self->is(ref($ch),'Quiq::ChartJs::TimeSeries');
-    $self->is($ch->name,$name);
+    $self->is($ch->name,'timeseries');
 
     # warn $ch->javaScript;
 }
