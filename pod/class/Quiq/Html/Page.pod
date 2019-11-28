@@ -73,7 +73,7 @@ ihre Werte.
 
 =item javaScript => $url|$jsCode|[...] (Default: undef)
 
-URL oder JavaScript-Code im Head der Seite. Mehrfach-Definition,
+URL oder JavaScript-Code am Ende der Seite. Mehrfach-Definition,
 wenn Array-Referenz. Das Attribut kann mehrfach auftreten, die
 Werte werden zu einer Liste zusammengefügt.
 
@@ -81,6 +81,19 @@ Werte werden zu einer Liste zusammengefügt.
 
 Setze den JavaScrip-Code nicht an das Ende des Body, sondern in
 den Head der HTML-Seite.
+
+=item ready => $jsCode (Default: [])
+
+Führe JavaScript-Code $jsCode aus, wenn das DOM geladen ist.
+Dies ist so implementiert, dass der Code wird in einen jQuery
+ready-Handler eingebettet wird:
+
+  $(function() {
+      $jsCode
+  });
+
+Das Konstrukt setzt also jQuery voraus. Das Attribut kann mehrfach
+auftreten, es werden dann mehrere ready-Handler aufgesetzt.
 
 =item styleSheet => $spec | \@specs (Default: undef)
 
