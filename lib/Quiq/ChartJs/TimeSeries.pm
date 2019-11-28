@@ -7,7 +7,6 @@ use warnings;
 
 our $VERSION = '1.166';
 
-use Quiq::Unindent;
 use Quiq::Template;
 
 # -----------------------------------------------------------------------------
@@ -33,7 +32,6 @@ L<Quiq::Hash>
   my $ch = Quiq::ChartJs::TimeSeries->new(
       parameter => 'Windspeed',
       unit => 'm/s',
-      aspectRatio => 8/2.5,
       points => \@rows,
       pointCallback => sub {
            my ($point,$i) = @_;
@@ -51,34 +49,29 @@ L<Quiq::Hash>
       load => [
           js => $ch->cdnUrl('2.8.0'),
       ],
-      body => $h->cat(
-          $h->tag('canvas',
-              id => $ch->name,
-          ),
-          $ch->html($h),
-      ),
+      body => $ch->html($h),
   );
 
 =head3 Diagramm
 
-(Folgendes Diagramm ist nur unter HTML sichtbar). Es zeigt 720 Messwerte
-einer Windgeschwindigkeits-Messung im Zeitraum von "2019-11-08 00:00:00"
-bis "2019-11-13 00:00:00". Die X- und Y-Achse sind aufgrund der
-Daten automatisch skaliert worden. Beim Überfahren des Diagramms mit
-der Maus wird in einem Hinweiskasten ("tooltip") der Zeitpunkt und
-Messwert des nächstgelegenen Datenpunktes angezeigt.
+(Folgendes Diagramm erscheint nur auf HTML-Seiten). Es zeigt 720
+Messwerte einer Windgeschwindigkeits-Messung im Zeitraum von
+"2019-11-08 00:00:00" bis "2019-11-13 00:00:00". Die X- und
+Y-Achse werden auf Basis der Daten und des zur Verfügung stehenden
+Raums automatisch skaliert. Beim Überfahren des Diagramms mit der Maus
+wird in einem Hinweiskasten ("tooltip") der Zeitpunkt und Messwert
+des nächstgelegenen Datenpunktes angezeigt.
 
-=format html
+=begin html
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" type="text/javascript"></script>
-<canvas id="plot"></canvas>
+<div style="height: 300px">
+  <canvas id="plot"></canvas>
+</div>
 <script type="text/javascript">
   Chart.defaults.global.defaultFontSize = 12;
   Chart.defaults.global.animation.duration = 1000;
-  var plotCtx = document.getElementById('plot').getContext('2d');
-  plotCtx.canvas.width = 1000;
-  plotCtx.canvas.height = 312;
-  var plot = new Chart(plotCtx,{
+  var plot = new Chart('plot',{
     type: 'line',
     data: {
       datasets: [{
@@ -91,6 +84,7 @@ Messwert des nächstgelegenen Datenpunktes angezeigt.
       }],
     },
     options: {
+      maintainAspectRatio: false,
       title: {
         display: true,
         text: 'Windspeed (720)',
@@ -187,11 +181,10 @@ L<https://github.com/chartjs/Chart.js>
 
 =over 4
 
-=item aspectRatio => $ratio (Default: 8/1.5)
+=item height => $height (Default: 300)
 
-Die Größe der Zeichenfläche des Diagramms wird nicht durch Angabe
-von Breite und Höhe festgelegt, sondern durch das Seitenverhältnis.
-Die absolute Größe ergibt sich aus dem verfügbaren Raum auf der Seite.
+Die Höhe des Diagramms. Eine Breite wird nicht angegeben, diese passt
+sich dem zur Verfügung stehenden Raum an.
 
 =item lineColor => $color (Default: 'rgb(255,0,0,1)')
 
@@ -275,7 +268,7 @@ sub new {
     # @_: @attVal
 
     my $self = $class->SUPER::new(
-        aspectRatio => 8/1.5,
+        height => 300,
         lineColor => 'rgb(255,0,0,1)',
         name => 'plot',
         parameter => undef,
@@ -351,10 +344,10 @@ sub html {
 
     my $self = ref $this? $this: $this->new(@_);
 
-    my ($aspectRatio,$lineColor,$name,$parameter,$pointA,
-        $pointCallback,$pointRadius,$title,$tMin,$tMax,$unit,$yMin,$yMax) =
-        $self->get(qw/aspectRatio lineColor name parameter points
-        pointCallback pointRadius title tMin tMax unit yMin yMax/);
+    my ($height,$lineColor,$name,$parameter,$pointA,$pointCallback,
+        $pointRadius,$title,$tMin,$tMax,$unit,$yMin,$yMax) =
+        $self->get(qw/height lineColor name parameter points pointCallback
+        pointRadius title tMin tMax unit yMin yMax/);
 
     # Datenpunkte in ChartJs-Datenstruktur wandeln
 
@@ -370,92 +363,96 @@ sub html {
          $points .= sprintf '{t:%s,y:%s}',@$point;
     }
 
-    my $template = Quiq::Unindent->string(q~
-        Chart.defaults.global.defaultFontSize = 12;
-        Chart.defaults.global.animation.duration = 1000;
+    my $template = $h->cat(
+        $h->tag('div',
+            style => 'height: __HEIGHT__px',
+            $h->tag('canvas',
+                 id => $name,
+            ),
+        ),
+        $h->tag('script',q~
+            Chart.defaults.global.defaultFontSize = 12;
+            Chart.defaults.global.animation.duration = 1000;
 
-        var __NAME__Ctx = document.getElementById('__NAME__').getContext('2d');
-        __NAME__Ctx.canvas.width = __WIDTH__;
-        __NAME__Ctx.canvas.height = __HEIGHT__;
-
-        var __NAME__ = new Chart(__NAME__Ctx,{
-            type: 'line',
-            data: {
-                datasets: [{
-                    type: 'line',
-                    fill: true,
-                    borderColor: '__LINE_COLOR__',
-                    borderWidth: 1,
-                    pointRadius: __POINT_RADIUS__,
-                    data: [__POINTS__],
-                }],
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: '__TITLE__',
-                    fontSize: 16,
-                    fontStyle: 'normal',
+            var __NAME__ = new Chart('__NAME__',{
+                type: 'line',
+                data: {
+                    datasets: [{
+                        type: 'line',
+                        fill: true,
+                        borderColor: '__LINE_COLOR__',
+                        borderWidth: 1,
+                        pointRadius: __POINT_RADIUS__,
+                        data: [__POINTS__],
+                    }],
                 },
-                tooltips: {
-                    intersect: false,
-                    displayColors: false,
-                    backgroundColor: 'rgb(0,0,0,0.6)',
-                    titleMarginBottom: 2,
-                    callbacks: {
-                        label: function(tooltipItem,data) {
-                            return '__PARAMETER__: ' + tooltipItem.value +
-                                ' __UNIT__';
+                options: {
+                    maintainAspectRatio: false,
+                    title: {
+                        display: true,
+                        text: '__TITLE__',
+                        fontSize: 16,
+                        fontStyle: 'normal',
+                    },
+                    tooltips: {
+                        intersect: false,
+                        displayColors: false,
+                        backgroundColor: 'rgb(0,0,0,0.6)',
+                        titleMarginBottom: 2,
+                        callbacks: {
+                            label: function(tooltipItem,data) {
+                                return '__PARAMETER__: ' + tooltipItem.value +
+                                    ' __UNIT__';
+                            },
                         },
                     },
-                },
-                legend: {
-                    display: false,
-                },
-                scales: {
-                    xAxes: [{
-                        type: 'time',
-                        ticks: {
-                            minRotation: 30,
-                            maxRotation: 60,
-                        },
-                        time: {
-                            min: __T_MIN__,
-                            max: __T_MAX__,
-                            minUnit: 'second',
-                            displayFormats: {
-                                second: 'YYYY-MM-DD HH:mm:ss',
-                                minute: 'YYYY-MM-DD HH:mm',
-                                hour: 'YYYY-MM-DD HH',
-                                day: 'YYYY-MM-DD',
-                                week: 'YYYY-MM-DD',
-                                month: 'YYYY-MM',
-                                quarter: 'YYYY [Q]Q',
-                                year: 'YYYY',
+                    legend: {
+                        display: false,
+                    },
+                    scales: {
+                        xAxes: [{
+                            type: 'time',
+                            ticks: {
+                                minRotation: 30,
+                                maxRotation: 60,
                             },
-                            tooltipFormat: 'YYYY-MM-DD HH:mm:ss',
-                        },
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            min: __Y_MIN__,
-                            max: __Y_MAX__,
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: '__UNIT__',
-                        },
-                    }],
+                            time: {
+                                min: __T_MIN__,
+                                max: __T_MAX__,
+                                minUnit: 'second',
+                                displayFormats: {
+                                    second: 'YYYY-MM-DD HH:mm:ss',
+                                    minute: 'YYYY-MM-DD HH:mm',
+                                    hour: 'YYYY-MM-DD HH',
+                                    day: 'YYYY-MM-DD',
+                                    week: 'YYYY-MM-DD',
+                                    month: 'YYYY-MM',
+                                    quarter: 'YYYY [Q]Q',
+                                    year: 'YYYY',
+                                },
+                                tooltipFormat: 'YYYY-MM-DD HH:mm:ss',
+                            },
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                min: __Y_MIN__,
+                                max: __Y_MAX__,
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: '__UNIT__',
+                            },
+                        }],
+                    }
                 }
-            }
-        });
-    ~);
+            });
+        ~),
+    );
 
     my $tpl = Quiq::Template->new('text',\$template);
     $tpl->replace(
         __NAME__ => $name,
-        __WIDTH__ => 1000,
-        __HEIGHT__ => int(1000/$aspectRatio),
+        __HEIGHT__ => $height,
         __TITLE__ => $title // $parameter.' ('.scalar(@$pointA).')',
         __PARAMETER__ => $parameter,
         __UNIT__ => $unit,
@@ -468,7 +465,7 @@ sub html {
         __POINT_RADIUS__ => $pointRadius,
     );
 
-    return $h->tag('script',$tpl->asString);
+    return $tpl->asString;
 }
 
 # -----------------------------------------------------------------------------

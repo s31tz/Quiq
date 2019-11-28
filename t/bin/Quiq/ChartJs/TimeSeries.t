@@ -50,7 +50,6 @@ sub test_unitTest: Test(2) {
     my $ch = Quiq::ChartJs::TimeSeries->new(
         parameter => 'Windspeed',
         unit => 'm/s',
-        aspectRatio => 8/2.5,
         points => \@rows,
         pointCallback => sub {
              my ($point,$i) = @_;
@@ -81,9 +80,6 @@ sub test_unitTest: Test(2) {
             $h->tag('script',
                 src => $ch->cdnUrl('2.8.0'),
             ),
-            $h->tag('canvas',
-                 id => $ch->name,
-            ),
             $ch->html($h),
         ),
     );
@@ -93,7 +89,7 @@ sub test_unitTest: Test(2) {
     if ($p->exists('Blob/doc-content') && $p->compareData($blobFile,$html)) {
         $p->write($blobFile,$html);
     }
-    my $pod = "=format html\n\n$html\n=end html\n";
+    my $pod =  "=begin html\n\n$html\n\n=end html\n";
     $blobFile = 'Blob/doc-content/quiq-chartjs-timeseries.pod';
     if ($p->exists('Blob/doc-content') && $p->compareData($blobFile,$pod)) {
         $p->write($blobFile,$pod);
