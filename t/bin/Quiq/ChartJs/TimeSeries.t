@@ -39,9 +39,9 @@ sub test_unitTest: Test(2) {
         }
         chomp;
         s/^2007/2019/;
-        push @rows,$_;
+        push @rows, $_;
         # Begrenzung der Anzahl der Messwerte
-        if (@rows == 200) {
+        if (/2019-11-13 00:00:00/) {
             last;
         }
     }
@@ -50,7 +50,7 @@ sub test_unitTest: Test(2) {
     my $ch = Quiq::ChartJs::TimeSeries->new(
         parameter => 'Windspeed',
         unit => 'm/s',
-        aspectRatio => 8/2.2,
+        aspectRatio => 8/2.5,
         points => \@rows,
         pointCallback => sub {
              my ($point,$i) = @_;
