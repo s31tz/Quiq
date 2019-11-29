@@ -340,7 +340,7 @@ keine doppelten Anführungsstiche enthalten.
 
 =head1 VERSION
 
-1.166
+1.167
 
 =head1 SOURCE
 

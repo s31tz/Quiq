@@ -220,7 +220,7 @@ Perl-Interpreter gerufen, wenn eine Methode nicht gefunden wird.
 
 =head1 VERSION
 
-1.166
+1.167
 
 =head1 SOURCE
 
