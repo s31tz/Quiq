@@ -67,11 +67,7 @@ sub test_unitTest: Test(2) {
     #    load => [
     #        js => $ch->cdnUrl('2.8.0'),
     #    ],
-    #    body => $h->cat(
-    #        $h->tag('canvas',
-    #            id => $ch->name,
-    #        ),
-    #        $ch->html($h),
+    #    body => $ch->html($h),
     #    ),
     #);
 

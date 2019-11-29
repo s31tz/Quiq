@@ -41,13 +41,8 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head3 Diagramm
 
-(Folgendes Diagramm erscheint nur auf HTML-Seiten). Es zeigt 720
-Messwerte einer Windgeschwindigkeits-Messung im Zeitraum von
-"2019-11-08 00:00:00" bis "2019-11-13 00:00:00". Die X- und
-Y-Achse werden auf Basis der Daten und des zur Verfügung stehenden
-Raums automatisch skaliert. Beim Überfahren des Diagramms mit der Maus
-wird in einem Hinweiskasten ("tooltip") der Zeitpunkt und Messwert
-des nächstgelegenen Datenpunktes angezeigt.
+(Folgendes Diagramm erscheint nur auf HTML-Seiten, es zeigt 720
+Messwerte einer Windgeschwindigkeits-Messung)
 
 =begin html
 
@@ -63,6 +58,7 @@ des nächstgelegenen Datenpunktes angezeigt.
     data: {
       datasets: [{
         type: 'line',
+        lineTension: undefined,
         fill: true,
         borderColor: 'rgb(255,0,0,1)',
         borderWidth: 1,
@@ -137,8 +133,222 @@ des nächstgelegenen Datenpunktes angezeigt.
 =head1 DESCRIPTION
 
 Erzeuge einen Zeitreihen-Plot auf Basis von Chart.js. Chart.js ist
-eine JavaScript-Bibliothek zum Plotten von Diagrammen auf einen
-HTML5 <canvas>.
+eine JavaScript-Bibliothek zur Darstellung von Diagrammen auf einem
+HTML5 <canvas>. Chart.js bietet viele Möglichkeiten der
+Diagramm-Generierung. Die Einstellungen werden per Datenstruktur
+an den Konstruktor übergeben. Diese Perl-Klasse ist darauf
+optimiert, einen speziellen Typ von Diagramm zu erzeugen:
+Zeitreihen-Plots.
+
+=head2 Diagramm-Eigenschaften und wie sie konfiguriert werden
+
+=head3 Übergabe der Daten
+
+Zeitreihendaten werden als Array von Punkten übergeben:
+
+  data: {
+      datasets: [{
+          type: 'line',
+          data: [__POINTS__],
+      }],
+  }
+
+Jeder Punkt in __POINTS__ ist ein Objekt mit der Struktur:
+
+  {
+      t: __JAVASCRIPT_EPOCH__,
+      y: __VALUE__,
+  },
+
+Hierbei ist __JAVASCRIPT_EPOCH__ der Zeitpunkt in Unix Epoch
+mal 1000 (also in Millisekunden-Auflösung).
+
+=head3 Diagramm mit konstanter Höhe und variabler Breite
+
+Das <canvas>-Element wird in ein Parent-Element eingebettet, welches
+die Höhe __HEIGHT__ zugewiesen bekommt:
+
+  <div style="height: __HEIGHT__px">
+      <canvas id="__NAME__"></canvas>
+  </div>
+
+In den Chart-Optionen wird definiert:
+
+  options: {
+       maintainAspectRatio: false,
+  }
+
+Damit ist das Diagramm fest auf __HEIGHT__ Pixel Höhe eingestellt,
+passt sich in der Breite aber dem zur Verfügung stehenden Raum an,
+auch nach einem Resize.
+
+=head3 Konfiguration der Zeitachse
+
+Eine Zeitachse bedarf einiger Konfigurationsarbeit, da die Defaults
+nicht besonders sinnvoll sind.
+
+  options: {
+      scales: {
+          xAxes: [{
+              type: 'time',
+              ticks: {
+                  minRotation: 30,
+                  maxRotation: 60,
+              },
+              time: {
+                  min: __T_MIN__,
+                  max: __T_MAX__,
+                  minUnit: 'second',
+                  displayFormats: {
+                      second: 'YYYY-MM-DD HH:mm:ss',
+                      minute: 'YYYY-MM-DD HH:mm',
+                      hour: 'YYYY-MM-DD HH',
+                      day: 'YYYY-MM-DD',
+                      week: 'YYYY-MM-DD',
+                      month: 'YYYY-MM',
+                      quarter: 'YYYY [Q]Q',
+                      year: 'YYYY',
+                  },
+                  tooltipFormat: 'YYYY-MM-DD HH:mm:ss',
+              },
+          }],
+      }
+  }
+
+=over 2
+
+=item *
+
+Die X-Achse wird zu einer Zeitachse, wenn C<type: 'time'>
+gesetzt ist.
+
+=item *
+
+Eine Zeitachse besitzt die Unterstruktur C<time: ...>.
+
+=item *
+
+Anders als bei numerischen Achsen werden Minimum und Maximum
+dort und I<nicht> in der Unterstruktur C<ticks: ...> festgelegt.
+
+=item *
+
+Werden C<min:> und C<max:> nicht oder auf C<undefined> gesetzt,
+werden die Grenzen aus den Daten ermittelt.
+
+=item *
+
+Die Skalierung ergibt sich aus dem zur Verfügung stehenden Raum.
+Chart.js entscheidet sich für eine Auflösung aus den 9 Kategorien
+C<millisecond> .. C<year>.
+
+=item *
+
+Die Tick-Beschriftung für die einzelnen Kategorien wird durch
+die Substuktur C<displayFormats: ...> definiert. Diese sollte
+komplett durchdefiniert werden, da Defaults von Chart.js nicht
+besonders sinnvoll sind.
+
+=item *
+
+Wie die Zeit im Tooltip dargestellt wird, definiert C<tooltipFormat:>.
+
+=item *
+
+Bei längeren Tick-Beschriftungen kann Chart.js diese gekippt
+darstellen. Da Zeitangaben länger sind, sollte die gekippte
+Darstellung forciert werden. Die gekippte Darstellung wird forciert,
+wenn C<minRotation:> I<und> C<maxRotation> definiert werden. Dann
+unterbleibt eine gerade Beschriftung, denn ein Wechsel zwischen
+gerader und gekippter Beschriftung wirkt uneinheitlich.
+
+=back
+
+=head3 Raum unter dem Graph einfärben
+
+  data: {
+      datasets: [{
+          fill: true;
+      }],
+  }
+
+=head3 Konfigurations-Datenstruktur insgesamt
+
+Die Perl-Klasse übergibt folgende Datenstruktur an den Konstruktor
+der JavaScript-Klasse Chart, wobei die Platzhalter __XXXX__
+ersetzt werden, meist durch den Wert des betreffenden Klassen-Attributs
+xxxx. Die Liste aller Attribute siehe Abschnitt L<Attributes|"Attributes">.
+
+  type: 'line',
+  data: {
+      datasets: [{
+          type: 'line',
+          lineTension: __LINE_TENSION__,
+          fill: true,
+          borderColor: '__LINE_COLOR__',
+          borderWidth: 1,
+          pointRadius: __POINT_RADIUS__,
+          data: [__POINTS__],
+      }],
+  },
+  options: {
+      maintainAspectRatio: false,
+      title: {
+          display: true,
+          text: '__TITLE__',
+          fontSize: 16,
+          fontStyle: 'normal',
+      },
+      tooltips: {
+          intersect: false,
+          displayColors: false,
+          backgroundColor: 'rgb(0,0,0,0.6)',
+          titleMarginBottom: 2,
+          callbacks: {
+              label: function(tooltipItem,data) {
+                  return '__PARAMETER__: ' + tooltipItem.value + ' __UNIT__';
+              },
+          },
+      },
+      legend: {
+          display: false,
+      },
+      scales: {
+          xAxes: [{
+              type: 'time',
+              ticks: {
+                  minRotation: 30,
+                  maxRotation: 60,
+              },
+              time: {
+                  min: __T_MIN__,
+                  max: __T_MAX__,
+                  minUnit: 'second',
+                  displayFormats: {
+                      second: 'YYYY-MM-DD HH:mm:ss',
+                      minute: 'YYYY-MM-DD HH:mm',
+                      hour: 'YYYY-MM-DD HH',
+                      day: 'YYYY-MM-DD',
+                      week: 'YYYY-MM-DD',
+                      month: 'YYYY-MM',
+                      quarter: 'YYYY [Q]Q',
+                      year: 'YYYY',
+                  },
+                  tooltipFormat: 'YYYY-MM-DD HH:mm:ss',
+              },
+          }],
+          yAxes: [{
+              ticks: {
+                  min: __Y_MIN__,
+                  max: __Y_MAX__,
+              },
+              scaleLabel: {
+                  display: true,
+                  labelString: '__UNIT__',
+              },
+          }],
+      }
+  }
 
 =head1 SEE ALSO
 
@@ -176,6 +386,12 @@ sich dem zur Verfügung stehenden Raum an.
 =item lineColor => $color (Default: 'rgb(255,0,0,1)')
 
 Die Linienfarbe.
+
+=item lineTension => $n (Default: 'undefined')
+
+"Bezier curve tension of the line." Wenn 0, werden die Punkte
+gerade verbunden. Der Default 'undefined' bedeutet, dass der
+voreingestellte Wert von Chart.js verwendet wird.
 
 =item name => $name (Default: 'plot')
 
