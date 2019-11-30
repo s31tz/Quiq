@@ -54,8 +54,9 @@ L<Quiq::Hash>
 
 =head3 Diagramm
 
-(Folgendes Diagramm erscheint nur auf HTML-Seiten, es zeigt 720
-Messwerte einer Windgeschwindigkeits-Messung)
+(Folgendes Diagramm erscheint nur in HTML - außer auf
+meta::cpan, da es dort gestrippt wird. Es zeigt 720 Messwerte einer
+Windgeschwindigkeits-Messung)
 
 =begin html
 
@@ -83,7 +84,7 @@ Messwerte einer Windgeschwindigkeits-Messung)
       maintainAspectRatio: false,
       title: {
         display: true,
-        text: 'Windspeed (720)',
+        text: 'Windspeed',
         fontSize: 16,
         fontStyle: 'normal',
       },
@@ -145,15 +146,19 @@ Messwerte einer Windgeschwindigkeits-Messung)
 
 =head1 DESCRIPTION
 
-Erzeuge einen Zeitreihen-Plot auf Basis von Chart.js. Chart.js ist
-eine JavaScript-Bibliothek zur Darstellung von Diagrammen auf einem
-HTML5 <canvas>. Chart.js bietet viele Möglichkeiten der
+Diese Klasse bildet einen Perl-Wrapper für die Erzeugung für
+Zeitreihen-Plots auf Basis von Chart.js. Chart.js ist
+eine JavaScript-Bibliothek, die Diagramme auf einem
+HTML5 <canvas> darstellt. Chart.js bietet viele Möglichkeiten der
 Diagramm-Generierung. Die Einstellungen werden per Datenstruktur
-an den Konstruktor übergeben. Diese Perl-Klasse ist darauf
-optimiert, einen speziellen Typ von Diagramm zu erzeugen:
-Zeitreihen-Plots.
+an den Chart Konstruktor übergeben. Diese Perl-Klasse ist darauf
+optimiert, einen speziellen Typ von Diagrammen zu erzeugen:
+Zeitreihen-Plots. In einem Zeitreihen-Plot werden die Werte eines
+I<Parameters> einer bestimmten I<Einheit> (unit) gegen die
+Zeit geplottet. Die X-Achse ist die Zeitachse und die Y-Achse
+die Werteachse.
 
-=head2 Diagramm-Eigenschaften und wie sie konfiguriert werden
+=head2 Diagramm-Eigenschaften und wie sie in Chart.js konfiguriert werden
 
 =head3 Übergabe der Daten
 
@@ -171,7 +176,7 @@ Jeder Punkt in __POINTS__ ist ein Objekt mit der Struktur:
   {
       t: __JAVASCRIPT_EPOCH__,
       y: __VALUE__,
-  },
+  }
 
 Hierbei ist __JAVASCRIPT_EPOCH__ der Zeitpunkt in Unix Epoch
 mal 1000 (also in Millisekunden-Auflösung).
@@ -198,7 +203,7 @@ auch nach einem Resize.
 =head3 Konfiguration der Zeitachse
 
 Eine Zeitachse bedarf einiger Konfigurationsarbeit, da die Defaults
-nicht besonders sinnvoll sind.
+von Chart.js nicht besonders sinnvoll sind.
 
   options: {
       scales: {
@@ -225,7 +230,7 @@ nicht besonders sinnvoll sind.
                   tooltipFormat: 'YYYY-MM-DD HH:mm:ss',
               },
           }],
-      }
+      },
   }
 
 =over 2
@@ -237,7 +242,8 @@ gesetzt ist.
 
 =item *
 
-Eine Zeitachse besitzt die Unterstruktur C<time: ...>.
+Eine Zeitachse wird speziell über die Unterstruktur C<time: ...>
+konfiguriert.
 
 =item *
 
@@ -360,7 +366,7 @@ xxxx. Die Liste aller Attribute siehe Abschnitt L<Attributes|"Attributes">.
                   labelString: '__UNIT__',
               },
           }],
-      }
+      },
   }
 
 =head1 SEE ALSO
@@ -374,6 +380,10 @@ L<https://www.chartjs.org>
 =item *
 
 L<https://github.com/chartjs/Chart.js>
+
+=item *
+
+L<Everything you need to know to create great looking charts using Chart.js|http://www.shilling.co.uk/survey/Charts/docs/>
 
 =back
 
@@ -404,7 +414,7 @@ Die Linienfarbe.
 
 "Bezier curve tension of the line." Wenn 0, werden die Punkte
 gerade verbunden. Der Default 'undefined' bedeutet, dass der
-voreingestellte Wert von Chart.js verwendet wird.
+von Chart.js voreingestellte Wert 0.4 verwendet wird.
 
 =item name => $name (Default: 'plot')
 
@@ -671,7 +681,7 @@ sub html {
     $tpl->replace(
         __NAME__ => $name,
         __HEIGHT__ => $height,
-        __TITLE__ => $title // $parameter.' ('.scalar(@$pointA).')',
+        __TITLE__ => $title // $parameter,
         __PARAMETER__ => $parameter,
         __UNIT__ => $unit,
         __POINTS__ => $points,
