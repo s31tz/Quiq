@@ -55,8 +55,8 @@ L<Quiq::Hash>
 =head3 Diagramm
 
 (Folgendes Diagramm erscheint nur in HTML - außer auf
-meta::cpan, da es dort gestrippt wird. Es zeigt 720 Messwerte einer
-Windgeschwindigkeits-Messung)
+meta::cpan, da der HTML-Code dort gestrippt wird. Es zeigt 720 Messwerte
+einer Windgeschwindigkeits-Messung)
 
 =begin html
 
@@ -171,7 +171,7 @@ Zeitreihendaten werden als Array von Punkten übergeben:
       }],
   }
 
-Jeder Punkt in __POINTS__ ist ein Objekt mit der Struktur:
+Jeder Punkt in __POINTS__ ist ein JS-Objekt mit der Struktur:
 
   {
       t: __JAVASCRIPT_EPOCH__,
@@ -698,6 +698,38 @@ sub html {
 }
 
 # -----------------------------------------------------------------------------
+
+=head1 IDEAS
+
+=over 2
+
+=item *
+
+minRotation, maxRotation auf einen festen Wert einstellen, z.B. 45,
+damit alle Diagramme gleich aussehen
+
+=item *
+
+Höhe des Diagramms per JS setzen statt im HTML?
+
+=item *
+
+JS-Code in Ready-Handler setzen
+
+=item *
+
+L<Daten per Ajax laden|https://stackoverflow.com/questions/19894952/draw-a-chart-js-with-ajax-data-and-responsive-a-few-problems-and-questions>
+
+=item *
+
+Tick-Label der Zeitachse berechnen, so dass wiederholende Teile
+ausgeblendet sind
+
+=item *
+
+Zoomen in die Daten. Wie? Plugin?
+
+=back
 
 =head1 VERSION
 
