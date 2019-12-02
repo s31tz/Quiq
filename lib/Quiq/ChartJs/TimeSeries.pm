@@ -146,14 +146,14 @@ einer Windgeschwindigkeits-Messung)
 
 =head1 DESCRIPTION
 
-Diese Klasse bildet einen Perl-Wrapper für die Erzeugung für
+Diese Klasse ist ein Perl-Wrapper für die Erzeugung für
 Zeitreihen-Plots auf Basis von Chart.js. Chart.js ist
 eine JavaScript-Bibliothek, die Diagramme auf einem
 HTML5 <canvas> darstellt. Chart.js bietet viele Möglichkeiten der
 Diagramm-Generierung. Die Einstellungen werden per Datenstruktur
-an den Chart Konstruktor übergeben. Diese Perl-Klasse ist darauf
-optimiert, einen speziellen Typ von Diagrammen zu erzeugen:
-Zeitreihen-Plots. In einem Zeitreihen-Plot werden die Werte eines
+an den Chart-Konstruktor übergeben. Die Perl-Klasse ist darauf
+optimiert, einen speziellen Typ von Diagramm zu erzeugen: einen
+Zeitreihen-Plot. In einem Zeitreihen-Plot werden die Werte eines
 I<Parameters> einer bestimmten I<Einheit> (unit) gegen die
 Zeit geplottet. Die X-Achse ist die Zeitachse und die Y-Achse
 die Werteachse.
