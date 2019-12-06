@@ -69,11 +69,11 @@ einer Windgeschwindigkeits-Messung)
         hidden: false,
         type: 'line',
         fill: true,
-        borderColor: 'rgb(255,0,0,1)',
+        borderColor: 'rgb(0,0,0,0.1)',
         borderWidth: 1,
         pointRadius: 0,
-        data: [{t:undefined,y:11.5002631944444},
-          {t:undefined,y:11.5002631944444}],
+        data: [{t:1573167600000,y:11.4725},
+          {t:1573599600000,y:11.4725}],
       }],
     },
     options: {
@@ -107,8 +107,8 @@ einer Windgeschwindigkeits-Messung)
             maxRotation: 60,
           },
           time: {
-            min: undefined,
-            max: undefined,
+            min: 1573167600000,
+            max: 1573599600000,
             minUnit: 'second',
             displayFormats: {
               second: 'YYYY-MM-DD HH:mm:ss',
@@ -125,8 +125,8 @@ einer Windgeschwindigkeits-Messung)
         }],
         yAxes: [{
           ticks: {
-            min: undefined,
-            max: undefined,
+            min: 0,
+            max: 21.423,
           },
           scaleLabel: {
             display: true,
@@ -397,6 +397,34 @@ L<Everything you need to know to create great looking charts using Chart.js|http
 
 =over 4
 
+=item t => \@y (Default: [])
+
+Referenz auf Array der Zeit-Werte (in JavaScript-Epoch).
+
+=item y => \@y (Default: [])
+
+Referenz auf Array der Y-Werte (Weltkoordinaten).
+
+=item tMin => $jsEpoch (Default: 'undefined')
+
+Kleinster Wert auf der Zeitachse. Der Default 'undefined' bedeutet,
+dass der Wert aus den Daten ermittelt wird.
+
+=item tMax => $jsEpoch (Default: 'undefined')
+
+Größter Wert auf der Zeitachse. Der Default 'undefined' bedeutet,
+dass der Wert aus den Daten ermittelt wird.
+
+=item yMin => $val (Default: 'undefined')
+
+Kleinster Wert auf der Y-Achse. Der Default 'undefined' bedeutet,
+dass der Wert aus den Daten ermittelt wird.
+
+=item yMax => $val (Default: 'undefined')
+
+Größter Wert auf der Y-Achse. Der Default 'undefined' bedeutet,
+dass der Wert aus den Daten ermittelt wird.
+
 =item height => $height (Default: 300)
 
 Die Höhe des Diagramms. Eine Breite wird nicht angegeben, diese passt
@@ -445,30 +473,10 @@ dass die Datenpunkte nicht gekennzeichnet werden.
 
 Titel, der über das Diagramm geschrieben wird.
 
-=item tMin => $jsEpoch (Default: 'undefined')
-
-Kleinster Wert auf der Zeitachse. Der Default 'undefined' bedeutet,
-dass der Wert aus den Daten ermittelt wird.
-
-=item tMax => $jsEpoch (Default: 'undefined')
-
-Größter Wert auf der Zeitachse. Der Default 'undefined' bedeutet,
-dass der Wert aus den Daten ermittelt wird.
-
 =item unit => $str
 
 Einheit des Parameters. Mit der Einheit wird die Y-Achse beschriftet und
 sie erscheint im Tooltip.
-
-=item yMin => $val (Default: 'undefined')
-
-Kleinster Wert auf der Y-Achse. Der Default 'undefined' bedeutet,
-dass der Wert aus den Daten ermittelt wird.
-
-=item yMax => $val (Default: 'undefined')
-
-Größter Wert auf der Y-Achse. Der Default 'undefined' bedeutet,
-dass der Wert aus den Daten ermittelt wird.
 
 =back
 

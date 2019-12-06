@@ -83,11 +83,11 @@ einer Windgeschwindigkeits-Messung)
         hidden: false,
         type: 'line',
         fill: true,
-        borderColor: 'rgb(255,0,0,1)',
+        borderColor: 'rgb(0,0,0,0.1)',
         borderWidth: 1,
         pointRadius: 0,
-        data: [{t:undefined,y:11.5002631944444},
-          {t:undefined,y:11.5002631944444}],
+        data: [{t:1573167600000,y:11.4725},
+          {t:1573599600000,y:11.4725}],
       }],
     },
     options: {
@@ -121,8 +121,8 @@ einer Windgeschwindigkeits-Messung)
             maxRotation: 60,
           },
           time: {
-            min: undefined,
-            max: undefined,
+            min: 1573167600000,
+            max: 1573599600000,
             minUnit: 'second',
             displayFormats: {
               second: 'YYYY-MM-DD HH:mm:ss',
@@ -139,8 +139,8 @@ einer Windgeschwindigkeits-Messung)
         }],
         yAxes: [{
           ticks: {
-            min: undefined,
-            max: undefined,
+            min: 0,
+            max: 21.423,
           },
           scaleLabel: {
             display: true,
@@ -411,6 +411,34 @@ L<Everything you need to know to create great looking charts using Chart.js|http
 
 =over 4
 
+=item t => \@y (Default: [])
+
+Referenz auf Array der Zeit-Werte (in JavaScript-Epoch).
+
+=item y => \@y (Default: [])
+
+Referenz auf Array der Y-Werte (Weltkoordinaten).
+
+=item tMin => $jsEpoch (Default: 'undefined')
+
+Kleinster Wert auf der Zeitachse. Der Default 'undefined' bedeutet,
+dass der Wert aus den Daten ermittelt wird.
+
+=item tMax => $jsEpoch (Default: 'undefined')
+
+Größter Wert auf der Zeitachse. Der Default 'undefined' bedeutet,
+dass der Wert aus den Daten ermittelt wird.
+
+=item yMin => $val (Default: 'undefined')
+
+Kleinster Wert auf der Y-Achse. Der Default 'undefined' bedeutet,
+dass der Wert aus den Daten ermittelt wird.
+
+=item yMax => $val (Default: 'undefined')
+
+Größter Wert auf der Y-Achse. Der Default 'undefined' bedeutet,
+dass der Wert aus den Daten ermittelt wird.
+
 =item height => $height (Default: 300)
 
 Die Höhe des Diagramms. Eine Breite wird nicht angegeben, diese passt
@@ -459,30 +487,10 @@ dass die Datenpunkte nicht gekennzeichnet werden.
 
 Titel, der über das Diagramm geschrieben wird.
 
-=item tMin => $jsEpoch (Default: 'undefined')
-
-Kleinster Wert auf der Zeitachse. Der Default 'undefined' bedeutet,
-dass der Wert aus den Daten ermittelt wird.
-
-=item tMax => $jsEpoch (Default: 'undefined')
-
-Größter Wert auf der Zeitachse. Der Default 'undefined' bedeutet,
-dass der Wert aus den Daten ermittelt wird.
-
 =item unit => $str
 
 Einheit des Parameters. Mit der Einheit wird die Y-Achse beschriftet und
 sie erscheint im Tooltip.
-
-=item yMin => $val (Default: 'undefined')
-
-Kleinster Wert auf der Y-Achse. Der Default 'undefined' bedeutet,
-dass der Wert aus den Daten ermittelt wird.
-
-=item yMax => $val (Default: 'undefined')
-
-Größter Wert auf der Y-Achse. Der Default 'undefined' bedeutet,
-dass der Wert aus den Daten ermittelt wird.
 
 =back
 
@@ -509,15 +517,15 @@ sub new {
         lineTension => 'undefined',
         name => 'plot',
         parameter => undef,
-        points => [],
-        pointCallback => undef,
         pointRadius => 0,
+        t => [],
         title => undef,
-        tMin => 'undefined',
-        tMax => 'undefined',
+        tMin => undef, # 'undefined'
+        tMax => undef, # 'undefined'
         unit => undef,
-        yMin => 'undefined',
-        yMax => 'undefined',
+        y => [],
+        yMin => undef, # 'undefined'
+        yMax => undef, # 'undefined'
     );
     $self->set(@_);
 
@@ -581,29 +589,37 @@ sub html {
 
     my $self = ref $this? $this: $this->new(@_);
 
-    my ($height,$lineColor,$lineTension,$name,$parameter,$pointA,
-        $pointCallback,$pointRadius,$title,$tMin,$tMax,$unit,$yMin,$yMax) =
-        $self->get(qw/height lineColor lineTension name parameter points
-        pointCallback pointRadius title tMin tMax unit yMin yMax/);
+    my ($height,$lineColor,$lineTension,$name,$parameter,
+        $pointRadius,$title,$tA,$tMin,$tMax,$unit,$yA,$yMin,$yMax) =
+        $self->get(qw/height lineColor lineTension name parameter
+        pointRadius title t tMin tMax unit y yMin yMax/);
 
     # Datenpunkte in ChartJs-Datenstruktur wandeln
 
-    my @y;
     my $points = '';
-    for (my $i = 0; $i < @$pointA; $i++) {
-         my $point = $pointA->[$i];
-         if ($pointCallback) {
-              $point = $pointCallback->($point,$i);
-         }
+    for (my $i = 0; $i < @$tA; $i++) {
          if ($i) {
              $points .= ',';
          }
-         my ($t,$y) = @$point;
-         push @y,$point->[1];
-         $points .= sprintf '{t:%s,y:%s}',@$point;
+         $points .= sprintf '{t:%s,y:%s}',$tA->[$i],$yA->[$i];
     }
-    my $average = Quiq::Array->meanValue(\@y);
 
+    if (!defined $tMin || !defined $tMax) {
+        my ($min,$max) = Quiq::Array->minMax($tA);
+        $tMin //= $min;
+        $tMax //= $max;
+    }
+
+    if (!defined $yMin || !defined $yMax) {
+        my ($min,$max) = Quiq::Array->minMax($yA);
+        $yMin //= $min;
+        $yMax //= $max;
+    }
+
+    my $average = Quiq::Array->meanValue($yA);
+warn "$average\n";
+    $average = Quiq::Array->median($yA);
+warn "$average\n";
     my $template = $h->cat(
         $h->tag('div',
             style => 'height: __HEIGHT__px',
@@ -627,10 +643,10 @@ sub html {
                         pointRadius: __POINT_RADIUS__,
                         data: [__POINTS__],
                     },{
-                        hidden: true,
+                        hidden: false,
                         type: 'line',
                         fill: true,
-                        borderColor: '__LINE_COLOR__',
+                        borderColor: 'rgb(0,0,0,0.3)',
                         borderWidth: 1,
                         pointRadius: 0,
                         data: [{t:__T_MIN__,y:__AVERAGE__},
