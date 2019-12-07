@@ -21,6 +21,13 @@ Quiq::Json - Erzeuge JSON-Code
 
 L<Quiq::Hash>
 
+=head1 DESCRIPTION
+
+Die Klasse erzeugt JSON-Code in einem Coding-Style, wie ich ihn
+in JavaScript-Quelltexten verwende. Durch die Methode $j->L<object|"object() - Erzeuge Code für JSON-Objekt">()
+besteht Kontrolle über die Reihenfolge der Schlüssel/Wert-Paare.
+Darüber hinaus werden sie per Default eingerückt dargestellt.
+
 =head1 METHODS
 
 =head2 Instantiierung
