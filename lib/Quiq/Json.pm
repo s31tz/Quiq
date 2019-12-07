@@ -21,22 +21,80 @@ Quiq::Json - Erzeuge JSON-Code
 
 L<Quiq::Hash>
 
-=head1 SYNOPSIS
+=head1 METHODS
 
-Klasse laden:
+=head2 Instantiierung
 
-  use Quiq::Json;
+=head3 new() - Konstruktor
 
-JSON-Code erzeugen:
+=head4 Synopsis
 
-  $j = Quiq::Json->new;
-  $json = $j->encode($arg);
+  $j = $class->new(@keyVal);
 
-=head1 DESCRIPTION
+=head4 Attributes
 
-Diese Klasse erzeugt JSON-Code in einem Coding-Style, wie ich ihn
-in JavaScript-Quelltexten verwende. Die Übersetzung erfolgt nach
-folgenden Regeln:
+=over 4
+
+=item indent => $n (Default: 4)
+
+Tiefe der Einrückung.
+
+=back
+
+=head4 Returns
+
+Objekt
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere eine Referenz
+auf dieses Objekt zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub new {
+    my $class = shift;
+    # @_: @keyVal
+
+    my $self = $class->SUPER::new(
+        indent => 4,
+    );
+    $self->set(@_);
+
+    return $self;
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Objektmethoden
+
+=head3 encode() - Wandele Perl-Datenstruktur in JSON-Code
+
+=head4 Synopsis
+
+  $json = $j->encode($scalar);
+
+=head4 Arguments
+
+=over 4
+
+=item $scalar
+
+Skalarer Wert: undef, \0, \1, Number, String, String-Referenz,
+Array-Referenz, Hash-Referenz.
+
+=back
+
+=head4 Returns
+
+JSON-Code (String)
+
+=head4 Description
+
+Wandele $scalar nach JSON und liefere den resultierenden Code zurück.
+Die Übersetzung erfolgt (rekursiv) nach folgenden Regeln:
 
 =over 4
 
@@ -98,93 +156,7 @@ Wird abgebildet auf:
       ...,
   }
 
-Wird beim Konstruktoraufruf C<< indentHashElements=>0 >> angegeben,
-werden die Schlüssel/Wert-Paare nicht eingerückt:
-
-  {KEY1:VALUE1,KEY2:VALUE2,...}
-
-Die Reihenfolge der Schlüssel KEYI ist alphanumerisch. Ein Schlüssel
-KEYI wird in einfache Anführungsstriche eingefasst, wenn
-er mindestens ein Zeichen enthält, das nicht zum Zeichenvorrat \w
-gehört.
-
 =back
-
-=head1 METHODS
-
-=head2 Instantiierung
-
-=head3 new() - Konstruktor
-
-=head4 Synopsis
-
-  $j = $class->new(@attVal);
-
-=head4 Attributes
-
-=over 4
-
-=item indent => $n (Default: 4)
-
-Tiefe der Einrückung.
-
-=back
-
-=head4 Returns
-
-Objekt
-
-=head4 Description
-
-Instantiiere ein Objekt der Klasse und liefere eine Referenz
-auf dieses Objekt zurück.
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub new {
-    my $class = shift;
-
-    my $self = $class->SUPER::new(
-        indent => 4,
-        indentArrayElements => 0,
-        indentHashElements => 1,
-        indentStr => undef,
-    );
-    $self->set(@_);
-    $self->{'indentStr'} = ' ' x $self->{'indent'};
-
-    return $self;
-}
-
-# -----------------------------------------------------------------------------
-
-=head2 Objektmethoden
-
-=head3 encode() - Erzeuge JSON
-
-=head4 Synopsis
-
-  $json = $j->encode($arg);
-
-=head4 Arguments
-
-=over 4
-
-=item $arg
-
-Wert.
-
-=back
-
-=head4 Returns
-
-JSON-Code (String)
-
-=head4 Description
-
-Wandele Wert $arg nach JSON und liefere den JSON-Code zurück.
 
 =cut
 
@@ -215,63 +187,27 @@ sub encode {
             $json = 'false';
         }
         else {
-            $json = $arg;
+            $json = $$arg;
         }
     }
     elsif ($refType eq 'ARRAY') {
-        if ($self->{'indentArrayElements'}) {
-            for (my $i = 0; $i < @$arg; $i++) {
-                my $code = $self->encode($arg->[$i]);
-                if ($json && $code !~ /^[\[{]/) {
-                    $json .= "\n";
-                }
-                $json .= $code.',';
-            }
+        for (my $i = 0; $i < @$arg; $i++) {
             if ($json) {
-                $json =~ s/^/$self->{'indentStr'}/mg;
-                $json = "[\n$json\n]";
+                $json .= ',';
             }
-            else {
-                $json = '[]';
-            }
+            $json .= $self->encode($arg->[$i]);
         }
-        else {
-            for (my $i = 0; $i < @$arg; $i++) {
-                if ($json) {
-                    $json .= ',';
-                }
-                $json .= $self->encode($arg->[$i]);
-            }
-            $json = "[$json]";
-        }
+        $json = "[$json]";
     }
     elsif ($refType eq 'HASH') {
-        if ($self->{'indentHashElements'}) {
-            for my $key (sort keys %$arg) {
-                if ($json) {
-                    $json .= "\n";
-                }
-                $json .= $key =~ /\W/? "'$key'": $key;
-                $json .= ': '.$self->encode($arg->{$key}).',';
-            }
+        for my $key (sort keys %$arg) {
             if ($json) {
-                $json =~ s/^/$self->{'indentStr'}/mg;
-                $json = "{\n$json\n}";
+                $json .= ',';
             }
-            else {
-                $json .= '{}';
-            }
+            $json .= $self->key($key);
+            $json .= ':'.$self->encode($arg->{$key});
         }
-        else {
-            for my $key (sort keys %$arg) {
-                if ($json) {
-                    $json .= ',';
-                }
-                $json .= $key =~ /^\w+$/? $key: "'$key'";
-                $json .= ':'.$self->encode($arg->{$key});
-            }
-            $json = "{$json}";
-        }
+        $json = "{$json}";
     }
     else {
         $self->throw(
@@ -282,6 +218,161 @@ sub encode {
     }
 
     return $json;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 object() - Erzeuge Code für JSON-Objekt
+
+=head4 Synopsis
+
+  $json = $j->object(@opt,@keyVal);
+
+=head4 Arguments
+
+=over 4
+
+=item @keyVal
+
+Liste der Schlüssel/Wert-Paare
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -indent => $bool (Default: 1)
+
+Rücke die Elemente des Hash ein.
+
+=back
+
+=head4 Returns
+
+JSON-Code (String)
+
+=head4 Description
+
+Erzeuge den Code für ein JSON-Objekt mit den Attribut/Wert-Paaren
+@keyVal und liefere diesen zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub object {
+    my $self = shift;
+    # @_: @keyVal
+
+    # Optionen
+
+    my $indent = 1;
+
+    while (@_) {
+        if (substr($_[0],0,1) ne '-') {
+            # Implizites Ende der Optionsliste
+            last;
+        }
+        my $opt = shift;
+        if ($opt eq '-') {
+            # Explizites Ende der Optionsliste
+            last;
+        }
+        elsif ($opt eq '-indent') {
+            $indent = shift;
+        }
+        else {
+            $self->throw(
+                'JSON-00001: Unknown option',
+                Option => $opt,
+                Value => shift,
+            );
+        }
+    }
+
+    my $json = '';
+    if ($indent) {
+        while (@_) {
+            if ($json) {
+                $json .= "\n";
+            }
+            $json .= sprintf '%s: %s,',$self->key(shift),$self->encode(shift);
+        }
+        if ($json) {
+            my $indent = ' ' x $self->{'indent'};
+            $json =~ s/^/$indent/mg;
+            $json = "{\n$json\n}";
+        }
+        else {
+            $json = '{}';
+        }
+    }
+    else {
+        while (@_) {
+            if ($json) {
+                $json .= ',';
+            }
+            $json .= $self->key(shift).':'.$self->encode(shift);
+        }
+        $json = "{$json}";
+    }
+
+    return wantarray? \$json: $json;
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Hilfsmethoden
+
+=head3 key() - Schlüssel eines JSON-Objekts
+
+=head4 Synopsis
+
+  $str = $j->key($key);
+
+=head4 Arguments
+
+=over 4
+
+=item $key
+
+Schlüssel.
+
+=back
+
+=head4 Returns
+
+String
+
+=head4 Description
+
+Erzeuge den Code für den Schlüssel $key eines JSON-Objekts und
+liefere diesen zurück. Enthält der Schlüssel nur Zeichen, die
+in einem JavaScript-Bezeichner vorkommen dürfen, wird er unverändert
+geliefert, ansonsten wird er in einfache Anführungsstriche eingefasst.
+
+=head4 Example
+
+Schlüssel aus dem Zeichenvorrat eines JavaScript-Bezeichners:
+
+  $str = $j->Quiq::Json('borderWidth');
+  ==>
+  "borderWidth"
+
+Schlüssel mit Zeichen, die nicht in einem JavaScript-Bezeichner vorkommen:
+
+  $str = $j->Quiq::Json('border-width');
+  ==>
+  "'border-width'"
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub key {
+    my ($self,$key) = @_;
+    return $key =~ /\W/? "'$key'": $key;
 }
 
 # -----------------------------------------------------------------------------

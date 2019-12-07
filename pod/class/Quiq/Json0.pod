@@ -1,0 +1,182 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Json0 - Übersetze JSON-Code
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 SYNOPSIS
+
+Klasse laden:
+
+  use Quiq::Json0;
+
+JSON-Code erzeugen:
+
+  $j = Quiq::Json0->new;
+  $json = $j->encode($arg);
+
+=head1 DESCRIPTION
+
+Diese Klasse erzeugt JSON-Code in einem Coding-Style, wie ich ihn
+in JavaScript-Quelltexten verwende. Die Übersetzung erfolgt nach
+folgenden Regeln:
+
+=over 4
+
+=item undef
+
+Wird abgebildet auf: C<null>
+
+=item \1
+
+Wird abgebildet auf: C<true>
+
+=item \0
+
+Wird abgebildet auf: C<false>
+
+=item NUMBER
+
+Wird unverändert übernommen:
+
+  NUMBER
+
+=item STRING
+
+Wird abgebildet auf:
+
+  'STRING'
+
+=item STRING_REF
+
+Wird abgebildet auf:
+
+  STRING
+
+Dies ist nützlich, wenn ein Teil der Datenstruktur
+abweichend formatiert werden soll.
+
+=item ARRAY_REF
+
+Wird abgebildet auf:
+
+  [ELEMENT1,ELEMENT2,...]
+
+Wird beim Konstruktoraufruf C<< indentArrayElements=>1 >> angegeben,
+werden die Elemente eingerückt:
+
+  [
+      ELEMENT1,
+      ELEMENT2,
+      ...,
+  ]
+
+=item HASH_REF
+
+Wird abgebildet auf:
+
+  {
+      KEY1: VALUE1,
+      KEY2: VALUE2,
+      ...,
+  }
+
+Wird beim Konstruktoraufruf C<< indentHashElements=>0 >> angegeben,
+werden die Schlüssel/Wert-Paare nicht eingerückt:
+
+  {KEY1:VALUE1,KEY2:VALUE2,...}
+
+Die Reihenfolge der Schlüssel KEYI ist alphanumerisch. Ein Schlüssel
+KEYI wird in einfache Anführungsstriche eingefasst, wenn
+er mindestens ein Zeichen enthält, das nicht zum Zeichenvorrat \w
+gehört.
+
+=back
+
+=head1 METHODS
+
+=head2 Instantiierung
+
+=head3 new() - Konstruktor
+
+=head4 Synopsis
+
+  $j = $class->new(@attVal);
+
+=head4 Attributes
+
+=over 4
+
+=item indent => $n (Default: 4)
+
+Tiefe der Einrückung.
+
+=item indentArrayElements => $bool (Default: 0)
+
+Rücke Array-Elemente ein.
+
+=item indentHashElements => $bool (Default: 1)
+
+Rücke Hash-Elemente ein.
+
+=back
+
+=head4 Returns
+
+Objekt
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere eine Referenz
+auf dieses Objekt zurück.
+
+=head2 Objektmethoden
+
+=head3 encode() - Erzeuge JSON
+
+=head4 Synopsis
+
+  $json = $j->encode($arg);
+
+=head4 Arguments
+
+=over 4
+
+=item $arg
+
+Wert.
+
+=back
+
+=head4 Returns
+
+JSON-Code (String)
+
+=head4 Description
+
+Wandele Wert $arg nach JSON und liefere den JSON-Code zurück.
+
+=head1 VERSION
+
+1.167
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Json0.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

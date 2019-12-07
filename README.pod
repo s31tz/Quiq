@@ -513,6 +513,10 @@ L<Quiq::Json|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Json.pod> 
 
 =item *
 
+L<Quiq::Json0|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Json0.pod> - Übersetze JSON-Code
+
+=item *
+
 L<Quiq::LaTeX::Code|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/LaTeX/Code.pod> - Generator für LaTeX Code
 
 =item *
