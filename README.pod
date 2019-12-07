@@ -509,6 +509,10 @@ L<Quiq::JavaScript|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Java
 
 =item *
 
+L<Quiq::Json|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Json.pod> - Erzeuge JSON-Code
+
+=item *
+
 L<Quiq::LaTeX::Code|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/LaTeX/Code.pod> - Generator für LaTeX Code
 
 =item *

@@ -73,6 +73,7 @@ einer Windgeschwindigkeits-Messung)
     data: {
       datasets: [{
         type: 'line',
+        label: 'Windspeed',
         lineTension: undefined,
         fill: true,
         borderColor: 'rgb(255,0,0,1)',
@@ -82,8 +83,9 @@ einer Windgeschwindigkeits-Messung)
       },{
         hidden: false,
         type: 'line',
+        label: 'Average',
         fill: true,
-        borderColor: 'rgb(0,0,0,0.1)',
+        borderColor: 'rgb(0,0,0,0.3)',
         borderWidth: 1,
         pointRadius: 0,
         data: [{t:1573167600000,y:11.4725},
@@ -105,8 +107,12 @@ einer Windgeschwindigkeits-Messung)
         titleMarginBottom: 2,
         callbacks: {
           label: function(tooltipItem,data) {
-            return 'Windspeed: ' + tooltipItem.value +
-              ' m/s';
+            var i = tooltipItem.datasetIndex;
+            var label = data.datasets[i].label || '';
+            if (label)
+              label += ': ';
+            label += tooltipItem.value + ' m/s';
+            return label;
           },
         },
       },
@@ -617,9 +623,9 @@ sub html {
     }
 
     my $average = Quiq::Array->meanValue($yA);
-warn "$average\n";
+# warn "$average\n";
     $average = Quiq::Array->median($yA);
-warn "$average\n";
+# warn "$average\n";
     my $template = $h->cat(
         $h->tag('div',
             style => 'height: __HEIGHT__px',
@@ -636,6 +642,7 @@ warn "$average\n";
                 data: {
                     datasets: [{
                         type: 'line',
+                        label: '__PARAMETER__',
                         lineTension: __LINE_TENSION__,
                         fill: true,
                         borderColor: '__LINE_COLOR__',
@@ -645,6 +652,7 @@ warn "$average\n";
                     },{
                         hidden: false,
                         type: 'line',
+                        label: 'Average',
                         fill: true,
                         borderColor: 'rgb(0,0,0,0.3)',
                         borderWidth: 1,
@@ -668,8 +676,12 @@ warn "$average\n";
                         titleMarginBottom: 2,
                         callbacks: {
                             label: function(tooltipItem,data) {
-                                return '__PARAMETER__: ' + tooltipItem.value +
-                                    ' __UNIT__';
+                                var i = tooltipItem.datasetIndex;
+                                var label = data.datasets[i].label || '';
+                                if (label)
+                                    label += ': ';
+                                label += tooltipItem.value + ' __UNIT__';
+                                return label;
                             },
                         },
                     },
