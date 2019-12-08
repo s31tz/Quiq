@@ -63,6 +63,7 @@ sub test_unitTest: Test(2) {
         parameter => 'Windspeed',
         unit => 'm/s',
         yMin => 0,
+        showMedian => 1,
     );
     $self->is(ref($ch),'Quiq::ChartJs::TimeSeries');
     $self->is($ch->name,'plot');

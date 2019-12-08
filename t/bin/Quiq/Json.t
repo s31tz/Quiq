@@ -8,6 +8,8 @@ use strict;
 use warnings;
 use utf8;
 
+use Quiq::Html::Producer;
+
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
@@ -157,7 +159,8 @@ sub test_object : Test(6) {
     ~));
 
     my @dataSets;
-    my $title = 'Windspeed';
+    my $name = 'Windspeed';
+    my $title = $name;
     my $unit = 'm/s';
     my $tMin = undef;
     my $tMax = undef;
@@ -306,6 +309,21 @@ sub test_object : Test(6) {
             },
         }
     ~));
+
+    # Zusammenspiel ausprobieren
+    #
+    # my $h = Quiq::Html::Producer->new;
+    # my $html = $h->tag('script',
+    #     -placeholders => [
+    #         __NAME__ => 'plot',
+    #         __CONFIG__ => $json,
+    #     ],q~
+    #     Chart.defaults.global.defaultFontSize = 12;
+    #     Chart.defaults.global.animation.duration = 1000;
+    #
+    #     var __NAME__ = new Chart('__NAME__',__CONFIG__);
+    # ~);
+    # $self->diag($html);
 }
 
 # -----------------------------------------------------------------------------

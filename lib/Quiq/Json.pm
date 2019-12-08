@@ -35,7 +35,7 @@ L<Quiq::Hash>
   $json = $j->object(
       pi => 3.14159,
       str => 'Hello world!',
-      bool => \1,
+      bool => \'true',
       obj => $j->object(
           id => 4711,
           name => 'Wall',
@@ -81,7 +81,7 @@ die Schlüssel/Wert-Paare werden eingerückt
   $json = $j->encode({
       pi => 3.14159,
       str => 'Hello world!',
-      bool => \1,
+      bool => \'true',
       obj => {
           id => 4711,
           name => 'Wall',
@@ -113,13 +113,15 @@ gibt es keine Einrückung oder anderen zusätzlichen Leerraum
 
 Die Klasse ermöglicht die präzise Erzeugung von JavaScript-Datenstrukturen
 aus Perl heraus. Der Fokus liegt nicht auf der Übermittlung von Daten,
-sondern auf der Einsetzung in JavaScript-Quelltexte.
+sondern auf der Einsetzung der Strukturen in JavaScript-Quelltexte.
+Insofern gehen die Möglichketen der Klasse über JSON hinaus.
 Die JavaScript-Klasse Chart.js arbeitet z.B. mit einer komplexen
 Datenstruktur. Diese Struktur aus Perl heraus dynamisch erzeugen zu
 können, war der Anlass für die Entwicklung dieser Klasse.
-Das Perl-Modul JSON ist für diese Zwecke nicht geeignet, denn eine
-JavaScript-Datenstruktur kann z.B. Referenzen auf (inline definierte)
-JavaScript-Funktionen enthalten. Weitere Vorteile dieser Klasse:
+Das Perl-Modul JSON ist für diese Zwecke nicht geeignet, denn z.B.
+kann eine JavaScript-Datenstruktur Referenzen auf (inline definierte)
+JavaScript-Funktionen enthalten. Dies ist mit dieser Klasse möglich.
+Weitere Vorteile dieser Klasse:
 
 =over 2
 
@@ -129,7 +131,8 @@ die Reihenfolge von Objektattributen bleibt erhalten
 
 =item *
 
-Werte können I<literal> eingesetzt werden (z.B. Funktionsdefinionen)
+Werte können literal eingesetzt werden (z.B. Funktionsdefinionen,
+spezielle Werte wie C<true>, C<false>, C<null> usw.)
 
 =item *
 
@@ -139,7 +142,7 @@ lesbarerer Code
 
 =head1 EXAMPLE
 
-Ein realer Fall, die Erzeugung einer Konfiguration für Chart.js. Wir
+Ein realer Fall. Die Erzeugung einer Konfiguration für Chart.js. Wir
 nutzen hier die Aliase o() und c() für die Methoden object() und code().
 
   my @dataSets;
@@ -465,11 +468,11 @@ Die Übersetzung erfolgt (rekursiv) nach folgenden Regeln:
 
 Wird abgebildet auf: C<undefined> (nicht auf C<null>)
 
-=item \1
+=item \1 oder \'true'
 
 Wird abgebildet auf: C<true>
 
-=item \0
+=item \0 oder \'false'
 
 Wird abgebildet auf: C<false>
 
@@ -483,9 +486,9 @@ Wird abgebildet auf: 'STRING'
 
 =item STRING_REF
 
-Wird abgebildet auf: STRING
+Wird abgebildet auf: STRING (literale Einsetzung von STRING)
 
-Dies ist nützlich, wenn ein Teil der Datenstruktur
+Dies ist z.B. nützlich, wenn ein Teil der Datenstruktur
 abweichend formatiert werden soll.
 
 =item ARRAY_REF
