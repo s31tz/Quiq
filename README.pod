@@ -509,7 +509,7 @@ L<Quiq::JavaScript|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Java
 
 =item *
 
-L<Quiq::Json|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Json.pod> - Erzeuge JSON-Code
+L<Quiq::Json|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Json.pod> - Erzeuge JSON-Code in Perl
 
 =item *
 
