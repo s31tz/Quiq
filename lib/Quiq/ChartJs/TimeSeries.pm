@@ -9,6 +9,7 @@ our $VERSION = '1.168';
 
 use Quiq::Json;
 use Quiq::Array;
+use Quiq::Template;
 
 # -----------------------------------------------------------------------------
 
@@ -85,7 +86,7 @@ einer Windgeschwindigkeits-Messung)
               label: 'Median',
               lineTension: 0,
               fill: true,
-              borderColor: 'rgb(0,0,255,0.3)',
+              borderColor: 'rgb(0,0,0,0.3)',
               borderWidth: 1,
               pointRadius: 0,
               data: [{t:1573167600000,y:11.4725},{t:1573599600000,y:11.4725}],
@@ -768,6 +769,184 @@ sub html {
             var __NAME__ = new Chart('__NAME__',__CONFIG__);
         ~),
     );
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 js() - Generiere JavaScript
+
+=head4 Synopsis
+
+  $js = $ch->js;
+
+=head4 Returns
+
+JavaScript-Code (String)
+
+=head4 Description
+
+Liefere den JavaScript-Code der Chart-Instanz.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub js {
+    my $self = shift;
+
+    # Objektattribute
+
+    my ($height,$lineColor,$lineTension,$name,$parameter,
+        $pointRadius,$showAverage,$showMedian,$title,$tA,$tMin,$tMax,
+        $unit,$yA,$yMin,$yMax) =
+        $self->get(qw/height lineColor lineTension name parameter
+        pointRadius showAverage showMedian title t tMin tMax
+        unit y yMin yMax/);
+
+    # Defaultwerte
+
+    $title //= $parameter;
+
+    # Konfiguration erzeugen
+
+    my $j = Quiq::Json->new;
+
+    my @dataSets = $j->o(
+        type => 'line',
+        label => $parameter,
+        lineTension => $lineTension,
+        fill => \'true',
+        borderColor => $lineColor,
+        borderWidth => 1,
+        pointRadius => $pointRadius,
+        data => [do {
+            my $points = '';
+            for (my $i = 0; $i < @$tA; $i++) {
+                 if ($i) {
+                     $points .= ',';
+                 }
+                 $points .= sprintf '{t:%s,y:%s}',$tA->[$i],$yA->[$i];
+            }
+            \$points;
+        }],
+    );
+
+    if ($showAverage && @$tA) {
+        # Arithmetisches Mittel
+
+        my $average = Quiq::Array->meanValue($yA);
+        push @dataSets,$j->o(
+            type => 'line',
+            label => 'Average',
+            lineTension => 0,
+            fill => \'true',
+            borderColor => 'rgb(0,255,0,0.3)',
+            borderWidth => 1,
+            pointRadius => 0,
+            data => [\"{t:$tA->[0],y:$average},{t:$tA->[-1],y:$average}"],
+        );
+    }
+
+    if ($showMedian && @$tA) {
+        # Median
+
+        my $median = Quiq::Array->median($yA);
+        push @dataSets,$j->o(
+            type => 'line',
+            label => 'Median',
+            lineTension => 0,
+            fill => \'true',
+            borderColor => 'rgb(0,0,0,0.3)',
+            borderWidth => 1,
+            pointRadius => 0,
+            data => [\"{t:$tA->[0],y:$median},{t:$tA->[-1],y:$median}"],
+        );
+    }
+
+    my $config = $j->o(
+        type => 'line',
+        data => $j->o(
+            datasets => \@dataSets,
+        ),
+        options => $j->o(
+            maintainAspectRatio => \'false',
+            title => $j->o(
+                display => \'true',
+                text => $title,
+                fontSize => 16,
+                fontStyle => 'normal',
+            ),
+            tooltips => $j->o(
+                intersect => \'false',
+                displayColors => \'false',
+                backgroundColor => 'rgb(0,0,0,0.6)',
+                titleMarginBottom => 2,
+                callbacks => $j->o(
+                    label => $j->c(qq~
+                        function(tooltipItem,data) {
+                            var i = tooltipItem.datasetIndex;
+                            var label = data.datasets[i].label || '';
+                            if (label)
+                                label += ': ';
+                            label += tooltipItem.value + ' $unit';
+                            return label;
+                        }
+                    ~),
+                ),
+            ),
+            legend => $j->o(
+                display => \'false',
+            ),
+            scales => $j->o(
+                xAxes => [$j->o(
+                    type => 'time',
+                    ticks => $j->o(
+                        minRotation => 30,
+                        maxRotation => 60,
+                    ),
+                    time => $j->o(
+                        min => $tMin,
+                        max => $tMax,
+                        minUnit => 'second',
+                        displayFormats => $j->o(
+                            second => 'YYYY-MM-DD HH:mm:ss',
+                            minute => 'YYYY-MM-DD HH:mm',
+                            hour => 'YYYY-MM-DD HH',
+                            day => 'YYYY-MM-DD',
+                            week => 'YYYY-MM-DD',
+                            month => 'YYYY-MM',
+                            quarter => 'YYYY [Q]Q',
+                            year => 'YYYY',
+                        ),
+                        tooltipFormat => 'YYYY-MM-DD HH:mm:ss',
+                    ),
+                )],
+                yAxes => [$j->o(
+                    ticks => $j->o(
+                        min => $yMin,
+                        max => $yMax,
+                    ),
+                    scaleLabel => $j->o(
+                        display => \'true',
+                        labelString => $unit,
+                    ),
+                )],
+            ),
+        ),
+    );
+
+    # Erzeuge JavaScript-Code
+
+    return Quiq::Template->substitute(
+        placeholders => [
+            __NAME__ => $name,
+            __CONFIG__ => $config,
+        ],
+        template => q~
+            Chart.defaults.global.defaultFontSize = 12;
+            Chart.defaults.global.animation.duration = 1000;
+            var __NAME__ = new Chart('__NAME__',__CONFIG__);
+    ~);
 }
 
 # -----------------------------------------------------------------------------

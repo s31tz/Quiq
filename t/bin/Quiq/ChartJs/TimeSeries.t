@@ -98,6 +98,9 @@ sub test_unitTest: Test(2) {
     if ($p->exists('Blob/doc-content') && $p->compareData($blobFile,$pod)) {
         $p->write($blobFile,$pod);
     }
+
+my $js = $ch->js;
+warn $js;
 }
 
 # -----------------------------------------------------------------------------

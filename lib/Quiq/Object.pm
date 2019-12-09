@@ -257,7 +257,12 @@ sub parameters {
 
     # Parameterliste verarbeiten
 
-    my $argA = Quiq::Parameters->extract(1,0,undef,$paramA,$maxArgs,@_);
+    my $p = 0;
+    if (@_ && substr($_[0],0,1) ne '-') {
+        $p = 1; # Namensparameter/Properties
+    }
+
+    my $argA = Quiq::Parameters->extract(1,$p,undef,$paramA,$maxArgs,@_);
     if (@$argA < $minArgs) {
         $this->throw(
             'PARAM-00099: Missing arguments',

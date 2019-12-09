@@ -71,7 +71,7 @@ einer Windgeschwindigkeits-Messung)
               label: 'Median',
               lineTension: 0,
               fill: true,
-              borderColor: 'rgb(0,0,255,0.3)',
+              borderColor: 'rgb(0,0,0,0.3)',
               borderWidth: 1,
               pointRadius: 0,
               data: [{t:1573167600000,y:11.4725},{t:1573599600000,y:11.4725}],
@@ -535,6 +535,20 @@ HTML-Code (String)
 =head4 Description
 
 Liefere den HTML-Code der Chart-Instanz.
+
+=head3 js() - Generiere JavaScript
+
+=head4 Synopsis
+
+  $js = $ch->js;
+
+=head4 Returns
+
+JavaScript-Code (String)
+
+=head4 Description
+
+Liefere den JavaScript-Code der Chart-Instanz.
 
 =head1 IDEAS
 
