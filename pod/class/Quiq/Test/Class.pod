@@ -400,6 +400,19 @@ isTest()
 
 isntTest()
 
+=head3 isText() - Prüfe, ob Wert dem erwarteten Wert entspricht
+
+=head4 Synopsis
+
+  $bool = $test->isText($got,$expected);
+  $bool = $test->isText($got,$expected,$text);
+
+=head4 Description
+
+Im Unterschied zur Methode is(), wird auf das Argument $expected
+die Methode Quiq::Unindent->trimNl() angewendet. Dies ermöglicht
+den einfachen Vergleich im Falle eines mehrzeiligen Textes.
+
 =head3 floatIs() - Prüfe, ob Float-Wert dem erwarteten Wert entspricht
 
 =head4 Synopsis

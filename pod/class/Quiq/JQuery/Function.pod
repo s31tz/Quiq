@@ -14,13 +14,32 @@ Diese Klasse erweitert das jQuery-Objekt um nützliche Funktionen.
 
 =head1 METHODS
 
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+  $jq = $class->new;
+
+=head4 Returns
+
+Path-Objekt
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
+dieses Objekt zurück. Da die Klasse nur Klassenmethoden enthält,
+hat das Objekt lediglich die Aufgabe, eine abkürzende
+Aufrufschreibweise zu ermöglichen.
+
 =head2 Klassenmethoden
 
 =head3 formatDate() - JavaScript-Code der Funktion
 
 =head4 Synopsis
 
-  $javaScript = $class->formatDate;
+  $javaScript = $this->formatDate;
 
 =head4 Description
 
@@ -103,6 +122,40 @@ Millisekunden, dreistellig.
 
 Die Implementierung basiert auf der Funktion formatDate() im
 Buch L<jQuery in Action, Third Edition|https://www.manning.com/books/jquery-in-action-third-edition>, S. 352 ff.
+
+=head3 ready() - Erzeuge JQuery Ready-Handler
+
+=head4 Synopsis
+
+  $handler = $this->ready($js);
+
+=head4 Arguments
+
+=over 4
+
+=item $js
+
+JavaScript-Code (String).
+
+=back
+
+=head4 Returns
+
+JQuery Ready-Handler (String)
+
+=head4 Description
+
+Fasse JavaScript-Code $js in einen JQuery Ready-Handler ein und liefere
+den resultierenden JavaScript-Code zurück. Der Ready-Handler hat
+den Aufbau
+
+  $(function() {
+      <JAVASCRIPT>
+  });
+
+=head4 See Also
+
+L<https://api.jquery.com/ready/>
 
 =head1 VERSION
 
