@@ -97,8 +97,8 @@ Gegenüberstellung der Syntax
 
   {
       $text = Quiq::Unindent->hereDoc(<<'    EOT');
-      Dies ist
-      ein Text
+        Dies ist
+        ein Text
       EOT
   }
 

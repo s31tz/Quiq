@@ -68,11 +68,8 @@ bleibt die Reihenfolge der Schlüssel/Wert-Paare erhalten
 
 =item *
 
-jedes Schlüssel/Wert-Paar beginnt auf einer eigenen Zeile
-
-=item *
-
-die Schlüssel/Wert-Paare werden eingerückt
+jedes Schlüssel/Wert-Paar beginnt auf einer eigenen Zeile und
+wird eingerückt
 
 =back
 
@@ -100,12 +97,13 @@ Bei der Methode $j->L<encode|"encode() - Wandele Perl- in JavaScript-Datenstrukt
 
 =item *
 
-erscheinen die Schlüssel/Wert-Paare eines JSON-Objekte in
-alphanumerischer Reihenfolge
+werden die Schlüssel/Wert-Paare von JSON-Objekten
+alphanumerisch sortiert (bei {...} ist die Reihenfolge sonst
+undefiniert)
 
 =item *
 
-gibt es keine Einrückung oder anderen zusätzlichen Leerraum
+gibt es keine Einrückung oder Leerraum nach dem :
 
 =back
 

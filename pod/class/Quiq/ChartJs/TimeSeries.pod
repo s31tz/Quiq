@@ -542,10 +542,6 @@ Liefere den HTML-Code der Chart-Instanz.
 
 =item *
 
-Median und arithmetisches Mittel einzeichnen
-
-=item *
-
 minRotation, maxRotation auf einen festen Wert einstellen, z.B. 45,
 damit alle Diagramme gleich aussehen (?)
 

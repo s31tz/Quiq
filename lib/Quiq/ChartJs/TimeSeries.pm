@@ -667,7 +667,7 @@ sub html {
             label => 'Median',
             lineTension => 0,
             fill => \'true',
-            borderColor => 'rgb(0,0,255,0.3)',
+            borderColor => 'rgb(0,0,0,0.3)',
             borderWidth => 1,
             pointRadius => 0,
             data => [\"{t:$tA->[0],y:$median},{t:$tA->[-1],y:$median}"],
@@ -775,10 +775,6 @@ sub html {
 =head1 IDEAS
 
 =over 2
-
-=item *
-
-Median und arithmetisches Mittel einzeichnen
 
 =item *
 
