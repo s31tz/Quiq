@@ -178,8 +178,8 @@ wie bereits gesagt, sofort zurück. Beispiel:
       my $opt2 = 2;
   
       $this->parameters(\@_,
-          opt1 => \$opt1,
-          opt2 => \$opt2,
+          -opt1 => \$opt1,
+          -opt2 => \$opt2,
       );
   
       # ...
@@ -192,8 +192,8 @@ an eine andere Methode weiterleitet. Der Aufruf von parameters() ändert
 sich zu:
 
   $this->parameters(1,\@_,
-      opt1 => \$opt1,
-      opt2 => \$opt2,
+      -opt1 => \$opt1,
+      -opt2 => \$opt2,
   );
 
 [3], [4] Wie [1] bzw. [2], nur dass parameters() zusätzlich die
@@ -211,8 +211,8 @@ Referenz auf diese Liste zurückgegeben. Beispiel:
       my $opt2 = 2;
   
       $argA = $this->parameters(0,\@_,
-          opt1 => \$opt1,
-          opt2 => \$opt2,
+          -opt1 => \$opt1,
+          -opt2 => \$opt2,
       );
       my ($arg1,$arg2,$arg3,$arg4) = @$argA;
   
