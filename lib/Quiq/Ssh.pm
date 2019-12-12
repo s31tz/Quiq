@@ -215,7 +215,7 @@ sub exec {
     my $loginShell = $self->get('loginShell');
     my $sloppy = 0;
 
-    my $argA = Quiq::Parameters->extractToVariables(\@_,1,1,
+    my $argA = $self->parameters(1,1,\@_,
         -loginShell => \$loginShell,
         -sloppy => \$sloppy,
     );

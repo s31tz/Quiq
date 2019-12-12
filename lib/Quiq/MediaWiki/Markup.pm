@@ -1134,7 +1134,7 @@ sub table {
     my $titleA = [];
     my $valueCb = undef;
 
-    Quiq::Parameters->extractPropertiesToVariables(\@_,
+    $self->parameters(\@_,
         alignments => \$alignA,
         bodyBackground => \$bodyBackground,
         caption => \$caption,

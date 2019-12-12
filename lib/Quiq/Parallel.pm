@@ -8,7 +8,6 @@ use warnings;
 our $VERSION = '1.168';
 
 use Quiq::Path;
-use Quiq::Parameters;
 use Quiq::System;
 use Quiq::Progress;
 use Quiq::Hash;
@@ -228,7 +227,7 @@ sub runFetch {
     my $progressMeter = 1;
     my $progressNameSub = undef;
     
-    my $argA = Quiq::Parameters->extractToVariables(\@_,2,2,
+    my $argA = $class->parameters(2,2,\@_,
         -maxFetches => \$maxFetches,
         -maxProcesses => \$maxProcesses,
         -outputDir => \$outputDir,

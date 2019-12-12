@@ -7,7 +7,6 @@ use warnings;
 
 our $VERSION = '1.168';
 
-use Quiq::Parameters;
 use Quiq::String;
 
 # -----------------------------------------------------------------------------
@@ -141,7 +140,7 @@ sub new {
 
     my $noTrailingZeros = 0;
 
-    my $argA = Quiq::Parameters->extractToVariables(\@_,0,1,
+    my $argA = $class->parameters(0,1,\@_,
         -noTrailingZeros => \$noTrailingZeros,
     );
     my $valueA = shift(@$argA) // [];

@@ -190,7 +190,7 @@ sub new {
 
 =head4 Synopsis
 
-  $str = $class->substitute(@arguments);
+  $str = $class->substitute(@argVal);
 
 =head4 Arguments
 

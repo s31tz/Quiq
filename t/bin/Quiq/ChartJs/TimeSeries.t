@@ -14,6 +14,7 @@ use Quiq::Epoch;
 use Quiq::Html::Producer;
 use Quiq::Html::Page;
 use Quiq::Html::Fragment;
+use Quiq::JQuery::Function;
 use Quiq::Path;
 
 # -----------------------------------------------------------------------------
@@ -63,30 +64,44 @@ sub test_unitTest: Test(2) {
         parameter => 'Windspeed',
         unit => 'm/s',
         yMin => 0,
-        showMedian => 1,
+        height => 350,
+        minRotation => 45,
+        maxRotation => 45,
+        # showMedian => 1,
     );
     $self->is(ref($ch),'Quiq::ChartJs::TimeSeries');
     $self->is($ch->name,'plot');
 
     my $h = Quiq::Html::Producer->new;
 
-    #my $html = Quiq::Html::Page->html($h,
-    #    title => 'Chart.js testpage',
-    #    load => [
-    #        js => $ch->cdnUrl('2.8.0'),
-    #    ],
-    #    body => $ch->html($h),
-    #    ),
-    #);
-
-    my $html = Quiq::Html::Fragment->html($h,
-        html => $h->cat(
-            $h->tag('script',
-                src => $ch->cdnUrl('2.8.0'),
+    my $html;
+    if (1) { # Erzeuge vollständige Page
+        $html = Quiq::Html::Page->html($h,
+            title => 'Chart.js testpage',
+            load => [
+                js => 'https://code.jquery.com/jquery-3.4.1.min.js',
+                js => $ch->cdnUrl('2.8.0'),
+            ],
+            body => $ch->html($h),
+            ready => $ch->js,
+        );
+    }
+    else {
+        $html = Quiq::Html::Fragment->html($h,
+            html => $h->cat(
+                $h->tag('script',
+                    src => 'https://code.jquery.com/jquery-3.4.1.min.js',
+                ),
+                $h->tag('script',
+                    src => $ch->cdnUrl('2.8.0'),
+                ),
+                $ch->html($h),
+                $h->tag('script',
+                    Quiq::JQuery::Function->ready($ch->js),
+                ),
             ),
-            $ch->html($h),
-        ),
-    );
+        );
+    }
 
     my $p = Quiq::Path->new;
     my $blobFile = 'Blob/doc-content/quiq-chartjs-timeseries.html';
@@ -98,9 +113,6 @@ sub test_unitTest: Test(2) {
     if ($p->exists('Blob/doc-content') && $p->compareData($blobFile,$pod)) {
         $p->write($blobFile,$pod);
     }
-
-my $js = $ch->js;
-warn $js;
 }
 
 # -----------------------------------------------------------------------------

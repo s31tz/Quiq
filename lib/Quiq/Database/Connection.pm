@@ -22,7 +22,6 @@ use Quiq::Path;
 use Quiq::Digest;
 use Quiq::Database::Cursor;
 use Time::HiRes ();
-use Quiq::Parameters;
 use Quiq::Database::ResultSet;
 
 # -----------------------------------------------------------------------------
@@ -2855,7 +2854,7 @@ sub schemas {
     my $cache = 1;
     my $hash = 0;
 
-    Quiq::Parameters->extractToVariables(\@_,0,0,
+    $self->parameters(0,0,\@_,
         -cache => \$cache,
         -hash => \$hash,
     );
@@ -3237,7 +3236,7 @@ sub tableDiff {
     my $limit = 10;
     my $sortColumns = undef;
 
-    my $argA = Quiq::Parameters->extractToVariables(\@_,2,2,
+    my $argA = $self->parameters(2,2,\@_,
         -columns => \$columns,
         -ignoreColumns => \$ignoreColumns,
         -limit => \$limit,
@@ -3451,7 +3450,7 @@ sub doublets {
     my $limit = 10;
     my $sortColumns = undef;
 
-    my $argA = Quiq::Parameters->extractToVariables(\@_,1,1,
+    my $argA = $self->parameters(1,1,\@_,
         -columns => \$columns,
         -ignoreColumns => \$ignoreColumns,
         -limit => \$limit,
