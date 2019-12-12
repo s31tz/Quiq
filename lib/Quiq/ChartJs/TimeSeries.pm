@@ -66,13 +66,13 @@ einer Windgeschwindigkeits-Messung)
 
 <html>
 <head>
-  <title>Chart.js testpage</title>
+  <title>Chart.js demo page</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
 </head>
 <body>
-  <div style="height: 300px">
+  <div style="height: 350px">
     <canvas id="plot"></canvas>
   </div>
   <script type="text/javascript">

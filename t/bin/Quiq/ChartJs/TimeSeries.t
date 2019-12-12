@@ -77,7 +77,7 @@ sub test_unitTest: Test(2) {
     my $html;
     if (1) { # Erzeuge vollständige Page
         $html = Quiq::Html::Page->html($h,
-            title => 'Chart.js testpage',
+            title => 'Chart.js example',
             load => [
                 js => 'https://code.jquery.com/jquery-3.4.1.min.js',
                 js => $ch->cdnUrl('2.8.0'),
