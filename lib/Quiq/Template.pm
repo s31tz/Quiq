@@ -186,11 +186,11 @@ sub new {
 
 =head2 Klassenmethoden
 
-=head3 substitute() - Ersetze Platzhalter in Text
+=head3 combine() - Ersetze Platzhalter in Text
 
 =head4 Synopsis
 
-  $str = $class->substitute(@argVal);
+  $str = $class->combine(@argVal);
 
 =head4 Arguments
 
@@ -231,7 +231,7 @@ resultierenden Text zurück.
 
 # -----------------------------------------------------------------------------
 
-sub substitute {
+sub combine {
     my $class = shift;
     # @_: @keyVal
 

@@ -66,7 +66,7 @@ einer Windgeschwindigkeits-Messung)
 
 <html>
 <head>
-  <title>Chart.js demo page</title>
+  <title>Chart.js example</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
@@ -786,7 +786,7 @@ sub js {
 
     # Erzeuge JavaScript-Code
 
-    return Quiq::Template->substitute(
+    return Quiq::Template->combine(
         placeholders => [
             __NAME__ => $name,
             __CONFIG__ => $config,
