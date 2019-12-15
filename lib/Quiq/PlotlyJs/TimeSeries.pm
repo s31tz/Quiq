@@ -7,6 +7,9 @@ use warnings;
 
 our $VERSION = '1.168';
 
+use Quiq::Json;
+use Quiq::Template;
+
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -153,9 +156,25 @@ sub js {
 
     my ($name) = $self->get(qw/name/);
 
-    my $js = '';
+    # Erzeuge JSON-Code
 
-    return $js;
+    my $j = Quiq::Json->new;
+
+    my @traces;
+    my $layout = $j->o;
+
+    # Erzeuge JavaScript-Code
+
+    return Quiq::Template->combine(
+        placeholders => [
+            __NAME__ => $name,
+            __TRACES__ => \@traces,
+            __LAYOUT__ => $layout,
+        ],
+        template => q~
+            var __NAME__ = Plotly.newPlot('__NAME__',[__TRACES__],__LAYOUT__);
+        ~,
+    );
 }
 
 # -----------------------------------------------------------------------------
