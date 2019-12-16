@@ -247,7 +247,7 @@ sub new {
                 $dbh->{'odbc_utf8_on'} = 1;
             }
             $dbh->{LongTruncOk} = 0; # RuV Auftrags-DB
-            $dbh->{LongReadLen} = 32768; # RuV Auftrags-DB
+            $dbh->{LongReadLen} = 3*1024*1024; # 3MB / 32768; # RuV Auftrags-DB
         }
         else {
             $class->throw('Not implemented');
