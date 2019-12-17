@@ -662,6 +662,43 @@ ihre Erzeugung nicht abgeschlossen ist, d.h. der Zugriff auf die erzeugten
 Objekte wird blockiert. Oder das Setzen von Session-Einstellungen
 verfällt mit einem ROLLBACK. usw.
 
+=head3 execute() - Führe SQL-Statement atomar aus und liefere Ergebnis
+
+=head4 Synopsis
+
+  $str = $db->execute($stmt,@opt);
+
+=head4 Arguments
+
+SQL-Statement.
+
+=head4 Options
+
+Alle Optionen der Methode $db->sql() plus
+
+=over 4
+
+=item -limit => $n (Default: 10)
+
+Begrenze die Anzahl der gefetchten Datensätze auf $n.
+
+=back
+
+=head4 Returns
+
+Ausführungsergebnis (String)
+
+=head4 Description
+
+Führe DDL-Statement $stmt aus und liefere das Ergebnis der Ausführung
+in Form eines Textes zurück. Im Falle einer Selektion werden die
+selektierten Datensätze in einer ASCII-Tabelle dargestellt. Die maximale
+Anzahl der selektierten Datensätze ist per Default auf 10 begrenzt
+(siehe Option -limit).
+
+Die Methode ist für die Programmierung einfacher Terminal-Clients
+nützlich.
+
 =head2 Sessions
 
 =head3 setSchema() - Setze Default-Schema

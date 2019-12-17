@@ -260,7 +260,7 @@ sub newFromSbit {
     return $class->new($db->udlDbms,
         -handle => $db->dbh,
         -log => 0,
-        -logfile => '/tmp/tsplot.log',
+        # -logfile => '/tmp/tsplot.log',
     );
 }
 
@@ -1539,6 +1539,80 @@ sub sqlAtomic {
     $self->commit;
 
     return $cur;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 execute() - Führe SQL-Statement atomar aus und liefere Ergebnis
+
+=head4 Synopsis
+
+  $str = $db->execute($stmt,@opt);
+
+=head4 Arguments
+
+SQL-Statement.
+
+=head4 Options
+
+Alle Optionen der Methode $db->sql() plus
+
+=over 4
+
+=item -limit => $n (Default: 10)
+
+Begrenze die Anzahl der gefetchten Datensätze auf $n.
+
+=back
+
+=head4 Returns
+
+Ausführungsergebnis (String)
+
+=head4 Description
+
+Führe DDL-Statement $stmt aus und liefere das Ergebnis der Ausführung
+in Form eines Textes zurück. Im Falle einer Selektion werden die
+selektierten Datensätze in einer ASCII-Tabelle dargestellt. Die maximale
+Anzahl der selektierten Datensätze ist per Default auf 10 begrenzt
+(siehe Option -limit).
+
+Die Methode ist für die Programmierung einfacher Terminal-Clients
+nützlich.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub execute {
+    my $self = shift;
+    my $stmt = shift;
+    # @_: @opt
+
+    # Optionen
+
+    my $limit = 10;
+
+    $self->parameters(1,\@_,
+        -limit => \$limit,
+    );
+
+    my $cur = $self->sql($stmt,
+        @_,
+        -raw => 1,
+    );
+
+    my $str;
+    if ($cur->isSelect) {
+        $str = $cur->fetchAll(1,$limit)->asTable;
+    }
+    else {
+        $str = sprintf "%s\n%s rows affected, %.3fs\n",
+            $stmt,$cur->hits,$cur->elapsed;
+        $self->commit;
+    }
+
+    return $str;
 }
 
 # -----------------------------------------------------------------------------
