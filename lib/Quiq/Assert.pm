@@ -34,7 +34,7 @@ L<Quiq::Hash>
   $a->isNotNull('xyz');
   
   # Prüfe, ob Wert eine Zahl ist
-  $a->isNumber(3.14152);
+  $a->isNumber(3.14159);
 
 =head1 DESCRIPTION
 
@@ -106,7 +106,7 @@ sub new {
 
 # -----------------------------------------------------------------------------
 
-=head2 Tests
+=head2 Zusicherungen
 
 Die folgenden Testmethoden können sowohl als Klassen- als auch als
 Objektmethoden aufgerufen werden. Im Void-Kontext gerufen, werfen sie

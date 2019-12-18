@@ -22,6 +22,7 @@ use Quiq::Path;
 use Quiq::Digest;
 use Quiq::Database::Cursor;
 use Time::HiRes ();
+use Quiq::AnsiColor;
 use Quiq::Database::ResultSet;
 
 # -----------------------------------------------------------------------------
@@ -1559,6 +1560,10 @@ Alle Optionen der Methode $db->sql() plus
 
 =over 4
 
+=item -color => $bool (Default: 1)
+
+Zeige das Resultat der Statement-Ausführung farbig an.
+
 =item -limit => $n (Default: 10)
 
 Begrenze die Anzahl der gefetchten Datensätze auf $n.
@@ -1577,8 +1582,8 @@ selektierten Datensätze in einer ASCII-Tabelle dargestellt. Die maximale
 Anzahl der selektierten Datensätze ist per Default auf 10 begrenzt
 (siehe Option -limit).
 
-Die Methode ist für die Programmierung einfacher Terminal-Clients
-nützlich.
+Die Methode ist nützlich für die Programmierung von einfachen
+Terminal-Clients für Ad-Hoc-Abfragen.
 
 =cut
 
@@ -1591,9 +1596,11 @@ sub execute {
 
     # Optionen
 
+    my $color = 1;
     my $limit = 10;
 
     $self->parameters(1,\@_,
+        -color => \$color,
         -limit => \$limit,
     );
 
@@ -1604,12 +1611,15 @@ sub execute {
 
     my $str;
     if ($cur->isSelect) {
-        $str = $cur->fetchAll(1,$limit)->asTable;
+        $str = $cur->fetchAll(1,$limit)->asTable(
+            -color => $color,
+        );
     }
     else {
-        $str = sprintf "%s\n%s rows affected, %.3fs\n",
-            $stmt,$cur->hits,$cur->elapsed;
-        $self->commit;
+        my $a = Quiq::AnsiColor->new($color);
+        $str = sprintf "%s\n\n",$a->str('dark red',$stmt);
+        my $tmp = sprintf '%s rows affected, %.2f',$cur->hits,$cur->elapsed;
+        $str .= $a->str('dark green',$tmp)."\n";
     }
 
     return $str;

@@ -21,7 +21,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
   $a->isNotNull('xyz');
   
   # Prüfe, ob Wert eine Zahl ist
-  $a->isNumber(3.14152);
+  $a->isNumber(3.14159);
 
 =head1 DESCRIPTION
 
@@ -74,7 +74,7 @@ dieses Objekt zurück. Da die Klasse ausschließlich Klassenmethoden
 enthält, hat das Objekt lediglich die Funktion, eine abkürzende
 Aufrufschreibweise zu ermöglichen.
 
-=head2 Tests
+=head2 Zusicherungen
 
 Die folgenden Testmethoden können sowohl als Klassen- als auch als
 Objektmethoden aufgerufen werden. Im Void-Kontext gerufen, werfen sie

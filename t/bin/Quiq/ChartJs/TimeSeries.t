@@ -58,6 +58,9 @@ sub test_unitTest: Test(2) {
         push @y,$val;
     }
 
+    # warn '[',join(',',@t),"]\n";
+    # warn '[',join(',',@y),"]\n";
+
     my $ch = Quiq::ChartJs::TimeSeries->new(
         t => \@t,
         y => \@y,

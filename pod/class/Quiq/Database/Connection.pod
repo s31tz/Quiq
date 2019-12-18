@@ -678,6 +678,10 @@ Alle Optionen der Methode $db->sql() plus
 
 =over 4
 
+=item -color => $bool (Default: 1)
+
+Zeige das Resultat der Statement-Ausführung farbig an.
+
 =item -limit => $n (Default: 10)
 
 Begrenze die Anzahl der gefetchten Datensätze auf $n.
@@ -696,8 +700,8 @@ selektierten Datensätze in einer ASCII-Tabelle dargestellt. Die maximale
 Anzahl der selektierten Datensätze ist per Default auf 10 begrenzt
 (siehe Option -limit).
 
-Die Methode ist für die Programmierung einfacher Terminal-Clients
-nützlich.
+Die Methode ist nützlich für die Programmierung von einfachen
+Terminal-Clients für Ad-Hoc-Abfragen.
 
 =head2 Sessions
 
