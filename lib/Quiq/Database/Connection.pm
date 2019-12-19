@@ -1617,9 +1617,9 @@ sub execute {
     }
     else {
         my $a = Quiq::AnsiColor->new($color);
-        $str = sprintf "%s\n\n",$a->str('dark red',$stmt);
+        $str = sprintf "%s\n\n",$a->str('dark green',$stmt);
         my $tmp = sprintf '%s rows affected, %.2f',$cur->hits,$cur->elapsed;
-        $str .= $a->str('dark green',$tmp)."\n";
+        $str .= $a->str('dark red',$tmp)."\n";
     }
 
     return $str;
