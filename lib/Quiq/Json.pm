@@ -533,7 +533,7 @@ sub encode {
     }
     elsif ($refType eq 'ARRAY') {
         for (my $i = 0; $i < @$arg; $i++) {
-            if ($json) {
+            if ($json ne '') {
                 $json .= ',';
             }
             $json .= $self->encode($arg->[$i]);

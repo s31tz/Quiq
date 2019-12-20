@@ -7,6 +7,13 @@ use v5.10;
 use strict;
 use warnings;
 
+use Quiq::Test::Class;
+use Quiq::FileHandle;
+use Quiq::Epoch;
+use Quiq::Html::Producer;
+use Quiq::Html::Page;
+use Quiq::Path;
+
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
@@ -18,10 +25,63 @@ sub test_loadClass : Init(1) {
 sub test_unitTest: Test(1) {
     my $self = shift;
 
-    my $plt = Quiq::PlotlyJs::TimeSeries->new;
+    # Zeitreihendaten einlesen
+
+    my $dataFile = Quiq::Test::Class->testPath(
+        'quiq/test/data/db/timeseries.dat');
+    my $fh = Quiq::FileHandle->new('<',$dataFile);
+
+    my @rows;
+    while (<$fh>) {
+        if (!/^2007/) {
+            next;
+        }
+        chomp;
+        s/^2007/2019/;
+        push @rows, $_;
+        # Begrenzung der Anzahl der Messwerte
+        if (/2019-11-13 00:00:00/) {
+            last;
+        }
+    }
+    $fh->close;
+
+    # Koordinaten erstellen
+
+    my (@x,@y);
+    for (@rows) {
+        my ($iso,$val) = split /\t/;
+        push @x,Quiq::Epoch->new($iso)->epoch*1000;
+        push @y,$val;
+    }
+
+    # Plot-Klasse instantiieren
+
+    my $plt = Quiq::PlotlyJs::TimeSeries->new(
+        title => 'Windspeed',
+        x => \@x,
+        y => \@y,
+        yTitle => 'm/s',
+        xTickFormat => '%Y-%m-%d %H',
+    );
     $self->is(ref($plt),'Quiq::PlotlyJs::TimeSeries');
 
-    $self->diag($plt->js);
+    # HTML-Seite generieren
+
+    my $h = Quiq::Html::Producer->new;
+
+    my $html = Quiq::Html::Page->html($h,
+        title => 'Plotly.js example',
+        load => [
+            js => 'https://code.jquery.com/jquery-3.4.1.min.js',
+            js => $plt->cdnUrl,
+        ],
+        body => $plt->html($h),
+        ready => $plt->js,
+    );
+
+    # Seite speichern
+    Quiq::Path->write('~/tmp/plotly-example.html',$html);
 }
 
 # -----------------------------------------------------------------------------

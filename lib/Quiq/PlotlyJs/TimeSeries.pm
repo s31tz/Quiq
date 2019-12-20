@@ -62,6 +62,15 @@ sub new {
 
     my $self = $class->SUPER::new(
         name => 'plot',
+        parameter => undef,
+        shape => 'spline',
+        title => undef,
+        x => [],
+        xTickFormat => '%Y-%m-%d %H:%M:%S',
+        y => [],
+        yMin => undef,
+        yMax => undef,
+        yTitle => undef,
     );
     $self->set(@_);
 
@@ -154,14 +163,87 @@ sub js {
 
     # Objektattribute
 
-    my ($name) = $self->get(qw/name/);
+    my ($name,$parameter,$shape,$title,$xA,$xTickFormat,$yA,$yMin,$yMax,
+        $yTitle) = $self->get(qw/name parameter shape title x xTickFormat
+        y yMin yMax yTitle/);
 
     # Erzeuge JSON-Code
 
     my $j = Quiq::Json->new;
 
-    my @traces;
-    my $layout = $j->o;
+    # Traces
+
+    push my @traces,$j->o(
+        type => 'scatter',
+        mode => 'lines',
+        # name => $parameter,
+        fill => 'tonexty',
+        fillcolor => 'rgb(230,230,230,0.1)',
+        line => $j->o(
+            width => 1,
+            color => 'rgb(255,0,0,1)',
+            shape => $shape,
+        ),
+        x => $xA,
+        y => $yA,
+    );
+    if (!@$xA) {
+        $yMin = 0;
+        $yMax = 1;
+    }
+
+    # Layout
+
+    my $layout = $j->o(
+        title => $title,
+        spikedistance => -1,
+        margin => $j->o(
+            l => 90,
+            r => 90,
+            t => 60,
+            b => 10,
+        ),
+        xaxis => $j->o(
+            type => 'date',
+            autorange => \'true',
+            gridcolor => 'rgb(232,232,232,1)',
+            tickformat => $xTickFormat,
+            tickangle => 30,
+            ticklen => 4,
+            tickcolor => 'rgb(64,64,64,1)',
+            showspikes => \'true',
+            spikethickness => 1,
+            spikesnap => 'data',
+            spikecolor => 'rgb(0,0,0,1)',
+            spikedash => 'dot',
+            rangeslider => $j->o(
+                autorange => \'true',
+            ),
+        ),
+        yaxis => $j->o(
+            type => 'linear',
+            defined($yMin) && defined($yMax)? (range => [$yMin,$yMax]):
+                (autorange => \'true'),
+            ticklen => 4,
+            tickcolor => 'rgb(64,64,64,1)',
+            gridcolor => 'rgb(232,232,232,1)',
+            showspikes => \'true',
+            spikethickness => 1,
+            spikesnap => 'data',
+            spikecolor => 'rgb(0,0,0,1)',
+            spikedash => 'dot',
+            title => $j->o(
+                text => $yTitle,
+            ),
+        ),
+    );
+
+    # Extra
+
+    my $extra = $j->o(
+        displayModeBar => \'false',
+        responsive => \'true',
+    );
 
     # Erzeuge JavaScript-Code
 
@@ -170,9 +252,10 @@ sub js {
             __NAME__ => $name,
             __TRACES__ => \@traces,
             __LAYOUT__ => $layout,
+            __EXTRA__ => $extra,
         ],
         template => q~
-            var __NAME__ = Plotly.newPlot('__NAME__',[__TRACES__],__LAYOUT__);
+            Plotly.newPlot('__NAME__',[__TRACES__],__LAYOUT__,__EXTRA__);
         ~,
     );
 }
