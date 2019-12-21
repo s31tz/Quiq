@@ -60,9 +60,9 @@ sub test_unitTest: Test(1) {
     my $plt = Quiq::PlotlyJs::TimeSeries->new(
         title => 'Windspeed',
         x => \@x,
+        xTickFormat => '%Y-%m-%d %H:%M',
         y => \@y,
         yTitle => 'm/s',
-        xTickFormat => '%Y-%m-%d %H',
     );
     $self->is(ref($plt),'Quiq::PlotlyJs::TimeSeries');
 

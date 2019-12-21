@@ -66,7 +66,7 @@ sub new {
         shape => 'spline',
         title => undef,
         x => [],
-        xTickFormat => '%Y-%m-%d %H:%M:%S',
+        xTickFormat => '%Y-%m-%d %H:%M',
         y => [],
         yMin => undef,
         yMax => undef,
@@ -242,7 +242,6 @@ sub js {
 
     my $extra = $j->o(
         displayModeBar => \'false',
-        responsive => \'true',
     );
 
     # Erzeuge JavaScript-Code
