@@ -78,7 +78,7 @@ sub test_unitTest: Test(2) {
     my $h = Quiq::Html::Producer->new;
 
     my $html;
-    if (1) { # Erzeuge vollständige Page
+    if (0) { # Erzeuge vollständige Page
         $html = Quiq::Html::Page->html($h,
             title => 'Chart.js example',
             load => [

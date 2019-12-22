@@ -6,6 +6,7 @@ use base qw/Quiq::Test::Class/;
 use v5.10;
 use strict;
 use warnings;
+use utf8;
 
 use Quiq::Test::Class;
 use Quiq::FileHandle;
@@ -81,7 +82,31 @@ sub test_unitTest: Test(1) {
     );
 
     # Seite speichern
-    Quiq::Path->write('~/tmp/plotly-example.html',$html);
+
+    # Gesamtseite
+
+    my $p = Quiq::Path->new;
+    my $blobFile = 'Blob/doc-content/quiq-plotlyjs-timeseries.html';
+    if ($p->exists('Blob/doc-content') && $p->compareData($blobFile,$html)) {
+        $p->write($blobFile,$html);
+    }
+
+    # Fragment für Include
+
+    $html =~ s|^<.*\n||mg;
+    $html =~ s|^.* />\n||msg;
+    $html =~ s|^  ||mg;
+
+    $blobFile = 'Blob/doc-content/quiq-plotlyjs-timeseries-inc.html';
+    if ($p->exists('Blob/doc-content') && $p->compareData($blobFile,$html)) {
+        $p->write($blobFile,$html);
+    }
+
+    my $pod =  "=begin html\n\n$html\n=end html\n";
+    $blobFile = 'Blob/doc-content/quiq-plotlyjs-timeseries-inc.pod';
+    if ($p->exists('Blob/doc-content') && $p->compareData($blobFile,$pod)) {
+        $p->write($blobFile,$pod);
+    }
 }
 
 # -----------------------------------------------------------------------------
