@@ -22,9 +22,12 @@ Quiq::PlotlyJs::TimeSeries - Erzeuge Zeitreihen-Plot auf Basis von Plotly.js
 
 L<Quiq::Hash>
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
-=head3 Diagramm
+Diese Klasse ist ein Perl-Wrapper für die Erzeugung für
+Zeitreihen-Plots auf Basis von Plotly.js.
+
+=head1 EXAMPLE
 
 (Folgendes Diagramm erscheint nur in HTML - außer auf
 meta::cpan, da der HTML-Code dort gestrippt wird. Es zeigt 720 Messwerte
