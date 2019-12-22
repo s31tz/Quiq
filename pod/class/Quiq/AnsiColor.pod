@@ -142,7 +142,7 @@ abgeschaltet, wird die Zeichenkette unverändert geliefert.
 
 =head1 VERSION
 
-1.168
+1.169
 
 =head1 SOURCE
 

@@ -203,7 +203,7 @@ Liefere den JavaScript-Code für die Erzeugung Plot-Instanz.
 
 =head1 VERSION
 
-1.168
+1.169
 
 =head1 SOURCE
 

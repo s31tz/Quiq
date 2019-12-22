@@ -363,7 +363,7 @@ Funktion rechnet jedoch in Minuten, daher die Division durch 60.
 
 =head1 VERSION
 
-1.168
+1.169
 
 =head1 SOURCE
 

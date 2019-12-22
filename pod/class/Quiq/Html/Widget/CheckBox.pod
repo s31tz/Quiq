@@ -80,7 +80,7 @@ Aktueller Wert. Stimmt dieser mit dem Wert des Attributs option
 
 =head1 VERSION
 
-1.168
+1.169
 
 =head1 SOURCE
 

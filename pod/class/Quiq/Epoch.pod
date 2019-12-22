@@ -236,7 +236,7 @@ Zeit-Darstellung (String)
 
 =head1 VERSION
 
-1.168
+1.169
 
 =head1 SOURCE
 
