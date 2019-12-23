@@ -44,8 +44,8 @@ Mehrere SQL-Statements I<auf einer Zeile> beherrscht die Klasse nicht.
 
 =head4 Synopsis
 
-  $rd = $class->new($dbms,$file);
-  $rd = $class->new($dbms,\$str);
+  $rd = $class->new($dbms,$file,@opt);
+  $rd = $class->new($dbms,\$str,@opt);
 
 =head4 Arguments
 
@@ -62,6 +62,18 @@ Dateipfad des SQL-Skripts. Im Falle von '-' wird von STDIN gelesen.
 =item $str
 
 Das SQL-Skript als Zeichenkette.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -separator => $regex (Default: qr/;\s*$/)
+
+Statement-Separator. Per Default ein Semikolon (;) am Zeilenende.
+Andere Variante (geeigneter, wenn Prozeduren vorkommen können),
+Semikolon allein auf Zeile: qr/^;\s*$/.
 
 =back
 
