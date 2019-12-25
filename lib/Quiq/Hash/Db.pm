@@ -23,6 +23,11 @@ Quiq::Hash::Db - Persistenter Hash
 
 L<Quiq::Hash>
 
+=head1 DESCRIPTION
+
+Diese Klasse ist eine objektorientierte Überdeckung des Moduls DB_File,
+das eine Schnittstelle zu Berkeley DB 1.x darstellt.
+
 =head1 METHODS
 
 =head2 Konstruktor

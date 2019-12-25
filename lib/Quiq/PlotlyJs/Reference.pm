@@ -50,7 +50,7 @@ sub new {
     my $url = 'https://plot.ly/javascript/reference/';
 
     return $class->SUPER::new(
-        url=> $url,
+        url => $url,
         tree => HTML::TreeBuilder->new_from_url($url)->elementify,
     );
 }
