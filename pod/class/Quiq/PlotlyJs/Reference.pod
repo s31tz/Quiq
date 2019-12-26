@@ -27,6 +27,22 @@ Object
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
 dieses Objekt zurück.
 
+=head2 Objektmethoden
+
+=head3 asSdoc() - Wandele die Dokumentation nach Sdoc
+
+=head4 Synopsis
+
+  $sdoc = $obj->asSdoc;
+
+=head4 Returns
+
+Sdoc-Code (String)
+
+=head4 Description
+
+Liefere die plotly.js Dokumentation in Sdoc.
+
 =head1 VERSION
 
 1.169
