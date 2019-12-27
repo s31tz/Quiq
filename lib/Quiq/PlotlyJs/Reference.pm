@@ -91,6 +91,11 @@ sub asSdoc {
 
     $str .= $sdoc->document(
         title => 'Plotly.js Reference',
+        sectionNumberLevel => 4,
+    );
+
+    $str .= $sdoc->tableOfContents(
+        maxLevel => 4,
     );
 
     my $i = 0;
@@ -101,7 +106,9 @@ sub asSdoc {
             next;
         }
         my $title = ucfirst $sec->look_down(_tag=>'h4')->as_text;
-        $str .= $sdoc->section(1,$title);
+        $title =~ s/^\s+//;
+        $title =~ s/\s+$//;
+        $str .= $sdoc->section(-1,$title);
 
         my $e = $sec->look_down(_tag=>'div',class=>'description');
         if ($e) {
@@ -110,7 +117,7 @@ sub asSdoc {
         }
 
         my $li = $sec->look_down(_tag=>'ul')->content_list;
-        $str .= $self->attributes($sdoc,2,$sec);
+        $str .= $self->attributes($sdoc,0,$sec);
 last;
     }
 

@@ -327,8 +327,18 @@ erzeugt
 
 sub section {
     my ($self,$level,$title) = splice @_,0,3;
+    # @_: $body
 
-    my $str = sprintf "%s %s\n\n",('=' x $level),$title;
+    my $str;
+    if ($level == -1) {
+        $str = sprintf "=- %s\n\n",$title;
+    }
+    elsif ($level == 0) {
+        $str = sprintf "==- %s\n\n",$title;
+    }
+    else {
+        $str = sprintf "%s %s\n\n",('=' x $level),$title;
+    }
     if (@_) {
         my $body = shift;
         $body =~ s/\s+$//;
