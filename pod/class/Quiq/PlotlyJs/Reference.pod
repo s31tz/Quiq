@@ -43,6 +43,18 @@ Sdoc-Code (String)
 
 Liefere die plotly.js Dokumentation in Sdoc.
 
+=head2 Hilfsmethoden
+
+=head3 attributes() - Beschreibung der Attribute
+
+=head4 Synopsis
+
+  $sdoc = $obj->attributes($e);
+
+=head4 Returns
+
+Sdoc-Code (String)
+
 =head1 VERSION
 
 1.169

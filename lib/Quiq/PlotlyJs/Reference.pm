@@ -50,7 +50,7 @@ sub new {
     my $class = shift;
 
     # my $url = 'https://plot.ly/javascript/reference/';
-    my $file = Quiq::Path->expandTilde('~/tmp/plotly-reference.html');
+    my $file = Quiq::Path->expandTilde('~/tmp/plotlyjs-reference.html');
 
     return $class->SUPER::new(
         # root => HTML::TreeBuilder->new_from_url($url)->elementify,
@@ -89,7 +89,7 @@ sub asSdoc {
         indentation => 2,
     );
 
-    print $sdoc->document(
+    $str .= $sdoc->document(
         title => 'Plotly.js Reference',
     );
 
@@ -101,19 +101,63 @@ sub asSdoc {
             next;
         }
         my $title = ucfirst $sec->look_down(_tag=>'h4')->as_text;
-        print $sdoc->section(1,$title);
+        $str .= $sdoc->section(1,$title);
 
         my $e = $sec->look_down(_tag=>'div',class=>'description');
         if ($e) {
             my $descr = $e->as_text;
-            print $sdoc->paragraph($descr);
+            $str .= $sdoc->paragraph($descr);
         }
 
-        for my $li ($sec->look_down(_tag=>'ul')->content_list) {
+        my $li = $sec->look_down(_tag=>'ul')->content_list;
+        $str .= $self->attributes($sdoc,2,$sec);
+last;
+    }
+
+    return $str;
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Hilfsmethoden
+
+=head3 attributes() - Beschreibung der Attribute
+
+=head4 Synopsis
+
+  $sdoc = $obj->attributes($e);
+
+=head4 Returns
+
+Sdoc-Code (String)
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub attributes {
+    my ($self,$sdoc,$level,$e) = @_;
+
+    my $str = '';
+
+    my $ul = $e->look_down(_tag=>'ul');
+    if ($ul) {
+        for my $li ($ul->content_list) {
             my $attribute = $li->look_down(class=>'attribute-name')->as_text;
-            print $sdoc->section(2,$attribute);
+            $str .= $sdoc->section($level,$attribute);
+
+            my $html = $sdoc->paragraph($li->as_HTML);
+
+            my ($parent) = $html =~ m|Parent:.*?<code>(.*?)</code>|s;
+            $str .= $sdoc->paragraph("Parent: $parent");
+
+            my $p = $li->look_down(_tag=>'p');
+            if ($p) {
+                $str .= $sdoc->paragraph($p->as_text);
+            }
+
+            $str .= $self->attributes($sdoc,$level+1,$li);
         }
-# last;
     }
 
     return $str;
