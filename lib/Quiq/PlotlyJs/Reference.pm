@@ -102,7 +102,7 @@ sub asSdoc {
     my $root = $self->root;
     for my $sec ($root->look_down(_tag=>'div',class=>'row')) {
         if (!$i++) {
-            # Die Einleitung übergehen wir
+            # Die Einleitung des Reference-Dokuments übergehen wir
             next;
         }
         my $title = ucfirst $sec->look_down(_tag=>'h4')->as_text;
@@ -116,7 +116,7 @@ sub asSdoc {
             $str .= $sdoc->paragraph($descr);
         }
 
-        my $li = $sec->look_down(_tag=>'ul')->content_list;
+        # my $li = $sec->look_down(_tag=>'ul')->content_list;
         $str .= $self->attributes($sdoc,0,$sec);
 last;
     }
