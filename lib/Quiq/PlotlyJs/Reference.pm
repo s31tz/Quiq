@@ -91,11 +91,11 @@ sub asSdoc {
 
     $str .= $sdoc->document(
         title => 'Plotly.js Reference',
-        sectionNumberLevel => 4,
+        sectionNumberLevel => 6,
     );
 
     $str .= $sdoc->tableOfContents(
-        maxLevel => 4,
+        maxLevel => 6,
     );
 
     my $i = 0;
@@ -108,7 +108,7 @@ sub asSdoc {
         my $title = ucfirst $sec->look_down(_tag=>'h4')->as_text;
         $title =~ s/^\s+//;
         $title =~ s/\s+$//;
-        $str .= $sdoc->section(-1,$title);
+        $str .= $sdoc->section(1,$title);
 
         my $e = $sec->look_down(_tag=>'div',class=>'description');
         if ($e) {
@@ -116,9 +116,7 @@ sub asSdoc {
             $str .= $sdoc->paragraph($descr);
         }
 
-        # my $li = $sec->look_down(_tag=>'ul')->content_list;
-        $str .= $self->attributes($sdoc,0,$sec);
-last;
+        $str .= $self->attributes($sdoc,2,$sec);
     }
 
     return $str;
@@ -155,8 +153,54 @@ sub attributes {
 
             my $html = $sdoc->paragraph($li->as_HTML);
 
-            my ($parent) = $html =~ m|Parent:.*?<code>(.*?)</code>|s;
-            $str .= $sdoc->paragraph("Parent: $parent");
+            my @arr;
+
+            # Parent:
+
+            my ($parent) = $html =~ m|Parent:.*?<code>(.*?)</code>|;
+            if (!defined $parent) {
+                # Die Angabe Parent: gibt es immer
+                $self->throw;
+            }
+            push @arr,"Parent:"=>$parent;
+
+            # Type:
+
+            if ($html =~ /Type:/) {
+                my ($type) = $html =~ m{Type:</em>(.*?)(<br|<p>|<ul>|$)}s;
+                if (!defined $type) {
+                    # Wenn Angabe Type: vorkommt, müssen wir sie
+                    # extrahieren können
+                    $self->throw(
+                         'PLOTYJS-00001: Can\'t extract Type: from HTML',
+                         Html => $html,
+                    );
+                }
+                $type =~ s|</?code>||g;
+                $type =~ s|&quot;|"|g;
+                push @arr,"Type:"=>$type;
+            }
+
+            # Default:
+
+            if ($html =~ /Default:/) {
+                my ($default) = $html =~ m|Default:.*?<code>(.*?)</code>|;
+                if (!defined $default) {
+                    # Wenn Angabe Default: vorkommt, müssen wir sie
+                    # extrahieren können
+                    $self->throw(
+                         'PLOTYJS-00001: Can\'t extract Default: from HTML',
+                         Html => $html,
+                    );
+                }
+                $default =~ s|</?code>||g;
+                $default =~ s|&quot;|"|g;
+                push @arr,"Default:"=>$default;
+            }
+
+            $str .= $sdoc->definitionList(\@arr);
+
+            # Description
 
             my $p = $li->look_down(_tag=>'p');
             if ($p) {
