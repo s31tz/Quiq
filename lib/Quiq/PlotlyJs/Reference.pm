@@ -108,7 +108,7 @@ sub asSdoc {
         my $title = ucfirst $sec->look_down(_tag=>'h4')->as_text;
         $title =~ s/^\s+//;
         $title =~ s/\s+$//;
-        $str .= $sdoc->section(1,$title);
+        $str .= $sdoc->section(-1,$title);
 
         my $e = $sec->look_down(_tag=>'div',class=>'description');
         if ($e) {
@@ -116,7 +116,8 @@ sub asSdoc {
             $str .= $sdoc->paragraph($descr);
         }
 
-        $str .= $self->attributes($sdoc,2,$sec);
+        $str .= $self->attributes($sdoc,1,$sec);
+last;
     }
 
     return $str;
@@ -204,7 +205,9 @@ sub attributes {
 
             my $p = $li->look_down(_tag=>'p');
             if ($p) {
-                $str .= $sdoc->paragraph($p->as_text);
+                my $descr = $p->as_text;
+                $descr =~ s|M~|\\M~|g;
+                $str .= $sdoc->paragraph($descr);
             }
 
             $str .= $self->attributes($sdoc,$level+1,$li);
