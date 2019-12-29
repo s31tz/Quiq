@@ -117,7 +117,6 @@ sub asSdoc {
         }
 
         $str .= $self->attributes($sdoc,1,$sec);
-last;
     }
 
     return $str;
