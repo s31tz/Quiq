@@ -824,12 +824,16 @@ sub minMax {
 
 # -----------------------------------------------------------------------------
 
-=head3 meanValue() - Berechne Mittelwert
+=head3 average() - Berechne Mittelwert
 
 =head4 Synopsis
 
-  $x = $arr->meanValue;
-  $x = $class->meanValue(\@arr);
+  $x = $arr->average;
+  $x = $class->average(\@arr);
+
+=head4 Alias
+
+meanValue()
 
 =head4 Description
 
@@ -840,7 +844,7 @@ zurück. Enthält $arr keine Elemente, liefere undef.
 
 # -----------------------------------------------------------------------------
 
-sub meanValue {
+sub average {
     my $arr = ref $_[0]? CORE::shift: CORE::splice @_,0,2;
 
     return undef if !@$arr;
@@ -851,6 +855,11 @@ sub meanValue {
     }
 
     return $sum/@$arr;
+}
+
+{
+    no warnings 'once';
+    *meanValue = \&average;
 }
 
 # -----------------------------------------------------------------------------

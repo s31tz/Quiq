@@ -75,8 +75,10 @@ sub new {
     if ($epoch !~ /^[\d.]+$/) {
         # ISO Zeitangabe
 
-        $epoch =~ s/(\.\d+)//;
-        my $x = $1;
+        my $x;
+        if ($epoch =~ s/(\.\d+)//) {
+            $x = $1;
+        }
 
         if (length($epoch) == 10) {
             $epoch .= ' 00:00:00';

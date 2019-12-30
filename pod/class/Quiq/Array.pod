@@ -407,12 +407,16 @@ keine Elemente, liefere undef.
 Ermittele die kleinste und die größte Zahl und liefere die beiden Werte
 zurück. Enthält $arr keine Elemente, wird jeweils C<undef> geliefert.
 
-=head3 meanValue() - Berechne Mittelwert
+=head3 average() - Berechne Mittelwert
 
 =head4 Synopsis
 
-  $x = $arr->meanValue;
-  $x = $class->meanValue(\@arr);
+  $x = $arr->average;
+  $x = $class->average(\@arr);
+
+=head4 Alias
+
+meanValue()
 
 =head4 Description
 

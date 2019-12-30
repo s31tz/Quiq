@@ -103,6 +103,10 @@ Windgeschwindigkeits-Messung)
 
 =over 4
 
+=item color => $color (Default: 'rgb(255,0,0,1)')
+
+Farbe der Kurve.
+
 =item name => $name (Default: 'plot')
 
 Name des Plot. Der Name wird als CSS-Id für den Div-Container
