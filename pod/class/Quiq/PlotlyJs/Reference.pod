@@ -29,6 +29,22 @@ dieses Objekt zurück.
 
 =head2 Objektmethoden
 
+=head3 tree() - Dokumentbaum des PlotlyJs Referenz-Manuals
+
+=head4 Synopsis
+
+  $tree = $obj->tree;
+
+=head4 Returns
+
+Wurzelknoten des Dokumentbaums (Object)
+
+=head4 Description
+
+Überführe das PlotlyJs Referenz-Manual in HTML in einen Dokumentbaum
+mit den enthaltenen Informationen und liefere eine Referenz auf
+dessen Wurzelknoten zurück.
+
 =head3 asSdoc() - Wandele die Dokumentation nach Sdoc
 
 =head4 Synopsis
@@ -45,11 +61,21 @@ Liefere die plotly.js Dokumentation in Sdoc.
 
 =head2 Hilfsmethoden
 
-=head3 attributes() - Beschreibung der Attribute
+=head3 attributes() - Attribut-Knoten
 
 =head4 Synopsis
 
-  $sdoc = $obj->attributes($e);
+  $node = $obj->attributes($h);
+
+=head4 Returns
+
+Attribut-Knoten (Object)
+
+=head3 attributesAsSdoc() - Beschreibung der Attribute
+
+=head4 Synopsis
+
+  $sdoc = $obj->attributesAsSdoc($e);
 
 =head4 Returns
 
@@ -69,7 +95,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2019 Frank Seitz
+Copyright (C) 2020 Frank Seitz
 
 =head1 LICENSE
 
