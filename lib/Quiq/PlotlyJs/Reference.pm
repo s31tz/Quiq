@@ -11,6 +11,7 @@ use Quiq::Path;
 use Quiq::Hash;
 use HTML::TreeBuilder ();
 use Quiq::Html::Page;
+use Quiq::Html::List;
 
 # -----------------------------------------------------------------------------
 
@@ -155,9 +156,12 @@ sub asHtml {
                 style => 'margin-left: 22px',
                 '-',
                 $h->tag('p',
+                    -text => 1,
                     $sec->get('description')
                 ),
-                $self->attributesAsHtml($sec,$h),
+                $h->tag('p',
+                    $self->attributesAsHtml($sec,$h)
+                ),
             ),
         );
         $i++;
@@ -167,6 +171,12 @@ sub asHtml {
         my $title = $self->get('title');
         $html = Quiq::Html::Page->html($h,
             title => $title,
+            styleSheet => q~
+                body {
+                    font-family: sans-serif;
+                    font-size: 11pt;
+                }
+            ~,
             body => $h->cat(
                 $h->tag('h1',$title),
                 $html,
@@ -210,11 +220,24 @@ sub attributesAsHtml {
             $h->tag('div',
                 style => 'margin-left: 22px',
                 '-',
+                Quiq::Html::List->html($h,
+                    type => 'description',
+                    isText => 1,
+                    items => [
+                        Parent => $att->get('parent'),
+                        Type => $att->get('type'),
+                        Default => $att->get('default'),
+                    ],
+                ),
                 $h->tag('p',
+                    -text => 1,
                     $att->get('description')
                 ),
-                # $self->attributesAsHtml($att,$h),
             ),
+        );
+        $html .= $h->tag('div',
+            style => 'margin-left: 22px',
+            $self->attributesAsHtml($att,$h)
         );
     }
 
@@ -276,6 +299,8 @@ sub attributes {
                          Html => $html,
                     );
                 }
+                $type =~ s/^\s+//;
+                $type =~ s/\s+$//;
                 $type =~ s|</?code>||g;
                 $type =~ s|&quot;|"|g;
             }
