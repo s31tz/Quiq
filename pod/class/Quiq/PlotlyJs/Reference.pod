@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::PlotlyJs::Reference - Erzeuge Plotly.js Dokumentation
+Quiq::PlotlyJs::Reference - Erzeuge Plotly.js Reference Manual
 
 =head1 BASE CLASS
 
@@ -27,37 +27,51 @@ Object
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
 dieses Objekt zurück.
 
-=head2 Objektmethoden
+=head2 HTML-Repräsentation
 
-=head3 tree() - Dokumentbaum des PlotlyJs Referenz-Manuals
-
-=head4 Synopsis
-
-  $tree = $obj->tree;
-
-=head4 Returns
-
-Wurzelknoten des Dokumentbaums (Object)
-
-=head4 Description
-
-Überführe das PlotlyJs Referenz-Manual in HTML in einen Dokumentbaum
-mit den enthaltenen Informationen und liefere eine Referenz auf
-dessen Wurzelknoten zurück.
-
-=head3 asSdoc() - Wandele die Dokumentation nach Sdoc
+=head3 asHtml() - Erzeuge HTML-Repräsentation
 
 =head4 Synopsis
 
-  $sdoc = $obj->asSdoc;
+  $html = $obj->asHtml($h);
+
+=head4 Arguments
+
+=over 4
+
+=item $h
+
+Quiq::Html::Tag Objekt.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -document => $bool (Default: 0)
+
+Erzeuge ein vollständiges HTML-Dokument.
+
+=back
 
 =head4 Returns
 
-Sdoc-Code (String)
+HTML-Code (String)
 
 =head4 Description
 
-Liefere die plotly.js Dokumentation in Sdoc.
+Liefere die plotly.js Dokumentation in HTML.
+
+=head3 attributesAsHtml() - HTML-Repräsentation der Attribute
+
+=head4 Synopsis
+
+  $html = $self->attributesAsHtml($h);
+
+=head4 Returns
+
+Attribut-Knoten (Object)
 
 =head2 Hilfsmethoden
 
@@ -65,21 +79,11 @@ Liefere die plotly.js Dokumentation in Sdoc.
 
 =head4 Synopsis
 
-  $node = $obj->attributes($h);
+  $node = $class->attributes($h);
 
 =head4 Returns
 
 Attribut-Knoten (Object)
-
-=head3 attributesAsSdoc() - Beschreibung der Attribute
-
-=head4 Synopsis
-
-  $sdoc = $obj->attributesAsSdoc($e);
-
-=head4 Returns
-
-Sdoc-Code (String)
 
 =head1 VERSION
 

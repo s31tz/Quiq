@@ -8,9 +8,9 @@ use warnings;
 our $VERSION = '1.169';
 
 use Quiq::Path;
-use HTML::TreeBuilder ();
 use Quiq::Hash;
-use Quiq::Sdoc::Producer;
+use HTML::TreeBuilder ();
+use Quiq::Html::Page;
 
 # -----------------------------------------------------------------------------
 
@@ -18,7 +18,7 @@ use Quiq::Sdoc::Producer;
 
 =head1 NAME
 
-Quiq::PlotlyJs::Reference - Erzeuge Plotly.js Dokumentation
+Quiq::PlotlyJs::Reference - Erzeuge Plotly.js Reference Manual
 
 =head1 BASE CLASS
 
@@ -51,44 +51,13 @@ sub new {
     my $class = shift;
 
     # my $url = 'https://plot.ly/javascript/reference/';
+    # my $hRoot = HTML::TreeBuilder->new_from_url($url)->elementify;
+
     my $file = Quiq::Path->expandTilde('~/tmp/plotlyjs-reference.html');
-
-    return $class->SUPER::new(
-        # root => HTML::TreeBuilder->new_from_url($url)->elementify,
-        root => HTML::TreeBuilder->new_from_file($file)->elementify,
-    );
-}
-
-# -----------------------------------------------------------------------------
-
-=head2 Objektmethoden
-
-=head3 tree() - Dokumentbaum des PlotlyJs Referenz-Manuals
-
-=head4 Synopsis
-
-  $tree = $obj->tree;
-
-=head4 Returns
-
-Wurzelknoten des Dokumentbaums (Object)
-
-=head4 Description
-
-Überführe das PlotlyJs Referenz-Manual in HTML in einen Dokumentbaum
-mit den enthaltenen Informationen und liefere eine Referenz auf
-dessen Wurzelknoten zurück.
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub tree {
-    my $self = shift;
+    my $hRoot = HTML::TreeBuilder->new_from_file($file)->elementify;
 
     my $i = 0;
     my @sections;
-    my $hRoot = $self->root;
     for my $hSec ($hRoot->look_down(_tag=>'div',class=>'row')) {
         if (!$i++) {
             # Die Einleitung des Reference-Dokuments übergehen wir
@@ -108,11 +77,14 @@ sub tree {
         push @sections,Quiq::Hash->new(
             title => $title,
             description => $descr,
-            attributeA => $self->attributes($hSec),
+            attributeA => $class->attributes($hSec),
         );
     }
 
-    return Quiq::Hash->new(
+    # Abschnitt Layout an den Anfang
+    unshift @sections,pop @sections;
+
+    return $class->SUPER::new(
         title => 'Plotly.js Reference',
         sectionA => \@sections,
     );
@@ -120,64 +92,133 @@ sub tree {
 
 # -----------------------------------------------------------------------------
 
-=head3 asSdoc() - Wandele die Dokumentation nach Sdoc
+=head2 HTML-Repräsentation
+
+=head3 asHtml() - Erzeuge HTML-Repräsentation
 
 =head4 Synopsis
 
-  $sdoc = $obj->asSdoc;
+  $html = $obj->asHtml($h);
+
+=head4 Arguments
+
+=over 4
+
+=item $h
+
+Quiq::Html::Tag Objekt.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -document => $bool (Default: 0)
+
+Erzeuge ein vollständiges HTML-Dokument.
+
+=back
 
 =head4 Returns
 
-Sdoc-Code (String)
+HTML-Code (String)
 
 =head4 Description
 
-Liefere die plotly.js Dokumentation in Sdoc.
+Liefere die plotly.js Dokumentation in HTML.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub asSdoc {
-    my $self = shift;
+sub asHtml {
+    my ($self,$h) = splice @_,0,2;
 
-    my $str = '';
+    # Optionen
 
-    my $sdoc = Quiq::Sdoc::Producer->new(
-        indentation => 2,
+    my $document = 0;
+
+    $self->parameters(\@_,
+        document => \$document,
     );
 
-    $str .= $sdoc->document(
-        title => 'Plotly.js Reference',
-        sectionNumberLevel => 6,
-    );
-
-    $str .= $sdoc->tableOfContents(
-        maxLevel => 6,
-    );
-
+    my $html = '';
     my $i = 0;
-    my $root = $self->root;
-    for my $sec ($root->look_down(_tag=>'div',class=>'row')) {
-        if (!$i++) {
-            # Die Einleitung des Reference-Dokuments übergehen wir
-            next;
-        }
-        my $title = ucfirst $sec->look_down(_tag=>'h4')->as_text;
-        $title =~ s/^\s+//;
-        $title =~ s/\s+$//;
-        $str .= $sdoc->section(-1,$title);
-
-        my $e = $sec->look_down(_tag=>'div',class=>'description');
-        if ($e) {
-            my $descr = $e->as_text;
-            $str .= $sdoc->paragraph($descr);
-        }
-
-        $str .= $self->attributesAsSdoc($sdoc,1,$sec);
+    for my $sec (@{$self->get('sectionA')}) {
+        $html .= $h->tag('details',
+            '-',
+            $h->tag('summary',
+                "$i. ".$sec->get('title')
+            ),
+            $h->tag('div',
+                style => 'margin-left: 22px',
+                '-',
+                $h->tag('p',
+                    $sec->get('description')
+                ),
+                $self->attributesAsHtml($sec,$h),
+            ),
+        );
+        $i++;
     }
 
-    return $str;
+    if ($document) {
+        my $title = $self->get('title');
+        $html = Quiq::Html::Page->html($h,
+            title => $title,
+            body => $h->cat(
+                $h->tag('h1',$title),
+                $html,
+            ),
+        );
+    }
+
+    return $html;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 attributesAsHtml() - HTML-Repräsentation der Attribute
+
+=head4 Synopsis
+
+  $html = $self->attributesAsHtml($h);
+
+=head4 Returns
+
+Attribut-Knoten (Object)
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub attributesAsHtml {
+    my ($self,$node,$h) = @_;
+
+    my $html = '';
+
+    my @attributes = sort {$a->get('name') cmp $b->get('name')}
+        @{$node->get('attributeA')};
+
+    for my $att (@attributes) {
+        $html .= $h->tag('details',
+            '-',
+            $h->tag('summary',
+                $att->get('name')
+            ),
+            $h->tag('div',
+                style => 'margin-left: 22px',
+                '-',
+                $h->tag('p',
+                    $att->get('description')
+                ),
+                # $self->attributesAsHtml($att,$h),
+            ),
+        );
+    }
+
+    return $html;
 }
 
 # -----------------------------------------------------------------------------
@@ -188,7 +229,7 @@ sub asSdoc {
 
 =head4 Synopsis
 
-  $node = $obj->attributes($h);
+  $node = $class->attributes($h);
 
 =head4 Returns
 
@@ -199,7 +240,7 @@ Attribut-Knoten (Object)
 # -----------------------------------------------------------------------------
 
 sub attributes {
-    my ($self,$h) = @_;
+    my ($class,$h) = @_;
 
     my @attributes;
 
@@ -219,7 +260,7 @@ sub attributes {
             my ($parent) = $html =~ m|Parent:.*?<code>(.*?)</code>|;
             if (!defined $parent) {
                 # Angabe Parent: erwarten wir immer
-                $self->throw;
+                $class->throw;
             }
 
             # Type
@@ -230,7 +271,7 @@ sub attributes {
                 if (!defined $type) {
                     # Wenn Angabe Type: vorkommt, müssen wir sie
                     # extrahieren können
-                    $self->throw(
+                    $class->throw(
                          'PLOTYJS-00001: Can\'t extract Type: from HTML',
                          Html => $html,
                     );
@@ -247,7 +288,7 @@ sub attributes {
                 if (!defined $default) {
                     # Wenn Angabe Default: vorkommt, müssen wir sie
                     # extrahieren können
-                    $self->throw(
+                    $class->throw(
                          'PLOTYJS-00001: Can\'t extract Default: from HTML',
                          Html => $html,
                     );
@@ -271,104 +312,12 @@ sub attributes {
                 type => $type,
                 default => $default,
                 description => $descr,
-                attributeA => $self->attributes($li),
+                attributeA => $class->attributes($li),
             );
         }
     }
 
     return \@attributes;
-}
-
-# -----------------------------------------------------------------------------
-
-=head3 attributesAsSdoc() - Beschreibung der Attribute
-
-=head4 Synopsis
-
-  $sdoc = $obj->attributesAsSdoc($e);
-
-=head4 Returns
-
-Sdoc-Code (String)
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub attributesAsSdoc {
-    my ($self,$sdoc,$level,$e) = @_;
-
-    my $str = '';
-
-    my $ul = $e->look_down(_tag=>'ul');
-    if ($ul) {
-        for my $li ($ul->content_list) {
-            my $attribute = $li->look_down(class=>'attribute-name')->as_text;
-            $str .= $sdoc->section($level,$attribute);
-
-            my $html = $sdoc->paragraph($li->as_HTML);
-
-            my @arr;
-
-            # Parent:
-
-            my ($parent) = $html =~ m|Parent:.*?<code>(.*?)</code>|;
-            if (!defined $parent) {
-                # Die Angabe Parent: gibt es immer
-                $self->throw;
-            }
-            push @arr,"Parent:"=>$parent;
-
-            # Type:
-
-            if ($html =~ /Type:/) {
-                my ($type) = $html =~ m{Type:</em>(.*?)(<br|<p>|<ul>|$)}s;
-                if (!defined $type) {
-                    # Wenn Angabe Type: vorkommt, müssen wir sie
-                    # extrahieren können
-                    $self->throw(
-                         'PLOTYJS-00001: Can\'t extract Type: from HTML',
-                         Html => $html,
-                    );
-                }
-                $type =~ s|</?code>||g;
-                $type =~ s|&quot;|"|g;
-                push @arr,"Type:"=>$type;
-            }
-
-            # Default:
-
-            if ($html =~ /Default:/) {
-                my ($default) = $html =~ m|Default:.*?<code>(.*?)</code>|;
-                if (!defined $default) {
-                    # Wenn Angabe Default: vorkommt, müssen wir sie
-                    # extrahieren können
-                    $self->throw(
-                         'PLOTYJS-00001: Can\'t extract Default: from HTML',
-                         Html => $html,
-                    );
-                }
-                $default =~ s|</?code>||g;
-                $default =~ s|&quot;|"|g;
-                push @arr,"Default:"=>$default;
-            }
-
-            $str .= $sdoc->definitionList(\@arr);
-
-            # Description
-
-            my $p = $li->look_down(_tag=>'p');
-            if ($p) {
-                my $descr = $p->as_text;
-                $descr =~ s|M~|\\M~|g;
-                $str .= $sdoc->paragraph($descr);
-            }
-
-            $str .= $self->attributesAsSdoc($sdoc,$level+1,$li);
-        }
-    }
-
-    return $str;
 }
 
 # -----------------------------------------------------------------------------

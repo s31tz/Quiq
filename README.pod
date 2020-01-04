@@ -589,7 +589,7 @@ L<Quiq::Perl|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Perl.pod> 
 
 =item *
 
-L<Quiq::PlotlyJs::Reference|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/Reference.pod> - Erzeuge Plotly.js Dokumentation
+L<Quiq::PlotlyJs::Reference|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/Reference.pod> - Erzeuge Plotly.js Reference Manual
 
 =item *
 
