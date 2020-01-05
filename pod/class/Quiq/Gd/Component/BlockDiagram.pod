@@ -60,7 +60,7 @@ Signatur:
 =begin html
 
 <p class="sdoc-fig-p">
-  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/doc/img/quiq-gd-component-blockdiagram.png" width="430" height="887" alt="" />
+  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/img/quiq-gd-component-blockdiagram.png" width="430" height="887" alt="" />
 </p>
 
 =end html
