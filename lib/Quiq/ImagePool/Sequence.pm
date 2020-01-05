@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use utf8;
 
-our $VERSION = '1.169';
+our $VERSION = '1.170';
 
 use Quiq::OrderedHash;
 use Quiq::FileHandle;
@@ -378,7 +378,7 @@ sub images {
 
 =head1 VERSION
 
-1.169
+1.170
 
 =head1 AUTHOR
 
@@ -386,7 +386,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2019 Frank Seitz
+Copyright (C) 2020 Frank Seitz
 
 =head1 LICENSE
 

@@ -5,7 +5,7 @@ use v5.10;
 use strict;
 use warnings;
 
-our $VERSION = '1.169';
+our $VERSION = '1.170';
 
 use Quiq::Hash;
 use HTML::TreeBuilder ();
@@ -110970,7 +110970,7 @@ siehe L<Full Reference|https://plot.ly/javascript/reference/>)
 
 =head1 VERSION
 
-1.169
+1.170
 
 =head1 AUTHOR
 

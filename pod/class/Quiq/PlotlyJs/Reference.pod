@@ -110708,7 +110708,7 @@ siehe L<Full Reference|https://plot.ly/javascript/reference/>)
 
 =head1 VERSION
 
-1.169
+1.170
 
 =head1 SOURCE
 
