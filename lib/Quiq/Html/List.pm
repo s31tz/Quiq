@@ -191,7 +191,7 @@ sub html {
             if ($type eq 'dl') {
                 for (my $i = 0; $i < @$itemA; $i += 2) {
                     my $val = $itemA->[$i+1];
-                    if (!defined $val) {
+                    if (!defined($val) || $val eq '') {
                         next;
                     }
                     $html .= $h->tag('dt',
