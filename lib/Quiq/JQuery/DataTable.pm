@@ -28,7 +28,7 @@ L<Quiq::Hash>
 =begin html
 
 <p class="sdoc-fig-p">
-  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/img/quiq-jquery-datatable-example01.png" width="757" height="170" alt="" />
+  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/doc/img/quiq-jquery-datatable-example01.png" width="757" height="170" alt="" />
 </p>
 
 =end html
@@ -141,7 +141,7 @@ Default-Aussehen einer DataTable:
 =begin html
 
 <p class="sdoc-fig-p">
-  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/img/quiq-jquery-datatable-example01.png" width="757" height="170" alt="" />
+  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/doc/img/quiq-jquery-datatable-example01.png" width="757" height="170" alt="" />
 </p>
 
 =end html
@@ -263,7 +263,7 @@ keine Bedienelemente erzeugt:
 =begin html
 
 <p class="sdoc-fig-p">
-  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/img/quiq-jquery-datatable-example02.png" width="757" height="117" alt="" />
+  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/doc/img/quiq-jquery-datatable-example02.png" width="757" height="117" alt="" />
 </p>
 
 =end html
