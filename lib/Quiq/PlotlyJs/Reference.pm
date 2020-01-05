@@ -26,12 +26,9 @@ L<Quiq::Hash>
 
 =head1 SYNOPSIS
 
-Klasse laden:
-
   use Quiq::PlotlyJs::Reference;
-
-Dokument erzeugen:
-
+  use Quiq::Html::Producer;
+  
   $root = Quiq::PlotlyJs::Reference->new;
   $h = Quiq::Html::Producer->new;
   $html = $root->asHtml($h);
@@ -45,6 +42,8 @@ ist allerdings umständlich zu handhaben. Diese Klasse erzeugt eine
 Abschnitt L<Plotly.js Reference|"Plotly.js Reference">.
 
 =head1 EXAMPLE
+
+=head2 Dokument an der Kommandozeile erzeugen
 
   $ perl -MQuiq::Html::Producer -MQuiq::PlotlyJs::Reference -E '$h = Quiq::Html::Producer->new; print Quiq::PlotlyJs::Reference->new->asHtml($h)'
 
@@ -74,7 +73,7 @@ produziert auf stdout
             </p>
           </div>
         </details>
-  ...
+  ... und mehr als 11.000 weitere Zeilen ...
 
 =head1 METHODS
 
