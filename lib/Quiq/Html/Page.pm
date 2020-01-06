@@ -101,7 +101,7 @@ den Head der HTML-Seite.
 =item ready => $jsCode (Default: [])
 
 Führe JavaScript-Code $jsCode aus, wenn das DOM geladen ist.
-Dies ist so implementiert, dass der Code wird in einen jQuery
+Dies ist so implementiert, dass der Code in einen jQuery
 ready-Handler eingebettet wird:
 
   $(function() {
@@ -219,7 +219,7 @@ sub html {
 
     my $readyHandlers = '';
     for (@$readyA) {
-        $readyHandlers .= Quiq::JQuery::Function->ready($_);
+        $readyHandlers .= Quiq::JQuery::Function->ready($_)."\n";
     }
     if ($readyHandlers) {
         push @$javaScript,$readyHandlers;
