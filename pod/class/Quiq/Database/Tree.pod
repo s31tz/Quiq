@@ -24,7 +24,20 @@ Baumstruktur operieren zu können.
 
 =head4 Synopsis
 
-  $tree = $class->new($tab,$pkColumn,$fkColumn);
+  $tree = $class->new($tab,$pkColumn,$fkColumn,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -removeRowsWithoutParent => $bool (Default: 0)
+
+Entferne alle Child-Datensätze, deren Parent in der Ergebnismenge nicht
+enthalten ist. Diese Option ist nützlich, wenn die Ergebnismenge
+nicht alle Sätze enthält, sondern nur eine Teilmenge, z.B. aufgrund
+einer Selektion mit -limit.
+
+=back
 
 =head4 Description
 
@@ -164,7 +177,7 @@ Resultat:
 =head4 Description
 
 Füge zu allen Datensätzen das Attribut $key hinzu und setze
-es auf den Pfad gemß Datensatz-Attribut $valColumn mit
+es auf den Pfad gemäß Datensatz-Attribut $valColumn mit
 der Trenn-Zeichenkette $sep. Die Methode liefert keinen Wert zurück.
 
 =head4 Example
@@ -181,6 +194,24 @@ Erweitert alle Datensätze um das Attribut 'path':
   2  1         B    A/B
   3  2         C    A/B/C
   4  1         D    A/D
+
+=head3 hierarchy() - Datensätze als Hierarchie
+
+=head4 Synopsis
+
+  @rows|$rowA = $tree->hierarchy;
+
+=head4 Description
+
+Liefere die Datensätze der Ergebnismenge in hierarchischer Reihenfolge,
+also die Kind-Sätze in der Reihenfolge einer Tiefensuche.
+
+=head3 level() - Anzahl der übergeordneten Knoten
+
+=head4 Synopsis
+
+  $level = $tree->level($pk);
+  $level = $tree->level($row);
 
 =head3 lookup() - Datensatz-Lookup
 
@@ -306,6 +337,18 @@ Datensätze und ihre name-Pfade:
 
 Liefere die Datensätze des Baums. Die Reihenfolge entspricht
 der Reihenfolge der zugrundeliegenden Tabelle $tab (s. Konstruktor).
+
+=head3 roots() - Alle Wurzel-Datensätze
+
+=head4 Synopsis
+
+  @rows|$rowA = $tree->roots;
+
+=head4 Description
+
+Liefere die Liste der Wurzel-Datensätze, also alle Datensätze, die
+keinen Parent haben. Die Reihenfolge entspricht der Reihenfolge der
+zugrundeliegenden Tabelle $tab (s. Konstruktor).
 
 =head3 siblings() - Geschwister-Datensätze
 
