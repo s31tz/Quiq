@@ -81,10 +81,6 @@ L<Quiq::CommandLine|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Com
 
 =item *
 
-L<Quiq::Concat|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Concat.pod> - Konkateniere Zeichenketten
-
-=item *
-
 L<Quiq::Config|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Config.pod> - Konfigurationsdatei in "Perl Object Notation"
 
 =item *
@@ -458,6 +454,10 @@ L<Quiq::Http::Cookie|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Ht
 =item *
 
 L<Quiq::Http::Message|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Http/Message.pod> - HTTP-Nachricht
+
+=item *
+
+L<Quiq::If|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/If.pod> - Liefere Werte unter einer Bedingung
 
 =item *
 

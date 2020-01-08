@@ -1,4 +1,4 @@
-package Quiq::Concat;
+package Quiq::If;
 use base qw/Quiq::Object/;
 
 use v5.10;
@@ -13,7 +13,7 @@ our $VERSION = '1.170';
 
 =head1 NAME
 
-Quiq::Concat - Konkateniere Zeichenketten
+Quiq::If - Liefere Werte unter einer Bedingung
 
 =head1 BASE CLASS
 
@@ -23,7 +23,7 @@ L<Quiq::Object>
 
 =head2 Klassenmethoden
 
-=head3 catIf() - Konkateniere bei erfüllter Bedingung
+=head3 catIf() - Konkateniere Strings bei erfüllter Bedingung
 
 =head4 Synopsis
 
@@ -65,7 +65,7 @@ wenn C<$bool> falsch ist.
 
 B<Konkatenation bei zutreffender Bedingung>
 
-  Quiq::Concat->catIf(1,sub {
+  Quiq::If->catIf(1,sub {
       'Dies',
       'ist',
       'ein',
@@ -82,6 +82,87 @@ B<Konkatenation bei zutreffender Bedingung>
 sub catIf {
     my ($class,$bool,$sub) = @_;
     return !$bool? '': join '',map {$_ // ''} $sub->();
+}
+    
+
+# -----------------------------------------------------------------------------
+
+=head3 listIf() - Liefere Liste bei erfüllter Bedingung
+
+=head4 Synopsis
+
+  @ret = $class->listIf($bool,@list);
+  @ret = $class->listIf($bool,$sub);
+
+=head4 Arguments
+
+=over 4
+
+=item $bool
+
+Bedingung
+
+=item @list
+
+Liste, die bei erfüllter Bedingung geliefert wird.
+
+=back
+
+=head4 Returns
+
+String
+
+=head4 Description
+
+Ist Bedingung C<$bool> wahr, liefere @list bzw. den Rückgabewert
+von $sub->(), andernfalls eine leere Liste.
+
+Die Methode ist logisch äquivalent zu
+
+  $bool? @list: ()
+
+bzw.
+
+  $bool? $sub->(): ()
+
+=head4 Example
+
+Setze Attribut C<ready> des Quiq::Html::Page-Objekts
+nur dann, wenn $refresh erfüllt ist:
+
+  my $html = Quiq::Html::Page->html($h,
+      ...
+      Quiq::If->listIf($refresh,
+          ready => qq~
+              var refresh = $refresh;
+              var interval = setInterval(function() {
+                  refresh--;
+                  \$('#timer').text(refresh);
+                  if (refresh == 0) {
+                      clearInterval(interval);
+                      \$('#timer').text('Lade Seite...');
+                      location.reload();
+                  }
+              },1000);
+          ~
+      ),
+  );
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub listIf {
+    my ($class,$bool) = splice @_,0,2;
+
+    if (!$bool) {
+        return ();
+    }
+    elsif (ref($_[0]) eq 'CODE') {
+        return $_[0]->();
+    }
+
+    return @_;
 }
     
 

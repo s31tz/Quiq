@@ -43,12 +43,32 @@ Baumstruktur operieren zu können.
 
 =over 4
 
-=item -removeRowsWithoutParent => $bool (Default: 0)
+=item -whenNoParentRow => 'removeRow'|'removeReference'|'throwException' \
 
-Entferne alle Child-Datensätze, deren Parent in der Ergebnismenge nicht
-enthalten ist. Diese Option ist nützlich, wenn die Ergebnismenge
-nicht alle Sätze enthält, sondern nur eine Teilmenge, z.B. aufgrund
-einer Selektion mit -limit.
+(Default: 'throwException')
+Was getan werden soll, wenn der Parent eines Child-Datensatzes in
+der Ergebnismenge nicht enthalten ist:
+
+=over 4
+
+=item 'removeRow'
+
+Entferne den Datensatz aus der Ergebnismenge.
+
+=item 'removeReference'
+
+Setze die Referenz auf NULL (Leerstring). Der Child-Datensatz
+wird damit logisch zu einem Parent-Datensatz.
+
+=item 'throwException'
+
+Wirf eine Exception.
+
+=back
+
+Die Varianten 'removeRow' und 'removeReference' sind nützlich, wenn
+die Ergebnismenge nicht alle Sätze enthält, sondern nur eine Teilmenge,
+z.B. aufgrund einer Selektion mit -limit.
 
 =back
 
@@ -96,10 +116,10 @@ sub new {
 
     # Optionen
 
-    my $removeRowsWithoutParent = 0;
+    my $whenNoParentRow = 'throwException';
 
     $class->parameters(\@_,
-        -removeRowsWithoutParent => \$removeRowsWithoutParent,
+        -whenNoParentRow => \$whenNoParentRow,
     );
 
     # Operation ausführen
@@ -121,8 +141,12 @@ sub new {
         if (my $pk = $row->$fkColumn) {
             my $par = $h->try($pk);
             if (!$par) {
-                if ($removeRowsWithoutParent) {
+                if ($whenNoParentRow eq 'removeRow') {
                     splice @$rowA,$i--,1;
+                    next;
+                }
+                elsif ($whenNoParentRow eq 'removeReference') {
+                    $row->$fkColumn('');
                     next;
                 }
                 $class->throw(
@@ -316,7 +340,34 @@ sub generatePathAttribute {
 
 =head4 Synopsis
 
-  @rows|$rowA = $tree->hierarchy;
+  @rows|$rowA = $tree->hierarchy(@opt);
+
+=head4 Options
+
+=over 4
+
+=item -childSort => $sub (Default: sub {0})
+
+Sortierfunktion für die Kind-Datensätze (die Wurzel-Datensätze bleiben
+in ihrer gegebenen Reihenfolge).
+
+ACHTUNG: Die Sortierfunktion muss mit Prototype ($$) vereinbart werden,
+damit die Elemente per Parameter und nicht mittels der globalen Variablen
+$a und $b übergeben werden. Denn die globalen Variablen befinden sich
+in einem anderen Package als dem, in dem die Sortierfunktion aufgerufen
+wird. Beispiel:
+
+  -childSort => sub ($$) {
+      $_[0]->id <=> $_[1]->id;
+  }
+
+=item -setTable => $bool (Default: 0)
+
+Setze die hierarchische Reihenfolge auf der zugrunde liegenden Tabelle.
+D.h. $tree->table->rows() liefert die Datensätze fortan in dieser
+Reihenfolge.
+
+=back
 
 =head4 Description
 
@@ -330,21 +381,41 @@ also die Kind-Sätze in der Reihenfolge einer Tiefensuche.
 sub hierarchy {
     my $self = shift;
 
+    # Optionen
+
+    my $childSort = sub {0};
+    my $setTable = 0;
+
+    $self->parameters(\@_,
+        -childSort => \$childSort,
+        -setTable => \$setTable,
+    );
+
+    # Eingebettete rekursive Funktion
+
     my $treeSub; # Vorab-Deklaration wg. Rekursion
     $treeSub = sub {
         my $row = shift;
 
         my @rows = ($row);
-        for my $row (sort {$a->id <=> $b->id} $self->childs($row)) {
+        for my $row (sort $childSort $self->childs($row)) {
             push @rows,$treeSub->($row);
         }
 
         return @rows;
     };
 
+    # Wurzelknoten in ihrer gegebenen Reihenfolge
+
     my @rows;
     for my $row (@{$self->roots}) {
         push @rows,$treeSub->($row);
+    }
+
+    if ($setTable) {
+        # Setze die Reihenfolge der Datensätze auf der
+        # zugrunde liegenden Tabelle
+        $self->table->set(rows=>\@rows);
     }
 
     return wantarray? @rows: \@rows;
