@@ -68,6 +68,10 @@ Die Regeln der Umwandlung:
 
 =item *
 
+Kommentare (\s*//.*) werden entfernt
+
+=item *
+
 Leerzeilen und Zeilen nur aus Whitespace werden entfernt
 
 =item *
@@ -95,6 +99,7 @@ sub line {
     my $line = '';
     open my $fh,'<',\$code or $self->throw;
     while (<$fh>) {
+        s|\s*//.*||; # Kommentar entfernen
         s/^\s+//;
         s/\s+$//;
         next if $_ eq '';

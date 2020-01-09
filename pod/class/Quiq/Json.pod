@@ -415,7 +415,8 @@ Die Übersetzung erfolgt (rekursiv) nach folgenden Regeln:
 
 =item undef
 
-Wird abgebildet auf: C<undefined> (nicht auf C<null>)
+Wird abgebildet auf: C<undefined>. In einem Objekt wird das
+betreffende Attribut weggelassen.
 
 =item \1 oder \'true'
 
@@ -446,7 +447,8 @@ Wird abgebildet auf: [ELEMENT1,ELEMENT2,...]
 
 =item HASH_REF
 
-Wird abgebildet auf: {KEY1:VALUE1,KEY2:VALUE2,...}
+Wird abgebildet auf: {KEY1:VALUE1,KEY2:VALUE2,...}. Im Falle des
+Werts undef, wird das betreffende Schlüssel/Wert-Paar weggelassen.
 
 =back
 

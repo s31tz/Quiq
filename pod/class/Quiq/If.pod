@@ -96,11 +96,15 @@ von $sub->(), andernfalls eine leere Liste.
 
 Die Methode ist logisch äquivalent zu
 
-  $bool? @list: ()
+  !$bool? (): @list
 
 bzw.
 
-  $bool? $sub->(): ()
+  !$bool? (): $sub->()
+
+B<Anmerkung>: Die erste Variante hat den Nachteil, dass @list auch
+dann ausgewertet wird, wenn $bool falsch ist. In dem Fall ist
+die äquivalente Formulierung normalerweise vorzuziehen.
 
 =head4 Example
 

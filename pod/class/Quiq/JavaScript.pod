@@ -55,6 +55,10 @@ Die Regeln der Umwandlung:
 
 =item *
 
+Kommentare (\s*//.*) werden entfernt
+
+=item *
+
 Leerzeilen und Zeilen nur aus Whitespace werden entfernt
 
 =item *
