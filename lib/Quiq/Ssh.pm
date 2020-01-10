@@ -10,6 +10,7 @@ our $VERSION = '1.170';
 use Quiq::Parameters;
 use Net::SSH::Perl ();
 use Quiq::Shell;
+use Encode ();
 
 # -----------------------------------------------------------------------------
 
@@ -230,6 +231,7 @@ sub exec {
         $cmd = "/bin/bash -lc '$cmd'";
     }
 
+    $cmd = Encode::encode('utf-8',$cmd);
     my ($stdout,$stderr,$exit) = $self->obj->cmd($cmd);
     $exit //= 0;
     if (!$sloppy) {

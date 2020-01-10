@@ -44,18 +44,15 @@ Windgeschwindigkeits-Messung)
       },
       spikedistance: -1,
       margin: {
-        l: 90,
-        r: 90,
-        t: 60,
-        b: 10,
+        autoexpand: false,
       },
       xaxis: {
         type: 'date',
         autorange: true,
         gridcolor: 'rgb(232,232,232,1)',
+        hoverformat: '%Y-%m-%d %H:%M:%S',
         tickformat: '%Y-%m-%d %H:%M',
         tickangle: 30,
-        ticklen: 4,
         tickcolor: 'rgb(64,64,64,1)',
         showspikes: true,
         spikethickness: 1,
@@ -69,7 +66,6 @@ Windgeschwindigkeits-Messung)
       yaxis: {
         type: 'linear',
         autorange: true,
-        ticklen: 4,
         tickcolor: 'rgb(64,64,64,1)',
         gridcolor: 'rgb(232,232,232,1)',
         showspikes: true,
@@ -107,6 +103,26 @@ Windgeschwindigkeits-Messung)
 
 Farbe der Kurve.
 
+=item height (Default: 450 I<Default von plotly.js>)
+
+Höhe des Plot in Pixeln.
+
+=item marginBottom => $n (Default: 10)
+
+Unterer Rand in Pixeln.
+
+=item marginLeft => $n (Default: 90)
+
+Linker Rand in Pixeln.
+
+=item marginRight => $n (Default: 90)
+
+Rechter Rand in Pixeln.
+
+=item marginTop => $n (Default: 60)
+
+Oberer Rand in Pixeln.
+
 =item name => $name (Default: 'plot')
 
 Name des Plot. Der Name wird als CSS-Id für den Div-Container
@@ -125,6 +141,11 @@ der Name des gemessenen Parameters.
 
 Referenz auf Array der Zeit-Werte (bevorzugt in JavaScript-Epoch).
 
+=item xSpikeFormat => $timeFormat ('%Y-%m-%d %H:%M:%S')
+
+Format der Spike-Beschriftung für die X-Koordinate.
+Siehe: L<https://github.com/d3/d3-3.x-api-reference/blob/master/Time-Formatting.md#format>.
+
 =item xTickFormat => $timeFormat ('%Y-%m-%d %H:%M')
 
 Format der Zeitachsen-Beschriftung. Siehe: L<https://github.com/d3/d3-3.x-api-reference/blob/master/Time-Formatting.md#format>.
@@ -142,6 +163,8 @@ dass der Wert aus den Daten ermittelt wird.
 
 Größter Wert auf der Y-Achse. Der Default 'undefined' bedeutet,
 dass der Wert aus den Daten ermittelt wird.
+
+=item ySide => 'left'|'right' (Default: 'left' I<Default von plotly.js>)
 
 =item yTitle => $str
 

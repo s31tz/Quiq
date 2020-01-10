@@ -47,7 +47,7 @@ CSS-Id.
 
 Name, unter dem der Button kommuniziert wird.
 
-=item onClick => \@arr (Default: [])
+=item onClick => \@arr (Default: undef)
 
 OnClick-Handler.
 

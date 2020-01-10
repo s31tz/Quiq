@@ -145,6 +145,13 @@ sub html {
         $maxLength = undef;
     }
 
+    # Whitespace entfernen
+
+    if (defined $value) {
+        $value =~ s/^\s+//;
+        $value =~ s/\s+$//;
+    }
+
     # Generierung
 
     return $h->tag('input',

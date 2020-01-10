@@ -155,10 +155,10 @@ sub js {
                     url: ej.attr('href'),
                     async: false,
                     beforeSend: function () {
-                        $("body").css("cursor","wait");
+                        $('body').css('cursor','wait');
                     },
                     complete: function () {
-                        $("body").css("cursor","default");
+                        $('body').css('cursor','default');
                     },
                     success: function (data,textStatus,jqXHR) {
                         options = {
