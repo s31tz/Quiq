@@ -26,7 +26,7 @@ L<Quiq::Hash>
 
 Die Klasse erzeugt Code für ein Kontext-Menü, welches durch das
 jQuery-Plugin L<jQuery contextmenu|https://swisnl.github.io/jQuery-contextMenu/docs.html> realisiert wird. Der Inhalt
-des Menüs wird durch einen AJAX-Aufruf beschafft. der Aufruf liefert
+des Menüs wird durch einen AJAX-Aufruf beschafft. Der Aufruf liefert
 eine JSON-Struktur mit folgendem Aufbau:
 
   {
