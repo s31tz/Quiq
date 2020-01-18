@@ -149,7 +149,7 @@ Datenanalyse einer Tabelle q06i001, die Ergebnismenge wird einen Tag gecacht:
 
 =head1 VERSION
 
-1.170
+1.171
 
 =head1 SOURCE
 

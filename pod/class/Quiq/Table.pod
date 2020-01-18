@@ -337,7 +337,7 @@ Text-Tabelle (String)
 
 =head1 VERSION
 
-1.170
+1.171
 
 =head1 SOURCE
 

@@ -140,7 +140,7 @@ einzelner SVG-Elemente. Details zur Methode siehe Quiq::Tag->tag().
 
 =head1 VERSION
 
-1.170
+1.171
 
 =head1 SOURCE
 

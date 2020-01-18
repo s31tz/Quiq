@@ -827,7 +827,7 @@ L<Quiq::Xml::LibXml|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Xml
 
 =head1 VERSION
 
-1.170
+1.171
 
 =head1 AUTHOR
 
