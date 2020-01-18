@@ -165,7 +165,7 @@ sub new {
         password => '',
         host => '',
         port => '',
-        # FIXME: auf Quiq::OrderedHash umstellen
+        # FIXME: auf Quiq::Hash::Ordered umstellen
         options => Quiq::Hash->new->unlockKeys,
     );
     if (@_ == 1 && $_[0] !~ /^[a-z]+#/) {

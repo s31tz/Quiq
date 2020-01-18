@@ -321,6 +321,10 @@ L<Quiq::Hash::Db|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash/D
 
 =item *
 
+L<Quiq::Hash::Ordered|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash/Ordered.pod> - Hash mit geordneten Elementen
+
+=item *
+
 L<Quiq::Hash::Persistent|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash/Persistent.pod> - Persistente Hash-Datenstruktur
 
 =item *
@@ -570,10 +574,6 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 =item *
 
 L<Quiq::Option|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Option.pod> - Verarbeitung von Programm- und Methoden-Optionen
-
-=item *
-
-L<Quiq::OrderedHash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/OrderedHash.pod> - Hash mit geordneten Elementen
 
 =item *
 

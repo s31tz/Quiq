@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::OrderedHash - Hash mit geordneten Elementen
+Quiq::Hash::Ordered - Hash mit geordneten Elementen
 
 =head1 BASE CLASS
 
@@ -178,7 +178,7 @@ andernfalls "falsch".
 
 =head1 SOURCE
 
-L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/OrderedHash.pm>
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Hash/Ordered.pm>
 
 =head1 AUTHOR
 

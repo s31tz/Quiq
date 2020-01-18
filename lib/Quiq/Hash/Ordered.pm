@@ -1,4 +1,4 @@
-package Quiq::OrderedHash;
+package Quiq::Hash::Ordered;
 use base qw/Quiq::Object/;
 
 use v5.10;
@@ -15,7 +15,7 @@ use Quiq::Hash;
 
 =head1 NAME
 
-Quiq::OrderedHash - Hash mit geordneten Elementen
+Quiq::Hash::Ordered - Hash mit geordneten Elementen
 
 =head1 BASE CLASS
 

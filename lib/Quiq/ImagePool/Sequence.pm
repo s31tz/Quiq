@@ -8,7 +8,7 @@ use utf8;
 
 our $VERSION = '1.170';
 
-use Quiq::OrderedHash;
+use Quiq::Hash::Ordered;
 use Quiq::FileHandle;
 
 # -----------------------------------------------------------------------------
@@ -79,7 +79,7 @@ sub new {
 
     # Leeres Objekt instantiieren
 
-    my $oh = Quiq::OrderedHash->new;
+    my $oh = Quiq::Hash::Ordered->new;
     my $self = $class->SUPER::new(
         file => $file,
         oHash => $oh,

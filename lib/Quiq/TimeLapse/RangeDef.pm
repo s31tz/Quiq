@@ -7,7 +7,7 @@ use warnings;
 
 our $VERSION = '1.170';
 
-use Quiq::OrderedHash;
+use Quiq::Hash::Ordered;
 use Quiq::Path;
 use Quiq::FileHandle;
 use Quiq::Hash;
@@ -221,9 +221,9 @@ sub new {
     # Wir speichern die Range- und Clip-Definitionen in geordneten Hashes
     # und die ausgeklammerten Ranges in einem Array.
     
-    my $clipH = Quiq::OrderedHash->new;
-    my $clipPropertyH = Quiq::OrderedHash->new;
-    my $rangeH = Quiq::OrderedHash->new;
+    my $clipH = Quiq::Hash::Ordered->new;
+    my $clipPropertyH = Quiq::Hash::Ordered->new;
+    my $rangeH = Quiq::Hash::Ordered->new;
     my $junkExpr;
    
     # Range-Definitionsdateien einlesen.

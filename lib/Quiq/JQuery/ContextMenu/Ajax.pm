@@ -58,7 +58,7 @@ L<Allgmeine Doku|https://swisnl.github.io/jQuery-contextMenu/docs.html>
 
 =item className => $name
 
-Name der CSS-Klasse. Kann explizit angegeben werden, wenn das
+Name der CSS-Klasse des Menüs. Kann explizit angegeben werden, wenn das
 Menü customized werden soll. Beispiel ($name ist 'contextMenu'):
 
   .contextMenu {

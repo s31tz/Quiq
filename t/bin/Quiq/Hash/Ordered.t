@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Quiq::OrderedHash::Test;
+package Quiq::Hash::Ordered::Test;
 use base qw/Quiq::Test::Class/;
 
 use v5.10;
@@ -11,7 +11,7 @@ use utf8;
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
-    shift->useOk('Quiq::OrderedHash');
+    shift->useOk('Quiq::Hash::Ordered');
 }
 
 # -----------------------------------------------------------------------------
@@ -22,8 +22,8 @@ sub test_unitTest : Test(5) {
     my $self = shift;
 
     my @keys = ('a'..'d');
-    my $oh = Quiq::OrderedHash->new(a=>1,b=>2,c=>3,d=>4);
-    $self->is(ref($oh),'Quiq::OrderedHash');
+    my $oh = Quiq::Hash::Ordered->new(a=>1,b=>2,c=>3,d=>4);
+    $self->is(ref($oh),'Quiq::Hash::Ordered');
 
     my $arr = $oh->keys;
     $self->isDeeply($arr,\@keys);
@@ -45,7 +45,7 @@ sub test_unitTest : Test(5) {
 sub test_get : Test(3) {
     my $self = shift;
 
-    my $oh = Quiq::OrderedHash->new(a=>1,b=>2,c=>3,d=>4);
+    my $oh = Quiq::Hash::Ordered->new(a=>1,b=>2,c=>3,d=>4);
 
     my $val = $oh->get('b');
     $self->is($val,2);
@@ -62,7 +62,7 @@ sub test_get : Test(3) {
 sub test_setDelete : Test(2) {
     my $self = shift;
 
-    my $oh = Quiq::OrderedHash->new(a=>1,b=>2,c=>3,d=>4);
+    my $oh = Quiq::Hash::Ordered->new(a=>1,b=>2,c=>3,d=>4);
 
     $oh->setDelete(b=>5,a=>undef,z=>26);
     my $arr = $oh->keys;
@@ -76,7 +76,7 @@ sub test_setDelete : Test(2) {
 sub test_clear : Test(4) {
     my $self = shift;
 
-    my $oh = Quiq::OrderedHash->new(a=>1,b=>2,c=>3,d=>4);
+    my $oh = Quiq::Hash::Ordered->new(a=>1,b=>2,c=>3,d=>4);
 
     $oh->clear;
     my $arr = $oh->keys;
@@ -84,7 +84,7 @@ sub test_clear : Test(4) {
     $arr = $oh->values;
     $self->isDeeply($arr,[]);
 
-    $oh = Quiq::OrderedHash->new(a=>1,b=>2,c=>3,d=>4);
+    $oh = Quiq::Hash::Ordered->new(a=>1,b=>2,c=>3,d=>4);
 
     $oh->clear(z=>26,y=>25);
     $arr = $oh->keys;
@@ -98,7 +98,7 @@ sub test_clear : Test(4) {
 sub test_copy : Test(3) {
     my $self = shift;
 
-    my $oh1 = Quiq::OrderedHash->new(a=>1,b=>2,c=>3,d=>4);
+    my $oh1 = Quiq::Hash::Ordered->new(a=>1,b=>2,c=>3,d=>4);
     my $oh2 = $oh1->copy;
 
     $self->isnt($oh1,$oh2);
@@ -117,7 +117,7 @@ sub test_copy : Test(3) {
 sub test_delete : Test(2) {
     my $self = shift;
 
-    my $oh = Quiq::OrderedHash->new(a=>1,b=>2,c=>3,d=>4);
+    my $oh = Quiq::Hash::Ordered->new(a=>1,b=>2,c=>3,d=>4);
 
     $oh->delete('c','a','z','a');
 
@@ -133,7 +133,7 @@ sub test_delete : Test(2) {
 sub test_increment : Test(3) {
     my $self = shift;
 
-    my $h = Quiq::OrderedHash->new(a=>1,b=>2,c=>3);
+    my $h = Quiq::Hash::Ordered->new(a=>1,b=>2,c=>3);
 
     my $n = $h->increment('a');
     $self->is($n,2);
@@ -150,7 +150,7 @@ sub test_increment : Test(3) {
 sub test_keys : Test(3) {
     my $self = shift;
 
-    my $oh = Quiq::OrderedHash->new(a=>1,b=>2,c=>3,d=>4);
+    my $oh = Quiq::Hash::Ordered->new(a=>1,b=>2,c=>3,d=>4);
 
     my $arr = $oh->keys;
     $self->isDeeply($arr,['a'..'d']);
@@ -171,11 +171,11 @@ sub test_keys : Test(3) {
 sub test_hashSize : Test(2) {
     my $self = shift;
 
-    my $oh = Quiq::OrderedHash->new;
+    my $oh = Quiq::Hash::Ordered->new;
     my $n = $oh->hashSize;
     $self->is($n,0);
 
-    $oh = Quiq::OrderedHash->new(a=>1,b=>2,c=>3,d=>4);
+    $oh = Quiq::Hash::Ordered->new(a=>1,b=>2,c=>3,d=>4);
     $n = $oh->hashSize;
     $self->is($n,4);
 }
@@ -185,7 +185,7 @@ sub test_hashSize : Test(2) {
 sub test_unshift : Test(4) {
     my $self = shift;
 
-    my $oh = Quiq::OrderedHash->new(a=>1,b=>2,c=>3,d=>4);
+    my $oh = Quiq::Hash::Ordered->new(a=>1,b=>2,c=>3,d=>4);
 
     $oh->unshift(z=>26);
 
@@ -207,7 +207,7 @@ sub test_unshift : Test(4) {
 sub test_values : Test(3) {
     my $self = shift;
 
-    my $oh = Quiq::OrderedHash->new(a=>1,b=>2,c=>3,d=>4);
+    my $oh = Quiq::Hash::Ordered->new(a=>1,b=>2,c=>3,d=>4);
 
     my $arr = $oh->values;
     $self->isDeeply($arr,[1..4]);
@@ -228,7 +228,7 @@ sub test_values : Test(3) {
 sub test_exists : Test(2) {
     my $self = shift;
 
-    my $oh = Quiq::OrderedHash->new(a=>1,b=>2,c=>3,d=>4);
+    my $oh = Quiq::Hash::Ordered->new(a=>1,b=>2,c=>3,d=>4);
 
     my $bool = $oh->exists('b');
     $self->is($bool,1);
@@ -240,6 +240,6 @@ sub test_exists : Test(2) {
 # -----------------------------------------------------------------------------
 
 package main;
-Quiq::OrderedHash::Test->runTests;
+Quiq::Hash::Ordered::Test->runTests;
 
 # eof
