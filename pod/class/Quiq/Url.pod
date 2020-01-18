@@ -17,6 +17,25 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 =head4 Synopsis
 
   $encStr = $class->encode($str);
+  $encStr = $class->encode($str,$encoding);
+
+=head4 Arguments
+
+=over 4
+
+=item $str
+
+Die Zeichenkette, die kodiert wird.
+
+=item $encoding (Default: 'utf-8')
+
+Das Encoding, in dem die Zeichenkette encodiert werden soll.
+
+=back
+
+=head4 Returns
+
+String
 
 =head4 Description
 
@@ -28,17 +47,37 @@ In der Zeichenkette werden alle Zeichen außer
 
   * - . _ 0-9 A-Z a-z
 
-durch
+durch eine Folge von
 
   %xx
 
-ersetzt, wobei xx dem Hexadezimalwert des Zeichens entspricht.
+ersetzt, wobei die xx dem Hexadezimalwert des betreffenden
+Bytes im Encoding des Zeichens entspricht.
 
 =head3 decode() - Dekodiere Zeichenkette
 
 =head4 Synopsis
 
   $str = $class->decode($encStr);
+  $str = $class->decode($encStr,$encoding);
+
+=head4 Arguments
+
+=over 4
+
+=item $str
+
+Die Zeichenkette, die dekodiert wird.
+
+=item $encoding (Default: 'utf-8')
+
+Das Encoding, in dem die Zeichenkette encodiert ist.
+
+=back
+
+=head4 Returns
+
+String
 
 =head4 Description
 
@@ -53,9 +92,28 @@ zurück.
   $queryStr = $class->queryEncode(@opt,@keyVal);
   $queryStr = $class->queryEncode($initialChar,@opt,@keyVal);
 
+=head4 Arguments
+
+=over 4
+
+=item @keyVal
+
+Liste der Schlüssel/Wert-Paare, die URL-kodiert werden sollen.
+
+=item $initialChar
+
+Zeichen, das der URL-Kodierten Zeichenkette vorangestellt werden
+soll. Dies ist, wenn bentigt, typischweise ein Fragezeichen (?).
+
+=back
+
 =head4 Options
 
 =over 4
+
+=item -encoding => $encoding (Default: 'utf-8')
+
+Das Encoding, in dem die Zeichenkette encodiert werden soll.
 
 =item -null => $bool (Default: 0)
 
@@ -68,6 +126,10 @@ Verwende $char als Trennzeichen zwischen den Schlüssel/Wert-Paaren.
 Mögliche Werte sind ';' und '&'.
 
 =back
+
+=head4 Returns
+
+String
 
 =head4 Description
 
@@ -124,6 +186,26 @@ wird zu
 =head4 Synopsis
 
   @arr | $arr = $class->queryDecode($queryStr);
+  @arr | $arr = $class->queryDecode($queryStr,$encoding);
+
+=head4 Arguments
+
+=over 4
+
+=item $queryStr
+
+Querystring, der dekodiert werden soll.
+
+=item $encoding (Default: 'utf-8')
+
+Das Encoding, in dem der Querystring encodiert ist.
+
+=back
+
+=head4 Returns
+
+Liste der dekodierten Schüssel/Wert-Paare. Im Skalarkontext
+eine Referenz auf die Liste.
 
 =head4 Description
 

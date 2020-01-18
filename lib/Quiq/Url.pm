@@ -7,6 +7,7 @@ use warnings;
 
 our $VERSION = '1.170';
 
+use Encode ();
 use Quiq::Array;
 use Quiq::Option;
 
@@ -31,6 +32,25 @@ L<Quiq::Object>
 =head4 Synopsis
 
   $encStr = $class->encode($str);
+  $encStr = $class->encode($str,$encoding);
+
+=head4 Arguments
+
+=over 4
+
+=item $str
+
+Die Zeichenkette, die kodiert wird.
+
+=item $encoding (Default: 'utf-8')
+
+Das Encoding, in dem die Zeichenkette encodiert werden soll.
+
+=back
+
+=head4 Returns
+
+String
 
 =head4 Description
 
@@ -42,23 +62,25 @@ In der Zeichenkette werden alle Zeichen außer
 
   * - . _ 0-9 A-Z a-z
 
-durch
+durch eine Folge von
 
   %xx
 
-ersetzt, wobei xx dem Hexadezimalwert des Zeichens entspricht.
+ersetzt, wobei die xx dem Hexadezimalwert des betreffenden
+Bytes im Encoding des Zeichens entspricht.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
 sub encode {
-    my ($class,$str) = @_;
+    my ($class,$str) = splice @_,0,2;
+    my $encoding = shift // 'utf-8';
 
-    # FIXME: byte-orientiert encoden! D.h. utf8 geflaggte Strings
-    # werden als mehrere Bytes kodiert.
-
-    return '' unless defined $str;
+    if (!defined $str) {
+        return '';
+    }
+    $str = Encode::encode($encoding,$str);
     $str =~ s|([^-*._0-9A-Za-z])|sprintf('%%%02X',ord $1)|eg;
     # $str =~ s|%20|+|g;
 
@@ -72,6 +94,25 @@ sub encode {
 =head4 Synopsis
 
   $str = $class->decode($encStr);
+  $str = $class->decode($encStr,$encoding);
+
+=head4 Arguments
+
+=over 4
+
+=item $str
+
+Die Zeichenkette, die dekodiert wird.
+
+=item $encoding (Default: 'utf-8')
+
+Das Encoding, in dem die Zeichenkette encodiert ist.
+
+=back
+
+=head4 Returns
+
+String
 
 =head4 Description
 
@@ -84,16 +125,17 @@ zurück.
 # -----------------------------------------------------------------------------
 
 sub decode {
-    my ($class,$str) = @_;
+    my ($class,$str) = splice @_,0,2;
+    my $encoding = shift // 'utf-8';
 
-    # FIXME: byte-orientiert decoden und nach UTF-8 wandeln, wenn
-    # nichts anderes gewüncht ist.
+    if (!defined $str) {
+        return '';
+    }
 
-    return '' unless defined $str;
     # $str =~ tr/+/ /;
     $str =~ s/%([\dA-F]{2})/chr hex $1/egi;
 
-    return $str;
+    return Encode::decode($encoding,$str);
 }
 
 # -----------------------------------------------------------------------------
@@ -105,9 +147,28 @@ sub decode {
   $queryStr = $class->queryEncode(@opt,@keyVal);
   $queryStr = $class->queryEncode($initialChar,@opt,@keyVal);
 
+=head4 Arguments
+
+=over 4
+
+=item @keyVal
+
+Liste der Schlüssel/Wert-Paare, die URL-kodiert werden sollen.
+
+=item $initialChar
+
+Zeichen, das der URL-Kodierten Zeichenkette vorangestellt werden
+soll. Dies ist, wenn bentigt, typischweise ein Fragezeichen (?).
+
+=back
+
 =head4 Options
 
 =over 4
+
+=item -encoding => $encoding (Default: 'utf-8')
+
+Das Encoding, in dem die Zeichenkette encodiert werden soll.
 
 =item -null => $bool (Default: 0)
 
@@ -120,6 +181,10 @@ Verwende $char als Trennzeichen zwischen den Schlüssel/Wert-Paaren.
 Mögliche Werte sind ';' und '&'.
 
 =back
+
+=head4 Returns
+
+String
 
 =head4 Description
 
@@ -188,6 +253,7 @@ sub queryEncode {
 
     # Direktiven
 
+    my $encoding = 'utf-8',
     my $null = 0;
     my $separator = ';';
 
@@ -199,7 +265,11 @@ sub queryEncode {
         if (substr($key,0,1) eq '-') {
             # Optionen
 
-            if ($key eq '-null') {
+            if ($key eq '-encoding') {
+                $encoding = shift;
+                next;
+            }
+            elsif ($key eq '-null') {
                 $null = shift;
                 next;
             }
@@ -218,9 +288,9 @@ sub queryEncode {
             if ($i++) {
                 $str .= $separator;
             }
-            $str .= $class->encode($key);
+            $str .= $class->encode($key,$encoding);
             $str .= '=';
-            $str .= $class->encode($val);
+            $str .= $class->encode($val,$encoding);
         }
     }
 
@@ -234,6 +304,26 @@ sub queryEncode {
 =head4 Synopsis
 
   @arr | $arr = $class->queryDecode($queryStr);
+  @arr | $arr = $class->queryDecode($queryStr,$encoding);
+
+=head4 Arguments
+
+=over 4
+
+=item $queryStr
+
+Querystring, der dekodiert werden soll.
+
+=item $encoding (Default: 'utf-8')
+
+Das Encoding, in dem der Querystring encodiert ist.
+
+=back
+
+=head4 Returns
+
+Liste der dekodierten Schüssel/Wert-Paare. Im Skalarkontext
+eine Referenz auf die Liste.
 
 =head4 Description
 
@@ -248,17 +338,16 @@ Die Schlüssel/Wert-Paare können per & oder ; getrennt sein.
 # -----------------------------------------------------------------------------
 
 sub queryDecode {
-    my $class = shift;
-    my $str = shift;
+    my ($class,$str) = splice @_,0,2;
+    my $encoding = shift // 'utf-8';
 
     my $arr = Quiq::Array->new;
     for (split /[&;]/,$str) {
         next if !$_;
         my ($key,$val) = split /=/;
 
-        $key = $class->decode($key);
-        $val = $class->decode($val);
-        # $val =~ s/&quot;/"/g; # &quot;-Rueckwandlung
+        $key = $class->decode($key,$encoding);
+        $val = $class->decode($val,$encoding);
 
         push @$arr,$key,$val;
     }
