@@ -175,10 +175,10 @@ Das Encoding, in dem die Zeichenkette encodiert werden soll.
 Kodiere auch Schlüssel/Wert-Paare mit leerem Wert (undef oder '').
 Per Default werden diese weggelassen.
 
-=item -separator => $char (Default: ';')
+=item -separator => $char (Default: '&')
 
 Verwende $char als Trennzeichen zwischen den Schlüssel/Wert-Paaren.
-Mögliche Werte sind ';' und '&'.
+Mögliche Werte sind '&' und ';'.
 
 =back
 
@@ -194,38 +194,38 @@ zusammen.
 
 =head4 Examples
 
+Querystring mit Kaufmanns-Und als Trennzeichen:
+
+  $url = Quiq::Url->queryEncode(a=>1,b=>2,c=>3);
+  =>
+  a=1&b=2&c=3
+
 Querystring mit Semikolon als Trennzeichen:
 
-  $str = Quiq::Url->queryEncode(a=>1,b=>2,c=>3);
+  $url = Quiq::Url->queryEncode(-separator=>';',d=>4,e=>5);
   =>
-  a=1;b=2;c=3
-
-Querystring mit Kaufmannsund als Trennzeichen:
-
-  $url .= Quiq::Url->queryEncode(-separator=>'&',d=>4,e=>5);
-  =>
-  ?a=1&b=2&c=3&d=4,e=5
+  d=4;e=5
 
 Querystring mit einleitendem Fragezeichen:
 
   $url = Quiq::Url->queryEncode('?',a=>1,b=>2,c=>3);
   =>
-  ?a=1;b=2;c=3
+  ?a=1&b=2&c=3
 
 =head4 Details
 
 Als Trennzeichen zwischen den Paaren wird per Default ein
-Semikolon (;) verwendet:
+Kaufmanns-Und (&) verwendet:
 
-  key1=val1;key2=val2;...;keyN=valN
+  key1=val1&key2=val2&...&keyN=valN
 
-Ist der erste Parameter ein Fragezeichen (?), Semikolon (;) oder
-Kaufmannsund (&), wird dieses dem Query String vorangestellt:
+Ist der erste Parameter ein Fragezeichen (?), wird dieses dem
+Query String vorangestellt:
 
-  ?key1=val1;key2=val2;...;keyN=valN
+  ?key1=val1&key2=val2&...&keyN=valN
 
 Das Fragezeichen ist für die URL-Generierung nützlich, das Semikolon
-und das Kaufmannsund für die Konkatenation von Querystrings.
+und das Kaufmanns-Und für die Konkatenation von Querystrings.
 
 Ist der Wert eines Schlüssels eine Arrayreferenz, wird für
 jedes Arrayelement ein eigenes Schlüssel/Wert-Paar erzeugt:
@@ -234,7 +234,7 @@ jedes Arrayelement ein eigenes Schlüssel/Wert-Paar erzeugt:
 
 wird zu
 
-  a=1;a=2;a=3
+  a=1&a=2&a=3
 
 =cut
 
@@ -255,7 +255,7 @@ sub queryEncode {
 
     my $encoding = 'utf-8',
     my $null = 0;
-    my $separator = ';';
+    my $separator = '&';
 
     # Query-String generieren
 
@@ -416,8 +416,8 @@ Die Funktion akzeptiert auch unvollständige HTTP URLs:
   
   ?arg1=val1&arg2=val2&arg3=val3
 
-Der Querystring ist alles zwischen '?' und '#', der konkrete Aufbau,
-wie Trennzeichen usw., spielt keine Rolle.
+Der Querystring ist alles nach '?' und ggf. bis '#', falls angegeben.
+Der konkrete Aufbau, wie Trennzeichen usw., spielt keine Rolle.
 
 =cut
 

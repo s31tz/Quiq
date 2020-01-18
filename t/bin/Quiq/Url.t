@@ -77,53 +77,53 @@ sub test_queryEncode : Test(10) {
     # Einfacher Query-String
 
     my $val = Quiq::Url->queryEncode(a=>1,b=>2,c=>3);
-    $self->is($val,'a=1;b=2;c=3');
+    $self->is($val,'a=1&b=2&c=3');
 
     # Query-String mit Fragezeichen
 
     $val = Quiq::Url->queryEncode('?',a=>1,b=>2,c=>3);
-    $self->is($val,'?a=1;b=2;c=3');
+    $self->is($val,'?a=1&b=2&c=3');
 
     # Query-String ohne leere Werte
 
     $val = Quiq::Url->queryEncode('?',a=>1,b=>2,c=>'',d=>4,e=>undef);
-    $self->is($val,'?a=1;b=2;d=4');
+    $self->is($val,'?a=1&b=2&d=4');
 
     # Query-String ohne leere Werte
 
     $val = Quiq::Url->queryEncode(a=>1,b=>[2,'',3,undef],c=>'',d=>4,e=>undef);
-    $self->is($val,'a=1;b=2;b=3;d=4');
+    $self->is($val,'a=1&b=2&b=3&d=4');
 
     # Query-String mit leeren Werten
 
     $val = Quiq::Url->queryEncode('?',-null=>1,a=>1,b=>2,c=>'',d=>4,e=>undef);
-    $self->is($val,'?a=1;b=2;c=;d=4;e=');
+    $self->is($val,'?a=1&b=2&c=&d=4&e=');
 
     # Query-String mit leeren Werten
 
     $val = Quiq::Url->queryEncode(-null=>1,a=>1,b=>[2,'',3,undef],c=>'',
         d=>4,e=>undef);
-    $self->is($val,'a=1;b=2;b=;b=3;b=;c=;d=4;e=');
+    $self->is($val,'a=1&b=2&b=&b=3&b=&c=&d=4&e=');
 
     # Umlaute iso-8859-1
 
     $val = Quiq::Url->queryEncode(-encoding=>'iso-8859-1',a=>1,'für'=>'Möller');
-    $self->is($val,'a=1;f%FCr=M%F6ller');
+    $self->is($val,'a=1&f%FCr=M%F6ller');
 
     # Umlaute utf-8
 
     $val = Quiq::Url->queryEncode(a=>1,'für'=>'Möller');
-    $self->is($val,'a=1;f%C3%BCr=M%C3%B6ller');
+    $self->is($val,'a=1&f%C3%BCr=M%C3%B6ller');
 
     # Array-Referenz als Wert
 
     $val = Quiq::Url->queryEncode(a=>1,b=>[1,2,3],c=>3);
-    $self->is($val,'a=1;b=1;b=2;b=3;c=3');
-
-    # & als Trennzeichen
-
-    $val = Quiq::Url->queryEncode(-separator=>'&',a=>1,b=>[1,2,3],c=>3);
     $self->is($val,'a=1&b=1&b=2&b=3&c=3');
+
+    # ; als Trennzeichen
+
+    $val = Quiq::Url->queryEncode(-separator=>';',a=>1,b=>[1,2,3],c=>3);
+    $self->is($val,'a=1;b=1;b=2;b=3;c=3');
 }
 
 # -----------------------------------------------------------------------------
