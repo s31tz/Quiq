@@ -44,6 +44,11 @@ L<Quiq::Html::Base>
 
 Rumpf der Seite.
 
+=item bodyOnly => $bool (Default: 0)
+
+Liefere als Returnwert von asHtml() nur den Body anstelle der
+Gesamtseite.
+
 =item comment => $str (Default: undef)
 
 Kommentar am Anfang der Seite.
@@ -147,6 +152,7 @@ sub new {
 
     my $self = $class->SUPER::new(
         body => '',
+        bodyOnly => 0,
         comment => undef,
         encoding => 'utf-8',
         head => '',
@@ -199,11 +205,12 @@ sub html {
 
     my $self = ref $this? $this: $this->new(@_);
 
-    my ($body,$comment,$encoding,$head,$loadA,$noNewline,$placeholders,
-        $title,$javaScript,$javaScriptToHead,$readyA,$styleSheet,
-        $topIndentation) =
-        $self->get(qw/body comment encoding head load noNewline placeholders
-        title javaScript javaScriptToHead ready styleSheet topIndentation/);
+    my ($body,$bodyOnly,$comment,$encoding,$head,$loadA,$noNewline,
+        $placeholders,$title,$javaScript,$javaScriptToHead,$readyA,
+        $styleSheet,$topIndentation) =
+        $self->get(qw/body bodyOnly comment encoding head load noNewline
+        placeholders title javaScript javaScriptToHead ready
+        styleSheet topIndentation/);
 
     # CSS- und JavaScript-Dateien laden (Test auf @$loadA wg. der
     # neuen Klasse Quiq::Html::Construct - bei Feher $h auf
@@ -230,7 +237,7 @@ sub html {
 
     # Wenn $body keinen body-Tag enthält, fügen wir ihn hinzu.
 
-    $body = $h->cat($body);
+    # $body = $h->cat($body);
     if ($body !~ /^<body/i) {
         $body = $h->tag('body',
             -ind => $topIndentation,
@@ -240,7 +247,7 @@ sub html {
         );
     }
 
-    my $html = $h->cat(
+    my $html = $bodyOnly? $body: $h->cat(
         $h->doctype,
         $h->comment(-nl=>2,$comment),
         $h->tag('html',

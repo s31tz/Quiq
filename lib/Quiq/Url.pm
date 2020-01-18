@@ -387,9 +387,9 @@ Leerstring ('') geliefert.
 
 Ein vollständiger URL hat die Form:
 
-  schema://[user[:passw]@]host[:port]/[path][?query][#fragment]
-  ------    ----  -----   ----  ----   ----   -----   --------
-     1       2      3      4     5      6       7        8
+  schema://[user[:password]@]host[:port]/[path][?query][#fragment]
+  ------    ----  --------   ----  ----   ----   -----   --------
+  1         2     3          4     5      6      7       8
   
   1 = Schema (http, ftp, ...)
   2 = Benutzername

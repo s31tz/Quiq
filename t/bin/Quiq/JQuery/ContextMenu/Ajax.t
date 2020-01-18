@@ -24,7 +24,7 @@ sub test_js : Test(4) {
     $self->is(ref($obj),'Quiq::JQuery::ContextMenu::Ajax');
 
     my $js = $obj->js;
-    warn $js,"\n";
+    # warn $js,"\n";
     $self->like($js,qr/selector:/);
     $self->unlike($js,qr/trigger:/);
     $self->like($js,qr/build:/);

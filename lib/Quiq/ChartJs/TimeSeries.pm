@@ -77,7 +77,6 @@ einer Windgeschwindigkeits-Messung)
         datasets: [{
           type: 'line',
           label: 'Windspeed',
-          lineTension: undefined,
           fill: true,
           borderColor: 'rgb(255,0,0,1)',
           borderWidth: 1,
@@ -120,8 +119,6 @@ einer Windgeschwindigkeits-Messung)
               maxRotation: 45,
             },
             time: {
-              min: undefined,
-              max: undefined,
               minUnit: 'second',
               displayFormats: {
                 year: 'YYYY',
@@ -139,7 +136,6 @@ einer Windgeschwindigkeits-Messung)
           yAxes: [{
             ticks: {
               min: 0,
-              max: undefined,
             },
             scaleLabel: {
               display: true,
@@ -151,7 +147,6 @@ einer Windgeschwindigkeits-Messung)
     });
   });
 </script>
-
 
 =end html
 

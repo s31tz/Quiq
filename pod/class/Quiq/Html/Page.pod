@@ -28,6 +28,11 @@ L<Quiq::Html::Base|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html
 
 Rumpf der Seite.
 
+=item bodyOnly => $bool (Default: 0)
+
+Liefere als Returnwert von asHtml() nur den Body anstelle der
+Gesamtseite.
+
 =item comment => $str (Default: undef)
 
 Kommentar am Anfang der Seite.
