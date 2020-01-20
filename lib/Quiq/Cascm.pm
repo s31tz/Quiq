@@ -394,7 +394,7 @@ sub edit {
 
     # Lokale Kopie der Datei erstellen
 
-    my $localFile = $p->filename($file);
+    my $localFile = '~/tmp/'.$p->filename($file);
     my $which = 'r';
     if (-e $localFile) {
         # Repo-Datei muss nicht kopiert werden, wenn sie schon
@@ -414,7 +414,7 @@ sub edit {
         }
     }
     if ($which eq 'r') {
-        $p->copyToDir($file,'.');
+        $p->copyToDir($file,'~/tmp');
     }
 
     # Original-Datei mit dem Stand vor der ersten Änderung sichern
@@ -1382,6 +1382,8 @@ sub package {
     if (!defined $version) {
         $version = $self->versionNumber($repoFile);
     }
+
+    $repoFile =~ s|/dssweb/|/Dssweb/|; # Im Pfad auf der Db steht Dssweb
 
     my $tab = $self->runSql("
         SELECT

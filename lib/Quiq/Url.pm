@@ -140,7 +140,7 @@ sub decode {
 
 # -----------------------------------------------------------------------------
 
-=head3 queryEncode() - Kodiere URL-Querystring
+=head3 queryEncode() - Kodiere Querystring
 
 =head4 Synopsis
 
@@ -299,7 +299,7 @@ sub queryEncode {
 
 # -----------------------------------------------------------------------------
 
-=head3 queryDecode() - Dekodiere URL-Querystring
+=head3 queryDecode() - Dekodiere Querystring
 
 =head4 Synopsis
 
@@ -370,7 +370,7 @@ sub queryDecode {
 
 =item -defaultSchema => $schema (Default: undef)
 
-Füge Defaultschema hinzu, wenn keins angegeben ist.
+Füge Defaultschema hinzu, falls keins angegeben ist.
 Beispiel: -defaultSchema=>'http://'
 
 =item -debug => $bool (Default: 0)
@@ -417,7 +417,8 @@ Die Funktion akzeptiert auch unvollständige HTTP URLs:
   ?arg1=val1&arg2=val2&arg3=val3
 
 Der Querystring ist alles nach '?' und ggf. bis '#', falls angegeben.
-Der konkrete Aufbau, wie Trennzeichen usw., spielt keine Rolle.
+Der konkrete Aufbau des Querystring, wie Trennzeichen usw., spielt
+keine Rolle.
 
 =cut
 
