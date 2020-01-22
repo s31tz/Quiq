@@ -161,10 +161,18 @@ sub js {
                         $('body').css('cursor','default');
                     },
                     success: function (data,textStatus,jqXHR) {
+                        // Wir bekommen die Items in einem Array geliefert,
+                        // damit die Reihenfolge wohldefiniert ist. Hier
+                        // wandeln wir das Array in ein Objekt, wie
+                        // das ContexMenu-Plugin es erwartet.
+                        var items = {};
+                        for (var i = 0; i < data.length; i += 2) {
+                            items[data[i]] = data[i+1];
+                        }
                         options = {
-                            items: data,
+                            items: items,
                             callback: function(key,options) {
-                                document.location = data[key].url;
+                                document.location = items[key].url;
                             },
                         };
                     },

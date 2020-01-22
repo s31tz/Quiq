@@ -198,10 +198,13 @@ sub html {
                         -text => $isText,
                         $itemA->[$i]
                     );
-                    $html .= $h->tag('dd',
+                    # Wir rücken <dd> zusätzlich ein
+                    my $tmp = $h->tag('dd',
                         -text => $isText,
                         $val
                     );
+                    $tmp =~ s/^/  /mg;
+                    $html .= $tmp;
                 }
             }
             else {
