@@ -760,6 +760,18 @@ sich in einem anderen Schema des Suchpfads befinden).
 
 =head2 Transactions
 
+=head3 runCount() - Anzahl ausgeführter Statements
+
+=head4 Synopsis
+
+  $n = $db->runCount;
+
+=head4 Description
+
+Liefere die Anzahl der in der aktuellen Transaktion ausgeführten
+Statements. Diese Information kann z.B. genutzt werden, um zu
+entscheiden, ob ein COMMIT oder ROLLBACK ausgeführt werden müsste.
+
 =head3 begin() - Beginne Transaktion
 
 =head4 Synopsis

@@ -183,6 +183,7 @@ sub new {
 
     $self = $class->SUPER::new(
         startTime => scalar(Time::HiRes::gettimeofday),
+        runCount => 0, # Anzahl ausgeführter Statements (in Transaktion)
         apiObj => $apiObj,
         udlObj => $udlObj,
         sqlClass => $sqlClass,
@@ -1412,6 +1413,7 @@ sub sql {
             $stmt = "FETCH $chunkSize FROM $curName";
         }
 
+        $self->{'runCount'}++; # Anzahl ausgeführter Statements
         $apiCur = eval { $self->get('apiObj')->sql($stmt,$forceExec) };
         $err = $@;
 
@@ -1781,6 +1783,28 @@ sub setSearchPath {
 
 =head2 Transactions
 
+=head3 runCount() - Anzahl ausgeführter Statements
+
+=head4 Synopsis
+
+  $n = $db->runCount;
+
+=head4 Description
+
+Liefere die Anzahl der in der aktuellen Transaktion ausgeführten
+Statements. Diese Information kann z.B. genutzt werden, um zu
+entscheiden, ob ein COMMIT oder ROLLBACK ausgeführt werden müsste.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub runCount {
+    return shift->{'runCount'};
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 begin() - Beginne Transaktion
 
 =head4 Synopsis
@@ -1860,6 +1884,10 @@ sub commit {
 
     my $stmt = $self->stmt->commit;
     my $cur = eval { $self->sql($stmt) };
+
+    # Anzahl ausgeführter Statements zurücksetzen
+    $self->{'runCount'} = 0;
+
     if ($self->isSQLite && $@ =~ /no transaction/i) {
         return $self->sql;
     }
@@ -1895,6 +1923,10 @@ sub rollback {
 
     my $stmt = $self->stmt->rollback;
     my $cur = eval { $self->sql($stmt) };
+
+    # Anzahl ausgeführter Statements zurücksetzen
+    $self->{'runCount'} = 0;
+
     if ($self->isSQLite && $@ =~ /no transaction/i) {
         return $self->sql;
     }
