@@ -40,6 +40,10 @@ JavaScript-Code, der an den Widget-Code angehängt wird.
 
 Name des Widget.
 
+=item undefIf => $bool (Default: 0)
+
+Wenn wahr, liefere C<undef> als Widget-Code.
+
 =item value => $str (Default: undef)
 
 Anfänglich ausgewählter Wert.
@@ -61,6 +65,10 @@ Liste der möglichen Werte und ihrer Anzeigetexte. Beispiel:
       1 => 'Ja',
       2 => 'Vielleicht',
   ]
+
+=item readonly => $bool (Default: 0)
+
+Zeige das Feld und seinen Wert unveränderbar an.
 
 =item texts => \@text (Default: [])
 

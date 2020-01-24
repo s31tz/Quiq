@@ -54,6 +54,10 @@ Generiere Leerstring, wenn Wert Null (undef oder Leerstring) ist.
 
 Das Element wird nicht submittet.
 
+=item undefIf => $bool (Default: 0)
+
+Wenn wahr, liefere C<undef> als Widget-Code.
+
 =back
 
 =head1 EXAMPLES
@@ -113,6 +117,7 @@ sub new {
         hidden => 1,
         ignoreIfNull => 0,
         name => undef,
+        undefIf => 0,
         value => undef,
     );
 
@@ -143,10 +148,10 @@ sub html {
 
     my $self = ref $this? $this: $this->new(@_);
 
-    # *** Attribute ***
+    # Attribute
 
-    my ($id,$disabled,$ignoreIfNull,$name,$value) =
-        $self->get('id','disabled','ignoreIfNull','name','value');
+    my ($id,$disabled,$ignoreIfNull,$name,$undefIf,$value) =
+        $self->get(qw/id disabled ignoreIfNull name undefIf value/);
 
     # Wert auf Array abbilden. Wenn ignoreIfNull erfüllt, Leerstring liefern.
 
@@ -167,7 +172,11 @@ sub html {
         $arr = [$value];
     }
 
-    # *** Generierung ***
+    # Generierung
+
+    if ($undefIf) {
+        return undef;
+    }
 
     return '' if !$name;
 

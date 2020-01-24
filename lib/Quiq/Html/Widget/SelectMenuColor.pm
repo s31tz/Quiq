@@ -39,6 +39,10 @@ Liste der Farbwerte für die Elemente der Auswahlliste. Es sind
 alle Farbwerte (außer ($r,$g,$b)) möglich, die der Konstruktor
 der Klasse Quiq::Color akzeptiert.
 
+=item undefIf => $bool (Default: 0)
+
+Wenn wahr, liefere C<undef> als Widget-Code.
+
 =back
 
 =head1 EXAMPLES
@@ -91,6 +95,7 @@ sub new {
     $self->add(
         applyColorsTo => 'fg', # 'bg' -or- 'fg'
         colors => [],
+        undefIf => 0,
     );
 
     # Werte Konstruktoraufruf
@@ -123,8 +128,15 @@ sub html {
 
     # Attribute
 
-    my ($applyColorsTo,$colors,$id,$javaScript,$onChange,$styles) =
-       $self->get(qw/applyColorsTo colors id javaScript onChange styles/);
+    my ($applyColorsTo,$colors,$id,$javaScript,$onChange,$styles,$undefIf) =
+       $self->get(qw/applyColorsTo colors id javaScript onChange styles
+       undeiF/);
+
+    # Generierung
+
+    if ($undefIf) {
+        return undef;
+    }
 
     for (my $i = 0; $i < @$colors; $i++) {
         my $color = $colors->[$i] || next;

@@ -25,6 +25,10 @@ Liste der Farbwerte für die Elemente der Auswahlliste. Es sind
 alle Farbwerte (außer ($r,$g,$b)) möglich, die der Konstruktor
 der Klasse Quiq::Color akzeptiert.
 
+=item undefIf => $bool (Default: 0)
+
+Wenn wahr, liefere C<undef> als Widget-Code.
+
 =back
 
 =head1 EXAMPLES

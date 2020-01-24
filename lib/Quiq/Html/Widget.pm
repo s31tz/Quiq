@@ -58,6 +58,11 @@ $w->hidden() geprüft werden kann.
 Jedes Widget ist entweder dekativiert oder aktiviert, was mit
 $w->disabled() festgestellt werden kann.
 
+=item *
+
+Jedes Widget kann auf C<undef> reduziert werden, wenn das
+Attribut undefIf=>$bool wahr ist.
+
 =back
 
 =head1 METHODS

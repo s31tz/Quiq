@@ -50,6 +50,10 @@ Name des Feldes.
 
 CSS Definition (inline).
 
+=item undefIf => $bool (Default: 0)
+
+Wenn wahr, liefere C<undef> als Widget-Code.
+
 =back
 
 =head1 METHODS

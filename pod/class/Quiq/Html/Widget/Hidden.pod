@@ -43,6 +43,10 @@ Generiere Leerstring, wenn Wert Null (undef oder Leerstring) ist.
 
 Das Element wird nicht submittet.
 
+=item undefIf => $bool (Default: 0)
+
+Wenn wahr, liefere C<undef> als Widget-Code.
+
 =back
 
 =head1 EXAMPLES

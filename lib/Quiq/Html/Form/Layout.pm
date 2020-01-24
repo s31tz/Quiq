@@ -78,6 +78,11 @@ Schlüssel/Wert-Paare, die als Hidden-Widgets gesetzt werden.
 Der HTML-Code des Layouts. In das Layout wird der HTML-Code der
 Widgets eingesetzt.
 
+=item sloppy => $bool (Default: 0)
+
+Wirf keine Exception, wenn für ein Widget kein Platzhalter existiert.
+Dies kann bei wechselnden Layouts hilfreich sein.
+
 =item widgets => \@widgets (Default: [])
 
 Liste der Widgets, die in das Layout eingesetzt werden.
@@ -224,7 +229,11 @@ sub html {
     my @keyVal;
     for my $w (@$widgetA) {
         if ($w->hidden) {
-            $hidden .= $w->html($h);
+            # $hidden .= $w->html($h);
+            $hidden .= Quiq::Html::Widget::Hidden->html($h,
+                name => $w->name,
+                value => $w->value,
+            );
             next;
         }
         push @keyVal,sprintf('__%s__',uc $w->name),$w->html($h);

@@ -63,6 +63,10 @@ Tooltip-Text.
 
 Button-Typ:  'button', 'submit' oder 'reset'.
 
+=item undefIf => $bool (Default: 0)
+
+Wenn wahr, liefere C<undef> als Widget-Code.
+
 =item value => $value (Default: undef)
 
 Wert, der gesendet wird.
@@ -100,6 +104,7 @@ sub new {
         style => undef,
         title => undef,
         type => 'button',
+        undefIf => 0,
         value => undef,
     );
     $self->set(@_);
@@ -131,8 +136,14 @@ sub html {
     # Attribute
 
     my ($class,$content,$disabled,$hidden,$id,$name,$onClick,$style,
-        $title,$type,$value) = $self->get(qw/class content disabled hidden id
-        name onClick style title type value/);
+        $title,$type,$undefIf,$value) = $self->get(qw/class content disabled
+        hidden id name onClick style title type undefIf value/);
+
+    # Generierung
+
+    if ($undefIf) {
+        return undef;
+    }
 
     if ($hidden) {
         return '';

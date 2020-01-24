@@ -52,6 +52,10 @@ CSS Definition (inline).
 
 Tooltip-Text.
 
+=item undefIf => $bool (Default: 0)
+
+Wenn wahr, liefere C<undef> als Widget-Code.
+
 =item value => $value (Default: undef)
 
 Aktueller Wert. Stimmt dieser mit dem Wert des Attributs option

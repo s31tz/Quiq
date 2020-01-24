@@ -45,13 +45,21 @@ Name des Textfelds.
 
 JavaScript-Handler.
 
+=item readonly => $bool (Default: 0)
+
+Zeige das Feld und seinen Wert unveränderbar an.
+
 =item size => $n (Default: undef)
 
 Breite des Feldes in Zeichen.
 
-=item title => $text (Deafult: undef)
+=item title => $text (Default: undef)
 
 Text Tooltip.
+
+=item undefIf => $bool (Default: 0)
+
+Wenn wahr, liefere C<undef> als Widget-Code.
 
 =item value => $str (Default: undef)
 

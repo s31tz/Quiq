@@ -74,6 +74,10 @@ CSS Definition des Konstruktes (inline).
 
 Tooltip-Texte der CheckBoxes.
 
+=item undefIf => $bool (Default: 0)
+
+Wenn wahr, liefere C<undef> als Widget-Code.
+
 =item values => \@values (Default: undef)
 
 Aktuelle Werte. Die CheckBoxes mit den betreffenden Werten werden
@@ -119,6 +123,7 @@ sub new {
         buttonClass => undef,
         style => undef,
         titles => [],
+        undefIf => 0,
         values => [],
     );
     $self->set(@_);
@@ -156,9 +161,15 @@ sub html {
     # Attribute
 
     my ($class,$disabled,$hidden,$id,$labelA,$name,$onClickA,$optionA,
-        $orientation,$buttonClass,$style,$titleA,$valueA) =
+        $orientation,$buttonClass,$style,$titleA,$undefIf,$valueA) =
         $self->get(qw/class disabled hidden id labels name onClick options
-        orientation buttonClass style titles values/);
+        orientation buttonClass style titles undefIf values/);
+
+    # Generierung
+
+    if ($undefIf) {
+        return undef;
+    }
 
     if ($hidden || !@$optionA) {
         return '';

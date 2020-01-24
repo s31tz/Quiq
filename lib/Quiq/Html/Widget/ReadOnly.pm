@@ -52,6 +52,10 @@ Name des Hidden-Felds.
 Text, der angezeigt wird. Ist dieses Attribut nicht gesetzt,
 wird der Wert des Attributs value angezeigt.
 
+=item undefIf => $bool (Default: 0)
+
+Wenn wahr, liefere C<undef> als Widget-Code.
+
 =item value => $str (Default: undef)
 
 Wert (vom Anwender nicht änderbar).
@@ -86,6 +90,7 @@ sub new {
         name => undef,
         style => undef,
         text => undef,
+        undefIf => 0,
         value => undef,
     );
 
@@ -118,8 +123,8 @@ sub html {
 
     # Attribute
 
-    my ($class,$disabled,$id,$name,$style,$text,$value) =
-        $self->get(qw/class disabled id name style text value/);
+    my ($class,$disabled,$id,$name,$style,$text,$undefIf,$value) =
+        $self->get(qw/class disabled id name style text undefIf value/);
 
     if (!defined $value) {
         $value = '';
@@ -129,6 +134,10 @@ sub html {
     }
 
     # Generierung
+
+    if ($undefIf) {
+        return undef;
+    }
 
     return '' if !$name;
 

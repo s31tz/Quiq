@@ -48,6 +48,10 @@ Sichtbare Höhe des Texteingabefeldes in Zeilen.
 
 CSS Definition (inline).
 
+=item undefIf => $bool (Default: 0)
+
+Wenn wahr, liefere C<undef> als Widget-Code.
+
 =item value => $str (Default: undef)
 
 Anfänglicher Wert des Felds.

@@ -52,6 +52,10 @@ Tooltip-Text.
 
 Button-Typ:  'button', 'submit' oder 'reset'.
 
+=item undefIf => $bool (Default: 0)
+
+Wenn wahr, liefere C<undef> als Widget-Code.
+
 =item value => $value (Default: undef)
 
 Wert, der gesendet wird.

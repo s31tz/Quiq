@@ -41,6 +41,10 @@ Name des Hidden-Felds.
 Text, der angezeigt wird. Ist dieses Attribut nicht gesetzt,
 wird der Wert des Attributs value angezeigt.
 
+=item undefIf => $bool (Default: 0)
+
+Wenn wahr, liefere C<undef> als Widget-Code.
+
 =item value => $str (Default: undef)
 
 Wert (vom Anwender nicht änderbar).
