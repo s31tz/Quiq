@@ -1137,7 +1137,7 @@ MediaWiki übertragen und dort optisch begutachtet werden.
 
 =head1 VERSION
 
-1.171
+1.172
 
 =head1 SOURCE
 
