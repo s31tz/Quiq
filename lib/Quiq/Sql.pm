@@ -636,7 +636,8 @@ sub dataType {
         }
     }
 
-    if ($portableType eq 'DATETIME' && $dbmsType eq 'TIMESTAMP') {
+    if ($args eq '' && $portableType eq 'DATETIME' &&
+            $dbmsType eq 'TIMESTAMP') {
         $args = '(0)';
     }
 
