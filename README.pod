@@ -493,6 +493,10 @@ L<Quiq::JQuery::Accordion|https://github.com/s31tz/Quiq/tree/master/pod/class/Qu
 
 =item *
 
+L<Quiq::JQuery::ContextMenu|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/JQuery/ContextMenu.pod> - Erzeuge Code für ein jQuery Kontext-Menü
+
+=item *
+
 L<Quiq::JQuery::ContextMenu::Ajax|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/JQuery/ContextMenu/Ajax.pod> - Erzeuge Code für ein jQuery Kontext-Menü
 
 =item *
