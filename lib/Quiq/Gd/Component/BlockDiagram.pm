@@ -51,6 +51,11 @@ Anfang des Y-Wertebereichs (Weltkoodinate).
 
 Ende des Y-Wertebereichs (Weltkoodinate).
 
+=item yReverse => $bool (Default: 0)
+
+Die Y-Achse geht von oben nach unten statt von unten nach oben,
+d.h. die kleineren Werte sind oben.
+
 =item objects => \@objects (Default: [])
 
 Liste der Objekte, die die Blockinformation liefern.
@@ -109,6 +114,7 @@ sub new {
         xMax => undef,
         yMin => undef,
         yMax => undef,
+        yReverse => 0,
         objects => [],
         objectCallback => undef,
     );
@@ -164,6 +170,7 @@ sub render {
     my $xMax = $self->{'xMax'};
     my $yMin = $self->{'yMin'};
     my $yMax = $self->{'yMax'};
+    my $yReverse = $self->{'yReverse'};
     my $objectA = $self->{'objects'};
     my $objectCallback = $self->{'objectCallback'};
 
@@ -182,11 +189,23 @@ sub render {
         my $color = $img->color($rgb);
 
         my $pX = $x+$m->valueToPixelX($width,$xMin,$xMax,$oX);
-        my $pY = $y+$m->valueToPixelYTop($height,$yMin,$yMax,$oY);
+        my $pY;
+        if ($yReverse) {
+            $pY = $y+$m->valueToPixelYTop($height,$yMin,$yMax,$oY);
+        }
+        else {
+            $pY = $y+$m->valueToPixelY($height,$yMin,$yMax,$oY);
+        }
         my $pW = $oW*$xFactor-1; # -1 -> 1 Pixel Lücke zw. den Blöcken
         my $pH = $oH*$yFactor;
 
-        my ($x1,$y1,$x2,$y2) = (int($pX),int($pY),int($pX+$pW),int($pY+$pH));
+        my ($x1,$y1,$x2,$y2);
+        if ($yReverse) {
+            ($x1,$y1,$x2,$y2) = (int($pX),int($pY),int($pX+$pW),int($pY+$pH));
+        }
+        else {
+            ($x1,$y1,$x2,$y2) = (int($pX),int($pY-$pH),int($pX+$pW),int($pY));
+        }
 
         $img->filledRectangle($x1,$y1,$x2,$y2,$color);
         if ($border) {

@@ -38,6 +38,11 @@ Anfang des Y-Wertebereichs (Weltkoodinate).
 
 Ende des Y-Wertebereichs (Weltkoodinate).
 
+=item yReverse => $bool (Default: 0)
+
+Die Y-Achse geht von oben nach unten statt von unten nach oben,
+d.h. die kleineren Werte sind oben.
+
 =item objects => \@objects (Default: [])
 
 Liste der Objekte, die die Blockinformation liefern.
