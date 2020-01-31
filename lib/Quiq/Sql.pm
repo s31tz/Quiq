@@ -387,6 +387,7 @@ sub stmtListToScript {
 my %Commands = (
     Oracle => [
     ],
+    #    END
     PostgreSQL => [qw/
         ABORT
         ALTER
@@ -405,7 +406,6 @@ my %Commands = (
         DISCARD
         DO
         DROP
-        END
         EXECUTE
         EXPLAIN
         FETCH
