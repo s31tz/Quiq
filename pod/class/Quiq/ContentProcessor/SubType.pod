@@ -63,7 +63,7 @@ ein Sigil am Namensanfang (z.B. C<°°>) wird entfernt
 
 =head1 VERSION
 
-1.172
+1.173
 
 =head1 SOURCE
 

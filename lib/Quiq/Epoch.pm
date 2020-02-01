@@ -5,7 +5,7 @@ use v5.10;
 use strict;
 use warnings;
 
-our $VERSION = '1.172';
+our $VERSION = '1.173';
 
 use Time::HiRes ();
 use Time::Local ();
@@ -408,7 +408,7 @@ sub asIso {
 
 =head1 VERSION
 
-1.172
+1.173
 
 =head1 AUTHOR
 
