@@ -18,7 +18,7 @@ sub test_loadClass : Init(1) {
 
 # -----------------------------------------------------------------------------
 
-sub test_js : Test(0) {
+sub test_js : Test(1) {
     my $self = shift;
 
     # JSON-Generator
@@ -51,7 +51,7 @@ sub test_js : Test(0) {
     $self->is(ref($obj),'Quiq::JQuery::ContextMenu');
 
     my $js = $obj->js($j);
-    warn $js,"\n";
+    # warn $js,"\n";
 }
 
 # -----------------------------------------------------------------------------
