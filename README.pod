@@ -7,7 +7,7 @@ Quiq - Perl class library for rapid development (German documentation)
 =head1 DESCRIPTION
 
 Diese Klassenbibliothek enthält anwendungsunabhängige
-Klassen, die ich in Perl-Projekten (nur Unix/Linux) einsetze. Sie
+Klassen, die ich in Perl-Projekten (nur Unix/Linux) nutze. Sie
 sind nach einheitlichen Prinzipien konzipiert. Die Bibliothek
 befindet sich unter kontinuierlicher Weiterentwicklung.
 
