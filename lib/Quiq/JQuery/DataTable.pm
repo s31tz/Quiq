@@ -640,8 +640,10 @@ sub instantiate {
         if (my $searchable = $col->searchable) {
             $keyVals .= "searchable: '$searchable',\n"; 
         }
-        if (my $orderable = $col->orderable) {
-            $keyVals .= "orderable: '$orderable',\n"; 
+        my $orderable = $col->orderable;
+        if (defined $orderable) {
+            $keyVals .= sprintf "orderable: %s,\n",
+                $orderable? 'true': 'false'; 
         }
         if (my $visible = $col->visible) {
             $keyVals .= "visible: '$visible',\n"; 
