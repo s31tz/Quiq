@@ -201,9 +201,18 @@ Formatangabe. Folgende Formate sind definiert:
 
 =over 4
 
+=item YYYY-MM-DD
+
+Datum in ISO-Darstellung.
+
 =item YYYY-MM-DD HH:MI:SS
 
 Zeit in ISO-Darstellung.
+
+=item YYYY-MM-DD HH:MI:SS.XXX
+
+Zeit in ISO-Darstellung mit Nachkommastellen. Die Anzahl der X
+gibt die Anzahl der Nachkommastellen an (in obiger Angabe drei).
 
 =back
 
