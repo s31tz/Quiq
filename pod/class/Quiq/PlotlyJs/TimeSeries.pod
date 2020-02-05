@@ -79,6 +79,7 @@ Windgeschwindigkeits-Messung)
       },
     },{
       displayModeBar: false,
+      doubleClickDelay: 1000,
     });
   });
 </script>

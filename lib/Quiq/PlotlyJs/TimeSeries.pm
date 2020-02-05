@@ -93,6 +93,7 @@ Windgeschwindigkeits-Messung)
       },
     },{
       displayModeBar: false,
+      doubleClickDelay: 1000,
     });
   });
 </script>
@@ -401,7 +402,7 @@ sub js {
 
     my $extra = $j->o(
         displayModeBar => \'false',
-        # doubleClick => \'false', # http://codepen.io/etpinard/pen/XNXKaM
+        doubleClickDelay => 1000, # 1000ms
     );
 
     # Erzeuge JavaScript-Code
