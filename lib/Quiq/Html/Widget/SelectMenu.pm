@@ -8,6 +8,7 @@ use warnings;
 our $VERSION = '1.173';
 
 use Quiq::Html::Widget::TextField;
+use Quiq::JavaScript;
 
 # -----------------------------------------------------------------------------
 
@@ -239,7 +240,7 @@ sub html {
             class => $class,
             style => $style,
             disabled => $disabled,
-            onchange => $onChange,
+            onchange => Quiq::JavaScript->line($onChange),
             title => $title,
             '-',
             $str

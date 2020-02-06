@@ -697,6 +697,14 @@ L<Quiq::Sql::Script::Reader|https://github.com/s31tz/Quiq/tree/master/pod/class/
 
 =item *
 
+L<Quiq::Sql::Sequence|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sql/Sequence.pod> - Folge von SQL-Statements
+
+=item *
+
+L<Quiq::Sql::Statement|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sql/Statement.pod> - SQL-Statement
+
+=item *
+
 L<Quiq::SqlPlus|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/SqlPlus.pod> - Erzeuge Code für SQL*Plus
 
 =item *

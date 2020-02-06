@@ -55,6 +55,10 @@ Die Regeln der Umwandlung:
 
 =item *
 
+ist $code C<undef>, wird C<undef> geliefert
+
+=item *
+
 Kommentare (\s*//.*) werden entfernt
 
 =item *
