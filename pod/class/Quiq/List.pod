@@ -1,0 +1,181 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::List - Datenstruktur zur Speicherung von Objekten
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 SYNOPSIS
+
+  use Quiq::List;
+  
+  my $lst = Quiq::List->new;
+  $lst->push($obj);
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse stellt eine Datenstruktur zur Speicherung
+von beliebigen Objekten dar.
+
+=head1 METHODS
+
+=head2 Klassenmethoden
+
+=head3 new() - Konstruktor
+
+=head4 Synopsis
+
+  $lst = $class->new;
+  $lst = $class->new(\@objects);
+
+=head4 Arguments
+
+=over 4
+
+=item @objects
+
+Liste von Objekten.
+
+=back
+
+=head4 Returns
+
+Listen-Objekt
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere eine Referenz auf dieses
+Objekt zurück.
+
+=head2 Attributmethoden
+
+=head3 elements() - Liste der Objekte
+
+=head4 Synopsis
+
+  @objects | $objectA = $lst->elements;
+
+=head4 Returns
+
+Liste von Objekten. Im Skalarkontext eine Referenz auf die Liste.
+
+=head4 Description
+
+Liefere die Liste der enthaltenen Objekte.
+
+=head2 Objektmethoden
+
+=head3 push() - Füge Objekt zu Liste hinzu
+
+=head4 Synopsis
+
+  $obj = $lst->push($obj);
+
+=head4 Arguments
+
+=over 4
+
+=item $obj
+
+Objekt
+
+=back
+
+=head4 Returns
+
+Objekt
+
+=head4 Description
+
+Füge Objekt $obj zur Liste hinzu und liefere eine Referenz auf
+dieses Objekt zurück.
+
+=head3 sum() - Summiere Werte
+
+=head4 Synopsis
+
+  $sum = $lst->sum($sub);
+
+=head4 Arguments
+
+=over 4
+
+=item $sub
+
+Subroutine, die den Objektwert liefert, der summiert werden soll.
+Die Subroutine hat die Signatur
+
+  sub {
+      my $obj = shift;
+      ...
+      return $val;
+  }
+
+=back
+
+=head4 Returns
+
+Summe (Number)
+
+=head4 Description
+
+Summiere alle Werte, die die Subroutine $sub liefert. Die Subroutine
+wird für jedes Element der Liste gerufen, mit dem Listenelement
+als erstem (und einzigem) Parameter.
+
+=head3 concat() - Konkateniere Werte
+
+=head4 Synopsis
+
+  $str = $lst->concat($sub);
+
+=head4 Arguments
+
+=over 4
+
+=item $sub
+
+Subroutine, die den Objektwert liefert, der concateniert werden soll.
+Die Subroutine hat die Signatur
+
+  sub {
+      my $obj = shift;
+      ...
+      return $val;
+  }
+
+=back
+
+=head4 Returns
+
+String
+
+=head4 Description
+
+Konkateniere alle Werte, die die Subroutine $sub liefert. Die Subroutine
+wird für jedes Element der Liste gerufen, mit dem Listenelement
+als erstem (und einzigem) Parameter.
+
+=head1 VERSION
+
+1.173
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/List.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2020 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
