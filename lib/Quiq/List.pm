@@ -13,7 +13,7 @@ our $VERSION = '1.173';
 
 =head1 NAME
 
-Quiq::List - Datenstruktur zur Speicherung von Objekten
+Quiq::List - Liste von Objekten
 
 =head1 BASE CLASS
 
@@ -23,13 +23,12 @@ L<Quiq::Hash>
 
   use Quiq::List;
   
-  my $lst = Quiq::List->new;
-  $lst->push($obj);
+  my $lst = Quiq::List->new(\@objects);
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse stellt eine Datenstruktur zur Speicherung
-von beliebigen Objekten dar.
+Ein Objekt der Klasse speichert eine Kollektion von (beliebigen) Objekten.
+Mit den Methoden der Klasse kann auf dieser Kollektion operiert werden.
 
 =head1 METHODS
 
@@ -76,7 +75,31 @@ sub new {
 
 # -----------------------------------------------------------------------------
 
-=head2 Attributmethoden
+=head2 Objektmethoden
+
+=head3 count() - Anzahl der Objekte
+
+=head4 Synopsis
+
+  $n = $lst->count;
+
+=head4 Returns
+
+Integer
+
+=head4 Description
+
+Liefere die Anzahl der Objekte, also eine ganze Zahl >= 0.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub count {
+    return scalar @{shift->{'objectA'}};
+}
+
+# -----------------------------------------------------------------------------
 
 =head3 elements() - Liste der Objekte
 
@@ -90,7 +113,8 @@ Liste von Objekten. Im Skalarkontext eine Referenz auf die Liste.
 
 =head4 Description
 
-Liefere die Liste der enthaltenen Objekte.
+Liefere die Liste der enthaltenen Objekte in der Reihenfolge,
+wie sie intern gespeichert sind.
 
 =cut
 
@@ -103,8 +127,6 @@ sub elements {
 }
 
 # -----------------------------------------------------------------------------
-
-=head2 Objektmethoden
 
 =head3 push() - Füge Objekt zu Liste hinzu
 

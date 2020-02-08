@@ -17,7 +17,7 @@ sub test_loadClass : Init(1) {
 
 # -----------------------------------------------------------------------------
 
-sub test_unitTest : Test(6) {
+sub test_unitTest : Test(8) {
     my $self = shift;
 
     my $lst = Quiq::List->new;
@@ -26,10 +26,15 @@ sub test_unitTest : Test(6) {
     my @objs = $lst->elements;
     $self->isDeeply(\@objs,[]);
 
+    my $n = $lst->count;
+    $self->is($n,0);
+
     my $obj = $lst->push(Quiq::Hash->new(
         id => 1,
         name => 'Birgit',
     ));
+    $n = $lst->count;
+    $self->is($n,1);
     $self->is(ref($obj),'Quiq::Hash');
     $self->is($obj->id,1);
     $self->is($obj->name,'Birgit');

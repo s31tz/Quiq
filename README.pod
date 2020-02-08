@@ -549,7 +549,7 @@ L<Quiq::LineProcessor::Line|https://github.com/s31tz/Quiq/tree/master/pod/class/
 
 =item *
 
-L<Quiq::List|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/List.pod> - Datenstruktur zur Speicherung von Objekten
+L<Quiq::List|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/List.pod> - Liste von Objekten
 
 =item *
 
