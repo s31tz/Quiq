@@ -23,12 +23,49 @@ L<Quiq::Hash>
 
   use Quiq::List;
   
-  my $lst = Quiq::List->new(\@objects);
+  # Instantiiere Liste
+  $lst = Quiq::List->new(\@objects);
+  
+  # Anzahl der enthaltenen Objekte
+  $n = $lst->count;
+  
+  # Array der enthaltenen Objekte
+  @obj = $lst->elements;
+  
+  # Füge Objekt zur Liste hinzu (am Ende)
+  $obj = $lst->push($obj);
+  
+  # Bilde Objekte auf Werte ab
+  
+  @arr = $lst->map(sub {
+      my $obj = shift;
+      ...
+      return (...);
+  };
 
 =head1 DESCRIPTION
 
 Ein Objekt der Klasse speichert eine Ansammlung von (beliebigen) Objekten.
 Mit den Methoden der Klasse kann auf dieser Ansammlung operiert werden.
+
+=head1 EXAMPLES
+
+Bilde die Summe über einem Attributwert:
+
+  use Hash::Util 'sum';
+  $sum = sum $lst->map(sub {
+      my $obj = shift;
+      ...
+      return $x;
+  });
+
+Bilde die Summe über einem Attributwert:
+
+  $str = join "\n",$lst->map(sub {
+      my $obj = shift;
+      ...
+      return '...';
+  });
 
 =head1 METHODS
 
@@ -60,7 +97,8 @@ Listen-Objekt
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf dieses
 Objekt zurück. Der Aufruf ohne Argument ist äquivalent zu einem
 Aufruf mit einem leeren Array. Das Array und die Objekte werden nicht
-kopiert, es wird die übergebene Referenz gespeichert.
+kopiert, es wird lediglich die übergebene Referenz gespeichert, d.h.
+alle Operationen finden auf den Originalstrukturen statt.
 
 =cut
 
@@ -129,6 +167,56 @@ sub elements {
 
 # -----------------------------------------------------------------------------
 
+=head3 map() - Bilde Objekte auf Werte ab
+
+=head4 Synopsis
+
+  @arr | $arr = $lst->map($sub);
+
+=head4 Arguments
+
+=over 4
+
+=item $sub
+
+Subroutine, die für jedes Objekt eine Liste von Werten liefert.
+Die Subroutine hat die Signatur
+
+  sub {
+      my $obj = shift;
+      ...
+      return @arr;
+  }
+
+=back
+
+=head4 Returns
+
+Array aller Werte. Im Skalarkontext eine Referenz auf das Array.
+
+=head4 Description
+
+Rufe die Subroutine $sub für jedes Element der Liste auf, sammele
+alle gelieferten Werte ein und liefere das resultierende Array
+zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub map {
+    my ($self,$sub) = @_;
+
+    my @arr;
+    for (@{$self->elements}) {
+        CORE::push @arr,$sub->($_);
+    }
+
+    return wantarray? @arr: \@arr;
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 push() - Füge Objekt am Ende der Liste hinzu
 
 =head4 Synopsis
@@ -160,108 +248,8 @@ dieses Objekt zurück.
 
 sub push {
     my ($self,$obj) = @_;
-    push @{$self->{'objectA'}},$obj;
+    CORE::push @{$self->{'objectA'}},$obj;
     return $obj;
-}
-
-# -----------------------------------------------------------------------------
-
-=head3 sum() - Summiere Werte
-
-=head4 Synopsis
-
-  $sum = $lst->sum($sub);
-
-=head4 Arguments
-
-=over 4
-
-=item $sub
-
-Subroutine, die den Wert liefert, der summiert werden soll.
-Die Subroutine hat die Signatur
-
-  sub {
-      my $obj = shift;
-      ...
-      return $val;
-  }
-
-=back
-
-=head4 Returns
-
-Summe (Number)
-
-=head4 Description
-
-Summiere alle Werte, die die Subroutine $sub liefert. Die Subroutine
-wird für jedes Element der Liste gerufen, mit diesem Element
-als erstem (und einzigen) Parameter.
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub sum {
-    my ($self,$sub) = @_;
-
-    my $sum;
-    for (@{$self->elements}) {
-        $sum += $sub->($_);
-    }
-
-    return $sum;
-}
-
-# -----------------------------------------------------------------------------
-
-=head3 concat() - Konkateniere Werte
-
-=head4 Synopsis
-
-  $str = $lst->concat($sub);
-
-=head4 Arguments
-
-=over 4
-
-=item $sub
-
-Subroutine, die den Objektwert liefert, der concateniert werden soll.
-Die Subroutine hat die Signatur
-
-  sub {
-      my $obj = shift;
-      ...
-      return $val;
-  }
-
-=back
-
-=head4 Returns
-
-String
-
-=head4 Description
-
-Konkateniere alle Werte, die die Subroutine $sub liefert. Die Subroutine
-wird für jedes Element der Liste gerufen, mit dem Listenelement
-als erstem (und einzigem) Parameter.
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub concat {
-    my ($self,$sub) = @_;
-
-    my $str;
-    for (@{$self->elements}) {
-        $str .= $sub->($_);
-    }
-
-    return $str;
 }
 
 # -----------------------------------------------------------------------------
