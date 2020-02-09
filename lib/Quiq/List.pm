@@ -27,8 +27,8 @@ L<Quiq::Hash>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse speichert eine Kollektion von (beliebigen) Objekten.
-Mit den Methoden der Klasse kann auf dieser Kollektion operiert werden.
+Ein Objekt der Klasse speichert eine Ansammlung von (beliebigen) Objekten.
+Mit den Methoden der Klasse kann auf dieser Ansammlung operiert werden.
 
 =head1 METHODS
 
@@ -47,7 +47,7 @@ Mit den Methoden der Klasse kann auf dieser Kollektion operiert werden.
 
 =item @objects
 
-Liste von Objekten.
+Array von Objekten.
 
 =back
 
@@ -58,7 +58,9 @@ Listen-Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf dieses
-Objekt zurück.
+Objekt zurück. Der Aufruf ohne Argument ist äquivalent zu einem
+Aufruf mit einem leeren Array. Das Array und die Objekte werden nicht
+kopiert, es wird die übergebene Referenz gespeichert.
 
 =cut
 
@@ -85,11 +87,11 @@ sub new {
 
 =head4 Returns
 
-Integer
+Nicht-negative ganze Zahl
 
 =head4 Description
 
-Liefere die Anzahl der Objekte, also eine ganze Zahl >= 0.
+Liefere die Anzahl der in der Liste gespeichteren Objekte.
 
 =cut
 
@@ -113,8 +115,7 @@ Liste von Objekten. Im Skalarkontext eine Referenz auf die Liste.
 
 =head4 Description
 
-Liefere die Liste der enthaltenen Objekte in der Reihenfolge,
-wie sie intern gespeichert sind.
+Liefere das Array der in der Liste gespeicherten Objekte.
 
 =cut
 
@@ -128,7 +129,7 @@ sub elements {
 
 # -----------------------------------------------------------------------------
 
-=head3 push() - Füge Objekt zu Liste hinzu
+=head3 push() - Füge Objekt am Ende der Liste hinzu
 
 =head4 Synopsis
 
@@ -150,7 +151,7 @@ Objekt
 
 =head4 Description
 
-Füge Objekt $obj zur Liste hinzu und liefere eine Referenz auf
+Füge Objekt $obj am Ende der Liste hinzu und liefere eine Referenz auf
 dieses Objekt zurück.
 
 =cut
@@ -159,7 +160,7 @@ dieses Objekt zurück.
 
 sub push {
     my ($self,$obj) = @_;
-    $self->SUPER::push(objectA=>$obj);
+    push @{$self->{'objectA'}},$obj;
     return $obj;
 }
 
@@ -177,7 +178,7 @@ sub push {
 
 =item $sub
 
-Subroutine, die den Objektwert liefert, der summiert werden soll.
+Subroutine, die den Wert liefert, der summiert werden soll.
 Die Subroutine hat die Signatur
 
   sub {
@@ -195,8 +196,8 @@ Summe (Number)
 =head4 Description
 
 Summiere alle Werte, die die Subroutine $sub liefert. Die Subroutine
-wird für jedes Element der Liste gerufen, mit dem Listenelement
-als erstem (und einzigem) Parameter.
+wird für jedes Element der Liste gerufen, mit diesem Element
+als erstem (und einzigen) Parameter.
 
 =cut
 
