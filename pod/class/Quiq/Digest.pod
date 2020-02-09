@@ -39,7 +39,7 @@ als 32 Zeichen langen Hex-String zurück.
 
 =head1 VERSION
 
-1.173
+1.174
 
 =head1 SOURCE
 

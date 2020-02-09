@@ -140,7 +140,7 @@ Liefere das für die Cachedatei definierte Timeout.
 
 =head1 VERSION
 
-1.173
+1.174
 
 =head1 SOURCE
 

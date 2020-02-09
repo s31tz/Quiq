@@ -131,7 +131,7 @@ nur dann, wenn $refresh erfüllt ist:
 
 =head1 VERSION
 
-1.173
+1.174
 
 =head1 SOURCE
 

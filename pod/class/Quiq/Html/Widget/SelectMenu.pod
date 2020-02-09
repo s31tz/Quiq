@@ -107,7 +107,7 @@ verschiedene Hintergrundfarben genutzt werden.
 
 =head1 VERSION
 
-1.173
+1.174
 
 =head1 SOURCE
 
