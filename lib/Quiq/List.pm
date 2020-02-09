@@ -42,6 +42,13 @@ L<Quiq::Hash>
       ...
       return (...);
   };
+  
+  # Über alle Objekte iterieren
+  
+  $lst->loop($ref,sub {
+      my ($ref,$obj,$i) = @_
+      ...
+  });
 
 =head1 DESCRIPTION
 
@@ -64,7 +71,21 @@ Füge Werte zu einer Zeichenkette zusammen:
   $str = join "\n",$lst->map(sub {
       my $obj = shift;
       ...
-      return '...';
+      return $s;
+  });
+
+Beides zusammen in einem Aufruf:
+
+  $lst->loop([\$sum,\$str],sub {
+      my ($ref,$obj,$i) = @_;
+      my ($sumS,$strS) = @$ref;
+      ...
+      $$sumS += $x;
+      ...
+      if ($i) {
+          $$strS .= "\n";
+      }
+      $$strS .= $s;
   });
 
 =head1 METHODS
