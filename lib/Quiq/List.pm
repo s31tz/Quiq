@@ -59,7 +59,7 @@ Bilde die Summe über einem Attributwert:
       return $x;
   });
 
-Bilde die Summe über einem Attributwert:
+Füge Werte zu einer Zeichenkette zusammen:
 
   $str = join "\n",$lst->map(sub {
       my $obj = shift;
@@ -163,6 +163,54 @@ sub elements {
     my $self = shift;
     my $arr = $self->{'objectA'};
     return wantarray? @$arr: $arr;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 loop() - Iteriere über allen Elementen
+
+=head4 Synopsis
+
+  $lst->loop($ref,$sub);
+
+=head4 Arguments
+
+=over 4
+
+=item $ref
+
+Referenz auf Struktur, die von der Schleife manipuliert wird.
+
+=item $sub
+
+Subroutine, die für jedes Objekt aufgerufen wird.
+Die Subroutine hat die Signatur
+
+  sub {
+      my ($ref,$obj,$i) = @_;
+      ...
+  }
+
+=back
+
+=head4 Description
+
+Rufe die Subroutine $sub für jedes Element der Liste auf. Innerhalb der
+Subroutine kann die Struktur, auf die $ref verweist, manipuliert werden.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub loop {
+    my ($self,$ref,$sub) = @_;
+
+    my $i = 0;
+    for (@{$self->elements}) {
+        $sub->($ref,$_,$i++);
+    }
+
+    return;
 }
 
 # -----------------------------------------------------------------------------
