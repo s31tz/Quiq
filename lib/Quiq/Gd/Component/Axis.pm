@@ -229,7 +229,8 @@ sub render {
             $img->line($x,$y,$x,$y+$length-1,$axisColor);
         }
         else {
-            $img->line($x,$y,$x,$y-$length+1,$axisColor);
+            # Warum $y-1, $y-$length?
+            $img->line($x,$y-1,$x,$y-$length,$axisColor);
         }
     }
     else {
@@ -263,7 +264,8 @@ sub render {
     for my $tik (@ticks) {
         my $pos = $tik->position;
         if ($orientation eq 'y') {
-            my $yPos = $reverse? $y+$pos: $y-$pos;
+            # Warum $y-$pos-1?
+            my $yPos = $reverse? $y+$pos: $y-$pos-1;
             if ($tickDirection eq 'r') {
                 $img->line($x+$tickLength,$yPos,$x+1,$yPos,$tickColor);
                 $img->stringCentered($fnt,'v',$x+$tickLength+
@@ -300,7 +302,7 @@ sub render {
     for my $tik ($ax->subTicks) {
         my $pos = $tik->position;
         if ($orientation eq 'y') {
-            my $yPos = $reverse? $y+$pos: $y-$pos;
+            my $yPos = $reverse? $y+$pos: $y-$pos-1;
             if ($tickDirection eq 'r') {
                 $img->line($x+$subTickLength,$yPos,$x+1,$yPos,
                     $subTickColor);

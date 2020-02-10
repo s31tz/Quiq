@@ -192,15 +192,16 @@ sub elements {
 
 =head4 Synopsis
 
-  $lst->loop($ref,$sub);
+  $lst->loop(@refs,$sub);
 
 =head4 Arguments
 
 =over 4
 
-=item $ref
+=item @refs
 
-Referenz auf Struktur, die von der Schleife manipuliert wird.
+Liste von Referenzen auf Strukturen, die von der Schleife manipuliert
+werden. Die Liste kann leer sein.
 
 =item $sub
 
@@ -208,7 +209,7 @@ Subroutine, die für jedes Objekt aufgerufen wird.
 Die Subroutine hat die Signatur
 
   sub {
-      my ($ref,$obj,$i) = @_;
+      my ($obj,$i,@refs) = @_;
       ...
   }
 
@@ -217,18 +218,21 @@ Die Subroutine hat die Signatur
 =head4 Description
 
 Rufe die Subroutine $sub für jedes Element der Liste auf. Innerhalb der
-Subroutine kann die Struktur, auf die $ref verweist, manipuliert werden.
+Subroutine können die Strukturen, auf die @refs verweist, manipuliert
+werden.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
 sub loop {
-    my ($self,$ref,$sub) = @_;
+    my $self = shift;
+    my $sub = pop;
+    # @_: @refs
 
     my $i = 0;
     for (@{$self->elements}) {
-        $sub->($ref,$_,$i++);
+        $sub->($_,$i++,@_);
     }
 
     return;
