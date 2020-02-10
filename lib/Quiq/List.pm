@@ -32,7 +32,7 @@ L<Quiq::Hash>
   # Array der enthaltenen Objekte
   @obj = $lst->elements;
   
-  # Füge Objekt zur Liste hinzu (am Ende)
+  # Füge Objekt am Ende zur Liste hinzu
   $obj = $lst->push($obj);
   
   # Bilde Objekte auf Werte ab
@@ -40,20 +40,20 @@ L<Quiq::Hash>
   @arr = $lst->map(sub {
       my $obj = shift;
       ...
-      return (...);
+      return @vals;
   };
   
   # Über alle Objekte iterieren
   
-  $lst->loop($ref,sub {
-      my ($ref,$obj,$i) = @_
+  $lst->loop(@refs,sub {
+      my ($obj,$i,@refs) = @_
       ...
   });
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse speichert eine Ansammlung von (beliebigen) Objekten.
-Mit den Methoden der Klasse kann auf dieser Ansammlung operiert werden.
+Ein Objekt der Klasse speichert eine Liste von Objekten.
+Mit den Methoden der Klasse kann auf dieser Liste operiert werden.
 
 =head1 EXAMPLES
 
@@ -76,9 +76,8 @@ Füge Werte zu einer Zeichenkette zusammen:
 
 Beides zusammen in einem Aufruf:
 
-  $lst->loop([\$sum,\$str],sub {
-      my ($ref,$obj,$i) = @_;
-      my ($sumS,$strS) = @$ref;
+  $lst->loop(\$sum,\$str,sub {
+      my ($obj,$i,$sumS,$strS) = @_;
       ...
       $$sumS += $x;
       ...
@@ -86,6 +85,20 @@ Beides zusammen in einem Aufruf:
           $$strS .= "\n";
       }
       $$strS .= $s;
+  });
+
+oder als Closure
+
+  my ($sum,$str);
+  $lst->loop(sub {
+      my ($obj,$i) = @_;
+      ...
+      $sum += $x;
+      ...
+      if ($i) {
+          $str .= "\n";
+      }
+      $str .= $s;
   });
 
 =head1 METHODS
