@@ -32,21 +32,29 @@ L<Quiq::Hash>
   # Array der enthaltenen Objekte
   @obj = $lst->elements;
   
-  # Füge Objekt am Ende zur Liste hinzu
+  # Füge Objekt zur Liste hinzu (am Ende)
   $obj = $lst->push($obj);
+  
+  # Wähle Objekte aus
+  
+  @objects = $lst->grep(sub {
+      my ($obj,$i,@args) = @_;
+      ...
+      return $bool;
+  });
   
   # Bilde Objekte auf Werte ab
   
-  @arr = $lst->map(sub {
-      my $obj = shift;
+  @arr = $lst->map(@args,sub {
+      my ($obj,$i,@args) = @_;
       ...
-      return @vals;
+      return (...);
   };
   
-  # Über alle Objekte iterieren
+  # Iteriere über alle Objekte
   
-  $lst->loop(@refs,sub {
-      my ($obj,$i,@refs) = @_
+  $lst->loop(@args,sub {
+      my ($obj,$i,@args) = @_
       ...
   });
 
@@ -201,20 +209,76 @@ sub elements {
 
 # -----------------------------------------------------------------------------
 
-=head3 loop() - Iteriere über allen Elementen
+=head3 grep() - Wähle Objekte aus
 
 =head4 Synopsis
 
-  $lst->loop(@refs,$sub);
+  @objects | $lstNew = $lst->grep(@args,$sub);
 
 =head4 Arguments
 
 =over 4
 
-=item @refs
+=item $sub
 
-Liste von Referenzen auf Strukturen, die von der Schleife manipuliert
-werden. Die Liste kann leer sein.
+Subroutine, die für jedes Objekt prüft, ob es in der Ergebnismenge
+enthalten ist. Die Subroutine hat die Signatur
+
+  sub {
+      my ($obj,$i,@args) = @_;
+      ...
+      return $bool;
+  }
+
+=back
+
+=head4 Returns
+
+Liste von Objekten. Im Skalarkontext eine Referenz auf eine
+(neu erzeugte) Liste mit diesen Objekten.
+
+=head4 Description
+
+Rufe die Subroutine $sub für jedes Element der Liste auf. Liefert die
+Subroutine wahr, wird das betreffende Objekt in die Ergebnismenge
+übernommen, sonst nicht.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub grep {
+    my $self = shift;
+    my $sub = pop;
+    # @_: @args
+
+    my @objects;
+    my $i = 0;
+    for (@{$self->elements}) {
+        if ($sub->($_,$i++,@_)) {
+            CORE::push @objects,$_;
+        }
+    }
+
+    return wantarray? @objects: ref($self)->new(\@objects);
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 loop() - Iteriere über allen Elementen
+
+=head4 Synopsis
+
+  $lst->loop(@args,$sub);
+
+=head4 Arguments
+
+=over 4
+
+=item @args
+
+Liste von Argumentn, z.B. Referenzen auf Strukturen, die von der Schleife
+manipuliert werden. Die Liste kann leer sein.
 
 =item $sub
 
@@ -231,7 +295,7 @@ Die Subroutine hat die Signatur
 =head4 Description
 
 Rufe die Subroutine $sub für jedes Element der Liste auf. Innerhalb der
-Subroutine können die Strukturen, auf die @refs verweist, manipuliert
+Subroutine können die Strukturen, auf die @args verweist, manipuliert
 werden.
 
 =cut
@@ -241,7 +305,7 @@ werden.
 sub loop {
     my $self = shift;
     my $sub = pop;
-    # @_: @refs
+    # @_: @args
 
     my $i = 0;
     for (@{$self->elements}) {
@@ -257,7 +321,7 @@ sub loop {
 
 =head4 Synopsis
 
-  @arr | $arr = $lst->map($sub);
+  @arr | $arr = $lst->map(@args,$sub);
 
 =head4 Arguments
 
@@ -269,7 +333,7 @@ Subroutine, die für jedes Objekt eine Liste von Werten liefert.
 Die Subroutine hat die Signatur
 
   sub {
-      my $obj = shift;
+      my ($obj,$i,@args) = @_;
       ...
       return @arr;
   }
@@ -291,11 +355,14 @@ zurück.
 # -----------------------------------------------------------------------------
 
 sub map {
-    my ($self,$sub) = @_;
+    my $self = shift;
+    my $sub = pop;
+    # @_: @args
 
     my @arr;
+    my $i = 0;
     for (@{$self->elements}) {
-        CORE::push @arr,$sub->($_);
+        CORE::push @arr,$sub->($_,$i++,@_);
     }
 
     return wantarray? @arr: \@arr;

@@ -17,7 +17,7 @@ sub test_loadClass : Init(1) {
 
 # -----------------------------------------------------------------------------
 
-sub test_unitTest : Test(12) {
+sub test_unitTest : Test(13) {
     my $self = shift;
 
     # new()
@@ -64,6 +64,14 @@ sub test_unitTest : Test(12) {
         return $obj->produkt;
     });
     $self->is($str,'Erdbeeren,Pflaumen');
+
+    # grep()
+
+    my @objects = $lst->grep(sub {
+        my $obj = shift;
+        return substr($obj->produkt,0,1) eq 'P'? 1: 0;
+    });
+    $self->isDeeply(\@objects,[{produkt=>'Pflaumen',preis=>2.99}]);
 
     # loop()
 

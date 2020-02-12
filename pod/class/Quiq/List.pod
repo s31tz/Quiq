@@ -21,21 +21,29 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
   # Array der enthaltenen Objekte
   @obj = $lst->elements;
   
-  # Füge Objekt am Ende zur Liste hinzu
+  # Füge Objekt zur Liste hinzu (am Ende)
   $obj = $lst->push($obj);
+  
+  # Wähle Objekte aus
+  
+  @objects = $lst->grep(sub {
+      my ($obj,$i,@args) = @_;
+      ...
+      return $bool;
+  });
   
   # Bilde Objekte auf Werte ab
   
-  @arr = $lst->map(sub {
-      my $obj = shift;
+  @arr = $lst->map(@args,sub {
+      my ($obj,$i,@args) = @_;
       ...
-      return @vals;
+      return (...);
   };
   
-  # Über alle Objekte iterieren
+  # Iteriere über alle Objekte
   
-  $lst->loop(@refs,sub {
-      my ($obj,$i,@refs) = @_
+  $lst->loop(@args,sub {
+      my ($obj,$i,@args) = @_
       ...
   });
 
@@ -153,20 +161,54 @@ Liste von Objekten. Im Skalarkontext eine Referenz auf die Liste.
 
 Liefere das Array der in der Liste gespeicherten Objekte.
 
-=head3 loop() - Iteriere über allen Elementen
+=head3 grep() - Wähle Objekte aus
 
 =head4 Synopsis
 
-  $lst->loop(@refs,$sub);
+  @objects | $lstNew = $lst->grep(@args,$sub);
 
 =head4 Arguments
 
 =over 4
 
-=item @refs
+=item $sub
 
-Liste von Referenzen auf Strukturen, die von der Schleife manipuliert
-werden. Die Liste kann leer sein.
+Subroutine, die für jedes Objekt prüft, ob es in der Ergebnismenge
+enthalten ist. Die Subroutine hat die Signatur
+
+  sub {
+      my ($obj,$i,@args) = @_;
+      ...
+      return $bool;
+  }
+
+=back
+
+=head4 Returns
+
+Liste von Objekten. Im Skalarkontext eine Referenz auf eine
+(neu erzeugte) Liste mit diesen Objekten.
+
+=head4 Description
+
+Rufe die Subroutine $sub für jedes Element der Liste auf. Liefert die
+Subroutine wahr, wird das betreffende Objekt in die Ergebnismenge
+übernommen, sonst nicht.
+
+=head3 loop() - Iteriere über allen Elementen
+
+=head4 Synopsis
+
+  $lst->loop(@args,$sub);
+
+=head4 Arguments
+
+=over 4
+
+=item @args
+
+Liste von Argumentn, z.B. Referenzen auf Strukturen, die von der Schleife
+manipuliert werden. Die Liste kann leer sein.
 
 =item $sub
 
@@ -183,14 +225,14 @@ Die Subroutine hat die Signatur
 =head4 Description
 
 Rufe die Subroutine $sub für jedes Element der Liste auf. Innerhalb der
-Subroutine können die Strukturen, auf die @refs verweist, manipuliert
+Subroutine können die Strukturen, auf die @args verweist, manipuliert
 werden.
 
 =head3 map() - Bilde Objekte auf Werte ab
 
 =head4 Synopsis
 
-  @arr | $arr = $lst->map($sub);
+  @arr | $arr = $lst->map(@args,$sub);
 
 =head4 Arguments
 
@@ -202,7 +244,7 @@ Subroutine, die für jedes Objekt eine Liste von Werten liefert.
 Die Subroutine hat die Signatur
 
   sub {
-      my $obj = shift;
+      my ($obj,$i,@args) = @_;
       ...
       return @arr;
   }
