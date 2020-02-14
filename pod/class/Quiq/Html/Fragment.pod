@@ -29,6 +29,12 @@ werden.
 
 =over 4
 
+=item css => $css | \@css (Default: undef)
+
+Der CSS-Code des Fragments. Siehe Methode
+Quiq::Css->style(). Das Attribut kann mehrfach vorkommen,
+z.B. für die getrennte Angabe von CSS-URLs und CSS-Definitionen.
+
 =item doctype => $bool (Default: 0)
 
 Füge <DOCTYPE> am Anfang des Fragments hinzu. Dies ist nützlich,
@@ -39,7 +45,7 @@ wenn das Fragment die Antwort eines Ajax-Requests ist.
 Der HTML-Code des Fragments. Ist ein Array von Code-Abschnitten
 angegeben, werden diese konkateniert.
 
-=item javaScript => $js | \@js (Default: undef)
+=item js => $js | \@js (Default: undef)
 
 Der JavaScript-Code des Fragments. Siehe Methode
 Quiq::JavaScript->code(). Das Attribut kann mehrfach
@@ -50,12 +56,6 @@ JavaScript-Code.
 
 Ersetze im generierten Code die angegebenen Platzhalter durch ihre
 Werte.
-
-=item styleSheet => $css | \@css (Default: undef)
-
-Der CSS-Code des Fragments. Siehe Methode
-Quiq::Css->style(). Das Attribut kann mehrfach vorkommen,
-z.B. für die getrennte Angabe von CSS-URLs und CSS-Definitionen.
 
 =back
 

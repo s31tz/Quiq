@@ -71,7 +71,7 @@ sub test_html_3 : Test(1) {
     );
 
     my $c = Quiq::Html::Fragment->new(
-        styleSheet => q|
+        css => q|
             #container {
                 background-color: red;
             }
@@ -80,7 +80,7 @@ sub test_html_3 : Test(1) {
             id => 'container',
             '__TEXT__'
         ),
-        javaScript => q|
+        js => q|
             $(function() {
                 alert('ready');
             });

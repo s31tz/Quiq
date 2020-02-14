@@ -43,6 +43,12 @@ werden.
 
 =over 4
 
+=item css => $css | \@css (Default: undef)
+
+Der CSS-Code des Fragments. Siehe Methode
+Quiq::Css->style(). Das Attribut kann mehrfach vorkommen,
+z.B. für die getrennte Angabe von CSS-URLs und CSS-Definitionen.
+
 =item doctype => $bool (Default: 0)
 
 Füge <DOCTYPE> am Anfang des Fragments hinzu. Dies ist nützlich,
@@ -53,7 +59,7 @@ wenn das Fragment die Antwort eines Ajax-Requests ist.
 Der HTML-Code des Fragments. Ist ein Array von Code-Abschnitten
 angegeben, werden diese konkateniert.
 
-=item javaScript => $js | \@js (Default: undef)
+=item js => $js | \@js (Default: undef)
 
 Der JavaScript-Code des Fragments. Siehe Methode
 Quiq::JavaScript->code(). Das Attribut kann mehrfach
@@ -64,12 +70,6 @@ JavaScript-Code.
 
 Ersetze im generierten Code die angegebenen Platzhalter durch ihre
 Werte.
-
-=item styleSheet => $css | \@css (Default: undef)
-
-Der CSS-Code des Fragments. Siehe Methode
-Quiq::Css->style(). Das Attribut kann mehrfach vorkommen,
-z.B. für die getrennte Angabe von CSS-URLs und CSS-Definitionen.
 
 =back
 
@@ -97,17 +97,17 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
+        css => [],
         doctype => 0,
         html => [],
-        javaScript => [],
+        js => [],
         placeholders => undef,
-        styleSheet => [],
     );
     while (@_) {
         my $key = shift;
         my $val = shift;
 
-        if ($key =~ /^(html|javaScript|styleSheet)$/) {
+        if ($key =~ /^(css|html|js)$/) {
             my $arr = $self->get($key);
             push @$arr,ref $val? @$val: $val;
         }
@@ -146,16 +146,16 @@ sub html {
 
     my $self = ref $this? $this: $this->new(@_);
 
-    my ($doctype,$html,$javaScript,$placeholders,$styleSheet) =
-        $self->get(qw/doctype html javaScript placeholders styleSheet/);
+    my ($css,$doctype,$html,$js,$placeholders) =
+        $self->get(qw/css doctype html js placeholders/);
 
     return $h->cat(
         -placeholders => $placeholders,
         '-',
         $doctype? $h->doctype: '',
-        Quiq::Css->style($h,$styleSheet),
+        Quiq::Css->style($h,$css),
         join('',@$html),
-        Quiq::JavaScript->script($h,$javaScript),
+        Quiq::JavaScript->script($h,$js),
     );
 }
 
