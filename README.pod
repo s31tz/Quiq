@@ -333,6 +333,10 @@ L<Quiq::Html::Base|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html
 
 =item *
 
+L<Quiq::Html::Component|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Component.pod> - Eigenständige Komponente einer HTML-Seite
+
+=item *
+
 L<Quiq::Html::Construct|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Construct.pod> - Generierung von einfachen Tag-Konstrukten
 
 =item *
