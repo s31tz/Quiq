@@ -97,7 +97,7 @@ angegeben werden.
 
 =item ready => $js | \@js
 
-Die Ready-Handler der Komponente. Gibt es mehrere Ready-Handler
+Der Ready-Handler der Komponente. Gibt es mehrere Ready-Handler
 kann das Attribut mehrfach oder eine Array-Referenz angegeben werden.
 
 =back
@@ -117,25 +117,172 @@ sub new {
 
     my $self = $class->SUPER::new(
         css => [],
-        doctype => 0,
         html => [],
         js => [],
-        placeholders => undef,
+        name => undef,
+        ready => [],
+        resources => [],
     );
     while (@_) {
-        my $key = shift;
-        my $val = shift;
-
-        if ($key =~ /^(css|html|js)$/) {
-            my $arr = $self->get($key);
-            push @$arr,ref $val? @$val: $val;
-        }
-        else {
-            $self->set($key=>$val);
-        }
+        $self->setOrPush(splice @_,0,2);
     }
 
     return $self;
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Objektmethoden
+
+=head3 css() - CSS-Code der Komponente
+
+=head4 Synopsis
+
+  $css | @css = $c->css;
+
+=head4 Description
+
+Liefere den CSS-Code der Komponente. Im Arraykontext die Liste der
+Array-Elemente, im Skalarkontext deren Konkatenation.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub css {
+    my ($self,$h) = @_;
+    return $self->attributeValue('css');
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 html() - HTML-Code der Komponente
+
+=head4 Synopsis
+
+  $html | @html = $c->html;
+
+=head4 Description
+
+Liefere den HTML-Code der Komponente. Im Arraykontext die Liste der
+Array-Elemente, im Skalarkontext deren Konkatenation.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub html {
+    my $self = shift;
+    return $self->attributeValue('html');
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 js() - JavaScript-Code der Komponente
+
+=head4 Synopsis
+
+  $js | @js = $c->js;
+
+=head4 Description
+
+Liefere den JavaScript-Code der Komponente. Im Arraykontext die Liste der
+Array-Elemente, im Skalarkontext deren Konkatenation.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub js {
+    my $self = shift;
+    return $self->attributeValue('js');
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 name() - Name der Komponente
+
+=head4 Synopsis
+
+  $name = $c->name;
+
+=head4 Description
+
+Liefere den Namen der Komponente.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub name {
+    return shift->{'name'};
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 ready() - Ready-Handler der Komponente
+
+=head4 Synopsis
+
+  $ready | @ready = $c->ready;
+
+=head4 Description
+
+Liefere den/die Ready-Handler der Komponente. Im Arraykontext die
+Liste der Array-Elemente, im Skalarkontext deren Konkatenation.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub ready {
+    my $self = shift;
+    return $self->attributeValue('ready');
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 resources() - Resourcen der Komponente
+
+=head4 Synopsis
+
+  @resources = $c->resources;
+
+=head4 Description
+
+Liefere die Liste der Resourcen der Komponente.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub resources {
+    return @{shift->{'resources'}};
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Private Methoden
+
+=head3 attributeValue() - Liefere Attributwert
+
+=head4 Synopsis
+
+  $str | @arr = $obj->attributeValue($key);
+
+=head4 Description
+
+Liefere den Wert des Attributs $key. Im Arraykontext die Liste der
+Array-Elemente, im Skalarkontext deren Konkatenation.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub attributeValue {
+    my ($self,$key) = @_;
+    my $arr = $self->{$key};
+    return wantarray? @$arr: join('',@$arr);
 }
 
 # -----------------------------------------------------------------------------
