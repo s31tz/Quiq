@@ -7,6 +7,10 @@ use warnings;
 
 our $VERSION = '1.174';
 
+use Quiq::Css;
+use Quiq::JavaScript;
+use Quiq::JQuery::Function;
+
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -23,6 +27,8 @@ L<Quiq::Hash>
 
   use Quiq::Html::Component;
   
+  # Instantiiere Objekt
+  
   $c = Quiq::Html::Component->new(
       name => $name
       resources => \@resources,
@@ -32,19 +38,26 @@ L<Quiq::Hash>
       ready => $js | \@js,
   );
   
+  # Frage Eigenschaften ab
+  
   $name = $c->name;
   @resources = $c->resources;
   $css | @css = $c->css;
   $html | @html = $c->html;
   $js | @js = $c->js;
   $ready | @ready = $c->ready;
+  
+  # Generiere HTML
+  
+  $h = Quiq::Html::Tag->new;
+  $html = $c->fragment($h);
 
 =head1 DESCRIPTION
 
 Ein Objekt der Klasse repräsentiert eine eigenständige Komponente einer
 HTML-Seite bestehend aus HTML-, CSS- und JavaScript-Code. Der Zweck
 besteht darin, diese einzelnen Bestandteile zu einer Einheit
-zusammenzufassen. Die Bestandteile können über Methoden der Klasse
+zusammenfassen zu können. Die Bestandteile können über Methoden der Klasse
 abgefragt werden, um sie systematisch in die unterschiedlichen Abschnitte
 einer HTML-Seite (<head>, <body>, <style>, <script>, $(function() {...}))
 einsetzen zu können. Die Resourcen mehrerer Komponenten können
@@ -116,15 +129,23 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-        css => [],
-        html => [],
-        js => [],
+        cssA => [],
+        htmlA => [],
+        jsA => [],
         name => undef,
-        ready => [],
-        resources => [],
+        readyA => [],
+        resourceA => [],
     );
     while (@_) {
-        $self->setOrPush(splice @_,0,2);
+        my $key = {
+            css => 'cssA',
+            html => 'htmlA',
+            js => 'jsA',
+            name => 'name',
+            ready => 'readyA',
+            resources => 'resourceA',
+        }->{shift()};
+        $self->setOrPush($key=>shift);
     }
 
     return $self;
@@ -150,8 +171,58 @@ Array-Elemente, im Skalarkontext deren Konkatenation.
 # -----------------------------------------------------------------------------
 
 sub css {
-    my ($self,$h) = @_;
-    return $self->attributeValue('css');
+    return shift->returnValue('cssA');
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 fragment() - Generiere HTML
+
+=head4 Synopsis
+
+  $html = $c->fragment($h);
+  $html = $class->fragment($h,@keyVal);
+
+=head4 Description
+
+Generiere den Frament-Code der Komponente und liefere diesen zurück.
+Als Klassenmethode gerufen, wird das Objekt intern erzeugt und mit den
+Attributen @keyVal instantiiert.
+
+Der Fragment-Code besteht aus dem HTML-, CSS- und JavaScript-Code der
+Komponente. Anwendungsfall ist z.B. eine Ajax-Antwort, die in ein
+bestehendes HTML-Dokument eingebettet wird.
+
+Der generierte Code hat den Aufbau:
+
+  <RESOURCEN LADEN>
+  <STYLE CODE>
+  <HTML CODE>
+  <JAVASCRIPT CODE>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub fragment {
+    my $this = shift;
+    my $h = shift;
+
+    my $self = ref $this? $this: $this->new(@_);
+
+    my ($cssA,$htmlA,$jsA,$readyA,$resourceA) =
+        $self->get(qw/cssA htmlA jsA readyA resourceA/);
+
+    return $h->cat(
+        $h->loadFiles(@$resourceA),
+        Quiq::Css->style($h,$cssA),
+        join('',@$htmlA),
+        Quiq::JavaScript->script($h,$jsA),
+        $h->tag('script',
+            -ignoreIfNull => 1,
+            Quiq::JQuery::Function->ready(join('',@$readyA))
+        ),
+    );
 }
 
 # -----------------------------------------------------------------------------
@@ -172,8 +243,7 @@ Array-Elemente, im Skalarkontext deren Konkatenation.
 # -----------------------------------------------------------------------------
 
 sub html {
-    my $self = shift;
-    return $self->attributeValue('html');
+    return shift->returnValue('htmlA');
 }
 
 # -----------------------------------------------------------------------------
@@ -194,8 +264,7 @@ Array-Elemente, im Skalarkontext deren Konkatenation.
 # -----------------------------------------------------------------------------
 
 sub js {
-    my $self = shift;
-    return $self->attributeValue('js');
+    return shift->returnValue('jsA');
 }
 
 # -----------------------------------------------------------------------------
@@ -236,8 +305,7 @@ Liste der Array-Elemente, im Skalarkontext deren Konkatenation.
 # -----------------------------------------------------------------------------
 
 sub ready {
-    my $self = shift;
-    return $self->attributeValue('ready');
+    return shift->returnValue('readyA');
 }
 
 # -----------------------------------------------------------------------------
@@ -246,29 +314,35 @@ sub ready {
 
 =head4 Synopsis
 
-  @resources = $c->resources;
+  @resources | $resourceA = $c->resources;
+
+=head4 Returns
+
+Liste der Resource-URLs. Im Skalarkontext eine Referenz auf die Liste.
 
 =head4 Description
 
-Liefere die Liste der Resourcen der Komponente.
+Liefere die Liste der Resource-URLs der Komponente.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
 sub resources {
-    return @{shift->{'resources'}};
+    my $self = shift;
+    my $arr = $self->{'resourceA'};
+    return wantarray? @$arr: $arr;
 }
 
 # -----------------------------------------------------------------------------
 
 =head2 Private Methoden
 
-=head3 attributeValue() - Liefere Attributwert
+=head3 returnValue() - Liefere Attributwert
 
 =head4 Synopsis
 
-  $str | @arr = $obj->attributeValue($key);
+  $str | @arr = $obj->returnValue($key);
 
 =head4 Description
 
@@ -279,7 +353,7 @@ Array-Elemente, im Skalarkontext deren Konkatenation.
 
 # -----------------------------------------------------------------------------
 
-sub attributeValue {
+sub returnValue {
     my ($self,$key) = @_;
     my $arr = $self->{$key};
     return wantarray? @$arr: join('',@$arr);

@@ -337,15 +337,15 @@ L<Quiq::Html::Component|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq
 
 =item *
 
+L<Quiq::Html::Component::Bundle|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Component/Bundle.pod> - Bündel von HTML-Komponenten
+
+=item *
+
 L<Quiq::Html::Construct|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Construct.pod> - Generierung von einfachen Tag-Konstrukten
 
 =item *
 
 L<Quiq::Html::Form::Layout|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Form/Layout.pod> - HTML-Formular mit freiem Layout
-
-=item *
-
-L<Quiq::Html::Fragment|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Fragment.pod> - Fragment aus HTML-, CSS- und JavaScript-Code
 
 =item *
 

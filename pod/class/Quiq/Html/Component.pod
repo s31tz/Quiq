@@ -12,6 +12,8 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
   use Quiq::Html::Component;
   
+  # Instantiiere Objekt
+  
   $c = Quiq::Html::Component->new(
       name => $name
       resources => \@resources,
@@ -21,19 +23,26 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
       ready => $js | \@js,
   );
   
+  # Frage Eigenschaften ab
+  
   $name = $c->name;
   @resources = $c->resources;
   $css | @css = $c->css;
   $html | @html = $c->html;
   $js | @js = $c->js;
   $ready | @ready = $c->ready;
+  
+  # Generiere HTML
+  
+  $h = Quiq::Html::Tag->new;
+  $html = $c->fragment($h);
 
 =head1 DESCRIPTION
 
 Ein Objekt der Klasse repräsentiert eine eigenständige Komponente einer
 HTML-Seite bestehend aus HTML-, CSS- und JavaScript-Code. Der Zweck
 besteht darin, diese einzelnen Bestandteile zu einer Einheit
-zusammenzufassen. Die Bestandteile können über Methoden der Klasse
+zusammenfassen zu können. Die Bestandteile können über Methoden der Klasse
 abgefragt werden, um sie systematisch in die unterschiedlichen Abschnitte
 einer HTML-Seite (<head>, <body>, <style>, <script>, $(function() {...}))
 einsetzen zu können. Die Resourcen mehrerer Komponenten können
@@ -109,6 +118,30 @@ dieses Objekt zurück.
 Liefere den CSS-Code der Komponente. Im Arraykontext die Liste der
 Array-Elemente, im Skalarkontext deren Konkatenation.
 
+=head3 fragment() - Generiere HTML
+
+=head4 Synopsis
+
+  $html = $c->fragment($h);
+  $html = $class->fragment($h,@keyVal);
+
+=head4 Description
+
+Generiere den Frament-Code der Komponente und liefere diesen zurück.
+Als Klassenmethode gerufen, wird das Objekt intern erzeugt und mit den
+Attributen @keyVal instantiiert.
+
+Der Fragment-Code besteht aus dem HTML-, CSS- und JavaScript-Code der
+Komponente. Anwendungsfall ist z.B. eine Ajax-Antwort, die in ein
+bestehendes HTML-Dokument eingebettet wird.
+
+Der generierte Code hat den Aufbau:
+
+  <RESOURCEN LADEN>
+  <STYLE CODE>
+  <HTML CODE>
+  <JAVASCRIPT CODE>
+
 =head3 html() - HTML-Code der Komponente
 
 =head4 Synopsis
@@ -156,19 +189,23 @@ Liste der Array-Elemente, im Skalarkontext deren Konkatenation.
 
 =head4 Synopsis
 
-  @resources = $c->resources;
+  @resources | $resourceA = $c->resources;
+
+=head4 Returns
+
+Liste der Resource-URLs. Im Skalarkontext eine Referenz auf die Liste.
 
 =head4 Description
 
-Liefere die Liste der Resourcen der Komponente.
+Liefere die Liste der Resource-URLs der Komponente.
 
 =head2 Private Methoden
 
-=head3 attributeValue() - Liefere Attributwert
+=head3 returnValue() - Liefere Attributwert
 
 =head4 Synopsis
 
-  $str | @arr = $obj->attributeValue($key);
+  $str | @arr = $obj->returnValue($key);
 
 =head4 Description
 

@@ -8,7 +8,7 @@ use strict;
 use warnings;
 
 use Quiq::Css;
-use Quiq::Html::Tag;
+use Quiq::Html::Producer;
 
 # -----------------------------------------------------------------------------
 
@@ -18,11 +18,11 @@ sub test_loadClass : Init(1) {
 
 # -----------------------------------------------------------------------------
 
-sub test_unitTest_1 : Test(12) {
+sub test_unitTest_1 : Test(13) {
     my $self = shift;
 
     my $c = Quiq::Css->new('flat');
-    my $h = Quiq::Html::Tag->new;
+    my $h = Quiq::Html::Producer->new;
 
     my $cssCode = $c->rule('body',color=>'#40808');
     my $htmlCode = $h->tag('p','Ein Test');
@@ -79,8 +79,46 @@ sub test_unitTest_1 : Test(12) {
 
     my @resources = $obj->resources;
     $self->isDeeply(\@resources,['js/jquery.js']);
-    my $n = $obj->resources;
-    $self->is($n,1);
+    my $resourceA = $obj->resources;
+    $self->isDeeply($resourceA,['js/jquery.js']);
+
+    # Fragment
+
+    my $expected = $h->cat(
+        $h->tag('style',q|
+            #container {
+                background-color: red;
+            }
+        |),
+        $h->tag('div',
+            id => 'container',
+            'Ein Test',
+        ),
+        $h->tag('script',q|
+            $(function() {
+                alert('ready');
+            });
+        |),
+    );
+
+    $c = Quiq::Html::Component->new(
+        css => q|
+            #container {
+                background-color: red;
+            }
+        |,
+        html => $h->tag('div',
+            id => 'container',
+            'Ein Test'
+        ),
+        ready => q|
+            alert('ready');
+        |,
+    );
+
+   $html = $c->fragment($h);
+   $self->is($html,$expected);
+
 }
 
 # -----------------------------------------------------------------------------
