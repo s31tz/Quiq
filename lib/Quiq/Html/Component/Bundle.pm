@@ -32,16 +32,22 @@ L<Quiq::List>
   # Lookup einer Komponente
   $c = $b->component($name);
   
+  # Zusammenfassung der Bestandteile der Komponenten
+  
   @resources | $resourceA = $b->resources;
   @css | $css = $b->css;
   @html | $html = $b->html;
   @js | $js = $b->js;
   @ready | $ready = $b->ready;
+  
+  # Platzhalter-Liste für HTML
+  @keyVal = $b->htmlPlaceholders;
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse speichert ein Bündel von HTML-Komponenten
-vom Typ Quiq::Html::Component.
+Ein Objekt der Klasse speichert mehrere HTML-Komponenten
+vom Typ Quiq::Html::Component und stellt Methoden zur Verfügung,
+deren Bestandteile abzufragen.
 
 =head1 SEE ALSO
 
@@ -179,7 +185,7 @@ Array-Elemente, im Skalarkontext deren Konkatenation.
 # -----------------------------------------------------------------------------
 
 sub css {
-    return shift->returnValue('css');
+    return shift->getValue('css');
 }
 
 # -----------------------------------------------------------------------------
@@ -200,7 +206,39 @@ Array-Elemente, im Skalarkontext deren Konkatenation.
 # -----------------------------------------------------------------------------
 
 sub html {
-    return shift->returnValue('html');
+    return shift->getValue('html');
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 htmlPlaceholders() - Platzhalterliste für HTML
+
+=head4 Synopsis
+
+  @keyVal = $c->htmlPlaceholders;
+
+=head4 Returns
+
+Liste von Schlüssel/Wert-Paaren
+
+=head4 Description
+
+Liefere die Liste von Schlüssel/Wert-Paaren für eine
+HTML-Platzhalterersetzung.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub htmlPlaceholders {
+    my $self = shift;
+
+    my @arr;
+    for my $c (@{$self->elements}) {
+        push @arr,'__'.uc($c->name).'__'=>scalar $c->html;
+    }
+
+    return @arr;
 }
 
 # -----------------------------------------------------------------------------
@@ -221,7 +259,7 @@ Array-Elemente, im Skalarkontext deren Konkatenation.
 # -----------------------------------------------------------------------------
 
 sub js {
-    return shift->returnValue('js');
+    return shift->getValue('js');
 }
 
 # -----------------------------------------------------------------------------
@@ -242,7 +280,7 @@ Liste der Array-Elemente, im Skalarkontext deren Konkatenation.
 # -----------------------------------------------------------------------------
 
 sub ready {
-    return shift->returnValue('ready');
+    return shift->getValue('ready');
 }
 
 # -----------------------------------------------------------------------------
@@ -260,7 +298,7 @@ Liste von Resource-URLs. Im Skalarkontext eine Referenz auf die Liste.
 =head4 Description
 
 Liefere die Liste der Resource-URLs aller Komponenten. Mehrfachnennungen
-wrden gefiltert.
+werden gefiltert.
 
 =cut
 
@@ -269,13 +307,9 @@ wrden gefiltert.
 sub resources {
     my $self = shift;
 
-    my (@arr,%seen);
+    my @arr;
     for my $c (@{$self->elements}) {
-         for my $url (@{$c->resources}) {
-             if (!$seen{$url}++) {
-                 push @arr,$url;
-             }                 
-         }
+        push @arr,$c->resources;
     }
 
     return wantarray? @arr: \@arr;
@@ -285,11 +319,11 @@ sub resources {
 
 =head2 Private Methoden
 
-=head3 returnValue() - Liefere Attributwert
+=head3 getValue() - Liefere Attributwert
 
 =head4 Synopsis
 
-  $str | @arr = $obj->returnValue($key);
+  $str | @arr = $obj->getValue($key);
 
 =head4 Description
 
@@ -300,7 +334,7 @@ Array-Elemente, im Skalarkontext deren Konkatenation.
 
 # -----------------------------------------------------------------------------
 
-sub returnValue {
+sub getValue {
     my ($self,$key) = @_;
 
     my @arr;

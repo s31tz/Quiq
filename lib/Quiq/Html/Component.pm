@@ -47,7 +47,7 @@ L<Quiq::Hash>
   $js | @js = $c->js;
   $ready | @ready = $c->ready;
   
-  # Generiere HTML
+  # Generiere HTML-Fragment
   
   $h = Quiq::Html::Tag->new;
   $html = $c->fragment($h);
@@ -57,11 +57,14 @@ L<Quiq::Hash>
 Ein Objekt der Klasse repräsentiert eine eigenständige Komponente einer
 HTML-Seite bestehend aus HTML-, CSS- und JavaScript-Code. Der Zweck
 besteht darin, diese einzelnen Bestandteile zu einer Einheit
-zusammenfassen zu können. Die Bestandteile können über Methoden der Klasse
+zusammenzufassen. Die Bestandteile können über Methoden der Klasse
 abgefragt werden, um sie systematisch in die unterschiedlichen Abschnitte
 einer HTML-Seite (<head>, <body>, <style>, <script>, $(function() {...}))
 einsetzen zu können. Die Resourcen mehrerer Komponenten können
-zu einer Liste ohne Dubletten konsolidiert werden.
+zu einer Liste ohne Dubletten konsolidiert werden, dies ist allerdings
+Aufgabe des Nutzers. Ein Objekt der Klasse speicher die einzelnen
+Bestandteile nur, sie manipuliert sie nicht (außer, dass im Skalarkontext
+Teile konkateniert werden).
 
 =head1 METHODS
 
@@ -75,6 +78,8 @@ zu einer Liste ohne Dubletten konsolidiert werden.
 
 =head4 Attributes
 
+Alle Attribute außer C<name> können mehrfach angegeben werden.
+
 =over 4
 
 =item name => $name
@@ -82,7 +87,7 @@ zu einer Liste ohne Dubletten konsolidiert werden.
 Name der Komponente. Unter diesem Namen kann die Komponente aus einem
 Bündel von Komponenten ausgewählt werden. Siehe Quiq::Html::Bundle.
 
-=item resources => \@reasources
+=item resources => \@resources
 
 Liste von Resourcen (CSS- und JavaScript-Dateien), die von der
 Komponente benötigt werden. Eine Resource wird durch ihren
@@ -136,16 +141,9 @@ sub new {
         readyA => [],
         resourceA => [],
     );
+
     while (@_) {
-        my $key = {
-            css => 'cssA',
-            html => 'htmlA',
-            js => 'jsA',
-            name => 'name',
-            ready => 'readyA',
-            resources => 'resourceA',
-        }->{shift()};
-        $self->setOrPush($key=>shift);
+        $self->putValue(splice @_,0,2);
     }
 
     return $self;
@@ -171,7 +169,7 @@ Array-Elemente, im Skalarkontext deren Konkatenation.
 # -----------------------------------------------------------------------------
 
 sub css {
-    return shift->returnValue('cssA');
+    return shift->getValue('cssA');
 }
 
 # -----------------------------------------------------------------------------
@@ -243,7 +241,7 @@ Array-Elemente, im Skalarkontext deren Konkatenation.
 # -----------------------------------------------------------------------------
 
 sub html {
-    return shift->returnValue('htmlA');
+    return shift->getValue('htmlA');
 }
 
 # -----------------------------------------------------------------------------
@@ -264,7 +262,7 @@ Array-Elemente, im Skalarkontext deren Konkatenation.
 # -----------------------------------------------------------------------------
 
 sub js {
-    return shift->returnValue('jsA');
+    return shift->getValue('jsA');
 }
 
 # -----------------------------------------------------------------------------
@@ -305,7 +303,7 @@ Liste der Array-Elemente, im Skalarkontext deren Konkatenation.
 # -----------------------------------------------------------------------------
 
 sub ready {
-    return shift->returnValue('readyA');
+    return shift->getValue('readyA');
 }
 
 # -----------------------------------------------------------------------------
@@ -338,11 +336,11 @@ sub resources {
 
 =head2 Private Methoden
 
-=head3 returnValue() - Liefere Attributwert
+=head3 getValue() - Liefere Attributwert
 
 =head4 Synopsis
 
-  $str | @arr = $obj->returnValue($key);
+  @arr | $str = $obj->getValue($key);
 
 =head4 Description
 
@@ -353,10 +351,46 @@ Array-Elemente, im Skalarkontext deren Konkatenation.
 
 # -----------------------------------------------------------------------------
 
-sub returnValue {
+sub getValue {
     my ($self,$key) = @_;
     my $arr = $self->{$key};
     return wantarray? @$arr: join('',@$arr);
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 putValue() - Setze Attributwert oder füge ihn hinzu
+
+=head4 Synopsis
+
+  $obj->putValue($key=>$val);
+
+=head4 Description
+
+Setze den Wert $val des Attributs $key oder füge ihn hinzu.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub putValue {
+    my ($self,$key,$val) = @_;
+
+    # Übersetze externen Namen in internen Namen
+
+    $key = {
+        css => 'cssA',
+        html => 'htmlA',
+        js => 'jsA',
+        name => 'name',
+        ready => 'readyA',
+        resources => 'resourceA',
+    }->{$key};
+
+    # Setze Wert (Skalarattribut) oder füge ihn hinzu (Arrayattribut)
+    $self->setOrPush($key=>$val);
+
+    return;
 }
 
 # -----------------------------------------------------------------------------

@@ -19,15 +19,11 @@ einer eigenen Klasse rechtfertigen.
 
 =head2 Objektmethoden
 
-=head3 loadFiles()
+=head3 loadFiles() - Lade CSS- und JavaScript-Dateien
 
 =head4 Synopsis
 
   $html = $class->loadFiles(@spec);
-
-=head4 Description
-
-Siehe Basisklasse Quiq::Html::Tag.
 
 =head1 VERSION
 

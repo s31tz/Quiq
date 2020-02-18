@@ -37,6 +37,13 @@ Gesamtseite.
 
 Kommentar am Anfang der Seite.
 
+=item components => \@components
+
+Liste der HTML-Komponenten, die in die Seite eingesetzt werden.
+Die Komponentenbestandteile werden automatisch zu den Seitenbestandteilen
+hinzugefüht. Im Seiten-HTML-Code wird der HTML-Code der Komponente
+an der Postion des Platzhalters __<NAME>__ eingesetzt.
+
 =item encoding => $charset (Default: 'utf-8')
 
 Encoding der Seite, z.B. 'iso-8859-1'.

@@ -32,7 +32,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
   $js | @js = $c->js;
   $ready | @ready = $c->ready;
   
-  # Generiere HTML
+  # Generiere HTML-Fragment
   
   $h = Quiq::Html::Tag->new;
   $html = $c->fragment($h);
@@ -42,11 +42,14 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 Ein Objekt der Klasse repräsentiert eine eigenständige Komponente einer
 HTML-Seite bestehend aus HTML-, CSS- und JavaScript-Code. Der Zweck
 besteht darin, diese einzelnen Bestandteile zu einer Einheit
-zusammenfassen zu können. Die Bestandteile können über Methoden der Klasse
+zusammenzufassen. Die Bestandteile können über Methoden der Klasse
 abgefragt werden, um sie systematisch in die unterschiedlichen Abschnitte
 einer HTML-Seite (<head>, <body>, <style>, <script>, $(function() {...}))
 einsetzen zu können. Die Resourcen mehrerer Komponenten können
-zu einer Liste ohne Dubletten konsolidiert werden.
+zu einer Liste ohne Dubletten konsolidiert werden, dies ist allerdings
+Aufgabe des Nutzers. Ein Objekt der Klasse speicher die einzelnen
+Bestandteile nur, sie manipuliert sie nicht (außer, dass im Skalarkontext
+Teile konkateniert werden).
 
 =head1 METHODS
 
@@ -60,6 +63,8 @@ zu einer Liste ohne Dubletten konsolidiert werden.
 
 =head4 Attributes
 
+Alle Attribute außer C<name> können mehrfach angegeben werden.
+
 =over 4
 
 =item name => $name
@@ -67,7 +72,7 @@ zu einer Liste ohne Dubletten konsolidiert werden.
 Name der Komponente. Unter diesem Namen kann die Komponente aus einem
 Bündel von Komponenten ausgewählt werden. Siehe Quiq::Html::Bundle.
 
-=item resources => \@reasources
+=item resources => \@resources
 
 Liste von Resourcen (CSS- und JavaScript-Dateien), die von der
 Komponente benötigt werden. Eine Resource wird durch ihren
@@ -201,16 +206,26 @@ Liefere die Liste der Resource-URLs der Komponente.
 
 =head2 Private Methoden
 
-=head3 returnValue() - Liefere Attributwert
+=head3 getValue() - Liefere Attributwert
 
 =head4 Synopsis
 
-  $str | @arr = $obj->returnValue($key);
+  @arr | $str = $obj->getValue($key);
 
 =head4 Description
 
 Liefere den Wert des Attributs $key. Im Arraykontext die Liste der
 Array-Elemente, im Skalarkontext deren Konkatenation.
+
+=head3 putValue() - Setze Attributwert oder füge ihn hinzu
+
+=head4 Synopsis
+
+  $obj->putValue($key=>$val);
+
+=head4 Description
+
+Setze den Wert $val des Attributs $key oder füge ihn hinzu.
 
 =head1 VERSION
 
