@@ -147,10 +147,6 @@ einer Windgeschwindigkeits-Messung)
     });
   });
 </script>
-<script type="text/javascript">
-  $(function() {
-  });
-</script>
 
 =end html
 
