@@ -302,6 +302,7 @@ sub render {
     for my $tik ($ax->subTicks) {
         my $pos = $tik->position;
         if ($orientation eq 'y') {
+            # Warum $y-$pos-1?
             my $yPos = $reverse? $y+$pos: $y-$pos-1;
             if ($tickDirection eq 'r') {
                 $img->line($x+$subTickLength,$yPos,$x+1,$yPos,
