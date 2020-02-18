@@ -91,7 +91,7 @@ das PostgreSQL COPY Kommando.
 
 =head1 VERSION
 
-1.174
+1.175
 
 =head1 SOURCE
 

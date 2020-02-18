@@ -65,7 +65,7 @@ de facto ungeordnet. Ist das Ende erreicht, liefere undef.
 
 =head1 VERSION
 
-1.174
+1.175
 
 =head1 SOURCE
 
