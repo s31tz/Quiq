@@ -625,6 +625,10 @@ L<Quiq::PostgreSql::CopyFormat|https://github.com/s31tz/Quiq/tree/master/pod/cla
 
 =item *
 
+L<Quiq::PostgreSql::PgDump|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PostgreSql/PgDump.pod> - Wrapper für pg_dump
+
+=item *
+
 L<Quiq::PostgreSql::Psql|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PostgreSql/Psql.pod> - Wrapper für psql
 
 =item *

@@ -8,6 +8,7 @@ use warnings;
 our $VERSION = '1.175';
 
 use Time::HiRes ();
+use Quiq::Duration;
 
 # -----------------------------------------------------------------------------
 
@@ -140,6 +141,46 @@ sub elapsed {
     my $self = shift;
     my $i = shift // 0;
     return Time::HiRes::gettimeofday-$self->[$i];
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 elapsedReadable() - Vergangene Zeit in lesbarer Darstellung
+
+=head4 Synopsis
+
+  $duration = $stw->elapsedReadable;
+  $duration = $stw->elapsedReadable($i);
+
+=head4 Arguments
+
+=over 4
+
+=item $i (Default: 0)
+
+Index des abgefragten Timers.
+
+=back
+
+=head4 Returns
+
+Dauer (String)
+
+=head4 Description
+
+Liefere die Zeit, die auf Timer $i seit dem (letzten) Start vergangen ist,
+in der lesbaren Darstellung DdHhMmSs.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub elapsedReadable {
+    my $self = shift;
+    my $i = shift // 0;
+
+    my $sec = Time::HiRes::gettimeofday-$self->[$i];
+    return Quiq::Duration->new($sec)->asString;
 }
 
 # -----------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-package Quiq::PostgreSql::Psql;
+package Quiq::PostgreSql::PgDump;
 use base qw/Quiq::Object/;
 
 use v5.10;
@@ -7,6 +7,7 @@ use warnings;
 
 our $VERSION = '1.175';
 
+use Quiq::Stopwatch;
 use Quiq::Udl;
 use Quiq::CommandLine;
 use Expect ();
@@ -17,7 +18,7 @@ use Expect ();
 
 =head1 NAME
 
-Quiq::PostgreSql::Psql - Wrapper für psql
+Quiq::PostgreSql::PgDump - Wrapper für pg_dump
 
 =head1 BASE CLASS
 
@@ -25,23 +26,27 @@ L<Quiq::Object>
 
 =head1 SYNOPSIS
 
-  use Quiq::PostgreSql::Psql;
+  use Quiq::PostgreSql::PgDump;
   
-  Quiq::PostgreSql::Psql->run($database,@opt);
+  Quiq::PostgreSql::PgDump->run($database,@opt);
 
 =head1 DESCRIPTION
 
-Die Klasse stellt einen Wrapper für den PostgreSQL-Client psql dar.
+Die Klasse stellt einen Wrapper für den PostgreSQL-Client pg_dump dar.
+
+=head1 EXAMPLE
+
+  $ perl -MQuiq::PostgreSql::PgDump -E 'Quiq::PostgreSql::PgDump->run("prod","--table","p_muster.admviews","--schema-only","--debug")'
 
 =head1 METHODS
 
 =head2 Klassenmethoden
 
-=head3 run() - Rufe psql für interaktive Nutzung auf
+=head3 run() - Rufe pg_dump ohne Passwortabfrage auf
 
 =head4 Synopsis
 
-  $class->run($database);
+  $class->run($database,@opt);
 
 =head4 Arguments
 
@@ -56,41 +61,15 @@ Der Name muss in der Datenbank-Konfigurationsdatei definiert sein.
 
 =head4 Options
 
+Alle Optionen von C<pg_dump>, plus
+
 =over 4
-
-=item -command => $cmd
-
-Führe Kommando $cmd aus und terminiere die Verbindung.
-
-=item -showInternal => $bool (Default: 0)
-
-Gib die Queries aus, die psql im Zusammenhang mit Backslash-Kommandos
-intern ausführt.
 
 =item -debug => $bool (Default: 0)
 
-Gib das ausgeführte psql-Kommando auf STDOUT aus.
+Gib das ausgeführte pg_dump-Kommando auf STDOUT aus.
 
 =back
-
-=head4 Description
-
-Rufe psql für die interaktive Nutzung am Terminal auf. Der Vorteil dieser
-Methode ist, dass die Datenbank per Name kontaktiert werden kann, wenn
-der UDL in die Konfiguration (s. Quiq::Database::Config) eingetragen
-wurde.
-
-=head4 Example
-
-  $ perl -MQuiq::PostgreSql::Psql -E 'Quiq::PostgreSql::Psql->run("test")'
-  Password for user xv882js:
-  Pager usage is off.
-  Timing is on.
-  psql (8.2.15)
-  SSL connection (cipher: DHE-RSA-AES256-SHA, bits: 256)
-  Type "help" for help.
-  
-  dsstest=>
 
 =cut
 
@@ -98,17 +77,16 @@ wurde.
 
 sub run {
     my ($class,$database) = splice @_,0,2;
+    # @_: @opt
 
-    # Options
+    my $stw = Quiq::Stopwatch->new;
+
+    # Options (alle anderen Argumente befinden sich auf @_)
 
     my $debug = 0;
-    my $command = undef;
-    my $showInternal = 0;
 
-    $class->parameters(\@_,
-        -command => \$command,
+    $class->parameters(1,\@_,
         -debug => \$debug,
-        -showInternal => \$showInternal,
     );
 
     # Führe Operation aus
@@ -121,7 +99,7 @@ sub run {
         );
     }
 
-    my $c = Quiq::CommandLine->new('psql');
+    my $c = Quiq::CommandLine->new('pg_dump');
     for my $opt (qw/user host port/) {
         if (my $val = $udl->$opt) {
             $c->addLongOption(
@@ -129,11 +107,8 @@ sub run {
             );
         }
     }
-    $c->addBoolOption('--echo-hidden'=>$showInternal);
-    if ($command) {
-        $c->addOption(-P=>'pager=off');
-        $c->addLongOption('--command'=>$command);
-    }
+    $c->addBoolOption('--schema-only'=>1);
+    $c->addString("@_"); 
 
     if (my $database = $udl->db) {
         $c->addArgument($database);
@@ -162,14 +137,16 @@ sub run {
             $exp->send($udl->password."\n");
             $interact = 1;
         },
-    ],[
-        # ohne Passwort
-        -re => '^psql ',sub {
-            $interact = 1;
-        },
-    ],[
+    ],
+    #[
+    #    # ohne Passwort
+    #    -re => '^psql ',sub {
+    #        $interact = 1;
+    #    },
+    #],
+    [
         # Verbindung kommt nicht zustande
-        -re => '^psql:',sub {
+        -re => '^pg_dump:',sub {
             # Ende der Kommunikation
         },
     ]);
@@ -178,6 +155,8 @@ sub run {
         # Benutzer-Interaktion
         $exp->interact;
     }
+
+    printf "Duration: %s\n",$stw->elapsedReadable;
 
     return;
 }

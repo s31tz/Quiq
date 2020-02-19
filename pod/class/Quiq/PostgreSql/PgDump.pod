@@ -1,0 +1,77 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::PostgreSql::PgDump - Wrapper für pg_dump
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 SYNOPSIS
+
+  use Quiq::PostgreSql::PgDump;
+  
+  Quiq::PostgreSql::PgDump->run($database,@opt);
+
+=head1 DESCRIPTION
+
+Die Klasse stellt einen Wrapper für den PostgreSQL-Client pg_dump dar.
+
+=head1 EXAMPLE
+
+  $ perl -MQuiq::PostgreSql::PgDump -E 'Quiq::PostgreSql::PgDump->run("prod","--table","p_muster.admviews","--schema-only","--debug")'
+
+=head1 METHODS
+
+=head2 Klassenmethoden
+
+=head3 run() - Rufe pg_dump ohne Passwortabfrage auf
+
+=head4 Synopsis
+
+  $class->run($database,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $database
+
+Name der Datenbank oder der Universal Database Locator (UDL).
+Der Name muss in der Datenbank-Konfigurationsdatei definiert sein.
+
+=back
+
+=head4 Options
+
+Alle Optionen von C<pg_dump>, plus
+
+=over 4
+
+=item -debug => $bool (Default: 0)
+
+Gib das ausgeführte pg_dump-Kommando auf STDOUT aus.
+
+=back
+
+=head1 VERSION
+
+1.175
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/PostgreSql/PgDump.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2020 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
