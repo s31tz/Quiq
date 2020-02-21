@@ -387,54 +387,55 @@ sub stmtListToScript {
 my %Commands = (
     Oracle => [
     ],
-    #    END
-    PostgreSQL => [qw/
-        ABORT
-        ALTER
-        ANALYZE
-        BEGIN
-        CALL
-        CHECKPOINT
-        CLOSE
-        CLUSTER
-        COMMENT
-        COMMIT
-        COPY CREATE
-        DEALLOCATE
-        DECLARE
-        DELETE
-        DISCARD
-        DO
-        DROP
-        EXECUTE
-        EXPLAIN
-        FETCH
-        GRANT
-        IMPORT FOREIGN SCHEMA
-        INSERT
-        LISTEN
-        LOAD
-        LOCK
-        MOVE
-        NOTIFY
-        PREPARE
-        REASSIGN OWNED
-        REFRESH MATERIALIZED VIEW
-        REINDEX
-        RELEASE SAVEPOINT
-        ROLLBACK
-        SAVEPOINT
-        SECURITY LABEL
-        SELECT
-        SET
-        SHOW
-        START TRANSACTION
-        TRUNCATE
-        UNLISTEN
-        UPDATE
-        VACUUM
-        VALUES
-    /],
+    PostgreSQL => [
+        'ABORT',
+        'ALTER',
+        'ANALYZE',
+        'BEGIN',
+        'CALL',
+        'CHECKPOINT',
+        'CLOSE',
+        'CLUSTER',
+        'COMMENT',
+        'COMMIT',
+        'COPY',
+        'CREATE',
+        'DEALLOCATE',
+        'DECLARE',
+        'DELETE',
+        'DISCARD',
+        'DO',
+        'DROP',
+        # 'END'
+        'EXECUTE',
+        'EXPLAIN',
+        'FETCH',
+        'GRANT',
+        'IMPORT FOREIGN SCHEMA',
+        'INSERT',
+        'LISTEN',
+        'LOAD',
+        'LOCK',
+        'MOVE',
+        'NOTIFY',
+        'PREPARE',
+        'REASSIGN OWNED',
+        'REFRESH MATERIALIZED VIEW',
+        'REINDEX',
+        'RELEASE SAVEPOINT',
+        'ROLLBACK',
+        'SAVEPOINT',
+        'SECURITY LABEL',
+        'SELECT',
+        'SET',
+        'SHOW',
+        'START TRANSACTION',
+        'TRUNCATE',
+        'UNLISTEN',
+        'UPDATE',
+        'VACUUM',
+        'VALUES',
+    ],
     SQLite => [
     ],
     MySQL => [
