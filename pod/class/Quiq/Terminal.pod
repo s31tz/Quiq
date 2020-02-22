@@ -139,7 +139,7 @@ Terminal in den Anfangszustand zurückversetzen:
 
 =head1 VERSION
 
-1.175
+1.176
 
 =head1 SOURCE
 

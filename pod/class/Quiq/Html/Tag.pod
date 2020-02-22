@@ -1033,7 +1033,7 @@ Die Methode liefert keinen Wert zurück.
 
 =head1 VERSION
 
-1.175
+1.176
 
 =head1 SOURCE
 
