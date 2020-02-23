@@ -24,6 +24,43 @@ Liefere das Seitenverhältnis eines Bildes, gegeben dessen
 Breite und Höhe. Mögliche Rückgabewerte: '16:9', '4:3' oder (bei
 anderen Seitenverhltnissen) der Quotient $width/$height.
 
+=head3 edit() - Editiere Bild mit Bildbearbeitungsprogramm
+
+=head4 Synopsis
+
+  $class->edit($file,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Pfad der Bilddatei.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -backupDir => (Default: undef)
+
+Sichere die unbearbeitete Bilddatei nach $dir.
+
+=item -program => $program (Default: 'gimp')
+
+Nutze Programm $program zum Editieren des Bildes.
+
+=back
+
+=head4 Description
+
+Editiere Bilddatei $file mit Programm $program. Ist ein Backupverzeichnis
+$backupDir gegeben, wird die unbearbeitete Datei unter einer laufenden
+Nummer plus Extension dorthin gesichert, aber nur, wenn die Bilddatei
+tatsächlich geändert wurde.
+
 =head3 findImages() - Suche Bild-Dateien
 
 =head4 Synopsis
@@ -49,9 +86,7 @@ oder nach Name. Per Default werden die Bilder unsortiert geliefert.
 =head4 Description
 
 Liefere die Liste aller Bild-Dateien, die in @filesAndDirs
-vorkommen. Vereichnisse werden rekursiv nach Bild-Dateien
-durchsucht.
-
+vorkommen. Vereichnisse werden rekursiv nach Bild-Dateien durchsucht.
 Als Bild-Dateien werden alle Dateien angesehen, die eine
 Bild-Extension (.jpg, .png, .gif) besitzen. Bei Dateien ohne
 Extension wird mittels Quiq::Image->type() geprüft, ob es sich

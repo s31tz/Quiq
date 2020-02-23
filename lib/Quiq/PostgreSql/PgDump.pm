@@ -55,7 +55,8 @@ Die Klasse stellt einen Wrapper für den PostgreSQL-Client pg_dump dar.
 =item $database
 
 Name der Datenbank oder der Universal Database Locator (UDL).
-Der Name muss in der Datenbank-Konfigurationsdatei definiert sein.
+Ist ein Name angegeben, muss in der Datenbank-Konfigurationsdatei
+definiert sein.
 
 =back
 
