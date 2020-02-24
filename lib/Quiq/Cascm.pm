@@ -394,7 +394,7 @@ sub edit {
 
     # Lokale Kopie der Datei erstellen
 
-    my $localFile = '~/tmp/'.$p->filename($file);
+    my $localFile = '~/tmp/cascm/'.$p->filename($file);
     my $which = 'r';
     if (-e $localFile) {
         # Repo-Datei muss nicht kopiert werden, wenn sie schon
@@ -414,7 +414,7 @@ sub edit {
         }
     }
     if ($which eq 'r') {
-        $p->copyToDir($file,'~/tmp');
+        $p->copyToDir($file,'~/tmp/cascm',-createDir=>1);
     }
 
     # Original-Datei mit dem Stand vor der ersten Änderung sichern
