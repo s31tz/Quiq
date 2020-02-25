@@ -570,7 +570,7 @@ zurück.
 Liefere "wahr", wenn der Zeitpunkt $ti1 gleich dem Zeitpunkt $ti2
 ist, andernfalls "falsch".
 
-=head3 less() - Prüfe auf kleiner
+=head3 less() - Prüfe auf kleiner als
 
 =head4 Synopsis
 

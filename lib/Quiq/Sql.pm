@@ -406,7 +406,7 @@ my %Commands = (
         'DISCARD',
         'DO',
         'DROP',
-        # 'END'
+        'END',
         'EXECUTE',
         'EXPLAIN',
         'FETCH',
