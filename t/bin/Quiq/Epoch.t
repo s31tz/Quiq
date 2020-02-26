@@ -61,27 +61,6 @@ sub test_plus : Test(1) {
 
 # -----------------------------------------------------------------------------
 
-sub test_less : Test(3) {
-    my $self = shift;
-
-    my $t1 = Quiq::Epoch->new('2019-11-14 11:27:36');
-    my $t2 = Quiq::Epoch->new('2019-11-14 11:27:36');
-    my $bool = $t1->less($t2);
-    $self->ok(!$bool);
-
-    $t1 = Quiq::Epoch->new('2019-11-14 11:27:36');
-    $t2 = Quiq::Epoch->new('2019-11-14 11:27:36.001');
-    $bool = $t1->less($t2);
-    $self->ok($bool);
-
-    $t1 = Quiq::Epoch->new('2019-11-14 11:27:36.001');
-    $t2 = Quiq::Epoch->new('2019-11-14 11:27:36');
-    $bool = $t1->less($t2);
-    $self->ok(!$bool);
-}
-
-# -----------------------------------------------------------------------------
-
 sub test_epoch : Test(1) {
     my $self = shift;
 

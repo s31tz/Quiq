@@ -11,9 +11,9 @@ our $VERSION = '1.176';
 use Quiq::Database::Row::Array;
 use Quiq::AnsiColor;
 use Quiq::Shell;
+use Quiq::Terminal;
 use Quiq::Path;
 use Quiq::Converter;
-use Quiq::Terminal;
 use Quiq::CommandLine;
 use Quiq::TempDir;
 use Quiq::Array;
@@ -369,6 +369,17 @@ sub edit {
     my ($self,$repoFile,$package) = @_;
 
     my $output = '';
+
+    # Information über die Versionen der Datei ausgeben
+    print $self->findItem($repoFile)->asTable(-info=>2);
+
+    my $answ = Quiq::Terminal->askUser('Continue?',
+        -values => 'y/n',
+        -default => 'y',
+    );
+    if ($answ ne 'y') {
+        return $output;
+    }
 
     my $p = Quiq::Path->new;
 
@@ -1202,7 +1213,7 @@ sub deleteVersion {
     my $transportPackage;
     my @rows = reverse $tab->rows;
     for my $row (@rows) {
-        if ($row->[6] ne $self->states->[0]) {
+        if ($row->[3] ne $self->states->[0]) {
             my $name = Quiq::Converter->intToWord(time);
             $transportPackage = "S6800_0_Seitz_Lift_$name";
             $output .= $self->createPackage($transportPackage);
@@ -1216,7 +1227,7 @@ sub deleteVersion {
     if ($transportPackage) {
         my $transportPackageCount = 0;
         for my $row (@rows) {
-            my $state = $row->[6];
+            my $state = $row->[3];
             if ($state ne $self->states->[0]) {
                 my $out = $self->movePackage($state,$transportPackage,
                     -askUser => $transportPackageCount,
@@ -1230,9 +1241,9 @@ sub deleteVersion {
                 # Version in Transportpackage bewegen
                 # say sprintf '%s[%s] => %s',$state,$row->[3],$transportPackage;
 
-                my $repoFile = $row->[1];
-                my $package = $row->[5];
-                my $version = $row->[3];
+                my $repoFile = $row->[0];
+                my $package = $row->[3];
+                my $version = $row->[1];
 
                 $self->switchPackage($package,$transportPackage,
                     "$repoFile:$version");
@@ -1245,7 +1256,7 @@ sub deleteVersion {
     # Wir löschen die Dateien.
 
     for my $row (@rows) {
-        my $repoFile = $row->[1];
+        my $repoFile = $row->[0];
 
         my ($dir,$file) = Quiq::Path->split($repoFile);
         my $viewPath = $self->viewPath;
@@ -1498,15 +1509,17 @@ sub findItem {
             *
         FROM (
             SELECT DISTINCT -- Warum ist hier DISTINCT nötig?
-                itm.itemobjid AS id
+                -- itm.itemobjid AS id
                 -- Warum ist /zenmod manchmal im Pfad?
-                , REPLACE(SYS_CONNECT_BY_PATH(itm.itemname,'/'),'/zenmod','')
+                REPLACE(SYS_CONNECT_BY_PATH(itm.itemname,'/'),'/zenmod','')
                     AS item_path
-                , itm.itemtype AS item_type
+                -- , itm.itemtype AS item_type
                 , ver.mappedversion AS version
-                , ver.versiondataobjid
+                -- , ver.versiondataobjid
                 , pkg.packagename AS package
                 , sta.statename AS state
+                , ver.creationtime
+                , usr.username
             FROM
                 haritems itm
                 JOIN harversions ver
@@ -1521,6 +1534,8 @@ sub findItem {
                     ON par.itemobjid = itm.parentobjid
                 JOIN harrepository rep
                     ON rep.repositobjid = itm.repositobjid
+                JOIN harallusers usr
+                    ON usr.usrobjid = ver.creatorid
             WHERE
                 env.environmentname = '$projectContext'
             START WITH
@@ -1541,7 +1556,7 @@ sub findItem {
     # da er für alle Pfade gleich ist
 
     for my $row ($tab->rows) {
-        $row->[1] =~ s|^/\Q$viewPath\E/||;
+        $row->[0] =~ s|^/\Q$viewPath\E/||;
     }
 
     return $tab;
@@ -1935,11 +1950,11 @@ sub showPackage {
 
     my $tab = $self->runSql("
         SELECT DISTINCT -- Warum ist hier DISTINCT nötig?
-            itm.itemobjid AS id
-            , SYS_CONNECT_BY_PATH(itm.itemname,'/') AS item_path
-            , itm.itemtype AS item_type
+            -- itm.itemobjid AS id
+            SYS_CONNECT_BY_PATH(itm.itemname,'/') AS item_path
+            -- , itm.itemtype AS item_type
             , ver.mappedversion AS version
-            , ver.versiondataobjid
+            -- , ver.versiondataobjid
             , pkg.packagename
         FROM
             haritems itm
@@ -1973,7 +1988,7 @@ sub showPackage {
     # da er für alle Pfade gleich ist
 
     for my $row ($tab->rows) {
-        $row->[1] =~ s|^/\Q$viewPath\E/||;
+        $row->[0] =~ s|^/\Q$viewPath\E/||;
     }
 
     return wantarray? $tab->rows: $tab;
@@ -2351,7 +2366,17 @@ sub packageState {
 
 =head4 Synopsis
 
-  $tab = $scm->listPackages;
+  $tab = $scm->listPackages(@opt);
+
+=head4 Options
+
+=over 4
+
+=item -order => 'package'|'username'|'time' (Default: 'time')
+
+Sortierkriterium.
+
+=back
 
 =head4 Returns
 
@@ -2375,22 +2400,36 @@ Liefere die Liste aller Packages.
 sub listPackages {
     my $self = shift;
 
+    # Optionen
+
+    my $order = 'time';
+
+    $self->parameters(\@_,
+        -order => \$order,
+    );
+
+    # Operation ausführen
+
     my $projectContext = $self->projectContext;
 
     return $self->runSql("
         SELECT
-            pkg.packagename
-            , sta.statename
+            pkg.packagename AS package
+            , sta.statename AS stage
+            , pkg.creationtime AS time
+            , usr.username AS username
         FROM
             harPackage pkg
             JOIN harEnvironment env
                 ON pkg.envobjid = env.envobjid
             JOIN harState sta
                 ON pkg.stateobjid = sta.stateobjid
+            JOIN harallusers usr
+                ON usr.usrobjid = pkg.creatorid
         WHERE
             env.environmentname = '$projectContext'
         ORDER BY
-            1
+            $order
     ");
 }
 
