@@ -184,8 +184,8 @@ matcht, und ihren Inhalt.
 
 =head4 Synopsis
 
-  $output = $scm->edit($repoFile);
   $output = $scm->edit($repoFile,$package);
+  $output = $scm->edit($repoFile,$package,$version);
 
 =head4 Arguments
 
@@ -203,6 +203,8 @@ untersten Stufe stehen. Befindet es sich auf einer höheren Stufe, wird
 intern ein Transportpackage erzeugt, das die Dateien zu der Stufe
 des Package bewegt.
 
+=item $version (Default: I<aktuelle Version>)
+
 =back
 
 =head4 Returns
@@ -211,14 +213,81 @@ Ausgabe der CASCM-Kommandos (String)
 
 =head4 Description
 
-Checke die Repository-Datei $repoFile aus und öffne sie im Editor.
-Nach dem Verlassen des Editors wird geprüft, ob die Datei (eine Kopie
-im lokalen Verzeichnis) verändert wurde. Der Benutzer wird gefragt,
-ob er seine Änderungen ins Repository übertragen möchte oder nicht.
-Anschließend wird die Repository-Datei wieder eingecheckt. Dies
-geschieht, gleichgültig, ob sie geändert wurde oder nicht. CASCM
-vergibt nur dann eine neue Versionsnummer, wenn die Datei sich
-geändert hat.
+Checke die Repository-Datei $repoFile aus und lade Version $version
+in den Editor. Wird die Datei bearbeitet, d.h. nach dem Verlassen
+des Editors ist ihr Inhalt ein anderer als vorher, wird dieser Stand
+(nach Rückfage) als neue Version eingecheckt. Andernfalls wird
+ohne Änderung eingecheckt, wobei die Vergabe einer neuen Versionsnummer
+unterbleibt.
+
+Das Editieren einer älteren Version kann genutzt werden,
+um eine in Arbeit befindliche Version zu übergehen. Ein weiteres Mal
+auf die zuvor aktuelle Version angewandt, kann die aktuelle Version
+wieder reaktiviert werden.
+
+=head4 Example
+
+Bearbeite eine ältere Version, so dass diese vor der unfertigen
+aktuellen Version promotet werden kann.
+
+Aktueller Stand:
+
+  $ $ dss-repo find-item DATEI
+  1 item_path
+  2 version
+  3 package
+  4 state
+  5 creationtime
+  6 username
+  
+  1            2   3                           4             5                     6
+  | DATEI | 0 | PACKAGE1 | Produktion  | 2020-02-27 14:05:30 | xv882js |
+  | DATEI | 1 | PACKAGE2 | TTEST       | 2020-02-27 14:06:16 | xv882js |
+
+Alte Version editieren und zur neusten Version machen:
+
+  $ dss-repo create PACKAGE3
+  $ dss-repo edit DATEI PACKAGE3 0
+
+Nächster Stand:
+
+  $ $ dss-repo find-item DATEI
+  1 item_path
+  2 version
+  3 package
+  4 state
+  5 creationtime
+  6 username
+  
+  1            2   3                           4             5                     6
+  | DATEI | 0 | PACKAGE1 | Produktion  | 2020-02-27 14:05:30 | xv882js |
+  | DATEI | 1 | PACKAGE2 | TTEST       | 2020-02-27 14:06:16 | xv882js |
+  | DATEI | 2 | PACKAGE3 | Entwicklung | 2020-02-27 14:08:45 | xv882js |
+
+Die in PACKAGE3 befindliche bearbeitete Version 2, die aus Version 0
+hervorgegangen ist, kann nach Produktion promotet werden ohne den
+unfertigen Code aus Version 1.
+
+Unfertigen Stand wieder zum aktuellen Stand machen, u.U. mit den
+gleichen vormaligen Änderungen:
+
+  $ dss-repo edit DATEI PACKAGE2 1
+
+Nächster Stand:
+
+  $ $ dss-repo find-item DATEI
+  1 item_path
+  2 version
+  3 package
+  4 state
+  5 creationtime
+  6 username
+  
+  1            2   3                           4             5                     6
+  | DATEI | 0 | PACKAGE1 | Produktion  | 2020-02-27 14:05:30 | xv882js |
+  | DATEI | 1 | PACKAGE2 | TTEST       | 2020-02-27 14:06:16 | xv882js |
+  | DATEI | 2 | PACKAGE3 | Entwicklung | 2020-02-27 14:08:45 | xv882js |
+  | DATEI | 2 | PACKAGE2 | TTEST       | 2020-02-27 14:10:45 | xv882js |
 
 =head3 view() - Repository-Datei ansehen
 
@@ -560,11 +629,11 @@ Die Versionen bis 110 der Datei C<lib/MetaData.pm> löschen:
 
   $scm->deleteVersion('lib/MetaData.pm',110);
 
-=head3 passVersion() - Überhole die aktuelle mit der vorigen Version
+=head3 passVersion() - Überhole die aktuelle mit älterer Version
 
 =head4 Synopsis
 
-  $output = $scm->passVersion($repoFile);
+  $output = $scm->passVersion($repoFile,$version,$package);
 
 =head4 Arguments
 
@@ -574,6 +643,14 @@ Die Versionen bis 110 der Datei C<lib/MetaData.pm> löschen:
 
 Der Pfad der zu löschenden Repository-Datei.
 
+=item $version
+
+Ältere Version, die die neuere Version überholen soll.
+
+=item $package
+
+Package, dem die neue ältere Version hinzugefügt wird.
+
 =back
 
 =head4 Returns
@@ -582,9 +659,9 @@ Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Erzeuge eine neue Version von $repoFile mit dem Stand I<vor> der aktuellen
-Version. Dies ist nützlich, wenn an einem vorherigen Stand "vorbeigezogen"
-werden soll.
+Erzeuge eine neue Version von $repoFile mit der älteren Version $version
+und füge diese zu Package $package hinzu. Dies ist nützlich, wenn an der
+aktuellen Version vorbeigezogen werden soll.
 
 =head3 package() - Package einer Version
 
