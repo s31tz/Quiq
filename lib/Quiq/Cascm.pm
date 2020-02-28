@@ -400,7 +400,7 @@ Nächster Stand:
   5 creationtime
   6 username
   
-  1            2   3                           4             5                     6
+  1            2   3                           4             5
   | DATEI | 0 | PACKAGE1 | Produktion  | 2020-02-27 14:05:30 | xv882js |
   | DATEI | 1 | PACKAGE2 | TTEST       | 2020-02-27 14:06:16 | xv882js |
   | DATEI | 2 | PACKAGE3 | Entwicklung | 2020-02-27 14:08:45 | xv882js |
@@ -416,7 +416,7 @@ gleichen vormaligen Änderungen:
 
 Nächster Stand:
 
-  $ $ dss-repo find-item DATEI
+  $ dss-repo find-item DATEI
   1 item_path
   2 version
   3 package
@@ -424,7 +424,7 @@ Nächster Stand:
   5 creationtime
   6 username
   
-  1            2   3                           4             5                     6
+  1            2   3                           4             5
   | DATEI | 0 | PACKAGE1 | Produktion  | 2020-02-27 14:05:30 | xv882js |
   | DATEI | 1 | PACKAGE2 | TTEST       | 2020-02-27 14:06:16 | xv882js |
   | DATEI | 2 | PACKAGE3 | Entwicklung | 2020-02-27 14:08:45 | xv882js |
