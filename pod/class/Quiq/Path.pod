@@ -1276,6 +1276,10 @@ Datei $after ein. Ist $after leer (Leerstring oder undef), werden
 die Pfade an den Anfang gestellt. Alle Angaben I<vor> der
 (Re-)Nummerierung.
 
+=item -start => $n (Default: $step)
+
+Verwende $n als Startwert.
+
 =back
 
 =head4 Description
