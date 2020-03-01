@@ -353,7 +353,7 @@ ist. Andere unersetzte Platzhalter werden nicht beachtet.
 
 =head1 VERSION
 
-1.176
+1.177
 
 =head1 SOURCE
 

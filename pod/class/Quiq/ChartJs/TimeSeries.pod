@@ -132,10 +132,6 @@ einer Windgeschwindigkeits-Messung)
     });
   });
 </script>
-<script type="text/javascript">
-  $(function() {
-  });
-</script>
 
 =end html
 
@@ -576,7 +572,7 @@ Zoomen in die Daten. Wie? Plugin?
 
 =head1 VERSION
 
-1.176
+1.177
 
 =head1 SOURCE
 

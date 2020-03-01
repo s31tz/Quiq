@@ -1284,7 +1284,7 @@ wird die Selektion direkt auf der Datenbank ausgeführt, andernfalls
 
 =head1 VERSION
 
-1.176
+1.177
 
 =head1 SOURCE
 
