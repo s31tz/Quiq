@@ -11,6 +11,7 @@ our $VERSION = '1.177';
 use Quiq::Hash;
 use Quiq::Option;
 use Quiq::String;
+use Quiq::Template;
 use Scalar::Util ();
 use Quiq::Unindent;
 use Quiq::Reference;
@@ -3493,13 +3494,6 @@ sub rollback {
 
 =over 4
 
-=item -args, $name => $value, ...
-
-=item -args => "$name=$value,..."
-
-Ersetze im SELECT-Statement den Platzhalter "__$name__" durch $value.
-Mehrere Name/Wert-Kombinationen können angegeben werden.
-
 =item -comment => $text (Default: keiner)
 
 Setze Kommentar mit dem ein- oder mehrzeiligen Text $text an den
@@ -3673,9 +3667,9 @@ SELECT mit Statement-Platzhaltern
           vorname = '__VORNAME__'
           AND nachname = '__NACHNAME__'
       ",
-      -args =>
-           VORNAME => 'Elli',
-           NACHNAME => 'Pirelli'
+      -placeholders =>
+           __VORNAME__ => 'Elli',
+           __NACHNAME__ => 'Pirelli'
   );
   =>
   SELECT
@@ -3748,12 +3742,12 @@ sub select {
     my @groupBy;
     my @having;
     my @orderBy;
+    my @placeholders;
     my $limit;
     my $offset;
     my $stmt = '';
 
     Quiq::Option->extractMulti(\@_,
-        -args => \@args,
         -comment => \$comment,
         -select => \@select,
         -distinct => \$distinct,
@@ -3766,6 +3760,7 @@ sub select {
         -limit => \$limit,
         -offset => \$offset,
         -stmt => \$stmt,
+        -placeholders => \@placeholders,
     );
 
     my ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) =
@@ -4047,15 +4042,13 @@ sub select {
         $stmt = "$comment\n$stmt";
     }
 
-    # Statement-Argumente einsetzen. Übergabemöglichkeiten:
-    # -args => 'NAME=VALUE,..."
-    # -args, $name => $value, ...
+    # Platzhalter-Ersetzung
 
-    if (@args == 1) {
-        @args = map {split /\s*=\s*/} split /\s*,\s*/,$args[0];
-    }
-    for (my $i = 0; $i < @args; $i += 2) {
-         $stmt =~ s/__$args[$i]__/$args[$i+1]/g;
+    if (@placeholders) {
+        $stmt = Quiq::Template->combine(
+            placeholders => \@placeholders,
+            template => $stmt,
+        );
     }
 
     return $stmt;

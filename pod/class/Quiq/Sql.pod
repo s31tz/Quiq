@@ -1625,13 +1625,6 @@ generiert
 
 =over 4
 
-=item -args, $name => $value, ...
-
-=item -args => "$name=$value,..."
-
-Ersetze im SELECT-Statement den Platzhalter "__$name__" durch $value.
-Mehrere Name/Wert-Kombinationen können angegeben werden.
-
 =item -comment => $text (Default: keiner)
 
 Setze Kommentar mit dem ein- oder mehrzeiligen Text $text an den
@@ -1805,9 +1798,9 @@ SELECT mit Statement-Platzhaltern
           vorname = '__VORNAME__'
           AND nachname = '__NACHNAME__'
       ",
-      -args =>
-           VORNAME => 'Elli',
-           NACHNAME => 'Pirelli'
+      -placeholders =>
+           __VORNAME__ => 'Elli',
+           __NACHNAME__ => 'Pirelli'
   );
   =>
   SELECT

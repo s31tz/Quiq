@@ -1285,7 +1285,7 @@ sub deleteVersion {
                 # say sprintf '%s[%s] => %s',$state,$row->[3],$transportPackage;
 
                 my $repoFile = $row->[0];
-                my $package = $row->[3];
+                my $package = $row->[2];
                 my $version = $row->[1];
 
                 $self->switchPackage($package,$transportPackage,

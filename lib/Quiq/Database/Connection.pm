@@ -3422,11 +3422,11 @@ sub tableDiff {
         ORDER BY
             __TITLES1__
         ",
-        -args =>
-            TABLE1 => $table1,
-            TITLES1 => join(', ',@columns),
-            TABLE2 => $table2,
-            TITLES2 => join(', ',@columns),
+        -placeholders =>
+            __TABLE1__ => $table1,
+            __TITLES1__ => join(', ',@columns),
+            __TABLE2__ => $table2,
+            __TITLES2__ => join(', ',@columns),
     );
 
     my $i = 0;
@@ -3455,11 +3455,11 @@ sub tableDiff {
         ORDER BY
             __TITLES2__
         ",
-        -args =>
-            TABLE1 => $table1,
-            TITLES1 => join(', ',@columns),
-            TABLE2 => $table2,
-            TITLES2 => join(', ',@columns),
+        -placeholders =>
+            __TABLE1__ => $table1,
+            __TITLES1__ => join(', ',@columns),
+            __TABLE2__ => $table2,
+            __TITLES2__ => join(', ',@columns),
     );
 
     $i = 0;
