@@ -1347,13 +1347,28 @@ hochgesetzt, aber nicht verringert werden!
 
 =back
 
-=head2 Trigger
+=head2 Function
 
 =head3 createFunction() - Generiere Statement zum Erzeugen einer Funktion
 
 =head4 Synopsis
 
-  $stmt = $sql->createFunction($name,$body,@opt);
+  $stmt = $sql->createFunction($signature,$body,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $signature
+
+Signatur der Funktion, also Name mit Typ-Parameterliste und ggf.
+Schema-Präfix.
+
+=item $body
+
+Rumpf der Funktion.
+
+=back
 
 =head4 Options
 
@@ -1373,7 +1388,7 @@ Generiere "RETURNS $type" Klausel.
 
 B<PostgreSQL>
 
-  CREATE OR REPLACE FUNCTION <name>()
+  CREATE OR REPLACE FUNCTION <signature>
   RETURNS <returns>
   AS $SQL$
     <body>
@@ -1391,13 +1406,53 @@ B<PostgreSQL>
 
 =head4 Synopsis
 
-  $stmt = $sql->dropFunction($name);
+  $stmt = $sql->dropFunction($signature);
+
+=head4 Arguments
+
+=over 4
+
+=item $signature
+
+Signatur der Funktion, also Name mit Typ-Parameterliste und ggf.
+Schema-Präfix.
+
+=back
 
 =head4 Description
 
 B<PostgreSQL>
 
-  DROP FUNCTION <name>() CASCADE
+  DROP FUNCTION <signature> CASCADE
+
+=head3 moveFunction() - Bewege Funktion in ein anderes Schema
+
+=head4 Synopsis
+
+  $stmt = $sql->moveFunction($signature,$schema);
+
+=head4 Arguments
+
+=over 4
+
+=item $signature
+
+Signatur der Funktion, also Name mit Typ-Parameterliste und
+Schema-Präfix.
+
+=item $schema
+
+Zielschema, in das die Funktion bewegt wird.
+
+=back
+
+=head4 Description
+
+B<PostgreSQL>
+
+  ALTER FUNCTION <signature> SET SCHEMA <schema>
+
+=head2 Trigger
 
 =head3 createTrigger() - Generiere Statement zum Erzeugen eines Triggers
 

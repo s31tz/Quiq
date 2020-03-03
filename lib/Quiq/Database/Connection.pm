@@ -4545,7 +4545,7 @@ sub createTrigger {
         return $self->sqlAtomic($stmt,-forceExec=>1);
     }
     elsif ($self->isPostgreSQL) { 
-        my $procName = $name.'_proc';
+        my $procName = $name.'_proc()';
 
         my $stmt = $sql->createFunction($procName,$body,
             -returns => 'trigger'
@@ -4584,7 +4584,7 @@ sub dropTrigger {
         return $self->sqlAtomic($stmt);
     }
     elsif ($self->isPostgreSQL) {
-        my $stmt = $sql->dropFunction($name.'_proc',-cascade=>1);
+        my $stmt = $sql->dropFunction($name.'_proc()',-cascade=>1);
         return $self->sqlAtomic($stmt);
     }
 

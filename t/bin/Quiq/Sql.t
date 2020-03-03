@@ -506,7 +506,7 @@ sub test_createFunction_postgresql : Test(4) {
 
     my $sql = Quiq::Sql->new('PostgreSQL');
     my $stmt = $sql->createFunction(
-        '<name>',
+        '<name>()',
         -replace => 1,
         -returns => '<returns>','
         <body>

@@ -154,7 +154,7 @@ sub run {
 
     # Anmeldung. Wir unterscheiden drei Fälle.
 
-    my $interact = 0;
+    my $interact = -t STDIN;
     $exp->expect(3,[
         # mit Passwort
         -re => 'Password.*?:',sub {

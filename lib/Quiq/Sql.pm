@@ -2911,13 +2911,28 @@ sub setSequence {
 
 # -----------------------------------------------------------------------------
 
-=head2 Trigger
+=head2 Function
 
 =head3 createFunction() - Generiere Statement zum Erzeugen einer Funktion
 
 =head4 Synopsis
 
-  $stmt = $sql->createFunction($name,$body,@opt);
+  $stmt = $sql->createFunction($signature,$body,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $signature
+
+Signatur der Funktion, also Name mit Typ-Parameterliste und ggf.
+Schema-Präfix.
+
+=item $body
+
+Rumpf der Funktion.
+
+=back
 
 =head4 Options
 
@@ -2937,7 +2952,7 @@ Generiere "RETURNS $type" Klausel.
 
 B<PostgreSQL>
 
-  CREATE OR REPLACE FUNCTION <name>()
+  CREATE OR REPLACE FUNCTION <signature>
   RETURNS <returns>
   AS $SQL$
     <body>
@@ -2957,7 +2972,7 @@ B<PostgreSQL>
 
 sub createFunction {
     my $self = shift;
-    # @_: $name,$body,@opt
+    # @_: $signature,$body,@opt
 
     # Argumente
 
@@ -2968,7 +2983,7 @@ sub createFunction {
         -replace => \$replace,
         -returns => \$returns,
     );
-    my $name = shift;
+    my $signature = shift;
     my $body = Quiq::String->removeIndentation(shift);
 
     my ($oracle,$postgresql,$sqlite,$mysql) = $self->dbmsTestVector;
@@ -2979,7 +2994,7 @@ sub createFunction {
         if ($replace) {
             $stmt .= ' OR REPLACE';
         }
-        $stmt .= " FUNCTION $name()";
+        $stmt .= " FUNCTION $signature";
         if ($returns) {
             $stmt .= "\nRETURNS $returns";
         }
@@ -3000,13 +3015,24 @@ sub createFunction {
 
 =head4 Synopsis
 
-  $stmt = $sql->dropFunction($name);
+  $stmt = $sql->dropFunction($signature);
+
+=head4 Arguments
+
+=over 4
+
+=item $signature
+
+Signatur der Funktion, also Name mit Typ-Parameterliste und ggf.
+Schema-Präfix.
+
+=back
 
 =head4 Description
 
 B<PostgreSQL>
 
-  DROP FUNCTION <name>() CASCADE
+  DROP FUNCTION <signature> CASCADE
 
 =cut
 
@@ -3014,7 +3040,7 @@ B<PostgreSQL>
 
 sub dropFunction {
     my $self = shift;
-    # @_: $name,@opt
+    # @_: $signature,@opt
 
     # Argumente
 
@@ -3023,12 +3049,12 @@ sub dropFunction {
     Quiq::Option->extract(\@_,
         -cascade => \$cascade,
     );
-    my $name = shift;
+    my $signature = shift;
 
     my ($oracle,$postgresql,$sqlite,$mysql) = $self->dbmsTestVector;
 
     if ($postgresql) {
-        my $stmt = "DROP FUNCTION $name()";
+        my $stmt = "DROP FUNCTION $signature";
         if ($cascade) {
             $stmt .= ' CASCADE';
         }
@@ -3039,6 +3065,53 @@ sub dropFunction {
 }
 
 # -----------------------------------------------------------------------------
+
+=head3 moveFunction() - Bewege Funktion in ein anderes Schema
+
+=head4 Synopsis
+
+  $stmt = $sql->moveFunction($signature,$schema);
+
+=head4 Arguments
+
+=over 4
+
+=item $signature
+
+Signatur der Funktion, also Name mit Typ-Parameterliste und
+Schema-Präfix.
+
+=item $schema
+
+Zielschema, in das die Funktion bewegt wird.
+
+=back
+
+=head4 Description
+
+B<PostgreSQL>
+
+  ALTER FUNCTION <signature> SET SCHEMA <schema>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub moveFunction {
+    my ($self,$signature,$schema) = @_;
+
+    my ($oracle,$postgresql,$sqlite,$mysql) = $self->dbmsTestVector;
+
+    if ($postgresql) {
+        return "ALTER FUNCTION $signature SET SCHEMA $schema";
+    }
+
+    $self->throw('Not implemented');
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Trigger
 
 =head3 createTrigger() - Generiere Statement zum Erzeugen eines Triggers
 
