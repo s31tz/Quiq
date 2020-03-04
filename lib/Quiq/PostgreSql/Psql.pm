@@ -145,6 +145,9 @@ sub run {
     }
 
     my $exp = Expect->new;
+    if ($debug) {
+        $exp->exp_internal(1);
+    }
     $exp->spawn($cmd) || do {
         $class->throw(
             'EXPECT-00099: Cannot spawn command',
@@ -154,7 +157,7 @@ sub run {
 
     # Anmeldung. Wir unterscheiden drei Fälle.
 
-    my $interact = -t STDIN;
+    my $interact = 0;
     $exp->expect(3,[
         # mit Passwort
         -re => 'Password.*?:',sub {

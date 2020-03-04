@@ -14,6 +14,9 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
   
   my $a = Quiq::Assert->new;
   
+  # Prüfe, ob Wert einen Punkt (.) enthält
+  $a->check('a.b',sub {index(shift,'.') >= 0});
+  
   # Prüfe, ob Wert in Aufzählung vorkommt
   $a->isEnumValue('Birne',['Apfel','Birne','Pflaume']);
   
@@ -77,8 +80,54 @@ Aufrufschreibweise zu ermöglichen.
 =head2 Zusicherungen
 
 Die folgenden Testmethoden können sowohl als Klassen- als auch als
-Objektmethoden aufgerufen werden. Im Void-Kontext gerufen, werfen sie
+Objektmethoden gerufen werden. Im Void-Kontext gerufen, werfen sie
 eine Exception, wenn die Bedingung verletzt ist, andernfalls 0 oder 1.
+
+=head3 check() - Prüfe beliebige Bedingung
+
+=head4 Synopsis
+
+  $this->check($val,@opt,$sub);         # Exception
+  $bool = $this->check($val,@opt,$sub); # Rückgabewert
+
+=head4 Arguments
+
+=over 4
+
+=item $val
+
+Wert, der geprüft wird.
+
+=item $sub
+
+Prüf-Subroutine. Ist die Bedingung erfüllt, liefert sie "wahr",
+andernfalls "falsch".
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -name => $str
+
+Name, der bei Verletzung der Bedingung als Teil der Fehlermeldung
+ausgegeben wird. Dies kann der Name der geprüften Variable,
+des geprüften Parameters o.ä. sein.
+
+=back
+
+=head4 Returns
+
+Boolean
+
+=head4 Description
+
+Prüfe den Wert $val daraufhin, ob er die Prüfung $sub besteht.
+Ist dies nicht der Fall, wirf eine Exception, wenn die Methode im
+Void-Kontext gerufen wurde, andernfalls 0. Ein leerer Wert verletzt
+die Bedingung nicht (die Subroutine wird für einen leeren Wert nicht
+gerufen).
 
 =head3 isEnumValue() - Prüfe auf Enthaltensein in Enum
 
