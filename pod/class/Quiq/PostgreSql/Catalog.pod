@@ -24,7 +24,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =item $sql
 
-CREATE FUNCTION Statement, das von pg_get_function_identity_arguments(oid)
+CREATE FUNCTION Statement, das von pg_get_functiondef(oid)
 geliefert wurde.
 
 =back
@@ -35,10 +35,80 @@ Umgeschriebenes CREATE FUNCTION Statement (String)
 
 =head4 Description
 
-PostgreSQL stellt die Funktion pg_get_functiondef() zur Verfügung,
+PostgreSQL stellt die Funktion pg_get_functiondef(oid) zur Verfügung,
 die den Quelltext einer Datenbankfunktion liefert. Leider ist
 der Quelltext manchmal fehlerbehaftet, zumindest in der Version 8.3.
 Diese Methode korrigiert diese Fehler.
+
+=head3 functions() - Selektiere Information über Funktionen
+
+=head4 Synopsis
+
+  @rows|$tab = $class->functions($db,@select,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $db
+
+Datenbank-Verbindung (PostgreSQL).
+
+=item @select
+
+Alle Optionen von $db->select(), bis auf -from.
+
+=back
+
+=head4 Options
+
+Alle Optinen von $db->select().
+
+=head4 Returns
+
+Liste von Datensätzen. Im Skalarkontext ein Ergebnismengen-Objekt.
+
+=head4 Description
+
+Selektiere Information über eine oder mehrere Funktionen von einer
+PostgreSQL-Datenbank. Die Eigenschaften, die geliefert werden und
+über die selektiert werden kann, sind
+
+=over 4
+
+=item fun_oid
+
+PostgreSQL-Objekt-Id der Funktion.
+
+=item fun_owner
+
+Name des Owners der Funktion.
+
+=item fun_schema
+
+Name des Schemas, in dem sich die Funktion befindet.
+
+=item fun_name
+
+Name der Funktion.
+
+=item fun_arguments
+
+Argumentliste der Funktion als kommaseparierte Liste der Typ-Namen.
+
+=item fun_signature
+
+Name plus Argumentliste der Funktion in der Form:
+
+  FUNCTION(TYPE,...)
+
+=item fun_source
+
+Der vollständige Quelltext der Funktion. B<ACHTUNG:> Der Quelltext
+kann Fehler enthalten. Diese können mit Methode L<correctFunctionDef|"correctFunctionDef() - Korrigiere Quelltext einer Funktionsdefinition">()
+korrigiert werden.
+
+=back
 
 =head1 VERSION
 

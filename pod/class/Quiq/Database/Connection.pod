@@ -921,6 +921,20 @@ Siehe Quiq::Database::Connection/sql().
 
 =back
 
+=head3 selectWith() - Liefere Liste von Datensätzen
+
+=head4 Synopsis
+
+  $tab|@rows|$cur = $db->selectWith($stmt,@select,@opt);
+
+=head4 Options
+
+Dieselben Optionen wie L<select|"select() - Liefere Liste von Datensätzen">()
+
+=head4 Description
+
+Siehe Quiq::Sql->selectWith().
+
 =head3 lookup() - Liefere Datensatz
 
 =head4 Synopsis

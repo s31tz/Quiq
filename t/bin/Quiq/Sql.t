@@ -656,9 +656,9 @@ sub test_select : Test(7) {
 
     my $stmt2 = Quiq::String->removeIndentation(<< '    __SQL__');
     SELECT
-        col1,
-        col2,
-        col3
+        col1
+        , col2
+        , col3
     FROM
         tab
     WHERE
@@ -722,10 +722,10 @@ sub test_select : Test(7) {
     
     $stmt2 = Quiq::String->removeIndentation(<< '    __SQL__');
     SELECT
-        sta_id,
-        sta_name,
-        par_id,
-        par_name
+        sta_id
+        , sta_name
+        , par_id
+        , par_name
     FROM
         station sta LEFT JOIN parameter par
         ON par_station_id = sta_id
@@ -735,6 +735,31 @@ sub test_select : Test(7) {
     __SQL__
 
     $self->is($stmt,$stmt2);
+}
+
+# -----------------------------------------------------------------------------
+
+sub test_selectWith : Test(1) {
+    my $self = shift;
+
+    my $sql = Quiq::Sql->new('PostgreSQL');
+
+    my $expected = Quiq::Unindent->trim(q~
+        WITH qry AS (
+            SELECT * FROM a
+        )
+        SELECT
+            *
+        FROM
+            qry
+        WHERE
+            x = '7'
+    ~);
+
+    my $stmt = $sql->selectWith('SELECT * FROM a',-where,x=>7);
+    $self->is($stmt,$expected);
+
+    return;
 }
 
 # -----------------------------------------------------------------------------
@@ -1041,6 +1066,28 @@ sub test_stringLiteral : Test(1) {
 
     my $val = $sql->stringLiteral('');
     $self->is($val,'');
+
+    return;
+}
+
+# -----------------------------------------------------------------------------
+
+sub test_withClause : Test(1) {
+    my $self = shift;
+
+    my $sql = Quiq::Sql->new('PostgreSQL');
+
+    my $expected = Quiq::Unindent->trim(q~
+        x AS (
+            SELECT * FROM a
+        ),
+        y AS (
+            SELECT * FROM b
+        )
+    ~);
+
+    my $stmt = $sql->withClause(x=>'SELECT * FROM a',y=>'SELECT * FROM b');
+    $self->is($stmt,$expected);
 
     return;
 }

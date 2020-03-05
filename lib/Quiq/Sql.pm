@@ -3567,10 +3567,17 @@ sub rollback {
 
 =over 4
 
-=item -comment => $text (Default: keiner)
+=item -comment => $text
 
 Setze Kommentar mit dem ein- oder mehrzeiligen Text $text an den
 Anfang des Statement.
+
+=item -with => @withElements
+
+Liste von WITH-Elementen. Dies ist eine Liste von
+Schlüssel/Wert-Paaren der Art
+
+  $name => $select, ...
 
 =item -select => @selectExpr (Default: '*')
 
@@ -3580,20 +3587,20 @@ spezifiziert, wird '*' angenommen.
 
 Platzhalter: %SELECT%
 
-=item -distinct => $bool (Default: keiner)
+=item -distinct => $bool
 
 Generiere "SELECT DISTINCT" statement.
 
 Schlüsselwort "DISTINCT" wird in %SELECT%-Platzhalter mit eingsetzt.
 
-=item -hint => $hint (Default: keiner)
+=item -hint => $hint
 
 Setze im Statement hinter das Schlüsselwort SELECT einen
 Hint, d.h. einen Kommentar in der Form /*+ ... */. (nur Oracle)
 
 hint wird in %SELECT%-Platzhalter mit eingsetzt.
 
-=item -from => @fromExpr (Default: keiner)
+=item -from => @fromExpr
 
 Generiere eine FROM-Klausel aus den Ausdrücken @fromExpr.
 Die Ausdrücke werden mit Komma separiert. Die FROM-Klausel ist
@@ -3605,47 +3612,47 @@ Platzhalter: %FROM%
 Option angegeben, werden die folgenden Parameter als
 Tabellennamen interpretiert.
 
-=item -where => @whereExpr (Default: keiner)
+=item -where => @whereExpr
 
 Generiere eine WHERE-Klausel aus den Ausdrücken @whereExpr.
 Die Ausdrücke werden mit 'AND' separiert.
 
 Platzhalter: %WHERE%
 
-=item -groupBy => @groupExpr (Default: keiner)
+=item -groupBy => @groupExpr
 
 Generiere eine GROUP BY-Klausel aus den Ausdrücken @groupExpr.
 Die Ausdrücke werden mit Komma separiert.
 
 Platzhalter: %GROUPBY%
 
-=item -having => @havingExpr (Default: keiner)
+=item -having => @havingExpr
 
 Generiere eine HAVING-Klausel aus den Ausdrücken @havingExpr.
 Die Ausdrücke werden mit Komma separiert.
 
 Platzhalter: %HAVING%
 
-=item -orderBy => @orderExpr (Default: keiner)
+=item -orderBy => @orderExpr
 
 Generiere eine ORDER BY-Klausel aus den Ausdrücken @orderExpr.
 Die Ausdrücke werden mit Komma separiert.
 
 Platzhalter: %ORDERBY%
 
-=item -limit => $n (Default: keiner)
+=item -limit => $n
 
 Generiere eine LIMIT-Klausel.
 
 Platzhalter: %LIMIT%
 
-=item -offset => $n (Default: keiner)
+=item -offset => $n
 
 Generiere eine OFFSET-Klausel.
 
 Platzhalter: %OFFSET%
 
-=item -stmt => $stmt (Default: keiner)
+=item -stmt => $stmt
 
 Liefere $stmt als Statement. Enthält $stmt Platzhalter,
 werden diese durch die entsprechenden Komponenten ersetzt
@@ -3807,6 +3814,7 @@ sub select {
 
     my @args;
     my $comment;
+    my @with;
     my @select;
     my $distinct;
     my $hint;
@@ -3822,6 +3830,7 @@ sub select {
 
     Quiq::Option->extractMulti(\@_,
         -comment => \$comment,
+        -with => \@with,
         -select => \@select,
         -distinct => \$distinct,
         -hint => \$hint,
@@ -3885,7 +3894,7 @@ sub select {
         $selectClause .= $self->selectClause(@select);
     }
 
-    # From-Klausel ($fromClause)
+    # FROM-Klausel
     my $fromClause = $self->fromClause(@from);
 
     # Where-Klausel ($whereClause)
@@ -3972,6 +3981,26 @@ sub select {
             Stmt => $stmt,
             SelectClause => $selectClause,
         );
+    }
+
+    # WITH-Klausel
+
+    my $withClause = $self->withClause(@with);
+    if ($withClause) {
+        if ($body =~ /%WITH%/) {
+            $stmt =~ s/%WITH%/$withClause/g;
+        }
+        elsif ($body !~ /\bWITH\b/i) {
+            # WITH-Klausel an den Anfang stellen
+            $stmt = "WITH $withClause\n$stmt";
+        }
+        else {
+            $self->throw(
+                'SELECT-00002: Kein Platzhalter für WITH-Klausel',
+                Stmt => $stmt,
+                WithClause => $withClause,
+            );
+        }
     }
 
     if ($fromClause) {
@@ -4125,6 +4154,120 @@ sub select {
     }
 
     return $stmt;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 selectWith() - Generiere Selektion über Statement in WITH-Klausel
+
+=head4 Synopsis
+
+  $stmt = $sql->selectWith($stmt,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $stmt
+
+SELECT-Statement, das in eine WITH Klausel eingebettet wird.
+
+=back
+
+=head4 Options
+
+Alle Optionen von L<select|"select() - Generiere SELECT Statement">()
+
+=head4 Returns
+
+SELECT-Statement (String)
+
+=head4 Description
+
+Bette SELECT-Statement $stmt in eine WITH-Klausel ein und generiere
+eine Selektion über dieser WITH-Klausel. Dieses Vorgehen hat den Vorteil,
+dass die Bedingungen der WHERE-Klausel über den Kolumnennamen der
+SELECT-Liste formuliert werden können.
+
+Beispiel:
+
+Eine Selektion über dem Statement
+
+  SELECT
+      fun.oid AS fun_oid
+      , usr.usename AS fun_owner
+      , nsp.nspname AS fun_schema
+      , fun.proname AS fun_name
+      , pg_get_function_identity_arguments(fun.oid) AS fun_arguments
+      , fun.proname || '(' ||
+          COALESCE(pg_get_function_identity_arguments(fun.oid), '')
+          || ')' AS fun_signature
+      , pg_get_functiondef(fun.oid) AS fun_source
+  FROM
+      pg_proc AS fun
+      JOIN pg_namespace AS nsp
+          ON fun.pronamespace = nsp.oid
+      JOIN pg_user usr
+          ON fun.proowner = usr.usesysid
+
+liefert zwar Datensätze mit den eigens vergebenen Kolumnennamen fun_oid,
+fun_owner usw. Diese Namen können jedoch nicht bei der Formulierung der
+WHERE-Klausel verwendet werden. Hier müssen die ursprünglichen Namen der
+zugrundeliegenden Tabellen verwendet werden. Diese Komplikation lässt
+sich vermeiden, wenn das Statement in eine WITH-Klausel eingebettet und
+über I<dieser> die Selektion formuliert wird. In dem Fall können
+(und müssen) die Namen des eingebetteten SELECT verwendet werden.
+Hier eine Suche via fun_name ($stmt ist obiges Statement):
+
+  $stmt = $sql->selectWith($stmt,
+      -select => 'fun_schema','fun_signature',
+      -where => fun_name => 'check_bigint',
+      -orderBy => 'fun_schema',
+  );
+
+liefert
+
+  WITH qry AS (
+      SELECT
+          fun.oid AS fun_oid
+          , usr.usename AS fun_owner
+          , nsp.nspname AS fun_schema
+          , fun.proname AS fun_name
+          , pg_get_function_identity_arguments(fun.oid) AS fun_arguments
+          , fun.proname || '(' ||
+              COALESCE(pg_get_function_identity_arguments(fun.oid), '')
+              || ')' AS fun_signature
+          , pg_get_functiondef(fun.oid) AS fun_source
+      FROM
+          pg_proc AS fun
+          JOIN pg_namespace AS nsp
+              ON fun.pronamespace = nsp.oid
+          JOIN pg_user usr
+              ON fun.proowner = usr.usesysid
+  )
+  SELECT
+      fun_schema
+      , fun_signature
+  FROM
+      qry
+  WHERE
+      fun_name = 'check_bigint'
+  ORDER BY
+      fun_schema
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub selectWith {
+    my ($self,$stmt) = splice @_,0,2;
+    # @_: @opt
+
+    return $self->select(
+        -with,qry => $stmt,
+        @_,
+        -from => 'qry',
+    );
 }
 
 # -----------------------------------------------------------------------------
@@ -5100,6 +5243,52 @@ sub stringLiteral {
 
 # -----------------------------------------------------------------------------
 
+=head3 withClause() - Liefere WITH-Klausel
+
+=head4 Synopsis
+
+  $withClause = $sql->withClause(@keyVal);
+
+=head4 Description
+
+Wandele die Liste von Schlüssel/Wert-Paaren @keyVal in eine WITH-Klausel
+(ohne WITH-Schlüsselwort) und liefere diese zurück. Der Wert ist jeweils
+ein SELECT-Statement und der Schlüssel ein Bezeichner für das Statement.
+
+=head4 Example
+
+  $sql->withClause(x=>'SELECT * FROM a',y=>'SELECT * FROM b');
+
+liefert
+
+  x AS (
+      SELECT * FROM a
+  ),
+  y AS (
+      SELECT * FROM b
+  )
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub withClause {
+    my $self = shift;
+    # @_: @keyVal
+
+    my @arr;
+    while (@_) {
+        my $name = shift;
+        my $stmt = Quiq::Unindent->trim(shift);
+        $stmt =~ s/^/    /mg;
+        push @arr,"$name AS (\n$stmt\n)";
+    }
+
+    return @arr? join(",\n",@arr): '';
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 selectClause() - Liefere SELECT-Klausel
 
 =head4 Synopsis
@@ -5118,7 +5307,7 @@ sub selectClause {
         $expr = $self->keyExpr($expr);
     }
 
-    return join ",\n    ",@select;
+    return join "\n    , ",@select;
 }
 
 # -----------------------------------------------------------------------------

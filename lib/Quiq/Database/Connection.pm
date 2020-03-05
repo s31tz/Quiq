@@ -2170,6 +2170,33 @@ sub select {
 
 # -----------------------------------------------------------------------------
 
+=head3 selectWith() - Liefere Liste von Datensätzen
+
+=head4 Synopsis
+
+  $tab|@rows|$cur = $db->selectWith($stmt,@select,@opt);
+
+=head4 Options
+
+Dieselben Optionen wie L<select|"select() - Liefere Liste von Datensätzen">()
+
+=head4 Description
+
+Siehe Quiq::Sql->selectWith().
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub selectWith {
+    my ($self,$stmt) = splice @_,0,2;
+    # @_: @select,@opt
+    $stmt = $self->stmt->selectWith($stmt);
+    return $self->select($stmt,@_);
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 lookup() - Liefere Datensatz
 
 =head4 Synopsis
