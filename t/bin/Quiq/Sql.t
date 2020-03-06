@@ -739,31 +739,6 @@ sub test_select : Test(7) {
 
 # -----------------------------------------------------------------------------
 
-sub test_selectWith : Test(1) {
-    my $self = shift;
-
-    my $sql = Quiq::Sql->new('PostgreSQL');
-
-    my $expected = Quiq::Unindent->trim(q~
-        WITH qry AS (
-            SELECT * FROM a
-        )
-        SELECT
-            *
-        FROM
-            qry
-        WHERE
-            x = '7'
-    ~);
-
-    my $stmt = $sql->selectWith('SELECT * FROM a',-where,x=>7);
-    $self->is($stmt,$expected);
-
-    return;
-}
-
-# -----------------------------------------------------------------------------
-
 sub test_insert_1 : Test(1) {
     my $self = shift;
 
@@ -1111,8 +1086,8 @@ sub test_fromClause_oracle : Test(2) {
     my $fromClause = $sql->fromClause('x');
     $self->is($fromClause,'x');
 
-    $fromClause = $sql->fromClause(['AS','x','y']);
-    $self->is($fromClause,'x y');
+    $fromClause = $sql->fromClause(['AS','x','stmt']);
+    $self->is($fromClause,'stmt x');
 }
 
 sub test_fromClause_postgresql : Test(2) {
@@ -1122,8 +1097,8 @@ sub test_fromClause_postgresql : Test(2) {
     my $fromClause = $sql->fromClause('x');
     $self->is($fromClause,'x');
 
-    $fromClause = $sql->fromClause(['AS','x','y']);
-    $self->is($fromClause,'x AS y');
+    $fromClause = $sql->fromClause(['AS','x','stmt']);
+    $self->is($fromClause,'stmt AS x');
 }
 
 # -----------------------------------------------------------------------------

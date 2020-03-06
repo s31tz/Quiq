@@ -7,6 +7,8 @@ use warnings;
 
 our $VERSION = '1.177';
 
+use Quiq::Unindent;
+
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -78,39 +80,22 @@ sub correctFunctionDef {
 
 # -----------------------------------------------------------------------------
 
-=head3 functions() - Selektiere Information über Funktionen
+=head2 SQL-Statements
+
+=head3 functionSelect() - Statement: Selektiere Funktionen
 
 =head4 Synopsis
 
-  @rows|$tab = $class->functions($db,@select,@opt);
-
-=head4 Arguments
-
-=over 4
-
-=item $db
-
-Datenbank-Verbindung (PostgreSQL).
-
-=item @select
-
-Alle Optionen von $db->select(), bis auf -from.
-
-=back
-
-=head4 Options
-
-Alle Optinen von $db->select().
+  $stmt = $class->functionSelect;
 
 =head4 Returns
 
-Liste von Datensätzen. Im Skalarkontext ein Ergebnismengen-Objekt.
+SQL-Statement (String)
 
 =head4 Description
 
-Selektiere Information über eine oder mehrere Funktionen von einer
-PostgreSQL-Datenbank. Die Eigenschaften, die geliefert werden und
-über die selektiert werden kann, sind
+Liefere ein SELECT-Statement, das Informationen über Funktionen
+abfragt. Folgende Information wird geliefert:
 
 =over 4
 
@@ -143,39 +128,68 @@ Name plus Argumentliste der Funktion in der Form:
 =item fun_source
 
 Der vollständige Quelltext der Funktion. B<ACHTUNG:> Der Quelltext
-kann Fehler enthalten. Diese können mit Methode L<correctFunctionDef|"correctFunctionDef() - Korrigiere Quelltext einer Funktionsdefinition">()
-korrigiert werden.
+kann (zumindest bei PostgreSQL 8.3) Fehler enthalten, siehe Methode
+L<correctFunctionDef|"correctFunctionDef() - Korrigiere Quelltext einer Funktionsdefinition">(), die ggf. auf die Werte der Kolumne
+angewendet werden sollte.
 
 =back
+
+Wird das Statement in eine WITH- oder FROM-Klausel Klausel eingebettet,
+können auch die Suchkriterien über obige Kolumnennamen formuliert werden:
+
+  $tab = $db->selectWith(
+      Quiq::PostgreSql::Catalog->functionSelect,
+      -select => 'fun_source',
+      -where, fun_name = 'rv_copy_to',
+          fun_arguments = 'text, text, text',
+  );
+
+=head4 Details
+
+Das gelieferte SELECT-Statement:
+
+  SELECT
+      fun.oid AS fun_oid
+      , usr.usename AS fun_owner
+      , nsp.nspname AS fun_schema
+      , fun.proname AS fun_name
+      , pg_get_function_identity_arguments(fun.oid) AS fun_arguments
+      , fun.proname || '(' ||
+          COALESCE(pg_get_function_identity_arguments(fun.oid), '')
+          || ')' AS fun_signature
+      , pg_get_functiondef(fun.oid) AS fun_source
+  FROM
+      pg_proc AS fun
+      JOIN pg_namespace AS nsp
+          ON fun.pronamespace = nsp.oid
+      JOIN pg_user usr
+          ON fun.proowner = usr.usesysid
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub functions {
-    my ($class,$db) = splice @_,0,2;
-    # @_: @select
+sub functionSelect {
+    my $class = shift;
 
-    return $db->selectWith(q~
-        SELECT
-            fun.oid AS fun_oid
-            , usr.usename AS fun_owner
-            , nsp.nspname AS fun_schema
-            , fun.proname AS fun_name
-            , pg_get_function_identity_arguments(fun.oid) AS fun_arguments
-            , fun.proname || '(' ||
-                COALESCE(pg_get_function_identity_arguments(fun.oid), '')
-                || ')' AS fun_signature
-            , pg_get_functiondef(fun.oid) AS fun_source
-        FROM
-            pg_proc AS fun
-            JOIN pg_namespace AS nsp
-                ON fun.pronamespace = nsp.oid
-            JOIN pg_user usr
-                ON fun.proowner = usr.usesysid
-        ~,
-        @_,
-    );
+    return Quiq::Unindent->trim(q~
+    SELECT
+        fun.oid AS fun_oid
+        , usr.usename AS fun_owner
+        , nsp.nspname AS fun_schema
+        , fun.proname AS fun_name
+        , pg_get_function_identity_arguments(fun.oid) AS fun_arguments
+        , fun.proname || '(' ||
+            COALESCE(pg_get_function_identity_arguments(fun.oid), '')
+            || ')' AS fun_signature
+        , pg_get_functiondef(fun.oid) AS fun_source
+    FROM
+        pg_proc AS fun
+        JOIN pg_namespace AS nsp
+            ON fun.pronamespace = nsp.oid
+        JOIN pg_user usr
+            ON fun.proowner = usr.usesysid
+    ~);
 }
 
 # -----------------------------------------------------------------------------

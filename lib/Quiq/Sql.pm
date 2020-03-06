@@ -3894,9 +3894,6 @@ sub select {
         $selectClause .= $self->selectClause(@select);
     }
 
-    # FROM-Klausel
-    my $fromClause = $self->fromClause(@from);
-
     # Where-Klausel ($whereClause)
 
     # Im Falle von $limit u.U. @where erweitern
@@ -3985,6 +3982,13 @@ sub select {
 
     # WITH-Klausel
 
+    if (@with == 1) {
+        unshift @with,'query';
+        if (!@from) {
+            @from = ('query');
+        }
+    }
+
     my $withClause = $self->withClause(@with);
     if ($withClause) {
         if ($body =~ /%WITH%/) {
@@ -4003,12 +4007,21 @@ sub select {
         }
     }
 
+    # FROM-Klausel
+
+    my $fromClause = $self->fromClause(@from);
     if ($fromClause) {
+        $fromClause =~ s/\n/\n    /mg;
         if ($body =~ /%FROM%/) {
             $stmt =~ s/%FROM%/$fromClause/g;
         }
         elsif ($body !~ /\bFROM\b/i) {
-            $stmt .= "\nFROM\n    $fromClause";
+            if ($fromClause =~ /^\s*\(/) {
+                $stmt .= "\nFROM $fromClause";
+            }
+            else {
+                $stmt .= "\nFROM\n    $fromClause";
+            }
         }
         else {
             $self->throw(
@@ -4154,120 +4167,6 @@ sub select {
     }
 
     return $stmt;
-}
-
-# -----------------------------------------------------------------------------
-
-=head3 selectWith() - Generiere Selektion über Statement in WITH-Klausel
-
-=head4 Synopsis
-
-  $stmt = $sql->selectWith($stmt,@opt);
-
-=head4 Arguments
-
-=over 4
-
-=item $stmt
-
-SELECT-Statement, das in eine WITH Klausel eingebettet wird.
-
-=back
-
-=head4 Options
-
-Alle Optionen von L<select|"select() - Generiere SELECT Statement">()
-
-=head4 Returns
-
-SELECT-Statement (String)
-
-=head4 Description
-
-Bette SELECT-Statement $stmt in eine WITH-Klausel ein und generiere
-eine Selektion über dieser WITH-Klausel. Dieses Vorgehen hat den Vorteil,
-dass die Bedingungen der WHERE-Klausel über den Kolumnennamen der
-SELECT-Liste formuliert werden können.
-
-Beispiel:
-
-Eine Selektion über dem Statement
-
-  SELECT
-      fun.oid AS fun_oid
-      , usr.usename AS fun_owner
-      , nsp.nspname AS fun_schema
-      , fun.proname AS fun_name
-      , pg_get_function_identity_arguments(fun.oid) AS fun_arguments
-      , fun.proname || '(' ||
-          COALESCE(pg_get_function_identity_arguments(fun.oid), '')
-          || ')' AS fun_signature
-      , pg_get_functiondef(fun.oid) AS fun_source
-  FROM
-      pg_proc AS fun
-      JOIN pg_namespace AS nsp
-          ON fun.pronamespace = nsp.oid
-      JOIN pg_user usr
-          ON fun.proowner = usr.usesysid
-
-liefert zwar Datensätze mit den eigens vergebenen Kolumnennamen fun_oid,
-fun_owner usw. Diese Namen können jedoch nicht bei der Formulierung der
-WHERE-Klausel verwendet werden. Hier müssen die ursprünglichen Namen der
-zugrundeliegenden Tabellen verwendet werden. Diese Komplikation lässt
-sich vermeiden, wenn das Statement in eine WITH-Klausel eingebettet und
-über I<dieser> die Selektion formuliert wird. In dem Fall können
-(und müssen) die Namen des eingebetteten SELECT verwendet werden.
-Hier eine Suche via fun_name ($stmt ist obiges Statement):
-
-  $stmt = $sql->selectWith($stmt,
-      -select => 'fun_schema','fun_signature',
-      -where => fun_name => 'check_bigint',
-      -orderBy => 'fun_schema',
-  );
-
-liefert
-
-  WITH qry AS (
-      SELECT
-          fun.oid AS fun_oid
-          , usr.usename AS fun_owner
-          , nsp.nspname AS fun_schema
-          , fun.proname AS fun_name
-          , pg_get_function_identity_arguments(fun.oid) AS fun_arguments
-          , fun.proname || '(' ||
-              COALESCE(pg_get_function_identity_arguments(fun.oid), '')
-              || ')' AS fun_signature
-          , pg_get_functiondef(fun.oid) AS fun_source
-      FROM
-          pg_proc AS fun
-          JOIN pg_namespace AS nsp
-              ON fun.pronamespace = nsp.oid
-          JOIN pg_user usr
-              ON fun.proowner = usr.usesysid
-  )
-  SELECT
-      fun_schema
-      , fun_signature
-  FROM
-      qry
-  WHERE
-      fun_name = 'check_bigint'
-  ORDER BY
-      fun_schema
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub selectWith {
-    my ($self,$stmt) = splice @_,0,2;
-    # @_: @opt
-
-    return $self->select(
-        -with,qry => $stmt,
-        @_,
-        -from => 'qry',
-    );
 }
 
 # -----------------------------------------------------------------------------
@@ -5332,7 +5231,7 @@ folgendermaßen behandelt:
 
 Eine Zeichenkette wird nicht verändert.
 
-=item ['AS',$fromExpr,$alias]
+=item ['AS',$alias,$fromExpr]
 
 Es wird ein FROM-Alias erzeugt. Dieser hat entweder den Aufbau
 "expr AS alias" oder "fromExpr alias", abhängig vom DBMS.
@@ -5346,16 +5245,16 @@ Oracle akzeptiert "fromExpr AS alias" nicht.
 
 sub fromClause {
     my $self = shift;
-    my @from = @_;
+    my @from = @_; # Wir müssen kopieren
 
     for my $expr (@from) {
         if (ref $expr) {
             if ($expr->[0] eq 'AS') {
                 if ($self->isOracle) {
-                    $expr = "$expr->[1] $expr->[2]";
+                    $expr = "$expr->[2] $expr->[1]";
                 }
                 else {
-                    $expr = "$expr->[1] AS $expr->[2]";
+                    $expr = "$expr->[2] AS $expr->[1]";
                 }
             }
             else {
@@ -5363,10 +5262,10 @@ sub fromClause {
             }
         }
         $expr = Quiq::String->removeIndentation($expr);
-        $expr =~ s/\n/\n    /g;
+        # $expr =~ s/\n/\n    /g;
     }
 
-    return join ",\n    ",@from;
+    return join "\n, ",@from;
 }
 
 # -----------------------------------------------------------------------------
