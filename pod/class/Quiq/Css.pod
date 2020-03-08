@@ -390,7 +390,7 @@ einer umgebenden Methode kommt.
 
 =head1 VERSION
 
-1.177
+1.178
 
 =head1 SOURCE
 
