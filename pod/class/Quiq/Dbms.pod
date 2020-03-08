@@ -15,11 +15,13 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
   # Instantiierung
   my $d = Quiq::Dbms->new($dbms);
   
-  # Namen der bekannten Datensysteme
+  # Namen der unterstützten Datenbanksysteme
   my @names = Quiq::Dbms->dbmsNames;
   
   # Boolsche Variable für Tests
-  ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) = $d->dbmsVector;
+  
+  ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) =
+      $d->dbmsTestVector;
   
   # Test-Methoden
   
@@ -86,6 +88,8 @@ DBMS-Objekt
 Instantiiere ein DBMS-Objekt für DBMS $dbms und liefere eine
 Referenz auf dieses Objekt zurück. Die Liste der unterstützten
 DBMSe siehe $class->L<dbmsNames|"dbmsNames() - Liste der Namen der unterstützten Datenbanksysteme">().
+
+=head2 Klassenmethoden
 
 =head3 dbmsNames() - Liste der Namen der unterstützten Datenbanksysteme
 
