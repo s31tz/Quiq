@@ -27,7 +27,7 @@ L<Quiq::Hash>
   
   my $a = Quiq::Assert->new;
   
-  # Prüfe, ob Wert einen Punkt (.) enthält
+  # Universeller Test (hier: Prüfe, ob Wert einen Punkt (.) enthält)
   $a->check('a.b',sub {index(shift,'.') >= 0});
   
   # Prüfe, ob Wert in Aufzählung vorkommt

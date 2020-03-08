@@ -206,7 +206,7 @@ sub nextStmt {
                     last;
                 }
 
-                # Anzahl der bereits gelesenen Begranzer ermitteln
+                # Anzahl der bereits gelesenen Begrenzer ermitteln
 
                 my $i = 0;
                 while ($stmt =~ /\Q$as/g) {
