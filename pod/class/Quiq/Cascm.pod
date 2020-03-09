@@ -727,6 +727,47 @@ Ergebnismengen-Objekt.
 
 =back
 
+=head3 moveItem() - Verschiebe Repository-Datei in ein anderes Verzeichnis
+
+=head4 Synopsis
+
+  $output = $scm->moveItem($repoFile,$repoDir,$removePackage,$putPackage);
+
+=head4 Arguments
+
+=over 4
+
+=item $repoFile
+
+Repository-Pfad der Datei, die verschoben werden soll.
+
+=item $repoDir
+
+Repository-Pfad des Ziel-Verzeichnisses. Dieses Verzeichnis muss
+bereits existieren.
+
+=item $removePackage
+
+Package, das die per removeItem() entfernte Datei aufnimmt.
+
+=item $removePackage
+
+Package, das die per putFiles() hinzugefügte Datei aufnimmt.
+
+=back
+
+=head4 Returns
+
+Ausgabe der Kommandos (String)
+
+=head4 Description
+
+Entferne Datei $repoFile aus dem Repository und füge sie unter
+dem neuen Repository-Pfad $repoDir wieder zum Repository hinzu.
+Verschiebe sie also innerhalb der Repository-Verzeichnisstruktur. Die
+entfernte Datei wird zu Package $removePackage hinzugefügt und die
+neue Datei zu Package $putPackage.
+
 =head3 removeItems() - Lösche Items
 
 =head4 Synopsis

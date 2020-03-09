@@ -99,33 +99,33 @@ abfragt. Folgende Information wird geliefert:
 
 =over 4
 
-=item fun_oid
+=item fnc_oid
 
 PostgreSQL-Objekt-Id der Funktion.
 
-=item fun_owner
+=item fnc_owner
 
 Name des Owners der Funktion.
 
-=item fun_schema
+=item fnc_schema
 
 Name des Schemas, in dem sich die Funktion befindet.
 
-=item fun_name
+=item fnc_name
 
 Name der Funktion.
 
-=item fun_arguments
+=item fnc_arguments
 
 Argumentliste der Funktion als kommaseparierte Liste der Typ-Namen.
 
-=item fun_signature
+=item fnc_signature
 
 Name plus Argumentliste der Funktion in der Form:
 
   FUNCTION(TYPE,...)
 
-=item fun_source
+=item fnc_source
 
 Der vollständige Quelltext der Funktion. B<ACHTUNG:> Der Quelltext
 kann (zumindest bei PostgreSQL 8.3) Fehler enthalten, siehe Methode
@@ -139,9 +139,9 @@ können auch die Suchkriterien über obige Kolumnennamen formuliert werden:
 
   $tab = $db->selectWith(
       Quiq::PostgreSql::Catalog->functionSelect,
-      -select => 'fun_source',
-      -where, fun_name = 'rv_copy_to',
-          fun_arguments = 'text, text, text',
+      -select => 'fnc_source',
+      -where, fnc_name = 'rv_copy_to',
+          fnc_arguments = 'text, text, text',
   );
 
 =head4 Details
@@ -149,21 +149,21 @@ können auch die Suchkriterien über obige Kolumnennamen formuliert werden:
 Das gelieferte SELECT-Statement:
 
   SELECT
-      fun.oid AS fun_oid
-      , usr.usename AS fun_owner
-      , nsp.nspname AS fun_schema
-      , fun.proname AS fun_name
-      , pg_get_function_identity_arguments(fun.oid) AS fun_arguments
-      , fun.proname || '(' ||
-          COALESCE(pg_get_function_identity_arguments(fun.oid), '')
-          || ')' AS fun_signature
-      , pg_get_functiondef(fun.oid) AS fun_source
+      fnc.oid AS fnc_oid
+      , usr.usename AS fnc_owner
+      , nsp.nspname AS fnc_schema
+      , fnc.proname AS fnc_name
+      , pg_get_function_identity_arguments(fnc.oid) AS fnc_arguments
+      , fnc.proname || '(' ||
+          COALESCE(pg_get_function_identity_arguments(fnc.oid), '')
+          || ')' AS fnc_signature
+      , pg_get_functiondef(fnc.oid) AS fnc_source
   FROM
-      pg_proc AS fun
+      pg_proc AS fnc
       JOIN pg_namespace AS nsp
-          ON fun.pronamespace = nsp.oid
+          ON fnc.pronamespace = nsp.oid
       JOIN pg_user usr
-          ON fun.proowner = usr.usesysid
+          ON fnc.proowner = usr.usesysid
 
 =cut
 
@@ -174,21 +174,21 @@ sub functionSelect {
 
     return Quiq::Unindent->trim(q~
     SELECT
-        fun.oid AS fun_oid
-        , usr.usename AS fun_owner
-        , nsp.nspname AS fun_schema
-        , fun.proname AS fun_name
-        , pg_get_function_identity_arguments(fun.oid) AS fun_arguments
-        , fun.proname || '(' ||
-            COALESCE(pg_get_function_identity_arguments(fun.oid), '')
-            || ')' AS fun_signature
-        , pg_get_functiondef(fun.oid) AS fun_source
+        fnc.oid AS fnc_oid
+        , usr.usename AS fnc_owner
+        , nsp.nspname AS fnc_schema
+        , fnc.proname AS fnc_name
+        , pg_get_function_identity_arguments(fnc.oid) AS fnc_arguments
+        , fnc.proname || '(' ||
+            COALESCE(pg_get_function_identity_arguments(fnc.oid), '')
+            || ')' AS fnc_signature
+        , pg_get_functiondef(fnc.oid) AS fnc_source
     FROM
-        pg_proc AS fun
+        pg_proc AS fnc
         JOIN pg_namespace AS nsp
-            ON fun.pronamespace = nsp.oid
+            ON fnc.pronamespace = nsp.oid
         JOIN pg_user usr
-            ON fun.proowner = usr.usesysid
+            ON fnc.proowner = usr.usesysid
     ~);
 }
 

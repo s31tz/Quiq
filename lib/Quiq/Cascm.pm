@@ -717,11 +717,8 @@ sub putFiles {
     }
 
     if ($transportPackage) {
-        $output .= $self->movePackage($state,$transportPackage,
-            -askUser => 1,
-        );
-        $output .= $self->switchPackage($transportPackage,
-            $package,@items);
+        $output .= $self->movePackage($state,$transportPackage,-askUser=>1);
+        $output .= $self->switchPackage($transportPackage,$package,@items);
         $output .= $self->deletePackages($transportPackage);
     }
 
@@ -1600,6 +1597,88 @@ sub findItem {
 
 # -----------------------------------------------------------------------------
 
+=head3 moveItem() - Verschiebe Repository-Datei in ein anderes Verzeichnis
+
+=head4 Synopsis
+
+  $output = $scm->moveItem($repoFile,$repoDir,$removePackage,$putPackage);
+
+=head4 Arguments
+
+=over 4
+
+=item $repoFile
+
+Repository-Pfad der Datei, die verschoben werden soll.
+
+=item $repoDir
+
+Repository-Pfad des Ziel-Verzeichnisses. Dieses Verzeichnis muss
+bereits existieren.
+
+=item $removePackage
+
+Package, das die per removeItem() entfernte Datei aufnimmt.
+
+=item $removePackage
+
+Package, das die per putFiles() hinzugefügte Datei aufnimmt.
+
+=back
+
+=head4 Returns
+
+Ausgabe der Kommandos (String)
+
+=head4 Description
+
+Entferne Datei $repoFile aus dem Repository und füge sie unter
+dem neuen Repository-Pfad $repoDir wieder zum Repository hinzu.
+Verschiebe sie also innerhalb der Repository-Verzeichnisstruktur. Die
+entfernte Datei wird zu Package $removePackage hinzugefügt und die
+neue Datei zu Package $putPackage.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub moveItem {
+    my ($self,$repoFile,$repoDir,$removePackage,$putPackage) = @_;
+
+    my $p = Quiq::Path->new;
+
+    # Repository-Information
+    my $workspace = $self->workspace;
+
+    # Prüfe, ob Zielverzeichnis exisitert
+
+    my $destDir = "$workspace/$repoDir";
+    if (!$p->exists($destDir)) {
+            $self->throw(
+                'CASCM-00099: Destination directory does not exist',
+                Dir => $destDir,
+            );
+    }
+
+    # Prüfe, ob Put-Package existiert
+    $self->packageState($putPackage);
+
+    my $output;
+
+    # Entferne Datei unter altem Pfad aus Repository
+    $output = $self->removeItems($removePackage,$repoFile);
+
+    # Füge Datei unter neuem Pfad zum repository hinzu
+    $output .= $self->putFiles($putPackage,$repoDir,"$workspace/$repoFile");
+
+    # Ursprüngliche Repository-Datei entfernen
+    $p->delete($repoFile);
+
+    return $output;
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 removeItems() - Lösche Items
 
 =head4 Synopsis
@@ -1638,10 +1717,24 @@ Stufe gelöscht.
 sub removeItems {
     my ($self,$package,@repoFiles) = @_;
 
+    my $output;
+
     # FIXME: Dateien mit dem gleichen ViewPath mit
     # einem Aufruf behandeln (Optimierung).
 
-    my $output;
+    my $state = $self->packageState($package);
+
+    # Erzeuge ein Transportpackage, falls sich das Zielpackage
+    # nicht auf der untersten Stufe befindet
+
+    my $transportPackage;
+    if ($state ne $self->states->[0]) {
+        my $name = Quiq::Converter->intToWord(time);
+        $transportPackage = "S6800_0_Seitz_Lift_$name";
+        $output .= $self->createPackage($transportPackage);
+    }
+
+    my @items;
     for my $repoFile (@repoFiles) {
         my ($dir,$file) = Quiq::Path->split($repoFile);
         my $viewPath = $self->viewPath;
@@ -1654,10 +1747,20 @@ sub removeItems {
             -en => $self->projectContext,
             -vp => $dir? "$viewPath/$dir": $viewPath,
             -st => $self->states->[0],
-            -p => $package,
+            -p => $transportPackage || $package,
         );
 
         $output .= $self->runCmd('hri',$c);
+
+        # Liste der Items im Packate (nur relevant
+        # im Falle eines Transportpackage)
+        push @items,$file;
+    }
+
+    if ($transportPackage) {
+        $output .= $self->movePackage($state,$transportPackage,-askUser=>1);
+        $output .= $self->switchPackage($transportPackage,$package,@items);
+        $output .= $self->deletePackages($transportPackage);
     }
 
     return $output;
