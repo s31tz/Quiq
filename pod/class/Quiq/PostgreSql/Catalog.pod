@@ -10,7 +10,33 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 METHODS
 
-=head2 Klassenmethoden
+=head2 Datenbank-Anfragen
+
+=head3 grepFunction() - Durchsuche Funktions-Quelltexte
+
+=head4 Synopsis
+
+  @rows | $tab = $class->grepFunction($db,$regex);
+
+=head4 Arguments
+
+=over 4
+
+=item $regex
+
+Regulärer Ausdruck, mit dem gesucht wird.
+
+=back
+
+=head4 Returns
+
+Liste der Funktions-Datensätze. Im Skalarkontext ein ResultSet-Objekt.
+
+=head4 Description
+
+Durchsuche die Quelltexte der Datenbank-Funktionen nach Muster $regex.
+
+=head2 Hilfsmethoden
 
 =head3 correctFunctionDef() - Korrigiere Quelltext einer Funktionsdefinition
 

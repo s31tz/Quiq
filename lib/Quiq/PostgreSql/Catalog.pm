@@ -23,7 +23,52 @@ L<Quiq::Object>
 
 =head1 METHODS
 
-=head2 Klassenmethoden
+=head2 Datenbank-Anfragen
+
+=head3 grepFunction() - Durchsuche Funktions-Quelltexte
+
+=head4 Synopsis
+
+  @rows | $tab = $class->grepFunction($db,$regex);
+
+=head4 Arguments
+
+=over 4
+
+=item $regex
+
+Regulärer Ausdruck, mit dem gesucht wird.
+
+=back
+
+=head4 Returns
+
+Liste der Funktions-Datensätze. Im Skalarkontext ein ResultSet-Objekt.
+
+=head4 Description
+
+Durchsuche die Quelltexte der Datenbank-Funktionen nach Muster $regex.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub grepFunction {
+    my ($class,$db,$regex) = @_;
+
+    return $db->select(
+        -with,$class->functionSelect,
+        -where =>
+            "fnc_schema NOT IN ('public', 'information_schema',".
+                " 'pg_catalog')",
+            "fnc_source ~ '$regex'",
+        -orderBy => 'fnc_schema', 'fnc_name',
+    );
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Hilfsmethoden
 
 =head3 correctFunctionDef() - Korrigiere Quelltext einer Funktionsdefinition
 

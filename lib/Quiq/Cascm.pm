@@ -1669,10 +1669,12 @@ sub moveItem {
     $output = $self->removeItems($removePackage,$repoFile);
 
     # Füge Datei unter neuem Pfad zum repository hinzu
-    $output .= $self->putFiles($putPackage,$repoDir,"$workspace/$repoFile");
+
+    my $srcFile = "$workspace/$repoFile";
+    $output .= $self->putFiles($putPackage,$repoDir,$srcFile);
 
     # Ursprüngliche Repository-Datei entfernen
-    $p->delete($repoFile);
+    $p->delete($srcFile);
 
     return $output;
 }
