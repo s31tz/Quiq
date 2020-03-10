@@ -182,8 +182,8 @@ angewendet werden sollte.
 Wird das Statement in eine WITH- oder FROM-Klausel Klausel eingebettet,
 können auch die Suchkriterien über obige Kolumnennamen formuliert werden:
 
-  $tab = $db->selectWith(
-      Quiq::PostgreSql::Catalog->functionSelect,
+  $tab = $db->select(
+      -with => Quiq::PostgreSql::Catalog->functionSelect,
       -select => 'fnc_source',
       -where, fnc_name = 'rv_copy_to',
           fnc_arguments = 'text, text, text',
