@@ -4755,7 +4755,7 @@ sub opCAST {
 
 # -----------------------------------------------------------------------------
 
-=head3 opIN() - Generiere IN-Ausdruck
+=head3 opIN() - Generiere IN- oder NOT IN-Ausdruck
 
 =head4 Synopsis
 
@@ -4763,7 +4763,7 @@ sub opCAST {
 
 =head4 Description
 
-Generiere Ausdruck "IN (VAL1, VAL2, ...)" und liefere diesen zurück.
+Generiere Ausdruck "IN / NOT IN (VAL1, VAL2, ...)" und liefere diesen zurück.
 
 =cut
 
@@ -4779,7 +4779,7 @@ sub opIN {
         # Subselect
         $str = Quiq::String->removeIndentationNl($_[0]);
         $str =~ s/^/        /mg;
-        return "IN (\n$str    )";
+        return "$op (\n$str    )";
     }
 
     for (@_) {
@@ -4790,7 +4790,7 @@ sub opIN {
         # $str .= $self->valExpr($_); Problem: STRING wird zu '''STRING'''
     }
 
-    return $str?  "IN ($str)": '';
+    return $str?  "$op ($str)": '';
 }
 
 # -----------------------------------------------------------------------------
@@ -5041,6 +5041,7 @@ my %opMethod = (
     'BETWEEN' => 'opBETWEEN',
     'CAST' => 'opCAST',
     'IN' => 'opIN',
+    'NOT IN' => 'opIN',
     'LOWER' => 'opFunc',
     'MAX' => 'opFunc',
     'MIN' => 'opFunc',

@@ -62,6 +62,10 @@ Der Name muss in der Datenbank-Konfigurationsdatei definiert sein.
 
 Führe Kommando $cmd aus und terminiere die Verbindung.
 
+=item --script => $file
+
+Führe SQL-Skript $file aus und terminiere die Verbindung.
+
 =item -showInternal => $bool (Default: 0)
 
 Gib die Queries aus, die psql im Zusammenhang mit Backslash-Kommandos
@@ -101,14 +105,20 @@ sub run {
 
     # Options
 
-    my $debug = 0;
     my $command = undef;
+    my $debug = 0;
+    my $echo = 0;
+    my $script = undef;
     my $showInternal = 0;
+    my $stopOnError = 0;
 
     $class->parameters(\@_,
         -command => \$command,
         -debug => \$debug,
+        -echo => \$echo,
+        -script => \$script,
         -showInternal => \$showInternal,
+        -stopOnError => \$stopOnError,
     );
 
     # Führe Operation aus
@@ -134,6 +144,15 @@ sub run {
         $c->addOption(-P=>'pager=off');
         $c->addLongOption('--command'=>$command);
     }
+    if ($script) {
+        $c->addLongOption('--file'=>$script);
+        $stopOnError = 1;
+        $echo = 1;
+    }
+    if ($stopOnError) {
+        $c->addLongOption('--set'=>'ON_ERROR_STOP=1');
+    }
+    $c->addBoolOption('--echo-all'=>$echo);
 
     if (my $database = $udl->db) {
         $c->addArgument($database);

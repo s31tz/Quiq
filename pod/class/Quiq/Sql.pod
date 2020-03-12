@@ -2234,7 +2234,7 @@ Für diff() implementiert, funktioniert aber nicht.
 
   $sqlExpr = $sql->opCAST($op,$dataType,$arg);
 
-=head3 opIN() - Generiere IN-Ausdruck
+=head3 opIN() - Generiere IN- oder NOT IN-Ausdruck
 
 =head4 Synopsis
 
@@ -2242,7 +2242,7 @@ Für diff() implementiert, funktioniert aber nicht.
 
 =head4 Description
 
-Generiere Ausdruck "IN (VAL1, VAL2, ...)" und liefere diesen zurück.
+Generiere Ausdruck "IN / NOT IN (VAL1, VAL2, ...)" und liefere diesen zurück.
 
 =head2 Expressions
 

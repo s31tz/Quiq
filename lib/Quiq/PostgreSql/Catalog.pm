@@ -25,19 +25,19 @@ L<Quiq::Object>
 
 =head2 Datenbank-Anfragen
 
-=head3 grepFunction() - Durchsuche Funktions-Quelltexte
+=head3 functions() - Selektiere Information über Datenbank-Funktionen
 
 =head4 Synopsis
 
-  @rows | $tab = $class->grepFunction($db,$regex);
+  @rows | $tab = $class->functions($db,@select);
 
 =head4 Arguments
 
 =over 4
 
-=item $regex
+=item @select
 
-Regulärer Ausdruck, mit dem gesucht wird.
+Klauseln und Optionen. Siehe Quiq::Database::Connection->select().
 
 =back
 
@@ -47,23 +47,52 @@ Liste der Funktions-Datensätze. Im Skalarkontext ein ResultSet-Objekt.
 
 =head4 Description
 
-Durchsuche die Quelltexte der Datenbank-Funktionen nach Muster $regex.
+Suche Datenbank-Funktionen und liefere die Ergebnismenge zurück.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub grepFunction {
-    my ($class,$db,$regex) = @_;
+sub functions {
+    my ($class,$db) = splice @_,0,2;
+    # @_: @select
+    return $db->select(-with,$class->functionSelect,@_);
+}
 
-    return $db->select(
-        -with,$class->functionSelect,
-        -where =>
-            "fnc_schema NOT IN ('public', 'information_schema',".
-                " 'pg_catalog')",
-            "fnc_source ~ '$regex'",
-        -orderBy => 'fnc_schema', 'fnc_name',
-    );
+# -----------------------------------------------------------------------------
+
+=head3 views() - Selektiere Information über Views
+
+=head4 Synopsis
+
+  @rows | $tab = $class->views($db,@select);
+
+=head4 Arguments
+
+=over 4
+
+=item @select
+
+Klauseln und Optionen. Siehe Quiq::Database::Connection->select().
+
+=back
+
+=head4 Returns
+
+Liste der View-Datensätze. Im Skalarkontext ein ResultSet-Objekt.
+
+=head4 Description
+
+Suche Views und liefere die Ergebnismenge zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub views {
+    my ($class,$db) = splice @_,0,2;
+    # @_: @select
+    return $db->select(-with,$class->viewSelect,@_);
 }
 
 # -----------------------------------------------------------------------------
@@ -189,27 +218,6 @@ können auch die Suchkriterien über obige Kolumnennamen formuliert werden:
           fnc_arguments = 'text, text, text',
   );
 
-=head4 Details
-
-Das gelieferte SELECT-Statement:
-
-  SELECT
-      fnc.oid AS fnc_oid
-      , usr.usename AS fnc_owner
-      , nsp.nspname AS fnc_schema
-      , fnc.proname AS fnc_name
-      , pg_get_function_identity_arguments(fnc.oid) AS fnc_arguments
-      , fnc.proname || '(' ||
-          COALESCE(pg_get_function_identity_arguments(fnc.oid), '')
-          || ')' AS fnc_signature
-      , pg_get_functiondef(fnc.oid) AS fnc_source
-  FROM
-      pg_proc AS fnc
-      JOIN pg_namespace AS nsp
-          ON fnc.pronamespace = nsp.oid
-      JOIN pg_user usr
-          ON fnc.proowner = usr.usesysid
-
 =cut
 
 # -----------------------------------------------------------------------------
@@ -234,6 +242,81 @@ sub functionSelect {
             ON fnc.pronamespace = nsp.oid
         JOIN pg_user usr
             ON fnc.proowner = usr.usesysid
+    ~);
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 viewSelect() - Statement: Selektiere Views
+
+=head4 Synopsis
+
+  $stmt = $class->viewSelect;
+
+=head4 Returns
+
+SQL-Statement (String)
+
+=head4 Description
+
+Liefere ein SELECT-Statement, das Informationen über Views
+abfragt. Folgende Information wird geliefert:
+
+=over 4
+
+=item viw_oid
+
+PostgreSQL-Objekt-Id der View.
+
+=item viw_owner
+
+Name des Owners der View.
+
+=item viw_schema
+
+Name des Schemas, in dem sich die View befindet.
+
+=item viw_name
+
+Name der View.
+
+=item viw_source
+
+Der Quelltext der View.
+
+=back
+
+Wird das Statement in eine WITH- oder FROM-Klausel Klausel eingebettet,
+können auch die Suchkriterien über obige Kolumnennamen formuliert werden:
+
+  $tab = $db->select(
+      -with => Quiq::PostgreSql::Catalog->viewSelect,
+      -select => 'viw_source',
+      -where, viw_name = 'dd_rh_invoice_add',
+  );
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub viewSelect {
+    my $class = shift;
+
+    return Quiq::Unindent->trim(q~
+    SELECT
+        cls.oid AS viw_oid
+        , usr.usename AS viw_owner
+        , nsp.nspname AS viw_schema
+        , cls.relname AS viw_name
+        , pg_get_viewdef(cls.oid, true) AS viw_source
+    FROM
+        pg_class AS cls
+        JOIN pg_namespace AS nsp
+            ON cls.relnamespace = nsp.oid
+        JOIN pg_user usr
+            ON cls.relowner = usr.usesysid
+    WHERE
+        cls.relkind = 'v'
     ~);
 }
 

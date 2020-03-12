@@ -47,6 +47,10 @@ Der Name muss in der Datenbank-Konfigurationsdatei definiert sein.
 
 Führe Kommando $cmd aus und terminiere die Verbindung.
 
+=item --script => $file
+
+Führe SQL-Skript $file aus und terminiere die Verbindung.
+
 =item -showInternal => $bool (Default: 0)
 
 Gib die Queries aus, die psql im Zusammenhang mit Backslash-Kommandos
