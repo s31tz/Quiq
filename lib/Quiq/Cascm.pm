@@ -435,7 +435,17 @@ Nächster Stand:
 # -----------------------------------------------------------------------------
 
 sub edit {
-    my ($self,$repoFile,$package,$version) = @_;
+    my ($self,$repoFile,$package) = splice @_,0,3;
+
+    # Optionen und Argumente
+
+    my $show = undef;
+    my $version = undef;
+
+    $self->parameters(\@_,
+        -show => \$show,
+        -version => \$version,
+    );
 
     my $output = '';
 
@@ -491,9 +501,17 @@ sub edit {
     $output .= $self->checkout($transportPackage || $package,$repoFile);
 
     my $fileChanged = 0;
-    my $editor = $ENV{'EDITOR'} || 'vi';
+    my $editCmd = "emacs -nw $localFile";
+    if ($show) {
+        $editCmd .= " -f split-window-horizontally $show -f other-window";
+    }
+    my $sh = Quiq::Shell->new(
+        log=>1,
+        cmdPrefix => '> ',
+        cmdAnsiColor => 'bold',
+    );
     while (1) {
-        Quiq::Shell->exec("$editor $localFile");
+        $sh->exec($editCmd);
         if ($p->compare($localFile,$backupFile)) {
             # Im Falle von Perl-Code diesen auf Syntaxfehler hin überprüfen
 

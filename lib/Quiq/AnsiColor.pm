@@ -193,6 +193,34 @@ sub str {
 
 # -----------------------------------------------------------------------------
 
+=head3 strLn() - Formatiere Zeile mit Colorcodes
+
+=head4 Synopsis
+
+  $str = $a->strLn($attr,$str);
+
+=head4 Arguments
+
+Siehe L<str|"str() - Formatiere String mit Colorcodes">()
+
+=head4 Returns
+
+Siehe L<str|"str() - Formatiere String mit Colorcodes">()
+
+=head4 Description
+
+Wie L<str|"str() - Formatiere String mit Colorcodes">(), nur dass das Resultat mit einem Newline terminiert wird.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub strLn {
+    return shift->str(@_)."\n";
+}
+
+# -----------------------------------------------------------------------------
+
 =head1 VERSION
 
 1.178
