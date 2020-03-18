@@ -178,9 +178,9 @@ sub run {
     }
 
     my $cmd = $c->command;
-    if ($debug) {
+    # if ($debug) {
         say $cmd;
-    }
+    # }
 
     my $exp = Expect->new;
     if ($debug) {
