@@ -25,7 +25,7 @@ L<Quiq::Object>
 
 =head2 Datenbank-Anfragen
 
-=head3 functions() - Selektiere Information über Datenbank-Funktionen
+=head3 functions() - Selektiere Informationen über Funktionen
 
 =head4 Synopsis
 
@@ -61,7 +61,7 @@ sub functions {
 
 # -----------------------------------------------------------------------------
 
-=head3 views() - Selektiere Information über Views
+=head3 views() - Selektiere Informationen über Views
 
 =head4 Synopsis
 

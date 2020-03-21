@@ -12,7 +12,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head2 Datenbank-Anfragen
 
-=head3 functions() - Selektiere Information über Datenbank-Funktionen
+=head3 functions() - Selektiere Informationen über Funktionen
 
 =head4 Synopsis
 
@@ -36,7 +36,7 @@ Liste der Funktions-Datensätze. Im Skalarkontext ein ResultSet-Objekt.
 
 Suche Datenbank-Funktionen und liefere die Ergebnismenge zurück.
 
-=head3 views() - Selektiere Information über Views
+=head3 views() - Selektiere Informationen über Views
 
 =head4 Synopsis
 
