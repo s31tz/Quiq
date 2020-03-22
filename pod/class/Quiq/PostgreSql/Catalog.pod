@@ -10,6 +10,21 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 METHODS
 
+=head2 Konstruktor
+
+=head3 new() - Konstruktor
+
+=head4 Synopsis
+
+  $cat = $class->new;
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere eine Referenz auf dieses
+Objekt zurück. Da die Klasse ausschließlich Klassenmethoden enthält,
+hat das Objekt lediglich die Funktion, eine abkürzende Aufrufschreibweise
+zu ermöglichen.
+
 =head2 Datenbank-Anfragen
 
 =head3 functions() - Selektiere Informationen über Funktionen

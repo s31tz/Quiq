@@ -23,6 +23,32 @@ L<Quiq::Object>
 
 =head1 METHODS
 
+=head2 Konstruktor
+
+=head3 new() - Konstruktor
+
+=head4 Synopsis
+
+  $cat = $class->new;
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere eine Referenz auf dieses
+Objekt zurück. Da die Klasse ausschließlich Klassenmethoden enthält,
+hat das Objekt lediglich die Funktion, eine abkürzende Aufrufschreibweise
+zu ermöglichen.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub new {
+    my $class = shift;
+    return bless \(my $dummy),$class;
+}
+
+# -----------------------------------------------------------------------------
+
 =head2 Datenbank-Anfragen
 
 =head3 functions() - Selektiere Informationen über Funktionen
