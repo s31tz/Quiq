@@ -5036,6 +5036,8 @@ my %opMethod = (
     '=' => 'opRel',
     '>' => 'opRel',
     '>=' => 'opRel',
+    '~' => 'opRel',
+    '!~' => 'opRel',
     'LIKE' => 'opRel',
     'AS' => 'opAS',
     'BETWEEN' => 'opBETWEEN',
@@ -5435,6 +5437,52 @@ sub exists {
 
 sub notExists {
     return shift->exists(-not=>1,@_);
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 union() - Verknüpfe Statements mit UNION
+
+=head4 Synopsis
+
+  $stmt = $sql->union(@stmts);
+
+=head4 Arguments
+
+=over 4
+
+=item @stmts
+
+Statements, die mit UNION verknpft werden.
+
+=back
+
+=head4 Returns
+
+String
+
+=head4 Description
+
+Verknüpfe die (SELECT-)Statements @stmts per UNION und liefere das
+resultierende Statement zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub union {
+    my $self = shift;
+    # @_: @stmts
+
+    my $stmt = '';
+    for (@_) {
+        if ($stmt) {
+            $stmt .= "\nUNION\n";
+        }
+        $stmt .= Quiq::Unindent->trim($_);
+    }
+
+    return $stmt;
 }
 
 # -----------------------------------------------------------------------------

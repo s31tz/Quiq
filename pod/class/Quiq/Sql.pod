@@ -2558,6 +2558,31 @@ Liefere NOT EXISTS Klausel.
 
   $str = $sql->notExists(@select);
 
+=head3 union() - Verknüpfe Statements mit UNION
+
+=head4 Synopsis
+
+  $stmt = $sql->union(@stmts);
+
+=head4 Arguments
+
+=over 4
+
+=item @stmts
+
+Statements, die mit UNION verknpft werden.
+
+=back
+
+=head4 Returns
+
+String
+
+=head4 Description
+
+Verknüpfe die (SELECT-)Statements @stmts per UNION und liefere das
+resultierende Statement zurück.
+
 =head2 Spezielle Konstrukte
 
 =head3 diff() - Liefere SELECT zur Differenzermittlung

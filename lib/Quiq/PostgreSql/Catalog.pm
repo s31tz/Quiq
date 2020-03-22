@@ -87,6 +87,42 @@ sub functions {
 
 # -----------------------------------------------------------------------------
 
+=head3 objects() - Selektiere Informationen über Objekte
+
+=head4 Synopsis
+
+  @rows | $tab = $class->objects($db,@select);
+
+=head4 Arguments
+
+=over 4
+
+=item @select
+
+Klauseln und Optionen. Siehe Quiq::Database::Connection->select().
+
+=back
+
+=head4 Returns
+
+Liste der Objekt-Datensätze. Im Skalarkontext ein ResultSet-Objekt.
+
+=head4 Description
+
+Suche Objekte und liefere die Ergebnismenge zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub objects {
+    my ($class,$db) = splice @_,0,2;
+    # @_: @select
+    return $db->select(-with,$class->objectSelect,@_);
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 views() - Selektiere Informationen über Views
 
 =head4 Synopsis
@@ -251,6 +287,9 @@ können auch die Suchkriterien über obige Kolumnennamen formuliert werden:
 sub functionSelect {
     my $class = shift;
 
+    # pg_get_functiondef() funktioniert nicht auf Aggregat-Funktionen,
+    # daher "WHERE fnc.proisagg is false"
+
     return Quiq::Unindent->trim(q~
     SELECT
         fnc.oid AS fnc_oid
@@ -268,6 +307,116 @@ sub functionSelect {
             ON fnc.pronamespace = nsp.oid
         JOIN pg_user usr
             ON fnc.proowner = usr.usesysid
+    WHERE
+         fnc.proisagg is false
+    ~);
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 objectSelect() - Statement: Selektiere Objekte
+
+=head4 Synopsis
+
+  $stmt = $class->objectSelect;
+
+=head4 Returns
+
+SQL-Statement (String)
+
+=head4 Description
+
+Liefere ein SELECT-Statement, das Informationen über Objekte
+abfragt. Folgende Information wird geliefert:
+
+=over 4
+
+=item obj_oid
+
+PostgreSQL-Objekt-Id des Objekts.
+
+=item obj_type
+
+Typ des Objekts.
+
+=item obj_owner
+
+Name des Owners des Objekts.
+
+=item obj_schema
+
+Name des Schemas, in dem sich das Objekt befindet.
+
+=item obj_name
+
+Name des Objekts.
+
+=item obj_longname
+
+Vollständiger Name des Objekts. Im Falle einer Funktion dessen
+Signatur. Bei allen anderen Objekten identisch zu obj_name.
+
+=item obj_source
+
+Der Quelltext des Objekts im Falle von Funktionen und Views.
+
+=back
+
+Wird das Statement in eine WITH- oder FROM-Klausel Klausel eingebettet,
+können auch die Suchkriterien über obige Kolumnennamen formuliert werden:
+
+  $tab = $db->select(
+      -with => Quiq::PostgreSql::Catalog->objectSelect,
+      ...
+  );
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub objectSelect {
+    my $class = shift;
+
+    # pg_get_functiondef() funktioniert nicht auf Aggregat-Funktionen,
+    # daher "WHERE fnc.proisagg is false"
+
+    return Quiq::Unindent->trim(q~
+    SELECT
+        cls.oid AS obj_oid
+        , cls.relkind AS obj_type
+        , usr.usename AS obj_owner
+        , nsp.nspname AS obj_schema
+        , cls.relname AS obj_name
+        , cls.relname AS obj_longname
+        , CASE
+              WHEN cls.relkind != 'v' THEN pg_get_viewdef(cls.oid, true)
+              ELSE ''
+          END AS obj_source
+    FROM
+        pg_class AS cls
+        JOIN pg_namespace AS nsp
+            ON cls.relnamespace = nsp.oid
+        JOIN pg_user usr
+            ON cls.relowner = usr.usesysid
+    UNION
+    SELECT
+        fnc.oid AS fnc_oid
+        , 'F' AS fnc_type
+        , usr.usename AS fnc_owner
+        , nsp.nspname AS fnc_schema
+        , fnc.proname AS fnc_name
+        , fnc.proname || '(' ||
+            COALESCE(pg_get_function_identity_arguments(fnc.oid), '')
+            || ')' AS fnc_longname
+        , pg_get_functiondef(fnc.oid) AS fnc_source
+    FROM
+        pg_proc AS fnc
+        JOIN pg_namespace AS nsp
+            ON fnc.pronamespace = nsp.oid
+        JOIN pg_user usr
+            ON fnc.proowner = usr.usesysid
+    WHERE
+         fnc.proisagg is false -- keine Aggregat-Funktionen 
     ~);
 }
 

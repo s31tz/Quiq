@@ -51,6 +51,30 @@ Liste der Funktions-Datensätze. Im Skalarkontext ein ResultSet-Objekt.
 
 Suche Datenbank-Funktionen und liefere die Ergebnismenge zurück.
 
+=head3 objects() - Selektiere Informationen über Objekte
+
+=head4 Synopsis
+
+  @rows | $tab = $class->objects($db,@select);
+
+=head4 Arguments
+
+=over 4
+
+=item @select
+
+Klauseln und Optionen. Siehe Quiq::Database::Connection->select().
+
+=back
+
+=head4 Returns
+
+Liste der Objekt-Datensätze. Im Skalarkontext ein ResultSet-Objekt.
+
+=head4 Description
+
+Suche Objekte und liefere die Ergebnismenge zurück.
+
 =head3 views() - Selektiere Informationen über Views
 
 =head4 Synopsis
@@ -167,6 +191,62 @@ können auch die Suchkriterien über obige Kolumnennamen formuliert werden:
       -select => 'fnc_source',
       -where, fnc_name = 'rv_copy_to',
           fnc_arguments = 'text, text, text',
+  );
+
+=head3 objectSelect() - Statement: Selektiere Objekte
+
+=head4 Synopsis
+
+  $stmt = $class->objectSelect;
+
+=head4 Returns
+
+SQL-Statement (String)
+
+=head4 Description
+
+Liefere ein SELECT-Statement, das Informationen über Objekte
+abfragt. Folgende Information wird geliefert:
+
+=over 4
+
+=item obj_oid
+
+PostgreSQL-Objekt-Id des Objekts.
+
+=item obj_type
+
+Typ des Objekts.
+
+=item obj_owner
+
+Name des Owners des Objekts.
+
+=item obj_schema
+
+Name des Schemas, in dem sich das Objekt befindet.
+
+=item obj_name
+
+Name des Objekts.
+
+=item obj_longname
+
+Vollständiger Name des Objekts. Im Falle einer Funktion dessen
+Signatur. Bei allen anderen Objekten identisch zu obj_name.
+
+=item obj_source
+
+Der Quelltext des Objekts im Falle von Funktionen und Views.
+
+=back
+
+Wird das Statement in eine WITH- oder FROM-Klausel Klausel eingebettet,
+können auch die Suchkriterien über obige Kolumnennamen formuliert werden:
+
+  $tab = $db->select(
+      -with => Quiq::PostgreSql::Catalog->objectSelect,
+      ...
   );
 
 =head3 viewSelect() - Statement: Selektiere Views
