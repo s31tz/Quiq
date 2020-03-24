@@ -3100,6 +3100,42 @@ sub delete {
 
 =head2 Schemas
 
+=head3 schemaExists() - Prüfe, ob Schema existiert
+
+=head4 Synopsis
+
+  $bool = $db->schemaExists($schema);
+
+=head4 Description
+
+Liefere wahr, wenn Schema $schema existiert, sonst falsch.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub schemaExists {
+    my ($self,$schema) = @_;
+
+    # Optionen
+
+    my $bool;
+    if ($self->isPostgreSQL) {
+        ($bool) = $self->values(
+            -select => '1',
+            -from => 'pg_namespace',
+            -where, nspname => $schema,
+        );
+    }
+    else {
+        $self->throw;
+    }
+
+    return $bool? 1: 0;
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 schemas() - Liste der Schemata
 
 =head4 Synopsis

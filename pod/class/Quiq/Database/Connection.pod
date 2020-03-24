@@ -1502,6 +1502,16 @@ das Resultat der Ausführung zurück.
 
 =head2 Schemas
 
+=head3 schemaExists() - Prüfe, ob Schema existiert
+
+=head4 Synopsis
+
+  $bool = $db->schemaExists($schema);
+
+=head4 Description
+
+Liefere wahr, wenn Schema $schema existiert, sonst falsch.
+
 =head3 schemas() - Liste der Schemata
 
 =head4 Synopsis
