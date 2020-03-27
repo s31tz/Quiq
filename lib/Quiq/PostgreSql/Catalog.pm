@@ -389,7 +389,7 @@ sub objectSelect {
         , cls.relname AS obj_name
         , cls.relname AS obj_longname
         , CASE
-              WHEN cls.relkind != 'v' THEN pg_get_viewdef(cls.oid, true)
+              WHEN cls.relkind = 'v' THEN pg_get_viewdef(cls.oid, true)
               ELSE ''
           END AS obj_source
     FROM
