@@ -1694,9 +1694,9 @@ Kolumnen, nach denen die Gesamt-Differenzliste sortiert wird.
 =head4 Description
 
 Die Methode untersucht zwei strukturell identische Tabellen hinsichtlich
-etwaig vorhandener Daten-Differenzen. Sie tut dies mittels SQL und ist
-dadurch auch auf groﬂen Datenmengen sehr schnell. Der Vergleich
-geschieht durch die Bildung der zwei Differenzmengen
+etwaig vorhandener Daten-Differenzen. Sie tut dies mittels SQL und kann
+dadurch auch groﬂe Datenmengen bew‰ltigen. Der Vergleich geschieht durch
+Bildung zweier Differenzmengen:
 
   -- Alle Zeilen in Tabelle 1, die nicht in Tabelle 2 vorkommen
   

@@ -3492,9 +3492,9 @@ Kolumnen, nach denen die Gesamt-Differenzliste sortiert wird.
 =head4 Description
 
 Die Methode untersucht zwei strukturell identische Tabellen hinsichtlich
-etwaig vorhandener Daten-Differenzen. Sie tut dies mittels SQL und ist
-dadurch auch auf großen Datenmengen sehr schnell. Der Vergleich
-geschieht durch die Bildung der zwei Differenzmengen
+etwaig vorhandener Daten-Differenzen. Sie tut dies mittels SQL und kann
+dadurch auch große Datenmengen bewältigen. Der Vergleich geschieht durch
+Bildung zweier Differenzmengen:
 
   -- Alle Zeilen in Tabelle 1, die nicht in Tabelle 2 vorkommen
   
@@ -3643,9 +3643,9 @@ sub tableDiff {
         ",
         -placeholders =>
             __TABLE1__ => $table1,
-            __TITLES1__ => join(', ',@columns),
+            __TITLES1__ => join(', ',map {qq|"$_"|} @columns),
             __TABLE2__ => $table2,
-            __TITLES2__ => join(', ',@columns),
+            __TITLES2__ => join(', ',map {qq|"$_"|} @columns),
     );
 
     my $i = 0;
@@ -3676,9 +3676,9 @@ sub tableDiff {
         ",
         -placeholders =>
             __TABLE1__ => $table1,
-            __TITLES1__ => join(', ',@columns),
+            __TITLES1__ => join(', ',map {qq|"$_"|} @columns),
             __TABLE2__ => $table2,
-            __TITLES2__ => join(', ',@columns),
+            __TITLES2__ => join(', ',map {qq|"$_"|} @columns),
     );
 
     $i = 0;
