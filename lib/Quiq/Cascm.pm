@@ -503,7 +503,8 @@ sub edit {
     my $fileChanged = 0;
     my $editCmd = "emacs -nw $localFile";
     if ($show) {
-        $editCmd .= " -f split-window-horizontally $show -f other-window";
+        # $editCmd .= " -f split-window-horizontally $show -f other-window";
+        $editCmd .= " -f split-window-vertically $show -f other-window";
     }
     my $sh = Quiq::Shell->new(
         log=>1,

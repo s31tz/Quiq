@@ -60,6 +60,13 @@ Code die (langsame) Antwortzeit des Benutzers herauszunehmen.
 Achtung: Der Wert der Zeitvariable wird in die Zukunft verschoben
 und sollte daher nur zur Zeitdauermessung verwendet werden.
 
+=item -timeout => $n
+
+Liefere den Defaultwert nach $n Sekunden. Ist kein Defaultwert
+angegeben, wirf eine Exception. Diese Option ist für Programme
+nützlich, die einen automatischen Default-Ablauf haben, in den
+der Benutzer aber eingreifen kann, wenn er das Programm bedient.
+
 =item -ttyIn => $bool (Default: 0)
 
 Lies Eingabe vom Terminal. Der Terminal-Eingabekanal (/dev/tty)
