@@ -381,7 +381,8 @@ sub maxBlobSize {
 
 =head4 Description
 
-Bei eingeschaltetem Strict-Modus wird eine Exception
+Bei eingeschaltetem Strict-Modus wird im Falle eines Datenbankfehlers
+eine Exception geworfen.
 
 =head4 Example
 
@@ -396,6 +397,8 @@ Bei eingeschaltetem Strict-Modus wird eine Exception
   # bei Datenbank-Fehler wird Exception geworfen
   
   $db->strict(0)
+  
+  # bei Datenbank-Fehler wird keine Exception geworfen
 
 =cut
 
