@@ -115,7 +115,7 @@ Command failed: Blob/R1/Html/Listing/html-listing.pl pod%%CLASS-CODE%%
 
 =head1 VERSION
 
-1.178
+1.179
 
 =head1 SOURCE
 

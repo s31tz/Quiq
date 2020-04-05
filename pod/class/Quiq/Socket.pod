@@ -83,7 +83,7 @@ nützlich, um eine HTTP-Antwort zu lesen.
 
 =head1 VERSION
 
-1.178
+1.179
 
 =head1 SOURCE
 

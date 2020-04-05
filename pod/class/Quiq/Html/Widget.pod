@@ -103,7 +103,7 @@ Liefere die Disabled-Eigenschaft des Widget.
 
 =head1 VERSION
 
-1.178
+1.179
 
 =head1 SOURCE
 
