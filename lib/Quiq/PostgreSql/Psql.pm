@@ -221,8 +221,8 @@ sub run {
         return 0;
     }
 
-     $exp->expect(undef);
-     return $exp->exitstatus/256;
+    $exp->expect(undef);
+    return $exp->exitstatus/256;
 }
 
 # -----------------------------------------------------------------------------
