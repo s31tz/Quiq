@@ -1704,32 +1704,32 @@ Bildung zweier Differenzmengen:
   -- Alle Zeilen in Tabelle 1, die nicht in Tabelle 2 vorkommen
   
   SELECT
-      COLUMNS1
+      <COLUMNS1>
   FROM
-      TABLE1
+      <TABLE1>
   EXCEPT
   SELECT
-      COLUMNS2
+      <COLUMNS2>
   FROM
-      TABLE2
+      <TABLE2>
   ORDER BY
-      COLUMNS1
+      <COLUMNS1>
 
 und
 
   -- Alle Zeilen in Tabelle 2, die nicht in Tabelle 1 vorkommen
   
   SELECT
-      COLUMNS2
+      <COLUMNS2>
   FROM
-      TABLE2
+      <TABLE2>
   EXCEPT
   SELECT
-      COLUMNS1
+      <COLUMNS1>
   FROM
-      TABLE1
+      <TABLE1>
   ORDER BY
-      COLUMNS2
+      <COLUMNS2>
 
 Sind beide Differenzmengen leer, sind die Tabellen identisch.
 
