@@ -12,6 +12,7 @@ use Time::HiRes ();
 use Quiq::Option;
 use Quiq::FileHandle;
 use Quiq::Properties;
+use Quiq::Excel::Writer;
 use Quiq::AnsiColor;
 use Quiq::Array;
 use Quiq::Duration;
@@ -664,6 +665,71 @@ Die Methode wird in der Subklasse Quiq::Database::ResultSet::Array
 
 sub defaultRowClass {
     return 'Quiq::Database::Row::Object';
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 asExcel() - Tabellen-Repräsentation in Excel-Format
+
+=head4 Synopsis
+
+  $tab->asExcel($file);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Pfad der Ausgabedatei.
+
+=back
+
+=head4 Description
+
+Schreibe die Tabelle im Excel-Format auf Datei $file.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub asExcel {
+    my ($self,$file) = @_;
+
+    # Erzeuge Excel Workbook
+    my $wkb = Quiq::Excel::Writer->new($file);
+
+    # Füge Worksheet hinzu
+    my $wks = $wkb->add_worksheet('Data');
+
+    # Erzeuge Formate
+
+    my $fmt1 = $wkb->add_format;
+    $fmt1->set_bold;
+
+    # Titelzeile
+
+    my @titles = $self->titles;
+    my $x = my $y = 0;
+
+    for my $title (@titles) {
+        $wks->write($y,$x++,$title,$fmt1);
+    }
+
+    # Datenzeilen
+
+    for my $row ($self->rows) {
+        $x = 0;
+        $y++;
+        for my $title (@titles) {
+            $wks->write($y,$x++,$row->$title);
+        }
+    }
+
+    # Schließe Workbook
+    $wkb->close;
+
+    return;
 }
 
 # -----------------------------------------------------------------------------

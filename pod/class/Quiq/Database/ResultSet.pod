@@ -306,6 +306,26 @@ Die Methode wird in der Subklasse Quiq::Database::ResultSet::Array
 überschrieben. Für diesen Zweig ist die Default-Rowklasse
 'Quiq::Database::Row::Array'.
 
+=head3 asExcel() - Tabellen-Repräsentation in Excel-Format
+
+=head4 Synopsis
+
+  $tab->asExcel($file);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Pfad der Ausgabedatei.
+
+=back
+
+=head4 Description
+
+Schreibe die Tabelle im Excel-Format auf Datei $file.
+
 =head3 asString() - String-Repräsentation der Tabelle
 
 =head4 Synopsis
