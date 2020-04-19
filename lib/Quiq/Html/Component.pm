@@ -62,7 +62,7 @@ abgefragt werden, um sie systematisch in die unterschiedlichen Abschnitte
 einer HTML-Seite (<head>, <body>, <style>, <script>, $(function() {...}))
 einsetzen zu können. Die Resourcen mehrerer Komponenten können
 zu einer Liste ohne Dubletten konsolidiert werden, dies ist allerdings
-Aufgabe des Nutzers. Ein Objekt der Klasse speicher die einzelnen
+Aufgabe des Nutzers. Ein Objekt der Klasse speichert die einzelnen
 Bestandteile nur, sie manipuliert sie nicht (außer, dass im Skalarkontext
 Teile konkateniert werden).
 
