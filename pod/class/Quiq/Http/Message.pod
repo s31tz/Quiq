@@ -426,7 +426,7 @@ oder eine Zeichenkette (Skalar-Referenz) angegeben werden.
 
 =head1 VERSION
 
-1.180
+1.181
 
 =head1 SOURCE
 

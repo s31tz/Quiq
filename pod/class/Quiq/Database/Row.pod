@@ -99,7 +99,7 @@ Instanttierung über anonyme Datensatz-Klasse:
 
 =head1 VERSION
 
-1.180
+1.181
 
 =head1 SOURCE
 
