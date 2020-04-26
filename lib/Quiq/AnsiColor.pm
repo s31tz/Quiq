@@ -71,6 +71,16 @@ Debian-Repository enthalten.
 
   $ PROGRAM | less -R
 
+=head1 SEE ALSO
+
+=over 2
+
+=item *
+
+Term::ANSIColor
+
+=back
+
 =head1 METHODS
 
 =head2 Konstruktor
@@ -174,7 +184,8 @@ Formatiere Zeichenkette $str mit ANSI Colorcodes gemäß
 Spezifikation $attr und liefere das Resultat zurück. Die
 Colorcodes werden der Zeichenkette vorangestellt und mit dem
 Colorcode 'reset' beendet. Ist die Erzeugung von Colorcodes
-abgeschaltet, wird die Zeichenkette unverändert geliefert.
+abgeschaltet (siehe Konstruktor), wird die Zeichenkette unverändert
+geliefert.
 
 =cut
 
@@ -209,7 +220,7 @@ Siehe L<str|"str() - Formatiere String mit Colorcodes">()
 
 =head4 Description
 
-Wie L<str|"str() - Formatiere String mit Colorcodes">(), nur dass das Resultat mit einem Newline terminiert wird.
+Wie L<str|"str() - Formatiere String mit Colorcodes">(), nur dass der Rckgabewert mit einem Newline beendet wird.
 
 =cut
 
