@@ -111,8 +111,9 @@ AnsiColor-Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere dieses zurück. Durch
-den Parameter $bool wird entschieden, ob die Methode L<str|"str() - Formatiere String mit Colorcodes">()
-ihren Rückgabewert mit oder ohne ANSI Colorcodes liefert.
+den Parameter $bool wird entschieden, ob die Methode
+L<str|"str() - Formatiere String mit Colorcodes">() ihren Rückgabewert mit
+oder ohne ANSI Colorcodes liefert.
 
 =cut
 

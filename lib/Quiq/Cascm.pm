@@ -2019,7 +2019,7 @@ sub renamePackage {
 
 # -----------------------------------------------------------------------------
 
-=head3 showPackage() - Inhalt eines Package
+=head3 showPackage() - Inhalt von Packages
 
 =head4 Synopsis
 
@@ -2032,8 +2032,8 @@ Datensätze oder Ergebnismengen-Objekt
 
 =head4 Description
 
-Ermittele die in Package $package enthaltenen Items und ihrer Versions
-und liefere diese Ergebnismenge zurück.
+Ermittele die in den Packages @packages enthaltenen Items und
+ihrer Versions und liefere diese Ergebnismenge zurück.
 
 =head4 Example
 
@@ -2042,6 +2042,9 @@ und liefere diese Ergebnismenge zurück.
   1 item_path
   2 version
   3 package_name
+  4 creation_time
+  5 username
+  6 versionstatus
 
 =cut
 
@@ -2072,10 +2075,15 @@ sub showPackage {
             , ver.mappedversion AS version
             -- , ver.versiondataobjid
             , pkg.packagename
+            , ver.creationtime
+            , usr.username
+            , ver.versionstatus
         FROM
             haritems itm
             JOIN harversions ver
                 ON ver.itemobjid = itm.itemobjid
+            JOIN harallusers usr
+                ON usr.usrobjid = ver.creatorid
             JOIN harpackage pkg
                 ON pkg.packageobjid = ver.packageobjid
             JOIN harenvironment env
@@ -2494,6 +2502,17 @@ sub packageState {
 =head4 Synopsis
 
   $tab = $scm->listPackages(@opt);
+  $tab = $scm->listPackages($likePattern,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $likePattern
+
+Schränke die Liste auf Packages ein, deren Name $likePattern matchen.
+
+=back
 
 =head4 Options
 
@@ -2526,14 +2545,16 @@ Liefere die Liste aller Packages.
 
 sub listPackages {
     my $self = shift;
+    # @_: $likePattern,@opt
 
     # Optionen
 
     my $order = 'time';
 
-    $self->parameters(\@_,
+    my $argA = $self->parameters(0,1,\@_,
         -order => \$order,
     );
+    my $likePattern = shift(@$argA) // '';
 
     # Operation ausführen
 
@@ -2555,6 +2576,7 @@ sub listPackages {
                 ON usr.usrobjid = pkg.creatorid
         WHERE
             env.environmentname = '$projectContext'
+            AND pkg.packagename LIKE '%$likePattern%'
         ORDER BY
             $order
     ");
