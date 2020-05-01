@@ -486,6 +486,9 @@ sub edit {
 
     my $tmpDir = '~/tmp/cascm/';
 
+    # Checke Datei aus
+    $output .= $self->checkout($transportPackage || $package,$repoFile);
+
     # Lokale Kopie der Datei erstellen
 
     my $localFile;
@@ -502,9 +505,6 @@ sub edit {
 
     my $backupFile = "$localFile.bak";
     $p->copy($localFile,$backupFile);
-
-    # Checke Datei aus
-    $output .= $self->checkout($transportPackage || $package,$repoFile);
 
     my $fileChanged = 0;
     my $editCmd = "emacs -nw $localFile";
@@ -1267,7 +1267,7 @@ sub deleteVersion {
     my $answ = Quiq::Terminal->askUser(
         $count == 1? 'Delete this version?': 'Delete these versions?',
         -values => 'y/n',
-        -default => 'n',
+        -default => 'y',
     );
     if ($answ ne 'y') {
         return undef; # Abbruch
