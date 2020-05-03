@@ -12,7 +12,6 @@ use Time::HiRes ();
 use Quiq::Option;
 use Quiq::FileHandle;
 use Quiq::Properties;
-use Quiq::Excel::Writer;
 use Quiq::AnsiColor;
 use Quiq::Array;
 use Quiq::Duration;
@@ -695,6 +694,9 @@ Schreibe die Tabelle im Excel-Format auf Datei $file.
 
 sub asExcel {
     my ($self,$file) = @_;
+
+    # Dieses Modul laden wir nur, wenn wir diese Methode nutzen
+    require Quiq::Excel::Writer;
 
     # Erzeuge Excel Workbook
     my $wkb = Quiq::Excel::Writer->new($file);
