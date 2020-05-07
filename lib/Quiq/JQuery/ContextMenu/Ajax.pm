@@ -67,7 +67,11 @@ liefert
                   options = {
                       items: items,
                       callback: function(key,options) {
-                          document.location = items[key].url;
+                          var item = items[key];
+                          if (item.target)
+                              window.open(item.url,item.target);
+                          else
+                              document.location = item.url;
                       },
                   };
               },
@@ -87,6 +91,7 @@ den Aufbau
       <key>: {
           name: '<name>',
           url: '<url>',
+          target: '<target>',
       }
       ...
   ]
@@ -244,7 +249,11 @@ sub js {
                         options = {
                             items: items,
                             callback: function(key,options) {
-                                document.location = items[key].url;
+                                var item = items[key];
+                                if (item.target)
+                                    window.open(item.url,item.target);
+                                else
+                                    document.location = item.url;
                             },
                         };
                     },

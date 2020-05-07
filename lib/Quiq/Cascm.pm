@@ -2153,6 +2153,10 @@ Ausgabe des Kommandos (String)
 Übertrage die Dateien @files von Paket $fromPackage in Paket $toPackage.
 Sind keine Dateien angegeben, übertrage alle Dateien aus $fromPackage.
 
+Per Default werden I<alle> Versionen einer Datei übertragen. Soll eine
+bestimmte Version übertragen werden, wird der Suffix :VERSION an
+den Dateinamen angehängt.
+
 =cut
 
 # -----------------------------------------------------------------------------
