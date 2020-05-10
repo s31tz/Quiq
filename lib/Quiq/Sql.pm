@@ -4432,15 +4432,34 @@ sub insertMulti {
     '),$table,join(', ',@$keyA);
 
     my $i = 0;
-    my $fmt = sprintf '    (%s)',join ', ',('%s') x @$keyA;
     for my $rec (@$recA) {
         if ($i++) {
             $sql .= ",\n";
         }
-        $sql .= sprintf $fmt,map {$self->valExpr($_)} @$rec;
+        my $str = '';
+        for (@$rec) {
+            my $val = $self->valExpr($_);
+            if ($str) {
+                $str .= ', ';
+            }
+            $str .= $val eq ''? 'NULL': $val;
+            
+        }
+        $sql .= sprintf '    (%s)',$str;
     }
 
     return $sql;
+
+    #my $i = 0;
+    #my $fmt = sprintf '    (%s)',join ', ',('%s') x @$keyA;
+    #for my $rec (@$recA) {
+    #    if ($i++) {
+    #        $sql .= ",\n";
+    #    }
+    #    $sql .= sprintf $fmt,map {$self->valExpr($_)} @$rec;
+    #}
+    #
+    #return $sql;
 }
 
 # -----------------------------------------------------------------------------
@@ -4936,7 +4955,7 @@ sub valExpr {
 
     my $refType = ref $expr;
     if (!$refType) {
-        return $self->stringLiteral($expr,'NULL');
+        return $self->stringLiteral($expr);
     }
     elsif ($refType eq 'SCALAR') {
         return $$expr;
