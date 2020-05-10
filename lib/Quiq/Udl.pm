@@ -11,6 +11,7 @@ our $VERSION = '1.181';
 use Quiq::Hash;
 use Quiq::Database::Config;
 use Quiq::Option;
+use Quiq::Path;
 
 # -----------------------------------------------------------------------------
 
@@ -634,6 +635,7 @@ sub dsn {
         }
     }
     elsif ($dbms eq 'sqlite') {
+        $db = Quiq::Path->expandTilde($db);
         $dsn = "DBI:SQLite:dbname=$db";
     }
     elsif ($dbms eq 'access') {

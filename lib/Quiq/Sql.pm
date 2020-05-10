@@ -4936,7 +4936,7 @@ sub valExpr {
 
     my $refType = ref $expr;
     if (!$refType) {
-        return $self->stringLiteral($expr);
+        return $self->stringLiteral($expr,'NULL');
     }
     elsif ($refType eq 'SCALAR') {
         return $$expr;
