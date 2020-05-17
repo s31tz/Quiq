@@ -656,6 +656,16 @@ Liste von Dateien I<außerhalb> des Workspace.
 
 =back
 
+=head4 Options
+
+=over 4
+
+=item -force => $bool (Default: 0)
+
+Prüfe nicht, ob hinzugefügte Datei und Repository-Datei identisch sind.
+
+=back
+
 =head4 Returns
 
 Konkatenierte Ausgabe der der checkout- und checkin-Kommandos (String)
@@ -677,7 +687,18 @@ braucht sich um die Unterscheidung nicht zu kümmern.
 # -----------------------------------------------------------------------------
 
 sub putFiles {
-    my ($self,$package,$repoDir,@files) = @_;
+    my $self = shift;
+
+    # Optionen und Argumente
+
+    my $force = 0;
+
+    my $argA = $self->parameters(3,undef,\@_,
+        -force => \$force,
+    );
+    my ($package,$repoDir,@files) = @$argA;
+
+    # Operation ausführen
 
     my $workspace = $self->workspace;
     my $p = Quiq::Path->new;
@@ -714,7 +735,7 @@ sub putFiles {
             # und die Workspace-Datei sich unterscheiden. Wenn nein, ist
             # nichts zu tun.
 
-            if (!$p->compare($srcFile,"$workspace/$repoFile")) {
+            if (!$force && !$p->compare($srcFile,"$workspace/$repoFile")) {
                 # Bei fehlender Differenz tun wir nichts
                 next;
             }
@@ -1191,8 +1212,8 @@ sub diff {
 
 =head4 Synopsis
 
-  $output = $scm->deleteVersion($repoFile);
-  $output = $scm->deleteVersion($repoFile,$version);
+  $bool = $scm->deleteVersion($repoFile);
+  $bool = $scm->deleteVersion($repoFile,$version);
 
 =head4 Arguments
 
@@ -1210,7 +1231,7 @@ Version der Datei, die gelöscht werden soll.
 
 =head4 Returns
 
-Ausgabe des Kommandos (String)
+Wahrheitswert: 1, wenn Löschung ausgeführt wurde, andernfalls 0.
 
 =head4 Description
 
@@ -1241,8 +1262,6 @@ Die Versionen bis 110 der Datei C<lib/MetaData.pm> löschen:
 sub deleteVersion {
     my ($self,$repoFile,$version) = @_;
 
-    my $output;
-
     if (!defined $version) {
         $version = $self->versionNumber($repoFile);
     }
@@ -1270,7 +1289,7 @@ sub deleteVersion {
         -default => 'y',
     );
     if ($answ ne 'y') {
-        return undef; # Abbruch
+        return 0; # Abbruch
     }
 
     # Transportpaket erzeugen, falls nötig
@@ -1281,7 +1300,7 @@ sub deleteVersion {
         if ($row->[3] ne $self->states->[0]) {
             my $name = Quiq::Converter->intToWord(time);
             $transportPackage = "S6800_0_Seitz_Lift_$name";
-            $output .= $self->createPackage($transportPackage);
+            $self->createPackage($transportPackage);
             last;
         }
     }
@@ -1300,7 +1319,6 @@ sub deleteVersion {
                 if ($out) {
                     # Ab der 2. Bewegung fragen wir zurück
                     $transportPackageCount++;
-                    $output .= $out;
                 }
 
                 # Version in Transportpackage bewegen
@@ -1336,16 +1354,16 @@ sub deleteVersion {
             # Löschen ist nur auf unterster Stufe möglích
             -st => $self->states->[0],
         );
-        $output .= $self->runCmd('hdv',$c);
+        $self->runCmd('hdv',$c);
     }
 
     # Transportpaket löschen
 
     if ($transportPackage) {
-        $output .= $self->deletePackages($transportPackage);
+        $self->deletePackages($transportPackage);
     }
 
-    return $output;
+    return 1;
 }
 
 # -----------------------------------------------------------------------------
@@ -1403,6 +1421,87 @@ sub passVersion {
 
     my ($repoDir) = $p->split($repoFile);
     return $self->putFiles($package,$repoDir,$file);
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 reduceVersion() - Mache die neueste Version zu früherer Version
+
+=head4 Synopsis
+
+  $output = $scm->reduceVersion($repoFile,$version);
+
+=head4 Arguments
+
+=over 4
+
+=item $repoFile
+
+Der Pfad der Repository-Datei.
+
+=item $version
+
+Versionsnummer, auf die die neuste Version zurückgeführt werden soll.
+
+=back
+
+=head4 Returns
+
+Boolean. 1, wenn Operation ausgeführt wurde, sonst 0. 0 wird geliefert,
+wenn der Nutzer die Rückfrage nach der Löschung der Dateien mit
+"nein" beantwortet.
+
+=head4 Description
+
+Sichere den Quelltext der neusten Version, lösche alle Versionen bis
+und einschließlich Version $version und checke den gesicherten Quelltext
+ein. Der Ergebnis ist, dass die neuste Version zu Version $version wird.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub reduceVersion {
+    my ($self,$repoFile,$version) = @_;
+
+    my $p = Quiq::Path->new;
+
+    # Höchste Versionsnummer der Datei ermitteln
+
+    my $repoVersion = $self->versionNumber($repoFile);
+    if ($version >= $repoVersion) {
+        # Es ist nichts zu tun
+        return 0;
+    }
+
+    # Package der neusten Version ermitteln. In diesem Package
+    # wird auch die neuerzeugte frühere Version abgelegt.
+
+    my $package = $self->package($repoFile,$repoVersion);
+
+    # Datei der neusten Version sichern
+
+    my $tmpDir = '~/tmp/cascm';
+    my $file = $self->getVersion($repoFile,$repoVersion,$tmpDir,
+        -sloppy => 1,
+        -versionSuffix => 0,
+    );
+
+    # Alle Versionen bis $version löschen
+
+    my $bool = $self->deleteVersion($repoFile,$version);
+    if ($bool) {
+        # Repository-Verzeichnis der Datei
+        my ($repoDir) = $p->split($repoFile);
+
+        # Gesicherte Datei zum Repository hinzufügen
+        $self->putFiles(-force=>1,$package,$repoDir,$file);
+    }
+
+    # Gesicherte Datei löschen
+    $p->delete($file);
+
+    return 1;
 }
 
 # -----------------------------------------------------------------------------

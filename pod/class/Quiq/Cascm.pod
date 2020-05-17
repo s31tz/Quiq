@@ -347,6 +347,16 @@ Liste von Dateien I<außerhalb> des Workspace.
 
 =back
 
+=head4 Options
+
+=over 4
+
+=item -force => $bool (Default: 0)
+
+Prüfe nicht, ob hinzugefügte Datei und Repository-Datei identisch sind.
+
+=back
+
 =head4 Returns
 
 Konkatenierte Ausgabe der der checkout- und checkin-Kommandos (String)
@@ -590,8 +600,8 @@ zurück.
 
 =head4 Synopsis
 
-  $output = $scm->deleteVersion($repoFile);
-  $output = $scm->deleteVersion($repoFile,$version);
+  $bool = $scm->deleteVersion($repoFile);
+  $bool = $scm->deleteVersion($repoFile,$version);
 
 =head4 Arguments
 
@@ -609,7 +619,7 @@ Version der Datei, die gelöscht werden soll.
 
 =head4 Returns
 
-Ausgabe des Kommandos (String)
+Wahrheitswert: 1, wenn Löschung ausgeführt wurde, andernfalls 0.
 
 =head4 Description
 
@@ -666,6 +676,38 @@ Ausgabe des Kommandos (String)
 Erzeuge eine neue Version von $repoFile mit der älteren Version $version
 und füge diese zu Package $package hinzu. Dies ist nützlich, wenn an der
 aktuellen Version vorbeigezogen werden soll.
+
+=head3 reduceVersion() - Mache die neueste Version zu früherer Version
+
+=head4 Synopsis
+
+  $output = $scm->reduceVersion($repoFile,$version);
+
+=head4 Arguments
+
+=over 4
+
+=item $repoFile
+
+Der Pfad der Repository-Datei.
+
+=item $version
+
+Versionsnummer, auf die die neuste Version zurückgeführt werden soll.
+
+=back
+
+=head4 Returns
+
+Boolean. 1, wenn Operation ausgeführt wurde, sonst 0. 0 wird geliefert,
+wenn der Nutzer die Rückfrage nach der Löschung der Dateien mit
+"nein" beantwortet.
+
+=head4 Description
+
+Sichere den Quelltext der neusten Version, lösche alle Versionen bis
+und einschließlich Version $version und checke den gesicherten Quelltext
+ein. Der Ergebnis ist, dass die neuste Version zu Version $version wird.
 
 =head3 package() - Package einer Version
 

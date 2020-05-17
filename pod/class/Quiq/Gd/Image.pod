@@ -156,7 +156,51 @@ Farbe die Hintergrundfarbe!
 
 Siehe "perldoc GD", Methoden newPalette(), newTrueColor().
 
-=head2 Einfache Operationen
+=head2 Klassenmethoden
+
+=head3 textImage() - Erzeuge Bild mit Text
+
+=head4 Synopsis
+
+  $img = $class->textImage($text,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $text
+
+Text, der in das Bild geschrieben wird.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -background => $color (Default: 'white')
+
+Hintergrundfarbe.
+
+=item -color => $color (Default: 'white')
+
+Textfarbe.
+
+=item -font => $font (Default: 'gdGiantFont')
+
+Font, in dem der Text gesetzt wird.
+
+=back
+
+=head4 Returns
+
+Bildobjekt
+
+=head4 Description
+
+Erzeuge ein Bild, das den Text $text enthält.
+
+=head2 Objektmethoden
 
 =head3 color() - Alloziere Farbe
 
