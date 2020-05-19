@@ -1033,7 +1033,7 @@ sub diffReport {
 
 # -----------------------------------------------------------------------------
 
-=head3 reverse() - Kehre Reihenfolge der Datensätze um
+=head3 reverse() - Kehre Datensatz-Reihenfolge um
 
 =head4 Synopsis
 

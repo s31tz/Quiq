@@ -53,7 +53,7 @@ L<Quiq::AxisTick|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/AxisTi
 
 =item *
 
-L<Quiq::Cache|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Cache.pod> - Cache Daten in Datei
+L<Quiq::Cache|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Cache.pod> - Cache Datenstruktur in Datei
 
 =item *
 

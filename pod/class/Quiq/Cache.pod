@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Cache - Cache Daten in Datei
+Quiq::Cache - Cache Datenstruktur in Datei
 
 =head1 BASE CLASS
 
@@ -12,19 +12,26 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
   use Quiq::Cache;
   
+  sub ... {
+      ...
   
-  my $c = Quiq::Cache->new($cacheDir,$duration,\@key)
-      -inactive => $condition,
-  );
-  if (my $ref = $c->read) {
-      return $ref; # liefere Datenstruktur aus Cache
+      # Instantiiere Cache
+  
+      my $c = Quiq::Cache->new($cacheDir,$duration,\@key)
+          -inactive => $condition,
+      );
+      if (my $ref = $c->read) {
+          return $ref; # liefere Datenstruktur aus Cache
+      }
+  
+      # Baue Datenstruktur auf
+  
+      ...
+  
+      $c->write($ref); # schreibe Datenstuktur auf Cache
+  
+      return $ref; # liefere Datenstruktur
   }
-  
-  # ... baue Datenstruktur auf ...
-  
-  $c->write($ref); # schreibe Datenstuktur auf Cache
-  
-  return $ref;
 
 =head1 DESCRIPTION
 
