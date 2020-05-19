@@ -221,7 +221,7 @@ Siehe L<str|"str() - Formatiere String mit Colorcodes">()
 
 =head4 Description
 
-Wie L<str|"str() - Formatiere String mit Colorcodes">(), nur dass der Rckgabewert mit einem Newline beendet wird.
+Wie L<str|"str() - Formatiere String mit Colorcodes">(), nur dass der Rückgabewert mit einem Newline beendet wird.
 
 =cut
 

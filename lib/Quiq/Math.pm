@@ -294,7 +294,7 @@ Breite und Länge des geografischen Mittelpunkts
 =head4 Description
 
 Berechne den geografischen Mittelpunkt der Geo-Koordination (plus
-optionaler Gewichtung) und liefere diesen zurck.
+optionaler Gewichtung) und liefere diesen zurück.
 
 Beschreibung des Alogrithmus siehe
 L<http://www.geomidpoint.com/example.html>
