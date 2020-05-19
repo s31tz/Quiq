@@ -99,7 +99,7 @@ Objektmethode gerufen werden.
 
 =head1 VERSION
 
-1.181
+1.182
 
 =head1 SOURCE
 

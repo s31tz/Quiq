@@ -449,7 +449,7 @@ Setze STDERR des Programms auf $fh.
 
 =head1 VERSION
 
-1.181
+1.182
 
 =head1 SOURCE
 
