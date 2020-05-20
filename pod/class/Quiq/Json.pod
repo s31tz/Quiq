@@ -537,7 +537,7 @@ Schlüssel mit Zeichen, die nicht in einem JavaScript-Bezeichner vorkommen:
 
 =head1 VERSION
 
-1.182
+1.183
 
 =head1 SOURCE
 

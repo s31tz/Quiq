@@ -672,7 +672,7 @@ in Sekunden ersetzt.
 
 =head1 VERSION
 
-1.182
+1.183
 
 =head1 SOURCE
 

@@ -173,7 +173,7 @@ SQL*Plus-Code, der I<nach> $sql ausgeführt wird.
 
 =head1 VERSION
 
-1.182
+1.183
 
 =head1 SOURCE
 
