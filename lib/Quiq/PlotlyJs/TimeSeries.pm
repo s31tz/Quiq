@@ -116,7 +116,8 @@ Windgeschwindigkeits-Messung)
 
 =item color => $color (Default: 'rgb(255,0,0,1)')
 
-Farbe der Kurve.
+Farbe der Kurve. Alle Schreibweisen, die in CSS erlaubt sind, sind
+zulässig, also NAME, #XXXXXX oder rgb(NNN,NNN,NNN).
 
 =item height (Default: 450 I<Default von plotly.js>)
 
