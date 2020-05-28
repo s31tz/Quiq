@@ -37,7 +37,7 @@ Windgeschwindigkeits-Messung)
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<div id="plot"></div>
+<div style="border: solid 1px #a0a0a0; margin-top: 10px;" id="plot"></div>
 <script type="text/javascript">
   $(function() {
     var plot = Plotly.newPlot('plot',[{
@@ -55,6 +55,9 @@ Windgeschwindigkeits-Messung)
     }],{
       title: {
         text: 'Windspeed',
+        font: {
+          color: 'rgb(255,0,0,1)',
+        },
       },
       spikedistance: -1,
       margin: {
@@ -114,6 +117,10 @@ Windgeschwindigkeits-Messung)
 
 =over 4
 
+=item background => $color
+
+Hintergrundfarbe.
+
 =item color => $color (Default: 'rgb(255,0,0,1)')
 
 Farbe der Kurve. Alle Schreibweisen, die in CSS erlaubt sind, sind
@@ -143,6 +150,10 @@ Oberer Rand in Pixeln.
 
 Name des Plot. Der Name wird als CSS-Id für den Div-Container
 und als Variablenname für die JavaScript-Instanz verwendet.
+
+=item plotBackground => $color
+
+Hintergrundfarbe des Plot-Bereichs.
 
 =item shape => 'spline'|'linear'|'hv'|'vh'|'hvh'|'vhv' (Default: 'spline')
 
@@ -207,6 +218,7 @@ sub new {
     # @_: @attVal
 
     my $self = $class->SUPER::new(
+        background => undef,
         color => 'rgb(255,0,0,1)',
         height => undef,
         marginBottom => undef,
@@ -214,6 +226,7 @@ sub new {
         marginRight => undef,
         marginTop => undef,
         name => 'plot',
+        plotBackground => undef,
         shape => 'spline',
         title => undef,
         x => [],
@@ -287,6 +300,7 @@ sub html {
     my $name = $self->get('name');
 
     return $h->tag('div',
+        style => "border: dashed 1px #a0a0a0; margin-top: 10px;",
         id => $name,
     );
 }
@@ -316,12 +330,12 @@ sub js {
 
     # Objektattribute
 
-    my ($color,$height,$marginBottom,$marginLeft,$marginRight,
-        $marginTop,$name,$shape,$title,$xA,$xSpikeFormat,$xTickFormat,
-        $yA,$yMin,$yMax,$ySide,$yTitle) =
-        $self->get(qw/color height marginBottom marginLeft marginRight
-        marginTop name shape title x xSpikeFormat xTickFormat
-        y yMin yMax ySide yTitle/);
+    my ($background,$color,$height,$marginBottom,$marginLeft,
+        $marginRight,$marginTop,$name,$plotBackground,$shape,$title,$xA,
+        $xSpikeFormat, $xTickFormat,$yA,$yMin,$yMax,$ySide,$yTitle) =
+        $self->get(qw/background color height marginBottom marginLeft
+        marginRight marginTop name plotBackground shape title x
+        xSpikeFormat xTickFormat y yMin yMax ySide yTitle/);
 
     # Erzeuge JSON-Code
 
@@ -352,7 +366,12 @@ sub js {
     my $layout = $j->o(
         title => $j->o(
             text => $title,
+            font => $j->o(
+                color => $color,
+            ),
         ),
+        plot_bgcolor => $plotBackground,
+        paper_bgcolor => $background,
         spikedistance => -1,
         height => $height,
         margin => $j->o(

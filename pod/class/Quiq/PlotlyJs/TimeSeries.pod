@@ -23,7 +23,7 @@ Windgeschwindigkeits-Messung)
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<div id="plot"></div>
+<div style="border: solid 1px #a0a0a0; margin-top: 10px;" id="plot"></div>
 <script type="text/javascript">
   $(function() {
     var plot = Plotly.newPlot('plot',[{
@@ -41,6 +41,9 @@ Windgeschwindigkeits-Messung)
     }],{
       title: {
         text: 'Windspeed',
+        font: {
+          color: 'rgb(255,0,0,1)',
+        },
       },
       spikedistance: -1,
       margin: {
@@ -100,6 +103,10 @@ Windgeschwindigkeits-Messung)
 
 =over 4
 
+=item background => $color
+
+Hintergrundfarbe.
+
 =item color => $color (Default: 'rgb(255,0,0,1)')
 
 Farbe der Kurve. Alle Schreibweisen, die in CSS erlaubt sind, sind
@@ -129,6 +136,10 @@ Oberer Rand in Pixeln.
 
 Name des Plot. Der Name wird als CSS-Id für den Div-Container
 und als Variablenname für die JavaScript-Instanz verwendet.
+
+=item plotBackground => $color
+
+Hintergrundfarbe des Plot-Bereichs.
 
 =item shape => 'spline'|'linear'|'hv'|'vh'|'hvh'|'vhv' (Default: 'spline')
 
