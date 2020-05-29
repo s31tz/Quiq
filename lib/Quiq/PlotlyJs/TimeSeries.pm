@@ -37,14 +37,14 @@ Windgeschwindigkeits-Messung)
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<div style="border: solid 1px #a0a0a0; margin-top: 10px;" id="plot"></div>
+<div id="plot" class="plotly-timeseries"></div>
 <script type="text/javascript">
   $(function() {
     var plot = Plotly.newPlot('plot',[{
       type: 'scatter',
       mode: 'lines',
       fill: 'tonexty',
-      fillcolor: 'rgb(230,230,230,0.1)',
+      fillcolor: '#e0e0e0',
       line: {
         width: 1,
         color: 'rgb(255,0,0,1)',
@@ -121,10 +121,23 @@ Windgeschwindigkeits-Messung)
 
 Hintergrundfarbe.
 
+=item class => $class (Default: 'plotly-timeseries')
+
+CSS-Klasse des div-Containers. Kann zur Definition eines Rahmens,
+von Außenabständen usw. genutzt werden.
+
 =item color => $color (Default: 'rgb(255,0,0,1)')
 
 Farbe der Kurve. Alle Schreibweisen, die in CSS erlaubt sind, sind
 zulässig, also NAME, #XXXXXX oder rgb(NNN,NNN,NNN).
+
+=item fillColor => $color (Default: 'rgb(230,230,230,01)'
+
+Farbe zwischen Kurve und X-Achse.
+
+=item gridColor => $color (Default: 'rgb(230,230,230,01)'
+
+Gitter-Farbe.
 
 =item height (Default: 450 I<Default von plotly.js>)
 
@@ -219,7 +232,10 @@ sub new {
 
     my $self = $class->SUPER::new(
         background => undef,
+        class => 'plotly-timeseries',
         color => 'rgb(255,0,0,1)',
+        fillColor => 'rgb(230,230,230,0.1)',
+        gridColor => 'rgb(230,230,230,0.1)',
         height => undef,
         marginBottom => undef,
         marginLeft => undef,
@@ -297,11 +313,11 @@ sub html {
     my ($self,$h) = @_;
 
     # Objektattribute
-    my $name = $self->get('name');
+    my ($class,$name) = $self->get(qw/class name/);
 
     return $h->tag('div',
-        style => "border: dashed 1px #a0a0a0; margin-top: 10px;",
         id => $name,
+        class => $class,
     );
 }
 
@@ -330,10 +346,10 @@ sub js {
 
     # Objektattribute
 
-    my ($background,$color,$height,$marginBottom,$marginLeft,
+    my ($background,$class,$color,$fillColor,$gridColor,$height,$marginBottom,$marginLeft,
         $marginRight,$marginTop,$name,$plotBackground,$shape,$title,$xA,
         $xSpikeFormat, $xTickFormat,$yA,$yMin,$yMax,$ySide,$yTitle) =
-        $self->get(qw/background color height marginBottom marginLeft
+        $self->get(qw/background class color fillColor gridColor height marginBottom marginLeft
         marginRight marginTop name plotBackground shape title x
         xSpikeFormat xTickFormat y yMin yMax ySide yTitle/);
 
@@ -347,7 +363,7 @@ sub js {
         type => 'scatter',
         mode => 'lines',
         fill => 'tonexty',
-        fillcolor => 'rgb(230,230,230,0.1)',
+        fillcolor => $fillColor,
         line => $j->o(
             width => 1,
             color => $color,
@@ -384,7 +400,7 @@ sub js {
         xaxis => $j->o(
             type => 'date',
             autorange => \'true',
-            gridcolor => 'rgb(232,232,232,1)',
+            gridcolor => $gridColor,
             hoverformat => $xSpikeFormat,
             tickformat => $xTickFormat,
             tickangle => 30,
@@ -405,7 +421,7 @@ sub js {
                 (autorange => \'true'),
             # ticklen => 4,
             tickcolor => 'rgb(64,64,64,1)',
-            gridcolor => 'rgb(232,232,232,1)',
+            gridcolor => $gridColor,
             showspikes => \'true',
             side => $ySide,
             spikethickness => 1,

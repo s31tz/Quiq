@@ -23,14 +23,14 @@ Windgeschwindigkeits-Messung)
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<div style="border: solid 1px #a0a0a0; margin-top: 10px;" id="plot"></div>
+<div id="plot" class="plotly-timeseries"></div>
 <script type="text/javascript">
   $(function() {
     var plot = Plotly.newPlot('plot',[{
       type: 'scatter',
       mode: 'lines',
       fill: 'tonexty',
-      fillcolor: 'rgb(230,230,230,0.1)',
+      fillcolor: '#e0e0e0',
       line: {
         width: 1,
         color: 'rgb(255,0,0,1)',
@@ -107,10 +107,23 @@ Windgeschwindigkeits-Messung)
 
 Hintergrundfarbe.
 
+=item class => $class (Default: 'plotly-timeseries')
+
+CSS-Klasse des div-Containers. Kann zur Definition eines Rahmens,
+von Außenabständen usw. genutzt werden.
+
 =item color => $color (Default: 'rgb(255,0,0,1)')
 
 Farbe der Kurve. Alle Schreibweisen, die in CSS erlaubt sind, sind
 zulässig, also NAME, #XXXXXX oder rgb(NNN,NNN,NNN).
+
+=item fillColor => $color (Default: 'rgb(230,230,230,01)'
+
+Farbe zwischen Kurve und X-Achse.
+
+=item gridColor => $color (Default: 'rgb(230,230,230,01)'
+
+Gitter-Farbe.
 
 =item height (Default: 450 I<Default von plotly.js>)
 
