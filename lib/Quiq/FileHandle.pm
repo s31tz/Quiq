@@ -138,7 +138,10 @@ sub new {
     }
     else {                          # Datei öffnen
         $mode = shift;
-        $path = Quiq::Path->expandTilde(shift);
+        $path = shift;
+        if (!ref $path) {
+            $path = Quiq::Path->expandTilde($path);
+        }
     }
 
     # Optionen
