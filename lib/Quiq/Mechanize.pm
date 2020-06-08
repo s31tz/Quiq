@@ -68,6 +68,7 @@ sub new {
     return $class->SUPER::new(
         autocheck => 1,
         stack_depth => 0,
+        strict_forms => 1,
         onerror => sub {
             my $msg = join '',@_;                
             $class->throw(
