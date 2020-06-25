@@ -978,6 +978,17 @@ Entferne alle, nicht nur die erste Extension.
 
 Liefere den Grundnamen des Pfads, d.h. ohne Pfadanfang und Extension.
 
+=head3 basePath() - Pfad ohne Extension
+
+=head4 Synopsis
+
+  $basePath = $class->basePath($path);
+
+=head4 Description
+
+Entferne eine etwaig vorhandene Extension von $path und liefere das
+Resultat zurück.
+
 =head3 chmod() - Setze Zugriffsrechte
 
 =head4 Synopsis
@@ -1001,6 +1012,22 @@ das Verzeichnis einschließlich Inhalt. Es ist kein Fehler, wenn
 der Pfad im Dateisystem nicht existiert. Existiert der Pfad und
 kann nicht gelöscht werden, wird eine Exception ausgelöst.
 Die Methode liefert keinen Wert zurück.
+
+=head3 dir() - Pfad ohne letzten Bestandteil
+
+=head4 Synopsis
+
+  $dir = $class->dir($path);
+
+=head4 Returns
+
+String
+
+=head4 Description
+
+Entferne den letzten Pfadbestandteil von $path und liefere
+den Rest zurück. Enthält $path keinen Slash (/), wird ein Leerstring
+geliefert.
 
 =head3 exists() - Prüfe Existenz
 
