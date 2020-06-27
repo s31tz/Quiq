@@ -39,7 +39,7 @@ Windgeschwindigkeits-Messung)
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<div id="plot" class="plotly-timeseries"></div>
+<div id="plot" class="plotly-timeseries" style="border: 1px dotted #b0b0b0"></div>
 <script type="text/javascript">
   $(function() {
     var plot = Plotly.newPlot('plot',[{
@@ -65,13 +65,20 @@ Windgeschwindigkeits-Messung)
         font: {
           color: 'rgb(255,0,0,1)',
         },
+        yref: 'container',
+        yanchor: 'top',
+        y: 0.96,
       },
       spikedistance: -1,
+      height: 400,
       margin: {
+        t: 50,
+        b: 150,
         autoexpand: false,
       },
       xaxis: {
         type: 'date',
+        mirror: true,
         linecolor: '#b0b0b0',
         autorange: true,
         gridcolor: 'rgb(230,230,230,0.1)',
@@ -86,10 +93,14 @@ Windgeschwindigkeits-Messung)
         spikedash: 'dot',
         rangeslider: {
           autorange: true,
+          bordercolor: '#b0b0b0',
+          borderwidth: 1,
+          thickness: 0.2,
         },
       },
       yaxis: {
         type: 'linear',
+        mirror: true,
         linecolor: '#b0b0b0',
         autorange: true,
         tickcolor: 'rgb(64,64,64,1)',
@@ -101,11 +112,15 @@ Windgeschwindigkeits-Messung)
         spikedash: 'dot',
         title: {
           text: 'm/s',
+          font: {
+            color: 'rgb(255,0,0,1)',
+          },
         },
       },
     },{
       displayModeBar: false,
       doubleClickDelay: 1000,
+      responsive: true,
     });
   });
 </script>
@@ -156,19 +171,19 @@ Gitter-Farbe.
 
 Höhe des Plot in Pixeln.
 
-=item marginBottom => $n (Default: 10)
+=item marginBottom => $n (Default: 135)
 
 Unterer Rand in Pixeln.
 
-=item marginLeft => $n (Default: 90)
+=item marginLeft => $n
 
 Linker Rand in Pixeln.
 
-=item marginRight => $n (Default: 90)
+=item marginRight => $n
 
 Rechter Rand in Pixeln.
 
-=item marginTop => $n (Default: 60)
+=item marginTop => $n (Default: 70)
 
 Oberer Rand in Pixeln.
 
@@ -260,15 +275,15 @@ sub new {
         color => 'rgb(255,0,0,1)',
         fillColor => 'rgb(230,230,230,0.1)',
         gridColor => 'rgb(230,230,230,0.1)',
-        height => undef,
-        marginBottom => undef,
+        height => 400,
+        marginBottom => 150,
         marginLeft => undef,
         marginRight => undef,
-        marginTop => undef,
+        marginTop => 50,
         mode => 'lines',
         name => 'plot',
         plotBackground => undef,
-        plotBox => 0,
+        plotBox => 1,
         shape => 'spline',
         title => undef,
         x => [],
@@ -343,6 +358,7 @@ sub html {
     return $h->tag('div',
         id => $name,
         class => $class,
+        style => 'border: 1px dotted #b0b0b0',
     );
 }
 
@@ -399,6 +415,7 @@ sub js {
         marker => $j->o(
             size => 3,
             color => $color,
+            # color => [....] Einzelfarben
             symbol => 'circle',
         ),
         x => $xA,
@@ -412,14 +429,17 @@ sub js {
     # Layout
 
     my $layout = $j->o(
+        plot_bgcolor => $plotBackground,
+        paper_bgcolor => $background,
         title => $j->o(
             text => $title,
             font => $j->o(
                 color => $color,
             ),
+            yref => 'container',
+            yanchor => 'top',
+            y => 0.96,
         ),
-        plot_bgcolor => $plotBackground,
-        paper_bgcolor => $background,
         spikedistance => -1,
         height => $height,
         margin => $j->o(
@@ -447,6 +467,9 @@ sub js {
             spikedash => 'dot',
             rangeslider => $j->o(
                 autorange => \'true',
+                bordercolor => '#b0b0b0',
+                borderwidth => 1,
+                thickness => 0.20,
             ),
         ),
         yaxis => $j->o(
@@ -466,6 +489,9 @@ sub js {
             spikedash => 'dot',
             title => $j->o(
                 text => $yTitle,
+                font => $j->o(
+                    color => $color,
+                ),
             ),
         ),
     );

@@ -45,7 +45,7 @@ Objekt zurück.
 Generiere Sdoc mit Einrückung 2:
 
   $gen = Quiq::Sdoc::Producer->new(
-      indentation=>2,
+      indentation => 2,
   );
 
 =head2 Objektmethoden
@@ -101,6 +101,20 @@ erzeugt
 =head4 Description
 
 Erzeuge eine Dokument-Definition mit den Eigenschaften @keyVal und
+liefere den resultierenden Sdoc-Code zurück.
+
+=head3 format() - Format-Abschnitt
+
+=head4 Synopsis
+
+  $str = $gen->format(
+      $format => $code,
+      ...
+  );
+
+=head4 Description
+
+Erzeuge einen Format-Abschnitt für die angegebenen Format/Code-Paare und
 liefere den resultierenden Sdoc-Code zurück.
 
 =head3 paragraph() - Paragraph

@@ -216,7 +216,7 @@ resultierenden Text zurück.
 
 =head4 Example
 
-  $js = Quiq::Template->substitute(
+  $js = Quiq::Template->combine(
       placeholders => [
           __NAME__ => $name,
           __CONFIG__ => $config,
