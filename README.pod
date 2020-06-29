@@ -641,7 +641,7 @@ L<Quiq::PostgreSql::Psql|https://github.com/s31tz/Quiq/tree/master/pod/class/Qui
 
 =item *
 
-L<Quiq::Process|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Process.pod> - Information über den laufenden Prozess
+L<Quiq::Process|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Process.pod> - Informationen über den laufenden Prozess
 
 =item *
 
