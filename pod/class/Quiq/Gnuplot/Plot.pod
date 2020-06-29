@@ -82,7 +82,7 @@ selbst das Quiq::Gnuplot::Label-Objekt.
 
 =head1 VERSION
 
-1.184
+1.185
 
 =head1 SOURCE
 

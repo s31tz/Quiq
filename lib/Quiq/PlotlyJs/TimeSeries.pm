@@ -5,7 +5,7 @@ use v5.10;
 use strict;
 use warnings;
 
-our $VERSION = '1.184';
+our $VERSION = '1.185';
 
 use Quiq::Json;
 use Quiq::Template;
@@ -272,7 +272,7 @@ sub new {
         axisColor => '#b0b0b0',
         background => undef,
         class => 'plotly-timeseries',
-        color => 'rgb(255,0,0,1)',
+        color => '#ff0000',
         fillColor => 'rgb(230,230,230,0.1)',
         gridColor => 'rgb(230,230,230,0.1)',
         height => 400,
@@ -523,7 +523,7 @@ sub js {
 
 =head1 VERSION
 
-1.184
+1.185
 
 =head1 AUTHOR
 

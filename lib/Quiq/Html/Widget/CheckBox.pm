@@ -5,7 +5,7 @@ use v5.10;
 use strict;
 use warnings;
 
-our $VERSION = '1.184';
+our $VERSION = '1.185';
 
 # -----------------------------------------------------------------------------
 
@@ -45,7 +45,7 @@ Label rechts neben der Checkbox.
 
 =item name => $name (Default: undef)
 
-Name, unter dem der Button kommuniziert wird.
+Name, unter dem die Checkbox kommuniziert wird.
 
 =item onClick => $js (Default: undef)
 
@@ -175,7 +175,7 @@ sub html {
 
 =head1 VERSION
 
-1.184
+1.185
 
 =head1 AUTHOR
 

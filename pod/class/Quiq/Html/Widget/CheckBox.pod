@@ -34,7 +34,7 @@ Label rechts neben der Checkbox.
 
 =item name => $name (Default: undef)
 
-Name, unter dem der Button kommuniziert wird.
+Name, unter dem die Checkbox kommuniziert wird.
 
 =item onClick => $js (Default: undef)
 
@@ -84,7 +84,7 @@ Aktueller Wert. Stimmt dieser mit dem Wert des Attributs option
 
 =head1 VERSION
 
-1.184
+1.185
 
 =head1 SOURCE
 

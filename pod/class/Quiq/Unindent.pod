@@ -306,7 +306,7 @@ angehängt, sofern der Sting nicht leer ist.
 
 =head1 VERSION
 
-1.184
+1.185
 
 =head1 SOURCE
 
