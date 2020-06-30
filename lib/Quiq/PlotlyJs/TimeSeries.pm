@@ -46,7 +46,7 @@ Windgeschwindigkeits-Messung)
       type: 'scatter',
       mode: 'lines',
       fill: 'tonexty',
-      fillcolor: 'rgb(230,230,230,0.1)',
+      fillcolor: '#e8e8e8',
       line: {
         width: 1,
         color: '#ff0000',
@@ -79,37 +79,40 @@ Windgeschwindigkeits-Messung)
       xaxis: {
         type: 'date',
         mirror: true,
-        linecolor: '#b0b0b0',
+        linecolor: '#d8d8d8',
         autorange: true,
-        gridcolor: 'rgb(230,230,230,0.1)',
+        gridcolor: '#e8e8e8',
         hoverformat: '%Y-%m-%d %H:%M:%S',
         tickformat: '%Y-%m-%d %H:%M',
         tickangle: 30,
-        ticklen: 4,
-        tickcolor: '#b0b0b0',
+        ticklen: 5,
+        tickcolor: '#d8d8d8',
         showspikes: true,
         spikethickness: 1,
         spikesnap: 'data',
-        spikecolor: 'rgb(0,0,0,1)',
+        spikecolor: '#000000',
         spikedash: 'dot',
         rangeslider: {
           autorange: true,
-          bordercolor: '#b0b0b0',
+          bordercolor: '#e0e0e0',
           borderwidth: 1,
           thickness: 0.2,
         },
+        zeroline: true,
+        zerolinecolor: '#b0b0b0',
       },
       yaxis: {
         type: 'linear',
         mirror: true,
-        linecolor: '#b0b0b0',
+        linecolor: '#d8d8d8',
         autorange: true,
-        tickcolor: '#b0b0b0',
-        gridcolor: 'rgb(230,230,230,0.1)',
+        ticklen: 4,
+        tickcolor: '#d8d8d8',
+        gridcolor: '#e8e8e8',
         showspikes: true,
         spikethickness: 1,
         spikesnap: 'data',
-        spikecolor: 'rgb(0,0,0,1)',
+        spikecolor: '#000000',
         spikedash: 'dot',
         title: {
           text: 'm/s',
@@ -117,6 +120,12 @@ Windgeschwindigkeits-Messung)
             color: '#ff0000',
           },
         },
+        zeroline: true,
+        zerolinecolor: '#b0b0b0',
+      },
+      yaxis2: {
+        overlaying: 'y',
+        side: 'right',
       },
     },{
       displayModeBar: false,
@@ -270,12 +279,9 @@ sub new {
     # @_: @attVal
 
     my $self = $class->SUPER::new(
-        axisColor => '#b0b0b0',
         background => undef,
         class => 'plotly-timeseries',
         color => '#ff0000',
-        fillColor => 'rgb(230,230,230,0.1)',
-        gridColor => 'rgb(230,230,230,0.1)',
         height => 400,
         marginBottom => 150,
         marginLeft => undef,
@@ -388,17 +394,35 @@ sub js {
 
     # Objektattribute
 
-    my ($axisColor,$background,$class,$color,$fillColor,$gridColor,
-        $height,$marginBottom,$marginLeft,$marginRight,$marginTop,$mode,$name,
-        $plotBackground,$plotBox,$shape,$title,$xA,$xSpikeFormat,$xTickFormat,
-        $yA,$yMin,$yMax,$ySide,$yTitle) =
-        $self->get(qw/axisColor background class color fillColor gridColor
-        height marginBottom marginLeft marginRight marginTop mode name
-        plotBackground plotBox shape title x xSpikeFormat xTickFormat
-        y yMin yMax ySide yTitle/);
+    my ($color,$title,$xA,$yA,$yTitle) =
+        $self->get(qw/color title x y yTitle/);
+
+    my ($background,$class,
+        $height,$marginBottom,$marginLeft,$marginRight,$marginTop,$name,
+        $plotBackground,$plotBox,$xSpikeFormat,$xTickFormat,
+        $ySide) =
+        $self->get(qw/background class
+        height marginBottom marginLeft marginRight marginTop name
+        plotBackground plotBox xSpikeFormat xTickFormat
+        ySide/);
+
+    my $axisColor = '#d0d0d0';
+    my $fillColor = '#e8e8e8';
+    my $gridColor = '#e8e8e8';
+    my $rangeSliderBorderColor = '#e0e0e0';
+    my $lineColor = $color;
+    my $lineShape = 'linear';
+    my $lineWidth = 1;
+    my $markerColor = $color;
+    my $markerSize = 3;
+    my $markerSymbol = 'circle';
+    my $mode = 'lines';
+    my $xTickLen = 5;
+    my $yTickLen = 4;
+    my $yMin = undef;
+    my $yMax = undef;
 
     # Erzeuge JSON-Code
-
     my $j = Quiq::Json->new;
 
     # Traces
@@ -409,15 +433,14 @@ sub js {
         fill => 'tonexty',
         fillcolor => $fillColor,
         line => $j->o(
-            width => 1,
-            color => $color,
-            shape => $shape,
+            width => $lineWidth,
+            color => $lineColor,
+            shape => $lineShape,
         ),
         marker => $j->o(
-            size => 3,
-            color => $color,
-            # color => [....] Einzelfarben
-            symbol => 'circle',
+            size => $markerSize,
+            color => $markerColor, # [....] Einzelfarben
+            symbol => $markerSymbol,
         ),
         x => $xA,
         y => $yA,
@@ -459,16 +482,16 @@ sub js {
             hoverformat => $xSpikeFormat,
             tickformat => $xTickFormat,
             tickangle => 30,
-            ticklen => 4,
-            tickcolor => '#b0b0b0',
+            ticklen => $xTickLen,
+            tickcolor => $axisColor,
             showspikes => \'true',
             spikethickness => 1,
             spikesnap => 'data',
-            spikecolor => 'rgb(0,0,0,1)',
+            spikecolor => '#000000',
             spikedash => 'dot',
             rangeslider => $j->o(
                 autorange => \'true',
-                bordercolor => '#b0b0b0',
+                bordercolor => $rangeSliderBorderColor,
                 borderwidth => 1,
                 thickness => 0.20,
             ),
@@ -481,8 +504,8 @@ sub js {
             linecolor => $axisColor,
             defined($yMin) && defined($yMax)? (range => [$yMin,$yMax]):
                 (autorange => \'true'),
-            # ticklen => 4,
-            tickcolor => '#b0b0b0',
+            ticklen => $yTickLen,
+            tickcolor => $axisColor,
             gridcolor => $gridColor,
             showspikes => \'true',
             side => $ySide,
@@ -498,6 +521,10 @@ sub js {
             ),
             zeroline => \'true',
             zerolinecolor => '#b0b0b0',
+        ),
+        yaxis2 => $j->o(
+            overlaying => 'y',
+            side => 'right',
         ),
     );
 
