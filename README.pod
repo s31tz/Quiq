@@ -493,6 +493,10 @@ L<Quiq::Ipc|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Ipc.pod> - 
 
 =item *
 
+L<Quiq::JQuery|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/JQuery.pod> - Basisfunktionalität zu jQuery
+
+=item *
+
 L<Quiq::JQuery::Accordion|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/JQuery/Accordion.pod> - Erzeuge HTML einer jQuery UI Accodion Reiterleiste
 
 =item *

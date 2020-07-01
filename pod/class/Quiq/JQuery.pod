@@ -1,0 +1,54 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::JQuery - Basisfunktionalität zu jQuery
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 METHODS
+
+=head2 Klassenmethoden
+
+=head3 cdnUrl() - Liefere CDN URL
+
+=head4 Synopsis
+
+  $url = $this->cdnUrl;
+
+=head4 Returns
+
+URL (String)
+
+=head4 Description
+
+Liefere den CDN URL der neusten Version von jQuery.
+
+=head4 Example
+
+  $url = Quiq::JQuery->cdnUrl;
+  ==>
+  https://code.jquery.com/jquery-latest.min.js
+
+=head1 VERSION
+
+1.185
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/JQuery.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2020 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
