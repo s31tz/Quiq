@@ -35,7 +35,7 @@ Windgeschwindigkeits-Messung)
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<div id="plot" class="plotly-timeseries" style="border: 1px dotted #b0b0b0"></div>
+<div id="plot" class="plotly-timeseries" style="height: 400px; border: 1px dotted #b0b0b0"></div>
 <script type="text/javascript">
   $(function() {
     var plot = Plotly.react('plot',[{
@@ -69,7 +69,6 @@ Windgeschwindigkeits-Messung)
           y: 0.96,
         },
         spikedistance: -1,
-        height: 400,
         margin: {
           t: 50,
           b: 150,
@@ -128,8 +127,6 @@ Windgeschwindigkeits-Messung)
         doubleClickDelay: 1000,
         responsive: true,
       });
-    alert($('#plot')[0]);
-    var x = 1;
   });
 </script>
 

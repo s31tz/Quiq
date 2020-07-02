@@ -49,7 +49,7 @@ Windgeschwindigkeits-Messung)
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<div id="plot" class="plotly-timeseries" style="border: 1px dotted #b0b0b0"></div>
+<div id="plot" class="plotly-timeseries" style="height: 400px; border: 1px dotted #b0b0b0"></div>
 <script type="text/javascript">
   $(function() {
     var plot = Plotly.react('plot',[{
@@ -83,7 +83,6 @@ Windgeschwindigkeits-Messung)
           y: 0.96,
         },
         spikedistance: -1,
-        height: 400,
         margin: {
           t: 50,
           b: 150,
@@ -142,8 +141,6 @@ Windgeschwindigkeits-Messung)
         doubleClickDelay: 1000,
         responsive: true,
       });
-    alert($('#plot')[0]);
-    var x = 1;
   });
 </script>
 
@@ -291,12 +288,16 @@ sub html {
     my ($self,$h) = @_;
 
     # Objektattribute
-    my ($class,$name) = $self->get(qw/class name/);
+    my ($class,$height,$name) = $self->get(qw/class height name/);
+
+    # MEMO: Wir setzen die Höhe im div und nicht im Layout, damit
+    # das div bereits den Raum einnimmt, welcher später durch
+    # Plotly befüllt wird
 
     return $h->tag('div',
         id => $name,
         class => $class,
-        style => 'border: 1px dotted #b0b0b0',
+        style => "height: ${height}px; border: 1px dotted #b0b0b0",
     );
 }
 
@@ -345,7 +346,7 @@ sub js {
     my $axisColor = '#d0d0d0'; # Farbe der Achsenlinien
     my $fillColor = '#f0f0f0'; # Farbe zwischen Kurve und X-Achse
     my $gridColor = '#e8e8e8'; # Farbe des Gitters
-    my $height = 400; # Höhe des gesamten Diagramms (einschl. Rändern)
+    # my $height = 400; # Höhe des gesamten Diagramms (einschl. Rändern)
     my $lineColor = $color;
     my $lineShape = 'linear'; # Linienform: 'spline'|'linear'|'hv'|
         # 'vh'|'hvh'|'vhv'
@@ -415,7 +416,7 @@ sub js {
             y => 0.96,
         ),
         spikedistance => -1,
-        height => $height,
+        # height => $height,
         margin => $j->o(
             l => $margin->[3],
             r => $margin->[1],
