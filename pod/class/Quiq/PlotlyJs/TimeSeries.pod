@@ -25,6 +25,58 @@ gewählten) Zeitbereich von C<2000-01-01 00:00:00> bis C<2001-01-01
 00:00:00>. Die Y-Achse umfasst den (willkürlich gewählten)
 Wertebereich C<-1> bis C<4>.
 
+=head2 Diagramm-Höhe
+
+Die Diagramm-Höhe kann im div-Container, in der Layout-Konfiguration
+oder in beiden gesetzt werden. Die Auswirkungen:
+
+=over 2
+
+=item *
+
+Wird die Höhe nur beim div-Container gesetzt, füllt Plotly
+die Höhe immer ganz aus. Wird z.B. der Rangeslider entfernt, rendert
+Plotly das Diagramm neu, so dass es wieder die gesamte Höhe ausfüllt.
+D.h. der Plotbereich wird höher. Der Inhalt des Diagramms ist
+nicht statisch.
+
+=item *
+
+Wird die Höhe nur in der Layout-Konfiguration gesetzt, hat der
+div-Container zunächst die Höhe 0, bis das Diagramm
+(typischerweise im ready-Handler) aufgebaut wird.
+
+=item *
+
+Wird die Höhe im div-Container I<und> in der Layout-Konfiguration
+gesetzt, ist der Bereich des Diagramms auf der Seite sofort
+sichtbar, kann aber aber statisch gehalten werden, indem beide
+Angaben synchron geändert werden.
+
+=back
+
+=head2 Titel-Positionierung
+
+Der Diagramm-Titel wird per Default leider ungünstig positioniert,
+daher positioniert man ihn am besten selbst. Damit der Titel
+oberhalb des Plot-Bereichs positioniert werden kann, muss
+im Layout vereinbart werden:
+
+  title: {
+      yref: 'container',
+      yanchor => 'top',
+      y => $y,
+  }
+
+Hierbei ist $y ein Wert zwischen 0 und 1, der die vertikale
+Position innerhalb des Diagramms festlegt. 1 -> ganz oben unter dem
+Rand, 0 -> ganz unten unter (!) dem Rand.
+
+Ändert sich die Höhe des Diagramms, muss der Wert y auf
+die neue Höhe umgerechnet werden:
+
+  y1 = 1 - (height0 * (1 - y0) / height1 );
+
 =head1 EXAMPLE
 
 (Folgendes Diagramm erscheint in HTML - außer auf meta::cpan, da der
@@ -34,15 +86,15 @@ Windgeschwindigkeits-Messung)
 =begin html
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script type="text/javascript" src="https://cdn.plot.ly/plotly-1.30.0.min.js"></script>
 <div id="plot" class="plotly-timeseries" style="height: 400px; border: 1px dotted #b0b0b0"></div>
 <script type="text/javascript">
   $(function() {
-    var plot = Plotly.react('plot',[{
+    var plot = Plotly.newPlot('plot',[{
       type: 'scatter',
       mode: 'lines',
       fill: 'tonexty',
-      fillcolor: '#f0f0f0',
+      fillcolor: '#e0e0e0',
       line: {
         width: 1,
         color: '#ff0000',
@@ -66,12 +118,13 @@ Windgeschwindigkeits-Messung)
           },
           yref: 'container',
           yanchor: 'top',
-          y: 0.96,
+          y: 0.965,
         },
         spikedistance: -1,
+        height: 400,
         margin: {
-          t: 50,
-          b: 150,
+          t: 45,
+          b: 135,
           autoexpand: false,
         },
         xaxis: {
@@ -81,8 +134,6 @@ Windgeschwindigkeits-Messung)
           autorange: true,
           gridcolor: '#e8e8e8',
           hoverformat: '%Y-%m-%d %H:%M:%S',
-          tickformat: '%Y-%m-%d %H:%M',
-          tickangle: 30,
           ticklen: 5,
           tickcolor: '#d0d0d0',
           showspikes: true,
@@ -156,6 +207,10 @@ von Außenabständen usw. genutzt werden.
 Farbe der Kurve und Titel (Haupttitel, Titel Y-Achse). Alle
 Schreibweisen, die in CSS erlaubt sind, sind zulässig,
 also NAME, #XXXXXX oder rgb(NNN,NNN,NNN). Dies gilt für alle Farben.
+
+=item height => $n (Default: 400)
+
+Höhe des (gesamten) Diagramms in Pixeln.
 
 =item name => $name (Default: 'plot')
 

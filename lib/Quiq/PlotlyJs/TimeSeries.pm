@@ -39,6 +39,58 @@ gewählten) Zeitbereich von C<2000-01-01 00:00:00> bis C<2001-01-01
 00:00:00>. Die Y-Achse umfasst den (willkürlich gewählten)
 Wertebereich C<-1> bis C<4>.
 
+=head2 Diagramm-Höhe
+
+Die Diagramm-Höhe kann im div-Container, in der Layout-Konfiguration
+oder in beiden gesetzt werden. Die Auswirkungen:
+
+=over 2
+
+=item *
+
+Wird die Höhe nur beim div-Container gesetzt, füllt Plotly
+die Höhe immer ganz aus. Wird z.B. der Rangeslider entfernt, rendert
+Plotly das Diagramm neu, so dass es wieder die gesamte Höhe ausfüllt.
+D.h. der Plotbereich wird höher. Der Inhalt des Diagramms ist
+nicht statisch.
+
+=item *
+
+Wird die Höhe nur in der Layout-Konfiguration gesetzt, hat der
+div-Container zunächst die Höhe 0, bis das Diagramm
+(typischerweise im ready-Handler) aufgebaut wird.
+
+=item *
+
+Wird die Höhe im div-Container I<und> in der Layout-Konfiguration
+gesetzt, ist der Bereich des Diagramms auf der Seite sofort
+sichtbar, kann aber aber statisch gehalten werden, indem beide
+Angaben synchron geändert werden.
+
+=back
+
+=head2 Titel-Positionierung
+
+Der Diagramm-Titel wird per Default leider ungünstig positioniert,
+daher positioniert man ihn am besten selbst. Damit der Titel
+oberhalb des Plot-Bereichs positioniert werden kann, muss
+im Layout vereinbart werden:
+
+  title: {
+      yref: 'container',
+      yanchor => 'top',
+      y => $y,
+  }
+
+Hierbei ist $y ein Wert zwischen 0 und 1, der die vertikale
+Position innerhalb des Diagramms festlegt. 1 -> ganz oben unter dem
+Rand, 0 -> ganz unten unter (!) dem Rand.
+
+Ändert sich die Höhe des Diagramms, muss der Wert y auf
+die neue Höhe umgerechnet werden:
+
+  y1 = 1 - (height0 * (1 - y0) / height1 );
+
 =head1 EXAMPLE
 
 (Folgendes Diagramm erscheint in HTML - außer auf meta::cpan, da der
@@ -48,15 +100,15 @@ Windgeschwindigkeits-Messung)
 =begin html
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script type="text/javascript" src="https://cdn.plot.ly/plotly-1.30.0.min.js"></script>
 <div id="plot" class="plotly-timeseries" style="height: 400px; border: 1px dotted #b0b0b0"></div>
 <script type="text/javascript">
   $(function() {
-    var plot = Plotly.react('plot',[{
+    var plot = Plotly.newPlot('plot',[{
       type: 'scatter',
       mode: 'lines',
       fill: 'tonexty',
-      fillcolor: '#f0f0f0',
+      fillcolor: '#e0e0e0',
       line: {
         width: 1,
         color: '#ff0000',
@@ -80,12 +132,13 @@ Windgeschwindigkeits-Messung)
           },
           yref: 'container',
           yanchor: 'top',
-          y: 0.96,
+          y: 0.965,
         },
         spikedistance: -1,
+        height: 400,
         margin: {
-          t: 50,
-          b: 150,
+          t: 45,
+          b: 135,
           autoexpand: false,
         },
         xaxis: {
@@ -95,8 +148,6 @@ Windgeschwindigkeits-Messung)
           autorange: true,
           gridcolor: '#e8e8e8',
           hoverformat: '%Y-%m-%d %H:%M:%S',
-          tickformat: '%Y-%m-%d %H:%M',
-          tickangle: 30,
           ticklen: 5,
           tickcolor: '#d0d0d0',
           showspikes: true,
@@ -171,6 +222,10 @@ Farbe der Kurve und Titel (Haupttitel, Titel Y-Achse). Alle
 Schreibweisen, die in CSS erlaubt sind, sind zulässig,
 also NAME, #XXXXXX oder rgb(NNN,NNN,NNN). Dies gilt für alle Farben.
 
+=item height => $n (Default: 400)
+
+Höhe des (gesamten) Diagramms in Pixeln.
+
 =item name => $name (Default: 'plot')
 
 Name des Plot. Der Name wird als CSS-Id für den Div-Container
@@ -217,7 +272,6 @@ sub new {
         class => 'plotly-timeseries',
         color => '#ff0000',
         height => 400,
-        loadFunction => undef,
         name => 'plot',
         title => undef,
         x => [],
@@ -259,7 +313,8 @@ Liefere den CDN URL der neusten Version von Plotly.js.
 
 sub cdnUrl {
     my $this = shift;
-    return 'https://cdn.plot.ly/plotly-latest.min.js';
+    # return 'https://cdn.plot.ly/plotly-latest.min.js';
+    return 'https://cdn.plot.ly/plotly-1.30.0.min.js';
 }
 
 # -----------------------------------------------------------------------------
@@ -326,7 +381,6 @@ sub js {
 
     # Zusatz-Attribute (die Plotly nicht kennt)
 
-    my $loadFunction = $self->get('loadFunction');
     my $name = $self->get('name');
 
     # Multi-Attribute (betreffen mehrere Plotly-Attribute)
@@ -338,20 +392,21 @@ sub js {
 
     # Einzel-Attribute (betreffen einzelnes Plotly-Attribut)
 
+    my $height = $self->get('height'); # Höhe des gesamten Diagramms
     my $title = $self->get('title');
     my $xA = $self->get('x');
     my $yA = $self->get('y');
     my $yTitle = $self->get('yTitle');
     # ---
     my $axisColor = '#d0d0d0'; # Farbe der Achsenlinien
-    my $fillColor = '#f0f0f0'; # Farbe zwischen Kurve und X-Achse
+    # my $fillColor = '#f0f0f0'; # Farbe zwischen Kurve und X-Achse
+    my $fillColor = '#e0e0e0'; # Farbe zwischen Kurve und X-Achse
     my $gridColor = '#e8e8e8'; # Farbe des Gitters
-    # my $height = 400; # Höhe des gesamten Diagramms (einschl. Rändern)
     my $lineColor = $color;
     my $lineShape = 'linear'; # Linienform: 'spline'|'linear'|'hv'|
         # 'vh'|'hvh'|'vhv'
     my $lineWidth = 1;
-    my $margin = [50,undef,150,undef]; # Breite der Ränder (t, r, b, l)
+    my $margin = [45,undef,135,undef]; # Breite der Ränder (t, r, b, l)
     my $markerColor = $color;
     my $markerSize = 3;
     my $markerSymbol = 'circle';
@@ -385,7 +440,7 @@ sub js {
     push my @traces,$j->o(
         type => 'scatter',
         mode => $mode, # lines, markers, lines+markers, none,
-        fill => 'tonexty',
+        fill => 'tozeroy',
         fillcolor => $fillColor,
         line => $j->o(
             width => $lineWidth,
@@ -411,12 +466,12 @@ sub js {
             font => $j->o(
                 color => $color,
             ),
-            yref => 'container',
+            yref => 'container', # container, paper
             yanchor => 'top',
-            y => 0.96,
+            y => 0.965,
         ),
         spikedistance => -1,
-        # height => $height,
+        height => $height,
         margin => $j->o(
             l => $margin->[3],
             r => $margin->[1],
@@ -431,10 +486,12 @@ sub js {
             autorange => \'true',
             gridcolor => $gridColor,
             hoverformat => $xAxisHoverFormat,
-            tickformat => $xAxisTickFormat,
-            tickangle => 30,
+            # tickformat => $xAxisTickFormat,
+            # tickangle => 30,
             ticklen => $xTickLen,
             tickcolor => $axisColor,
+            #tickformatstops => [
+            #],
             showspikes => \'true',
             spikethickness => 1,
             spikesnap => 'data',
@@ -455,6 +512,7 @@ sub js {
             linecolor => $axisColor,
             defined($yMin) && defined($yMax)? (range => [$yMin,$yMax]):
                 (autorange => \'true'),
+            # autorange => \'true',
             ticklen => $yTickLen,
             tickcolor => $axisColor,
             gridcolor => $gridColor,
@@ -493,10 +551,9 @@ sub js {
             __CONFIG__ => $config,
         ],
         template => q~
-            var __NAME__ = Plotly.react('__NAME__',[__TRACES__]\
+            var __NAME__ = Plotly.newPlot('__NAME__',[__TRACES__]\
                 ,__LAYOUT__,__CONFIG__);
-            // alert($('#__NAME__')[0]);
-            // var x = 1;
+            // __NAME__.then(plot => {console.log(plot._fullLayout)});
         ~,
     );
 }
