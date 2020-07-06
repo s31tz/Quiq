@@ -52,44 +52,80 @@ Wird die Höhe nur beim div-Container gesetzt, füllt Plotly
 die Höhe immer ganz aus. Wird z.B. der Rangeslider entfernt, rendert
 Plotly das Diagramm neu, so dass es wieder die gesamte Höhe ausfüllt.
 D.h. der Plotbereich wird höher. Der Inhalt des Diagramms ist
-nicht statisch.
+nicht statisch. Das wollen wir nicht.
 
 =item *
 
 Wird die Höhe nur in der Layout-Konfiguration gesetzt, hat der
 div-Container zunächst die Höhe 0, bis das Diagramm
-(typischerweise im ready-Handler) aufgebaut wird.
+(typischerweise im ready-Handler) aufgebaut wird. Das wollen wir
+auch nicht.
 
 =item *
 
 Wird die Höhe im div-Container I<und> in der Layout-Konfiguration
 gesetzt, ist der Bereich des Diagramms auf der Seite sofort
-sichtbar, kann aber aber statisch gehalten werden, indem beide
-Angaben synchron geändert werden.
+sichtbar, der Inhalt kann aber aber statisch gehalten werden,
+indem beide Angaben gemeinsam geändert werden.
 
 =back
+
+=head2 Unterer Rand
+
+Im unteren Rand ist die Beschriftung der X-Achse und der
+Rangeslider angesiedelt. Die Beschriftung hat einen Platzbedarf von
+55 Pixeln, die Dicke des Rangesliders ist auf 20% der Plothöhe
+eingestellt. Wir nutzen folgende Formel, um aus der Höhe des
+Diagramms die Höhe des unteren Rands zu berechnen:
+
+  bottomMargin = (height - 300) / 50 * 10 + 110;
+
+Das ergibt folgende Werte (height->marginBottom):
+
+  250->100, 300->110, 350->120, 400->130, 450->140,...
+
+Wenn wir den Rangeslider entfernen, reduzieren wir die Höhe des
+Diagramms und den unteren Rand um
+
+  marginBottom - 55
 
 =head2 Titel-Positionierung
 
 Der Diagramm-Titel wird per Default leider ungünstig positioniert,
-daher positioniert man ihn am besten selbst. Damit der Titel
+daher positionieren wir ihn selbst. Damit der Titel
 oberhalb des Plot-Bereichs positioniert werden kann, muss
-im Layout vereinbart werden:
+im Layout C<container> als Bezugsbereich vereinbart werden:
 
   title: {
       yref: 'container',
       yanchor => 'top',
-      y => $y,
+      y => $y0,
   }
 
-Hierbei ist $y ein Wert zwischen 0 und 1, der die vertikale
+Hierbei ist $y0 ein Wert zwischen 0 und 1, der die vertikale
 Position innerhalb des Diagramms festlegt. 1 -> ganz oben unter dem
 Rand, 0 -> ganz unten unter (!) dem Rand.
 
 Ändert sich die Höhe des Diagramms, muss der Wert y auf
-die neue Höhe umgerechnet werden:
+die neue Höhe y1 umgerechnet werden:
 
-  y1 = 1 - (height0 * (1 - y0) / height1 );
+  y1 = 1 - (height0 * (1 - y0) / height1);
+
+=head2 Raum unter der Achse einfärben
+
+Ist beim Trace-Layout das Füllen unter der Achse angegeben mit
+
+  fill: 'tozeroy',
+  fillcolor: '#e0e0e0',
+
+wird der Y-Wertebereich nach unten bis 0 ausgedehnt, wenn kein
+Y-Wertebereich explizit vorgegeben ist. Ist für die Y-Achse
+(Diagramm-Layout!) explizit ein Wertebereich vorgegeben
+
+  range => [900,1000],
+
+findet die Ausdehnung bis 0 nicht statt, der Raum unter der
+Kurve wird dennoch wie gewünscht gefüllt.
 
 =head1 EXAMPLE
 
@@ -107,7 +143,7 @@ Windgeschwindigkeits-Messung)
     var plot = Plotly.newPlot('plot',[{
       type: 'scatter',
       mode: 'lines',
-      fill: 'tonexty',
+      fill: 'tozeroy',
       fillcolor: '#e0e0e0',
       line: {
         width: 1,
@@ -132,17 +168,18 @@ Windgeschwindigkeits-Messung)
           },
           yref: 'container',
           yanchor: 'top',
-          y: 0.965,
+          y: 0.9625,
         },
         spikedistance: -1,
         height: 400,
         margin: {
           t: 45,
-          b: 135,
+          b: 130,
           autoexpand: false,
         },
         xaxis: {
           type: 'date',
+          fixedrange: false,
           mirror: true,
           linecolor: '#d0d0d0',
           autorange: true,
@@ -166,6 +203,8 @@ Windgeschwindigkeits-Messung)
         },
         yaxis: {
           type: 'linear',
+          fixedrange: true,
+          automargin: true,
           mirror: true,
           linecolor: '#d0d0d0',
           autorange: true,
@@ -192,6 +231,8 @@ Windgeschwindigkeits-Messung)
         doubleClickDelay: 1000,
         responsive: true,
       });
+    $('#plot').attr('originalHeight',400);
+    $('#plot').attr('originalBottomMargin',130);
   });
 </script>
 
@@ -275,7 +316,11 @@ sub new {
         name => 'plot',
         title => undef,
         x => [],
+        xMin => undef,
+        xMax => undef,
         y => [],
+        yMin => undef,
+        yMax => undef,
         yTitle => undef,
     );
     $self->set(@_);
@@ -397,16 +442,35 @@ sub js {
     my $xA = $self->get('x');
     my $yA = $self->get('y');
     my $yTitle = $self->get('yTitle');
+    my $xMin = $self->get('xMin'); # Kleinster Wert auf der X-Achse.
+        # Der Default 'undefined' bedeutet, dass der Wert aus den Daten
+        # ermittelt wird.
+    my $xMax = $self->get('xMax'); # Größter Wert auf der X-Achse.
+        # Der Default 'undefined' bedeutet, dass der Wert aus den Daten
+        # ermittelt wird.
+    my $yMin = $self->get('yMin'); # Kleinster Wert auf der Y-Achse.
+        # Der Default 'undefined' bedeutet, dass der Wert aus den Daten
+        # ermittelt wird.
+    my $yMax = $self->get('yMax'); # Größter Wert auf der Y-Achse.
+        # Der Default 'undefined' bedeutet, dass der Wert aus den Daten
+        # ermittelt wird.
+
+    # Maße für die Ränder
+
+    my $topMargin = 45;
+
+    # 250->100,300->110,350->120,400->130,450->140,...
+    my $bottomMargin = ($height-300)/50*10+110;
+
     # ---
     my $axisColor = '#d0d0d0'; # Farbe der Achsenlinien
-    # my $fillColor = '#f0f0f0'; # Farbe zwischen Kurve und X-Achse
     my $fillColor = '#e0e0e0'; # Farbe zwischen Kurve und X-Achse
     my $gridColor = '#e8e8e8'; # Farbe des Gitters
     my $lineColor = $color;
     my $lineShape = 'linear'; # Linienform: 'spline'|'linear'|'hv'|
         # 'vh'|'hvh'|'vhv'
     my $lineWidth = 1;
-    my $margin = [45,undef,135,undef]; # Breite der Ränder (t, r, b, l)
+    my $margin = [$topMargin,undef,$bottomMargin,undef];
     my $markerColor = $color;
     my $markerSize = 3;
     my $markerSymbol = 'circle';
@@ -423,11 +487,6 @@ sub js {
     my $xAxisTickFormat = '%Y-%m-%d %H:%M'; # Format der
         # Zeitachsen-Beschriftung
     my $xTickLen = 5;
-    my $yMax = undef; # Größter Wert auf der Y-Achse. Der Default
-        # 'undefined' bedeutet, dass der Wert aus den Daten ermittelt wird.
-
-    my $yMin = undef; # Kleinster Wert auf der Y-Achse. Der Default
-        # 'undefined' bedeutet, dass der Wert aus den Daten ermittelt wird.
     my $ySide = 'left'; # Seite, auf der die Y-Achse gezeichnet wird
     my $yTickLen = 4;
     my $zeroLineColor = '#d0d0d0';
@@ -468,7 +527,7 @@ sub js {
             ),
             yref => 'container', # container, paper
             yanchor => 'top',
-            y => 0.965,
+            y => 1-(15/$height),
         ),
         spikedistance => -1,
         height => $height,
@@ -481,9 +540,12 @@ sub js {
         ),
         xaxis => $j->o(
             type => 'date',
+            fixedrange => \'false', # Zoom erlauben
             mirror => $axisBox? \'true': undef,
             linecolor => $axisColor,
-            autorange => \'true',
+            defined($xMin) && defined($xMax)? (range => [$xMin,$xMax]):
+                (autorange => \'true'),
+            # autorange => \'true',
             gridcolor => $gridColor,
             hoverformat => $xAxisHoverFormat,
             # tickformat => $xAxisTickFormat,
@@ -508,6 +570,8 @@ sub js {
         ),
         yaxis => $j->o(
             type => 'linear',
+            fixedrange => \'true', # Zoom verbieten
+            automargin => \'true',
             mirror => $axisBox? \'true': undef,
             linecolor => $axisColor,
             defined($yMin) && defined($yMax)? (range => [$yMin,$yMax]):
@@ -546,6 +610,8 @@ sub js {
     return Quiq::Template->combine(
         placeholders => [
             __NAME__ => $name,
+            __HEIGHT__ => $height,
+            __BOTTOM_MARGIN__ => $bottomMargin,
             __TRACES__ => \@traces,
             __LAYOUT__ => $layout,
             __CONFIG__ => $config,
@@ -553,6 +619,8 @@ sub js {
         template => q~
             var __NAME__ = Plotly.newPlot('__NAME__',[__TRACES__]\
                 ,__LAYOUT__,__CONFIG__);
+            $('#__NAME__').attr('originalHeight',__HEIGHT__);
+            $('#__NAME__').attr('originalBottomMargin',__BOTTOM_MARGIN__);
             // __NAME__.then(plot => {console.log(plot._fullLayout)});
         ~,
     );
