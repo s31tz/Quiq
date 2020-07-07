@@ -1,4 +1,4 @@
-package Quiq::PlotlyJs::TimeSeries;
+package Quiq::PlotlyJs::TimeSeries::DiagramGroup;
 use base qw/Quiq::Hash/;
 
 use v5.10;
@@ -16,7 +16,7 @@ use Quiq::Template;
 
 =head1 NAME
 
-Quiq::PlotlyJs::TimeSeries - Erzeuge Zeitreihen-Plot auf Basis von Plotly.js
+Quiq::PlotlyJs::TimeSeries::DiagramGroup - Erzeuge Zeitreihen-Plots auf Basis von Plotly.js
 
 =head1 BASE CLASS
 
@@ -129,8 +129,8 @@ Kurve wird dennoch wie gewünscht gefüllt.
 
 =head1 EXAMPLE
 
-(Folgendes Diagramm erscheint in HTML - außer auf meta::cpan, da der
-HTML-Code dort gestrippt wird - es zeigt 720 Messwerte einer
+(Folgendes Diagramm erscheint in HTML - außer auf metacpan.org, da der
+HTML-Code dort gestrippt wird. Es zeigt 720 Messwerte einer
 Windgeschwindigkeits-Messung)
 
 =begin html
@@ -245,49 +245,25 @@ Windgeschwindigkeits-Messung)
 
 =head4 Synopsis
 
-  $plt = $class->new(@attVal);
+  $dgr = $class->new(@attVal);
 
 =head4 Attributes
 
 =over 4
 
-=item class => $class (Default: 'plotly-timeseries')
+=item height => $n (Default: 300)
 
-CSS-Klasse des div-Containers. Kann zur Definition eines Rahmens,
-von Außenabständen usw. genutzt werden.
+Höhe des einzelnen Diagramms in Pixeln.
 
-=item color => $color (Default: '#ff0000')
+=item name => $name (Default: 'dgr')
 
-Farbe der Kurve und Titel (Haupttitel, Titel Y-Achse). Alle
-Schreibweisen, die in CSS erlaubt sind, sind zulässig,
-also NAME, #XXXXXX oder rgb(NNN,NNN,NNN). Dies gilt für alle Farben.
+Name der Diagramm-Gruppe. Der Name wird als CSS-Id für den
+äußeren Container der Diagramm-Gruppe genutzt.
 
-=item height => $n (Default: 400)
+=item B<< parameters => \@parameters >>
 
-Höhe des (gesamten) Diagramms in Pixeln.
-
-=item name => $name (Default: 'plot')
-
-Name des Plot. Der Name wird als CSS-Id für den Div-Container
-und als Variablenname für die JavaScript-Instanz verwendet.
-
-=item title => $str
-
-Titel des Plot. Wird über das Diagramm gesetzt. Typischerweise
-der Name des gemessenen Parameters.
-
-=item x => \@x (Default: [])
-
-Referenz auf Array der Zeit-Werte (bevorzugt in JavaScript-Epoch).
-
-=item y => \@y (Default: [])
-
-Referenz auf Array der Y-Werte (in Weltkoordinaten).
-
-=item yTitle => $str
-
-Beschriftung an der Y-Achse. Typischerweise die Einheit des
-gemessenen Parameters.
+Liste der Parameter-Objekte. Die Paramater-Objekte sind vom Typ
+Quiq::PlotlyJs::TimeSeries::Parameter.
 
 =back
 
@@ -309,18 +285,9 @@ sub new {
     # @_: @attVal
 
     my $self = $class->SUPER::new(
-        class => 'plotly-timeseries',
-        color => '#ff0000',
-        height => 400,
-        name => 'plot',
-        title => undef,
-        x => [],
-        xMin => undef,
-        xMax => undef,
-        y => [],
-        yMin => undef,
-        yMax => undef,
-        yTitle => undef,
+        height => 300,
+        name => 'dig',
+        parameters => [],
     );
     $self->set(@_);
 
@@ -329,47 +296,50 @@ sub new {
 
 # -----------------------------------------------------------------------------
 
-=head2 Klassenmethoden
+=head2 Objektmethoden
 
-=head3 cdnUrl() - Liefere CDN URL
+=head3 diagramName() - Diagramm-Name
 
 =head4 Synopsis
 
-  $url = $this->cdnUrl;
+  $name = $dgr->diagramName($par);
+
+=head4 Arguments
+
+=over 4
+
+=item $par
+
+Parameter-Objekt.
+
+=back
 
 =head4 Returns
 
-URL (String)
+Diagramm-Name (String)
 
 =head4 Description
 
-Liefere den CDN URL der neusten Version von Plotly.js.
-
-=head4 Example
-
-  $url = Quiq::PlotlyJs::TimeSeries->cdnUrl;
-  ==>
-  https://cdn.plot.ly/plotly-latest.min.js
+Liefere den (eindeutigen) Diagramm-Namen innerhalb der Diagramm-Gruppe.
+Dieser setzt sich zusammen aus dem Namen der Diagramm-Gruppe
+und dem Namen des Parameters.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub cdnUrl {
-    my $this = shift;
-    return 'https://cdn.plot.ly/plotly-latest.min.js';
-    #return 'https://cdn.plot.ly/plotly-1.30.0.min.js';
+sub diagramName {
+    my ($self,$par) = @_;
+    return sprintf '%s_%s',$self->name,$par->name;
 }
 
 # -----------------------------------------------------------------------------
-
-=head2 Objektmethoden
 
 =head3 html() - Generiere HTML
 
 =head4 Synopsis
 
-  $html = $ch->html($h);
+  $html = $dgr->html($h);
 
 =head4 Returns
 
@@ -377,7 +347,7 @@ HTML-Code (String)
 
 =head4 Description
 
-Liefere den HTML-Code der Plot-Instanz.
+Liefere den HTML-Code der Diagramm-Gruppe.
 
 =cut
 
@@ -387,16 +357,28 @@ sub html {
     my ($self,$h) = @_;
 
     # Objektattribute
-    my ($class,$height,$name) = $self->get(qw/class height name/);
 
-    # MEMO: Wir setzen die Höhe im div und nicht im Layout, damit
-    # das div bereits den Raum einnimmt, welcher später durch
-    # Plotly befüllt wird
+    my ($height,$name,$parameterA) =
+        $self->get(qw/height name parameters/);
+
+    # HTML erzeugen
+
+    my $html = '';
+    for my $par (@$parameterA) {
+        # MEMO: Wir setzen die Höhe bereits im div, damit
+        # das div bereits den Raum einnimmt, welcher später durch
+        # das Diagramm befüllt wird
+
+        $html .= $h->tag('div',
+            id => $self->diagramName($par),
+            class => sprintf('%s_diagram',$name),
+            style => "height: ${height}px; border: 1px dotted #b0b0b0",
+        );
+    }
 
     return $h->tag('div',
         id => $name,
-        class => $class,
-        style => "height: ${height}px; border: 1px dotted #b0b0b0",
+        $html
     );
 }
 
@@ -423,205 +405,64 @@ Liefere den JavaScript-Code für die Erzeugung Plot-Instanz.
 sub js {
     my $self = shift;
 
-    # Zusatz-Attribute (die Plotly nicht kennt)
+    # Objektattribute
 
-    my $name = $self->get('name');
-
-    # Multi-Attribute (betreffen mehrere Plotly-Attribute)
-
-    my $color = $self->get('color');
-    # ---
-    my $axisBox = 1; # Zeichne eine Box um den Plotbereich. Die Box hat
-        # die Farbe der Achsen (siehe axisColor).
-
-    # Einzel-Attribute (betreffen einzelnes Plotly-Attribut)
-
-    my $height = $self->get('height'); # Höhe des gesamten Diagramms
-    my $title = $self->get('title');
-    my $xA = $self->get('x');
-    my $yA = $self->get('y');
-    my $yTitle = $self->get('yTitle');
-    my $xMin = $self->get('xMin'); # Kleinster Wert auf der X-Achse.
-        # Der Default 'undefined' bedeutet, dass der Wert aus den Daten
-        # ermittelt wird.
-    my $xMax = $self->get('xMax'); # Größter Wert auf der X-Achse.
-        # Der Default 'undefined' bedeutet, dass der Wert aus den Daten
-        # ermittelt wird.
-    my $yMin = $self->get('yMin'); # Kleinster Wert auf der Y-Achse.
-        # Der Default 'undefined' bedeutet, dass der Wert aus den Daten
-        # ermittelt wird.
-    my $yMax = $self->get('yMax'); # Größter Wert auf der Y-Achse.
-        # Der Default 'undefined' bedeutet, dass der Wert aus den Daten
-        # ermittelt wird.
-
-    # Maße für die Ränder
-
-    my $topMargin = 45;
-
-    # 250->100,300->110,350->120,400->130,450->140,...
-    my $bottomMargin = ($height-300)/50*10+110;
-
-    # ---
-    my $axisColor = '#d0d0d0'; # Farbe der Achsenlinien
-    my $fillColor = '#e0e0e0'; # Farbe zwischen Kurve und X-Achse
-    my $gridColor = '#e8e8e8'; # Farbe des Gitters
-    my $lineColor = $color;
-    my $lineShape = 'linear'; # Linienform: 'spline'|'linear'|'hv'|
-        # 'vh'|'hvh'|'vhv'
-    my $lineWidth = 1;
-    my $margin = [$topMargin,undef,$bottomMargin,undef];
-    my $markerColor = $color;
-    my $markerSize = 3;
-    my $markerSymbol = 'circle';
-    my $mode = 'lines'; # Kurvendarstellung: 'lines', 'markers',
-        # 'text', 'none'. Die ersteren drei können auch mit '+' verbunden
-        # werden.
-    my $paperBackground = '#f8f8f8'; # Hintergrund Diagrammbereich
-    my $plotBackground = '#ffffff'; # Hintergrund Plotbereich
-    my $rangeSliderBorderColor = '#e0e0e0';
-    my $xAxisHoverFormat = '%Y-%m-%d %H:%M:%S'; # Format der
-        # Spike-Beschriftung für die X-Koordinate. Siehe:
-        # https://github.com/d3/d3-3.x-api-reference/blob/master/\
-        # Time-Formatting.md#format
-    my $xAxisTickFormat = '%Y-%m-%d %H:%M'; # Format der
-        # Zeitachsen-Beschriftung
-    my $xTickLen = 5;
-    my $ySide = 'left'; # Seite, auf der die Y-Achse gezeichnet wird
-    my $yTickLen = 4;
-    my $zeroLineColor = '#d0d0d0';
+    my ($height,$name,$parameterA) = $self->get(qw/height name parameters/);
 
     # Instantiiere Objekt zum Erzeugen von JSON-Code
     my $j = Quiq::Json->new;
 
-    # Traces
+    my $js = '';
 
-    push my @traces,$j->o(
-        type => 'scatter',
-        mode => $mode, # lines, markers, lines+markers, none,
-        fill => 'tozeroy',
-        fillcolor => $fillColor,
-        line => $j->o(
-            width => $lineWidth,
-            color => $lineColor,
-            shape => $lineShape,
-        ),
-        marker => $j->o(
-            size => $markerSize,
-            color => $markerColor, # [....] Einzelfarben
-            symbol => $markerSymbol,
-        ),
-        x => $xA,
-        y => $yA,
-    );
+    # Config (ist für alle Diagramme gleich)
 
-    # Layout
-
-    my $layout = $j->o(
-        plot_bgcolor => $plotBackground,
-        paper_bgcolor => $paperBackground,
-        title => $j->o(
-            text => $title,
-            font => $j->o(
-                color => $color,
-            ),
-            yref => 'container', # container, paper
-            yanchor => 'top',
-            y => 1-(15/$height),
-        ),
-        spikedistance => -1,
-        height => $height,
-        margin => $j->o(
-            l => $margin->[3],
-            r => $margin->[1],
-            t => $margin->[0],
-            b => $margin->[2],
-            autoexpand => \'false',
-        ),
-        xaxis => $j->o(
-            type => 'date',
-            fixedrange => \'false', # Zoom erlauben
-            mirror => $axisBox? \'true': undef,
-            linecolor => $axisColor,
-            defined($xMin) && defined($xMax)? (range => [$xMin,$xMax]):
-                (autorange => \'true'),
-            # autorange => \'true',
-            gridcolor => $gridColor,
-            hoverformat => $xAxisHoverFormat,
-            # tickformat => $xAxisTickFormat,
-            # tickangle => 30,
-            ticklen => $xTickLen,
-            tickcolor => $axisColor,
-            #tickformatstops => [
-            #],
-            showspikes => \'true',
-            spikethickness => 1,
-            spikesnap => 'data',
-            spikecolor => '#000000',
-            spikedash => 'dot',
-            rangeslider => $j->o(
-                autorange => \'true',
-                bordercolor => $rangeSliderBorderColor,
-                borderwidth => 1,
-                thickness => 0.20,
-            ),
-            zeroline => \'true',
-            zerolinecolor => '#b0b0b0',
-        ),
-        yaxis => $j->o(
-            type => 'linear',
-            fixedrange => \'true', # Zoom verbieten
-            automargin => \'true',
-            mirror => $axisBox? \'true': undef,
-            linecolor => $axisColor,
-            defined($yMin) && defined($yMax)? (range => [$yMin,$yMax]):
-                (autorange => \'true'),
-            # autorange => \'true',
-            ticklen => $yTickLen,
-            tickcolor => $axisColor,
-            gridcolor => $gridColor,
-            showspikes => \'true',
-            side => $ySide,
-            spikethickness => 1,
-            spikesnap => 'data',
-            spikecolor => '#000000',
-            spikedash => 'dot',
-            title => $j->o(
-                text => $yTitle,
-                font => $j->o(
-                    color => $color,
-                ),
-            ),
-            zeroline => \'true',
-            zerolinecolor => $zeroLineColor,
-        ),
-    );
-
-    # Config
-
-    my $config = $j->o(
+    $js .= sprintf "var %s_config = %s;\n\n",$name,scalar $j->o(
         displayModeBar => \'false',
         doubleClickDelay => 1000, # 1000ms
         responsive => \'true',
     );
 
-    # Erzeuge JavaScript-Code
+    # Trace
 
-    return Quiq::Template->combine(
-        placeholders => [
-            __NAME__ => $name,
-            __HEIGHT__ => $height,
-            __BOTTOM_MARGIN__ => $bottomMargin,
-            __TRACES__ => \@traces,
-            __LAYOUT__ => $layout,
-            __CONFIG__ => $config,
-        ],
-        template => q~
-            var __NAME__ = Plotly.newPlot('__NAME__',[__TRACES__],__LAYOUT__,__CONFIG__);
-            $('#__NAME__').attr('originalHeight',__HEIGHT__);
-            $('#__NAME__').attr('originalBottomMargin',__BOTTOM_MARGIN__);
-            // __NAME__.then(plot => {console.log(plot._fullLayout)});
-        ~,
+    $js .= sprintf "var %s_trace = %s;\n\n",$name,scalar $j->o(
+        type => 'scatter',
+        mode => 'lines', # lines, markers, lines+markers, none,
+        fill => 'tozeroy',
+        fillcolor => '#e0e0e0',
+        line => $j->o(
+            width => 1,
+            color => '#ff0000',
+            shape => 'linear',
+        ),
+        marker => $j->o(
+            size => 3,
+            color => '#ff0000', # [....] Einzelfarben
+            symbol => 'circle',
+        ),
+        x => [],
+        y => [],
     );
+
+    # JavaScript erzeugen
+
+    for my $par (@$parameterA) {
+        my $layout = '{}';
+
+        $js .= Quiq::Template->combine(
+            placeholders => [
+                __NAME__ => $self->diagramName($par),
+                __TRACES__ => '{}', # $self->trace($par),
+                __LAYOUT__ => $layout,
+                __C__ => $name.'_config',
+            ],
+            template => q~
+                Plotly.newPlot('__NAME__',[__TRACES__],__LAYOUT__,__C__);
+            ~,
+        );
+
+    }
+
+    return $js;
 }
 
 # -----------------------------------------------------------------------------

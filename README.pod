@@ -617,11 +617,23 @@ L<Quiq::Perl|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Perl.pod> 
 
 =item *
 
+L<Quiq::PlotlyJs|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs.pod> - Basisfunktionalität zu Plotly.js
+
+=item *
+
 L<Quiq::PlotlyJs::Reference|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/Reference.pod> - Erzeuge Plotly.js Reference Manual
 
 =item *
 
 L<Quiq::PlotlyJs::TimeSeries|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/TimeSeries.pod> - Erzeuge Zeitreihen-Plot auf Basis von Plotly.js
+
+=item *
+
+L<Quiq::PlotlyJs::TimeSeries::DiagramGroup|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/TimeSeries/DiagramGroup.pod> - Erzeuge Zeitreihen-Plots auf Basis von Plotly.js
+
+=item *
+
+L<Quiq::PlotlyJs::TimeSeries::Parameter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/TimeSeries/Parameter.pod> - Ein zu plottender Parameter
 
 =item *
 
