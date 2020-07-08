@@ -137,7 +137,7 @@ Windgeschwindigkeits-Messung)
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<div id="plot" class="plotly-timeseries" style="height: 400px; border: 1px dotted #b0b0b0"></div>
+<div id="plot" class="plotly-timeseries" style="height: 400px; border: 1px dotted #b0b0b0; margin-bottom: 0.8em;"></div>
 <script type="text/javascript">
   $(function() {
     var plot = Plotly.newPlot('plot',[{
@@ -396,7 +396,10 @@ sub html {
     return $h->tag('div',
         id => $name,
         class => $class,
-        style => "height: ${height}px; border: 1px dotted #b0b0b0",
+        style => [
+            height => "${height}px",
+            border => '1px dotted #b0b0b0',
+        ],
     );
 }
 

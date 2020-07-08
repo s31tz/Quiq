@@ -137,7 +137,7 @@ Windgeschwindigkeits-Messung)
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<div id="plot" class="plotly-timeseries" style="height: 400px; border: 1px dotted #b0b0b0"></div>
+<div id="plot" class="plotly-timeseries" style="height: 400px; border: 1px dotted #b0b0b0;"></div>
 <script type="text/javascript">
   $(function() {
     var plot = Plotly.newPlot('plot',[{
@@ -372,7 +372,11 @@ sub html {
         $html .= $h->tag('div',
             id => $self->diagramName($par),
             class => sprintf('%s_diagram',$name),
-            style => "height: ${height}px; border: 1px dotted #b0b0b0",
+            style => [
+                height => "${height}px",
+                border => '1px dotted #b0b0b0',
+                'margin-top' => '0.6em',
+            ],
         );
     }
 
@@ -407,62 +411,253 @@ sub js {
 
     # Objektattribute
 
-    my ($height,$name,$parameterA) = $self->get(qw/height name parameters/);
+    my ($name,$height,$parameterA) = $self->get(qw/name height parameters/);
 
-    # Instantiiere Objekt zum Erzeugen von JSON-Code
+    # Multi-Attribute (betreffen mehrere Plotly-Attribute)
+
+    my $color = '#ff0000';
+    # ---
+    my $axisBox = 1; # Zeichne eine Box um den Plotbereich. Die Box hat
+        # die Farbe der Achsen (siehe axisColor).
+
+    # Einzel-Attribute (betreffen einzelnes Plotly-Attribut)
+
+    # Maße für die Ränder
+
+    my $topMargin = 45;
+
+    # 250->100,300->110,350->120,400->130,450->140,...
+    my $bottomMargin = ($height-300)/50*10+110;
+
+    my $axisColor = '#d0d0d0'; # Farbe der Achsenlinien
+    my $fillColor = '#e0e0e0'; # Farbe zwischen Kurve und X-Achse
+    my $gridColor = '#e8e8e8'; # Farbe des Gitters
+    my $lineColor = $color;
+    my $lineShape = 'linear'; # Linienform: 'spline'|'linear'|'hv'|
+        # 'vh'|'hvh'|'vhv'
+    my $lineWidth = 1;
+    my $margin = [$topMargin,undef,$bottomMargin,undef];
+    my $markerColor = $color;
+    my $markerSize = 3;
+    my $markerSymbol = 'circle';
+    my $mode = 'lines'; # Kurvendarstellung: 'lines', 'markers',
+        # 'text', 'none'. Die ersteren drei können auch mit '+' verbunden
+        # werden.
+    my $paperBackground = '#f8f8f8'; # Hintergrund Diagrammbereich
+    my $plotBackground = '#ffffff'; # Hintergrund Plotbereich
+    my $rangeSliderBorderColor = '#e0e0e0';
+    my $xAxisHoverFormat = '%Y-%m-%d %H:%M:%S'; # Format der
+        # Spike-Beschriftung für die X-Koordinate. Siehe:
+        # https://github.com/d3/d3-3.x-api-reference/blob/master/\
+        # Time-Formatting.md#format
+    my $xAxisTickFormat = '%Y-%m-%d %H:%M'; # Format der
+        # Zeitachsen-Beschriftung
+    my $xTickLen = 5;
+    my $ySide = 'left'; # Seite, auf der die Y-Achse gezeichnet wird
+    my $yTickLen = 4;
+    my $zeroLineColor = '#d0d0d0';
+
+    my $title = undef;
+    my $yTitle = undef;
+    my $xMin = undef; # 946681200*1000;
+    my $xMax = undef; # 946684800*1000;
+    my $yMin = -1;
+    my $yMax = 1;
+
+    # JavaScript Code erzeugen
+
     my $j = Quiq::Json->new;
-
     my $js = '';
 
-    # Config (ist für alle Diagramme gleich)
+    # * Trace
 
-    $js .= sprintf "var %s_config = %s;\n\n",$name,scalar $j->o(
-        displayModeBar => \'false',
-        doubleClickDelay => 1000, # 1000ms
-        responsive => \'true',
-    );
-
-    # Trace
-
-    $js .= sprintf "var %s_trace = %s;\n\n",$name,scalar $j->o(
+    $js .= sprintf "let %s_trace = %s;\n",$name,scalar $j->o(
         type => 'scatter',
-        mode => 'lines', # lines, markers, lines+markers, none,
+        mode => $mode, # lines, markers, lines+markers, none,
         fill => 'tozeroy',
-        fillcolor => '#e0e0e0',
+        fillcolor => $fillColor,
         line => $j->o(
-            width => 1,
-            color => '#ff0000',
-            shape => 'linear',
+            width => $lineWidth,
+            color => $lineColor,
+            shape => $lineShape,
         ),
         marker => $j->o(
-            size => 3,
-            color => '#ff0000', # [....] Einzelfarben
-            symbol => 'circle',
+            size => $markerSize,
+            color => $markerColor, # [....] Einzelfarben
+            symbol => $markerSymbol,
         ),
         x => [],
         y => [],
     );
 
-    # JavaScript erzeugen
+    # * Layout
+
+    $js .= sprintf "let %s_layout = %s;\n",$name,scalar $j->o(
+        plot_bgcolor => $plotBackground,
+        paper_bgcolor => $paperBackground,
+        title => $j->o(
+            text => $title,
+            font => $j->o(
+                color => $color,
+            ),
+            yref => 'container', # container, paper
+            yanchor => 'top',
+            y => 1-(15/$height),
+        ),
+        spikedistance => -1,
+        height => $height,
+        margin => $j->o(
+            l => $margin->[3],
+            r => $margin->[1],
+            t => $margin->[0],
+            b => $margin->[2],
+            autoexpand => \'false',
+        ),
+        xaxis => $j->o(
+            type => 'date',
+            fixedrange => \'false', # Zoom erlauben
+            mirror => $axisBox? \'true': undef,
+            linecolor => $axisColor,
+            #defined($xMin) && defined($xMax)? (range => [$xMin,$xMax]):
+            #    (autorange => \'true'),
+            # autorange => \'true',
+            gridcolor => $gridColor,
+            hoverformat => $xAxisHoverFormat,
+            # tickformat => $xAxisTickFormat,
+            # tickangle => 30,
+            ticklen => $xTickLen,
+            tickcolor => $axisColor,
+            #tickformatstops => [
+            #],
+            showspikes => \'true',
+            spikethickness => 1,
+            spikesnap => 'data',
+            spikecolor => '#000000',
+            spikedash => 'dot',
+            rangeslider => $j->o(
+                autorange => \'true',
+                bordercolor => $rangeSliderBorderColor,
+                borderwidth => 1,
+                thickness => 0.20,
+            ),
+            zeroline => \'true',
+            zerolinecolor => '#b0b0b0',
+        ),
+        yaxis => $j->o(
+            type => 'linear',
+            fixedrange => \'true', # Zoom verbieten
+            automargin => \'true',
+            mirror => $axisBox? \'true': undef,
+            linecolor => $axisColor,
+            defined($yMin) && defined($yMax)? (range => [$yMin,$yMax]):
+                (autorange => \'true'),
+            # autorange => \'true',
+            ticklen => $yTickLen,
+            tickcolor => $axisColor,
+            gridcolor => $gridColor,
+            showspikes => \'true',
+            side => $ySide,
+            spikethickness => 1,
+            spikesnap => 'data',
+            spikecolor => '#000000',
+            spikedash => 'dot',
+            title => $j->o(
+                text => $yTitle,
+                font => $j->o(
+                    color => $color,
+                ),
+            ),
+            zeroline => \'true',
+            zerolinecolor => $zeroLineColor,
+        ),
+    );
+
+    # * Config (für alle Zeitreihen gleich)
+
+    $js .= sprintf "let %s_config = %s;\n",$name,scalar $j->o(
+        displayModeBar => \'false',
+        doubleClickDelay => 1000, # 1000ms
+        responsive => \'true',
+    );
+
+    $js .= "let trace,layout;\n";
 
     for my $par (@$parameterA) {
-        my $layout = '{}';
-
         $js .= Quiq::Template->combine(
             placeholders => [
-                __NAME__ => $self->diagramName($par),
-                __TRACES__ => '{}', # $self->trace($par),
-                __LAYOUT__ => $layout,
-                __C__ => $name.'_config',
+                __GNAME__ => $name,
+                __DNAME__ => $self->diagramName($par),
+                __CONFIG__ => $name.'_config',
+                __TITLE__ => $par->name,
+                __YTITLE__ => $par->unit,
+                __COLOR__ => $par->color,
+                __XMIN__ => $par->xMin,
+                __XMAX__ => $par->xMax,
+                __YMIN__ => $par->yMin,
+                __YMAX__ => $par->yMax,
+                __X__ => $j->encode($par->x),
+                __Y__ => $j->encode($par->y),
             ],
             template => q~
-                Plotly.newPlot('__NAME__',[__TRACES__],__LAYOUT__,__C__);
+                trace = jQuery.extend(true,{},__GNAME___trace);
+                trace.line.color = '__COLOR__';
+                trace.marker.color = '__COLOR__';
+                trace.x = __X__;
+                trace.y = __Y__;
+                layout = jQuery.extend(true,{},__GNAME___layout);
+                layout.title.text = '__TITLE__';
+                layout.title.font.color = '__COLOR__';
+                layout.xaxis.range = [__XMIN__,__XMAX__];
+                layout.yaxis.title.text = '__YTITLE__';
+                layout.yaxis.title.font.color = '__COLOR__';
+                layout.yaxis.range = [__YMIN__,__YMAX__];
+                Plotly.newPlot('__DNAME__',[trace],layout,__CONFIG__);
             ~,
         );
-
     }
 
     return $js;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 layout() - Layout-Objekt
+
+=head4 Synopsis
+
+  $json = $dgr->layout($j,$par);
+
+=head4 Arguments
+
+=over 4
+
+=item $j
+
+JSON-Generator
+
+=item $par
+
+Parameter-Objekt
+
+=back
+
+=head4 Returns
+
+JSON-Code (String)
+
+=head4 Description
+
+Liefere den JSON-Code für das Plotly Layout-Objekt zu Zeitreihe $par.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub layout {
+    my ($self,$j,$par) = @_;
+
+    return $j->o(
+    );
 }
 
 # -----------------------------------------------------------------------------

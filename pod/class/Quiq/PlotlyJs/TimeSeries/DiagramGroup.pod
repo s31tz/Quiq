@@ -123,7 +123,7 @@ Windgeschwindigkeits-Messung)
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<div id="plot" class="plotly-timeseries" style="height: 400px; border: 1px dotted #b0b0b0"></div>
+<div id="plot" class="plotly-timeseries" style="height: 400px; border: 1px dotted #b0b0b0;"></div>
 <script type="text/javascript">
   $(function() {
     var plot = Plotly.newPlot('plot',[{
@@ -317,6 +317,34 @@ JavaScript-Code (String)
 =head4 Description
 
 Liefere den JavaScript-Code für die Erzeugung Plot-Instanz.
+
+=head3 layout() - Layout-Objekt
+
+=head4 Synopsis
+
+  $json = $dgr->layout($j,$par);
+
+=head4 Arguments
+
+=over 4
+
+=item $j
+
+JSON-Generator
+
+=item $par
+
+Parameter-Objekt
+
+=back
+
+=head4 Returns
+
+JSON-Code (String)
+
+=head4 Description
+
+Liefere den JSON-Code für das Plotly Layout-Objekt zu Zeitreihe $par.
 
 =head1 VERSION
 

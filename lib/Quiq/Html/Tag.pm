@@ -1397,7 +1397,7 @@ sub tag {
 
         if ($key eq 'style' && ref($val)) {
             # liefert undef, wenn Array leer ist
-            $val = Quiq::Css->rules(@$val);
+            $val = Quiq::Css->properties(@$val);
         }
         if (defined $val) {
             if ($checkLevel >= 2) {
