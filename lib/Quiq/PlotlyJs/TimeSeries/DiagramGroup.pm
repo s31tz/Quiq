@@ -7,6 +7,8 @@ use warnings;
 
 our $VERSION = '1.185';
 
+use Quiq::Html::Table::Simple;
+use Quiq::Html::Widget::CheckBox;
 use Quiq::Json;
 use Quiq::Template;
 
@@ -363,19 +365,47 @@ sub html {
 
     # HTML erzeugen
 
-    my $html = '';
-    for my $par (@$parameterA) {
-        # MEMO: Wir setzen die Höhe bereits im div, damit
-        # das div bereits den Raum einnimmt, welcher später durch
-        # das Diagramm befüllt wird
+    my $html = $h->tag('script',q~
+        function toggleRangeSliders(name,e) {
+            // Durchlaufe alle Diagramm-Container. 1) Wechsele den
+            // Zustand des 
+            $('.'+name+'_diagram').each(function (index) {
+                if (this != e) {
+                    alert(this.id);
+                    $(this).prop('checked',false);
+                }
+            });
+        }
+    ~);
 
-        $html .= $h->tag('div',
-            id => $self->diagramName($par),
-            class => sprintf('%s_diagram',$name),
+    for my $par (@$parameterA) {
+        # MEMO: Wir setzen die Höhe bereits im container, damit
+        # dieser bereits den Raum einnimmt, welcher später durch
+        # das Diagramm grfüllt wird
+
+        $html .= Quiq::Html::Table::Simple->html($h,
+            width => '100%',
             style => [
-                height => "${height}px",
                 border => '1px dotted #b0b0b0',
-                'margin-top' => '0.6em',
+               'margin-top' => '0.6em',
+            ],
+            rows => [
+                [[
+                    id => $self->diagramName($par),
+                    class => sprintf('%s_diagram',$name),
+                    style => [
+                        height => "${height}px",
+                    ],
+                ]],
+                [[
+                    'Rangeslider:'.Quiq::Html::Widget::CheckBox->html($h,
+                         option => 1,
+                         value => 0,
+                         style => 'vertical-align: middle',
+                         title => 'Blende Rangeslider ein/aus',
+                         onClick => "toggleRangeSliders('$name',e)",
+                    ),
+                ]]
             ],
         );
     }
@@ -467,11 +497,10 @@ sub js {
     # JavaScript Code erzeugen
 
     my $j = Quiq::Json->new;
-    my $js = '';
 
-    # * Trace
+    # * Trace (Template)
 
-    $js .= sprintf "let %s_trace = %s;\n",$name,scalar $j->o(
+    my $js = sprintf "let %s_trace = %s;\n",$name,scalar $j->o(
         type => 'scatter',
         mode => $mode, # lines, markers, lines+markers, none,
         fill => 'tozeroy',
@@ -539,6 +568,7 @@ sub js {
                 bordercolor => $rangeSliderBorderColor,
                 borderwidth => 1,
                 thickness => 0.20,
+                visible => \'false',
             ),
             zeroline => \'true',
             zerolinecolor => '#b0b0b0',

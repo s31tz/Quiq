@@ -159,6 +159,29 @@ Geändertes Epoch-Objekt (für Method-Chaining)
 
 Verschiebe den Zeitpunkt um Dauer $duration in die Zukunft.
 
+=head3 tzOffset() - Zeit-Offset der lokalen Zeitzone
+
+=head4 Synopsis
+
+  $s = $this->tzOffset;
+
+=head4 Returns
+
+Anzahl Sekunden (Integer)
+
+=head4 Description
+
+Ermittele den Offset der lokalen Zeitzone gegenüber UTC in Sekunden
+und liefere diesen zurück.
+
+=head4 Example
+
+  Quiq::Epoch->tzOffset;
+  ==>
+  7200
+
+(in Zeitzone MESZ)
+
 =head2 Externe Repräsentation
 
 =head3 epoch() - Liefere Epoch-Wert
@@ -174,7 +197,7 @@ Liefere den Epoch-Wert des Zeitpunkts.
 =head4 Example
 
   Quiq::Epoch->new->epoch;
-  =>
+  ==>
   1464342621.73231
 
 =head3 localtime() - Zeitkomponenten in lokaler Zeit
@@ -194,10 +217,10 @@ erhöht werden.
 =head4 Example
 
   Quiq::Epoch->new(1559466751)->localtime;
-  =>
+  ==>
   (31,12,11,2,6,2019) # 2019-06-02 11:12:31
-  
-  (in Zeitzone MESZ)
+
+(in Zeitzone MESZ)
 
 =head3 as() - Erzeuge externe Darstellung
 

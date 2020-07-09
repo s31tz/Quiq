@@ -7,6 +7,8 @@ use warnings;
 
 our $VERSION = '1.185';
 
+use Quiq::JavaScript;
+
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -161,12 +163,12 @@ sub html {
         value => $option,
         checked => defined($value) && $value eq $option? 1: 0,
         title => $title,
-        onclick => $onClick,
+        onclick => Quiq::JavaScript->line($onClick),
     );
     if ($label ne '') {
         $html .= $label;
     }
-    $html .= "\n";
+    # $html .= "\n";
 
     return $html;
 }

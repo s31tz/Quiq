@@ -7,6 +7,8 @@ use warnings;
 
 our $VERSION = '1.185';
 
+use Quiq::JavaScript;
+
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -157,7 +159,7 @@ sub html {
         style => $style,
         value => $value,
         disabled => $disabled,
-        onclick => $onClick,
+        onclick => Quiq::JavaScript->line($onClick),
         title => $title,
         $content || $value
     );

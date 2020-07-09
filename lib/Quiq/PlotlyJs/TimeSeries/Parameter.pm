@@ -23,7 +23,7 @@ L<Quiq::Hash>
 
 Ein Objekt der Klasse speichert Information über eine Zeitreihe, die
 von der Klasse Quiq::PlotlyJs::TimeSeries::DiagramGroup
-herangezogen wird, um die Zeitreihe in ein Diagramm zu plotten.
+herangezogen wird, um diese in ein Diagramm zu plotten.
 
 =head1 METHODS
 
