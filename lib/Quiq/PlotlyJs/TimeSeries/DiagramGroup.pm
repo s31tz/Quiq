@@ -499,13 +499,13 @@ sub html {
     $js .= Quiq::Unindent->string(q~
         function generatePlot(trace,layout,config,name,i,title,yTitle,color,xMin,xMax,yMin,yMax,x,y) {
 
-            trace = jQuery.extend(true,{},trace);
+            trace = $.extend(true,{},trace);
             trace.line.color = color;
             trace.marker.color = color;
             trace.x = x;
             trace.y = y;
 
-            layout = jQuery.extend(true,{},layout);
+            layout = $.extend(true,{},layout);
             layout.title.text = title;
             layout.title.font.color = color;
             layout.xaxis.range = [xMin,xMax];
@@ -513,8 +513,7 @@ sub html {
             layout.yaxis.title.font.color = color;
             layout.yaxis.range = [yMin,yMax];
 
-            let id = name+'-d'+i.toString();
-            Plotly.newPlot(id,[trace],layout,config);
+            Plotly.newPlot(name+'-d'+i.toString(),[trace],layout,config);
         }
     ~);
 
