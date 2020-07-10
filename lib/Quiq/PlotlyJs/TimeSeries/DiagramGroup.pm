@@ -7,10 +7,11 @@ use warnings;
 
 our $VERSION = '1.185';
 
+use Quiq::Json;
+use Quiq::Unindent;
+use Quiq::JQuery::Function;
 use Quiq::Html::Table::Simple;
 use Quiq::Html::Widget::CheckBox;
-use Quiq::Json;
-use Quiq::Template;
 
 # -----------------------------------------------------------------------------
 
@@ -300,43 +301,6 @@ sub new {
 
 =head2 Objektmethoden
 
-=head3 diagramName() - Diagramm-Name
-
-=head4 Synopsis
-
-  $name = $dgr->diagramName($par);
-
-=head4 Arguments
-
-=over 4
-
-=item $par
-
-Parameter-Objekt.
-
-=back
-
-=head4 Returns
-
-Diagramm-Name (String)
-
-=head4 Description
-
-Liefere den (eindeutigen) Diagramm-Namen innerhalb der Diagramm-Gruppe.
-Dieser setzt sich zusammen aus dem Namen der Diagramm-Gruppe
-und dem Namen des Parameters.
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub diagramName {
-    my ($self,$par) = @_;
-    return sprintf '%s_%s',$self->name,$par->name;
-}
-
-# -----------------------------------------------------------------------------
-
 =head3 html() - Generiere HTML
 
 =head4 Synopsis
@@ -359,89 +323,7 @@ sub html {
     my ($self,$h) = @_;
 
     # Objektattribute
-
-    my ($height,$name,$parameterA) =
-        $self->get(qw/height name parameters/);
-
-    # HTML erzeugen
-
-    my $html = $h->tag('script',q~
-        function toggleRangeSliders(name,e) {
-            // Durchlaufe alle Diagramm-Container. 1) Wechsele den
-            // Zustand des 
-            $('.'+name+'_diagram').each(function (index) {
-                if (this != e) {
-                    alert(this.id);
-                    $(this).prop('checked',false);
-                }
-            });
-        }
-    ~);
-
-    for my $par (@$parameterA) {
-        # MEMO: Wir setzen die Höhe bereits im container, damit
-        # dieser bereits den Raum einnimmt, welcher später durch
-        # das Diagramm grfüllt wird
-
-        $html .= Quiq::Html::Table::Simple->html($h,
-            width => '100%',
-            style => [
-                border => '1px dotted #b0b0b0',
-               'margin-top' => '0.6em',
-            ],
-            rows => [
-                [[
-                    id => $self->diagramName($par),
-                    class => sprintf('%s_diagram',$name),
-                    style => [
-                        height => "${height}px",
-                    ],
-                ]],
-                [[
-                    'Rangeslider:'.Quiq::Html::Widget::CheckBox->html($h,
-                         option => 1,
-                         value => 0,
-                         style => 'vertical-align: middle',
-                         title => 'Blende Rangeslider ein/aus',
-                         onClick => "toggleRangeSliders('$name',e)",
-                    ),
-                ]]
-            ],
-        );
-    }
-
-    return $h->tag('div',
-        id => $name,
-        $html
-    );
-}
-
-# -----------------------------------------------------------------------------
-
-=head3 js() - Generiere JavaScript
-
-=head4 Synopsis
-
-  $js = $ch->js;
-
-=head4 Returns
-
-JavaScript-Code (String)
-
-=head4 Description
-
-Liefere den JavaScript-Code für die Erzeugung Plot-Instanz.
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub js {
-    my $self = shift;
-
-    # Objektattribute
-
-    my ($name,$height,$parameterA) = $self->get(qw/name height parameters/);
+    my ($height,$name,$parameterA) = $self->get(qw/height name parameters/);
 
     # Multi-Attribute (betreffen mehrere Plotly-Attribute)
 
@@ -494,13 +376,16 @@ sub js {
     my $yMin = -1;
     my $yMax = 1;
 
-    # JavaScript Code erzeugen
+    # Code erzeugen
+
+    my $html = '';
+    my $js = '';
 
     my $j = Quiq::Json->new;
 
     # * Trace (Template)
 
-    my $js = sprintf "let %s_trace = %s;\n",$name,scalar $j->o(
+    $js .= sprintf "let %s_trace = %s;\n",$name,scalar $j->o(
         type => 'scatter',
         mode => $mode, # lines, markers, lines+markers, none,
         fill => 'tozeroy',
@@ -568,7 +453,8 @@ sub js {
                 bordercolor => $rangeSliderBorderColor,
                 borderwidth => 1,
                 thickness => 0.20,
-                visible => \'false',
+                # visible => \'false',
+                visible => \'true',
             ),
             zeroline => \'true',
             zerolinecolor => '#b0b0b0',
@@ -610,84 +496,167 @@ sub js {
         responsive => \'true',
     );
 
-    $js .= "let trace,layout;\n";
+    $js .= Quiq::Unindent->string(q~
+        function generatePlot(trace,layout,config,name,i,title,yTitle,color,xMin,xMax,yMin,yMax,x,y) {
 
+            trace = jQuery.extend(true,{},trace);
+            trace.line.color = color;
+            trace.marker.color = color;
+            trace.x = x;
+            trace.y = y;
+
+            layout = jQuery.extend(true,{},layout);
+            layout.title.text = title;
+            layout.title.font.color = color;
+            layout.xaxis.range = [xMin,xMax];
+            layout.yaxis.title.text = yTitle;
+            layout.yaxis.title.font.color = color;
+            layout.yaxis.range = [yMin,yMax];
+
+            let id = name+'-d'+i.toString();
+            Plotly.newPlot(id,[trace],layout,config);
+        }
+    ~);
+
+    my $i = 0;
     for my $par (@$parameterA) {
-        $js .= Quiq::Template->combine(
-            placeholders => [
-                __GNAME__ => $name,
-                __DNAME__ => $self->diagramName($par),
-                __CONFIG__ => $name.'_config',
-                __TITLE__ => $par->name,
-                __YTITLE__ => $par->unit,
-                __COLOR__ => $par->color,
-                __XMIN__ => $par->xMin,
-                __XMAX__ => $par->xMax,
-                __YMIN__ => $par->yMin,
-                __YMAX__ => $par->yMax,
-                __X__ => $j->encode($par->x),
-                __Y__ => $j->encode($par->y),
-            ],
-            template => q~
-                trace = jQuery.extend(true,{},__GNAME___trace);
-                trace.line.color = '__COLOR__';
-                trace.marker.color = '__COLOR__';
-                trace.x = __X__;
-                trace.y = __Y__;
-                layout = jQuery.extend(true,{},__GNAME___layout);
-                layout.title.text = '__TITLE__';
-                layout.title.font.color = '__COLOR__';
-                layout.xaxis.range = [__XMIN__,__XMAX__];
-                layout.yaxis.title.text = '__YTITLE__';
-                layout.yaxis.title.font.color = '__COLOR__';
-                layout.yaxis.range = [__YMIN__,__YMAX__];
-                Plotly.newPlot('__DNAME__',[trace],layout,__CONFIG__);
-            ~,
-        );
+        $i++;
+        $html .= $self->htmlDiagram($h,$i);
+        $js .= $self->jsDiagram($j,$i,$par);
     }
 
-    return $js;
+    return $h->tag('div',
+        id => $name,
+        class => 'diagramGroup',
+        '-',
+        $html,
+        $h->tag('script',
+            Quiq::JQuery::Function->ready($js)
+        ),
+    );
 }
 
 # -----------------------------------------------------------------------------
 
-=head3 layout() - Layout-Objekt
+=head3 htmlDiagram() - Generiere HTML für ein Diagramm
 
 =head4 Synopsis
 
-  $json = $dgr->layout($j,$par);
+  $html = $dgr->htmlDiagram($h,$i);
 
 =head4 Arguments
 
 =over 4
 
-=item $j
+=item $h
 
-JSON-Generator
+Generator für HTML-Code.
 
-=item $par
+=item $i
 
-Parameter-Objekt
+Nummer des Diagramms.
 
 =back
 
 =head4 Returns
 
-JSON-Code (String)
+HTML-Code (String)
 
 =head4 Description
 
-Liefere den JSON-Code für das Plotly Layout-Objekt zu Zeitreihe $par.
+Genererie den HTML-Code für ein Diagramm und liefere diesen zurück.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub layout {
-    my ($self,$j,$par) = @_;
+sub htmlDiagram {
+    my ($self,$h,$i) = @_;
 
-    return $j->o(
+    # Objektattribute
+
+    my ($height,$name) = $self->get(qw/height name/);
+
+    # HTML erzeugen
+
+    return Quiq::Html::Table::Simple->html($h,
+        width => '100%',
+        style => [
+            border => '1px dotted #b0b0b0',
+           'margin-top' => '0.6em',
+        ],
+        rows => [
+            [[
+                id => "$name-d$i",
+                class => 'diagram',
+                style => [
+                    height => "${height}px",
+                ],
+            ]],
+            [[
+                'Rangeslider:'.Quiq::Html::Widget::CheckBox->html($h,
+                     id =>  "$name-r$i",
+                     option => 1,
+                     value => 0,
+                     style => 'vertical-align: middle',
+                     title => 'Toggle visibility of range slider',
+                ),
+            ]]
+        ],
     );
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 jsDiagram() - Generiere JavaScript für ein Diagramm
+
+=head4 Synopsis
+
+  $js = $dgr->jsDiagram($i,$par);
+
+=head4 Arguments
+
+=over 4
+
+=item $i
+
+Nummer des Diagramms.
+
+=item $par
+
+Zeitreihen-Objekt.
+
+=back
+
+=head4 Returns
+
+JavaScript-Code (String)
+
+=head4 Description
+
+Genererie den JavaScript-Code für ein Diagramm und liefere diesen zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub jsDiagram {
+    my ($self,$j,$i,$par) = @_;
+
+    # Objektattribute
+
+    my $name = $self->get('name');
+
+    # JavaScript erzeugen
+
+    #    function generatePlot(trace,layout,config,name,i,title,
+    #            unit,color,xMin,xMax,yMin,yMax,x,y) {
+
+    return sprintf("generatePlot(%s_trace,%s_layout,%s_config,'%s',%s,'%s',".
+            "'%s','%s',%s,%s,%s,%s,%s,%s);\n",
+        $name,$name,$name,$name,$i,$par->name,$par->unit,$par->color,
+        $par->xMin,$par->xMax,$par->yMin,$par->yMax,
+        scalar($j->encode($par->x)),scalar($j->encode($par->y)));
 }
 
 # -----------------------------------------------------------------------------

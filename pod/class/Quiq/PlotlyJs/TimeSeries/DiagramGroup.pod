@@ -264,32 +264,6 @@ dieses Objekt zurück.
 
 =head2 Objektmethoden
 
-=head3 diagramName() - Diagramm-Name
-
-=head4 Synopsis
-
-  $name = $dgr->diagramName($par);
-
-=head4 Arguments
-
-=over 4
-
-=item $par
-
-Parameter-Objekt.
-
-=back
-
-=head4 Returns
-
-Diagramm-Name (String)
-
-=head4 Description
-
-Liefere den (eindeutigen) Diagramm-Namen innerhalb der Diagramm-Gruppe.
-Dieser setzt sich zusammen aus dem Namen der Diagramm-Gruppe
-und dem Namen des Parameters.
-
 =head3 html() - Generiere HTML
 
 =head4 Synopsis
@@ -304,11 +278,53 @@ HTML-Code (String)
 
 Liefere den HTML-Code der Diagramm-Gruppe.
 
-=head3 js() - Generiere JavaScript
+=head3 htmlDiagram() - Generiere HTML für ein Diagramm
 
 =head4 Synopsis
 
-  $js = $ch->js;
+  $html = $dgr->htmlDiagram($h,$i);
+
+=head4 Arguments
+
+=over 4
+
+=item $h
+
+Generator für HTML-Code.
+
+=item $i
+
+Nummer des Diagramms.
+
+=back
+
+=head4 Returns
+
+HTML-Code (String)
+
+=head4 Description
+
+Genererie den HTML-Code für ein Diagramm und liefere diesen zurück.
+
+=head3 jsDiagram() - Generiere JavaScript für ein Diagramm
+
+=head4 Synopsis
+
+  $js = $dgr->jsDiagram($i,$par);
+
+=head4 Arguments
+
+=over 4
+
+=item $i
+
+Nummer des Diagramms.
+
+=item $par
+
+Zeitreihen-Objekt.
+
+=back
 
 =head4 Returns
 
@@ -316,35 +332,7 @@ JavaScript-Code (String)
 
 =head4 Description
 
-Liefere den JavaScript-Code für die Erzeugung Plot-Instanz.
-
-=head3 layout() - Layout-Objekt
-
-=head4 Synopsis
-
-  $json = $dgr->layout($j,$par);
-
-=head4 Arguments
-
-=over 4
-
-=item $j
-
-JSON-Generator
-
-=item $par
-
-Parameter-Objekt
-
-=back
-
-=head4 Returns
-
-JSON-Code (String)
-
-=head4 Description
-
-Liefere den JSON-Code für das Plotly Layout-Objekt zu Zeitreihe $par.
+Genererie den JavaScript-Code für ein Diagramm und liefere diesen zurück.
 
 =head1 VERSION
 
