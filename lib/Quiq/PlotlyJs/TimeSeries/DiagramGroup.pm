@@ -519,10 +519,7 @@ sub html {
     # Funktionen
 
     $js .= Quiq::Unindent->string('~',q°
-        function setRangeSlider(groupId,i,bool,self) {
-            let cbId = groupId+'-r'+i;
-            let e = $('#'+cbId)[0];
-            console.log(cbId+' '+e+' '+bool);
+        function setRangeSlider(groupId,i,bool) {
             let dId = groupId+'-d'+i;
             if (bool) {
                 Plotly.relayout(dId,{
@@ -544,18 +541,26 @@ sub html {
                 });
                 $('#'+dId).height(dig_variables.height[1]);
             }
-            if (!self) {
-                e.checked = false;
-                $('#'+dId).unbind('plotly_relayout');
-            }
-            else {
-                let div = $('#'+dId)[0];
-                /* $('#'+dId).bind('plotly_relayout',function() {
-                    console.log('event');
-                }); */
+            let cbId = groupId+'-r'+i;
+            $('#'+cbId).prop('checked',bool);
+
+            let div = $('#'+dId)[0];
+            if (bool) {
+                // $('#'+dId).bind('plotly_relayout',function(ed) {
+                //     console.log(JSON.stringify(ed,null,4));
+                // });
                 div.on('plotly_relayout',function(ed) {
                     console.log(JSON.stringify(ed,null,4));
+                    $('#'+groupId+' '+'.diagram').each(function(j) {
+                        if (j+1 != i && !ed['xaxis.rangeslider.visible']) {
+                            console.log(j+1);
+                            Plotly.relayout(this,ed);
+                        }
+                    });
                 });
+            }
+            else {
+                div.on('plotly_relayout',function(ed) {});
             }
         }
         
@@ -565,7 +570,7 @@ sub html {
                 // Beim angeklickten Rangeslider stellen wir den
                 // gewählten Zustand ein, die anderen schalten wir weg
                 let state = this == e? this.checked: false;
-                setRangeSlider(groupId,i,state,this == e);
+                setRangeSlider(groupId,i,state);
             });
         }
 
@@ -730,12 +735,8 @@ sub jsDiagram {
         $name,$name,$name,$name,$i,$par->name,$par->unit,$par->color,
         $par->xMin,$par->xMax,$par->yMin,$par->yMax,
         scalar($j->encode($par->x)),scalar($j->encode($par->y)));
-    if ($i == 1) {
-        $js .= "setRangeSlider('$name',$i,true,true);\n";
-    }
-    else {
-        $js .= "setRangeSlider('$name',$i,false,false);\n";
-    }
+    my $bool = $i == 2? 'true': 'false';
+    $js .= "setRangeSlider('$name',$i,$bool);\n";
     
     return $js;
 }
