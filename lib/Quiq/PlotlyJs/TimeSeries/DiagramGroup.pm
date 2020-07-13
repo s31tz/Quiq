@@ -4,6 +4,7 @@ use base qw/Quiq::Hash/;
 use v5.10;
 use strict;
 use warnings;
+use utf8;
 
 our $VERSION = '1.185';
 
@@ -369,6 +370,13 @@ sub html {
     my $yTickLen = 4;
     my $zeroLineColor = '#d0d0d0';
 
+    my $height1 = $height-($bottomMargin-55);
+
+    my $bottomMargin1 = $bottomMargin-($bottomMargin-55);
+
+    my $titleY = 1-(15/$height); # Faktor für Titel-Position
+    my $titleY1 = 1-($height*(1-$titleY)/$height1);
+
     my $title = undef;
     my $yTitle = undef;
     my $xMin = undef; # 946681200*1000;
@@ -376,16 +384,20 @@ sub html {
     my $yMin = -1;
     my $yMax = 1;
 
-    # Code erzeugen
+    # HTML-Code
 
     my $html = '';
-    my $js = '';
+
+    my $i = 0;
+    for my $par (@$parameterA) {
+        $html .= $self->htmlDiagram($h,++$i);
+    }
+
+    # Datenstrukturen
 
     my $j = Quiq::Json->new;
 
-    # * Trace (Template)
-
-    $js .= sprintf "let %s_trace = %s;\n",$name,scalar $j->o(
+    my $js = sprintf "let %s_trace = %s;\n",$name,scalar $j->o(
         type => 'scatter',
         mode => $mode, # lines, markers, lines+markers, none,
         fill => 'tozeroy',
@@ -416,7 +428,7 @@ sub html {
             ),
             yref => 'container', # container, paper
             yanchor => 'top',
-            y => 1-(15/$height),
+            y => $titleY,
         ),
         spikedistance => -1,
         height => $height,
@@ -496,8 +508,69 @@ sub html {
         responsive => \'true',
     );
 
-    $js .= Quiq::Unindent->string(q~
-        function generatePlot(trace,layout,config,name,i,title,yTitle,color,xMin,xMax,yMin,yMax,x,y) {
+    # * Einstellungen
+
+    $js .= sprintf "let %s_variables = %s;\n",$name,scalar $j->o(
+        height => [$height,$height1],
+        bottomMargin => [$bottomMargin,$bottomMargin1],
+        titleY => [$titleY,$titleY1],
+    );
+
+    # Funktionen
+
+    $js .= Quiq::Unindent->string('~',q°
+        function setRangeSlider(groupId,i,bool,self) {
+            let cbId = groupId+'-r'+i;
+            let e = $('#'+cbId)[0];
+            console.log(cbId+' '+e+' '+bool);
+            let dId = groupId+'-d'+i;
+            if (bool) {
+                Plotly.relayout(dId,{
+                    'xaxis.rangeslider.visible': true,
+                    'xaxis.fixedrange': false,
+                    'height': dig_variables.height[0],
+                    'margin.b': dig_variables.bottomMargin[0],
+                    'title.y': dig_variables.titleY[0],
+                });
+                $('#'+dId).height(dig_variables.height[0]);
+            }
+            else {
+                Plotly.relayout(dId,{
+                    'xaxis.rangeslider.visible': false,
+                    'xaxis.fixedrange': true,
+                    'height': dig_variables.height[1],
+                    'margin.b': dig_variables.bottomMargin[1],
+                    'title.y': dig_variables.titleY[1],
+                });
+                $('#'+dId).height(dig_variables.height[1]);
+            }
+            if (!self) {
+                e.checked = false;
+                $('#'+dId).unbind('plotly_relayout');
+            }
+            else {
+                let div = $('#'+dId)[0];
+                /* $('#'+dId).bind('plotly_relayout',function() {
+                    console.log('event');
+                }); */
+                div.on('plotly_relayout',function(ed) {
+                    console.log(JSON.stringify(ed,null,4));
+                });
+            }
+        }
+        
+        function toggleRangeSliders(groupId,e) {
+            $('#'+groupId+' .checkbox-rangeslider').each(function(i) {
+                i++;
+                // Beim angeklickten Rangeslider stellen wir den
+                // gewählten Zustand ein, die anderen schalten wir weg
+                let state = this == e? this.checked: false;
+                setRangeSlider(groupId,i,state,this == e);
+            });
+        }
+
+        function generatePlot(trace,layout,config,name,i,title,~
+                yTitle,color,xMin,xMax,yMin,yMax,x,y) {
 
             trace = $.extend(true,{},trace);
             trace.line.color = color;
@@ -513,16 +586,18 @@ sub html {
             layout.yaxis.title.font.color = color;
             layout.yaxis.range = [yMin,yMax];
 
-            Plotly.newPlot(name+'-d'+i.toString(),[trace],layout,config);
+            Plotly.newPlot(name+'-d'+i,[trace],layout,config);
         }
-    ~);
+    °);
 
+    # Ready-Handler
+
+    my $tmp = '';
     my $i = 0;
     for my $par (@$parameterA) {
-        $i++;
-        $html .= $self->htmlDiagram($h,$i);
-        $js .= $self->jsDiagram($j,$i,$par);
+        $tmp .= $self->jsDiagram($j,++$i,$par);
     }
+    $js .= Quiq::JQuery::Function->ready($tmp);
 
     return $h->tag('div',
         id => $name,
@@ -530,7 +605,7 @@ sub html {
         '-',
         $html,
         $h->tag('script',
-            Quiq::JQuery::Function->ready($js)
+            $js,
         ),
     );
 }
@@ -595,10 +670,12 @@ sub htmlDiagram {
             [[
                 'Rangeslider:'.Quiq::Html::Widget::CheckBox->html($h,
                      id =>  "$name-r$i",
+                     class => 'checkbox-rangeslider',
                      option => 1,
                      value => 0,
                      style => 'vertical-align: middle',
                      title => 'Toggle visibility of range slider',
+                     onClick => "toggleRangeSliders('$name',this)",
                 ),
             ]]
         ],
@@ -648,14 +725,19 @@ sub jsDiagram {
 
     # JavaScript erzeugen
 
-    #    function generatePlot(trace,layout,config,name,i,title,
-    #            unit,color,xMin,xMax,yMin,yMax,x,y) {
-
-    return sprintf("generatePlot(%s_trace,%s_layout,%s_config,'%s',%s,'%s',".
+    my $js = sprintf("generatePlot(%s_trace,%s_layout,%s_config,'%s',%s,'%s',".
             "'%s','%s',%s,%s,%s,%s,%s,%s);\n",
         $name,$name,$name,$name,$i,$par->name,$par->unit,$par->color,
         $par->xMin,$par->xMax,$par->yMin,$par->yMax,
         scalar($j->encode($par->x)),scalar($j->encode($par->y)));
+    if ($i == 1) {
+        $js .= "setRangeSlider('$name',$i,true,true);\n";
+    }
+    else {
+        $js .= "setRangeSlider('$name',$i,false,false);\n";
+    }
+    
+    return $js;
 }
 
 # -----------------------------------------------------------------------------

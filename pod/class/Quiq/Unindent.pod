@@ -54,6 +54,24 @@ String-Literalen und "Here Documents" entfernt werden kann.
   $str = $class->hereDoc(<<'EOT');
       <Text>
   EOT
+  
+  $str = $class->hereDoc($char,<<'EOT');
+      <Text>
+  EOT
+
+=head4 Arguments
+
+=over 4
+
+=item $char (optional)
+
+Fortsetzungszeichen. Siehe Quiq::String->joinLines().
+
+=item $text
+
+Eingerückter Text.
+
+=back
 
 =head4 Description
 
@@ -138,6 +156,24 @@ d.h. Sub-Einrückungen und Leerzeilen bleiben erhalten.
   $str = $class->string('
       <Text>
   ');
+  
+  $str = $class->string($char,'
+      <Text>
+  ');
+
+=head4 Arguments
+
+=over 4
+
+=item $char (optional)
+
+Fortsetzungszeichen. Siehe Quiq::String->joinLines().
+
+=item $text
+
+Eingerückter Text.
+
+=back
 
 =head4 Description
 
@@ -208,6 +244,21 @@ Varianten
 =head4 Synopsis
 
   $strOut = $class->trim($strIn);
+  $strOut = $class->trim($char,$strIn);
+
+=head4 Arguments
+
+=over 4
+
+=item $char (optional)
+
+Fortsetzungszeichen. Siehe Quiq::String->joinLines().
+
+=item $strIn
+
+Eingerückter Text.
+
+=back
 
 =head4 Description
 
@@ -298,6 +349,21 @@ Aufruf mit eingerücktem String-Literal, das I<intern> behandelt wird:
 =head4 Synopsis
 
   $strOut = $class->trimNl($strIn);
+  $strOut = $class->trimNl($char,$strIn);
+
+=head4 Arguments
+
+=over 4
+
+=item $char (optional)
+
+Fortsetzungszeichen. Siehe Quiq::String->joinLines().
+
+=item $strIn
+
+Eingerückter Text.
+
+=back
 
 =head4 Description
 
