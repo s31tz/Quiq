@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::PlotlyJs::TimeSeries::DiagramGroup - Erzeuge Zeitreihen-Plots auf Basis von Plotly.js
+Quiq::PlotlyJs::TimeSeries::DiagramGroup - Erzeuge eine Gruppe von Zeitreihen-Plots
 
 =head1 BASE CLASS
 
@@ -278,6 +278,8 @@ HTML-Code (String)
 
 Liefere den HTML-Code der Diagramm-Gruppe.
 
+=head2 Private Methoden
+
 =head3 htmlDiagram() - Generiere HTML für ein Diagramm
 
 =head4 Synopsis
@@ -336,7 +338,7 @@ Genererie den JavaScript-Code für ein Diagramm und liefere diesen zurück.
 
 =head1 VERSION
 
-1.185
+1.186
 
 =head1 SOURCE
 

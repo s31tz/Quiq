@@ -629,7 +629,7 @@ L<Quiq::PlotlyJs::TimeSeries|https://github.com/s31tz/Quiq/tree/master/pod/class
 
 =item *
 
-L<Quiq::PlotlyJs::TimeSeries::DiagramGroup|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/TimeSeries/DiagramGroup.pod> - Erzeuge Zeitreihen-Plots auf Basis von Plotly.js
+L<Quiq::PlotlyJs::TimeSeries::DiagramGroup|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/TimeSeries/DiagramGroup.pod> - Erzeuge eine Gruppe von Zeitreihen-Plots
 
 =item *
 
@@ -867,7 +867,7 @@ L<Quiq::Xml::LibXml|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Xml
 
 =head1 VERSION
 
-1.185
+1.186
 
 =head1 AUTHOR
 

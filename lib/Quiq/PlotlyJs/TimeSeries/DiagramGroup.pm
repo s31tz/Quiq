@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use utf8;
 
-our $VERSION = '1.185';
+our $VERSION = '1.186';
 
 use Quiq::Json;
 use Quiq::Unindent;
@@ -21,7 +21,7 @@ use Quiq::Html::Widget::Button;
 
 =head1 NAME
 
-Quiq::PlotlyJs::TimeSeries::DiagramGroup - Erzeuge Zeitreihen-Plots auf Basis von Plotly.js
+Quiq::PlotlyJs::TimeSeries::DiagramGroup - Erzeuge eine Gruppe von Zeitreihen-Plots
 
 =head1 BASE CLASS
 
@@ -522,18 +522,6 @@ sub html {
     # Funktionen
 
     $js .= Quiq::Unindent->string('~',q°
-        function checkNested(obj /*, level1, level2, ... levelN*/) {
-          var args = Array.prototype.slice.call(arguments, 1);
-
-          for (var i = 0; i < args.length; i++) {
-            if (!obj || !obj.hasOwnProperty(args[i])) {
-              return false;
-            }
-            obj = obj[args[i]];
-          }
-          return true;
-        }
-
         function setRangeSlider(groupId,i,bool) {
             let dId = groupId+'-d'+i;
             if (bool) {
@@ -560,31 +548,19 @@ sub html {
             $('#'+cbId).prop('checked',bool);
             let div = $('#'+dId)[0];
             if (bool) {
-                // $('#'+dId).bind('plotly_relayout',function(ed) {
-                //     console.log(JSON.stringify(ed,null,4));
-                // });
                 div.on('plotly_relayout',function(ed) {
-                    console.log(JSON.stringify(ed,null,4));
                     $('#'+groupId+' '+'.diagram').each(function(j) {
-                        // if (j+1 != i && ed['xaxis'] && ed['xaxis']['range']) {
                         if (j+1 != i && ed['height'] === undefined) {
-                        // if (j+1 != i && ed.xaxis && ed.xaxis.range && ed.xaxis.range[0]) {
-                            // console.log(JSON.stringify(ed,null,4));
-                            console.log((j+1)+' '+ed['xaxis.range[0]']);
                             Plotly.relayout(this,ed);
                         }
                     });
                 });
-            }
-            else {
-                // div.on('plotly_relayout',function(ed) {});
             }
         }
         
         function toggleRangeSliders(groupId,e) {
             // Event-Listener auf allen Diagrammen entfernen
             $('#'+groupId+' .diagram').each(function(i) {
-                console.log('DIAGRAM'+(i+1));
                 this.removeAllListeners('plotly_relayout');
             });
             $('#'+groupId+' .checkbox-rangeslider').each(function(i) {
@@ -597,13 +573,10 @@ sub html {
             // Event-Listener auf allen Diagrammen setzen
             /* $('#'+groupId+' .diagram').each(function(i) {
                 let bool = this.layout.xaxis.rangeslider.visible;
-                console.log((i+1)+': '+bool);
                 if (bool) {
                     this.on('plotly_relayout',function(ed) {
-                        console.log(JSON.stringify(ed,null,4));
                         $('#'+groupId+' '+'.diagram').each(function(j) {
                             if (j+1 != i) {
-                                console.log(j+1);
                                 Plotly.relayout(this,ed);
                             }
                         });
@@ -636,7 +609,7 @@ sub html {
     # Ready-Handler
 
     my $tmp = '';
-    my $i = 0;
+    $i = 0;
     for my $par (@$parameterA) {
         $tmp .= $self->jsDiagram($j,++$i,$par);
     }
@@ -654,6 +627,8 @@ sub html {
 }
 
 # -----------------------------------------------------------------------------
+
+=head2 Private Methoden
 
 =head3 htmlDiagram() - Generiere HTML für ein Diagramm
 
@@ -800,7 +775,7 @@ sub jsDiagram {
 
 =head1 VERSION
 
-1.185
+1.186
 
 =head1 AUTHOR
 
