@@ -13,6 +13,7 @@ use Quiq::Unindent;
 use Quiq::JQuery::Function;
 use Quiq::Html::Table::Simple;
 use Quiq::Html::Widget::CheckBox;
+use Quiq::Html::Widget::Button;
 
 # -----------------------------------------------------------------------------
 
@@ -340,7 +341,8 @@ sub html {
     my $topMargin = 45;
 
     # 250->100,300->110,350->120,400->130,450->140,...
-    my $bottomMargin = ($height-300)/50*10+110;
+    # my $bottomMargin = ($height-300)/50*10+110;
+    my $bottomMargin = ($height-300)/50*10+100;
 
     my $axisColor = '#d0d0d0'; # Farbe der Achsenlinien
     my $fillColor = '#e0e0e0'; # Farbe zwischen Kurve und X-Achse
@@ -370,9 +372,10 @@ sub html {
     my $yTickLen = 4;
     my $zeroLineColor = '#d0d0d0';
 
-    my $height1 = $height-($bottomMargin-55);
+    my $xAxisLabelHeight = 55;
+    my $height1 = $height-($bottomMargin-$xAxisLabelHeight);
 
-    my $bottomMargin1 = $bottomMargin-($bottomMargin-55);
+    my $bottomMargin1 = $bottomMargin-($bottomMargin-$xAxisLabelHeight);
 
     my $titleY = 1-(15/$height); # Faktor für Titel-Position
     my $titleY1 = 1-($height*(1-$titleY)/$height1);
@@ -390,7 +393,7 @@ sub html {
 
     my $i = 0;
     for my $par (@$parameterA) {
-        $html .= $self->htmlDiagram($h,++$i);
+        $html .= $self->htmlDiagram($h,++$i,$par,$paperBackground);
     }
 
     # Datenstrukturen
@@ -508,7 +511,7 @@ sub html {
         responsive => \'true',
     );
 
-    # * Einstellungen
+    # * Einstellungen (mit/ohne Rangeslider)
 
     $js .= sprintf "let %s_variables = %s;\n",$name,scalar $j->o(
         height => [$height,$height1],
@@ -519,6 +522,18 @@ sub html {
     # Funktionen
 
     $js .= Quiq::Unindent->string('~',q°
+        function checkNested(obj /*, level1, level2, ... levelN*/) {
+          var args = Array.prototype.slice.call(arguments, 1);
+
+          for (var i = 0; i < args.length; i++) {
+            if (!obj || !obj.hasOwnProperty(args[i])) {
+              return false;
+            }
+            obj = obj[args[i]];
+          }
+          return true;
+        }
+
         function setRangeSlider(groupId,i,bool) {
             let dId = groupId+'-d'+i;
             if (bool) {
@@ -543,7 +558,6 @@ sub html {
             }
             let cbId = groupId+'-r'+i;
             $('#'+cbId).prop('checked',bool);
-
             let div = $('#'+dId)[0];
             if (bool) {
                 // $('#'+dId).bind('plotly_relayout',function(ed) {
@@ -552,19 +566,27 @@ sub html {
                 div.on('plotly_relayout',function(ed) {
                     console.log(JSON.stringify(ed,null,4));
                     $('#'+groupId+' '+'.diagram').each(function(j) {
-                        if (j+1 != i && !ed['xaxis.rangeslider.visible']) {
-                            console.log(j+1);
+                        // if (j+1 != i && ed['xaxis'] && ed['xaxis']['range']) {
+                        if (j+1 != i && ed['height'] === undefined) {
+                        // if (j+1 != i && ed.xaxis && ed.xaxis.range && ed.xaxis.range[0]) {
+                            // console.log(JSON.stringify(ed,null,4));
+                            console.log((j+1)+' '+ed['xaxis.range[0]']);
                             Plotly.relayout(this,ed);
                         }
                     });
                 });
             }
             else {
-                div.on('plotly_relayout',function(ed) {});
+                // div.on('plotly_relayout',function(ed) {});
             }
         }
         
         function toggleRangeSliders(groupId,e) {
+            // Event-Listener auf allen Diagrammen entfernen
+            $('#'+groupId+' .diagram').each(function(i) {
+                console.log('DIAGRAM'+(i+1));
+                this.removeAllListeners('plotly_relayout');
+            });
             $('#'+groupId+' .checkbox-rangeslider').each(function(i) {
                 i++;
                 // Beim angeklickten Rangeslider stellen wir den
@@ -572,6 +594,22 @@ sub html {
                 let state = this == e? this.checked: false;
                 setRangeSlider(groupId,i,state);
             });
+            // Event-Listener auf allen Diagrammen setzen
+            /* $('#'+groupId+' .diagram').each(function(i) {
+                let bool = this.layout.xaxis.rangeslider.visible;
+                console.log((i+1)+': '+bool);
+                if (bool) {
+                    this.on('plotly_relayout',function(ed) {
+                        console.log(JSON.stringify(ed,null,4));
+                        $('#'+groupId+' '+'.diagram').each(function(j) {
+                            if (j+1 != i) {
+                                console.log(j+1);
+                                Plotly.relayout(this,ed);
+                            }
+                        });
+                    });                    
+                }
+            }); */
         }
 
         function generatePlot(trace,layout,config,name,i,title,~
@@ -650,7 +688,7 @@ Genererie den HTML-Code für ein Diagramm und liefere diesen zurück.
 # -----------------------------------------------------------------------------
 
 sub htmlDiagram {
-    my ($self,$h,$i) = @_;
+    my ($self,$h,$i,$par,$paperBackground) = @_;
 
     # Objektattribute
 
@@ -658,11 +696,14 @@ sub htmlDiagram {
 
     # HTML erzeugen
 
+    my $parameterName = $par->name;
     return Quiq::Html::Table::Simple->html($h,
         width => '100%',
         style => [
             border => '1px dotted #b0b0b0',
            'margin-top' => '0.6em',
+           'background-color' => $paperBackground,
+           
         ],
         rows => [
             [[
@@ -681,8 +722,21 @@ sub htmlDiagram {
                      style => 'vertical-align: middle',
                      title => 'Toggle visibility of range slider',
                      onClick => "toggleRangeSliders('$name',this)",
+                ).
+                ' | '.Quiq::Html::Widget::Button->html($h,
+                    content => 'Download as PNG',
+                    onClick => qq~
+                        let plot = \$('#$name-d$i');
+                        Plotly.downloadImage(plot[0],{
+                            format: 'png',
+                            width: plot.width(),
+                            height: plot.height(),
+                            filename: '$parameterName',
+                        });
+                    ~,
+                    title => 'Download plot graphic as PNG',
                 ),
-            ]]
+           ]]
         ],
     );
 }
@@ -735,7 +789,7 @@ sub jsDiagram {
         $name,$name,$name,$name,$i,$par->name,$par->unit,$par->color,
         $par->xMin,$par->xMax,$par->yMin,$par->yMax,
         scalar($j->encode($par->x)),scalar($j->encode($par->y)));
-    my $bool = $i == 2? 'true': 'false';
+    my $bool = $i == 1? 'true': 'false';
     $js .= "setRangeSlider('$name',$i,$bool);\n";
     
     return $js;
