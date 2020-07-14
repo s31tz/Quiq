@@ -714,7 +714,8 @@ sub htmlDiagram {
                 ],
             ]],
             [[
-                'Rangeslider:'.Quiq::Html::Widget::CheckBox->html($h,
+                $h->tag('span',style=>'margin-left: 0.5em','Rangeslider:').
+                Quiq::Html::Widget::CheckBox->html($h,
                      id =>  "$name-r$i",
                      class => 'checkbox-rangeslider',
                      option => 1,
