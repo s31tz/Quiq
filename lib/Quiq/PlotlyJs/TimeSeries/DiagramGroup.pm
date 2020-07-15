@@ -9,7 +9,7 @@ use utf8;
 our $VERSION = '1.186';
 
 use Quiq::Json;
-use Quiq::Unindent;
+use Quiq::JavaScript;
 use Quiq::JQuery::Function;
 use Quiq::Html::Table::Simple;
 use Quiq::Html::Widget::CheckBox;
@@ -36,13 +36,19 @@ Dokumentation und Beispiele: L<https://plotly.com/javascript/>
 
 Zeitformate: L<https://github.com/d3/d3/blob/master/API.md#time-formats-d3-time-format>
 
+=head2 Leere Diagrammgruppe
+
+Wenn die Liste der Parameter leer ist, liefert die Methode html()
+einen Leerstring.
+
 =head2 Leeres Diagramm
 
-Ein Konstuktoraufruf ohne jegliche Angaben, also auch ohne Daten,
-ergibt ein leeres Diagramm. Die X-Achse umfasst den (willkürlich
-gewählten) Zeitbereich von C<2000-01-01 00:00:00> bis C<2001-01-01
-00:00:00>. Die Y-Achse umfasst den (willkürlich gewählten)
-Wertebereich C<-1> bis C<4>.
+Besitzt ein Parameter keine Daten (die Arrays x und y sind leer),
+wird der Plot-Bereich des betreffenden Diagramms leer dargestellt.
+Die Achsen werden gemäß xMin, xMax, yMin, yMax skaliert. Fehlen
+auch diese Angaben, nimmt Plotly.js eine Default-Achsen-Skalierung
+vor (Zeitbereich: C<2000-01-01 00:00:00> bis C<2001-01-01 00:00:00>,
+Y-Wertebereich: C<-1> bis C<4>).
 
 =head2 Diagramm-Höhe
 
@@ -291,7 +297,7 @@ sub new {
 
     my $self = $class->SUPER::new(
         height => 300,
-        name => 'dig',
+        name => 'dgr',
         parameters => [],
     );
     $self->set(@_);
@@ -326,6 +332,12 @@ sub html {
 
     # Objektattribute
     my ($height,$name,$parameterA) = $self->get(qw/height name parameters/);
+
+    # Kein Code, wenn keine Parameter
+
+    if (!@$parameterA) {
+        return '';
+    }
 
     # Multi-Attribute (betreffen mehrere Plotly-Attribute)
 
@@ -382,8 +394,8 @@ sub html {
 
     my $title = undef;
     my $yTitle = undef;
-    my $xMin = undef; # 946681200*1000;
-    my $xMax = undef; # 946684800*1000;
+    my $xMin = undef;
+    my $xMax = undef;
     my $yMin = -1;
     my $yMax = 1;
 
@@ -396,216 +408,217 @@ sub html {
         $html .= $self->htmlDiagram($h,++$i,$par,$paperBackground);
     }
 
-    # Datenstrukturen
-
     my $j = Quiq::Json->new;
 
-    my $js = sprintf "let %s_trace = %s;\n",$name,scalar $j->o(
-        type => 'scatter',
-        mode => $mode, # lines, markers, lines+markers, none,
-        fill => 'tozeroy',
-        fillcolor => $fillColor,
-        line => $j->o(
-            width => $lineWidth,
-            color => $lineColor,
-            shape => $lineShape,
-        ),
-        marker => $j->o(
-            size => $markerSize,
-            color => $markerColor, # [....] Einzelfarben
-            symbol => $markerSymbol,
-        ),
-        x => [],
-        y => [],
-    );
-
-    # * Layout
-
-    $js .= sprintf "let %s_layout = %s;\n",$name,scalar $j->o(
-        plot_bgcolor => $plotBackground,
-        paper_bgcolor => $paperBackground,
-        title => $j->o(
-            text => $title,
-            font => $j->o(
-                color => $color,
+    my $js = Quiq::JavaScript->code(
+        __NAME__ => $name,
+        __TRACE__ => scalar $j->o(
+            type => 'scatter',
+            mode => $mode, # lines, markers, lines+markers, none,
+            fill => 'tozeroy',
+            fillcolor => $fillColor,
+            line => $j->o(
+                width => $lineWidth,
+                color => $lineColor,
+                shape => $lineShape,
             ),
-            yref => 'container', # container, paper
-            yanchor => 'top',
-            y => $titleY,
-        ),
-        spikedistance => -1,
-        height => $height,
-        margin => $j->o(
-            l => $margin->[3],
-            r => $margin->[1],
-            t => $margin->[0],
-            b => $margin->[2],
-            autoexpand => \'false',
-        ),
-        xaxis => $j->o(
-            type => 'date',
-            fixedrange => \'false', # Zoom erlauben
-            mirror => $axisBox? \'true': undef,
-            linecolor => $axisColor,
-            #defined($xMin) && defined($xMax)? (range => [$xMin,$xMax]):
-            #    (autorange => \'true'),
-            # autorange => \'true',
-            gridcolor => $gridColor,
-            hoverformat => $xAxisHoverFormat,
-            # tickformat => $xAxisTickFormat,
-            # tickangle => 30,
-            ticklen => $xTickLen,
-            tickcolor => $axisColor,
-            #tickformatstops => [
-            #],
-            showspikes => \'true',
-            spikethickness => 1,
-            spikesnap => 'data',
-            spikecolor => '#000000',
-            spikedash => 'dot',
-            rangeslider => $j->o(
-                autorange => \'true',
-                bordercolor => $rangeSliderBorderColor,
-                borderwidth => 1,
-                thickness => 0.20,
-                # visible => \'false',
-                visible => \'true',
+            marker => $j->o(
+                size => $markerSize,
+                color => $markerColor, # [....] Einzelfarben
+                symbol => $markerSymbol,
             ),
-            zeroline => \'true',
-            zerolinecolor => '#b0b0b0',
+            x => [],
+            y => [],
         ),
-        yaxis => $j->o(
-            type => 'linear',
-            fixedrange => \'true', # Zoom verbieten
-            automargin => \'true',
-            mirror => $axisBox? \'true': undef,
-            linecolor => $axisColor,
-            defined($yMin) && defined($yMax)? (range => [$yMin,$yMax]):
-                (autorange => \'true'),
-            # autorange => \'true',
-            ticklen => $yTickLen,
-            tickcolor => $axisColor,
-            gridcolor => $gridColor,
-            showspikes => \'true',
-            side => $ySide,
-            spikethickness => 1,
-            spikesnap => 'data',
-            spikecolor => '#000000',
-            spikedash => 'dot',
+        __LAYOUT__ => scalar $j->o(
+            plot_bgcolor => $plotBackground,
+            paper_bgcolor => $paperBackground,
             title => $j->o(
-                text => $yTitle,
+                text => $title,
                 font => $j->o(
                     color => $color,
                 ),
+                yref => 'container', # container, paper
+                yanchor => 'top',
+                y => $titleY,
             ),
-            zeroline => \'true',
-            zerolinecolor => $zeroLineColor,
+            spikedistance => -1,
+            height => $height,
+            margin => $j->o(
+                l => $margin->[3],
+                r => $margin->[1],
+                t => $margin->[0],
+                b => $margin->[2],
+                autoexpand => \'false',
+            ),
+            xaxis => $j->o(
+                type => 'date',
+                fixedrange => \'false', # Zoom erlauben
+                mirror => $axisBox? \'true': undef,
+                linecolor => $axisColor,
+                #defined($xMin) && defined($xMax)? (range => [$xMin,$xMax]):
+                #    (autorange => \'true'),
+                # autorange => \'true',
+                gridcolor => $gridColor,
+                hoverformat => $xAxisHoverFormat,
+                # tickformat => $xAxisTickFormat,
+                # tickangle => 30,
+                ticklen => $xTickLen,
+                tickcolor => $axisColor,
+                #tickformatstops => [
+                #],
+                showspikes => \'true',
+                spikethickness => 1,
+                spikesnap => 'data',
+                spikecolor => '#000000',
+                spikedash => 'dot',
+                rangeslider => $j->o(
+                    autorange => \'true',
+                    bordercolor => $rangeSliderBorderColor,
+                    borderwidth => 1,
+                    thickness => 0.20,
+                    # visible => \'false',
+                    visible => \'true',
+                ),
+                zeroline => \'true',
+                zerolinecolor => '#b0b0b0',
+            ),
+            yaxis => $j->o(
+                type => 'linear',
+                fixedrange => \'true', # Zoom verbieten
+                automargin => \'true',
+                mirror => $axisBox? \'true': undef,
+                linecolor => $axisColor,
+                defined($yMin) && defined($yMax)? (range => [$yMin,$yMax]):
+                    (autorange => \'true'),
+                # autorange => \'true',
+                ticklen => $yTickLen,
+                tickcolor => $axisColor,
+                gridcolor => $gridColor,
+                showspikes => \'true',
+                side => $ySide,
+                spikethickness => 1,
+                spikesnap => 'data',
+                spikecolor => '#000000',
+                spikedash => 'dot',
+                title => $j->o(
+                    text => $yTitle,
+                    font => $j->o(
+                        color => $color,
+                    ),
+                ),
+                zeroline => \'true',
+                zerolinecolor => $zeroLineColor,
+            ),
         ),
-    );
+        __CONFIG__ => scalar $j->o(
+            displayModeBar => \'false',
+            doubleClickDelay => 1000, # 1000ms
+            responsive => \'true',
+        ),
+        __VARS__ => scalar $j->o(
+            height => [$height,$height1],
+            bottomMargin => [$bottomMargin,$bottomMargin1],
+            titleY => [$titleY,$titleY1],
+        ),q°
+        var __NAME__ = (function() {
+            // Datenstrukturen
+            
+            let trace = __TRACE__;
+            let layout = __LAYOUT__;
+            let config = __CONFIG__;
+            let vars = __VARS__;
 
-    # * Config (für alle Zeitreihen gleich)
+            // Methoden
 
-    $js .= sprintf "let %s_config = %s;\n",$name,scalar $j->o(
-        displayModeBar => \'false',
-        doubleClickDelay => 1000, # 1000ms
-        responsive => \'true',
-    );
-
-    # * Einstellungen (mit/ohne Rangeslider)
-
-    $js .= sprintf "let %s_variables = %s;\n",$name,scalar $j->o(
-        height => [$height,$height1],
-        bottomMargin => [$bottomMargin,$bottomMargin1],
-        titleY => [$titleY,$titleY1],
-    );
-
-    # Funktionen
-
-    $js .= Quiq::Unindent->string('~',q°
-        function setRangeSlider(groupId,i,bool) {
-            let dId = groupId+'-d'+i;
-            if (bool) {
-                Plotly.relayout(dId,{
-                    'xaxis.rangeslider.visible': true,
-                    'xaxis.fixedrange': false,
-                    'height': dig_variables.height[0],
-                    'margin.b': dig_variables.bottomMargin[0],
-                    'title.y': dig_variables.titleY[0],
-                });
-                $('#'+dId).height(dig_variables.height[0]);
-            }
-            else {
-                Plotly.relayout(dId,{
-                    'xaxis.rangeslider.visible': false,
-                    'xaxis.fixedrange': true,
-                    'height': dig_variables.height[1],
-                    'margin.b': dig_variables.bottomMargin[1],
-                    'title.y': dig_variables.titleY[1],
-                });
-                $('#'+dId).height(dig_variables.height[1]);
-            }
-            let cbId = groupId+'-r'+i;
-            $('#'+cbId).prop('checked',bool);
-            let div = $('#'+dId)[0];
-            if (bool) {
-                div.on('plotly_relayout',function(ed) {
-                    $('#'+groupId+' '+'.diagram').each(function(j) {
-                        if (j+1 != i && ed['height'] === undefined) {
-                            Plotly.relayout(this,ed);
-                        }
-                    });
-                });
-            }
-        }
-        
-        function toggleRangeSliders(groupId,e) {
-            // Event-Listener auf allen Diagrammen entfernen
-            $('#'+groupId+' .diagram').each(function(i) {
-                this.removeAllListeners('plotly_relayout');
-            });
-            $('#'+groupId+' .checkbox-rangeslider').each(function(i) {
-                i++;
-                // Beim angeklickten Rangeslider stellen wir den
-                // gewählten Zustand ein, die anderen schalten wir weg
-                let state = this == e? this.checked: false;
-                setRangeSlider(groupId,i,state);
-            });
-            // Event-Listener auf allen Diagrammen setzen
-            /* $('#'+groupId+' .diagram').each(function(i) {
-                let bool = this.layout.xaxis.rangeslider.visible;
+            let setRangeSlider = function (groupId,i,bool) {
+                let dId = groupId+'-d'+i;
                 if (bool) {
-                    this.on('plotly_relayout',function(ed) {
+                    Plotly.relayout(dId,{
+                        'xaxis.rangeslider.visible': true,
+                        'xaxis.fixedrange': false,
+                        'height': vars.height[0],
+                        'margin.b': vars.bottomMargin[0],
+                        'title.y': vars.titleY[0],
+                    });
+                    $('#'+dId).height(vars.height[0]);
+                }
+                else {
+                    Plotly.relayout(dId,{
+                        'xaxis.rangeslider.visible': false,
+                        'xaxis.fixedrange': true,
+                        'height': vars.height[1],
+                        'margin.b': vars.bottomMargin[1],
+                        'title.y': vars.titleY[1],
+                    });
+                    $('#'+dId).height(vars.height[1]);
+                }
+                let cbId = groupId+'-r'+i;
+                $('#'+cbId).prop('checked',bool);
+                let div = $('#'+dId)[0];
+                if (bool) {
+                    // Event-Listener auf das aktive (es sollte nur
+                    // eins geben) Diagramm setzen. Der Event-Handler
+                    // überträgt die Änderungen am xrange auf alle
+                    // anderen Diagramme. Probleme hierbei: 1) Der Event wird
+                    // nicht nur bei der Bereichsauswahl und beim
+                    // Scrollen ausgelöst. 2) Die Erkennung des richtigen
+                    // Events am Eventdata-Objekt ed ist schwierig, da
+                    // der xrange auf verschiedene Weisen dargestellt wird
+                    // (siehe console.log()). Daher nutzen wir
+                    // ed['height'] === undefined zur Erkennung.
+                    div.on('plotly_relayout',function(ed) {
+                        // console.log(JSON.stringify(ed,null,4));
                         $('#'+groupId+' '+'.diagram').each(function(j) {
-                            if (j+1 != i) {
+                            if (j+1 != i && ed['height'] === undefined) {
                                 Plotly.relayout(this,ed);
                             }
                         });
-                    });                    
+                    });
                 }
-            }); */
-        }
+            }
 
-        function generatePlot(trace,layout,config,name,i,title,~
-                yTitle,color,xMin,xMax,yMin,yMax,x,y) {
+            let toggleRangeSliders = function (groupId,e) {
+                // Event-Listener von allen Diagrammen entfernen
+                $('#'+groupId+' .diagram').each(function(i) {
+                    this.removeAllListeners('plotly_relayout');
+                });
+                $('#'+groupId+' .checkbox-rangeslider').each(function(i) {
+                    i++;
+                    // Beim angeklickten Rangeslider stellen wir den
+                    // gewählten Zustand ein, die anderen schalten wir weg
+                    let state = this == e? this.checked: false;
+                    setRangeSlider(groupId,i,state);
+                });
+            }
 
-            trace = $.extend(true,{},trace);
-            trace.line.color = color;
-            trace.marker.color = color;
-            trace.x = x;
-            trace.y = y;
+            let generatePlot = function (name,i,title,~
+                    yTitle,color,xMin,xMax,yMin,yMax,x,y) {
 
-            layout = $.extend(true,{},layout);
-            layout.title.text = title;
-            layout.title.font.color = color;
-            layout.xaxis.range = [xMin,xMax];
-            layout.yaxis.title.text = yTitle;
-            layout.yaxis.title.font.color = color;
-            layout.yaxis.range = [yMin,yMax];
+                let t = $.extend(true,{},trace);
+                t.line.color = color;
+                t.marker.color = color;
+                t.x = x;
+                t.y = y;
 
-            Plotly.newPlot(name+'-d'+i,[trace],layout,config);
-        }
+                let l = $.extend(true,{},layout);
+                l.title.text = title;
+                l.title.font.color = color;
+                l.xaxis.range = [xMin,xMax];
+                l.yaxis.title.text = yTitle;
+                l.yaxis.title.font.color = color;
+                l.yaxis.range = [yMin,yMax];
+
+                Plotly.newPlot(name+'-d'+i,[t],l,config);
+            }
+
+            return {
+                generatePlot: generatePlot,
+                setRangeSlider: setRangeSlider,
+                toggleRangeSliders: toggleRangeSliders,
+            };
+        })();
     °);
-
     # Ready-Handler
 
     my $tmp = '';
@@ -615,11 +628,13 @@ sub html {
     }
     $js .= Quiq::JQuery::Function->ready($tmp);
 
-    return $h->tag('div',
-        id => $name,
-        class => 'diagramGroup',
-        '-',
-        $html,
+    return $h->cat(
+        $h->tag('div',
+            id => $name,
+            class => 'diagramGroup',
+            '-',
+            $html,
+        ),
         $h->tag('script',
             $js,
         ),
@@ -697,7 +712,7 @@ sub htmlDiagram {
                      value => 0,
                      style => 'vertical-align: middle',
                      title => 'Toggle visibility of range slider',
-                     onClick => "toggleRangeSliders('$name',this)",
+                     onClick => "$name.toggleRangeSliders('$name',this)",
                 ).
                 ' | '.Quiq::Html::Widget::Button->html($h,
                     content => 'Download as PNG',
@@ -723,11 +738,15 @@ sub htmlDiagram {
 
 =head4 Synopsis
 
-  $js = $dgr->jsDiagram($i,$par);
+  $js = $dgr->jsDiagram($j,$i,$par);
 
 =head4 Arguments
 
 =over 4
+
+=item $j
+
+JSON-Generator
 
 =item $i
 
@@ -760,13 +779,20 @@ sub jsDiagram {
 
     # JavaScript erzeugen
 
-    my $js = sprintf("generatePlot(%s_trace,%s_layout,%s_config,'%s',%s,'%s',".
-            "'%s','%s',%s,%s,%s,%s,%s,%s);\n",
-        $name,$name,$name,$name,$i,$par->name,$par->unit,$par->color,
-        $par->xMin,$par->xMax,$par->yMin,$par->yMax,
+    my $xMin = $par->xMin // 'undefined';
+    my $xMax = $par->xMax // 'undefined';
+    my $yMin = $par->yMin // 'undefined';
+    my $yMax = $par->yMax // 'undefined';
+
+    my $js = sprintf("$name.generatePlot('%s'".
+            ",%s,'%s','%s','%s',%s,%s,%s,%s,%s,%s);\n",
+        $name,$i,
+        $par->name,$par->unit,$par->color,
+        $xMin,$xMax,$yMin,$yMax,
         scalar($j->encode($par->x)),scalar($j->encode($par->y)));
+
     my $bool = $i == 1? 'true': 'false';
-    $js .= "setRangeSlider('$name',$i,$bool);\n";
+    $js .= "$name.setRangeSlider('$name',$i,$bool);\n";
     
     return $js;
 }

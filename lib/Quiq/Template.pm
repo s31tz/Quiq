@@ -214,6 +214,9 @@ ist eine Vereinfachung, sie instantiiert intern ein Template-Objekt,
 wendet darauf die Methode replace() an und liefert den
 resultierenden Text zurück.
 
+Eine Tilde (~) kann als Zeilenfortsetzungszeichen im
+Template verwendet werden.
+
 =head4 Example
 
   $js = Quiq::Template->combine(
@@ -243,7 +246,7 @@ sub combine {
         template => \$template,
     );
 
-    $template = Quiq::Unindent->string($template);
+    $template = Quiq::Unindent->string('~',$template);
     my $tpl = $class->new('text',\$template);
     $tpl->replace(@$placeholderA);
 

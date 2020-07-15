@@ -17,13 +17,19 @@ Dokumentation und Beispiele: L<https://plotly.com/javascript/>
 
 Zeitformate: L<https://github.com/d3/d3/blob/master/API.md#time-formats-d3-time-format>
 
+=head2 Leere Diagrammgruppe
+
+Wenn die Liste der Parameter leer ist, liefert die Methode html()
+einen Leerstring.
+
 =head2 Leeres Diagramm
 
-Ein Konstuktoraufruf ohne jegliche Angaben, also auch ohne Daten,
-ergibt ein leeres Diagramm. Die X-Achse umfasst den (willkürlich
-gewählten) Zeitbereich von C<2000-01-01 00:00:00> bis C<2001-01-01
-00:00:00>. Die Y-Achse umfasst den (willkürlich gewählten)
-Wertebereich C<-1> bis C<4>.
+Besitzt ein Parameter keine Daten (die Arrays x und y sind leer),
+wird der Plot-Bereich des betreffenden Diagramms leer dargestellt.
+Die Achsen werden gemäß xMin, xMax, yMin, yMax skaliert. Fehlen
+auch diese Angaben, nimmt Plotly.js eine Default-Achsen-Skalierung
+vor (Zeitbereich: C<2000-01-01 00:00:00> bis C<2001-01-01 00:00:00>,
+Y-Wertebereich: C<-1> bis C<4>).
 
 =head2 Diagramm-Höhe
 
@@ -312,11 +318,15 @@ Genererie den HTML-Code für ein Diagramm und liefere diesen zurück.
 
 =head4 Synopsis
 
-  $js = $dgr->jsDiagram($i,$par);
+  $js = $dgr->jsDiagram($j,$i,$par);
 
 =head4 Arguments
 
 =over 4
+
+=item $j
+
+JSON-Generator
 
 =item $i
 
