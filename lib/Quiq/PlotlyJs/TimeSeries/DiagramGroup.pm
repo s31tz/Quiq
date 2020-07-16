@@ -13,6 +13,7 @@ use Quiq::JavaScript;
 use Quiq::JQuery::Function;
 use Quiq::Html::Table::Simple;
 use Quiq::Html::Widget::CheckBox;
+use Quiq::Html::Widget::SelectMenu;
 use Quiq::Html::Widget::Button;
 
 # -----------------------------------------------------------------------------
@@ -360,7 +361,7 @@ sub html {
     my $fillColor = '#e0e0e0'; # Farbe zwischen Kurve und X-Achse
     my $gridColor = '#e8e8e8'; # Farbe des Gitters
     my $lineColor = $color;
-    my $lineShape = 'linear'; # Linienform: 'spline'|'linear'|'hv'|
+    my $lineShape = 'spline'; # Linienform: 'spline'|'linear'|'hv'|
         # 'vh'|'hvh'|'vhv'
     my $lineWidth = 1;
     my $margin = [$topMargin,undef,$bottomMargin,undef];
@@ -592,8 +593,8 @@ sub html {
                 });
             }
 
-            let generatePlot = function (name,i,title,~
-                    yTitle,color,xMin,xMax,yMin,yMax,x,y) {
+            let generatePlot = function (name,i,title,yTitle,color,~
+                    xMin,xMax,yMin,yMax,rangeSlider,x,y) {
 
                 let t = $.extend(true,{},trace);
                 t.line.color = color;
@@ -610,6 +611,7 @@ sub html {
                 l.yaxis.range = [yMin,yMax];
 
                 Plotly.newPlot(name+'-d'+i,[t],l,config);
+                setRangeSlider(name,i,rangeSlider);
             }
 
             return {
@@ -714,6 +716,36 @@ sub htmlDiagram {
                      title => 'Toggle visibility of range slider',
                      onClick => "$name.toggleRangeSliders('$name',this)",
                 ).
+                ' | Shape: '.Quiq::Html::Widget::SelectMenu->html($h,
+                    id => "$name-s$i",
+                    options => [
+                        'Spline',
+                        'Linear',
+                        'Marker',
+                    ],
+                    onChange => Quiq::JavaScript->line(qq~
+                        var shape = \$('#$name-s$i').val();
+                        if (shape == 'Spline') {
+                            Plotly.restyle('$name-d$i',{
+                                'mode': 'lines',
+                                'line.shape': 'spline',
+                            });
+                        }
+                        else if (shape == 'Marker') {
+                            Plotly.restyle('$name-d$i',{
+                                'mode': 'markers',
+                            });
+                        }
+                        else { // Linear
+                            Plotly.restyle('$name-d$i',{
+                                'mode': 'lines',
+                                'line.shape': 'linear',
+                            });
+                        }
+                    ~),
+                    title => 'Connect data points with straight lines,'.
+                        ' splines or show markers',
+                ).
                 ' | '.Quiq::Html::Widget::Button->html($h,
                     content => 'Download as PNG',
                     onClick => qq~
@@ -783,18 +815,13 @@ sub jsDiagram {
     my $xMax = $par->xMax // 'undefined';
     my $yMin = $par->yMin // 'undefined';
     my $yMax = $par->yMax // 'undefined';
+    my $rangeSlider = $i == 1? 'true': 'false';
 
-    my $js = sprintf("$name.generatePlot('%s'".
-            ",%s,'%s','%s','%s',%s,%s,%s,%s,%s,%s);\n",
-        $name,$i,
-        $par->name,$par->unit,$par->color,
-        $xMin,$xMax,$yMin,$yMax,
+    return sprintf("$name.generatePlot('%s'".
+            ",%s,'%s','%s','%s',%s,%s,%s,%s,%s,%s,%s);\n",
+        $name,$i,$par->name,$par->unit,$par->color,
+        $xMin,$xMax,$yMin,$yMax,$rangeSlider,
         scalar($j->encode($par->x)),scalar($j->encode($par->y)));
-
-    my $bool = $i == 1? 'true': 'false';
-    $js .= "$name.setRangeSlider('$name',$i,$bool);\n";
-    
-    return $js;
 }
 
 # -----------------------------------------------------------------------------
