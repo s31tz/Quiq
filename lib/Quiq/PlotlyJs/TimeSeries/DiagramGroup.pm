@@ -594,11 +594,33 @@ sub html {
             }
 
             let generatePlot = function (name,i,title,yTitle,color,~
-                    xMin,xMax,yMin,yMax,rangeSlider,x,y) {
+                    xMin,xMax,yMin,yMax,rangeSlider,x,y,url) {
 
                 let t = $.extend(true,{},trace);
                 t.line.color = color;
                 t.marker.color = color;
+                if (url) {
+                    // Daten per Ajax besorgen
+                    console.log(url);
+                    $.ajax({
+                        type: 'GET',
+                        url: url,
+                        // data: 'since='+maxTime,
+                        async: true,
+                        beforeSend: function () {
+                            $("body").css("cursor","wait");
+                        },
+                        complete: function () {
+                            $("body").css("cursor","default");
+                        },
+                        error: function () {
+                            console.log('FAILED: '+url);
+                        },
+                        success: function (data,textStatus,jqXHR) {
+                            console.log('OK');
+                        },
+                    });
+                }
                 t.x = x;
                 t.y = y;
 
@@ -816,12 +838,14 @@ sub jsDiagram {
     my $yMin = $par->yMin // 'undefined';
     my $yMax = $par->yMax // 'undefined';
     my $rangeSlider = $i == 1? 'true': 'false';
+    my $url = $par->url // 'undefined';
 
     return sprintf("$name.generatePlot('%s'".
-            ",%s,'%s','%s','%s',%s,%s,%s,%s,%s,%s,%s);\n",
+            ",%s,'%s','%s','%s',%s,%s,%s,%s,%s,%s,%s,'%s');\n",
         $name,$i,$par->name,$par->unit,$par->color,
         $xMin,$xMax,$yMin,$yMax,$rangeSlider,
-        scalar($j->encode($par->x)),scalar($j->encode($par->y)));
+        scalar($j->encode($par->x)),scalar($j->encode($par->y)),
+        $url);
 }
 
 # -----------------------------------------------------------------------------

@@ -633,7 +633,7 @@ L<Quiq::PlotlyJs::TimeSeries::DiagramGroup|https://github.com/s31tz/Quiq/tree/ma
 
 =item *
 
-L<Quiq::PlotlyJs::TimeSeries::Parameter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/TimeSeries/Parameter.pod> - Ein zu plottender Parameter
+L<Quiq::PlotlyJs::TimeSeries::Parameter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/TimeSeries/Parameter.pod> - Eine zu plottende Zeitreihe
 
 =item *
 

@@ -13,7 +13,7 @@ our $VERSION = '1.186';
 
 =head1 NAME
 
-Quiq::PlotlyJs::TimeSeries::Parameter - Ein zu plottender Parameter
+Quiq::PlotlyJs::TimeSeries::Parameter - Eine zu plottende Zeitreihe
 
 =head1 BASE CLASS
 
@@ -23,7 +23,7 @@ L<Quiq::Hash>
 
 Ein Objekt der Klasse speichert Information über eine Zeitreihe, die
 von der Klasse Quiq::PlotlyJs::TimeSeries::DiagramGroup
-herangezogen wird, um diese in ein Diagramm zu plotten.
+herangezogen wird, um sie in ein Diagramm zu plotten.
 
 =head1 METHODS
 
@@ -37,7 +37,7 @@ herangezogen wird, um diese in ein Diagramm zu plotten.
 
 =head4 Attributes
 
-Pflichtangaben sind B<fett> wiedergegeben
+Pflichtangaben sind B<fett> wiedergegeben.
 
 =over 4
 
@@ -59,11 +59,11 @@ Einheit der Parameterwerte.
 
 Referenz auf Array der Zeit-Werte in JavaScript-Epoch.
 
-=item B<< xMin => $val >>
+=item xMin => $val
 
 Kleinster Zeitwert der Zeitreihe.
 
-=item B<< xMax => $val >>
+=item xMax => $val
 
 Größter Zeitwert der Zeitreihe.
 
@@ -71,13 +71,18 @@ Größter Zeitwert der Zeitreihe.
 
 Referenz auf Array der Y-Werte (Weltkoordinaten).
 
-=item B<< yMin => $val >>
+=item yMin => $val
 
 Kleinster Parameterwert der Zeitreihe.
 
-=item B<< xMax => $val >>
+=item xMax => $val
 
 Größter Parameterwert der Zeitreihe.
+
+=item url => $url
+
+URL des Ajax-Requests, mit die Zeitreihendaten (Zeitpunkt, Wert)
+abgerufen werden.
 
 =back
 
@@ -108,6 +113,7 @@ sub new {
         yMin => undef,
         yMax => undef,
         unit => undef,
+        url => undef,
     );
     $self->set(@_);
 
