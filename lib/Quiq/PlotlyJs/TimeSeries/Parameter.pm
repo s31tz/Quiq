@@ -113,7 +113,7 @@ sub new {
         yMin => undef,
         yMax => undef,
         unit => undef,
-        url => undef,
+        url => '',
     );
     $self->set(@_);
 
