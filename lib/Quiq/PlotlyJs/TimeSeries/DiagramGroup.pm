@@ -277,6 +277,10 @@ Name der Diagramm-Gruppe. Der Name wird als CSS-Id für den
 Liste der Parameter-Objekte. Die Paramater-Objekte sind vom Typ
 Quiq::PlotlyJs::TimeSeries::Parameter.
 
+=item xAxisType => 'date'|'linear' (Default: 'date')
+
+Art der X-Achsen: date=Zeit, linear=numerisch
+
 =back
 
 =head4 Returns
@@ -300,6 +304,7 @@ sub new {
         height => 300,
         name => 'dgr',
         parameters => [],
+        xAxisType => 'date',
     );
     $self->set(@_);
 
@@ -332,7 +337,8 @@ sub html {
     my ($self,$h) = @_;
 
     # Objektattribute
-    my ($height,$name,$parameterA) = $self->get(qw/height name parameters/);
+    my ($height,$name,$parameterA,$xAxisType) =
+        $self->get(qw/height name parameters xAxisType/);
 
     # Kein Code, wenn keine Parameter
 
@@ -353,9 +359,9 @@ sub html {
 
     my $topMargin = 45;
 
-    # 250->100,300->110,350->120,400->130,450->140,...
-    # my $bottomMargin = ($height-300)/50*10+110;
-    my $bottomMargin = ($height-300)/50*10+100;
+    # date: 250->100,300->110,350->120,400->130,450->140,...
+    # linear: ?
+    my $bottomMargin = ($height-300)/50*10+($xAxisType eq 'date'? 100: 90);
 
     my $axisColor = '#d0d0d0'; # Farbe der Achsenlinien
     my $fillColor = '#e0e0e0'; # Farbe zwischen Kurve und X-Achse
@@ -374,20 +380,27 @@ sub html {
     my $paperBackground = '#f8f8f8'; # Hintergrund Diagrammbereich
     my $plotBackground = '#ffffff'; # Hintergrund Plotbereich
     my $rangeSliderBorderColor = '#e0e0e0';
-    my $xAxisHoverFormat = '%Y-%m-%d %H:%M:%S'; # Format der
-        # Spike-Beschriftung für die X-Koordinate. Siehe:
-        # https://github.com/d3/d3-3.x-api-reference/blob/master/\
-        # Time-Formatting.md#format
-    my $xAxisTickFormat = '%Y-%m-%d %H:%M'; # Format der
-        # Zeitachsen-Beschriftung
+
+    my ($xAxisHoverFormat,$xAxisTickFormat,$xAxisLabelHeight);
+    if ($xAxisType eq 'date') {
+        $xAxisHoverFormat = '%Y-%m-%d %H:%M:%S'; # Format der
+            # Spike-Beschriftung für die X-Koordinate. Siehe:
+            # https://github.com/d3/d3-3.x-api-reference/blob/master/\
+            # Time-Formatting.md#format
+        $xAxisTickFormat = '%Y-%m-%d %H:%M'; # Format der
+            # Zeitachsen-Beschriftung
+        $xAxisLabelHeight = 55;
+    }
+    else { # 'linear'
+        $xAxisLabelHeight = 40;
+    }
+
     my $xTickLen = 5;
     my $ySide = 'left'; # Seite, auf der die Y-Achse gezeichnet wird
     my $yTickLen = 4;
     my $zeroLineColor = '#d0d0d0';
 
-    my $xAxisLabelHeight = 55;
     my $height1 = $height-($bottomMargin-$xAxisLabelHeight);
-
     my $bottomMargin1 = $bottomMargin-($bottomMargin-$xAxisLabelHeight);
 
     my $titleY = 1-(15/$height); # Faktor für Titel-Position
@@ -453,7 +466,7 @@ sub html {
                 autoexpand => \'false',
             ),
             xaxis => $j->o(
-                type => 'date',
+                type => $xAxisType, # 'date', 'linear',
                 fixedrange => \'false', # Zoom erlauben
                 mirror => $axisBox? \'true': undef,
                 linecolor => $axisColor,
@@ -577,7 +590,7 @@ sub html {
                         });
                     });
                 }
-            }
+            };
 
             let toggleRangeSliders = function (groupId,e) {
                 // Event-Listener von allen Diagrammen entfernen
@@ -591,7 +604,38 @@ sub html {
                     let state = this == e? this.checked: false;
                     setRangeSlider(groupId,i,state);
                 });
-            }
+            };
+
+            let loadData = function (dId,trace,url) {
+                // Daten per Ajax besorgen
+                console.log(url);
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    async: true,
+                    beforeSend: function () {
+                        $('body').css('cursor','wait');
+                    },
+                    complete: function () {
+                        $('body').css('cursor','default');
+                    },
+                    error: function () {
+                        alert('ERROR: Ajax request failed: '+url);
+                    },
+                    success: function (data,textStatus,jqXHR) {
+                        trace.x = [];
+                        trace.y = [];
+                        var rows = data.split('\n');
+                        for (var i = 0; i < rows.length-1; i++) {
+                            let arr = rows[i].split(',');
+                            trace.x.push(parseInt(arr[0]));
+                            trace.y.push(parseFloat(arr[1]));
+                        }
+                        Plotly.deleteTraces(dId,0);
+                        Plotly.addTraces(dId,trace);
+                    },
+                });
+            };
 
             let generatePlot = function (name,i,title,yTitle,color,~
                     xMin,xMax,yMin,yMax,rangeSlider,url,x,y) {
@@ -615,34 +659,7 @@ sub html {
                 Plotly.newPlot(dId,[t],l,config).then(
                     function() {
                         if (url) {
-                            // Daten per Ajax besorgen
-                            console.log(url);
-                            $.ajax({
-                                type: 'GET',
-                                url: url,
-                                async: true,
-                                beforeSend: function () {
-                                    $('body').css('cursor','wait');
-                                },
-                                complete: function () {
-                                    $('body').css('cursor','default');
-                                },
-                                error: function () {
-                                    alert('ERROR: Ajax request failed: '+url);
-                                },
-                                success: function (data,textStatus,jqXHR) {
-                                    t.x = [];
-                                    t.y = [];
-                                    var rows = data.split("\n");
-                                    for (var i = 0; i < rows.length-1; i++) {
-                                        let arr = rows[i].split(',');
-                                        t.x.push(parseInt(arr[0]));
-                                        t.y.push(parseFloat(arr[1]));
-                                    }
-                                    Plotly.deleteTraces(dId,0);
-                                    Plotly.addTraces(dId,t);
-                                },
-                            });
+                            loadData(dId,t,url);
                         }
                     },
                     function() {
@@ -650,7 +667,7 @@ sub html {
                     }
                 );
                 setRangeSlider(name,i,rangeSlider);
-            }
+            };
 
             return {
                 generatePlot: generatePlot,

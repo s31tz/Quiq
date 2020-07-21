@@ -257,6 +257,10 @@ Name der Diagramm-Gruppe. Der Name wird als CSS-Id für den
 Liste der Parameter-Objekte. Die Paramater-Objekte sind vom Typ
 Quiq::PlotlyJs::TimeSeries::Parameter.
 
+=item xAxisType => 'date'|'linear' (Default: 'date')
+
+Art der X-Achsen: date=Zeit, linear=numerisch
+
 =back
 
 =head4 Returns
