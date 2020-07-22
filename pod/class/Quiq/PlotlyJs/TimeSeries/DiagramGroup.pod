@@ -13,9 +13,23 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 Diese Klasse ist ein Perl-Wrapper für die Erzeugung für
 Zeitreihen-Plots auf Basis von Plotly.js.
 
-Dokumentation und Beispiele: L<https://plotly.com/javascript/>
+=head2 Links
 
-Zeitformate: L<https://github.com/d3/d3/blob/master/API.md#time-formats-d3-time-format>
+=over 2
+
+=item *
+
+L<Plotly.js|https://plotly.com/javascript/>
+
+=item *
+
+L<Time Formats|https://github.com/d3/d3/blob/master/API.md#time-formats-d3-time-format>
+
+=item *
+
+L<Change the Default Locale|https://plotly.com/javascript/configuration-options/#change-the-default-locale>
+
+=back
 
 =head2 Leere Diagrammgruppe
 

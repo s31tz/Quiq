@@ -84,6 +84,11 @@ Größter Parameterwert der Zeitreihe.
 URL des Ajax-Requests, mit die Zeitreihendaten (Zeitpunkt, Wert)
 abgerufen werden.
 
+=item z => \@z
+
+Referenz auf Array von Z-Werten, die als CSS Markerfarben
+interpretiert werden.
+
 =back
 
 =head4 Returns
@@ -114,6 +119,7 @@ sub new {
         yMax => undef,
         unit => undef,
         url => '',
+        z => [],
     );
     $self->set(@_);
 

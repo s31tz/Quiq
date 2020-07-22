@@ -33,9 +33,23 @@ L<Quiq::Hash>
 Diese Klasse ist ein Perl-Wrapper für die Erzeugung für
 Zeitreihen-Plots auf Basis von Plotly.js.
 
-Dokumentation und Beispiele: L<https://plotly.com/javascript/>
+=head2 Links
 
-Zeitformate: L<https://github.com/d3/d3/blob/master/API.md#time-formats-d3-time-format>
+=over 2
+
+=item *
+
+L<Plotly.js|https://plotly.com/javascript/>
+
+=item *
+
+L<Time Formats|https://github.com/d3/d3/blob/master/API.md#time-formats-d3-time-format>
+
+=item *
+
+L<Change the Default Locale|https://plotly.com/javascript/configuration-options/#change-the-default-locale>
+
+=back
 
 =head2 Leere Diagrammgruppe
 
@@ -361,6 +375,7 @@ sub html {
 
     # date: 250->100,300->110,350->120,400->130,450->140,...
     # linear: ?
+    # FIXME: $xAxisLabelHeight in Berechnung einbeziehen
     my $bottomMargin = ($height-300)/50*10+($xAxisType eq 'date'? 100: 90);
 
     my $axisColor = '#d0d0d0'; # Farbe der Achsenlinien
@@ -438,8 +453,9 @@ sub html {
             ),
             marker => $j->o(
                 size => $markerSize,
-                color => $markerColor, # [....] Einzelfarben
+                color => $color, # [....] Einzelfarben
                 symbol => $markerSymbol,
+                colorscale => undef,
             ),
             x => [],
             y => [],
@@ -625,12 +641,17 @@ sub html {
                     success: function (data,textStatus,jqXHR) {
                         trace.x = [];
                         trace.y = [];
-                        var rows = data.split('\n');
+                        let colors = [];
+                        let rows = data.split('\n');
                         for (var i = 0; i < rows.length-1; i++) {
                             let arr = rows[i].split(',');
                             trace.x.push(parseInt(arr[0]));
                             trace.y.push(parseFloat(arr[1]));
+                            if (arr.length > 2)
+                                colors.push(arr[2]);
                         }
+                        if (colors.length)
+                            trace.marker.color = colors;
                         Plotly.deleteTraces(dId,0);
                         Plotly.addTraces(dId,trace);
                     },
@@ -638,14 +659,14 @@ sub html {
             };
 
             let generatePlot = function (name,i,title,yTitle,color,~
-                    xMin,xMax,yMin,yMax,rangeSlider,url,x,y) {
+                    xMin,xMax,yMin,yMax,rangeSlider,url,x,y,z) {
 
                 let t = $.extend(true,{},trace);
                 t.line.color = color;
-                t.marker.color = color;
                 // Direkt übergebene Daten (kann leer sein)
                 t.x = x;
                 t.y = y;
+                t.marker.color = z.length? z: color;
 
                 let l = $.extend(true,{},layout);
                 l.title.text = title;
@@ -873,10 +894,11 @@ sub jsDiagram {
     my $rangeSlider = $i == 1? 'true': 'false';
 
     return sprintf("$name.generatePlot('%s'".
-            ",%s,'%s','%s','%s',%s,%s,%s,%s,%s,'%s',%s,%s);\n",
+            ",%s,'%s','%s','%s',%s,%s,%s,%s,%s,'%s',%s,%s,%s);\n",
         $name,$i,$par->name,$par->unit,$par->color,
         $xMin,$xMax,$yMin,$yMax,$rangeSlider,$par->url,
-        scalar($j->encode($par->x)),scalar($j->encode($par->y)));
+        scalar($j->encode($par->x)),scalar($j->encode($par->y)),
+        scalar($j->encode($par->z)));
 }
 
 # -----------------------------------------------------------------------------
