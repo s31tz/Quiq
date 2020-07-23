@@ -644,8 +644,9 @@ sub html {
                         let colors = [];
                         let rows = data.split('\n');
                         for (var i = 0; i < rows.length-1; i++) {
-                            let arr = rows[i].split(',');
-                            trace.x.push(parseInt(arr[0]));
+                            let arr = rows[i].split('\t');
+                            // trace.x.push(parseInt(arr[0]));
+                            trace.x.push(arr[0]);
                             trace.y.push(parseFloat(arr[1]));
                             if (arr.length > 2)
                                 colors.push(arr[2]);
@@ -666,7 +667,8 @@ sub html {
                 // Direkt übergebene Daten (kann leer sein)
                 t.x = x;
                 t.y = y;
-                t.marker.color = z.length? z: color;
+                t.marker.color =
+                    typeof z !== 'undefined' && z.length? z: color;
 
                 let l = $.extend(true,{},layout);
                 l.title.text = title;
@@ -893,12 +895,21 @@ sub jsDiagram {
     my $yMax = $par->yMax // 'undefined';
     my $rangeSlider = $i == 1? 'true': 'false';
 
-    return sprintf("$name.generatePlot('%s'".
-            ",%s,'%s','%s','%s',%s,%s,%s,%s,%s,'%s',%s,%s,%s);\n",
-        $name,$i,$par->name,$par->unit,$par->color,
-        $xMin,$xMax,$yMin,$yMax,$rangeSlider,$par->url,
-        scalar($j->encode($par->x)),scalar($j->encode($par->y)),
-        scalar($j->encode($par->z)));
+    my $url = $par->url;
+    if ($url) {
+        return sprintf("$name.generatePlot('%s',%s,'%s','%s','%s','%s'".
+                ",'%s',%s,%s,%s,'%s');\n",
+            $name,$i,$par->name,$par->unit,$par->color,
+            $xMin,$xMax,$yMin,$yMax,$rangeSlider,$url);
+    }
+    else {
+        return sprintf("$name.generatePlot('%s',%s,'%s','%s','%s','%s'".
+                ",'%s',%s,%s,%s,'',%s,%s,%s);\n",
+            $name,$i,$par->name,$par->unit,$par->color,
+            $xMin,$xMax,$yMin,$yMax,$rangeSlider,
+            scalar($j->encode($par->x)),scalar($j->encode($par->y)),
+            scalar($j->encode($par->z)));
+    }
 }
 
 # -----------------------------------------------------------------------------
