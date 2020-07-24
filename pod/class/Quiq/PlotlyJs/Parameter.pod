@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::PlotlyJs::TimeSeries::Parameter - Eine zu plottende Zeitreihe
+Quiq::PlotlyJs::Parameter - Eine zu plottender Parameter
 
 =head1 BASE CLASS
 
@@ -10,9 +10,20 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse speichert Information über eine Zeitreihe, die
-von der Klasse Quiq::PlotlyJs::TimeSeries::DiagramGroup
-herangezogen wird, um sie in ein Diagramm zu plotten.
+Ein Objekt der Klasse speichert Information über einen Parameter,
+der von der Klasse B<< Quiq::PlotlyJs::DiagramGroup >> in ein
+Diagramm geplottet werden soll.
+
+Die zu plottenden Daten können entweder über die Komponenten B<x>,
+B<y> (und ggf. B<z>) übergeben werden oder sie werden per
+Ajax-Aufruf geholt, wenn das Attribut url gesetzt ist.
+
+Es ist sinnvoll, die Wertebereiche B<xMin>, B<xMax>, B<yMin>, B<yMax>
+explizit vorzugeben. Dies ist nicht zwingend erforderlich,
+Plotly.js setzt die Wertebereiche auch selbständig, dann aber nach
+eigenen Kriterien. Ist kein Y-Wertebereich vorgegeben, wird dann bei
+B<fill: 'tozeroy'> die Y-Achse bis 0 ausgedeht, auch wenn alle
+Y-Werte > 0 sind.
 
 =head1 METHODS
 
@@ -26,7 +37,9 @@ herangezogen wird, um sie in ein Diagramm zu plotten.
 
 =head4 Attributes
 
-Pflichtangaben sind B<fett> wiedergegeben.
+Pflichtangaben sind B<fett> wiedergegeben. Die zu plottenden Daten
+werden entweder per B<x>, B<y> (und ggf. B<z>) übergeben oder via
+B<url> abgerufen.
 
 =over 4
 
@@ -95,7 +108,7 @@ dieses Objekt zurück.
 
 =head1 SOURCE
 
-L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/PlotlyJs/TimeSeries/Parameter.pm>
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/PlotlyJs/Parameter.pm>
 
 =head1 AUTHOR
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Quiq::PlotlyJs::TimeSeries::Parameter::Test;
+package Quiq::PlotlyJs::Parameter::Test;
 use base qw/Quiq::Test::Class/;
 
 use v5.10;
@@ -10,12 +10,12 @@ use warnings;
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
-    shift->useOk('Quiq::PlotlyJs::TimeSeries::Parameter');
+    shift->useOk('Quiq::PlotlyJs::Parameter');
 }
 
 # -----------------------------------------------------------------------------
 
 package main;
-Quiq::PlotlyJs::TimeSeries::Parameter::Test->runTests;
+Quiq::PlotlyJs::Parameter::Test->runTests;
 
 # eof

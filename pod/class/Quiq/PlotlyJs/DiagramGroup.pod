@@ -1,0 +1,210 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::PlotlyJs::DiagramGroup - Erzeuge eine Gruppe von XY-Plots
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+Diese Klasse ist ein Perl-Wrapper für die Erzeugung einer Gruppe
+von XY-Plots auf Basis von Plotly.js, Beispiel siehe
+L<Plotly.js: Plotten und analysieren einer Gruppe von Zeitreihen|http://fseitz.de/blog/index.php?/archives/157-Plotly.js-Plotten-und-analysieren-einer-Gruppe-von-Zeitreihen.html>.
+
+Die Diagrammgruppe zeichnet sich dadurch aus, dass durch alle
+Plots der Gruppe synchron gescrollt werden kann. In dem Diagramm,
+dessen Rangeslider aktiviert ist, kann mit der linken Maustaste im
+Plot ein Zeitbereich ausgewählt und anschließend mit dem
+Rangeslider durch den Gesamtbereich gescrollt werden. Das Zoomen
+und Scrollen findet dabei über allen Diagrammen synchron
+statt. Bei Doppelklick in den Plot-Breich wird der ursprüngliche
+Zustand wieder hergestellt. Beim Überfahren der Plots mit der Maus
+wird das Koordinatenpaar des nächstgelegenen Punktes
+angezeigt. Über das Menü "Shape" kann die Kurvenform eingestellt
+und mittels des Buttons "Download as PNG" der aktuelle
+Diagramm-Zustand als Grafik heruntergeladen werden.
+
+Es gibt zwei Möglichkeiten, die Plot-Daten in die Diagramme zu
+übertragen:
+
+=over 4
+
+=item 1.
+
+Die Arrays x, x (und ggf. z) werden dem Parameter-Objekt mitgegeben.
+
+=item 2.
+
+Per Ajax-Aufruf, wenn beim Parameter-Objekt ein URL definiert ist.
+In diesem Fall sind die Daten sind nicht Teil der Seite,
+sondern werden per asynchronem Ajax-Request (ggf. via
+L<Cross-Origin Resource Sharing|http://fseitz.de/blog/index.php?/archives/159-Ajax-Cross-Origin-Resource-Sharing-CORS-implementieren.html>) geladen.
+
+=back
+
+Das  Laden per Ajax-Request hat den Vorteil, dass das Holen der
+Daten parallel geschieht - während die Diagramme auf der Seite
+bereits (leer) angezeigt werden.
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+  $dgr = $class->new(@attVal);
+
+=head4 Attributes
+
+=over 4
+
+=item height => $n (Default: 300)
+
+Höhe eines Diagramms in Pixeln.
+
+=item name => $name (Default: 'dgr')
+
+Name der Diagramm-Gruppe. Der Name wird als CSS-Id für den
+äußeren Container der Diagramm-Gruppe genutzt.
+
+=item parameters => \@parameters
+
+Liste der Parameter-Objekte. Die Paramater-Objekte sind vom Typ
+Quiq::PlotlyJs::Parameter.
+
+=item strict => $bool (Default: 1)
+
+Melde Fehler mittels alert(), nicht nur via console.log().
+
+=item xAxisType => 'date'|'linear' (Default: 'date')
+
+Art der X-Achsen: date=Zeit, linear=numerisch
+
+=back
+
+=head4 Returns
+
+Objekt
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
+dieses Objekt zurück.
+
+=head2 Objektmethoden
+
+=head3 html() - Generiere HTML
+
+=head4 Synopsis
+
+  $html = $dgr->html($h);
+
+=head4 Returns
+
+HTML-Code (String)
+
+=head4 Description
+
+Liefere den HTML-Code der Diagramm-Gruppe.
+
+B<Leere Diagrammgruppe>
+
+Wenn die Liste der Parameter leer ist, liefert die Methode html()
+einen Leerstring.
+
+B<Leeres Diagramm>
+
+Besitzt ein Parameter keine Daten (die Arrays x und y sind leer),
+wird der Plot-Bereich des betreffenden Diagramms leer dargestellt.
+Die Achsen werden gemäß xMin, xMax, yMin, yMax skaliert. Fehlen
+auch diese Angaben, nimmt Plotly.js eine Default-Achsen-Skalierung
+vor (Zeitbereich: C<2000-01-01 00:00:00> bis C<2001-01-01 00:00:00>,
+Y-Wertebereich: C<-1> bis C<4>).
+
+=head2 Private Methoden
+
+=head3 htmlDiagram() - Generiere HTML für ein Diagramm
+
+=head4 Synopsis
+
+  $html = $dgr->htmlDiagram($h,$i);
+
+=head4 Arguments
+
+=over 4
+
+=item $h
+
+Generator für HTML-Code.
+
+=item $i
+
+Nummer des Diagramms.
+
+=back
+
+=head4 Returns
+
+HTML-Code (String)
+
+=head4 Description
+
+Genererie den HTML-Code für ein Diagramm und liefere diesen zurück.
+
+=head3 jsDiagram() - Generiere JavaScript für ein Diagramm
+
+=head4 Synopsis
+
+  $js = $dgr->jsDiagram($j,$i,$par);
+
+=head4 Arguments
+
+=over 4
+
+=item $j
+
+JSON-Generator
+
+=item $i
+
+Nummer des Diagramms.
+
+=item $par
+
+Zeitreihen-Objekt.
+
+=back
+
+=head4 Returns
+
+JavaScript-Code (String)
+
+=head4 Description
+
+Genererie den JavaScript-Code für ein Diagramm und liefere diesen zurück.
+
+=head1 VERSION
+
+1.186
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/PlotlyJs/DiagramGroup.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2020 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

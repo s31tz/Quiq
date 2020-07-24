@@ -617,7 +617,15 @@ L<Quiq::Perl|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Perl.pod> 
 
 =item *
 
-L<Quiq::PlotlyJs|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs.pod> - Basisfunktionalität zu Plotly.js
+L<Quiq::PlotlyJs|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs.pod> - Basisfunktionalität/Notizen zu Plotly.js
+
+=item *
+
+L<Quiq::PlotlyJs::DiagramGroup|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/DiagramGroup.pod> - Erzeuge eine Gruppe von XY-Plots
+
+=item *
+
+L<Quiq::PlotlyJs::Parameter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/Parameter.pod> - Eine zu plottender Parameter
 
 =item *
 
@@ -626,14 +634,6 @@ L<Quiq::PlotlyJs::Reference|https://github.com/s31tz/Quiq/tree/master/pod/class/
 =item *
 
 L<Quiq::PlotlyJs::TimeSeries|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/TimeSeries.pod> - Erzeuge Zeitreihen-Plot auf Basis von Plotly.js
-
-=item *
-
-L<Quiq::PlotlyJs::TimeSeries::DiagramGroup|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/TimeSeries/DiagramGroup.pod> - Erzeuge eine Gruppe von Zeitreihen-Plots
-
-=item *
-
-L<Quiq::PlotlyJs::TimeSeries::Parameter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/TimeSeries/Parameter.pod> - Eine zu plottende Zeitreihe
 
 =item *
 

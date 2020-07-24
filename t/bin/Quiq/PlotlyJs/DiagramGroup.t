@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Quiq::PlotlyJs::TimeSeries::DiagramGroup::Test;
+package Quiq::PlotlyJs::DiagramGroup::Test;
 use base qw/Quiq::Test::Class/;
 
 use v5.10;
@@ -10,12 +10,12 @@ use warnings;
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
-    shift->useOk('Quiq::PlotlyJs::TimeSeries::DiagramGroup');
+    shift->useOk('Quiq::PlotlyJs::DiagramGroup');
 }
 
 # -----------------------------------------------------------------------------
 
 package main;
-Quiq::PlotlyJs::TimeSeries::DiagramGroup::Test->runTests;
+Quiq::PlotlyJs::DiagramGroup::Test->runTests;
 
 # eof
