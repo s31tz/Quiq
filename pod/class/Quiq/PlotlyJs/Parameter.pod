@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::PlotlyJs::Parameter - Eine zu plottender Parameter
+Quiq::PlotlyJs::Parameter - Ein zu plottender Parameter
 
 =head1 BASE CLASS
 
@@ -12,16 +12,16 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 Ein Objekt der Klasse speichert Information über einen Parameter,
 der von der Klasse B<< Quiq::PlotlyJs::DiagramGroup >> in ein
-Diagramm geplottet werden soll.
+Diagramm geplottet wird.
 
 Die zu plottenden Daten können entweder über die Komponenten B<x>,
 B<y> (und ggf. B<z>) übergeben werden oder sie werden per
-Ajax-Aufruf geholt, wenn das Attribut url gesetzt ist.
+Ajax-Aufruf geholt, wenn das Attribut B<url> gesetzt ist.
 
 Es ist sinnvoll, die Wertebereiche B<xMin>, B<xMax>, B<yMin>, B<yMax>
 explizit vorzugeben. Dies ist nicht zwingend erforderlich,
 Plotly.js setzt die Wertebereiche auch selbständig, dann aber nach
-eigenen Kriterien. Ist kein Y-Wertebereich vorgegeben, wird dann bei
+eigenen Kriterien. Ist kein Y-Wertebereich vorgegeben, wird z.B. bei
 B<fill: 'tozeroy'> die Y-Achse bis 0 ausgedeht, auch wenn alle
 Y-Werte > 0 sind.
 
@@ -39,13 +39,13 @@ Y-Werte > 0 sind.
 
 Pflichtangaben sind B<fett> wiedergegeben. Die zu plottenden Daten
 werden entweder per B<x>, B<y> (und ggf. B<z>) übergeben oder via
-B<url> abgerufen.
+B<url> besorgt.
 
 =over 4
 
-=item B<< color => $color >>
+=item color => $color (Default: '#ff0000')
 
-Farbe, in der die Zeitreihe dargestellt wird. Alle Schreibweisen,
+Farbe, in der die Kurve und Titel dargestellt werden. Alle Schreibweisen,
 die in CSS erlaubt sind, sind zulässig, also NAME, #XXXXXX
 oder rgb(NNN,NNN,NNN,NNN).
 
@@ -59,15 +59,18 @@ Einheit der Parameterwerte.
 
 =item x => \@x
 
-Referenz auf Array der Zeit-Werte in JavaScript-Epoch.
+Referenz auf Array der X-Werte. Im Falle einer Zeitreihe sollten die
+Zeiten als Strings angegeben werden, da Plotly.js Epoch- und
+JavaScript Date-Objekte (auch mit Zeitzone) als UTC-Zeiten ansieht
+und diese in die Zeitzone des Browsers umgerechnet werden.
 
 =item xMin => $val
 
-Kleinster Zeitwert der Zeitreihe.
+Kleinster Wert der X-Achse.
 
 =item xMax => $val
 
-Größter Zeitwert der Zeitreihe.
+Größter Wert der X-Achse.
 
 =item y => \@y
 
@@ -75,21 +78,21 @@ Referenz auf Array der Y-Werte (Weltkoordinaten).
 
 =item yMin => $val
 
-Kleinster Parameterwert der Zeitreihe.
+Kleinster Wert der Y-Achse.
 
-=item xMax => $val
+=item yMax => $val
 
-Größter Parameterwert der Zeitreihe.
+Größter Wert der Y-Achse.
 
 =item url => $url
 
-URL des Ajax-Requests, mit die Zeitreihendaten (Zeitpunkt, Wert)
-abgerufen werden.
+URL des Ajax-Requests, mit welchem die zu plottenden Daten
+(B<x>, B<y>, ggf. B<z>) abgerufen werden.
 
 =item z => \@z
 
-Referenz auf Array von Z-Werten, die als CSS Markerfarben
-interpretiert werden.
+Referenz auf Array von Z-Werten. Dies ist die Liste der Farben,
+in denen die Marker dargestellt werden.
 
 =back
 

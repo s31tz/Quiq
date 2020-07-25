@@ -625,7 +625,7 @@ L<Quiq::PlotlyJs::DiagramGroup|https://github.com/s31tz/Quiq/tree/master/pod/cla
 
 =item *
 
-L<Quiq::PlotlyJs::Parameter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/Parameter.pod> - Eine zu plottender Parameter
+L<Quiq::PlotlyJs::Parameter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/Parameter.pod> - Ein zu plottender Parameter
 
 =item *
 

@@ -54,7 +54,8 @@ Es gibt zwei Möglichkeiten, die Plot-Daten in die Diagramme zu
 
 =item 1.
 
-Die Arrays x, x (und ggf. z) werden dem Parameter-Objekt mitgegeben.
+Die Arrays B<x>, B<y> (und ggf. B<z>) werden dem Parameter-Objekt
+mitgegeben.
 
 =item 2.
 
@@ -68,6 +69,59 @@ L<Cross-Origin Resource Sharing|http://fseitz.de/blog/index.php?/archives/159-Aj
 Das  Laden per Ajax-Request hat den Vorteil, dass das Holen der
 Daten parallel geschieht - während die Diagramme auf der Seite
 bereits (leer) angezeigt werden.
+
+=head2 Aufbau HTML
+
+Der HTML-Code der Diagrammgruppe hat folgenden Aufbau. Hierbei ist
+B<NAME> der Name der Diagrammgruppe, die beim Konstruktor
+angegeben wird, und B<N> die laufende Nummer des Diagramms, beginnend
+mit 1.
+
+  <div id="NAME" class="diagramGroup">
+    <table ...>
+    <tr>
+      <td id="NAME-dN" class="diagram" ...></td>
+    </tr>
+    <tr>
+      <td>
+        ... Rangeslider: <input type="checkbox" id="NAME-rN" class="rangeslider" ...> ...
+      </td>
+    </tr>
+    </table>
+    ...
+  </div>
+
+Über die Id kann das jeweilige DOM-Objekt von CSS/JavaScripüt aus
+eindeutig adressiert werden, über die Klasse die Menge der
+gleichartigen DOM-Objekte.
+
+=over 4
+
+=item id="NAME"
+
+Id der Diagrammgruppe.
+
+=item class="diagramGroup"
+
+Klasse aller Diagrammgruppen.
+
+=item id="NAME-dN"
+
+Id des Nten Diagramms der Diagrammgruppe.
+
+=item class="diagram"
+
+Klasse aller Diagramme.
+
+=item id="NAME-rN"
+
+Id der Nten Rangeslider-Checkbox.
+
+=item class="rangeslider"
+
+Klasse aller Rangeslider.
+
+=back
 
 =head1 METHODS
 
@@ -90,12 +144,12 @@ Höhe eines Diagramms in Pixeln.
 =item name => $name (Default: 'dgr')
 
 Name der Diagramm-Gruppe. Der Name wird als CSS-Id für den
-äußeren Container der Diagramm-Gruppe genutzt.
+äußeren div-Container der Diagramm-Gruppe genutzt.
 
 =item parameters => \@parameters
 
 Liste der Parameter-Objekte. Die Paramater-Objekte sind vom Typ
-Quiq::PlotlyJs::Parameter.
+B<< Quiq::PlotlyJs::Parameter >>.
 
 =item strict => $bool (Default: 1)
 
@@ -262,9 +316,163 @@ sub html {
         $html .= $self->htmlDiagram($h,++$i,$par,$paperBackground);
     }
 
+    # JavaScript-Code
+
     my $j = Quiq::Json->new;
 
-    my $js = Quiq::JavaScript->code(
+    # * Namespace mit Datenstrukturen und Funktionen
+
+    my $js = Quiq::JavaScript->code(q°
+        var __NAME__ = (function() {
+            // Datenstrukturen
+            
+            let trace = __TRACE__;
+            let layout = __LAYOUT__;
+            let config = __CONFIG__;
+            let vars = __VARS__;
+
+            // Methoden
+
+            let setRangeSlider = function (groupId,i,bool) {
+                let dId = groupId+'-d'+i;
+                if (bool) {
+                    Plotly.relayout(dId,{
+                        'xaxis.rangeslider.visible': true,
+                        'xaxis.fixedrange': false,
+                        'height': vars.height[0],
+                        'margin.b': vars.bottomMargin[0],
+                        'title.y': vars.titleY[0],
+                    });
+                    $('#'+dId).height(vars.height[0]);
+                }
+                else {
+                    Plotly.relayout(dId,{
+                        'xaxis.rangeslider.visible': false,
+                        'xaxis.fixedrange': true,
+                        'height': vars.height[1],
+                        'margin.b': vars.bottomMargin[1],
+                        'title.y': vars.titleY[1],
+                    });
+                    $('#'+dId).height(vars.height[1]);
+                }
+                let cbId = groupId+'-r'+i;
+                $('#'+cbId).prop('checked',bool);
+                let div = $('#'+dId)[0];
+                if (bool) {
+                    // Event-Listener auf das aktive (es sollte nur
+                    // eins geben) Diagramm setzen. Der Event-Handler
+                    // überträgt die Änderungen am xrange auf alle
+                    // anderen Diagramme. Probleme hierbei: 1) Der Event wird
+                    // nicht nur bei der Bereichsauswahl und beim
+                    // Scrollen ausgelöst. 2) Die Erkennung des richtigen
+                    // Events am Eventdata-Objekt ed ist schwierig, da
+                    // der xrange auf verschiedene Weisen dargestellt wird
+                    // (siehe console.log()). Daher nutzen wir
+                    // ed['height'] === undefined zur Erkennung.
+                    div.on('plotly_relayout',function(ed) {
+                        // console.log(JSON.stringify(ed,null,4));
+                        $('#'+groupId+' '+'.diagram').each(function(j) {
+                            if (j+1 != i && ed['height'] === undefined) {
+                                Plotly.relayout(this,ed);
+                            }
+                        });
+                    });
+                }
+            };
+
+            let toggleRangeSliders = function (groupId,e) {
+                // Event-Listener von allen Diagrammen entfernen
+                $('#'+groupId+' .diagram').each(function(i) {
+                    this.removeAllListeners('plotly_relayout');
+                });
+                $('#'+groupId+' .rangeslider').each(function(i) {
+                    i++;
+                    // Beim angeklickten Rangeslider stellen wir den
+                    // gewählten Zustand ein, die anderen schalten wir weg
+                    let state = this == e? this.checked: false;
+                    setRangeSlider(groupId,i,state);
+                });
+            };
+
+            let loadData = function (dId,trace,url) {
+                // Daten per Ajax besorgen
+                console.log(url);
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    async: true,
+                    beforeSend: function () {
+                        $('body').css('cursor','wait');
+                    },
+                    complete: function () {
+                        $('body').css('cursor','default');
+                    },
+                    error: function () {
+                        let msg = 'ERROR: Ajax request failed: '+url;
+                        if (vars.strict) 
+                            alert(msg);
+                        else
+                            console.log(msg);
+                    },
+                    success: function (data,textStatus,jqXHR) {
+                        trace.x = [];
+                        trace.y = [];
+                        let colors = [];
+                        let rows = data.split('\n');
+                        for (var i = 0; i < rows.length-1; i++) {
+                            let arr = rows[i].split('\t');
+                            trace.x.push(arr[0]);
+                            trace.y.push(parseFloat(arr[1]));
+                            if (arr.length > 2)
+                                colors.push(arr[2]);
+                        }
+                        if (colors.length)
+                            trace.marker.color = colors;
+                        Plotly.deleteTraces(dId,0);
+                        Plotly.addTraces(dId,trace);
+                    },
+                });
+            };
+
+            let generatePlot = function (name,i,title,yTitle,color,~
+                    xMin,xMax,yMin,yMax,rangeSlider,url,x,y,z) {
+
+                let t = $.extend(true,{},trace);
+                t.line.color = color;
+                // Direkt übergebene Daten (kann leer sein)
+                t.x = x;
+                t.y = y;
+                t.marker.color =
+                    typeof z !== 'undefined' && z.length? z: color;
+
+                let l = $.extend(true,{},layout);
+                l.title.text = title;
+                l.title.font.color = color;
+                l.xaxis.range = [xMin,xMax];
+                l.yaxis.title.text = yTitle;
+                l.yaxis.title.font.color = color;
+                l.yaxis.range = [yMin,yMax];
+
+                let dId = name+'-d'+i;
+                Plotly.newPlot(dId,[t],l,config).then(
+                    function() {
+                        if (url) {
+                            loadData(dId,t,url);
+                        }
+                    },
+                    function() {
+                        alert('ERROR: plot creation failed: '+title);
+                    }
+                );
+                setRangeSlider(name,i,rangeSlider);
+            };
+
+            return {
+                generatePlot: generatePlot,
+                setRangeSlider: setRangeSlider,
+                toggleRangeSliders: toggleRangeSliders,
+            };
+        })();°,
         __NAME__ => $name,
         __TRACE__ => scalar $j->o(
             type => 'scatter',
@@ -376,159 +584,10 @@ sub html {
             bottomMargin => [$bottomMargin,$bottomMargin1],
             titleY => [$titleY,$titleY1],
             strict => $strict? \'true': \'false',
-        ),q°
-        var __NAME__ = (function() {
-            // Datenstrukturen
-            
-            let trace = __TRACE__;
-            let layout = __LAYOUT__;
-            let config = __CONFIG__;
-            let vars = __VARS__;
+        ),
+    );
 
-            // Methoden
-
-            let setRangeSlider = function (groupId,i,bool) {
-                let dId = groupId+'-d'+i;
-                if (bool) {
-                    Plotly.relayout(dId,{
-                        'xaxis.rangeslider.visible': true,
-                        'xaxis.fixedrange': false,
-                        'height': vars.height[0],
-                        'margin.b': vars.bottomMargin[0],
-                        'title.y': vars.titleY[0],
-                    });
-                    $('#'+dId).height(vars.height[0]);
-                }
-                else {
-                    Plotly.relayout(dId,{
-                        'xaxis.rangeslider.visible': false,
-                        'xaxis.fixedrange': true,
-                        'height': vars.height[1],
-                        'margin.b': vars.bottomMargin[1],
-                        'title.y': vars.titleY[1],
-                    });
-                    $('#'+dId).height(vars.height[1]);
-                }
-                let cbId = groupId+'-r'+i;
-                $('#'+cbId).prop('checked',bool);
-                let div = $('#'+dId)[0];
-                if (bool) {
-                    // Event-Listener auf das aktive (es sollte nur
-                    // eins geben) Diagramm setzen. Der Event-Handler
-                    // überträgt die Änderungen am xrange auf alle
-                    // anderen Diagramme. Probleme hierbei: 1) Der Event wird
-                    // nicht nur bei der Bereichsauswahl und beim
-                    // Scrollen ausgelöst. 2) Die Erkennung des richtigen
-                    // Events am Eventdata-Objekt ed ist schwierig, da
-                    // der xrange auf verschiedene Weisen dargestellt wird
-                    // (siehe console.log()). Daher nutzen wir
-                    // ed['height'] === undefined zur Erkennung.
-                    div.on('plotly_relayout',function(ed) {
-                        // console.log(JSON.stringify(ed,null,4));
-                        $('#'+groupId+' '+'.diagram').each(function(j) {
-                            if (j+1 != i && ed['height'] === undefined) {
-                                Plotly.relayout(this,ed);
-                            }
-                        });
-                    });
-                }
-            };
-
-            let toggleRangeSliders = function (groupId,e) {
-                // Event-Listener von allen Diagrammen entfernen
-                $('#'+groupId+' .diagram').each(function(i) {
-                    this.removeAllListeners('plotly_relayout');
-                });
-                $('#'+groupId+' .checkbox-rangeslider').each(function(i) {
-                    i++;
-                    // Beim angeklickten Rangeslider stellen wir den
-                    // gewählten Zustand ein, die anderen schalten wir weg
-                    let state = this == e? this.checked: false;
-                    setRangeSlider(groupId,i,state);
-                });
-            };
-
-            let loadData = function (dId,trace,url) {
-                // Daten per Ajax besorgen
-                console.log(url);
-                $.ajax({
-                    type: 'GET',
-                    url: url,
-                    async: true,
-                    beforeSend: function () {
-                        $('body').css('cursor','wait');
-                    },
-                    complete: function () {
-                        $('body').css('cursor','default');
-                    },
-                    error: function () {
-                        let msg = 'ERROR: Ajax request failed: '+url;
-                        if (vars.strict) 
-                            alert(msg);
-                        else
-                            console.log(msg);
-                    },
-                    success: function (data,textStatus,jqXHR) {
-                        trace.x = [];
-                        trace.y = [];
-                        let colors = [];
-                        let rows = data.split('\n');
-                        for (var i = 0; i < rows.length-1; i++) {
-                            let arr = rows[i].split('\t');
-                            trace.x.push(arr[0]);
-                            trace.y.push(parseFloat(arr[1]));
-                            if (arr.length > 2)
-                                colors.push(arr[2]);
-                        }
-                        if (colors.length)
-                            trace.marker.color = colors;
-                        Plotly.deleteTraces(dId,0);
-                        Plotly.addTraces(dId,trace);
-                    },
-                });
-            };
-
-            let generatePlot = function (name,i,title,yTitle,color,~
-                    xMin,xMax,yMin,yMax,rangeSlider,url,x,y,z) {
-
-                let t = $.extend(true,{},trace);
-                t.line.color = color;
-                // Direkt übergebene Daten (kann leer sein)
-                t.x = x;
-                t.y = y;
-                t.marker.color =
-                    typeof z !== 'undefined' && z.length? z: color;
-
-                let l = $.extend(true,{},layout);
-                l.title.text = title;
-                l.title.font.color = color;
-                l.xaxis.range = [xMin,xMax];
-                l.yaxis.title.text = yTitle;
-                l.yaxis.title.font.color = color;
-                l.yaxis.range = [yMin,yMax];
-
-                let dId = name+'-d'+i;
-                Plotly.newPlot(dId,[t],l,config).then(
-                    function() {
-                        if (url) {
-                            loadData(dId,t,url);
-                        }
-                    },
-                    function() {
-                        alert('ERROR: plot creation failed: '+title);
-                    }
-                );
-                setRangeSlider(name,i,rangeSlider);
-            };
-
-            return {
-                generatePlot: generatePlot,
-                setRangeSlider: setRangeSlider,
-                toggleRangeSliders: toggleRangeSliders,
-            };
-        })();
-    °);
-    # Ready-Handler
+    # * Ready-Handler
 
     my $tmp = '';
     $i = 0;
@@ -536,6 +595,8 @@ sub html {
         $tmp .= $self->jsDiagram($j,++$i,$par);
     }
     $js .= Quiq::JQuery::Function->ready($tmp);
+
+    # Gesamter HTML-Code
 
     return $h->cat(
         $h->tag('div',
@@ -616,7 +677,7 @@ sub htmlDiagram {
                 $h->tag('span',style=>'margin-left: 0.5em','Rangeslider:').
                 Quiq::Html::Widget::CheckBox->html($h,
                      id =>  "$name-r$i",
-                     class => 'checkbox-rangeslider',
+                     class => 'rangeslider',
                      option => 1,
                      value => 0,
                      style => 'vertical-align: middle',

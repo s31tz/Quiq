@@ -34,7 +34,8 @@ Es gibt zwei Möglichkeiten, die Plot-Daten in die Diagramme zu
 
 =item 1.
 
-Die Arrays x, x (und ggf. z) werden dem Parameter-Objekt mitgegeben.
+Die Arrays B<x>, B<y> (und ggf. B<z>) werden dem Parameter-Objekt
+mitgegeben.
 
 =item 2.
 
@@ -48,6 +49,59 @@ L<Cross-Origin Resource Sharing|http://fseitz.de/blog/index.php?/archives/159-Aj
 Das  Laden per Ajax-Request hat den Vorteil, dass das Holen der
 Daten parallel geschieht - während die Diagramme auf der Seite
 bereits (leer) angezeigt werden.
+
+=head2 Aufbau HTML
+
+Der HTML-Code der Diagrammgruppe hat folgenden Aufbau. Hierbei ist
+B<NAME> der Name der Diagrammgruppe, die beim Konstruktor
+angegeben wird, und B<N> die laufende Nummer des Diagramms, beginnend
+mit 1.
+
+  <div id="NAME" class="diagramGroup">
+    <table ...>
+    <tr>
+      <td id="NAME-dN" class="diagram" ...></td>
+    </tr>
+    <tr>
+      <td>
+        ... Rangeslider: <input type="checkbox" id="NAME-rN" class="rangeslider" ...> ...
+      </td>
+    </tr>
+    </table>
+    ...
+  </div>
+
+Über die Id kann das jeweilige DOM-Objekt von CSS/JavaScripüt aus
+eindeutig adressiert werden, über die Klasse die Menge der
+gleichartigen DOM-Objekte.
+
+=over 4
+
+=item id="NAME"
+
+Id der Diagrammgruppe.
+
+=item class="diagramGroup"
+
+Klasse aller Diagrammgruppen.
+
+=item id="NAME-dN"
+
+Id des Nten Diagramms der Diagrammgruppe.
+
+=item class="diagram"
+
+Klasse aller Diagramme.
+
+=item id="NAME-rN"
+
+Id der Nten Rangeslider-Checkbox.
+
+=item class="rangeslider"
+
+Klasse aller Rangeslider.
+
+=back
 
 =head1 METHODS
 
@@ -70,12 +124,12 @@ Höhe eines Diagramms in Pixeln.
 =item name => $name (Default: 'dgr')
 
 Name der Diagramm-Gruppe. Der Name wird als CSS-Id für den
-äußeren Container der Diagramm-Gruppe genutzt.
+äußeren div-Container der Diagramm-Gruppe genutzt.
 
 =item parameters => \@parameters
 
 Liste der Parameter-Objekte. Die Paramater-Objekte sind vom Typ
-Quiq::PlotlyJs::Parameter.
+B<< Quiq::PlotlyJs::Parameter >>.
 
 =item strict => $bool (Default: 1)
 

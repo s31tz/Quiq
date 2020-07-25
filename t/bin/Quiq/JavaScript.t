@@ -21,16 +21,15 @@ sub test_loadClass : Init(1) {
 sub test_code : Test(1) {
     my $self = shift;
 
-    my $js = Quiq::JavaScript->code(
-        __NAME__ => 'dgr',
-        __VALUE__ => 4711,q°
+    my $js = Quiq::JavaScript->code(q°
         var __NAME__ = (function() {
             return {
                 x: ~
                 __VALUE__,
             };
-        })();
-        °,
+        })();°,
+        __NAME__ => 'dgr',
+        __VALUE__ => 4711,
     );
     $self->isText($js,q~
         var dgr = (function() {
