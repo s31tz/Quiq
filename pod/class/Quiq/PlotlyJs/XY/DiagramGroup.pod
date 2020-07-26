@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::PlotlyJs::DiagramGroup - Erzeuge eine Gruppe von XY-Plots
+Quiq::PlotlyJs::XY::DiagramGroup - Erzeuge eine Gruppe von XY-Plots
 
 =head1 BASE CLASS
 
@@ -47,7 +47,7 @@ L<Cross-Origin Resource Sharing|http://fseitz.de/blog/index.php?/archives/159-Aj
 =back
 
 Das  Laden per Ajax-Request hat den Vorteil, dass das Holen der
-Daten parallel geschieht - während die Diagramme auf der Seite
+Daten parallel geschieht während die Diagramme auf der Seite
 bereits (leer) angezeigt werden.
 
 =head2 Aufbau HTML
@@ -71,7 +71,7 @@ mit 1.
     ...
   </div>
 
-Über die Id kann das jeweilige DOM-Objekt von CSS/JavaScripüt aus
+Über die Id kann das jeweilige DOM-Objekt von CSS/JavaScript aus
 eindeutig adressiert werden, über die Klasse die Menge der
 gleichartigen DOM-Objekte.
 
@@ -129,7 +129,7 @@ Name der Diagramm-Gruppe. Der Name wird als CSS-Id für den
 =item parameters => \@parameters
 
 Liste der Parameter-Objekte. Die Paramater-Objekte sind vom Typ
-B<< Quiq::PlotlyJs::Parameter >>.
+B<< Quiq::PlotlyJs::XY::Parameter >>.
 
 =item strict => $bool (Default: 1)
 
@@ -248,7 +248,7 @@ Genererie den JavaScript-Code für ein Diagramm und liefere diesen zurück.
 
 =head1 SOURCE
 
-L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/PlotlyJs/DiagramGroup.pm>
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/PlotlyJs/XY/DiagramGroup.pm>
 
 =head1 AUTHOR
 

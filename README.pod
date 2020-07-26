@@ -621,19 +621,19 @@ L<Quiq::PlotlyJs|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Plotly
 
 =item *
 
-L<Quiq::PlotlyJs::DiagramGroup|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/DiagramGroup.pod> - Erzeuge eine Gruppe von XY-Plots
-
-=item *
-
-L<Quiq::PlotlyJs::Parameter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/Parameter.pod> - Ein zu plottender Parameter
-
-=item *
-
 L<Quiq::PlotlyJs::Reference|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/Reference.pod> - Erzeuge Plotly.js Reference Manual
 
 =item *
 
 L<Quiq::PlotlyJs::TimeSeries|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/TimeSeries.pod> - Erzeuge Zeitreihen-Plot auf Basis von Plotly.js
+
+=item *
+
+L<Quiq::PlotlyJs::XY::DiagramGroup|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/XY/DiagramGroup.pod> - Erzeuge eine Gruppe von XY-Plots
+
+=item *
+
+L<Quiq::PlotlyJs::XY::Parameter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs/XY/Parameter.pod> - Ein zu plottender Parameter
 
 =item *
 

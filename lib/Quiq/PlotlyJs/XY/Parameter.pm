@@ -1,4 +1,4 @@
-package Quiq::PlotlyJs::Parameter;
+package Quiq::PlotlyJs::XY::Parameter;
 use base qw/Quiq::Hash/;
 
 use v5.10;
@@ -13,7 +13,7 @@ our $VERSION = '1.186';
 
 =head1 NAME
 
-Quiq::PlotlyJs::Parameter - Ein zu plottender Parameter
+Quiq::PlotlyJs::XY::Parameter - Ein zu plottender Parameter
 
 =head1 BASE CLASS
 
@@ -22,7 +22,7 @@ L<Quiq::Hash>
 =head1 DESCRIPTION
 
 Ein Objekt der Klasse speichert Information über einen Parameter,
-der von der Klasse B<< Quiq::PlotlyJs::DiagramGroup >> in ein
+der von der Klasse B<< Quiq::PlotlyJs::XY::DiagramGroup >> in ein
 Diagramm geplottet wird.
 
 Die zu plottenden Daten können entweder über die Komponenten B<x>,

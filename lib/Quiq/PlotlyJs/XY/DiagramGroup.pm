@@ -1,4 +1,4 @@
-package Quiq::PlotlyJs::DiagramGroup;
+package Quiq::PlotlyJs::XY::DiagramGroup;
 use base qw/Quiq::Hash/;
 
 use v5.10;
@@ -22,7 +22,7 @@ use Quiq::Html::Widget::Button;
 
 =head1 NAME
 
-Quiq::PlotlyJs::DiagramGroup - Erzeuge eine Gruppe von XY-Plots
+Quiq::PlotlyJs::XY::DiagramGroup - Erzeuge eine Gruppe von XY-Plots
 
 =head1 BASE CLASS
 
@@ -67,7 +67,7 @@ L<Cross-Origin Resource Sharing|http://fseitz.de/blog/index.php?/archives/159-Aj
 =back
 
 Das  Laden per Ajax-Request hat den Vorteil, dass das Holen der
-Daten parallel geschieht - während die Diagramme auf der Seite
+Daten parallel geschieht während die Diagramme auf der Seite
 bereits (leer) angezeigt werden.
 
 =head2 Aufbau HTML
@@ -91,7 +91,7 @@ mit 1.
     ...
   </div>
 
-Über die Id kann das jeweilige DOM-Objekt von CSS/JavaScripüt aus
+Über die Id kann das jeweilige DOM-Objekt von CSS/JavaScript aus
 eindeutig adressiert werden, über die Klasse die Menge der
 gleichartigen DOM-Objekte.
 
@@ -149,7 +149,7 @@ Name der Diagramm-Gruppe. Der Name wird als CSS-Id für den
 =item parameters => \@parameters
 
 Liste der Parameter-Objekte. Die Paramater-Objekte sind vom Typ
-B<< Quiq::PlotlyJs::Parameter >>.
+B<< Quiq::PlotlyJs::XY::Parameter >>.
 
 =item strict => $bool (Default: 1)
 
@@ -435,7 +435,7 @@ sub html {
             };
 
             let generatePlot = function (name,i,title,yTitle,color,~
-                    xMin,xMax,yMin,yMax,rangeSlider,url,x,y,z) {
+                    xMin,xMax,yMin,yMax,showRangeSlider,url,x,y,z) {
 
                 let t = $.extend(true,{},trace);
                 t.line.color = color;
@@ -464,7 +464,7 @@ sub html {
                         alert('ERROR: plot creation failed: '+title);
                     }
                 );
-                setRangeSlider(name,i,rangeSlider);
+                setRangeSlider(name,i,showRangeSlider);
             };
 
             return {
@@ -783,21 +783,21 @@ sub jsDiagram {
     my $xMax = $par->xMax // 'undefined';
     my $yMin = $par->yMin // 'undefined';
     my $yMax = $par->yMax // 'undefined';
-    my $rangeSlider = $i == 1? 'true': 'false';
+    my $showRangeSlider = $i == 1? 'true': 'false';
 
     my $url = $par->url;
     if ($url) {
         return sprintf("$name.generatePlot('%s',%s,'%s','%s','%s','%s'".
                 ",'%s',%s,%s,%s,'%s');\n",
             $name,$i,$par->name,$par->unit,$par->color,
-            $xMin,$xMax,$yMin,$yMax,$rangeSlider,$url);
+            $xMin,$xMax,$yMin,$yMax,$showRangeSlider,$url);
     }
     else {
         # mit x,y,z
         return sprintf("$name.generatePlot('%s',%s,'%s','%s','%s','%s'".
                 ",'%s',%s,%s,%s,'',%s,%s,%s);\n",
             $name,$i,$par->name,$par->unit,$par->color,
-            $xMin,$xMax,$yMin,$yMax,$rangeSlider,
+            $xMin,$xMax,$yMin,$yMax,$showRangeSlider,
             scalar($j->encode($par->x)),scalar($j->encode($par->y)),
             scalar($j->encode($par->z)));
     }
