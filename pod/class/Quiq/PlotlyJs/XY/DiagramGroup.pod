@@ -124,7 +124,8 @@ Höhe eines Diagramms in Pixeln.
 =item name => $name (Default: 'dgr')
 
 Name der Diagramm-Gruppe. Der Name wird als CSS-Id für den
-äußeren div-Container der Diagramm-Gruppe genutzt.
+äußeren div-Container der Diagramm-Gruppe und als Namespace
+für die Funktionen genutzt genutzt.
 
 =item parameters => \@parameters
 
@@ -137,7 +138,7 @@ Melde Fehler mittels alert(), nicht nur via console.log().
 
 =item xAxisType => 'date'|'linear' (Default: 'date')
 
-Art der X-Achsen: date=Zeit, linear=numerisch
+Art der X-Achse: date=Zeit, linear=numerisch
 
 =back
 

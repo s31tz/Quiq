@@ -144,7 +144,8 @@ Höhe eines Diagramms in Pixeln.
 =item name => $name (Default: 'dgr')
 
 Name der Diagramm-Gruppe. Der Name wird als CSS-Id für den
-äußeren div-Container der Diagramm-Gruppe genutzt.
+äußeren div-Container der Diagramm-Gruppe und als Namespace
+für die Funktionen genutzt genutzt.
 
 =item parameters => \@parameters
 
@@ -157,7 +158,7 @@ Melde Fehler mittels alert(), nicht nur via console.log().
 
 =item xAxisType => 'date'|'linear' (Default: 'date')
 
-Art der X-Achsen: date=Zeit, linear=numerisch
+Art der X-Achse: date=Zeit, linear=numerisch
 
 =back
 
@@ -394,7 +395,38 @@ sub html {
                 });
             };
 
-            let loadData = function (dId,trace,url) {
+            // Füge Daten zum Diagramm hinzu. Gibt es keine Daten,
+            // zeige "No data found" an und diable den Rangeslider
+            let setTrace = function (name,i,trace,layout,x,y,z) {
+                trace.x = x;
+                trace.y = y;
+                if (z.length) {
+                    trace.marker.color = z;
+                }
+                if (!x.length) {
+                    layout.annotations = [{
+                        text: 'No data found',
+                        xref: 'paper',
+                        yref: 'paper',
+                        showarrow: false,
+                        font: {
+                            size: 28,
+                            color: '#a0a0a0',
+                        },
+                    }];
+                    setRangeSlider(name,i,false);
+                    $('#'+name+'-r'+i).prop('disabled',true);
+                    $('#'+name+'-s'+i).prop('disabled',true);
+                }
+                let dId = name+'-d'+i;
+                Plotly.deleteTraces(dId,0);
+                Plotly.addTraces(dId,trace);
+
+                return;
+            };
+
+            // Lade Daten asynchron per Ajax und füge sie zum Diagramm hinzu
+            let loadDataSetTrace = function (name,i,trace,layout,url) {
                 // Daten per Ajax besorgen
                 console.log(url);
                 $.ajax({
@@ -415,21 +447,19 @@ sub html {
                             console.log(msg);
                     },
                     success: function (data,textStatus,jqXHR) {
-                        trace.x = [];
-                        trace.y = [];
-                        let colors = [];
+                        let x = [];
+                        let y = [];
+                        let z = [];
                         let rows = data.split('\n');
-                        for (var i = 0; i < rows.length-1; i++) {
+                        // length ist mindestens 1
+                        for (let i = 0; i < rows.length-1; i++) {
                             let arr = rows[i].split('\t');
-                            trace.x.push(arr[0]);
-                            trace.y.push(parseFloat(arr[1]));
+                            x.push(arr[0]);
+                            y.push(parseFloat(arr[1]));
                             if (arr.length > 2)
-                                colors.push(arr[2]);
+                                z.push(arr[2]);
                         }
-                        if (colors.length)
-                            trace.marker.color = colors;
-                        Plotly.deleteTraces(dId,0);
-                        Plotly.addTraces(dId,trace);
+                        setTrace(name,i,trace,layout,x,y,z);
                     },
                 });
             };
@@ -439,11 +469,7 @@ sub html {
 
                 let t = $.extend(true,{},trace);
                 t.line.color = color;
-                // Direkt übergebene Daten (kann leer sein)
-                t.x = x;
-                t.y = y;
-                t.marker.color =
-                    typeof z !== 'undefined' && z.length? z: color;
+                t.marker.color = color;
 
                 let l = $.extend(true,{},layout);
                 l.title.text = title;
@@ -456,9 +482,10 @@ sub html {
                 let dId = name+'-d'+i;
                 Plotly.newPlot(dId,[t],l,config).then(
                     function() {
-                        if (url) {
-                            loadData(dId,t,url);
-                        }
+                        if (url)
+                            loadDataSetTrace(name,i,t,l,url);
+                        else
+                            setTrace(name,i,t,l,x,y,z);
                     },
                     function() {
                         alert('ERROR: plot creation failed: '+title);
@@ -545,6 +572,7 @@ sub html {
                 ),
                 zeroline => \'true',
                 zerolinecolor => $zeroLineColor,
+                # visible => \'false',
             ),
             yaxis => $j->o(
                 type => 'linear',
@@ -572,6 +600,7 @@ sub html {
                 ),
                 zeroline => \'true',
                 zerolinecolor => $zeroLineColor,
+                # visible => \'false',
             ),
         ),
         __CONFIG__ => scalar $j->o(
