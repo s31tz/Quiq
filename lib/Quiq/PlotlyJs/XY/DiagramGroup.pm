@@ -278,7 +278,7 @@ sub html {
 
     my ($xAxisHoverFormat,$xAxisTickFormat,$xAxisLabelHeight);
     if ($xAxisType eq 'date') {
-        $xAxisHoverFormat = '%Y-%m-%d %H:%M:%S'; # Format der
+        $xAxisHoverFormat = '%Y-%m-%d %H:%M:%S %Z'; # Format der
             # Spike-Beschriftung für die X-Koordinate. Siehe:
             # https://github.com/d3/d3-3.x-api-reference/blob/master/\
             # Time-Formatting.md#format
@@ -396,12 +396,15 @@ sub html {
             };
 
             // Füge Daten zum Diagramm hinzu. Gibt es keine Daten,
-            // zeige "No data found" an und diable den Rangeslider
+            // zeige "No data found" an und diable Rangeslider
+            // und Shape
             let setTrace = function (name,i,trace,layout,x,y,z) {
                 trace.x = x;
                 trace.y = y;
+                trace.marker.color = z;
                 if (z.length) {
-                    trace.marker.color = z;
+                    // console.log(z);
+                    vars.zArrays[i-1] = [z.slice()];
                 }
                 if (!x.length) {
                     layout.annotations = [{
@@ -494,7 +497,13 @@ sub html {
                 setRangeSlider(name,i,showRangeSlider);
             };
 
+            let getZArray = function (i) {
+                // console.log(vars.zArrays[i-1]);
+                return vars.zArrays[i-1];
+            };
+
             return {
+                getZArray: getZArray,
                 generatePlot: generatePlot,
                 setRangeSlider: setRangeSlider,
                 toggleRangeSliders: toggleRangeSliders,
@@ -613,6 +622,7 @@ sub html {
             bottomMargin => [$bottomMargin,$bottomMargin1],
             titleY => [$titleY,$titleY1],
             strict => $strict? \'true': \'false',
+            zArrays => [],
         ),
     );
 
@@ -686,13 +696,13 @@ sub htmlDiagram {
     # HTML erzeugen
 
     my $parameterName = $par->name;
+    my $color = $par->color;
     return Quiq::Html::Table::Simple->html($h,
         width => '100%',
         style => [
             border => '1px dotted #b0b0b0',
            'margin-top' => '0.6em',
            'background-color' => $paperBackground,
-           
         ],
         rows => [
             [[
@@ -719,24 +729,38 @@ sub htmlDiagram {
                         'Spline',
                         'Linear',
                         'Marker',
+                        @{$par->zNames},
                     ],
                     onChange => Quiq::JavaScript->line(qq~
-                        var shape = \$('#$name-s$i').val();
+                        let shape = \$('#$name-s$i').val();
                         if (shape == 'Spline') {
                             Plotly.restyle('$name-d$i',{
                                 'mode': 'lines',
                                 'line.shape': 'spline',
                             });
                         }
-                        else if (shape == 'Marker') {
-                            Plotly.restyle('$name-d$i',{
-                                'mode': 'markers',
-                            });
-                        }
-                        else { // Linear
+                        else if (shape == 'Linear') {
                             Plotly.restyle('$name-d$i',{
                                 'mode': 'lines',
                                 'line.shape': 'linear',
+                            });
+                        }
+                        else if (shape == 'Marker') {
+                            Plotly.restyle('$name-d$i',{
+                                'mode': 'markers',
+                                'marker.color': '$color',
+                            });
+                        }
+                        else if (shape == 'Quality') {
+                            let z = $name.getZArray($i);
+                            console.log(z);
+                            Plotly.restyle('$name-d$i',{
+                                mode: 'markers',
+                                marker: {
+                                    color: z,
+                                    size: 3,
+                                    symbol: 'circle',
+                                },
                             });
                         }
                     ~),

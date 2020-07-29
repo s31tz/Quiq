@@ -29,9 +29,51 @@ L<Time Formats|https://github.com/d3/d3/blob/master/API.md#time-formats-d3-time-
 
 L<Change the Default Locale|https://plotly.com/javascript/configuration-options/#change-the-default-locale> - Locale Umstellung
 
+=item *
+
+L<Axis hover formatting|https://community.plotly.com/t/axis-hover-formatting-with-function/1349> - Beliebige Hover-Texte
+
+=item *
+
+L<Empty graph with message|https://community.plotly.com/t/replacing-an-empty-graph-with-a-message/31497> - Plot mit Meldung
+
+=item *
+
+L<Get state of chart|https://community.plotly.com/t/get-state-of-current-chart/5827> - Zugriff auf trace, layout usw.
+
+=item *
+
+L<Error Bars|https://plotly.com/javascript/error-bars/> - Fehlerbalken
+
 =back
 
 =head2 Notizen
+
+=head3 Umschaltung einzelne Marker-Farbe, Array von Markerfarben
+
+Ist der Plot auf eine einzelne Markerfarbe eingestellt worden,
+kann nicht auf ein Array von Markerfarben umgeschaltet werden,
+ohne die gesamte Marker-Struktur zu setzen. Die Komponente
+B<color> von einem String auf ein Array umzusetzen reicht nicht!
+
+Falsch:
+
+  'marker.color': [...],
+
+Richtig:
+
+  marker: {
+      color: [...],
+      ...
+  },
+
+=head3 Beliebige Hover-Texte definieren
+
+Hover-Texte können ohne Events nicht dynamisch berechnet werden,
+da Plotly.js nur JSON-serialisierare Strukturkomponenten besitzt und
+keine Funktionsattribute vorgesehen sind. Das Trace-Attribut
+B<text: [...]> kann aber genutzt werden, um jedem Wert
+ein individuelles Label zuzuweisen (L<Axis hover formatting|https://community.plotly.com/t/axis-hover-formatting-with-function/1349>).
 
 =head3 Zeit-Werte
 

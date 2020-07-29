@@ -89,10 +89,16 @@ Größter Wert der Y-Achse.
 URL des Ajax-Requests, mit welchem die zu plottenden Daten
 (B<x>, B<y>, ggf. B<z>) abgerufen werden.
 
-=item z => \@z
+=item z => [\@z,...]
 
-Referenz auf Array von Z-Werten. Dies ist die Liste der Farben,
-in denen die Marker dargestellt werden.
+Referenz auf Array von Arrays von Z-Werten. Dies sind verschiedene
+Sätze von Markerfarben, also verschiedene Listen von Farbwerten.
+Zu jedem Satz von Markerfarben muss ein Name vereinbart werden,
+siehe Attribut B<zNames>.
+
+=item zNames => \@names
+
+Liste der Namen der Z-Wert-Sätze.
 
 =back
 
