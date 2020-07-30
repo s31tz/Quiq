@@ -278,7 +278,7 @@ sub html {
 
     my ($xAxisHoverFormat,$xAxisTickFormat,$xAxisLabelHeight);
     if ($xAxisType eq 'date') {
-        $xAxisHoverFormat = '%Y-%m-%d %H:%M:%S %Z'; # Format der
+        $xAxisHoverFormat = '%Y-%m-%d %H:%M:%S'; # Format der
             # Spike-Beschriftung für die X-Koordinate. Siehe:
             # https://github.com/d3/d3-3.x-api-reference/blob/master/\
             # Time-Formatting.md#format
@@ -404,7 +404,7 @@ sub html {
                 trace.marker.color = z;
                 if (z.length) {
                     // console.log(z);
-                    vars.zArrays[i-1] = [z.slice()];
+                    vars.zArrays[i-1] = z.slice();
                 }
                 if (!x.length) {
                     layout.annotations = [{
@@ -696,6 +696,7 @@ sub htmlDiagram {
     # HTML erzeugen
 
     my $parameterName = $par->name;
+    my $zName = $par->zName;
     my $color = $par->color;
     return Quiq::Html::Table::Simple->html($h,
         width => '100%',
@@ -729,7 +730,7 @@ sub htmlDiagram {
                         'Spline',
                         'Linear',
                         'Marker',
-                        @{$par->zNames},
+                        $zName? ($zName): (),
                     ],
                     onChange => Quiq::JavaScript->line(qq~
                         let shape = \$('#$name-s$i').val();
@@ -751,7 +752,7 @@ sub htmlDiagram {
                                 'marker.color': '$color',
                             });
                         }
-                        else if (shape == 'Quality') {
+                        else if (shape == '$zName') {
                             let z = $name.getZArray($i);
                             console.log(z);
                             Plotly.restyle('$name-d$i',{
