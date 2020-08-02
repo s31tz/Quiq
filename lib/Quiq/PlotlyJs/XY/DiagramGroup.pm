@@ -55,11 +55,12 @@ Es gibt zwei Möglichkeiten, die Plot-Daten in die Diagramme zu
 =item 1.
 
 Die Arrays B<x>, B<y> (und ggf. B<z>) werden dem Parameter-Objekt
-mitgegeben.
+direkt mitgegeben.
 
 =item 2.
 
-Per Ajax-Aufruf, wenn beim Parameter-Objekt ein URL definiert ist.
+Die Arrays B<x>, B<y> (und ggf. B<z>) werden per Ajax-Aufruf
+besorgt, wenn beim Parameter-Objekt ein URL definiert ist.
 In diesem Fall sind die Daten sind nicht Teil der Seite,
 sondern werden per asynchronem Ajax-Request (ggf. via
 L<Cross-Origin Resource Sharing|http://fseitz.de/blog/index.php?/archives/159-Ajax-Cross-Origin-Resource-Sharing-CORS-implementieren.html>) geladen.
@@ -68,7 +69,120 @@ L<Cross-Origin Resource Sharing|http://fseitz.de/blog/index.php?/archives/159-Aj
 
 Das  Laden per Ajax-Request hat den Vorteil, dass das Holen der
 Daten parallel geschieht während die Diagramme auf der Seite
-bereits (leer) angezeigt werden.
+schon (leer) angezeigt werden, d.h. der Seitenaufbau ist schneller
+und die Daten werden performanter besorgt.
+
+=head2 Parameter-Objekte
+
+Bei der Instantiierung des DiagramGroup-Objekts wird dem Konstruktor
+eine Liste von Parameter-Objekten übergeben. Jeder Parameter wird
+in ein Diagramm geplottet. Folgende Information wird für die
+Darstellung des Diagramms ohne Daten benötigt:
+
+=over 2
+
+=item *
+
+Name (des Parameters)
+
+=item *
+
+Einheit
+
+=item *
+
+Farbe
+
+=item *
+
+Kleinster Wert der X-Achse
+
+=item *
+
+Größter Wert der X-Achse
+
+=item *
+
+Kleinster Wert der Y-Achse
+
+=item *
+
+Größter Wert der Y-Achse
+
+=back
+
+Die Daten selbst werden entweder als Arrays B<x>, B<y> (und ggf. B<z>)
+übergeben oder, was vorzuziehen ist, per asynchronem Ajax-Aufruf
+geladen, via B<url>.
+
+Beispiel für eine Vorab-Selektion der grundlegenden Diagramm-Daten:
+
+  my $parT = $db->select(qq~
+      SELECT
+          par_id
+          , par_name
+          , par_unit
+          , par_ymin
+          , par_ymax
+          , par_color
+          , MIN(val_time) AS par_time_min
+          , MAX(val_time) AS par_time_max
+          , COALESCE(MIN(val_value), par_ymin, 0) AS par_value_min
+          , COALESCE(MAX(val_value), par_ymax, 1) AS par_value_max
+      FROM
+          parameter AS par
+          LEFT JOIN value AS val
+              ON par_id = val_parameter_id
+                  AND val_time >= '__BEGIN__'
+                  AND val_time < '__END__'
+      WHERE
+          par_station_id = __STA_ID__
+          AND par_name IN (__PARAMETERS__)
+      GROUP BY
+          par_id
+          , par_name
+          , par_unit
+          , par_ymin
+          , par_ymax
+          , par_color
+      ~,
+      -placeholders =>
+          __STA_ID__ => $sta->sta_id,
+          __PARAMETERS__ => !@parameters? "''":
+              join(', ',map {"'$_'"} @parameters),
+          __BEGIN__ => $begin,
+          __END__ => $end,
+  );
+  $parT->normalizeNumber('par_ymin','par_ymax','par_value_min',
+      'par_value_max');
+  my %parI = $parT->index('par_name');
+
+Vorgegeben ist die Menge der Parameter B<@parameters> und der
+Zeitbereich B<$begin> und B<$end>.
+
+Die Instantiierung eines Parameters:
+
+  push @par,Quiq::PlotlyJs::XY::Parameter->new(
+      name => $par_name,
+      unit => Encode::decode('utf-8',$par->par_unit),
+      color => '#'.$par->par_color,
+      # x => scalar($valT->values('val_time')),
+      xMin => $begin, # $par->par_time_min,
+      xMax => $end, # $par->par_time_max,
+      # y => scalar($valT->values('val_value')),
+      yMin => $par_value_min,
+      yMax => $par_value_max,
+      url => 'http://s31tz.de/timeseries?'.Quiq::Url->queryEncode(
+          name => $par->par_name,
+      ),
+      # z => scalar($valT->values('qua_color')),
+      zName => 'Quality',
+  );
+
+Die Daten werden per Ajax geladen. Format der text/plain-Antwort:
+
+  2009-02-19 00:00:00<TAB>1025.2<TAB>#0000ff
+  ...
 
 =head2 Aufbau HTML
 
@@ -84,7 +198,9 @@ mit 1.
     </tr>
     <tr>
       <td>
-        ... Rangeslider: <input type="checkbox" id="NAME-rN" class="rangeslider" ...> ...
+        ...
+        Rangeslider: <input type="checkbox" id="NAME-rN" class="rangeslider" ... />
+        Shape: <select id="NAME-sN" ...>...
       </td>
     </tr>
     </table>

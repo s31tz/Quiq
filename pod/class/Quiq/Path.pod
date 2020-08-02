@@ -1293,6 +1293,52 @@ Ausgangslage: Unterhalb von /tmp existieren weder a noch x.
 Nach Ausführung existiert der der Pfad /tmp/x/b/c/d/f, aber der Pfad
 /tmp/a nicht mehr.
 
+=head3 numberBasePaths() - Nummeriere die Basisnamen der Pfade
+
+=head4 Synopsis
+
+  $this->numberBasePaths(\@paths,$width,$step,@opts);
+
+=head4 Arguments
+
+=over 4
+
+=item @path
+
+Die Menge der Pfade.
+
+=item $width
+
+Die Breite (Anzahl der Stellen) der Nummer.
+
+=item $step
+
+Die Schrittweite der Nummerierung.
+
+=back
+
+=head4 Description
+
+Sortiere die Basisnamen der Pfade B<@paths> lexikalisch und
+nummeriere ihre Basisnamen durch, beginnend mit Nummer B<$step> und
+Schrittweite B<$step>. Pfade mit dem gleichen Basisnamen aber
+unterschiedlichen Extensions erhalten die gleiche Nummer, behalten
+aber ihre unterschiedliche Extension.
+
+=head4 Example
+
+  $ ls
+  a.jpg
+  a.xcf
+  x.jpg
+  
+  $ perl -MQuiq::Path -E 'Quiq::Path->numberBasePaths([$p->glob("*")],5,10)'
+  
+  $ ls
+  00010.jpg
+  00010.xcf
+  00020.jpg
+
 =head3 numberPaths() - Nummeriere Pfade
 
 =head4 Synopsis
