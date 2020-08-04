@@ -648,6 +648,7 @@ sub html {
         __LAYOUT__ => scalar $j->o(
             plot_bgcolor => $plotBackground,
             paper_bgcolor => $paperBackground,
+            # autosize => \'true',
             title => $j->o(
                 text => $title,
                 font => $j->o(
