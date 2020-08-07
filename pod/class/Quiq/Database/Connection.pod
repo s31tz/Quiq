@@ -81,7 +81,7 @@ Dies ist n¸tzlich, wenn eine parallele Transaktion benˆtigt wird.
 
 =head4 Synopsis
 
-  $db = $class->newFromSbit($db);
+  $db = $class->newFromSbit($db,@opt);
 
 =head3 disconnect() - Schlieﬂe Datenbankverbindung
 

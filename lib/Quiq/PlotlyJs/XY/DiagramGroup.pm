@@ -300,6 +300,7 @@ sub new {
         name => 'dgr',
         parameters => [],
         strict => 1,
+        width => undef,
         xAxisType => 'date',
     );
     $self->set(@_);
@@ -347,8 +348,8 @@ sub html {
     my ($self,$h) = @_;
 
     # Objektattribute
-    my ($height,$name,$parameterA,$strict,$xAxisType) =
-        $self->get(qw/height name parameters strict xAxisType/);
+    my ($height,$name,$parameterA,$strict,$width,$xAxisType) =
+        $self->get(qw/height name parameters strict width xAxisType/);
 
     # Kein Code, wenn keine Parameter
 
@@ -660,6 +661,7 @@ sub html {
             ),
             spikedistance => -1,
             height => $height,
+            width => $width,
             margin => $j->o(
                 l => $margin->[3],
                 r => $margin->[1],
@@ -808,7 +810,7 @@ sub htmlDiagram {
 
     # Objektattribute
 
-    my ($height,$name) = $self->get(qw/height name/);
+    my ($height,$name,$width) = $self->get(qw/height name width/);
 
     # HTML erzeugen
 
@@ -816,7 +818,7 @@ sub htmlDiagram {
     my $zName = $par->zName;
     my $color = $par->color;
     return Quiq::Html::Table::Simple->html($h,
-        width => '100%',
+        width => $width? "${width}px": '100%',
         style => [
             border => '1px dotted #b0b0b0',
            'margin-top' => '0.6em',

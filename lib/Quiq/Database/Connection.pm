@@ -251,19 +251,21 @@ sub new {
 
 =head4 Synopsis
 
-  $db = $class->newFromSbit($db);
+  $db = $class->newFromSbit($db,@opt);
 
 =cut
 
 # -----------------------------------------------------------------------------
 
 sub newFromSbit {
-    my ($class,$db) = @_;
+    my ($class,$db) = splice @_,0,2;
+    # @_: @opt
 
     return $class->new($db->udlDbms,
         -handle => $db->dbh,
-        -log => 0,
+        # -log => 1,
         # -logfile => '/tmp/tsplot.log',
+        @_,
     );
 }
 
