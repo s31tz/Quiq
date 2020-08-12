@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use utf8;
 
-our $VERSION = '1.186';
+our $VERSION = '1.187';
 
 use Quiq::Json;
 use Quiq::JavaScript;
@@ -980,7 +980,7 @@ sub jsDiagram {
 
 =head1 VERSION
 
-1.186
+1.187
 
 =head1 AUTHOR
 
