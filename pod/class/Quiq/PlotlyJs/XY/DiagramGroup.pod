@@ -248,6 +248,10 @@ für die Funktionen genutzt genutzt.
 Liste der Parameter-Objekte. Die Paramater-Objekte sind vom Typ
 B<< Quiq::PlotlyJs::XY::Parameter >>.
 
+=item shape => $shape (Default: 'Spline')
+
+Anfangsauswahl des Shape-Menüs auf allen Diagrammen.
+
 =item strict => $bool (Default: 1)
 
 Melde Fehler mittels alert(), nicht nur via console.log().

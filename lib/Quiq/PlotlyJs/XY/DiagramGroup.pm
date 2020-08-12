@@ -268,6 +268,10 @@ für die Funktionen genutzt genutzt.
 Liste der Parameter-Objekte. Die Paramater-Objekte sind vom Typ
 B<< Quiq::PlotlyJs::XY::Parameter >>.
 
+=item shape => $shape (Default: 'Spline')
+
+Anfangsauswahl des Shape-Menüs auf allen Diagrammen.
+
 =item strict => $bool (Default: 1)
 
 Melde Fehler mittels alert(), nicht nur via console.log().
@@ -299,6 +303,7 @@ sub new {
         height => 300,
         name => 'dgr',
         parameters => [],
+        shape => 'Spline',
         strict => 1,
         width => undef,
         xAxisType => 'date',
@@ -348,8 +353,8 @@ sub html {
     my ($self,$h) = @_;
 
     # Objektattribute
-    my ($height,$name,$parameterA,$strict,$width,$xAxisType) =
-        $self->get(qw/height name parameters strict width xAxisType/);
+    my ($height,$name,$parameterA,$shape,$strict,$width,$xAxisType) =
+        $self->get(qw/height name parameters shape strict width xAxisType/);
 
     # Kein Code, wenn keine Parameter
 
@@ -585,7 +590,7 @@ sub html {
             };
 
             let generatePlot = function (name,i,title,yTitle,color,~
-                    xMin,xMax,yMin,yMax,showRangeSlider,url,x,y,z) {
+                    xMin,xMax,yMin,yMax,showRangeSlider,shape,url,x,y,z) {
 
                 let t = $.extend(true,{},trace);
                 t.line.color = color;
@@ -810,7 +815,7 @@ sub htmlDiagram {
 
     # Objektattribute
 
-    my ($height,$name,$width) = $self->get(qw/height name width/);
+    my ($height,$name,$shape,$width) = $self->get(qw/height name shape width/);
 
     # HTML erzeugen
 
@@ -845,6 +850,7 @@ sub htmlDiagram {
                 ).
                 ' | Shape: '.Quiq::Html::Widget::SelectMenu->html($h,
                     id => "$name-s$i",
+                    value => $shape,
                     options => [
                         'Spline',
                         'Linear',
@@ -948,7 +954,7 @@ sub jsDiagram {
 
     # Objektattribute
 
-    my $name = $self->get('name');
+    my ($name,$shape) = $self->get('name','shape');
 
     # JavaScript erzeugen
 
@@ -961,16 +967,16 @@ sub jsDiagram {
     my $url = $par->url;
     if ($url) {
         return sprintf("$name.generatePlot('%s',%s,'%s','%s','%s','%s'".
-                ",'%s',%s,%s,%s,'%s');\n",
+                ",'%s',%s,%s,%s,'%s','%s');\n",
             $name,$i,$par->name,$par->unit,$par->color,
-            $xMin,$xMax,$yMin,$yMax,$showRangeSlider,$url);
+            $xMin,$xMax,$yMin,$yMax,$showRangeSlider,$shape,$url);
     }
     else {
         # mit x,y,z
         return sprintf("$name.generatePlot('%s',%s,'%s','%s','%s','%s'".
-                ",'%s',%s,%s,%s,'',%s,%s,%s);\n",
+                ",'%s',%s,%s,%s,'%s','',%s,%s,%s);\n",
             $name,$i,$par->name,$par->unit,$par->color,
-            $xMin,$xMax,$yMin,$yMax,$showRangeSlider,
+            $xMin,$xMax,$yMin,$yMax,$showRangeSlider,$shape,
             scalar($j->encode($par->x)),scalar($j->encode($par->y)),
             scalar($j->encode($par->z)));
     }
