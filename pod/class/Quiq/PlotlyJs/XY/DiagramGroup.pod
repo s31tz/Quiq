@@ -233,6 +233,11 @@ Klasse aller Rangeslider.
 
 =over 4
 
+=item fontSize => $n
+
+Fontgröße der Achsenbeschriftungen. Aus dieser Größe wird die Größe
+der sonstigen Fonts (Titel, Y-Titel) abgeleitet.
+
 =item height => $n (Default: 300)
 
 Höhe eines Diagramms in Pixeln.

@@ -253,6 +253,11 @@ Klasse aller Rangeslider.
 
 =over 4
 
+=item fontSize => $n
+
+Fontgröße der Achsenbeschriftungen. Aus dieser Größe wird die Größe
+der sonstigen Fonts (Titel, Y-Titel) abgeleitet.
+
 =item height => $n (Default: 300)
 
 Höhe eines Diagramms in Pixeln.
@@ -300,6 +305,7 @@ sub new {
     # @_: @attVal
 
     my $self = $class->SUPER::new(
+        fontSize => undef,
         height => 300,
         name => 'dgr',
         parameters => [],
@@ -353,8 +359,10 @@ sub html {
     my ($self,$h) = @_;
 
     # Objektattribute
-    my ($height,$name,$parameterA,$shape,$strict,$width,$xAxisType) =
-        $self->get(qw/height name parameters shape strict width xAxisType/);
+    my ($fontSize,$height,$name,$parameterA,$shape,$strict,$width,
+        $xAxisType) =
+        $self->get(qw/fontSize height name parameters shape strict width
+        xAxisType/);
 
     # Kein Code, wenn keine Parameter
 
@@ -520,10 +528,31 @@ sub html {
             // Füge Daten zum Diagramm hinzu. Gibt es keine Daten,
             // zeige "No data found" an und diable Rangeslider
             // und Shape
-            let setTrace = function (name,i,trace,layout,x,y,z) {
+            let setTrace = function (name,i,trace,layout,shape,x,y,z) {
                 trace.x = x;
                 trace.y = y;
-                trace.marker.color = z;
+                if (shape == 'Spline') {
+                    trace.mode = 'lines';
+                    trace.line.shape = 'spline';
+                    trace.marker.color = trace.line.color;
+                }
+                else if (shape == 'Linear') {
+                    trace.mode = 'lines';
+                    trace.line.shape = 'linear';
+                    trace.marker.color = trace.line.color;
+                }
+                else if (shape == 'Marker') {
+                    trace.mode = 'markers';
+                    trace.marker.color = trace.line.color;
+                }
+                else {
+                    trace.mode = 'markers';
+                    trace.marker = {
+                        color: z,
+                        size: 3,
+                        symbol: 'circle',
+                    }
+                }
                 if (z.length) {
                     // console.log(z);
                     vars.zArrays[i-1] = z.slice();
@@ -551,7 +580,7 @@ sub html {
             };
 
             // Lade Daten asynchron per Ajax und füge sie zum Diagramm hinzu
-            let loadDataSetTrace = function (name,i,trace,layout,url) {
+            let loadDataSetTrace = function (name,i,trace,layout,shape,url) {
                 // Daten per Ajax besorgen
                 console.log(url);
                 $.ajax({
@@ -584,7 +613,7 @@ sub html {
                             if (arr.length > 2)
                                 z.push(arr[2]);
                         }
-                        setTrace(name,i,trace,layout,x,y,z);
+                        setTrace(name,i,trace,layout,shape,x,y,z);
                     },
                 });
             };
@@ -608,9 +637,9 @@ sub html {
                 Plotly.newPlot(dId,[t],l,config).then(
                     function() {
                         if (url)
-                            loadDataSetTrace(name,i,t,l,url);
+                            loadDataSetTrace(name,i,t,l,shape,url);
                         else
-                            setTrace(name,i,t,l,x,y,z);
+                            setTrace(name,i,t,l,shape,x,y,z);
                     },
                     function() {
                         alert('ERROR: plot creation failed: '+title);
@@ -659,6 +688,7 @@ sub html {
                 text => $title,
                 font => $j->o(
                     color => $color,
+                    size => $fontSize? int($fontSize*1.5): undef,
                 ),
                 yref => 'container', # container, paper
                 yanchor => 'top',
@@ -688,6 +718,9 @@ sub html {
                 # tickangle => 30,
                 ticklen => $xTickLen,
                 tickcolor => $axisColor,
+                tickfont => $j->o(
+                    size => $fontSize,
+                ),
                 #tickformatstops => [
                 #],
                 showspikes => \'true',
@@ -718,6 +751,9 @@ sub html {
                 # autorange => \'true',
                 ticklen => $yTickLen,
                 tickcolor => $axisColor,
+                tickfont => $j->o(
+                    size => $fontSize,
+                ),
                 gridcolor => $gridColor,
                 showspikes => \'true',
                 side => $ySide,
@@ -729,6 +765,7 @@ sub html {
                     text => $yTitle,
                     font => $j->o(
                         color => $color,
+                        size => $fontSize? int($fontSize*1.3): undef,
                     ),
                 ),
                 zeroline => \'true',
