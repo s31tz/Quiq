@@ -42,6 +42,10 @@ Filehandle, von der die Benutzereingabe gelesen wird.
 
 Filehandle, auf die der Prompt geschrieben wird.
 
+=item -sloppy => $bool (Default: 0)
+
+Beschränke die möglichen Antworten nicht auf die Liste $valSpec.
+
 =item -timer => \$t (Default: undef)
 
 Addiere Antwortzeit des Benutzer zu Zeitvariable $t hinzu. Dieses
