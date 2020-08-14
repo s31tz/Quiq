@@ -60,6 +60,11 @@ Farbe, in der die Kurve und Titel dargestellt werden. Alle Schreibweisen,
 die in CSS erlaubt sind, sind zulässig, also NAME, #XXXXXX
 oder rgb(NNN,NNN,NNN,NNN).
 
+=item html => $html
+
+HTML-Code der zum Div-Container des Diagramms hinzugefügt wird,
+z.B. um absolut postionierte Divs über den Diagramm-Bereich zu legen.
+
 =item B<< name => $name >>
 
 Name des Parameters.
@@ -131,6 +136,7 @@ sub new {
 
     my $self = $class->SUPER::new(
         color => '#ff0000',
+        html => undef,
         name => undef,
         x => [],
         xMin => undef,

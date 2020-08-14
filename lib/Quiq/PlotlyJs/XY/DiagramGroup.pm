@@ -266,7 +266,7 @@ Höhe eines Diagramms in Pixeln.
 
 Name der Diagramm-Gruppe. Der Name wird als CSS-Id für den
 äußeren div-Container der Diagramm-Gruppe und als Namespace
-für die Funktionen genutzt genutzt.
+für die Funktionen genutzt.
 
 =item parameters => \@parameters
 
@@ -438,15 +438,6 @@ sub html {
     my $yMin = -1;
     my $yMax = 1;
 
-    # HTML-Code
-
-    my $html = '';
-
-    my $i = 0;
-    for my $par (@$parameterA) {
-        $html .= $self->htmlDiagram($h,++$i,$par,$paperBackground);
-    }
-
     # JavaScript-Code
 
     my $j = Quiq::Json->new;
@@ -575,6 +566,7 @@ sub html {
                 let dId = name+'-d'+i;
                 Plotly.deleteTraces(dId,0);
                 Plotly.addTraces(dId,trace);
+                $('#'+name+'-c'+i).html(x.length.toString()+' values');
 
                 return;
             };
@@ -787,26 +779,36 @@ sub html {
         ),
     );
 
-    # * Ready-Handler
-
-    my $tmp = '';
-    $i = 0;
-    for my $par (@$parameterA) {
-        $tmp .= $self->jsDiagram($j,++$i,$par);
-    }
-    $js .= Quiq::JQuery::Function->ready($tmp);
-
     # Gesamter HTML-Code
 
     return $h->cat(
         $h->tag('div',
             id => $name,
             class => 'diagramGroup',
-            '-',
-            $html,
+            do {
+                # HTML-Code der Diagramme
+                
+                my $tmp = '';
+                my $i = 0;
+                for my $par (@$parameterA) {
+                    $tmp .= $self->htmlDiagram($h,++$i,$par,
+                        $paperBackground);
+                }
+                $tmp;
+            }
         ),
         $h->tag('script',
-            $js,
+            '-',
+            $js,do {
+                # Ready-Handler
+
+                my $tmp = '';
+                my $i = 0;
+                for my $par (@$parameterA) {
+                    $tmp .= $self->jsDiagram($j,++$i,$par);
+                }
+                Quiq::JQuery::Function->ready($tmp);
+            },
         ),
     );
 }
@@ -859,13 +861,16 @@ sub htmlDiagram {
     my $parameterName = $par->name;
     my $zName = $par->zName;
     my $color = $par->color;
-    return Quiq::Html::Table::Simple->html($h,
-        width => $width? "${width}px": '100%',
+    return $h->tag('div',
         style => [
             border => '1px dotted #b0b0b0',
            'margin-top' => '0.6em',
            'background-color' => $paperBackground,
+            position => 'relative',
         ],
+        '-',
+        Quiq::Html::Table::Simple->html($h,
+        width => $width? "${width}px": '100%',
         rows => [
             [[
                 id => "$name-d$i",
@@ -944,7 +949,13 @@ sub htmlDiagram {
                     title => 'Download plot graphic as PNG',
                 ),
            ]]
-        ],
+        ]),
+        $h->tag('div',
+           id =>  "$name-c$i",
+           style => 'position: absolute; bottom: 0.3em; right: 0.5em',
+           ''
+        ),
+        $par->get('html'), # optionaler HTML-Code
     );
 }
 

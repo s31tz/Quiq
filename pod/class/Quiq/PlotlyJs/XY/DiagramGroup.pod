@@ -246,7 +246,7 @@ Höhe eines Diagramms in Pixeln.
 
 Name der Diagramm-Gruppe. Der Name wird als CSS-Id für den
 äußeren div-Container der Diagramm-Gruppe und als Namespace
-für die Funktionen genutzt genutzt.
+für die Funktionen genutzt.
 
 =item parameters => \@parameters
 
