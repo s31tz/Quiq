@@ -285,6 +285,12 @@ Zeichne einen inneren Rahmen in Farbe $color um das Bild.
 "Innerer Rahmen" bedeutet, dass der Rahmen Teil des Bildes ist
 und nicht außen um das Bild herumgelegt ist.
 
+=head3 drawCross() - Zeichne ein Kreuz
+
+=head4 Synopsis
+
+  $img->drawCross($x,$y,$color);
+
 =head3 string() - Zeichne Zeichenkette horizontal oder vertikal
 
 =head4 Synopsis

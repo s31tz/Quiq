@@ -487,6 +487,27 @@ sub border {
 
 # -----------------------------------------------------------------------------
 
+=head3 drawCross() - Zeichne ein Kreuz
+
+=head4 Synopsis
+
+  $img->drawCross($x,$y,$color);
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub drawCross {
+    my ($self,$x,$y,$color) = @_;
+
+    $self->line($x-2,$y,$x+2,$y,$color);
+    $self->line($x,$y-2,$x,$y+2,$color);
+
+    return;
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 string() - Zeichne Zeichenkette horizontal oder vertikal
 
 =head4 Synopsis
