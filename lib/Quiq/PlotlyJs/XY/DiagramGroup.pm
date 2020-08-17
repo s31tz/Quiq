@@ -22,7 +22,7 @@ use Quiq::Html::Widget::Button;
 
 =head1 NAME
 
-Quiq::PlotlyJs::XY::DiagramGroup - Erzeuge eine Gruppe von XY-Plots
+Quiq::PlotlyJs::XY::DiagramGroup - Gruppe von XY-Diagrammen
 
 =head1 BASE CLASS
 
@@ -31,7 +31,7 @@ L<Quiq::Hash>
 =head1 DESCRIPTION
 
 Diese Klasse ist ein Perl-Wrapper für die Erzeugung einer Gruppe
-von XY-Plots auf Basis von Plotly.js, Beispiel siehe
+von XY-Diagrammen auf Basis von Plotly.js, Beispiel siehe
 L<Plotly.js: Plotten und analysieren einer Gruppe von Zeitreihen|http://fseitz.de/blog/index.php?/archives/157-Plotly.js-Plotten-und-analysieren-einer-Gruppe-von-Zeitreihen.html>.
 
 Die Diagrammgruppe zeichnet sich dadurch aus, dass durch alle
@@ -162,8 +162,8 @@ Zeitbereich B<$begin> und B<$end>.
 
 Die Instantiierung eines Parameters:
 
-  push @par,Quiq::PlotlyJs::XY::Parameter->new(
-      name => $par_name,
+  push @par,Quiq::PlotlyJs::XY::Diagram->new(
+      title => $par_name,
       unit => Encode::decode('utf-8',$par->par_unit),
       color => '#'.$par->par_color,
       # x => scalar($valT->values('val_time')),
@@ -253,6 +253,12 @@ Klasse aller Rangeslider.
 
 =over 4
 
+=item diagrams => \@diagrams
+
+Liste der Diagramm-Objekte. Die Diagramm-Objekte sind vom Typ
+B<< Quiq::PlotlyJs::XY::Diagram >> und definieren die Metadaten
+für die einzelnen Diagramme der Diagramm-Gruppe.
+
 =item fontSize => $n
 
 Fontgröße der Achsenbeschriftungen. Aus dieser Größe wird die Größe
@@ -267,11 +273,6 @@ Höhe eines Diagramms in Pixeln.
 Name der Diagramm-Gruppe. Der Name wird als CSS-Id für den
 äußeren div-Container der Diagramm-Gruppe und als Namespace
 für die Funktionen genutzt.
-
-=item parameters => \@parameters
-
-Liste der Parameter-Objekte. Die Paramater-Objekte sind vom Typ
-B<< Quiq::PlotlyJs::XY::Parameter >>.
 
 =item shape => $shape (Default: 'Spline')
 
@@ -305,10 +306,10 @@ sub new {
     # @_: @attVal
 
     my $self = $class->SUPER::new(
+        diagrams => [],
         fontSize => undef,
         height => 300,
         name => 'dgr',
-        parameters => [],
         shape => 'Spline',
         strict => 1,
         width => undef,
@@ -359,14 +360,14 @@ sub html {
     my ($self,$h) = @_;
 
     # Objektattribute
-    my ($fontSize,$height,$name,$parameterA,$shape,$strict,$width,
+    my ($diagramA,$fontSize,$height,$name,$shape,$strict,$width,
         $xAxisType) =
-        $self->get(qw/fontSize height name parameters shape strict width
+        $self->get(qw/diagrams fontSize height name shape strict width
         xAxisType/);
 
-    # Kein Code, wenn keine Parameter
+    # Kein Code, wenn keine Diagram
 
-    if (!@$parameterA) {
+    if (!@$diagramA) {
         return '';
     }
 
@@ -790,7 +791,7 @@ sub html {
                 
                 my $tmp = '';
                 my $i = 0;
-                for my $par (@$parameterA) {
+                for my $par (@$diagramA) {
                     $tmp .= $self->htmlDiagram($h,++$i,$par,
                         $paperBackground);
                 }
@@ -804,7 +805,7 @@ sub html {
 
                 my $tmp = '';
                 my $i = 0;
-                for my $par (@$parameterA) {
+                for my $par (@$diagramA) {
                     $tmp .= $self->jsDiagram($j,++$i,$par);
                 }
                 Quiq::JQuery::Function->ready($tmp);
@@ -858,7 +859,7 @@ sub htmlDiagram {
 
     # HTML erzeugen
 
-    my $parameterName = $par->name;
+    my $parameterName = $par->title;
     my $zName = $par->zName;
     my $color = $par->color;
     return $h->tag('div',
@@ -1016,14 +1017,14 @@ sub jsDiagram {
     if ($url) {
         return sprintf("$name.generatePlot('%s',%s,'%s','%s','%s','%s'".
                 ",'%s',%s,%s,%s,'%s','%s');\n",
-            $name,$i,$par->name,$par->unit,$par->color,
+            $name,$i,$par->title,$par->unit,$par->color,
             $xMin,$xMax,$yMin,$yMax,$showRangeSlider,$shape,$url);
     }
     else {
         # mit x,y,z
         return sprintf("$name.generatePlot('%s',%s,'%s','%s','%s','%s'".
                 ",'%s',%s,%s,%s,'%s','',%s,%s,%s);\n",
-            $name,$i,$par->name,$par->unit,$par->color,
+            $name,$i,$par->title,$par->unit,$par->color,
             $xMin,$xMax,$yMin,$yMax,$showRangeSlider,$shape,
             scalar($j->encode($par->x)),scalar($j->encode($par->y)),
             scalar($j->encode($par->z)));

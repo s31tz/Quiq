@@ -169,9 +169,19 @@ eine Exception geworfen.
 
   $sqlObj = $db->stmt;
 
-=head4 Alias
+=head4 Aliases
+
+=over 2
+
+=item *
 
 sqlEngine()
+
+=item *
+
+gen()
+
+=back
 
 =head4 Description
 
@@ -888,7 +898,7 @@ nicht unterstützt.
 
 =head4 Synopsis
 
-  $tab|@rows|$cur = $db->select(@select,@opt);
+  $tab|@rows|$cur|$stmt = $db->select(@select,@opt);
 
 =head4 Options
 
@@ -917,6 +927,10 @@ Siehe Quiq::Database::Connection/sql().
 =item -rowClass => $rowClass
 
 Siehe Quiq::Database::Connection/sql().
+
+=item -sql => $bool (Default: 0)
+
+Führe das Statement nicht aus, sondern liefere das SQL-Statemement zurück.
 
 =item -tableClass => $tableClass
 

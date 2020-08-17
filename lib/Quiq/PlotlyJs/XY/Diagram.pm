@@ -1,4 +1,4 @@
-package Quiq::PlotlyJs::XY::Parameter;
+package Quiq::PlotlyJs::XY::Diagram;
 use base qw/Quiq::Hash/;
 
 use v5.10;
@@ -13,7 +13,7 @@ our $VERSION = '1.187';
 
 =head1 NAME
 
-Quiq::PlotlyJs::XY::Parameter - Ein zu plottender Parameter
+Quiq::PlotlyJs::XY::Diagram - Metadaten eines XY-Diagramms
 
 =head1 BASE CLASS
 
@@ -21,17 +21,17 @@ L<Quiq::Hash>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse speichert Information über einen Parameter,
-der von der Klasse B<< Quiq::PlotlyJs::XY::DiagramGroup >> in ein
-Diagramm geplottet wird.
+Ein Objekt der Klasse speichert Metadaten zu einem XY-Diagramm,
+das von der Klasse B<< Quiq::PlotlyJs::XY::DiagramGroup >>
+geplottet wird.
 
-Die zu plottenden Daten können entweder über die Komponenten B<x>,
+Die zu plottenden Daten können entweder mittels der Komponenten B<x>,
 B<y> (und ggf. B<z>) übergeben werden oder sie werden per
 Ajax-Aufruf geholt, wenn das Attribut B<url> gesetzt ist.
 
 Es ist sinnvoll, die Wertebereiche B<xMin>, B<xMax>, B<yMin>, B<yMax>
-explizit vorzugeben. Dies ist nicht zwingend erforderlich,
-Plotly.js setzt die Wertebereiche auch selbständig, dann aber nach
+explizit vorzugeben. Dies ist nicht zwingend erforderlich, da
+Plotly.js die Wertebereiche auch selbständig setzt, dann aber nach
 eigenen Kriterien. Ist kein Y-Wertebereich vorgegeben, wird z.B. bei
 B<fill: 'tozeroy'> die Y-Achse bis 0 ausgedeht, auch wenn alle
 Y-Werte > 0 sind.
@@ -65,9 +65,9 @@ oder rgb(NNN,NNN,NNN,NNN).
 HTML-Code der zum Div-Container des Diagramms hinzugefügt wird,
 z.B. um absolut postionierte Divs über den Diagramm-Bereich zu legen.
 
-=item B<< name => $name >>
+=item B<< title => $title >>
 
-Name des Parameters.
+Diagramm-Titel.
 
 =item B<< unit => $unit >>
 
@@ -137,7 +137,7 @@ sub new {
     my $self = $class->SUPER::new(
         color => '#ff0000',
         html => undef,
-        name => undef,
+        title => undef,
         x => [],
         xMin => undef,
         xMax => undef,

@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::PlotlyJs::XY::DiagramGroup - Erzeuge eine Gruppe von XY-Plots
+Quiq::PlotlyJs::XY::DiagramGroup - Gruppe von XY-Diagrammen
 
 =head1 BASE CLASS
 
@@ -11,7 +11,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 =head1 DESCRIPTION
 
 Diese Klasse ist ein Perl-Wrapper für die Erzeugung einer Gruppe
-von XY-Plots auf Basis von Plotly.js, Beispiel siehe
+von XY-Diagrammen auf Basis von Plotly.js, Beispiel siehe
 L<Plotly.js: Plotten und analysieren einer Gruppe von Zeitreihen|http://fseitz.de/blog/index.php?/archives/157-Plotly.js-Plotten-und-analysieren-einer-Gruppe-von-Zeitreihen.html>.
 
 Die Diagrammgruppe zeichnet sich dadurch aus, dass durch alle
@@ -142,8 +142,8 @@ Zeitbereich B<$begin> und B<$end>.
 
 Die Instantiierung eines Parameters:
 
-  push @par,Quiq::PlotlyJs::XY::Parameter->new(
-      name => $par_name,
+  push @par,Quiq::PlotlyJs::XY::Diagram->new(
+      title => $par_name,
       unit => Encode::decode('utf-8',$par->par_unit),
       color => '#'.$par->par_color,
       # x => scalar($valT->values('val_time')),
@@ -233,6 +233,12 @@ Klasse aller Rangeslider.
 
 =over 4
 
+=item diagrams => \@diagrams
+
+Liste der Diagramm-Objekte. Die Diagramm-Objekte sind vom Typ
+B<< Quiq::PlotlyJs::XY::Diagram >> und definieren die Metadaten
+für die einzelnen Diagramme der Diagramm-Gruppe.
+
 =item fontSize => $n
 
 Fontgröße der Achsenbeschriftungen. Aus dieser Größe wird die Größe
@@ -247,11 +253,6 @@ Höhe eines Diagramms in Pixeln.
 Name der Diagramm-Gruppe. Der Name wird als CSS-Id für den
 äußeren div-Container der Diagramm-Gruppe und als Namespace
 für die Funktionen genutzt.
-
-=item parameters => \@parameters
-
-Liste der Parameter-Objekte. Die Paramater-Objekte sind vom Typ
-B<< Quiq::PlotlyJs::XY::Parameter >>.
 
 =item shape => $shape (Default: 'Spline')
 

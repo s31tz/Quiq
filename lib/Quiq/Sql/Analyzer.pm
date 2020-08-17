@@ -53,7 +53,7 @@ Boolean
 =head4 Description
 
 Prüfe, ob SQL-Statement $stmt ein C<CREATE FUNCTION> oder C<CREATE OR
-REPLACE FUNCTION> Statemtn enthält. Wenn ja, liefere 1, andernfalls 0.
+REPLACE FUNCTION> Statement enthält. Wenn ja, liefere 1, andernfalls 0.
 
 =cut
 

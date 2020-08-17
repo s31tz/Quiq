@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Quiq::PlotlyJs::XY::Parameter::Test;
+package Quiq::PlotlyJs::XY::Diagram::Test;
 use base qw/Quiq::Test::Class/;
 
 use v5.10;
@@ -10,12 +10,12 @@ use warnings;
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
-    shift->useOk('Quiq::PlotlyJs::XY::Parameter');
+    shift->useOk('Quiq::PlotlyJs::XY::Diagram');
 }
 
 # -----------------------------------------------------------------------------
 
 package main;
-Quiq::PlotlyJs::XY::Parameter::Test->runTests;
+Quiq::PlotlyJs::XY::Diagram::Test->runTests;
 
 # eof
