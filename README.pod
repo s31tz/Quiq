@@ -2,12 +2,12 @@
 
 =head1 NAME
 
-Quiq - Perl class library for rapid development (German documentation)
+Quiq - Class library for rapid development
 
 =head1 DESCRIPTION
 
 Diese Klassenbibliothek enthält anwendungsunabhängige
-Klassen, die ich in Perl-Projekten (nur Unix/Linux) nutze. Sie
+Klassen, die ich in Projekten (nur Unix/Linux) nutze. Sie
 sind nach einheitlichen Prinzipien konzipiert. Die Bibliothek
 befindet sich unter kontinuierlicher Weiterentwicklung.
 
