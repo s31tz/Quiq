@@ -862,16 +862,111 @@ sub htmlDiagram {
     my $parameterName = $par->title;
     my $zName = $par->zName;
     my $color = $par->color;
-    return $h->tag('div',
+#    return $h->tag('div',
+#        style => [
+#            border => '1px dotted #b0b0b0',
+#           'margin-top' => '0.6em',
+#           'background-color' => $paperBackground,
+#            position => 'relative',
+#        ],
+#        '-',
+#        Quiq::Html::Table::Simple->html($h,
+#        width => $width? "${width}px": '100%',
+#        rows => [
+#            [[
+#                id => "$name-d$i",
+#                class => 'diagram',
+#                style => [
+#                    height => "${height}px",
+#                ],
+#            ]],
+#            [[
+#                $h->tag('span',style=>'margin-left: 0.5em','Rangeslider:').
+#                Quiq::Html::Widget::CheckBox->html($h,
+#                     id =>  "$name-r$i",
+#                     class => 'rangeslider',
+#                     option => 1,
+#                     value => 0,
+#                     style => 'vertical-align: middle',
+#                     title => 'Toggle visibility of range slider',
+#                     onClick => "$name.toggleRangeSliders('$name',this)",
+#                ).
+#                ' | Shape: '.Quiq::Html::Widget::SelectMenu->html($h,
+#                    id => "$name-s$i",
+#                    value => $shape,
+#                    options => [
+#                        'Spline',
+#                        'Linear',
+#                        'Marker',
+#                        $zName? ($zName): (),
+#                    ],
+#                    onChange => Quiq::JavaScript->line(qq~
+#                        let shape = \$('#$name-s$i').val();
+#                        if (shape == 'Spline') {
+#                            Plotly.restyle('$name-d$i',{
+#                                'mode': 'lines',
+#                                'line.shape': 'spline',
+#                            });
+#                        }
+#                        else if (shape == 'Linear') {
+#                            Plotly.restyle('$name-d$i',{
+#                                'mode': 'lines',
+#                                'line.shape': 'linear',
+#                            });
+#                        }
+#                        else if (shape == 'Marker') {
+#                            Plotly.restyle('$name-d$i',{
+#                                'mode': 'markers',
+#                                'marker.color': '$color',
+#                            });
+#                        }
+#                        else if (shape == '$zName') {
+#                            let z = $name.getZArray($i);
+#                            console.log(z);
+#                            Plotly.restyle('$name-d$i',{
+#                                mode: 'markers',
+#                                marker: {
+#                                    color: z,
+#                                    size: 3,
+#                                    symbol: 'circle',
+#                                },
+#                            });
+#                        }
+#                    ~),
+#                    title => 'Connect data points with straight lines,'.
+#                        ' splines or show markers',
+#                ).
+#                ' | '.Quiq::Html::Widget::Button->html($h,
+#                    content => 'Download as PNG',
+#                    onClick => qq~
+#                        let plot = \$('#$name-d$i');
+#                        Plotly.downloadImage(plot[0],{
+#                            format: 'png',
+#                            width: plot.width(),
+#                            height: plot.height(),
+#                            filename: '$parameterName',
+#                        });
+#                    ~,
+#                    title => 'Download plot graphic as PNG',
+#                ),
+#           ]]
+#        ]),
+#        $h->tag('div',
+#           id =>  "$name-c$i",
+#           style => 'position: absolute; bottom: 0.3em; right: 0.5em',
+#           ''
+#        ),
+#        $par->get('html'), # optionaler HTML-Code
+#    );
+    return
+        Quiq::Html::Table::Simple->html($h,
+        width => $width? "${width}px": '100%',
         style => [
             border => '1px dotted #b0b0b0',
            'margin-top' => '0.6em',
            'background-color' => $paperBackground,
             position => 'relative',
         ],
-        '-',
-        Quiq::Html::Table::Simple->html($h,
-        width => $width? "${width}px": '100%',
         rows => [
             [[
                 id => "$name-d$i",
@@ -948,16 +1043,15 @@ sub htmlDiagram {
                         });
                     ~,
                     title => 'Download plot graphic as PNG',
-                ),
+                ).
+                $h->tag('div',
+                   id =>  "$name-c$i",
+                   style => 'position: absolute; bottom: 0.3em; right: 0.5em',
+                   ''
+                ).
+                ($par->get('html') // ''), # optionaler HTML-Code
            ]]
-        ]),
-        $h->tag('div',
-           id =>  "$name-c$i",
-           style => 'position: absolute; bottom: 0.3em; right: 0.5em',
-           ''
-        ),
-        $par->get('html'), # optionaler HTML-Code
-    );
+        ]);
 }
 
 # -----------------------------------------------------------------------------
