@@ -1046,7 +1046,7 @@ sub htmlDiagram {
                 ).
                 $h->tag('div',
                    id =>  "$name-c$i",
-                   style => 'position: absolute; bottom: 0.3em; right: 0.5em',
+                   style => 'position: absolute; bottom: 7px; right: 10px',
                    ''
                 ).
                 ($par->get('html') // ''), # optionaler HTML-Code
