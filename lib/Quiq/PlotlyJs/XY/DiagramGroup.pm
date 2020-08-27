@@ -164,7 +164,7 @@ Die Instantiierung eines Parameters:
 
   push @par,Quiq::PlotlyJs::XY::Diagram->new(
       title => $par_name,
-      unit => Encode::decode('utf-8',$par->par_unit),
+      yTitle => Encode::decode('utf-8',$par->par_unit),
       color => '#'.$par->par_color,
       # x => scalar($valT->values('val_time')),
       xMin => $begin, # $par->par_time_min,
@@ -286,6 +286,10 @@ Melde Fehler mittels alert(), nicht nur via console.log().
 
 Art der X-Achse: date=Zeit, linear=numerisch
 
+=item xTitle => $str
+
+Text unterhalb der X-Achse.
+
 =back
 
 =head4 Returns
@@ -314,6 +318,7 @@ sub new {
         strict => 1,
         width => undef,
         xAxisType => 'date',
+        xTitle => undef,
     );
     $self->set(@_);
 
@@ -361,9 +366,9 @@ sub html {
 
     # Objektattribute
     my ($diagramA,$fontSize,$height,$name,$shape,$strict,$width,
-        $xAxisType) =
+        $xAxisType,$xTitle) =
         $self->get(qw/diagrams fontSize height name shape strict width
-        xAxisType/);
+        xAxisType xTitle/);
 
     # Kein Code, wenn keine Diagram
 
@@ -387,7 +392,8 @@ sub html {
     # date: 250->100,300->110,350->120,400->130,450->140,...
     # linear: ?
     # FIXME: $xAxisLabelHeight in Berechnung einbeziehen
-    my $bottomMargin = ($height-300)/50*10+($xAxisType eq 'date'? 100: 90);
+    my $bottomMargin = ($height-300)/50*10+($xAxisType eq 'date'?
+        ($xTitle? 120: 100): ($xTitle? 110: 90));
 
     my $axisColor = '#d0d0d0'; # Farbe der Achsenlinien
     my $fillColor = '#e0e0e0'; # Farbe zwischen Kurve und X-Achse
@@ -456,6 +462,33 @@ sub html {
 
             // Methoden
 
+            let rescaleY = function (dId,yMinOrig,yMaxOrig) {
+                let d = $('#'+dId)[0];
+                if (d.layout.yaxis.range[0] != yMinOrig ||
+                        d.layout.yaxis.range[1] != yMaxOrig) {
+                    // Originalen Wertebereich wieder herstellen
+                    Plotly.relayout(dId,{'yaxis.range': [yMinOrig,yMaxOrig]});
+                    return;
+                };
+                let x = d.data[0].x;
+                if (x.length == 0)
+                    return;
+                let xMin = d.layout.xaxis.range[0];
+                let xMax = d.layout.xaxis.range[1];
+                let y = d.data[0].y;
+                let yMin, yMax;
+                for (let i = 0; i < x.length; i++) {
+                    if (x[i] >= xMin && x[i] <= xMax) {
+                        if (yMin === undefined || y[i] < yMin)
+                            yMin = y[i]
+                        if (yMax === undefined || y[i] > yMax)
+                            yMax = y[i]
+                    }
+                }
+                // alert(xMin+' '+xMax+' '+yMin+' '+yMax);
+                Plotly.relayout(dId,{'yaxis.range': [yMin,yMax]})
+            };
+
             let setRangeSlider = function (groupId,i,bool) {
                 let dId = groupId+'-d'+i;
                 if (bool) {
@@ -493,7 +526,11 @@ sub html {
                     // (siehe console.log()). Daher nutzen wir
                     // ed['height'] === undefined zur Erkennung.
                     div.on('plotly_relayout',function(ed) {
-                        // console.log(JSON.stringify(ed,null,4));
+                        if (ed['yaxis.range']) {
+                            // Skalierung Y-Achse leiten wir nicht weiter
+                            return;
+                        }
+                        console.log(ed+JSON.stringify(ed,null,4));
                         $('#'+groupId+' '+'.diagram').each(function(j) {
                             if (j+1 != i && ed['height'] === undefined) {
                                 Plotly.relayout(this,ed);
@@ -563,6 +600,7 @@ sub html {
                     setRangeSlider(name,i,false);
                     $('#'+name+'-r'+i).prop('disabled',true);
                     $('#'+name+'-s'+i).prop('disabled',true);
+                    $('#'+name+'-y'+i).prop('disabled',true);
                 }
                 let dId = name+'-d'+i;
                 Plotly.deleteTraces(dId,0);
@@ -639,6 +677,20 @@ sub html {
                     }
                 );
                 setRangeSlider(name,i,showRangeSlider);
+
+                // Bei Doppelklick Y-Skalierung auf allen Diagrammen
+                // in Originalzustand zurückversetzen
+
+                let d = $('#'+dId)[0];
+                $(d).data('yMinOrig',yMin);
+                $(d).data('yMaxOrig',yMax);
+                d.on('plotly_doubleclick',function (data) {
+                    $('#'+name+' .diagram').each(function(i) {
+                        let yMin = $(this).data('yMinOrig');
+                        let yMax = $(this).data('yMaxOrig');
+                        Plotly.relayout(this,{'yaxis.range': [yMin,yMax]});
+                    });
+                });
             };
 
             let getZArray = function (i) {
@@ -651,6 +703,7 @@ sub html {
                 generatePlot: generatePlot,
                 setRangeSlider: setRangeSlider,
                 toggleRangeSliders: toggleRangeSliders,
+                rescaleY: rescaleY,
             };
         })();°,
         __NAME__ => $name,
@@ -728,6 +781,12 @@ sub html {
                     thickness => 0.20,
                     # visible => \'false',
                     visible => \'true',
+                ),
+                title => $j->o(
+                    text => $xTitle,
+                    font => $j->o(
+                        size => $fontSize? int($fontSize*1.3): undef,
+                    ),
                 ),
                 zeroline => \'true',
                 zerolinecolor => $zeroLineColor,
@@ -862,102 +921,7 @@ sub htmlDiagram {
     my $parameterName = $par->title;
     my $zName = $par->zName;
     my $color = $par->color;
-#    return $h->tag('div',
-#        style => [
-#            border => '1px dotted #b0b0b0',
-#           'margin-top' => '0.6em',
-#           'background-color' => $paperBackground,
-#            position => 'relative',
-#        ],
-#        '-',
-#        Quiq::Html::Table::Simple->html($h,
-#        width => $width? "${width}px": '100%',
-#        rows => [
-#            [[
-#                id => "$name-d$i",
-#                class => 'diagram',
-#                style => [
-#                    height => "${height}px",
-#                ],
-#            ]],
-#            [[
-#                $h->tag('span',style=>'margin-left: 0.5em','Rangeslider:').
-#                Quiq::Html::Widget::CheckBox->html($h,
-#                     id =>  "$name-r$i",
-#                     class => 'rangeslider',
-#                     option => 1,
-#                     value => 0,
-#                     style => 'vertical-align: middle',
-#                     title => 'Toggle visibility of range slider',
-#                     onClick => "$name.toggleRangeSliders('$name',this)",
-#                ).
-#                ' | Shape: '.Quiq::Html::Widget::SelectMenu->html($h,
-#                    id => "$name-s$i",
-#                    value => $shape,
-#                    options => [
-#                        'Spline',
-#                        'Linear',
-#                        'Marker',
-#                        $zName? ($zName): (),
-#                    ],
-#                    onChange => Quiq::JavaScript->line(qq~
-#                        let shape = \$('#$name-s$i').val();
-#                        if (shape == 'Spline') {
-#                            Plotly.restyle('$name-d$i',{
-#                                'mode': 'lines',
-#                                'line.shape': 'spline',
-#                            });
-#                        }
-#                        else if (shape == 'Linear') {
-#                            Plotly.restyle('$name-d$i',{
-#                                'mode': 'lines',
-#                                'line.shape': 'linear',
-#                            });
-#                        }
-#                        else if (shape == 'Marker') {
-#                            Plotly.restyle('$name-d$i',{
-#                                'mode': 'markers',
-#                                'marker.color': '$color',
-#                            });
-#                        }
-#                        else if (shape == '$zName') {
-#                            let z = $name.getZArray($i);
-#                            console.log(z);
-#                            Plotly.restyle('$name-d$i',{
-#                                mode: 'markers',
-#                                marker: {
-#                                    color: z,
-#                                    size: 3,
-#                                    symbol: 'circle',
-#                                },
-#                            });
-#                        }
-#                    ~),
-#                    title => 'Connect data points with straight lines,'.
-#                        ' splines or show markers',
-#                ).
-#                ' | '.Quiq::Html::Widget::Button->html($h,
-#                    content => 'Download as PNG',
-#                    onClick => qq~
-#                        let plot = \$('#$name-d$i');
-#                        Plotly.downloadImage(plot[0],{
-#                            format: 'png',
-#                            width: plot.width(),
-#                            height: plot.height(),
-#                            filename: '$parameterName',
-#                        });
-#                    ~,
-#                    title => 'Download plot graphic as PNG',
-#                ),
-#           ]]
-#        ]),
-#        $h->tag('div',
-#           id =>  "$name-c$i",
-#           style => 'position: absolute; bottom: 0.3em; right: 0.5em',
-#           ''
-#        ),
-#        $par->get('html'), # optionaler HTML-Code
-#    );
+
     return
         Quiq::Html::Table::Simple->html($h,
         width => $width? "${width}px": '100%',
@@ -976,7 +940,7 @@ sub htmlDiagram {
                 ],
             ]],
             [[
-                $h->tag('span',style=>'margin-left: 0.5em','Rangeslider:').
+                $h->tag('span',style=>'margin-left: 10px','Rangeslider:').
                 Quiq::Html::Widget::CheckBox->html($h,
                      id =>  "$name-r$i",
                      class => 'rangeslider',
@@ -1030,6 +994,14 @@ sub htmlDiagram {
                     ~),
                     title => 'Connect data points with straight lines,'.
                         ' splines or show markers',
+                ).
+                ' | '.Quiq::Html::Widget::Button->html($h,
+                    id => "$name-y$i",
+                    content => 'Scale Y Axis',
+                    onClick => sprintf("%s.rescaleY('%s',%s,%s)",
+                        $name,"$name-d$i",$par->yMin,$par->yMax),
+                    title => 'Rescale Y axis according to visible data or'.
+                        ' original state',
                 ).
                 ' | '.Quiq::Html::Widget::Button->html($h,
                     content => 'Download as PNG',
@@ -1111,14 +1083,14 @@ sub jsDiagram {
     if ($url) {
         return sprintf("$name.generatePlot('%s',%s,'%s','%s','%s','%s'".
                 ",'%s',%s,%s,%s,'%s','%s');\n",
-            $name,$i,$par->title,$par->unit,$par->color,
+            $name,$i,$par->title,$par->yTitle,$par->color,
             $xMin,$xMax,$yMin,$yMax,$showRangeSlider,$shape,$url);
     }
     else {
         # mit x,y,z
         return sprintf("$name.generatePlot('%s',%s,'%s','%s','%s','%s'".
                 ",'%s',%s,%s,%s,'%s','',%s,%s,%s);\n",
-            $name,$i,$par->title,$par->unit,$par->color,
+            $name,$i,$par->title,$par->yTitle,$par->color,
             $xMin,$xMax,$yMin,$yMax,$showRangeSlider,$shape,
             scalar($j->encode($par->x)),scalar($j->encode($par->y)),
             scalar($j->encode($par->z)));

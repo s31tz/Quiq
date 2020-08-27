@@ -183,6 +183,12 @@ Windgeschwindigkeits-Messung)
           borderwidth: 1,
           thickness: 0.2,
         },
+        title: {
+          text: 'm/s',
+          font: {
+            color: '#ff0000',
+          },
+        },
         zeroline: true,
         zerolinecolor: '#b0b0b0',
       },

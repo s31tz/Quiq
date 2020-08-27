@@ -69,10 +69,6 @@ z.B. um absolut postionierte Divs über den Diagramm-Bereich zu legen.
 
 Diagramm-Titel.
 
-=item B<< unit => $unit >>
-
-Einheit der Parameterwerte.
-
 =item x => \@x
 
 Referenz auf Array der X-Werte. Im Falle einer Zeitreihe sollten die
@@ -99,6 +95,10 @@ Kleinster Wert der Y-Achse.
 =item yMax => $val
 
 Größter Wert der Y-Achse.
+
+=item B<< yTitle => $str >>
+
+Titel der Y-Achse, typischerweise die Einheit des Parameters.
 
 =item url => $url
 
@@ -144,7 +144,7 @@ sub new {
         y => [],
         yMin => undef,
         yMax => undef,
-        unit => undef,
+        yTitle => undef,
         url => '',
         z => [],
         zName => undef,

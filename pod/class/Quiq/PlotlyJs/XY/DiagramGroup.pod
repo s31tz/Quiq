@@ -144,7 +144,7 @@ Die Instantiierung eines Parameters:
 
   push @par,Quiq::PlotlyJs::XY::Diagram->new(
       title => $par_name,
-      unit => Encode::decode('utf-8',$par->par_unit),
+      yTitle => Encode::decode('utf-8',$par->par_unit),
       color => '#'.$par->par_color,
       # x => scalar($valT->values('val_time')),
       xMin => $begin, # $par->par_time_min,
@@ -265,6 +265,10 @@ Melde Fehler mittels alert(), nicht nur via console.log().
 =item xAxisType => 'date'|'linear' (Default: 'date')
 
 Art der X-Achse: date=Zeit, linear=numerisch
+
+=item xTitle => $str
+
+Text unterhalb der X-Achse.
 
 =back
 
