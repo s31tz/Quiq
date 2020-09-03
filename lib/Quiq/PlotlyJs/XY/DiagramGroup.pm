@@ -311,7 +311,7 @@ sub new {
 
     my $self = $class->SUPER::new(
         diagrams => [],
-        fontSize => undef,
+        fontSize => 11,
         height => 300,
         name => 'dgr',
         shape => 'Spline',
@@ -385,15 +385,26 @@ sub html {
 
     # Einzel-Attribute (betreffen einzelnes Plotly-Attribut)
 
+    my $titleFontSize = int($fontSize*1.5); # Petersen
+    my $xTitleFontSize = $fontSize+2;
+    my $yTitleFontSize = $fontSize+2;
+
     # Maße für die Ränder
 
-    my $topMargin = 45;
+    # my $topMargin = 45;
+    my $topMargin = 0.6*$titleFontSize+36; # Petersen
+    my $leftMargin = 5*($yTitleFontSize+2)-25; # Petersen
 
     # date: 250->100,300->110,350->120,400->130,450->140,...
     # linear: ?
     # FIXME: $xAxisLabelHeight in Berechnung einbeziehen
-    my $bottomMargin = ($height-300)/50*10+($xAxisType eq 'date'?
-        ($xTitle? 120: 100): ($xTitle? 110: 90));
+    # my $bottomMargin = ($height-300)/50*10+($xAxisType eq 'date'?
+    #     ($xTitle? 120: 100): ($xTitle? 110: 90));
+    # Petersen
+    my $bottomMargin = 0.2*$height+50+2.5*$fontSize-30;
+    if ($xAxisType eq 'date') {
+        $bottomMargin += 20; # FIXME: hängt von Fontgröße ab
+    }
 
     my $axisColor = '#d0d0d0'; # Farbe der Achsenlinien
     my $fillColor = '#e0e0e0'; # Farbe zwischen Kurve und X-Achse
@@ -402,7 +413,7 @@ sub html {
     my $lineShape = 'spline'; # Linienform: 'spline'|'linear'|'hv'|
         # 'vh'|'hvh'|'vhv'
     my $lineWidth = 1;
-    my $margin = [$topMargin,undef,$bottomMargin,undef];
+    my $margin = [$topMargin,undef,$bottomMargin,$leftMargin];
     my $markerColor = $color;
     my $markerSize = 3;
     my $markerSymbol = 'circle';
@@ -432,8 +443,10 @@ sub html {
     my $yTickLen = 4;
     my $zeroLineColor = '#d0d0d0';
 
-    my $height1 = $height-($bottomMargin-$xAxisLabelHeight);
-    my $bottomMargin1 = $bottomMargin-($bottomMargin-$xAxisLabelHeight);
+    # my $height1 = $height-($bottomMargin-$xAxisLabelHeight);
+    my $height1 = 0.8*$height-10; # Petersen
+    # my $bottomMargin1 = $bottomMargin-($bottomMargin-$xAxisLabelHeight);
+    my $bottomMargin1 = 40+2.5*$fontSize-30; # Petersen
 
     my $titleY = 1-(15/$height); # Faktor für Titel-Position
     my $titleY1 = 1-($height*(1-$titleY)/$height1);
@@ -734,7 +747,7 @@ sub html {
                 text => $title,
                 font => $j->o(
                     color => $color,
-                    size => $fontSize? int($fontSize*1.5): undef,
+                    size => $titleFontSize,
                 ),
                 yref => 'container', # container, paper
                 yanchor => 'top',
@@ -785,7 +798,9 @@ sub html {
                 title => $j->o(
                     text => $xTitle,
                     font => $j->o(
-                        size => $fontSize? int($fontSize*1.3): undef,
+                        # size => $fontSize? int($fontSize*1.3): undef,
+                        # size => $fontSize? int(1.25*$fontSize-0.2): undef,
+                        size => $xTitleFontSize,
                     ),
                 ),
                 zeroline => \'true',
@@ -817,7 +832,7 @@ sub html {
                     text => $yTitle,
                     font => $j->o(
                         color => $color,
-                        size => $fontSize? int($fontSize*1.3): undef,
+                        size => $yTitleFontSize,
                     ),
                 ),
                 zeroline => \'true',
