@@ -8,6 +8,7 @@ use utf8;
 
 our $VERSION = '1.187';
 
+use Quiq::Math;
 use Quiq::Json;
 use Quiq::JavaScript;
 use Quiq::JQuery::Function;
@@ -385,7 +386,8 @@ sub html {
 
     # Einzel-Attribute (betreffen einzelnes Plotly-Attribut)
 
-    my $titleFontSize = int($fontSize*1.5); # Petersen
+    # my $titleFontSize = int($fontSize*1.5);
+    my $titleFontSize = Quiq::Math->roundToInt(1.25*$fontSize-0.2);
     my $xTitleFontSize = $fontSize+2;
     my $yTitleFontSize = $fontSize+2;
 
