@@ -11,8 +11,8 @@ our $VERSION = '1.187';
 use Quiq::Math;
 use Quiq::Json;
 use Quiq::JavaScript;
-use Quiq::JQuery::Function;
 use Quiq::Html::Table::Simple;
+use Quiq::JQuery::Function;
 use Quiq::Html::Widget::CheckBox;
 use Quiq::Html::Widget::SelectMenu;
 use Quiq::Html::Widget::Button;
@@ -254,6 +254,11 @@ Klasse aller Rangeslider.
 
 =over 4
 
+=item debug => $bool (Default: 0)
+
+Zeige über dem Diagramm die Formatierungsgrößen an, die bei
+unterschiedlicher Höhe oder Fontgröße angepasst werden müssen.
+
 =item diagrams => \@diagrams
 
 Liste der Diagramm-Objekte. Die Diagramm-Objekte sind vom Typ
@@ -311,10 +316,12 @@ sub new {
     # @_: @attVal
 
     my $self = $class->SUPER::new(
+        debug => 0,
         diagrams => [],
         fontSize => 11,
         height => 300,
         name => 'dgr',
+        petersen => 0, # undokumentierter Parameter
         shape => 'Spline',
         strict => 1,
         width => undef,
@@ -366,10 +373,12 @@ sub html {
     my ($self,$h) = @_;
 
     # Objektattribute
-    my ($diagramA,$fontSize,$height,$name,$shape,$strict,$width,
-        $xAxisType,$xTitle) =
-        $self->get(qw/diagrams fontSize height name shape strict width
-        xAxisType xTitle/);
+    # Undokumentierter Parameter: petersen
+
+    my ($debug,$diagramA,$fontSize,$height,$name,$shape,$strict,$width,
+        $xAxisType,$xTitle,$petersen) =
+        $self->get(qw/debug diagrams fontSize height name shape strict width
+        xAxisType xTitle petersen/);
 
     # Kein Code, wenn keine Diagram
 
@@ -384,31 +393,50 @@ sub html {
     my $axisBox = 1; # Zeichne eine Box um den Plotbereich. Die Box hat
         # die Farbe der Achsen (siehe axisColor).
 
-    # Einzel-Attribute (betreffen einzelnes Plotly-Attribut)
+    my ($topMargin,$leftMargin,$titleFontSize,$xTitleFontSize,$bottomMargin,
+        $rangeSliderThickness,$rangeSliderThicknessAsFraction);
 
-    # orig
-    # date: 250->100,300->110,350->120,400->130,450->140,...
-    # linear: ?
-    my $topMargin = 45;
-    my $leftMargin = undef;
-    my $titleFontSize = int($fontSize*1.5);
-    my $xTitleFontSize = $fontSize? int($fontSize*1.3): undef;
-    my $yTitleFontSize = $xTitleFontSize;
-    # FIXME: $xAxisLabelHeight in Berechnung einbeziehen
-    my $bottomMargin = ($height-300)/50*10+($xAxisType eq 'date'?
-        ($xTitle? 120: 100): ($xTitle? 110: 90));
-
-    # Petersen
-    # my $titleFontSize = Quiq::Math->roundToInt(1.25*$fontSize-0.2);
-    # my $xTitleFontSize = $fontSize+2;
-    # my $yTitleFontSize = $fontSize+2;
-    # my $topMargin = 0.6*$titleFontSize+36;
-    # my $leftMargin = 5*($yTitleFontSize+2)-25;
-    # my $bottomMargin = 0.2*$height+50+2.5*$fontSize-30;
-    # if ($xAxisType eq 'date') {
-    #     $bottomMargin += 20; # FIXME: hängt von Fontgröße ab
-    # }
-
+    if (!$petersen) {
+        # orig
+        # date: 250->100,300->110,350->120,400->130,450->140,...
+        # linear: ?
+        $topMargin = 45;
+        $leftMargin = undef;
+        $titleFontSize = int($fontSize*1.5);
+        $xTitleFontSize = $fontSize? int($fontSize*1.3): undef;
+        # FIXME: $xAxisLabelHeight in Berechnung einbeziehen
+        $bottomMargin = ($height-300)/50*10+($xAxisType eq 'date'?
+            ($xTitle? 120: 100): ($xTitle? 110: 90));
+        # $rangeSliderThickness 
+        $rangeSliderThicknessAsFraction = 0.2;
+    }
+    else {
+        # Petersen 1
+        # $titleFontSize = Quiq::Math->roundToInt(1.25*$fontSize-0.2);
+        # $xTitleFontSize = $fontSize+2;
+        # $topMargin = 0.6*$titleFontSize+36;
+        # $leftMargin = 5*($xTitleFontSize+2)-25;
+        # $bottomMargin = 0.2*$height+50+2.5*$fontSize-30;
+        # if ($xAxisType eq 'date') {
+        #     $bottomMargin += 20; # FIXME: hängt von Fontgröße ab
+        # }
+        # $rangeSliderThickness = 0.2;
+        # Petersen 2
+        $titleFontSize = Quiq::Math->roundToInt(1.25*$fontSize-0.2);
+        $xTitleFontSize = $fontSize+2;
+        $topMargin = Quiq::Math->roundToInt(1.2*$titleFontSize+25);
+        $leftMargin = 5*($xTitleFontSize+2)-15;
+        $rangeSliderThickness = Quiq::Math->roundToInt(
+            $height*(1.461E-11*$height**3 - 7.126E-08*$height**2 +
+            5.377E-05*$height + 1.406E-01));
+        $rangeSliderThicknessAsFraction = Quiq::Math->roundTo(
+            $rangeSliderThickness/$height,2);
+        $bottomMargin = $rangeSliderThickness+1.5*$fontSize+
+            1.5*$xTitleFontSize+22;
+        if ($xAxisType eq 'date') {
+            $bottomMargin += 20; # FIXME: hängt von Fontgröße ab
+        }
+    }
 
     # Maße für die Ränder
 
@@ -449,15 +477,27 @@ sub html {
     my $yTickLen = 4;
     my $zeroLineColor = '#d0d0d0';
 
-    # orig
-    my $height1 = $height-($bottomMargin-$xAxisLabelHeight); # orig
-    my $bottomMargin1 = $bottomMargin-($bottomMargin-$xAxisLabelHeight);
-    # Petersen
-    # my $height1 = 0.8*$height-10; # Petersen
-    # my $bottomMargin1 = 40+2.5*$fontSize-30; # Petersen
+    my ($height2,$bottomMargin2,$titleY,$titleY2);
 
-    my $titleY = 1-(15/$height); # Faktor für Titel-Position
-    my $titleY1 = 1-($height*(1-$titleY)/$height1);
+    if (!$petersen) {
+        # orig
+        $height2 = $height-($bottomMargin-$xAxisLabelHeight); # orig
+        $bottomMargin2 = $bottomMargin-($bottomMargin-$xAxisLabelHeight);
+        $titleY = 1-(15/$height); # Faktor für Titel-Position
+        $titleY2 = 1-($height*(1-$titleY)/$height2);
+    }
+    else {
+        # Petersen1
+        # $height2 = 0.8*$height-10;
+        # $bottomMargin2 = 40+2.5*$fontSize-30;
+        # Petersen2
+        $height2 = $height-$rangeSliderThickness;
+        $bottomMargin2 = $bottomMargin-$rangeSliderThickness;
+        $titleY = Quiq::Math->roundTo(
+            1-($topMargin-$titleFontSize)/2/$height,4);
+        $titleY2 = Quiq::Math->roundTo(
+            1-($topMargin-$titleFontSize)/2/$height2,4);
+    }
 
     my $title = undef;
     my $yTitle = undef;
@@ -799,7 +839,7 @@ sub html {
                     autorange => \'true',
                     bordercolor => $rangeSliderBorderColor,
                     borderwidth => 1,
-                    thickness => 0.20,
+                    thickness => $rangeSliderThicknessAsFraction,
                     # visible => \'false',
                     visible => \'true',
                 ),
@@ -838,7 +878,7 @@ sub html {
                     text => $yTitle,
                     font => $j->o(
                         color => $color,
-                        size => $yTitleFontSize,
+                        size => $xTitleFontSize, # gleich groß wie x-Achse
                     ),
                 ),
                 zeroline => \'true',
@@ -852,9 +892,9 @@ sub html {
             responsive => \'true',
         ),
         __VARS__ => scalar $j->o(
-            height => [$height,$height1],
-            bottomMargin => [$bottomMargin,$bottomMargin1],
-            titleY => [$titleY,$titleY1],
+            height => [$height,$height2],
+            bottomMargin => [$bottomMargin,$bottomMargin2],
+            titleY => [$titleY,$titleY2],
             strict => $strict? \'true': \'false',
             zArrays => [],
         ),
@@ -862,7 +902,30 @@ sub html {
 
     # Gesamter HTML-Code
 
+    my $debugInfo = '';
+    if ($debug) {
+        $debugInfo = Quiq::Html::Table::Simple->html($h,
+            border => 1,
+            cellpadding => 2,
+            rows => [
+                [[-tag=>'th','height'],[-tag=>'th','fontSize'],
+                    [-tag=>'th','rangeSliderThickness'],[-tag=>'th','height2'],
+                    [-tag=>'th','xTitleFontSize'],[-tag=>'th','titleFontSize'],
+                    [-tag=>'th','topMargin'],[-tag=>'th','bottomMargin'],
+                    [-tag=>'th','bottomMargin2'],[-tag=>'th','titleY'],
+                    [-tag=>'th','titleY2'],[-tag=>'th','leftMargin']],
+                [[$height],[$fontSize],
+                    [$rangeSliderThickness.
+                        " ($rangeSliderThicknessAsFraction)"],
+                    [$height2],[$xTitleFontSize],[$titleFontSize],
+                    [$topMargin],[$bottomMargin],[$bottomMargin2],[$titleY],
+                    [$titleY2],[$leftMargin]],
+            ],
+        );
+    }
+
     return $h->cat(
+        $debugInfo,
         $h->tag('div',
             id => $name,
             class => 'diagramGroup',

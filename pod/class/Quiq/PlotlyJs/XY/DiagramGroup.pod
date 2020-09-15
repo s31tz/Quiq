@@ -233,6 +233,11 @@ Klasse aller Rangeslider.
 
 =over 4
 
+=item debug => $bool (Default: 0)
+
+Zeige über dem Diagramm die Formatierungsgrößen an, die bei
+unterschiedlicher Höhe oder Fontgröße angepasst werden müssen.
+
 =item diagrams => \@diagrams
 
 Liste der Diagramm-Objekte. Die Diagramm-Objekte sind vom Typ
