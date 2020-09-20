@@ -729,6 +729,10 @@ L<Quiq::Sql::Analyzer|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/S
 
 =item *
 
+L<Quiq::Sql::Composer|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sql/Composer.pod> - Klasse zum Erzeugen von SQL
+
+=item *
+
 L<Quiq::Sql::Script::Reader|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sql/Script/Reader.pod> - Leser von SQL-Skripten
 
 =item *

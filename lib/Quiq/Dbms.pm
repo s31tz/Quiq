@@ -75,6 +75,7 @@ Versionsnummer des DBMS.
 
   $d = $class->new($dbms);
   $d = $class->new($dbms,$version);
+  $d = $class->new($db);
 
 =head4 Arguments
 
@@ -105,7 +106,9 @@ DBMSe siehe $class->L<dbmsNames|"dbmsNames() - Liste der Namen der unterstützte
 # -----------------------------------------------------------------------------
 
 sub new {
-    my ($class,$dbms,$version) = @_;
+    my $class = shift;
+    my $dbms = ref $_[0]? shift->dbms: shift;
+    my $version = shift;
 
     # DBMS-Namen case insensitive suchen
 

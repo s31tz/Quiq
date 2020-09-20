@@ -5226,6 +5226,7 @@ sub selectClause {
 
     for my $expr (@select) {
         $expr = $self->keyExpr($expr);
+        $expr =~ s/\n/\n      /g; # mehrzeilige Ausdrücke rücken wir ein
     }
 
     return join "\n    , ",@select;
