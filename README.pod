@@ -729,7 +729,7 @@ L<Quiq::Sql::Analyzer|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/S
 
 =item *
 
-L<Quiq::Sql::Composer|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sql/Composer.pod> - Klasse zum Erzeugen von SQL
+L<Quiq::Sql::Composer|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sql/Composer.pod> - Klasse zum Erzeugen von SQL-Code
 
 =item *
 

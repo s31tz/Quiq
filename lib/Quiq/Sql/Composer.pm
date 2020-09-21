@@ -15,7 +15,7 @@ use Quiq::Reference;
 
 =head1 NAME
 
-Quiq::Sql::Composer - Klasse zum Erzeugen von SQL
+Quiq::Sql::Composer - Klasse zum Erzeugen von SQL-Code
 
 =head1 BASE CLASS
 
@@ -25,12 +25,197 @@ L<Quiq::Dbms>
 
 Instantiierung:
 
-  $s = Quiq::Sql::Composer->new($dbms); # Name des DBMS
-  $s = Quiq::Sql::Composer->new($db); # Instanz einer Datenbankverbindung
+  $s = Quiq::Sql::Composer->new($dbms); # Name eines DBMS (siehe Basisklasse)
+  $s = Quiq::Sql::Composer->new($db);   # Instanz einer Datenbankverbindung
+
+Alias:
+
+  $sql = $s->alias($expr,$alias);
+
+CASE:
+
+  $sql = $s->case($expr,@pairs,@opt);
+  $sql = $s->case($expr,@pairs,$else,@opt);
 
 =head1 METHODS
 
 =head2 Ausdrücke
+
+=head3 alias() - Ergänze Ausdruck um Alias
+
+=head4 Synopsis
+
+  $sql = $s->alias($expr,$alias);
+
+=head4 Arguments
+
+=over 4
+
+=item $expr
+
+Ausdruck, wie er in einer Select-Liste auftreten kann (expr).
+
+=item $alias
+
+Alias für den Ausdruck.
+
+=back
+
+=head4 Returns
+
+Ausdruck mit Alias (String)
+
+=head4 Description
+
+Ergänze den Ausdruck $expr um den Alias $alias und liefere das
+Resultat zurück.
+
+=head4 Example
+
+  $sql = $s->alias('LOWER(name)','name');
+  ==>
+  "LOWER(name) AS name"
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub alias {
+    my ($self,$expr,$alias) = @_;
+
+    my $sql = $self->expr($expr);
+    $sql .= " AS $alias";
+
+    return $sql;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 case() - Erzeuge CASE-Ausdruck
+
+=head4 Synopsis
+
+  $sql = $s->case($expr,@pairs,@opt);
+  $sql = $s->case($expr,@pairs,$else,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $expr
+
+CASE-Ausdruck (expr)
+
+=item @pairs
+
+Liste von WHEN/THEN-Paaren (valExpr)
+
+=item $else
+
+ELSE-Wert (valExpr)
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -fmt => 'm'|'i' (Default: 'm')
+
+Erzeuge einen mehrzeiligen (m=multiline) oder einen
+einzeiligen (i=inline) Ausdruck.
+
+=back
+
+=head4 Returns
+
+CASE-Ausdruck (String)
+
+=head4 Description
+
+Erzeuge einen CASE-Ausdruck und liefere diesen zurück.
+
+=head4 Examples
+
+=over 2
+
+=item *
+
+Übersetze Wochentagsnummer in Wochentagskürzel (SQLite)
+
+  $sql = $s->case("strftime('%w', datum)",0=>'So',1=>'Mo',2=>'Di',
+      3=>'Mi',4=>'Do',5=>'Fr',6=>'Sa');
+  ==>
+  "CASE strftime('%w', datum)
+      WHEN '0' THEN 'So'
+      WHEN '1' THEN 'Mo'
+      WHEN '2' THEN 'Di'
+      WHEN '3' THEN 'Mi'
+      WHEN '4' THEN 'Do'
+      WHEN '5' THEN 'Fr'
+      WHEN '6' THEN 'Sa'
+  END"
+
+=item *
+
+Übersetze 1, 0 in 'Ja', 'Nein', einzeiliger Ausdruck
+
+  $sql = $s->case('bearbeitet',1=>'Ja','Nein',-fmt=>'i');
+  ==>
+  "CASE bearbeitet WHEN '1' THEN 'Ja' ELSE 'Nein' END"
+
+=item *
+
+Ausdruck statt Sting-Literal (NULL)
+
+  $sql = $s->case('bearbeitet',1=>'Ja',0=>'Nein',\'NULL',-fmt=>'i');
+  ==>
+  "CASE bearbeitet WHEN '1' THEN 'Ja' WHEN '0' THEN 'Nein' ELSE NULL END"
+
+=back
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub case {
+    my $self = shift;
+    # @_: @keyVal,@opt -or- @keyVal,$else,@opt
+
+    my $fmt = 'm';
+
+    my $argA = $self->parameters(2,undef,\@_,
+        -fmt => \$fmt,
+    );
+
+    my $expr = $self->expr(shift @$argA);
+
+    my @else;
+    if (@$argA % 2) {
+        @else = ($self->valExpr(pop @$argA));
+    }
+
+    my $sql = "CASE $expr";
+    while (@$argA) {
+        my $when = $self->valExpr(shift @$argA);
+        my $then = $self->valExpr(shift @$argA);
+        
+        $sql .= $fmt eq 'm'? "\n    ": ' ';
+        $sql .= "WHEN $when THEN $then";
+    }
+    if (@else) {
+        $sql .= $fmt eq 'm'? "\n    ": ' ';
+        $sql .= "ELSE $else[0]";
+    }
+    $sql .= $fmt eq 'm'? "\n": ' ';
+    $sql .= 'END';
+
+    return $sql;
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Elementare Ausdrücke
 
 =head3 expr() - Erzeuge Ausdruck
 
@@ -49,7 +234,8 @@ Ausdruck, der unverändert geliefert wird.
 
 =item $val
 
-Wert, der in ein SQL String-Literals gewandelt wird.
+Wert, der in ein SQL String-Literals gewandelt wird (siehe Methode
+$s->L<stringLiteral|"stringLiteral() - Erzeuge String-Literal">()).
 
 =back
 
@@ -79,50 +265,6 @@ sub expr {
 
 # -----------------------------------------------------------------------------
 
-=head3 alias() - Ergänze Ausdruck um Alias
-
-=head4 Synopsis
-
-  $sql = $s->alias($expr,$alias);
-
-=head4 Arguments
-
-=over 4
-
-=item $expr
-
-Ausdruck, wie er in einer Select-Liste auftreten kann.
-
-=item $alias
-
-Alias für den Ausdruck
-
-=back
-
-=head4 Returns
-
-Ausdruck mit Alias (String)
-
-=head4 Description
-
-Ergänze den Ausdruck $expr um den Alias $alias in der Form
-B<$expr AS $alias> und liefere diese Zeichenkette zurück.
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub alias {
-    my ($self,$expr,$alias) = @_;
-
-    my $sql = $self->expr($expr);
-    $sql .= " AS $alias";
-
-    return $sql;
-}
-
-# -----------------------------------------------------------------------------
-
 =head3 valExpr() - Erzeuge Wert-Ausdruck
 
 =head4 Synopsis
@@ -137,7 +279,7 @@ sub alias {
 =item $val
 
 Wert, der in ein SQL String-Literals gewandelt wird (siehe Methode
-$s->L<stringLiteral|"stringLiteral() - Erzeuge String-Literal">().
+$s->L<stringLiteral|"stringLiteral() - Erzeuge String-Literal">()).
 
 =item $expr
 
@@ -201,16 +343,12 @@ Stringliteral oder Ausdruck (String)
 
 =head4 Description
 
-Wandele den Wert $val in ein SQL-Stringliteral und liefere
-dieses zurück.
-
-Hierbei werden alle in $str enthaltenen einfachen Anführungsstriche
-verdoppelt und der gesamte String in einfache Anführungsstriche
-eingefasst.
-
-Ist der String leer ('' oder undef) liefere einen Leerstring
-(kein leeres String-Literal!). Ist $default angegeben, liefere diesen
-Wert als Stringliteral.
+Wandele den Wert $val in ein SQL-Stringliteral und liefere dieses
+zurück. Hierbei werden alle in $str enthaltenen einfachen
+Anführungsstriche verdoppelt und der gesamte String in einfache
+Anführungsstriche eingefasst. Ist der String leer ('' oder undef)
+liefere einen Leerstring (kein leeres String-Literal!). Ist
+$default angegeben, liefere diesen Wert als Stringliteral.
 
 B<Anmerkung>: PostgreSQL erlaubt aktuell Escape-Sequenzen in
 String-Literalen. Wir behandeln diese nicht. Escape-Sequenzen sollten
@@ -220,29 +358,41 @@ in postgresql.conf abgeschaltet werden mit der Setzung:
 
 =head4 Examples
 
-Eingebettete Anführungsstriche:
+=over 2
 
-  $sel->stringLiteral('Sie hat's');
+=item *
+
+Eingebettete Anführungsstriche
+
+  $s->stringLiteral("Sie hat's");
   ==>
   "'Sie hat''s'"
 
-Leerstring, wenn kein Wert:
+=item *
 
-  $sel->stringLiteral('');
+Leerstring, wenn kein Wert
+
+  $s->stringLiteral('');
   ==>
   ""
 
-Defaultwert. wenn kein Wert:
+=item *
 
-  $sel->stringLiteral('','schwarz');
+Defaultwert, wenn kein Wert
+
+  $s->stringLiteral('','schwarz');
   ==>
   "'schwarz'"
 
-NULL, wenn kein Wert:
+=item *
 
-  $sel->stringLiteral('',\'NULL');
+Ausdruck als Defaultwert, wenn kein Wert
+
+  $s->stringLiteral('',\'NULL');
   ==>
   "NULL"
+
+=back
 
 =cut
 
@@ -262,65 +412,6 @@ sub stringLiteral {
     $str =~ s/'/''/g;
 
     return "'$str'";
-}
-
-# -----------------------------------------------------------------------------
-
-=head3 case() - Erzeuge CASE-Ausdruck
-
-=head4 Synopsis
-
-  $sql = $s->case($expr,@keyVal,@opt);
-  $sql = $s->case($expr,@keyVal,$else,@opt);
-
-=head4 Options
-
-=over 4
-
-=item -fmt => 'm'|'i' (Default: 'm')
-
-Erzeuge einen mehrzeiligen (m=multiline) oder einen
-einzeiligen (i=inline) Ausdruck.
-
-=back
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub case {
-    my $self = shift;
-    # @_: @keyVal,@opt -or- @keyVal,$else,@opt
-
-    my $fmt = 'm';
-
-    my $argA = $self->parameters(2,undef,\@_,
-        -fmt => \$fmt,
-    );
-
-    my $expr = $self->expr(shift @$argA);
-
-    my @else;
-    if (@$argA % 2) {
-        @else = ($self->valExpr(pop @$argA));
-    }
-
-    my $sql = "CASE $expr";
-    while (@$argA) {
-        my $when = $self->valExpr(shift @$argA);
-        my $then = $self->valExpr(shift @$argA);
-        
-        $sql .= $fmt eq 'm'? "\n    ": ' ';
-        $sql .= "WHEN $when THEN $then";
-    }
-    if (@else) {
-        $sql .= $fmt eq 'm'? "\n    ": ' ';
-        $sql .= "ELSE $else[0]";
-    }
-    $sql .= $fmt eq 'm'? "\n": ' ';
-    $sql .= 'END';
-
-    return $sql;
 }
 
 # -----------------------------------------------------------------------------

@@ -15,29 +15,7 @@ sub test_loadClass : Init(1) {
 
 # -----------------------------------------------------------------------------
 
-sub test_stringLiteral : Test(4) {
-    my $self = shift;
-
-    my $s = Quiq::Sql::Composer->new('PostgreSQL');
-
-    my $val = $s->stringLiteral("Sie hat's");
-    $self->is($val,"'Sie hat''s'");
-
-    $val = $s->stringLiteral('');
-    $self->is($val,'');
-
-    $val = $s->stringLiteral('',\'NULL');
-    $self->is($val,'NULL');
-
-    $val = $s->stringLiteral('','schwarz');
-    $self->is($val,"'schwarz'");
-
-    return;
-}
-
-# -----------------------------------------------------------------------------
-
-sub test_case : Test(3) {
+sub test_case : Test(4) {
     my $self = shift;
 
     my $s = Quiq::Sql::Composer->new('PostgreSQL');
@@ -57,8 +35,34 @@ sub test_case : Test(3) {
         END
     ~);
 
-    $sql = $s->case("strftime('%w', datum)",0=>'So',-fmt=>'i');
-    $self->is($sql,"CASE strftime('%w', datum) WHEN '0' THEN 'So' END");
+    $sql = $s->case('bearbeitet',1=>'Ja','Nein',-fmt=>'i');
+    $self->is($sql,"CASE bearbeitet WHEN '1' THEN 'Ja' ELSE 'Nein' END");
+
+    $sql = $s->case('bearbeitet',1=>'Ja',0=>'Nein',\'NULL',-fmt=>'i');
+    $self->is($sql,"CASE bearbeitet WHEN '1' THEN 'Ja' WHEN '0'".
+        " THEN 'Nein' ELSE NULL END");
+}
+
+# -----------------------------------------------------------------------------
+
+sub test_stringLiteral : Test(4) {
+    my $self = shift;
+
+    my $s = Quiq::Sql::Composer->new('PostgreSQL');
+
+    my $val = $s->stringLiteral("Sie hat's");
+    $self->is($val,"'Sie hat''s'");
+
+    $val = $s->stringLiteral('');
+    $self->is($val,'');
+
+    $val = $s->stringLiteral('',\'NULL');
+    $self->is($val,'NULL');
+
+    $val = $s->stringLiteral('','schwarz');
+    $self->is($val,"'schwarz'");
+
+    return;
 }
 
 # -----------------------------------------------------------------------------
