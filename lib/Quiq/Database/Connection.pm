@@ -1628,6 +1628,8 @@ sub execute {
         -raw => 1,
     );
 
+warn "SQL\n";
+
     my $str;
     if ($cur->isSelect) {
         $str = $cur->fetchAll(1,$limit)->asTable(
