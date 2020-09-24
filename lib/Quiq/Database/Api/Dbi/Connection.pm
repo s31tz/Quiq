@@ -471,7 +471,7 @@ sub sql {
         else { $dbh->rollback }
     }
     else {
-        $sth = $dbh->prepare($stmt);
+        $sth = $dbh->prepare($stmt); # MEMO: hängt auf kopc02 bei Fehler
 
         if ($dbms ne 'access') {
             # FIXME: im Falle von access ist nach Ausführung folgender
