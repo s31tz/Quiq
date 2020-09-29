@@ -183,12 +183,6 @@ Windgeschwindigkeits-Messung)
           borderwidth: 1,
           thickness: 0.2,
         },
-        title: {
-          text: 'm/s',
-          font: {
-            color: '#ff0000',
-          },
-        },
         zeroline: true,
         zerolinecolor: '#b0b0b0',
       },
@@ -346,7 +340,7 @@ Liefere den JavaScript-Code für die Erzeugung Plot-Instanz.
 
 =head1 VERSION
 
-1.187
+1.189
 
 =head1 SOURCE
 

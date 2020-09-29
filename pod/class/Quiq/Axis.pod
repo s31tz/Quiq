@@ -70,7 +70,7 @@ diesen Wert zurück.
 
 =head1 VERSION
 
-1.187
+1.189
 
 =head1 SOURCE
 

@@ -1,3 +1,22 @@
+1.188 2020-09-28
+================
+
+[Quiq::Dbms]
+* Instantiierung aus Datenbank-Connection hinzugefügt
+
+[Quiq::PlotlyJs::XY::Diagram]
+* Attribut unit in yTitle umbenannt
+
+[Quiq::PlotlyJs::XY::DiagramGroup]
+* Attribute debug, xTitle hinzugefügt
+* Defaultwert fontSize auf 11 gesetzt
+
+[Quiq::Sql]
+* mehrzeilige Select-Ausdrücke werden nun eingerückt
+
+[Quiq::Sql::Composer]
+* Klasse hinzugefügt
+
 1.187 2020-08-18
 ================
 

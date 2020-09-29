@@ -517,7 +517,7 @@ Dialog übertragen und diesen speichern.
 
 =head1 VERSION
 
-1.187
+1.189
 
 =head1 SOURCE
 
