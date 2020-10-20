@@ -431,8 +431,10 @@ sub html {
             5.377E-05*$height + 1.406E-01));
         $rangeSliderThicknessAsFraction = Quiq::Math->roundTo(
             $rangeSliderThickness/$height,2);
-        $bottomMargin = $rangeSliderThickness+1.5*$fontSize+
-            1.5*$xTitleFontSize+22;
+        # $bottomMargin = $rangeSliderThickness+1.5*$fontSize+
+        #     1.5*$xTitleFontSize+22;
+        # gändert gemäß Mail v. 2020-10-16
+        $bottomMargin = $rangeSliderThickness+$fontSize+$xTitleFontSize+25;
         if ($xAxisType eq 'date') {
             $bottomMargin += 20; # FIXME: hängt von Fontgröße ab
         }
@@ -710,7 +712,7 @@ sub html {
                 });
             };
 
-            let generatePlot = function (name,i,title,yTitle,color,~
+            let generatePlot = function (name,i,title,yTitle,yTitleColor,color,~
                     xMin,xMax,yMin,yMax,showRangeSlider,shape,url,x,y,z) {
 
                 let t = $.extend(true,{},trace);
@@ -722,7 +724,7 @@ sub html {
                 l.title.font.color = color;
                 l.xaxis.range = [xMin,xMax];
                 l.yaxis.title.text = yTitle;
-                l.yaxis.title.font.color = color;
+                l.yaxis.title.font.color = yTitleColor;
                 l.yaxis.range = [yMin,yMax];
 
                 let dId = name+'-d'+i;
@@ -769,7 +771,7 @@ sub html {
         })();°,
         __NAME__ => $name,
         __TRACE__ => scalar $j->o(
-            type => 'scatter',
+            type => 'scattergl',
             mode => $mode, # lines, markers, lines+markers, none,
             fill => 'tozeroy',
             fillcolor => $fillColor,
@@ -1165,17 +1167,17 @@ sub jsDiagram {
 
     my $url = $par->url;
     if ($url) {
-        return sprintf("$name.generatePlot('%s',%s,'%s','%s','%s','%s'".
+        return sprintf("$name.generatePlot('%s',%s,'%s','%s',%s,'%s','%s'".
                 ",'%s',%s,%s,%s,'%s','%s');\n",
-            $name,$i,$par->title,$par->yTitle,$par->color,
-            $xMin,$xMax,$yMin,$yMax,$showRangeSlider,$shape,$url);
+            $name,$i,$par->title,$par->yTitle,$j->encode($par->yTitleColor),
+            $par->color,$xMin,$xMax,$yMin,$yMax,$showRangeSlider,$shape,$url);
     }
     else {
         # mit x,y,z
-        return sprintf("$name.generatePlot('%s',%s,'%s','%s','%s','%s'".
+        return sprintf("$name.generatePlot('%s',%s,'%s','%s',%s,'%s','%s'".
                 ",'%s',%s,%s,%s,'%s','',%s,%s,%s);\n",
-            $name,$i,$par->title,$par->yTitle,$par->color,
-            $xMin,$xMax,$yMin,$yMax,$showRangeSlider,$shape,
+            $name,$i,$par->title,$par->yTitle,$j->encode($par->yTitleColor),
+            $par->color,$xMin,$xMax,$yMin,$yMax,$showRangeSlider,$shape,
             scalar($j->encode($par->x)),scalar($j->encode($par->y)),
             scalar($j->encode($par->z)));
     }

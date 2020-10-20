@@ -100,6 +100,10 @@ Größter Wert der Y-Achse.
 
 Titel der Y-Achse, typischerweise die Einheit des Parameters.
 
+=item yTitleColor => $color (Default: undef)
+
+Farbe des Titels der Y-Achse. Wenn C<undef>, Default-Farbe von Plotly.
+
 =item url => $url
 
 URL des Ajax-Requests, mit welchem die zu plottenden Daten
@@ -145,6 +149,7 @@ sub new {
         yMin => undef,
         yMax => undef,
         yTitle => undef,
+        yTitleColor => undef,
         url => '',
         z => [],
         zName => undef,
