@@ -434,7 +434,8 @@ sub html {
         # $bottomMargin = $rangeSliderThickness+1.5*$fontSize+
         #     1.5*$xTitleFontSize+22;
         # gändert gemäß Mail v. 2020-10-16
-        $bottomMargin = $rangeSliderThickness+$fontSize+$xTitleFontSize+25;
+        $bottomMargin = $rangeSliderThickness+$fontSize*1.33+
+            $xTitleFontSize*1.33+25;
         if ($xAxisType eq 'date') {
             $bottomMargin += 20; # FIXME: hängt von Fontgröße ab
         }
