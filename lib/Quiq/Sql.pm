@@ -5058,6 +5058,7 @@ my %opMethod = (
     '~' => 'opRel',
     '!~' => 'opRel',
     'LIKE' => 'opRel',
+    'NOT LIKE' => 'opRel',
     'AS' => 'opAS',
     'BETWEEN' => 'opBETWEEN',
     'CAST' => 'opCAST',
