@@ -412,18 +412,21 @@ sub html {
     my ($topMargin,$leftMargin,$titleFontSize,$xTitleFontSize,$bottomMargin,
         $rangeSliderThickness,$rangeSliderThicknessAsFraction);
 
+    my $titleYOffset = 14;
+
     if (!$petersen) {
         # orig
         # date: 250->100,300->110,350->120,400->130,450->140,...
         # linear: ?
-        $topMargin = 45;
         $leftMargin = undef;
         $titleFontSize = int($fontSize*1.5);
+        # $topMargin = $titleYOffset+int($titleFontSize*1.33+
+        $topMargin = 75;
         $xTitleFontSize = $fontSize? int($fontSize*1.3): undef;
         # FIXME: $xAxisLabelHeight in Berechnung einbeziehen
         $bottomMargin = ($height-300)/50*10+($xAxisType eq 'date'?
             ($xTitle? 120: 100): ($xTitle? 110: 90));
-        $rangeSliderThickness = 50;
+        $rangeSliderThickness = 25;
         # $rangeSliderThicknessAsFraction = 0.2;
     }
     else {
@@ -442,10 +445,10 @@ sub html {
         $xTitleFontSize = $fontSize+2;
         $topMargin = Quiq::Math->roundToInt(1.2*$titleFontSize+25);
         $leftMargin = 5*($xTitleFontSize+2)-15;
-        $rangeSliderThickness = Quiq::Math->roundToInt(
-            $height*(1.461E-11*$height**3 - 7.126E-08*$height**2 +
-            5.377E-05*$height + 1.406E-01));
-        # $rangeSliderThickness = 50;
+        # $rangeSliderThickness = Quiq::Math->roundToInt(
+        #     $height*(1.461E-11*$height**3 - 7.126E-08*$height**2 +
+        #     5.377E-05*$height + 1.406E-01));
+        $rangeSliderThickness = 30;
         #$bottomMargin = $rangeSliderThickness+1.5*$fontSize+
         #    1.5*$xTitleFontSize+22;
         # gändert gemäß Mail v. 2020-10-16
@@ -456,7 +459,7 @@ sub html {
         }
     }
     $rangeSliderThicknessAsFraction = Quiq::Math->roundTo(
-        $rangeSliderThickness/$height,4);
+        $rangeSliderThickness/($height-$topMargin-$bottomMargin),4);
 
     # Maße für die Ränder
 
@@ -504,7 +507,7 @@ sub html {
         # orig
         $height2 = $height-($bottomMargin-$xAxisLabelHeight); # orig
         $bottomMargin2 = $bottomMargin-($bottomMargin-$xAxisLabelHeight);
-        $titleY = 1-(15/$height); # Faktor für Titel-Position
+        $titleY = 1-($titleYOffset/$height); # Faktor für Titel-Position
         $titleY2 = 1-($height*(1-$titleY)/$height2);
     }
     else {
