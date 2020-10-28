@@ -409,56 +409,78 @@ sub html {
     my $axisBox = 1; # Zeichne eine Box um den Plotbereich. Die Box hat
         # die Farbe der Achsen (siehe axisColor).
 
-    my ($topMargin,$leftMargin,$titleFontSize,$xTitleFontSize,$bottomMargin,
-        $rangeSliderThickness,$rangeSliderThicknessAsFraction);
-
     my $titleYOffset = 14;
-
-    if (!$petersen) {
-        # orig
-        # date: 250->100,300->110,350->120,400->130,450->140,...
-        # linear: ?
-        $leftMargin = undef;
-        $titleFontSize = int($fontSize*1.5);
-        # $topMargin = $titleYOffset+int($titleFontSize*1.33+
-        $topMargin = 75;
-        $xTitleFontSize = $fontSize? int($fontSize*1.3): undef;
-        # FIXME: $xAxisLabelHeight in Berechnung einbeziehen
-        $bottomMargin = ($height-300)/50*10+($xAxisType eq 'date'?
-            ($xTitle? 120: 100): ($xTitle? 110: 90));
-        $rangeSliderThickness = 25;
-        # $rangeSliderThicknessAsFraction = 0.2;
+    my $leftMargin = {
+        32 => 160,
+        36 => 180,
+    }->{$fontSize};
+    my $titleFontSize = {
+        10 => 14,
+        11 => 16,
+        12 => 18,
+        14 => 20,
+        16 => 22,
+        18 => 24,
+        20 => 26,
+        22 => 28,
+        24 => 30,
+        28 => 35,
+        32 => 40,
+        36 => 45,
+    }->{$fontSize} // 50;
+    my $xTitleFontSize = {
+        10 => 12,
+        11 => 13,
+        12 => 14,
+        14 => 15,
+        16 => 16,
+        18 => 18,
+        20 => 19,
+        22 => 22,
+        24 => 24,
+        28 => 28,
+        32 => 32,
+        36 => 36,
+    }->{$fontSize} // 50;
+    my $topMargin = {
+        10 => 38,
+        11 => 40,
+        12 => 43,
+        14 => 45,
+        16 => 47,
+        18 => 49,
+        20 => 51,
+        22 => 53,
+        24 => 57,
+        28 => 63,
+        32 => 65,
+        36 => 75,
+    }->{$fontSize} // 0;
+    my $bottomMargin = {
+        10 => 100,
+        11 => 102,
+        12 => 104,
+        14 => 108,
+        16 => 116,
+        18 => 122,
+        20 => 128,
+        22 => 134,
+        24 => 140,
+        28 => 152,
+        32 => 164,
+        36 => 182,
+    }->{$fontSize} // 100;
+    my $xAxisLabelHeight = 40;
+    if ($xAxisType eq 'date') {
+        $bottomMargin += $fontSize*1.33;
+        $xAxisLabelHeight += 15;
     }
-    else {
-        # Petersen 1
-        # $titleFontSize = Quiq::Math->roundToInt(1.25*$fontSize-0.2);
-        # $xTitleFontSize = $fontSize+2;
-        # $topMargin = 0.6*$titleFontSize+36;
-        # $leftMargin = 5*($xTitleFontSize+2)-25;
-        # $bottomMargin = 0.2*$height+50+2.5*$fontSize-30;
-        # if ($xAxisType eq 'date') {
-        #     $bottomMargin += 20; # FIXME: hängt von Fontgröße ab
-        # }
-        # $rangeSliderThickness = 0.2;
-        # Petersen 2
-        $titleFontSize = Quiq::Math->roundToInt(1.25*$fontSize-0.2);
-        $xTitleFontSize = $fontSize+2;
-        $topMargin = Quiq::Math->roundToInt(1.2*$titleFontSize+25);
-        $leftMargin = 5*($xTitleFontSize+2)-15;
-        # $rangeSliderThickness = Quiq::Math->roundToInt(
-        #     $height*(1.461E-11*$height**3 - 7.126E-08*$height**2 +
-        #     5.377E-05*$height + 1.406E-01));
-        $rangeSliderThickness = 30;
-        #$bottomMargin = $rangeSliderThickness+1.5*$fontSize+
-        #    1.5*$xTitleFontSize+22;
-        # gändert gemäß Mail v. 2020-10-16
-        $bottomMargin = $rangeSliderThickness+$fontSize*1.33+
-            $xTitleFontSize*1.33+25;
-        if ($xAxisType eq 'date') {
-            $bottomMargin += 20; # FIXME: hängt von Fontgröße ab
-        }
-    }
-    $rangeSliderThicknessAsFraction = Quiq::Math->roundTo(
+    my $height2 = $height-($bottomMargin-$xAxisLabelHeight); # orig
+    my $bottomMargin2 = $bottomMargin-($bottomMargin-$xAxisLabelHeight);
+    my $titleY = 1-($titleYOffset/$height); # Faktor für Titel-Position
+    my $titleY2 = 1-($height*(1-$titleY)/$height2);
+    my $rangeSliderThickness = 25;
+    my $rangeSliderThicknessAsFraction = Quiq::Math->roundTo(
         $rangeSliderThickness/($height-$topMargin-$bottomMargin),4);
 
     # Maße für die Ränder
@@ -471,7 +493,7 @@ sub html {
         # Linienform: 'spline'|'linear'|'hv'|
         # 'vh'|'hvh'|'vhv'
     my $lineWidth = 1;
-    my $margin = [$topMargin,undef,$bottomMargin,$leftMargin];
+    my $margin = [$topMargin,$leftMargin,$bottomMargin,$leftMargin];
     my $markerColor = $color;
     my $markerSize = 3;
     my $markerSymbol = 'circle';
@@ -482,7 +504,7 @@ sub html {
     my $plotBackground = '#ffffff'; # Hintergrund Plotbereich
     my $rangeSliderBorderColor = '#e0e0e0';
 
-    my ($xAxisHoverFormat,$xAxisTickFormat,$xAxisLabelHeight);
+    my ($xAxisHoverFormat,$xAxisTickFormat);
     if ($xAxisType eq 'date') {
         $xAxisHoverFormat = '%Y-%m-%d %H:%M:%S'; # Format der
             # Spike-Beschriftung für die X-Koordinate. Siehe:
@@ -490,10 +512,6 @@ sub html {
             # Time-Formatting.md#format
         $xAxisTickFormat = '%Y-%m-%d %H:%M'; # Format der
             # Zeitachsen-Beschriftung
-        $xAxisLabelHeight = 55;
-    }
-    else { # 'linear'
-        $xAxisLabelHeight = 40;
     }
 
     my $xTickLen = 5;
@@ -501,29 +519,6 @@ sub html {
     my $yTickLen = 4;
     my $zeroLineColor = '#d0d0d0';
 
-    my ($height2,$bottomMargin2,$titleY,$titleY2);
-
-    if (!$petersen) {
-        # orig
-        $height2 = $height-($bottomMargin-$xAxisLabelHeight); # orig
-        $bottomMargin2 = $bottomMargin-($bottomMargin-$xAxisLabelHeight);
-        $titleY = 1-($titleYOffset/$height); # Faktor für Titel-Position
-        $titleY2 = 1-($height*(1-$titleY)/$height2);
-    }
-    else {
-        # Petersen1
-        # $height2 = 0.8*$height-10;
-        # $bottomMargin2 = 40+2.5*$fontSize-30;
-        # Petersen2
-        $height2 = $height-$rangeSliderThickness;
-        $bottomMargin2 = $bottomMargin-$rangeSliderThickness;
-        $titleY = Quiq::Math->roundTo(
-            1-($topMargin-$titleFontSize*1.33)/2/$height,4);
-        $titleY2 = Quiq::Math->roundTo(
-            1-($topMargin-$titleFontSize*1.33)/2/$height2,4);
-    }
-
-    my $title = undef;
     my $yTitle = undef;
     my $xMin = undef;
     my $xMax = undef;
@@ -817,7 +812,7 @@ sub html {
             paper_bgcolor => $paperBackground,
             # autosize => \'true',
             title => $j->o(
-                text => $title,
+                text => undef,
                 font => $j->o(
                     color => $color,
                     size => $titleFontSize,
@@ -1034,6 +1029,7 @@ sub htmlDiagram {
 
     return
         Quiq::Html::Table::Simple->html($h,
+        border => 1,
         width => $width? "${width}px": '100%',
         style => [
             border => '1px dotted #b0b0b0',
