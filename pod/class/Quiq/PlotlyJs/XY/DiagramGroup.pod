@@ -330,7 +330,7 @@ Y-Wertebereich: C<-1> bis C<4>).
 
 =head4 Synopsis
 
-  $html = $dgr->htmlDiagram($h,$i);
+  $html = $dgr->htmlDiagram($h,$i,$par,$paperBackground,$debug);
 
 =head4 Arguments
 

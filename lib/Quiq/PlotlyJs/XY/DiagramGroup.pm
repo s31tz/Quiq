@@ -409,77 +409,37 @@ sub html {
     my $axisBox = 1; # Zeichne eine Box um den Plotbereich. Die Box hat
         # die Farbe der Achsen (siehe axisColor).
 
-    my $titleYOffset = 14;
-    my $leftMargin = {
-        32 => 160,
-        36 => 180,
-    }->{$fontSize};
-    my $titleFontSize = {
-        10 => 14,
-        11 => 16,
-        12 => 18,
-        14 => 20,
-        16 => 22,
-        18 => 24,
-        20 => 26,
-        22 => 28,
-        24 => 30,
-        28 => 35,
-        32 => 40,
-        36 => 45,
-    }->{$fontSize} // 50;
-    my $xTitleFontSize = {
-        10 => 12,
-        11 => 13,
-        12 => 14,
-        14 => 15,
-        16 => 16,
-        18 => 18,
-        20 => 19,
-        22 => 22,
-        24 => 24,
-        28 => 28,
-        32 => 32,
-        36 => 36,
-    }->{$fontSize} // 50;
-    my $topMargin = {
-        10 => 38,
-        11 => 40,
-        12 => 43,
-        14 => 45,
-        16 => 47,
-        18 => 49,
-        20 => 51,
-        22 => 53,
-        24 => 57,
-        28 => 63,
-        32 => 65,
-        36 => 75,
-    }->{$fontSize} // 0;
-    my $bottomMargin = {
-        10 => 100,
-        11 => 102,
-        12 => 104,
-        14 => 108,
-        16 => 116,
-        18 => 122,
-        20 => 128,
-        22 => 134,
-        24 => 140,
-        28 => 152,
-        32 => 164,
-        36 => 182,
-    }->{$fontSize} // 100;
-    my $xAxisLabelHeight = 40;
+    my ($titleFontSize,$xyTitleFontSize,$titleYOffset,$topMargin,
+        $bottomMargin,$leftRightMargin) = @{{
+            # pt   ti xy ty t  b   lr
+            10 => [14,12,16,43,104,undef,],
+            11 => [16,13,18,48,106,undef,],
+            12 => [18,14,18,50,110,undef,],
+            14 => [20,16,20,55,118,undef,],
+            16 => [22,18,20,57,124,  100,],
+            18 => [24,20,22,61,134,  110,],
+            20 => [26,20,22,63,138,  120,],
+            22 => [28,22,22,65,142,  130,],
+            24 => [30,24,24,70,150,  140,],
+            28 => [35,28,24,75,168,  150,],
+            32 => [40,32,24,80,182,  165,],
+            36 => [45,36,24,85,196,  180,],
+        }->{$fontSize}};
+
     if ($xAxisType eq 'date') {
-        $bottomMargin += $fontSize*1.33;
-        $xAxisLabelHeight += 15;
+        # $bottomMargin += int($fontSize*1.33);
+        $bottomMargin += $fontSize;
     }
-    my $height2 = $height-($bottomMargin-$xAxisLabelHeight); # orig
-    my $bottomMargin2 = $bottomMargin-($bottomMargin-$xAxisLabelHeight);
-    my $titleY = 1-($titleYOffset/$height); # Faktor für Titel-Position
-    my $titleY2 = 1-($height*(1-$titleY)/$height2);
+
     my $rangeSliderThickness = 25;
+    my $height2 = $height-($rangeSliderThickness+15);
+    my $bottomMargin2 = $bottomMargin-($rangeSliderThickness+18);
+
+    my $titleY = Quiq::Math->roundTo(
+        1-($titleYOffset/$height),4); # Faktor für Titel-Position
+    my $titleY2 = Quiq::Math->roundTo(
+        1-($height*(1-$titleY)/$height2),4);
+
     my $rangeSliderThicknessAsFraction = Quiq::Math->roundTo(
         $rangeSliderThickness/($height-$topMargin-$bottomMargin),4);
 
@@ -493,7 +453,7 @@ sub html {
         # Linienform: 'spline'|'linear'|'hv'|
         # 'vh'|'hvh'|'vhv'
     my $lineWidth = 1;
-    my $margin = [$topMargin,$leftMargin,$bottomMargin,$leftMargin];
+    my $margin = [$topMargin,$leftRightMargin,$bottomMargin,$leftRightMargin];
     my $markerColor = $color;
     my $markerSize = 3;
     my $markerSymbol = 'circle';
@@ -866,7 +826,7 @@ sub html {
                 title => $j->o(
                     text => $xTitle,
                     font => $j->o(
-                        size => $xTitleFontSize,
+                        size => $xyTitleFontSize,
                     ),
                 ),
                 zeroline => \'true',
@@ -898,7 +858,7 @@ sub html {
                     text => $yTitle,
                     font => $j->o(
                         color => $color,
-                        size => $xTitleFontSize, # gleich groß wie x-Achse
+                        size => $xyTitleFontSize,
                     ),
                 ),
                 zeroline => \'true',
@@ -930,16 +890,17 @@ sub html {
             rows => [
                 [[-tag=>'th','height'],[-tag=>'th','fontSize'],
                     [-tag=>'th','rangeSliderThickness'],[-tag=>'th','height2'],
-                    [-tag=>'th','xTitleFontSize'],[-tag=>'th','titleFontSize'],
+                    [-tag=>'th','xyTitleFontSize'],
+                    [-tag=>'th','titleFontSize'],
                     [-tag=>'th','topMargin'],[-tag=>'th','bottomMargin'],
                     [-tag=>'th','bottomMargin2'],[-tag=>'th','titleY'],
-                    [-tag=>'th','titleY2'],[-tag=>'th','leftMargin']],
+                    [-tag=>'th','titleY2'],[-tag=>'th','leftRightMargin']],
                 [[$height],[$fontSize],
                     [$rangeSliderThickness.
                         " ($rangeSliderThicknessAsFraction)"],
-                    [$height2],[$xTitleFontSize],[$titleFontSize],
+                    [$height2],[$xyTitleFontSize],[$titleFontSize],
                     [$topMargin],[$bottomMargin],[$bottomMargin2],[$titleY],
-                    [$titleY2],[$leftMargin]],
+                    [$titleY2],[$leftRightMargin]],
             ],
         );
     }
@@ -956,7 +917,7 @@ sub html {
                 my $i = 0;
                 for my $par (@$diagramA) {
                     $tmp .= $self->htmlDiagram($h,++$i,$par,
-                        $paperBackground);
+                        $paperBackground,$debug);
                 }
                 $tmp;
             }
@@ -985,7 +946,7 @@ sub html {
 
 =head4 Synopsis
 
-  $html = $dgr->htmlDiagram($h,$i);
+  $html = $dgr->htmlDiagram($h,$i,$par,$paperBackground,$debug);
 
 =head4 Arguments
 
@@ -1014,7 +975,7 @@ Genererie den HTML-Code für ein Diagramm und liefere diesen zurück.
 # -----------------------------------------------------------------------------
 
 sub htmlDiagram {
-    my ($self,$h,$i,$par,$paperBackground) = @_;
+    my ($self,$h,$i,$par,$paperBackground,$debug) = @_;
 
     # Objektattribute
 
@@ -1029,7 +990,7 @@ sub htmlDiagram {
 
     return
         Quiq::Html::Table::Simple->html($h,
-        border => 1,
+        border => $debug? 1: undef,
         width => $width? "${width}px": '100%',
         style => [
             border => '1px dotted #b0b0b0',
