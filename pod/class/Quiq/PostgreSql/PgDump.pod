@@ -58,7 +58,7 @@ Gib das ausgeführte pg_dump-Kommando auf STDOUT aus.
 
 =head1 VERSION
 
-1.190
+1.191
 
 =head1 SOURCE
 
