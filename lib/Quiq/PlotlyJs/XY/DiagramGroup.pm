@@ -329,7 +329,6 @@ sub new {
         fontSize => 11,
         height => 300,
         name => 'dgr',
-        petersen => 0, # undokumentierter Parameter
         shape => undef,
         strict => 1,
         type => 'scatter',
@@ -382,12 +381,11 @@ sub html {
     my ($self,$h) = @_;
 
     # Objektattribute
-    # Undokumentierter Parameter: petersen
 
     my ($debug,$diagramA,$fontSize,$height,$name,$shape,$strict,$type,
-        $width,$xAxisType,$xTitle,$petersen) =
+        $width,$xAxisType,$xTitle) =
         $self->get(qw/debug diagrams fontSize height name shape strict type
-        width xAxisType xTitle petersen/);
+        width xAxisType xTitle/);
 
     # Default des Attributs shape hängt von type ab
 
@@ -427,8 +425,10 @@ sub html {
         }->{$fontSize}};
 
     if ($xAxisType eq 'date') {
-        # $bottomMargin += int($fontSize*1.33);
         $bottomMargin += $fontSize;
+    }
+    if (!$xTitle) {
+        $bottomMargin -= int $xyTitleFontSize*1.5;
     }
 
     my $rangeSliderThickness = 25;
