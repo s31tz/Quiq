@@ -390,7 +390,7 @@ eines Wertebereichs in einen Farbverlauf zu übersetzen.
 
 =head1 VERSION
 
-1.191
+1.192
 
 =head1 SOURCE
 

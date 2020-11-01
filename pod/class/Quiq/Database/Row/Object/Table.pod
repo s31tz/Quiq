@@ -211,7 +211,7 @@ Nach der Ausführung hat der Datensatz den Rowstatus 'I'.
 
 =head1 VERSION
 
-1.191
+1.192
 
 =head1 SOURCE
 

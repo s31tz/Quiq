@@ -119,7 +119,7 @@ sein (siehe Doku zu Quiq::Database::Connection/sql).
 
 =head1 VERSION
 
-1.191
+1.192
 
 =head1 SOURCE
 

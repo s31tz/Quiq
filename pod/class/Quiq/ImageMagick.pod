@@ -320,7 +320,7 @@ Wird das Kommando ausgeführt, entstehen in Unterverzeichnis tmp
 
 =head1 VERSION
 
-1.191
+1.192
 
 =head1 SOURCE
 

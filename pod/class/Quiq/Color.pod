@@ -154,7 +154,7 @@ R, G, B. Im Skalarkontext liefere eine Referenz auf die Liste.
 
 =head1 VERSION
 
-1.191
+1.192
 
 =head1 SOURCE
 
