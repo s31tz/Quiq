@@ -432,7 +432,7 @@ sub html {
     }
 
     my $rangeSliderThickness = 25;
-    my $height2 = $height-($rangeSliderThickness+15);
+    my $height2 = $height-($rangeSliderThickness+18);
     my $bottomMargin2 = $bottomMargin-($rangeSliderThickness+18);
 
     my $titleY = Quiq::Math->roundTo(
