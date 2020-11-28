@@ -1062,7 +1062,7 @@ sub htmlDiagram {
                     title => 'Connect data points with straight lines,'.
                         ' splines or show markers',
                 ).
-                ' | ToZeroY: '.Quiq::Html::Widget::CheckBox->html($h,
+                ' | FillArea:'.Quiq::Html::Widget::CheckBox->html($h,
                      id =>  "$name-y$i",
                      option => 1,
                      value => 1,
