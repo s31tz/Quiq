@@ -13,7 +13,7 @@ our $VERSION = '1.192';
 
 =head1 NAME
 
-Quiq::ContentProcessor::SubType - Sub-Typ
+Quiq::ContentProcessor::SubType - Sub-Typ Objekte
 
 =head1 BASE CLASS
 

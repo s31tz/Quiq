@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::ContentProcessor::BaseType - Typ
+Quiq::ContentProcessor::BaseType - Gemeinsame Funktionalität aller Entitäten (abstrakte Basisklasse)
 
 =head1 BASE CLASSES
 

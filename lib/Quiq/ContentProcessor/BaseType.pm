@@ -13,7 +13,7 @@ our $VERSION = '1.192';
 
 =head1 NAME
 
-Quiq::ContentProcessor::BaseType - Typ
+Quiq::ContentProcessor::BaseType - Gemeinsame Funktionalität aller Entitäten (abstrakte Basisklasse)
 
 =head1 BASE CLASSES
 

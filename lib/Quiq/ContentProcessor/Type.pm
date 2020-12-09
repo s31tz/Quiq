@@ -13,7 +13,7 @@ our $VERSION = '1.192';
 
 =head1 NAME
 
-Quiq::ContentProcessor::Type - Entität
+Quiq::ContentProcessor::Type - Entität, Basisklasse aller Plugin-Klassen
 
 =head1 BASE CLASS
 

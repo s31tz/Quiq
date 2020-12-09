@@ -101,7 +101,7 @@ L<Quiq::ContentProcessor|https://github.com/s31tz/Quiq/tree/master/pod/class/Qui
 
 =item *
 
-L<Quiq::ContentProcessor::BaseType|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ContentProcessor/BaseType.pod> - Typ
+L<Quiq::ContentProcessor::BaseType|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ContentProcessor/BaseType.pod> - Gemeinsame Funktionalität aller Entitäten (abstrakte Basisklasse)
 
 =item *
 
@@ -109,11 +109,11 @@ L<Quiq::ContentProcessor::File|https://github.com/s31tz/Quiq/tree/master/pod/cla
 
 =item *
 
-L<Quiq::ContentProcessor::SubType|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ContentProcessor/SubType.pod> - Sub-Typ
+L<Quiq::ContentProcessor::SubType|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ContentProcessor/SubType.pod> - Sub-Typ Objekte
 
 =item *
 
-L<Quiq::ContentProcessor::Type|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ContentProcessor/Type.pod> - Entität
+L<Quiq::ContentProcessor::Type|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ContentProcessor/Type.pod> - Entität, Basisklasse aller Plugin-Klassen
 
 =item *
 
