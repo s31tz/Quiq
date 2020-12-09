@@ -84,7 +84,7 @@ Aktueller Wert. Stimmt dieser mit dem Wert des Attributs option
 
 =head1 VERSION
 
-1.192
+1.193
 
 =head1 SOURCE
 

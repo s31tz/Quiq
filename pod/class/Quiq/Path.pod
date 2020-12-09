@@ -1570,7 +1570,7 @@ Ermittele die UID des Owners der Datei und liefere diese zurück.
 
 =head1 VERSION
 
-1.192
+1.193
 
 =head1 SOURCE
 
