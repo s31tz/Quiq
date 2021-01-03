@@ -458,6 +458,26 @@ verwendet werden, um Kommentarzeilen zu überlesen.
 
 Lies den Inhalt der Datei und liefere diesen zurück.
 
+=head3 sha1() - SHA1 Hex Digest
+
+=head4 Synopsis
+
+  $this->sha1($file);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Pfad der Datei.
+
+=back
+
+=head4 Description
+
+Ermittele den SHA1 Hex Digest der Datei $file und liefere diesen zurück.
+
 =head3 truncate() - Kürze Datei
 
 =head4 Synopsis
@@ -1582,7 +1602,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2020 Frank Seitz
+Copyright (C) 2021 Frank Seitz
 
 =head1 LICENSE
 
