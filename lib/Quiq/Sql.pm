@@ -4548,7 +4548,9 @@ sub delete {
     }
     $stmt .= " FROM $table";
 
-    if (@_) {
+    # FIXME: Optionale Angabe +null eleganter feststellen
+
+    if (@_ && !(@_ == 1 && $_[0] eq '+null')) {
         $stmt .= "\nWHERE\n    ";
         $stmt .= $self->whereClause(@_);
     }
@@ -5621,7 +5623,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2020 Frank Seitz
+Copyright (C) 2021 Frank Seitz
 
 =head1 LICENSE
 

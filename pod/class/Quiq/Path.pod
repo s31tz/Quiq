@@ -288,7 +288,17 @@ Bei großen Dateien kann dies ineffizient sein.
 
 =head4 Synopsis
 
-  $class->link($path,$link);
+  $this->link($path,$link);
+
+=head4 Options
+
+=over 4
+
+=item -force => $bool (Default: 0)
+
+Lösche die Datei $link, falls sie bereits existiert.
+
+=back
 
 =head4 Description
 
@@ -1276,7 +1286,7 @@ $path und $newPath identisch.
 
 =head4 Synopsis
 
-  $class->rename($oldPath,$newPath,@opt);
+  $this->rename($oldPath,$newPath,@opt);
 
 =head4 Options
 
