@@ -694,6 +694,10 @@ Schemaname C<undef> geliefert.
 
 =over 4
 
+=item -reference => [[\@cols => $refTable,@opt], ...]
+
+Liste von Fremdschlüssel-Verweisen.
+
 =item -tableSpace => $tableSpaceName (Default: keiner)
 
 Name des Tablespace, in dem die Tabelle erzeugt wird

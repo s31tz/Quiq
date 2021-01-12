@@ -1465,6 +1465,10 @@ sub splitTableName {
 
 =over 4
 
+=item -reference => [[\@cols => $refTable,@opt], ...]
+
+Liste von Fremdschlüssel-Verweisen.
+
 =item -tableSpace => $tableSpaceName (Default: keiner)
 
 Name des Tablespace, in dem die Tabelle erzeugt wird
@@ -1547,11 +1551,13 @@ sub createTable {
 
     # Optionen
 
+    my $referenceA = [];
     my $tableSpace = undef;
     my $tableType = 'InnoDB';
 
     if (@_) {
         Quiq::Option->extract(-mode=>'sloppy',\@_,
+             -references => \$referenceA,
              -tableSpace => \$tableSpace,
              -tableType => \$tableType,
         );
@@ -1571,6 +1577,14 @@ sub createTable {
     my $stmt = "CREATE TABLE $table (";
     if ($cols) {
         $stmt .= "\n$cols\n";
+    }
+    if (@$referenceA) {
+        for (@$referenceA) {
+            my $constr = $self->addForeignKeyConstraint($table,@$_);
+            $constr =~ s/\s+/ /g;
+            $constr =~ s/.*?(FOREIGN)/$1/;
+            $stmt .= "    , $constr\n";
+        }
     }
     $stmt .= ')';
 
@@ -2214,7 +2228,7 @@ sub addForeignKeyConstraint {
     my ($oracle,$postgresql,$sqlite,$mysql) = $self->dbmsTestVector;
 
     my $stmt;
-    if ($postgresql || $oracle || $mysql) {
+    if ($postgresql || $oracle || $sqlite || $mysql) {
         # ALTER TABLE
 
         $stmt = sprintf "ALTER TABLE %s ADD\n".

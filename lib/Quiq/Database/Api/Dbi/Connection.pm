@@ -240,6 +240,7 @@ sub new {
                 # $dbh->{'unicode'} = 1;
                 $dbh->{'sqlite_unicode'} = 1;
             }
+            $dbh->do('PRAGMA foreign_keys = ON'); # Schalte Foreign Keys ein
         }
         elsif ($dbms eq 'access') {
             if ($utf8) {
@@ -547,7 +548,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2020 Frank Seitz
+Copyright (C) 2021 Frank Seitz
 
 =head1 LICENSE
 
