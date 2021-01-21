@@ -1063,7 +1063,7 @@ sub htmlDiagram {
                         ' splines or show markers',
                 ).
                 ' | FillArea:'.Quiq::Html::Widget::CheckBox->html($h,
-                     id =>  "$name-y$i",
+                     id =>  "$name-f$i",
                      option => 1,
                      value => 1,
                      style => 'vertical-align: middle',
@@ -1189,7 +1189,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2020 Frank Seitz
+Copyright (C) 2021 Frank Seitz
 
 =head1 LICENSE
 
