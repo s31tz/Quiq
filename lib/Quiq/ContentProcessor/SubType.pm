@@ -19,6 +19,12 @@ Quiq::ContentProcessor::SubType - Sub-Typ Objekte
 
 L<Quiq::ContentProcessor::BaseType>
 
+=head1 DESCRIPTION
+
+Diese Klasse ist die Basisklasse von Typen, die keine Entitäten,
+sondern Bestandteile von Entitäten sind. In Jaz werden
+die Abschnitts-Objekte Group und Method durch SubTypes repräsentiert.
+
 =head1 METHODS
 
 =head2 Erzeugung
@@ -129,7 +135,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2020 Frank Seitz
+Copyright (C) 2021 Frank Seitz
 
 =head1 LICENSE
 

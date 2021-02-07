@@ -309,20 +309,6 @@ Ergänze Attribut fileSource um den Quelltext des Abschnitts $sec.
 
   $str = $ent->pureCode;
 
-=head2 Dateierzeugung
-
-=head3 outputFiles() - Liste der Ausgabedateien (abstrakt)
-
-=head4 Synopsis
-
-  @files = $ent->outputFiles;
-
-=head4 Description
-
-Liefere die Liste der Dateien, die die Entität generiert. Diese
-Basisklassenmethode liefert eine leere Liste. Sie wird in
-Subklassen überschrieben.
-
 =head2 Interne Methoden
 
 =head3 needsTest() - Liefere/Setze persistenten Test-Status
@@ -440,7 +426,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2020 Frank Seitz
+Copyright (C) 2021 Frank Seitz
 
 =head1 LICENSE
 
