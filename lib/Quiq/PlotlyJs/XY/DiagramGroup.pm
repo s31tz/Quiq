@@ -513,8 +513,8 @@ sub html {
                 let x = d.data[0].x;
                 if (x.length == 0)
                     return;
-                let xMin = d.layout.xaxis.range[0];
-                let xMax = d.layout.xaxis.range[1];
+                let xMin = Number(d.layout.xaxis.range[0]);
+                let xMax = Number(d.layout.xaxis.range[1]);
                 let y = d.data[0].y;
                 let yMin, yMax;
                 for (let i = 0; i < x.length; i++) {
@@ -525,7 +525,7 @@ sub html {
                             yMax = y[i]
                     }
                 }
-                // alert(xMin+' '+xMax+' '+yMin+' '+yMax);
+                // console.log(xMin+' '+xMax+' '+yMin+' '+yMax);
                 Plotly.relayout(dId,{'yaxis.range': [yMin,yMax]})
             };
 
@@ -1153,23 +1153,29 @@ sub jsDiagram {
 
     # JavaScript erzeugen
 
-    my $xMin = $par->xMin // 'undefined';
-    my $xMax = $par->xMax // 'undefined';
+    my $xMin = $par->xMin;
+    if (!defined($xMin) || $xMin eq '') {
+        $xMin = 'undefined';
+    }
+    my $xMax = $par->xMax;
+    if (!defined($xMax) || $xMax eq '') {
+        $xMax = 'undefined';
+    }
     my $yMin = $par->yMin // 'undefined';
     my $yMax = $par->yMax // 'undefined';
     my $showRangeSlider = $i == 1? 'true': 'false';
 
     my $url = $par->url;
     if ($url) {
-        return sprintf("$name.generatePlot('%s',%s,'%s','%s',%s,'%s','%s'".
-                ",'%s',%s,%s,%s,'%s','%s');\n",
+        return sprintf("$name.generatePlot('%s',%s,'%s','%s',%s,'%s',%s".
+                ",%s,%s,%s,%s,'%s','%s');\n",
             $name,$i,$par->title,$par->yTitle,$j->encode($par->yTitleColor),
             $par->color,$xMin,$xMax,$yMin,$yMax,$showRangeSlider,$shape,$url);
     }
     else {
         # mit x,y,z
-        return sprintf("$name.generatePlot('%s',%s,'%s','%s',%s,'%s','%s'".
-                ",'%s',%s,%s,%s,'%s','',%s,%s,%s);\n",
+        return sprintf("$name.generatePlot('%s',%s,'%s','%s',%s,'%s',%s".
+                ",%s,%s,%s,%s,'%s','',%s,%s,%s);\n",
             $name,$i,$par->title,$par->yTitle,$j->encode($par->yTitleColor),
             $par->color,$xMin,$xMax,$yMin,$yMax,$showRangeSlider,$shape,
             scalar($j->encode($par->x)),scalar($j->encode($par->y)),
