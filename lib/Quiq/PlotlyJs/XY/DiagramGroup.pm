@@ -1167,15 +1167,15 @@ sub jsDiagram {
 
     my $url = $par->url;
     if ($url) {
-        return sprintf("$name.generatePlot('%s',%s,'%s','%s',%s,'%s',%s".
-                ",%s,%s,%s,%s,'%s','%s');\n",
+        return sprintf("$name.generatePlot('%s',%s,'%s','%s',%s,'%s','%s'".
+                ",'%s',%s,%s,%s,'%s','%s');\n",
             $name,$i,$par->title,$par->yTitle,$j->encode($par->yTitleColor),
             $par->color,$xMin,$xMax,$yMin,$yMax,$showRangeSlider,$shape,$url);
     }
     else {
         # mit x,y,z
-        return sprintf("$name.generatePlot('%s',%s,'%s','%s',%s,'%s',%s".
-                ",%s,%s,%s,%s,'%s','',%s,%s,%s);\n",
+        return sprintf("$name.generatePlot('%s',%s,'%s','%s',%s,'%s','%s'".
+                ",'%s',%s,%s,%s,'%s','',%s,%s,%s);\n",
             $name,$i,$par->title,$par->yTitle,$j->encode($par->yTitleColor),
             $par->color,$xMin,$xMax,$yMin,$yMax,$showRangeSlider,$shape,
             scalar($j->encode($par->x)),scalar($j->encode($par->y)),
