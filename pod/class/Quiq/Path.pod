@@ -1347,6 +1347,20 @@ Die Schrittweite der Nummerierung.
 
 =back
 
+=head4 Options
+
+=over 4
+
+=item -start => $n (Default: $step)
+
+Startwert.
+
+=item -verbose => $bool (Default: 0)
+
+Gib Information aus.
+
+=back
+
 =head4 Description
 
 Sortiere die Basisnamen der Pfade B<@paths> lexikalisch und
