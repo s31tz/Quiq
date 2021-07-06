@@ -29,34 +29,6 @@ Durchsuche die Tabelle nach dem ersten Datensatz, dessen
 Attribut $key den Wert $val besitzt und liefere diesen zurück.
 Erfüllt kein Datensatz das Kriterium, liefere undef.
 
-=head3 values() - Liefere Kolumnenwerte als Liste oder Hash
-
-=head4 Synopsis
-
-  @vals|$valA = $tab->values($key,@opt);
-  %vals|$valH = $tab->values($key,@opt,-hash=>1);
-
-=head4 Options
-
-=over 4
-
-=item -distinct => $bool (Default: 0)
-
-Liefere in der Resultatliste nur verschiedene Kolumenwerte. Wird ein
-Hash geliefert, ist dies zwangsläufig der Fall. Der Wert findet
-sich in der Resultatliste an der Stelle seines ersten Auftretens.
-
-=item -hash => $bool (Default: 0)
-
-Liefere einen Hash bzw. eine Hashreferenz (Quiq::Hash) mit den
-Kolumnenwerten als Schlüssel und 1 als Wert.
-
-=item -notNull => $bool (Default: 0)
-
-Ignoriere Nullwerte, d.h. nimm sie nicht ins Resultat auf.
-
-=back
-
 =head3 index() - Indiziere Tabelle nach Kolumne(n)
 
 =head4 Synopsis
@@ -392,7 +364,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2020 Frank Seitz
+Copyright (C) 2021 Frank Seitz
 
 =head1 LICENSE
 

@@ -530,9 +530,27 @@ Daten-Hash und der Änderungs-Hash kopiert werden:
 
 =head4 Synopsis
 
-  $str = $row->asRecord;
-  $str = $row->asRecord($null);
-  $str = $row->asRecord($null,$indent);
+  $str = $row->asRecord(@opt);
+
+=head4 Options
+
+=over 4
+
+=item -color => $a
+
+AnsiColor-Objekt.
+
+=item -indent => $n (Default: 4)
+
+Tiefe der Einrückung der Werte.
+
+=item -null => $str (Default: 'NULL')
+
+Gibt an, welcher Wert für einen Nullwert ausgegeben wird. Ist -null undef,
+wird das Attribut nicht ausgegeben (weder Name noch Wert).
+Ist $null ein Leerstring (''), wird nur der Wert nicht ausgegeben.
+
+=back
 
 =head4 Description
 
@@ -544,15 +562,6 @@ Die Darstellung hat den Aufbau:
   <key2>:
       <val2>
   ...
-
-Der optionale Parameter $null gibt an, welcher Wert für einen Nullwert
-ausgegeben wird. Per Default wird NULL ausgegeben. Ist $null undef,
-wird das Attribut nicht ausgegeben (weder Name noch Wert).
-Ist $null '' (Leerstring), wird nur der Wert nicht ausgegeben.
-
-Der optionale Parameter $indent gibt an, wie tief die Werte
-eingerückt werden. Per Default werden die Werte um 4 Leerzeichen
-eingerückt.
 
 =head3 copyData() - Kopiere Attributwerte von Datensatz zu Datensatz
 
@@ -748,7 +757,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2020 Frank Seitz
+Copyright (C) 2021 Frank Seitz
 
 =head1 LICENSE
 

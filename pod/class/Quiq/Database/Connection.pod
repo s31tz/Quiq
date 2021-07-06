@@ -1482,6 +1482,12 @@ Methode ein einziges INSERT-Statement mit allen Daten aus, à la
       ]
   );
 
+=head3 insertResultSet() - Füge Datensätze eines Resultset zu Tabelle hinzu
+
+=head4 Synopsis
+
+  $cur = $db->insertResultSet($table,$tab);
+
 =head2 Update Operation
 
 =head3 update() - Aktualisiere Datensätze
@@ -2619,7 +2625,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2020 Frank Seitz
+Copyright (C) 2021 Frank Seitz
 
 =head1 LICENSE
 

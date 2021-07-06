@@ -122,31 +122,6 @@ sub lookupSub {
 
 # -----------------------------------------------------------------------------
 
-=head3 values() - Liefere die Werte einer Kolumne
-
-=head4 Synopsis
-
-  @vals|$valA = $tab->values($key);
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub values {
-    my ($self,$key) = @_;
-
-    my $idx = $self->columnIndex($key);
-
-    my @arr;
-    for my $row (@{$self->rows}) {
-        CORE::push @arr,$row->[$idx];
-    }
-
-    return wantarray? @arr: \@arr;
-}
-
-# -----------------------------------------------------------------------------
-
 =head3 index() - Indiziere Tabelle nach Kolumne
 
 =head4 Synopsis
@@ -182,7 +157,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2020 Frank Seitz
+Copyright (C) 2021 Frank Seitz
 
 =head1 LICENSE
 

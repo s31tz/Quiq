@@ -60,12 +60,6 @@ Erfüllt kein Datensatz das Kriterium, liefere undef.
 
 Wird durch Basisklasse getestet
 
-=head3 values() - Liefere die Werte einer Kolumne
-
-=head4 Synopsis
-
-  @vals|$valA = $tab->values($key);
-
 =head3 index() - Indiziere Tabelle nach Kolumne
 
 =head4 Synopsis
@@ -86,7 +80,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2020 Frank Seitz
+Copyright (C) 2021 Frank Seitz
 
 =head1 LICENSE
 
