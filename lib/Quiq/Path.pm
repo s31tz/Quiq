@@ -483,11 +483,12 @@ sub duplicate {
 
 # -----------------------------------------------------------------------------
 
-=head3 edit() - Bearbeite Datei im Editor
+=head3 edit() - Bearbeite Datei oder Daten im Editor
 
 =head4 Synopsis
 
   $changed = $this->edit($file,@opt);
+  $changed = $this->edit(\$data,@opt);
 
 =head4 Arguments
 
@@ -497,38 +498,65 @@ sub duplicate {
 
 Datei, die bearbeitet werden soll.
 
+=item $data
+
+Daten, die bearbeitet werden sollen.
+
 =back
 
 =head4 Returns
 
-Boolschen Wert, der anzeigt, ob die Datei verändert wurde.
+Boolschen Wert, der anzeigt, ob die Datei oder die Daten
+verändert wurden.
 
 =head4 Description
 
-Öffne Datei $file im Editor, so dass diese vom Benutzer bearbeitet werden
-kann. Die Methode prüft nach Verlassen des Editors, ob die Datei geändert
-wurde. Falls ja, wird der Benutzer gefragt, ob er die Änderungen
-beibehalten möchte. Falls ja, liefert die Methode wahr, andernfalls
-falsch.
+Öffne Datei $file oder Daten $data im Editor, so dass diese vom
+Benutzer bearbeitet werden können. Die Methode prüft nach
+Verlassen des Editors, ob die Datei bzw. Daten geändert
+wurden. Falls ja, wird der Benutzer gefragt, ob er die Änderungen
+beibehalten möchte. Falls ja, liefert die Methode wahr,
+andernfalls falsch.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
 sub edit {
-    my ($this,$file) = @_;
-
-    # Erzeuge eine temporäre Kopie
-
-    my $tmpFile = Quiq::TempFile->new;
-    $this->copy($file,$tmpFile);
-
-    # Öffne Datei im Editor
+    my $this = shift;
+    my ($file,$dataR) = ref $_[0]? (undef,shift): (shift,undef);
+    # @_: $file -or- \$data
 
     my $changed = 0;
+    my $tmpFile = Quiq::TempFile->new;
+
+    if ($file) {
+        # Erzeuge eine temporäre Kopie
+        $this->copy($file,$tmpFile);
+    }
+    else { # $dataR
+        # Schreibe Daten auf temporäre Datei
+        $this->write($tmpFile,$$dataR);
+    }
+
+    # Öffne Tempdatei im Editor
+
     my $editor = $ENV{'EDITOR'} || 'vi';
     Quiq::Shell->exec("$editor $tmpFile");
-    if ($this->compare($tmpFile,$file)) {
+
+    my $ask = 0;
+    if ($file) {    
+        if ($this->compare($tmpFile,$file)) {
+            $ask = 1;
+        }
+    }
+    else {
+        if ($this->compareData($tmpFile,$$dataR)) {
+            $ask = 1;
+        }
+    }
+
+    if ($ask) {
         # Rückfrage an Benutzer
 
         my $answ = Quiq::Terminal->askUser(
@@ -539,7 +567,12 @@ sub edit {
         if ($answ eq 'y') {
             # Schreibe die Änderungen auf die Datei
 
-            $this->copy($tmpFile,$file);
+            if ($file) {
+                $this->copy($tmpFile,$file);
+            }
+            else {
+                $$dataR = $this->read($tmpFile);
+            }
             $changed = 1;
         }
     }

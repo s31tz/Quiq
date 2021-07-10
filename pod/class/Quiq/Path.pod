@@ -223,11 +223,12 @@ Werte für $method:
   link
   symlink
 
-=head3 edit() - Bearbeite Datei im Editor
+=head3 edit() - Bearbeite Datei oder Daten im Editor
 
 =head4 Synopsis
 
   $changed = $this->edit($file,@opt);
+  $changed = $this->edit(\$data,@opt);
 
 =head4 Arguments
 
@@ -237,19 +238,25 @@ Werte für $method:
 
 Datei, die bearbeitet werden soll.
 
+=item $data
+
+Daten, die bearbeitet werden sollen.
+
 =back
 
 =head4 Returns
 
-Boolschen Wert, der anzeigt, ob die Datei verändert wurde.
+Boolschen Wert, der anzeigt, ob die Datei oder die Daten
+verändert wurden.
 
 =head4 Description
 
-Öffne Datei $file im Editor, so dass diese vom Benutzer bearbeitet werden
-kann. Die Methode prüft nach Verlassen des Editors, ob die Datei geändert
-wurde. Falls ja, wird der Benutzer gefragt, ob er die Änderungen
-beibehalten möchte. Falls ja, liefert die Methode wahr, andernfalls
-falsch.
+Öffne Datei $file oder Daten $data im Editor, so dass diese vom
+Benutzer bearbeitet werden können. Die Methode prüft nach
+Verlassen des Editors, ob die Datei bzw. Daten geändert
+wurden. Falls ja, wird der Benutzer gefragt, ob er die Änderungen
+beibehalten möchte. Falls ja, liefert die Methode wahr,
+andernfalls falsch.
 
 =head3 encoding() - Liefere das Encoding der Datei
 
