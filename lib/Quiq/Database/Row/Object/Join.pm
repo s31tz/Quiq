@@ -141,7 +141,7 @@ sub selectStmt {
 
 =head2 Verschiedenes
 
-=head3 cast() - Wandele Datensatz in einen Datensatz einer anderen Klasse
+=head3 cast() - Wandele Datensatz in Datensatz einer anderen Klasse
 
 =head4 Synopsis
 
@@ -270,7 +270,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2020 Frank Seitz
+Copyright (C) 2021 Frank Seitz
 
 =head1 LICENSE
 
