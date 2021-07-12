@@ -2882,7 +2882,11 @@ sub insert {
 
     my $sloppy = 0;
 
-    Quiq::Option->extract(\@_,
+    #Quiq::Option->extract(\@_,
+    #    -sloppy => \$sloppy,
+    #);
+
+    $self->parameters(1,\@_,
         -sloppy => \$sloppy,
     );
 

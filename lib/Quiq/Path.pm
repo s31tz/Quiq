@@ -536,7 +536,7 @@ sub edit {
     }
     else { # $dataR
         # Schreibe Daten auf temporäre Datei
-        $this->write($tmpFile,$$dataR);
+        $this->write($tmpFile,$$dataR,-encode=>'utf-8');
     }
 
     # Öffne Tempdatei im Editor
@@ -571,7 +571,7 @@ sub edit {
                 $this->copy($tmpFile,$file);
             }
             else {
-                $$dataR = $this->read($tmpFile);
+                $$dataR = $this->read($tmpFile,-decode=>'utf-8');
             }
             $changed = 1;
         }
