@@ -689,6 +689,10 @@ L<Quiq::Rsync|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Rsync.pod
 
 =item *
 
+L<Quiq::SQLite|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/SQLite.pod> - Funktionalität für Umgang mit SQLite-Datenbanken
+
+=item *
+
 L<Quiq::Schedule|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Schedule.pod> - Matrix von zeitlichen Vorgängen
 
 =item *
