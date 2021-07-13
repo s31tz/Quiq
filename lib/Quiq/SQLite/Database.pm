@@ -1,4 +1,4 @@
-package Quiq::SQLite;
+package Quiq::SQLite::Database;
 use base qw/Quiq::Hash/;
 
 use v5.10;
@@ -8,6 +8,7 @@ use warnings;
 our $VERSION = '1.193';
 
 use Quiq::Path;
+use Quiq::Database::Connection;
 use Quiq::FileHandle;
 
 # -----------------------------------------------------------------------------
@@ -16,7 +17,7 @@ use Quiq::FileHandle;
 
 =head1 NAME
 
-Quiq::SQLite - Funktionalität für Umgang mit SQLite-Datenbanken
+Quiq::SQLite::Database - Schema-Entwicklung auf SQLite-Datenbank
 
 =head1 BASE CLASS
 
@@ -24,13 +25,110 @@ L<Quiq::Hash>
 
 =head1 METHODS
 
-=head2 Sicherung
+=head2 Konstruktor
 
-=head3 saveDatabase() - Sichere Schema und Daten in Dateisystem
+=head3 new() - Instantiiere SQLite Datenbank-Objekt
 
 =head4 Synopsis
 
-  $class->saveDatabase($db,$dir);
+  $sd = $class->new($dir,$name);
+
+=head4 Arguments
+
+=over 4
+
+=item $dir
+
+Verzeichnis mit Datenbank-, Schema- und Exportdateien.
+
+=item $name
+
+Grundname der Datenbankdatei.
+
+=back
+
+=head4 Returns
+
+Object
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
+dieses Objekt zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub new {
+    my ($class,$dir,$name) = @_;
+
+    my $p = Quiq::Path->new;
+
+    $dir = $p->expandTilde($dir);
+    if (!-d $dir) {
+        $class->throw(
+            'SQLITE-00001: Directory does not exist',
+            Dir => $dir,
+        );
+    }
+
+    return $class->SUPER::new(
+        dir => $dir,
+        name => $name,
+    );
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Objektmethoden
+
+=head3 connect() - Öffne Datenbankverbindung
+
+=head4 Synopsis
+
+  $db = $sd->connect;
+
+=head4 Returns
+
+Datenbankverbindung (Object)
+
+=head4 Description
+
+Instantiiere eine Verbindung zur SQLite-Datenbank und liefere eine
+Referenz auf dieses Objekt zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub connect {
+    my $self = shift;
+
+    my $p = Quiq::Path->new;
+
+    # Wenn das DB-Verzeichnis nicht existiert, erzeugen wir es
+    # (Parent-Verzeichnis muss existieren)
+
+    my $dbDir = sprintf '%s/db',$self->dir;
+    $p->mkdir($dbDir);
+    
+    my $dbFile = sprintf '%s/%s.db',$dbDir,$self->name;
+    my $udl = sprintf 'dbi#sqlite:%s',$dbFile;
+    
+    return Quiq::Database::Connection->new($udl,
+        -utf8 => 1,
+        -log => 1,
+    );
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 save() - Sichere Schema und Daten in Dateisystem
+
+=head4 Synopsis
+
+  $class->save($db,$dir);
 
 =head4 Arguments
 
@@ -67,7 +165,7 @@ Verzeichnis hat die Substruktur:
 
 # -----------------------------------------------------------------------------
 
-sub saveDatabase {
+sub save {
     my $class = shift;
 
     my $p = Quiq::Path->new;

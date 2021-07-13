@@ -3049,7 +3049,8 @@ sub numberBasePaths {
 
     my %basePath;
     for my $path (@$pathA) {
-        my ($dir,undef,$base,$ext) = $this->split($path);
+        # my ($dir,undef,$base,$ext) = $this->split($path);
+        my ($dir,undef,undef,undef,$base,$ext) = $this->split($path);
 
         if ($dir ne '') {
             $base = "$dir/$base";
@@ -3250,6 +3251,7 @@ sub numberPaths {
             $tmpPath .= ".$ext";
         }
         $tmpPath .= '.tmp';
+
         push @tmpPath,$tmpPath;
 
         $this->rename($path,$tmpPath,-overwrite=>0);
@@ -3273,7 +3275,7 @@ sub numberPaths {
 
 =head4 Synopsis
 
-  ($dir,$file,$base,$ext) = $class->split($path);
+  ($dir,$file,$base,$ext,$shortBase,$longExt) = $class->split($path);
 
 =head4 Description
 
@@ -3291,7 +3293,7 @@ geliefert.
 sub split {
     my ($class,$path) = @_;
 
-    my ($dir,$file,$base,$ext) = ('') x 4;
+    my ($dir,$file,$base,$ext,$shortBase,$longExt) = ('') x 6;
 
     $dir = $1 if $path =~ s|(.*)/||;
     $file = $path;
@@ -3299,7 +3301,12 @@ sub split {
     $ext = $1 if $path =~ s/\.([^.]+)$//;
     $base = $path;
 
-    return ($dir,$file,$base,$ext);
+    $longExt = $ext;
+    if (($shortBase = $base) =~ s/\.(.+)$//) {
+        $longExt = "$1.$longExt";
+    }
+
+    return ($dir,$file,$base,$ext,$shortBase,$longExt);
 }
 
 # -----------------------------------------------------------------------------

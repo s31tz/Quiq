@@ -1460,7 +1460,7 @@ bleibt als einziges vom ursprünglichen Dateinamen erhalten.
 
 =head4 Synopsis
 
-  ($dir,$file,$base,$ext) = $class->split($path);
+  ($dir,$file,$base,$ext,$shortBase,$longExt) = $class->split($path);
 
 =head4 Description
 
