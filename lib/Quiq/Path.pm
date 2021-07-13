@@ -2966,7 +2966,7 @@ sub rename {
 
 # -----------------------------------------------------------------------------
 
-=head3 numberBasePaths() - Nummeriere die Basisnamen der Pfade
+=head3 numberBasePaths() - Nummeriere die (kurzen) Basisnamen der Pfade
 
 =head4 Synopsis
 
@@ -3006,11 +3006,11 @@ Gib Information aus.
 
 =head4 Description
 
-Sortiere die Basisnamen der Pfade B<@paths> lexikalisch und
+Sortiere die (kurzen) Basisnamen der Pfade B<@paths> lexikalisch und
 nummeriere ihre Basisnamen durch, beginnend mit Nummer B<$step> und
-Schrittweite B<$step>. Pfade mit dem gleichen Basisnamen aber
-unterschiedlichen Extensions erhalten die gleiche Nummer, behalten
-aber ihre unterschiedliche Extension.
+Schrittweite B<$step>. Pfade mit dem gleichen (kurzen) Basisnamen aber
+unterschiedlichen (lange) Extensions erhalten die gleiche Nummer, behalten
+aber ihre unterschiedliche (lange) Extension.
 
 =head4 Example
 

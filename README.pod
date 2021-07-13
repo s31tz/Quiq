@@ -689,7 +689,7 @@ L<Quiq::Rsync|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Rsync.pod
 
 =item *
 
-L<Quiq::SQLite::Database|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/SQLite/Database.pod> - Schema-Entwicklung auf SQLite-Datenbank
+L<Quiq::SQLite|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/SQLite.pod> - Operationen auf SQLite-Datenbank
 
 =item *
 

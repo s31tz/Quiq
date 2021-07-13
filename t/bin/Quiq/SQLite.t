@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Quiq::SQLite::Database::Test;
+package Quiq::SQLite::Test;
 use base qw/Quiq::Test::Class/;
 
 use v5.10;
@@ -10,12 +10,12 @@ use warnings;
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
-    shift->useOk('Quiq::SQLite::Database');
+    shift->useOk('Quiq::SQLite');
 }
 
 # -----------------------------------------------------------------------------
 
 package main;
-Quiq::SQLite::Database::Test->runTests;
+Quiq::SQLite::Test->runTests;
 
 # eof
