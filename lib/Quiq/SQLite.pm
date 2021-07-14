@@ -10,6 +10,7 @@ our $VERSION = '1.193';
 use Quiq::Path;
 use Quiq::Database::Connection;
 use Quiq::Unindent;
+use Quiq::Shell;
 
 # -----------------------------------------------------------------------------
 
@@ -93,6 +94,29 @@ sub export {
     $p->write("$exportDir/export.sqlite",$script);
     $p->write("$exportDir/export.sh","sqlite3 $dbFile <export.sqlite\n");
     $p->chmod("$exportDir/export.sh",0775);
+
+    my $sh = Quiq::Shell->new;
+    $sh->cd($exportDir);
+    $sh->exec('./export.sh');
+
+    # Erzeuge Import-Skript
+
+    $script = Quiq::Unindent->string(q~
+        .read create.sql
+        .mode csv
+        .headers on
+    ~);
+    for my $table (@tables) {
+        $script .= ".import $table.csv $table\n";
+    }
+    $script .= ".exit\n";
+
+    $p->write("$exportDir/import.sqlite",$script);
+    $p->write("$exportDir/import.sh",
+        "rm -f $dbFile\n".
+        "sqlite3 $dbFile <import.sqlite\n"
+    );
+    $p->chmod("$exportDir/import.sh",0775);
 
     return;
 }
