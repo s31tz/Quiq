@@ -1,6 +1,6 @@
 =head1 NAME
 
-Quiq::SQLite - Operationen auf SQLite-Datenbank
+Quiq::SQLite - Operationen auf einer SQLite-Datenbank
 
 =head1 BASE CLASS
 
@@ -10,11 +10,11 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head2 Klassenmethoden
 
-=head3 export() - Exportiere Datenbank in Verzeichnis
+=head3 exportDatabase() - Exportiere SQLite Datenbank in Verzeichnis
 
 =head4 Synopsis
 
-  $class->export($dbFile,$exportDir);
+  $class->exportDatabase($dbFile,$exportDir);
 
 =head4 Arguments
 
@@ -26,18 +26,25 @@ SQLite Datenbank-Datei.
 
 =item $exportDir
 
-Verzeichnis, in das die Datenbank (Schema, Daten, Skripte)
-gesichert wird.  Existiert das Verzeichnis nicht, wird es erzeugt.
+Verzeichnis, in das die Datenbank (Schema und Daten)
+gesichert wird. Existiert das Verzeichnis nicht, wird es angelegt.
 
 =back
 
 =head4 Description
 
-Sichere den Inhalt der SQLite-Datenbank $dbFile in Verzeichnis $exportDir.
+Exportiere den Inhalt der SQLite-Datenbank $dbFile in
+Verzeichnis $exportDir.
 
 =head4 Example
 
-  Quiq::SQLite->export('~/var/knw/knw.db','/tmp/knw');
+  Quiq::SQLite->export('~/var/myapp/myapp.db','/tmp/myapp');
+
+=head3 importDatabase() - Importiere SQLite Datenbank aus Verzeichnis
+
+=head4 Synopsis
+
+  $class->importDatabase($db,$name);
 
 =head1 VERSION
 

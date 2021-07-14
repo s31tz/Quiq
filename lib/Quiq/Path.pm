@@ -1402,6 +1402,42 @@ sub count {
 
 # -----------------------------------------------------------------------------
 
+=head3 deleteContent() - Lösche Inhalt des Verzeichnis
+
+=head4 Synopsis
+
+  $this->deleteContent($dir);
+
+=head4 Arguments
+
+=over 4
+
+=item $dir
+
+Pfad des Verzeichnisses
+
+=back
+
+=head4 Description
+
+Lösche den Inhalt des Verzeichnisses $dir.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub deleteContent {
+    my ($this,$dir) = @_;
+
+    for my $entry ($this->entries($dir)) {
+        $this->delete("$dir/$entry");
+    }
+
+    return;
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 entries() - Liste der Verzeichniseinträge
 
 =head4 Synopsis
