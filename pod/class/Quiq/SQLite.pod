@@ -40,11 +40,47 @@ Verzeichnis $exportDir.
 
   Quiq::SQLite->export('~/var/myapp/myapp.db','/tmp/myapp');
 
-=head3 importDatabase() - Importiere SQLite Datenbank aus Verzeichnis
+=head3 exportData() - Exportiere SQLite Tabellendaten in Verzeichnis
+
+=head4 Synopsis
+
+  $class->exportData($dbFile,$exportDir);
+
+=head4 Arguments
+
+=over 4
+
+=item $dbFile
+
+SQLite Datenbank-Datei.
+
+=item $exportDir
+
+Verzeichnis, in das die Tabellendaten gesichert werden. Existiert das
+Verzeichnis nicht, wird es angelegt.
+
+=back
+
+=head4 Description
+
+Exportiere die Tabellendaten der SQLite-Datenbank $dbFile in
+Verzeichnis $exportDir.
+
+=head4 Example
+
+  Quiq::SQLite->export('~/var/myapp/myapp.db','/tmp/myapp');
+
+=head3 importDatabase() - Importiere SQLite Tabellendaten aus Verzeichnis
 
 =head4 Synopsis
 
   $class->importDatabase($db,$name);
+
+=head3 importData() - Importiere SQLite Datenbank aus Verzeichnis
+
+=head4 Synopsis
+
+  $class->importData($db,$name);
 
 =head1 VERSION
 

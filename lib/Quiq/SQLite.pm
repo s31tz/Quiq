@@ -10,7 +10,6 @@ our $VERSION = '1.193';
 use Quiq::Path;
 use Quiq::FileHandle;
 use Quiq::Database::Connection;
-use Quiq::Unindent;
 use Quiq::Shell;
 
 # -----------------------------------------------------------------------------
@@ -66,35 +65,74 @@ sub exportDatabase {
 
     my $p = Quiq::Path->new;
 
+    # Exportiere Tabellendaten ($exportDir wird implizit erzeugt bzw.
+    # dessen Inhalt gelöscht)
+    $class->exportData($dbFile,$exportDir);
+
+    # Exportiere Schema
+
+    my $schemaFile = "$exportDir/schema.sql";
+    my $fh = Quiq::FileHandle->new('|-',"sqlite3 $dbFile");
+    $fh->print(".output $schemaFile\n");
+    $fh->print(".schema\n");
+    $fh->print(".exit\n");
+    $fh->close;
+
+    # * Ignoriere SQLite-interne Tabellen
+
+    my $sql = $p->read($schemaFile);
+    $sql =~ s/CREATE TABLE sqlite_.*?;\n//g;
+    $p->write($schemaFile,$sql);
+
+    return;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 exportData() - Exportiere SQLite Tabellendaten in Verzeichnis
+
+=head4 Synopsis
+
+  $class->exportData($dbFile,$exportDir);
+
+=head4 Arguments
+
+=over 4
+
+=item $dbFile
+
+SQLite Datenbank-Datei.
+
+=item $exportDir
+
+Verzeichnis, in das die Tabellendaten gesichert werden. Existiert das
+Verzeichnis nicht, wird es angelegt.
+
+=back
+
+=head4 Description
+
+Exportiere die Tabellendaten der SQLite-Datenbank $dbFile in
+Verzeichnis $exportDir.
+
+=head4 Example
+
+  Quiq::SQLite->export('~/var/myapp/myapp.db','/tmp/myapp');
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub exportData {
+    my ($class,$dbFile,$exportDir) = @_;
+
+    my $p = Quiq::Path->new;
+
     # Erzeuge Exportverzeichnis, falls es nicht existiert. Falls es
     # existiert, lösche seinen Inhalt.
     
     $p->mkdir($exportDir,-recursive=>1);
     $p->deleteContent($exportDir);
-
-    # Ermittele die zu exportierenden Tabellen
-
-    # Exportiere das Schema in zwei Dateien. Die erste Datei enthält
-    # die Tabellendefinitionen, die zweite Datei den Rest (Indizes usw.)
-
-    my $fh = Quiq::FileHandle->new('|-',"sqlite3 $dbFile");
-    $fh->print(".output $exportDir/schema.sql\n");
-    $fh->print(".schema\n");
-    $fh->print(".exit\n");
-    $fh->close;
-
-    my $schema1;
-    my $schema2 = Quiq::Path->read("$exportDir/schema.sql");
-    while ($schema2 =~ s/^(CREATE TABLE.*?\);\n)//s) {
-        my $stmt = $1;
-        if ($stmt =~ / sqlite_/) {
-            next;
-        }
-        $schema1 .= $stmt;
-    }
-    Quiq::Path->write("$exportDir/schema1.sql",$schema1);
-    Quiq::Path->write("$exportDir/schema2.sql",$schema2);
-    Quiq::Path->delete("$exportDir/schema.sql");
 
     # Exportiere die Tabellendaten
 
@@ -115,19 +153,12 @@ sub exportDatabase {
 
     $db->disconnect;
 
-    # Import-Skript erzeugen
-
-    $p->write("$exportDir/import.sh",Quiq::Unindent->string(qq~
-        perl -MQuiq::SQLite -E 'Quiq::SQLite->importDatabase("$dbFile",".")'
-    ~));
-    $p->chmod("$exportDir/import.sh",0775);
-
     return;
 }
 
 # -----------------------------------------------------------------------------
 
-=head3 importDatabase() - Importiere SQLite Datenbank aus Verzeichnis
+=head3 importDatabase() - Importiere SQLite Tabellendaten aus Verzeichnis
 
 =head4 Synopsis
 
@@ -143,25 +174,46 @@ sub importDatabase {
     my $p = Quiq::Path->new;
     my $sh = Quiq::Shell->new;
 
-    # Datenbank entfernen (sichern). Sie wird anschließend neu erzeugt.
-    $sh->exec("mv $dbFile /tmp/".$p->filename($dbFile));
+    # Datenbankdatei sichern (sichern) und leeren.
 
-    # Erzeuge Tabellen
-    $sh->exec("sqlite3 $dbFile <$importDir/schema1.sql");
+    $sh->exec("cp $dbFile /tmp/".$p->filename($dbFile).'.bak');
+    $p->write($dbFile,'');
+
+    # Erzeuge Schema
+    $sh->exec("sqlite3 $dbFile <$importDir/schema.sql");
+
+    # Importiere Tabellendaten
+    $class->importData($dbFile,$importDir);
+
+    return;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 importData() - Importiere SQLite Datenbank aus Verzeichnis
+
+=head4 Synopsis
+
+  $class->importData($db,$name);
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub importData {
+    my ($class,$dbFile,$importDir) = @_;
 
     # Importiere Tabellendaten
 
     my $udl = "dbi#sqlite:$dbFile";
     my $db = Quiq::Database::Connection->new($udl,-utf8=>1);
 
-    for my $file ($p->glob("$importDir/*.dat")) {
+    for my $file (Quiq::Path->glob("$importDir/*.dat")) {
         my ($table) = $file =~ m|/([^/]+).dat$|;
+        $db->delete($table);
         $db->importTable($table,$file);
     }
     $db->disconnect(1);
-
-    # Erzeuge Indizes usw.
-    $sh->exec("sqlite3 $dbFile <$importDir/schema2.sql");
 
     return;
 }
