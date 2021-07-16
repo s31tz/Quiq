@@ -233,12 +233,28 @@ sub importData {
 sub recreateDatabase {
     my ($class,$dbFile,$sub) = @_;
 
-    my $exportDir = Quiq::Path->tempDir(cleanup=>0);
-    print "ExportDir: $exportDir\n";
+    my $p = Quiq::Path->new;
 
     # Exportiere Tabellendaten
 
+    my $exportDir = $p->tempDir(-cleanup=>0);
+    print "ExportDir: $exportDir\n";
     $class->exportData($dbFile,$exportDir);
+
+    # Erzeuge Datenbank neu
+
+    $p->tuncate($dbFile);
+    my $db = Quiq::Database::Connection->new("dbi#sqlite:$dbFile",
+        -utf8=>1,
+    );
+    $sub->($dbFile);
+    $db->disconnect(1);
+
+    # Importiere Tabellendaten
+    $class->importData($dbFile,$exportDir);
+
+    # Wenn alles gut gegangen ist, löschen wir das Exportverzeichnis
+    $p->delete($exportDir);
 
     return;
 }
