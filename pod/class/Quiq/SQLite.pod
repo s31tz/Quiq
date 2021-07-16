@@ -74,13 +74,19 @@ Verzeichnis $exportDir.
 
 =head4 Synopsis
 
-  $class->importDatabase($db,$name);
+  $class->importDatabase($dbFile,$exportDir);
 
 =head3 importData() - Importiere SQLite Datenbank aus Verzeichnis
 
 =head4 Synopsis
 
-  $class->importData($db,$name);
+  $class->importData($dbFile,$exportDir);
+
+=head3 recreateDatabase() - Erzeuge SQLite Datenbank neu
+
+=head4 Synopsis
+
+  $class->recreateDatabase($dbFile,$sub);
 
 =head1 VERSION
 

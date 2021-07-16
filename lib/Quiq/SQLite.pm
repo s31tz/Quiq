@@ -162,7 +162,7 @@ sub exportData {
 
 =head4 Synopsis
 
-  $class->importDatabase($db,$name);
+  $class->importDatabase($dbFile,$exportDir);
 
 =cut
 
@@ -194,7 +194,7 @@ sub importDatabase {
 
 =head4 Synopsis
 
-  $class->importData($db,$name);
+  $class->importData($dbFile,$exportDir);
 
 =cut
 
@@ -214,6 +214,31 @@ sub importData {
         $db->importTable($table,$file);
     }
     $db->disconnect(1);
+
+    return;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 recreateDatabase() - Erzeuge SQLite Datenbank neu
+
+=head4 Synopsis
+
+  $class->recreateDatabase($dbFile,$sub);
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub recreateDatabase {
+    my ($class,$dbFile,$sub) = @_;
+
+    my $exportDir = Quiq::Path->tempDir(cleanup=>0);
+    print "ExportDir: $exportDir\n";
+
+    # Exportiere Tabellendaten
+
+    $class->exportData($dbFile,$exportDir);
 
     return;
 }
