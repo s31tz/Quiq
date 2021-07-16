@@ -243,7 +243,7 @@ sub recreateDatabase {
 
     # Erzeuge Datenbank neu
 
-    $p->tuncate($dbFile);
+    $p->truncate($dbFile);
     my $db = Quiq::Database::Connection->new("dbi#sqlite:$dbFile",
         -utf8=>1,
     );
