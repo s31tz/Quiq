@@ -259,30 +259,40 @@ Datenbank erzeugt. Als Parameter wird $dbFile übergeben.
 
 =head4 Description
 
-Erzeuge die Datenbank in fünf Schritten neu:
+Erzeuge die Datenbank $dbFile in folgenden Schritten via
+Subroutine $sub erstmalig oder neu:
 
 =over 4
 
-=item 0.
-
-Die Datenbank wird gesichert
-
 =item 1.
 
-Alle Tabellendaten werden exportiert (in temporäres Verzeichnis)
+Exportverzeichnis anlegen (temporäres Verzeichnis, das nur im
+Fehlerfall erhalten bleibt)
 
 =item 2.
 
-Die Datenbank wird komplett geleert
+Tabellendaten in Exportverzeichnis exportieren
+
+=item 3.
+
+Datenbank $dbFile in Exportverzeichnis sichern
 
 =item 4.
 
-Die Subroutine $sub wird aufgerufen, welche die Datenbankstrukturen
-neu erzeugt
+Datenbank $dbFile vollständig leeren
 
 =item 5.
 
-Die zuvor exportierten Daten werden importiert
+Schema via $sub neu erzeugen
+
+=item 6.
+
+die unter 2. exportierten Daten importieren
+
+=item 7.
+
+Exportverzeichnis löschen (falls in den Schritten 4. bis 6.
+kein Fehler aufgetreten ist)
 
 =back
 
@@ -298,34 +308,34 @@ sub recreateDatabase {
     # Exportiere Tabellendaten
 
     my $exportDir = $p->tempDir(-cleanup=>0);
-    warn "Exporting table data to directory: $exportDir\n";
     $class->exportData($dbFile,$exportDir);
 
     # Sichere Datenbank
-
-    warn "Saving database file $dbFile to directory $exportDir\n";
     $p->copyToDir($dbFile,$exportDir,-preserve=>1);
 
-    # Erzeuge Datenbank neu
+    eval {
+        # Erzeuge Datenbank neu
 
-    warn "Emptying database $dbFile\n";
-    $p->truncate($dbFile);
+        $p->truncate($dbFile);
+        my $db = Quiq::Database::Connection->new("dbi#sqlite:$dbFile",
+            -utf8=>1,
+        );
+        $sub->($dbFile);
+        $db->disconnect(1);
 
-    my $db = Quiq::Database::Connection->new("dbi#sqlite:$dbFile",
-        -utf8=>1,
-    );
-    warn "Creating schema\n";
-    $sub->($dbFile);
-    $db->disconnect(1);
-
-    # Importiere Tabellendaten
-
-    warn "Importing table data from directory: $exportDir\n";
-    $class->importData($dbFile,$exportDir);
+        # Importiere Tabellendaten
+        $class->importData($dbFile,$exportDir);
+    };
+    if ($@) {
+        $class->throw(
+             'SQLITE-00001: Recreation of database failed',
+             Database => $dbFile,
+             ExportDir => $exportDir,
+             Error => $@,
+        );
+    }
 
     # Wenn alles gut gegangen ist, löschen wir das Exportverzeichnis
-
-    warn "Deleting directory: $exportDir\n";
     $p->delete($exportDir);
 
     return;
