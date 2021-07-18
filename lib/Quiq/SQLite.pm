@@ -14,6 +14,8 @@ use Quiq::Shell;
 
 # -----------------------------------------------------------------------------
 
+=encoding utf8
+
 =head1 NAME
 
 Quiq::SQLite - Operationen auf einer SQLite-Datenbank
@@ -226,6 +228,64 @@ sub importData {
 
   $class->recreateDatabase($dbFile,$sub);
 
+=head4 Arguments
+
+=over 4
+
+=item $dbFile
+
+SQLite Datenbank-Datei.
+
+=item $sub
+
+Refenz auf eine Subroutine, die das Schema auf einer I<leeren>
+Datenbank erzeugt. Als Parameter wird $dbFile übergeben.
+
+  $class->recreateDatabase('~/var/myapp/myapp.db',sub {
+      my $dbPath = shift;
+  
+      my $db = %<Quiq::Database::Connection->new("dbi#sqlite:$dbPath",
+          -utf8 => 1,
+      );
+  
+      # via $db alle Schemaobjekte erzeugen,
+      # aber keine Daten importieren!
+      ...
+  
+      return;
+  });
+
+=back
+
+=head4 Description
+
+Erzeuge die Datenbank in fünf Schritten neu:
+
+=over 4
+
+=item 0.
+
+Die Datenbank wird gesichert
+
+=item 1.
+
+Alle Tabellendaten werden exportiert (in temporäres Verzeichnis)
+
+=item 2.
+
+Die Datenbank wird komplett geleert
+
+=item 4.
+
+Die Subroutine $sub wird aufgerufen, welche die Datenbankstrukturen
+neu erzeugt
+
+=item 5.
+
+Die zuvor exportierten Daten werden importiert
+
+=back
+
 =cut
 
 # -----------------------------------------------------------------------------
@@ -238,22 +298,34 @@ sub recreateDatabase {
     # Exportiere Tabellendaten
 
     my $exportDir = $p->tempDir(-cleanup=>0);
-    print "ExportDir: $exportDir\n";
+    warn "Exporting table data to directory: $exportDir\n";
     $class->exportData($dbFile,$exportDir);
+
+    # Sichere Datenbank
+
+    warn "Saving database file $dbFile to directory $exportDir\n";
+    $p->copyToDir($dbFile,$exportDir,-preserve=>1);
 
     # Erzeuge Datenbank neu
 
+    warn "Emptying database $dbFile\n";
     $p->truncate($dbFile);
+
     my $db = Quiq::Database::Connection->new("dbi#sqlite:$dbFile",
         -utf8=>1,
     );
+    warn "Creating schema\n";
     $sub->($dbFile);
     $db->disconnect(1);
 
     # Importiere Tabellendaten
+
+    warn "Importing table data from directory: $exportDir\n";
     $class->importData($dbFile,$exportDir);
 
     # Wenn alles gut gegangen ist, löschen wir das Exportverzeichnis
+
+    warn "Deleting directory: $exportDir\n";
     $p->delete($exportDir);
 
     return;

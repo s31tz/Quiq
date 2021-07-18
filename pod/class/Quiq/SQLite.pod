@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head1 NAME
 
 Quiq::SQLite - Operationen auf einer SQLite-Datenbank
@@ -87,6 +89,64 @@ Verzeichnis $exportDir.
 =head4 Synopsis
 
   $class->recreateDatabase($dbFile,$sub);
+
+=head4 Arguments
+
+=over 4
+
+=item $dbFile
+
+SQLite Datenbank-Datei.
+
+=item $sub
+
+Refenz auf eine Subroutine, die das Schema auf einer I<leeren>
+Datenbank erzeugt. Als Parameter wird $dbFile übergeben.
+
+  $class->recreateDatabase('~/var/myapp/myapp.db',sub {
+      my $dbPath = shift;
+  
+      my $db = %<Quiq::Database::Connection->new("dbi#sqlite:$dbPath",
+          -utf8 => 1,
+      );
+  
+      # via $db alle Schemaobjekte erzeugen,
+      # aber keine Daten importieren!
+      ...
+  
+      return;
+  });
+
+=back
+
+=head4 Description
+
+Erzeuge die Datenbank in fünf Schritten neu:
+
+=over 4
+
+=item 0.
+
+Die Datenbank wird gesichert
+
+=item 1.
+
+Alle Tabellendaten werden exportiert (in temporäres Verzeichnis)
+
+=item 2.
+
+Die Datenbank wird komplett geleert
+
+=item 4.
+
+Die Subroutine $sub wird aufgerufen, welche die Datenbankstrukturen
+neu erzeugt
+
+=item 5.
+
+Die zuvor exportierten Daten werden importiert
+
+=back
 
 =head1 VERSION
 
