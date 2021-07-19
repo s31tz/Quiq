@@ -12,36 +12,6 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head2 Klassenmethoden
 
-=head3 exportDatabase() - Exportiere SQLite Datenbank in Verzeichnis
-
-=head4 Synopsis
-
-  $class->exportDatabase($dbFile,$exportDir);
-
-=head4 Arguments
-
-=over 4
-
-=item $dbFile
-
-SQLite Datenbank-Datei.
-
-=item $exportDir
-
-Verzeichnis, in das die Datenbank (Schema und Daten)
-gesichert wird. Existiert das Verzeichnis nicht, wird es angelegt.
-
-=back
-
-=head4 Description
-
-Exportiere den Inhalt der SQLite-Datenbank $dbFile in
-Verzeichnis $exportDir.
-
-=head4 Example
-
-  Quiq::SQLite->export('~/var/myapp/myapp.db','/tmp/myapp');
-
 =head3 exportData() - Exportiere SQLite Tabellendaten in Verzeichnis
 
 =head4 Synopsis
@@ -58,8 +28,7 @@ SQLite Datenbank-Datei.
 
 =item $exportDir
 
-Verzeichnis, in das die Tabellendaten gesichert werden. Existiert das
-Verzeichnis nicht, wird es angelegt.
+Verzeichnis, in das die Tabellendaten gesichert werden.
 
 =back
 
@@ -72,12 +41,6 @@ Verzeichnis $exportDir.
 
   Quiq::SQLite->export('~/var/myapp/myapp.db','/tmp/myapp');
 
-=head3 importDatabase() - Importiere SQLite Tabellendaten aus Verzeichnis
-
-=head4 Synopsis
-
-  $class->importDatabase($dbFile,$exportDir);
-
 =head3 importData() - Importiere SQLite Datenbank aus Verzeichnis
 
 =head4 Synopsis
@@ -88,7 +51,7 @@ Verzeichnis $exportDir.
 
 =head4 Synopsis
 
-  $class->recreateDatabase($dbFile,$sub);
+  $class->recreateDatabase($dbFile,$exportDir,$sub);
 
 =head4 Arguments
 
@@ -98,12 +61,20 @@ Verzeichnis $exportDir.
 
 SQLite Datenbank-Datei.
 
+=item $exportDir
+
+Verzeichnis, in das die Tabellendaten und Datenbank-Datei gesichert
+werden. Schlägt die Neuerzeugung fehl, müssen die Tabellendaten
+eventuell bearbeitet und die Neuerzeugung wiederholt werden.
+Die ursprüngliche Datenbank kann bei Bedarf wieder hergestellt
+werden, da sie zuvor in das Exportverzeichnis gesichert wurde (s.u.).
+
 =item $sub
 
 Refenz auf eine Subroutine, die das Schema auf einer I<leeren>
 Datenbank erzeugt. Als Parameter wird $dbFile übergeben.
 
-  $class->recreateDatabase('~/var/myapp/myapp.db',sub {
+  $class->recreateDatabase('~/var/myapp/myapp.db','/tmp/myapp',sub {
       my $dbPath = shift;
   
       my $db = %<Quiq::Database::Connection->new("dbi#sqlite:$dbPath",
@@ -121,42 +92,40 @@ Datenbank erzeugt. Als Parameter wird $dbFile übergeben.
 
 =head4 Description
 
-Erzeuge die Datenbank $dbFile in folgenden Schritten via
-Subroutine $sub erstmalig oder neu:
+Erzeuge die Datenbank $dbFile via Subroutine $sub erstmalig oder neu.
+Dies erfolgt in folgenden Schritten:
 
 =over 4
 
 =item 1.
 
-Exportverzeichnis anlegen (temporäres Verzeichnis, das nur im
-Fehlerfall erhalten bleibt)
+Tabellendaten in Exportverzeichnis exportieren
 
 =item 2.
 
-Tabellendaten in Exportverzeichnis exportieren
+Datenbank $dbFile in Exportverzeichnis sichern
 
 =item 3.
 
-Datenbank $dbFile in Exportverzeichnis sichern
+Datenbank $dbFile leeren
 
 =item 4.
 
-Datenbank $dbFile vollständig leeren
+Datenbank-Strukturen via $sub erzeugen
 
 =item 5.
 
-Schema via $sub neu erzeugen
-
-=item 6.
-
 die unter 2. exportierten Daten importieren
 
-=item 7.
+=item 6.
 
 Exportverzeichnis löschen (falls in den Schritten 4. bis 6.
 kein Fehler aufgetreten ist)
 
 =back
+
+Die Schritte 1. und 2. finden erst nach Rückfrage statt, wenn
+das Exportverzeichnis bereits existiert.
 
 =head1 VERSION
 

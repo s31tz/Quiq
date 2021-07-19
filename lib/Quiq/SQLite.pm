@@ -7,10 +7,9 @@ use warnings;
 
 our $VERSION = '1.193';
 
-use Quiq::Path;
-use Quiq::FileHandle;
 use Quiq::Database::Connection;
-use Quiq::Shell;
+use Quiq::Path;
+use Quiq::Terminal;
 
 # -----------------------------------------------------------------------------
 
@@ -28,69 +27,6 @@ L<Quiq::Object>
 
 =head2 Klassenmethoden
 
-=head3 exportDatabase() - Exportiere SQLite Datenbank in Verzeichnis
-
-=head4 Synopsis
-
-  $class->exportDatabase($dbFile,$exportDir);
-
-=head4 Arguments
-
-=over 4
-
-=item $dbFile
-
-SQLite Datenbank-Datei.
-
-=item $exportDir
-
-Verzeichnis, in das die Datenbank (Schema und Daten)
-gesichert wird. Existiert das Verzeichnis nicht, wird es angelegt.
-
-=back
-
-=head4 Description
-
-Exportiere den Inhalt der SQLite-Datenbank $dbFile in
-Verzeichnis $exportDir.
-
-=head4 Example
-
-  Quiq::SQLite->export('~/var/myapp/myapp.db','/tmp/myapp');
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub exportDatabase {
-    my ($class,$dbFile,$exportDir) = @_;
-
-    my $p = Quiq::Path->new;
-
-    # Exportiere Tabellendaten ($exportDir wird implizit erzeugt bzw.
-    # dessen Inhalt gelöscht)
-    $class->exportData($dbFile,$exportDir);
-
-    # Exportiere Schema
-
-    my $schemaFile = "$exportDir/schema.sql";
-    my $fh = Quiq::FileHandle->new('|-',"sqlite3 $dbFile");
-    $fh->print(".output $schemaFile\n");
-    $fh->print(".schema\n");
-    $fh->print(".exit\n");
-    $fh->close;
-
-    # * Ignoriere SQLite-interne Tabellen
-
-    my $sql = $p->read($schemaFile);
-    $sql =~ s/CREATE TABLE sqlite_.*?;\n//g;
-    $p->write($schemaFile,$sql);
-
-    return;
-}
-
-# -----------------------------------------------------------------------------
-
 =head3 exportData() - Exportiere SQLite Tabellendaten in Verzeichnis
 
 =head4 Synopsis
@@ -107,8 +43,7 @@ SQLite Datenbank-Datei.
 
 =item $exportDir
 
-Verzeichnis, in das die Tabellendaten gesichert werden. Existiert das
-Verzeichnis nicht, wird es angelegt.
+Verzeichnis, in das die Tabellendaten gesichert werden.
 
 =back
 
@@ -128,18 +63,11 @@ Verzeichnis $exportDir.
 sub exportData {
     my ($class,$dbFile,$exportDir) = @_;
 
-    my $p = Quiq::Path->new;
-
-    # Erzeuge Exportverzeichnis, falls es nicht existiert. Falls es
-    # existiert, lösche seinen Inhalt.
-    
-    $p->mkdir($exportDir,-recursive=>1);
-    $p->deleteContent($exportDir);
-
     # Exportiere die Tabellendaten
 
     my $udl = "dbi#sqlite:$dbFile";
     my $db = Quiq::Database::Connection->new($udl,-utf8=>1);
+
     my @tables = $db->values(
         -select => 'name',
         -from => 'sqlite_master',
@@ -154,38 +82,6 @@ sub exportData {
     }
 
     $db->disconnect;
-
-    return;
-}
-
-# -----------------------------------------------------------------------------
-
-=head3 importDatabase() - Importiere SQLite Tabellendaten aus Verzeichnis
-
-=head4 Synopsis
-
-  $class->importDatabase($dbFile,$exportDir);
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub importDatabase {
-    my ($class,$dbFile,$importDir) = @_;
-
-    my $p = Quiq::Path->new;
-    my $sh = Quiq::Shell->new;
-
-    # Datenbankdatei sichern (sichern) und leeren.
-
-    $sh->exec("cp $dbFile /tmp/".$p->filename($dbFile).'.bak');
-    $p->write($dbFile,'');
-
-    # Erzeuge Schema
-    $sh->exec("sqlite3 $dbFile <$importDir/schema.sql");
-
-    # Importiere Tabellendaten
-    $class->importData($dbFile,$importDir);
 
     return;
 }
@@ -226,7 +122,7 @@ sub importData {
 
 =head4 Synopsis
 
-  $class->recreateDatabase($dbFile,$sub);
+  $class->recreateDatabase($dbFile,$exportDir,$sub);
 
 =head4 Arguments
 
@@ -236,12 +132,20 @@ sub importData {
 
 SQLite Datenbank-Datei.
 
+=item $exportDir
+
+Verzeichnis, in das die Tabellendaten und Datenbank-Datei gesichert
+werden. Schlägt die Neuerzeugung fehl, müssen die Tabellendaten
+eventuell bearbeitet und die Neuerzeugung wiederholt werden.
+Die ursprüngliche Datenbank kann bei Bedarf wieder hergestellt
+werden, da sie zuvor in das Exportverzeichnis gesichert wurde (s.u.).
+
 =item $sub
 
 Refenz auf eine Subroutine, die das Schema auf einer I<leeren>
 Datenbank erzeugt. Als Parameter wird $dbFile übergeben.
 
-  $class->recreateDatabase('~/var/myapp/myapp.db',sub {
+  $class->recreateDatabase('~/var/myapp/myapp.db','/tmp/myapp',sub {
       my $dbPath = shift;
   
       my $db = %<Quiq::Database::Connection->new("dbi#sqlite:$dbPath",
@@ -259,71 +163,80 @@ Datenbank erzeugt. Als Parameter wird $dbFile übergeben.
 
 =head4 Description
 
-Erzeuge die Datenbank $dbFile in folgenden Schritten via
-Subroutine $sub erstmalig oder neu:
+Erzeuge die Datenbank $dbFile via Subroutine $sub erstmalig oder neu.
+Dies erfolgt in folgenden Schritten:
 
 =over 4
 
 =item 1.
 
-Exportverzeichnis anlegen (temporäres Verzeichnis, das nur im
-Fehlerfall erhalten bleibt)
+Tabellendaten in Exportverzeichnis exportieren
 
 =item 2.
 
-Tabellendaten in Exportverzeichnis exportieren
+Datenbank $dbFile in Exportverzeichnis sichern
 
 =item 3.
 
-Datenbank $dbFile in Exportverzeichnis sichern
+Datenbank $dbFile leeren
 
 =item 4.
 
-Datenbank $dbFile vollständig leeren
+Datenbank-Strukturen via $sub erzeugen
 
 =item 5.
 
-Schema via $sub neu erzeugen
-
-=item 6.
-
 die unter 2. exportierten Daten importieren
 
-=item 7.
+=item 6.
 
 Exportverzeichnis löschen (falls in den Schritten 4. bis 6.
 kein Fehler aufgetreten ist)
 
 =back
 
+Die Schritte 1. und 2. finden erst nach Rückfrage statt, wenn
+das Exportverzeichnis bereits existiert.
+
 =cut
 
 # -----------------------------------------------------------------------------
 
 sub recreateDatabase {
-    my ($class,$dbFile,$sub) = @_;
+    my ($class,$dbFile,$exportDir,$sub) = @_;
 
     my $p = Quiq::Path->new;
 
-    # Exportiere Tabellendaten
+    # Exportiere Tabellendaten und sichere Datenbank. Wenn das
+    # Exportverzeichnis bereits existiert, stellen wir eine
+    # Rückfrage, denn es könnte der erneute Versuch nach einem
+    # fehlgeschlagenen Import sein.
 
-    my $exportDir = $p->tempDir(-cleanup=>0);
-    $class->exportData($dbFile,$exportDir);
+    my $export = 1;
+    if ($p->exists($exportDir)) {
+        my $answ = Quiq::Terminal->askUser(
+            "ExportDir $exportDir already exists. Export again?",
+            -values => 'y/n',
+            -default => 'n',
+        );
+        if ($answ ne 'y') {
+            $export = 0;
+        }
+    }
+    else {
+        $p->mkdir($exportDir,-recursive=>1);
+    }
 
-    # Sichere Datenbank
-    $p->copyToDir($dbFile,$exportDir,-preserve=>1);
+    if ($export) {
+        $class->exportData($dbFile,$exportDir);
+        $p->copyToDir($dbFile,$exportDir,-preserve=>1);
+    }
+
+    # Erzeuge Datenbank neu und importiere Tabellendaten
 
     eval {
-        # Erzeuge Datenbank neu
-
         $p->truncate($dbFile);
-        my $db = Quiq::Database::Connection->new("dbi#sqlite:$dbFile",
-            -utf8=>1,
-        );
         $sub->($dbFile);
-        $db->disconnect(1);
-
-        # Importiere Tabellendaten
         $class->importData($dbFile,$exportDir);
     };
     if ($@) {
@@ -335,7 +248,7 @@ sub recreateDatabase {
         );
     }
 
-    # Wenn alles gut gegangen ist, löschen wir das Exportverzeichnis
+    # Wenn alles geklappt hat, löschen wir das Exportverzeichnis
     $p->delete($exportDir);
 
     return;

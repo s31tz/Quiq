@@ -8,6 +8,7 @@ use strict;
 use warnings;
 use utf8;
 
+use Quiq::Path;
 use Quiq::SQLite;
 use Quiq::Database::Connection;
 
@@ -22,11 +23,17 @@ sub test_loadClass : Init(1) {
 sub test_unitTest_root: Test(3) {
     my $self = shift;
 
-    my $dbPath = "/tmp/test$$.db";
+    my $p = Quiq::Path->new;
+
+    my $dbPath = '/tmp/test-sqlite.db';
+    $p->delete($dbPath);
+
+    my $exportDir = '/tmp/test-sqlite';
+    $p->delete($exportDir);
 
     # Erzeuge initiale Datenbank
 
-    Quiq::SQLite->recreateDatabase($dbPath,sub {
+    Quiq::SQLite->recreateDatabase($dbPath,$exportDir,sub {
         my $dbPath = shift;
         
         my $db = Quiq::Database::Connection->new("dbi#sqlite:$dbPath");
@@ -48,7 +55,7 @@ sub test_unitTest_root: Test(3) {
 
     # Erzeuge die Datenbank mit geändertem Schema neu
 
-    Quiq::SQLite->recreateDatabase($dbPath,sub {
+    Quiq::SQLite->recreateDatabase($dbPath,$exportDir,sub {
         my $dbPath = shift;
         
         my $db = Quiq::Database::Connection->new("dbi#sqlite:$dbPath");
@@ -72,6 +79,9 @@ sub test_unitTest_root: Test(3) {
     $self->is($per->per_nachname,'Seitz');
     $self->is($per->per_geburtstag,'');
     $db->disconnect;
+
+    # Lösche Testdatenbank
+    $p->delete($dbPath);
 
     return;
 }
