@@ -25,18 +25,18 @@ sub test_unitTest_root: Test(3) {
 
     my $p = Quiq::Path->new;
 
-    my $dbPath = '/tmp/test-sqlite.db';
-    $p->delete($dbPath);
+    my $dbFile = '/tmp/test-sqlite.db';
+    $p->delete($dbFile);
 
     my $exportDir = '/tmp/test-sqlite';
     $p->delete($exportDir);
 
     # Erzeuge initiale Datenbank
 
-    Quiq::SQLite->recreateDatabase($dbPath,$exportDir,sub {
-        my $dbPath = shift;
+    Quiq::SQLite->recreateDatabase($dbFile,$exportDir,sub {
+        my $dbFile = shift;
         
-        my $db = Quiq::Database::Connection->new("dbi#sqlite:$dbPath");
+        my $db = Quiq::Database::Connection->new("dbi#sqlite:$dbFile");
 
         my $cur = $db->createTable('person',
             ['per_id',type=>'INTEGER',primaryKey=>1,autoIncrement=>1],
@@ -49,16 +49,16 @@ sub test_unitTest_root: Test(3) {
 
     # Füge Daten hinzu
 
-    my $db = Quiq::Database::Connection->new("dbi#sqlite:$dbPath");
+    my $db = Quiq::Database::Connection->new("dbi#sqlite:$dbFile");
     $db->insert('person',per_vorname=>'Linus',per_nachname=>'Seitz');
     $db->disconnect(1);
 
     # Erzeuge die Datenbank mit geändertem Schema neu
 
-    Quiq::SQLite->recreateDatabase($dbPath,$exportDir,sub {
-        my $dbPath = shift;
+    Quiq::SQLite->recreateDatabase($dbFile,$exportDir,sub {
+        my $dbFile = shift;
         
-        my $db = Quiq::Database::Connection->new("dbi#sqlite:$dbPath");
+        my $db = Quiq::Database::Connection->new("dbi#sqlite:$dbFile");
 
         my $cur = $db->createTable('person',
             ['per_id',type=>'INTEGER',primaryKey=>1,autoIncrement=>1],
@@ -73,7 +73,7 @@ sub test_unitTest_root: Test(3) {
     # Prüfe, dass das Schema geändert wurde und die Daten
     # erhalten geblieben sind
 
-    $db = Quiq::Database::Connection->new("dbi#sqlite:$dbPath");
+    $db = Quiq::Database::Connection->new("dbi#sqlite:$dbFile");
     my $per = $db->lookup('person',per_vorname=>'Linus');
     $self->is($per->per_id,1);
     $self->is($per->per_nachname,'Seitz');
@@ -81,7 +81,7 @@ sub test_unitTest_root: Test(3) {
     $db->disconnect;
 
     # Lösche Testdatenbank
-    $p->delete($dbPath);
+    $p->delete($dbFile);
 
     return;
 }

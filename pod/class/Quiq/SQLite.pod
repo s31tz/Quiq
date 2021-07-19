@@ -75,9 +75,9 @@ Refenz auf die Subroutine, die das Schema auf einer I<leeren>
 Datenbank erzeugt. Als Parameter wird $dbFile übergeben.
 
   $class->recreateDatabase('~/var/myapp/myapp.db','/tmp/myapp',sub {
-      my $dbPath = shift;
+      my $dbFile = shift;
   
-      my $db = %<Quiq::Database::Connection->new("dbi#sqlite:$dbPath",
+      my $db = %<Quiq::Database::Connection->new("dbi#sqlite:$dbFile",
           -utf8 => 1,
       );
   
@@ -103,7 +103,7 @@ Tabellendaten in Exportverzeichnis exportieren
 
 =item 2.
 
-Datenbank $dbFile in Exportverzeichnis sichern
+Datenbank $dbFile in Exportverzeichnis kopieren (sichern)
 
 =item 3.
 
@@ -124,8 +124,10 @@ kein Fehler aufgetreten ist)
 
 =back
 
-Die Schritte 1. und 2. finden nach Rückfrage statt, wenn
-das Exportverzeichnis bereits existiert.
+Die Schritte 1. und 2. finden nur nach Rückfrage statt, wenn
+das Exportverzeichnis bereits existiert. Das Exportverzeichnis existiert
+typischerweise nur, wenn ein vorheriger Neuerzeugungsversuch
+fehlgeschlagen ist.
 
 =head1 VERSION
 
