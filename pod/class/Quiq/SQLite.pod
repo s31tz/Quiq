@@ -71,7 +71,7 @@ werden, da sie zuvor in das Exportverzeichnis gesichert wurde (s.u.).
 
 =item $sub
 
-Refenz auf eine Subroutine, die das Schema auf einer I<leeren>
+Refenz auf die Subroutine, die das Schema auf einer I<leeren>
 Datenbank erzeugt. Als Parameter wird $dbFile übergeben.
 
   $class->recreateDatabase('~/var/myapp/myapp.db','/tmp/myapp',sub {
@@ -124,7 +124,7 @@ kein Fehler aufgetreten ist)
 
 =back
 
-Die Schritte 1. und 2. finden erst nach Rückfrage statt, wenn
+Die Schritte 1. und 2. finden nach Rückfrage statt, wenn
 das Exportverzeichnis bereits existiert.
 
 =head1 VERSION
