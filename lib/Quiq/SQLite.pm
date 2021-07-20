@@ -43,7 +43,7 @@ SQLite Datenbank-Datei.
 
 =item $exportDir
 
-Verzeichnis, in das die Tabellendaten gesichert werden.
+Verzeichnis, in das die Tabellendaten exportiert werden.
 
 =back
 
@@ -92,7 +92,30 @@ sub exportData {
 
 =head4 Synopsis
 
-  $class->importData($dbFile,$exportDir);
+  $class->importData($dbFile,$importDir);
+
+=head4 Arguments
+
+=over 4
+
+=item $dbFile
+
+SQLite Datenbank-Datei.
+
+=item $exportDir
+
+Verzeichnis, aus dem die Tabellendaten importiert werden.
+
+=back
+
+=head4 Description
+
+Importiere die Tabellendaten der SQLite-Datenbank $dbFile aus
+Verzeichnis $importDir.
+
+=head4 Example
+
+  Quiq::SQLite->export('~/var/myapp/myapp.db','/tmp/myapp');
 
 =cut
 
@@ -138,12 +161,14 @@ Verzeichnis, in das die Tabellendaten und Datenbank-Datei gesichert
 werden. Schlägt die Neuerzeugung fehl, müssen die Tabellendaten
 eventuell bearbeitet und die Neuerzeugung wiederholt werden.
 Die ursprüngliche Datenbank kann bei Bedarf wieder hergestellt
-werden, da sie zuvor in das Exportverzeichnis gesichert wurde (s.u.).
+werden, da sie zuvor ebenfalls in das Exportverzeichnis gesichert
+wurde (s.u.).
 
 =item $sub
 
 Refenz auf die Subroutine, die das Schema auf einer I<leeren>
-Datenbank erzeugt. Als Parameter wird $dbFile übergeben.
+Datenbank erzeugt. Als einzigen Parameter wird $dbFile
+an die Subroutine übergeben.
 
   $class->recreateDatabase('~/var/myapp/myapp.db','/tmp/myapp',sub {
       my $dbFile = shift;
