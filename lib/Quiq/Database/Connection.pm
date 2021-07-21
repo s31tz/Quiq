@@ -4927,13 +4927,12 @@ sub diff {
 
 # -----------------------------------------------------------------------------
 
-=head3 manageNToM() - Verwalte N-zu-M Relation
+=head3 updateNToM() - Verwalte N-zu-M Relation
 
 =head4 Synopsis
 
-  $db->manageNToM($masterId,\@values1,\@values2,
+  $db->updateNToM($masterId,\@values1,\@values2,
       a => $a,
-      a_pk => $a_pk,
       b => $b,
       b_pk => $b_pk,
       b_col => $b_col,
@@ -4942,11 +4941,80 @@ sub diff {
       a_b_fk_b => $a_b_fk_b,
   );
 
+=head4 Arguments
+
+=over 4
+
+=item $masterId
+
+Primärschlüssel-Wert des Master-Datensatzes.
+
+=item @values1
+
+Liste der dem Master-Datensatz zugeordneten B-Werte I<vor>
+der Änderung.
+
+=item @values2
+
+Dito. nach der Änderung.
+
+=item a => $a,
+
+Name der Master-Tabelle.
+
+=item b => $b,
+
+Name der Slave-Tabelle.
+
+=item b_pk => $b_pk,
+
+Name der Primärschlüsselkolumne der Slave-Tabelle.
+
+=item b_col => $b_col,
+
+Name der Wert-Kolumne der Slave-Tabelle.
+
+=item a_b => $a_b,
+
+Name der Relations-Tabelle.
+
+=item a_b_fk_a => $a_b_fk_a,
+
+Name der Fremdschlüsselkolumne in der Relationstabelle
+auf die Master-Tabelle.
+
+=item a_b_fk_b => $a_b_fk_b,
+
+Name der Fremdschlüsselkolumne in der Relationstabelle
+auf die Slave-Tabelle.
+
+=back
+
+=head4 Description
+
+Folgendes Datenmodell:
+
+  A <-- A_B --> B
+
+Beispiel: A = Tabelle mit Texten, B = Tabelle mit Schlagworten,
+A_B = Relationstabelle für die Zuordnung von Schlagworten zu Texten.
+
+Die Methode sorgt dafür, daß für einen Datensatz in A mit der Id
+$masterId eine Änderung der Schlagwortliste von @values1 nach @values2
+die Relationsdatensätze in A_B gemäß dieser Änderung aktualisiert werden.
+Neue Schlagworte in @values2 werden zu B hinzugefügt, Schlagworte,
+die wegfallen und nicht von anderen Texten referenziert werden,
+werden entfernt.
+
+=head4 Example
+
+Siehe KnowledgeBase::System->edit()
+
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub manageNToM {
+sub updateNToM {
     my ($self,$masterId,$values1A,$values2A) = splice @_,0,4;
     # @_: s. Synopsis
 
@@ -5008,7 +5076,7 @@ sub manageNToM {
         }
     }
 
-    # Lösche alle unverknüpften Keywords
+    # Lösche unverknüpfte Keywords
 
     $self->sql(qq~
         DELETE FROM $b
