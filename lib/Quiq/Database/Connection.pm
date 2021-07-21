@@ -25,6 +25,7 @@ use Time::HiRes ();
 use Quiq::AnsiColor;
 use Quiq::Unindent;
 use Quiq::Database::ResultSet;
+use Quiq::Parameters;
 
 # -----------------------------------------------------------------------------
 
@@ -4922,6 +4923,108 @@ sub diff {
 
     my $stmt = $self->stmt->diff(@_);
     return $self->select($stmt);
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 manageNToM() - Verwalte N-zu-M Relation
+
+=head4 Synopsis
+
+  $db->manageNToM($masterId,\@values1,\@values2,
+      a => $a,
+      a_pk => $a_pk,
+      b => $b,
+      b_pk => $b_pk,
+      b_col => $b_col,
+      a_b => $a_b,
+      a_b_fk_a => $a_b_fk_a,
+      a_b_fk_b => $a_b_fk_b,
+  );
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub manageNToM {
+    my ($self,$masterId,$values1A,$values2A) = splice @_,0,4;
+    # @_: s. Synopsis
+
+    my ($a,$a_pk,$b,$b_pk,$b_col,$a_b,$a_b_fk_a,$a_b_fk_b);
+
+    Quiq::Parameters->extractPropertiesToVariables(\@_,
+        a => \$a,
+        a_pk => \$a_pk,
+        b => \$b,
+        b_pk => \$b_pk,
+        b_col => \$b_col,
+        a_b => \$a_b,
+        a_b_fk_a => \$a_b_fk_a,
+        a_b_fk_b => \$a_b_fk_b,
+    );
+
+    my ($only1A,$only2A) = Quiq::Array->different($values1A,$values2A);
+
+    if (@$only1A) {
+        my $keywords = join ', ',map {"'$_'"} @$only1A;
+        $self->sql(qq~
+            DELETE FROM $a_b
+            WHERE
+                $a_b_fk_b IN (
+                    SELECT
+                        $b_pk
+                    FROM
+                        $b
+                    WHERE
+                        $b_col IN ($keywords)
+                )
+        ~);
+    }
+    if (@$only2A) {
+        # Ergänze alle Keywords, die noch nicht existieren
+
+        my %keyword = $self->values(
+            -select => $b_col, 1,
+            -from => $b,
+            -where, $b_col => ['IN',@$only2A],
+        );
+        for (@$only2A) {
+            if (!$keyword{$_}) {
+                $self->insert($b,$b_col=>$_);
+            }
+        }
+
+        # Verknüpfe mit allen Keywords, die noch nicht verknüpft sind
+
+        my @ids = $self->values(
+            -select => $b_pk,
+            -from => $b,
+            -where, $b_col => ['IN',@$only2A],
+        );
+        for (@ids) {
+            $self->insert($a_b,
+                $a_b_fk_a => $masterId,
+                $a_b_fk_b => $_,
+            );
+        }
+    }
+
+    # Lösche alle unverknüpften Keywords
+
+    $self->sql(qq~
+        DELETE FROM $b
+        WHERE
+            NOT EXISTS (
+                SELECT
+                    1
+                FROM
+                    $a_b
+                WHERE
+                    $a_b_fk_b = $b_pk
+            )
+    ~);
+
+    return;
 }
 
 # -----------------------------------------------------------------------------

@@ -2254,6 +2254,21 @@ Dann wird der Trigger definiert, der diese Funktion aufruft:
 
 Wie $db->select()
 
+=head3 manageNToM() - Verwalte N-zu-M Relation
+
+=head4 Synopsis
+
+  $db->manageNToM($masterId,\@values1,\@values2,
+      a => $a,
+      a_pk => $a_pk,
+      b => $b,
+      b_pk => $b_pk,
+      b_col => $b_col,
+      a_b => $a_b,
+      a_b_fk_a => $a_b_fk_a,
+      a_b_fk_b => $a_b_fk_b,
+  );
+
 =head1 DETAILS
 
 =head2 Zeitmessung
