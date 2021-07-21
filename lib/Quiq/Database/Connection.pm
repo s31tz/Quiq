@@ -4954,13 +4954,12 @@ sub manageNToM {
 
     Quiq::Parameters->extractPropertiesToVariables(\@_,
         a => \$a,
-        a_pk => \$a_pk,
         b => \$b,
-        b_pk => \$b_pk,
-        b_col => \$b_col,
-        a_b => \$a_b,
-        a_b_fk_a => \$a_b_fk_a,
-        a_b_fk_b => \$a_b_fk_b,
+        bPk => \$b_pk,
+        bCol => \$b_col,
+        aB => \$a_b,
+        aBFkA => \$a_b_fk_a,
+        aBFkB => \$a_b_fk_b,
     );
 
     my ($only1A,$only2A) = Quiq::Array->different($values1A,$values2A);
