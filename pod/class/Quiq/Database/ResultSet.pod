@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Database::ResultSet - Liste von Datensätzen (abstrakt)
+Quiq::Database::ResultSet - Liste von DatensÃ¤tzen (abstrakt)
 
 =head1 BASE CLASS
 
@@ -10,8 +10,8 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine Liste von gleichartigen
-Datensätzen.
+Ein Objekt der Klasse reprÃ¤sentiert eine Liste von gleichartigen
+DatensÃ¤tzen.
 
 =head1 METHODS
 
@@ -33,7 +33,7 @@ Datensätzen.
 =head4 Description
 
 Instantiiere ein Tabellen-Objekt und liefere eine Referenz auf dieses
-Objekt zurück.
+Objekt zurÃ¼ck.
 
 Die Arrays @titles und @rows werden von der Methode I<nicht> kopiert.
 
@@ -42,8 +42,8 @@ Row-Klasse angenommen.
 
 Als Objektmethode gerufen, wird ein neues Tabellen-Objekt mit
 $rowClass und $titles aus dem existierenden Tabellenobjekt
-initialisiert. Diese Methode ist nützlich, wenn ein
-Tabellen-Objekt mit einer Teilmenge des ursprünglichen
+initialisiert. Diese Methode ist nÃ¼tzlich, wenn ein
+Tabellen-Objekt mit einer Teilmenge des ursprÃ¼nglichen
 Tabellen-Objektes gebildet werden soll.
 
 =head2 Akzessoren
@@ -54,7 +54,7 @@ Tabellen-Objektes gebildet werden soll.
 
   $rowClass = $tab->rowClass;
 
-=head3 rows() - Liefere/Setze die Liste der Datensätze
+=head3 rows() - Liefere/Setze die Liste der DatensÃ¤tze
 
 =head4 Synopsis
 
@@ -63,7 +63,7 @@ Tabellen-Objektes gebildet werden soll.
 
 =head4 Description
 
-Liefere die Liste der Datensätze der Tabelle. Im Skalarkontext liefere
+Liefere die Liste der DatensÃ¤tze der Tabelle. Im Skalarkontext liefere
 eine Referenz auf die Liste.
 
 Ist Parameter \@rows angegeben, wird die Datensatz-Liste auf diese
@@ -77,10 +77,10 @@ Liste gesetzt.
 
 =head4 Description
 
-Liefere das SQL-Statement, mit welchem die Datensätze der Tabelle
+Liefere das SQL-Statement, mit welchem die DatensÃ¤tze der Tabelle
 selektiert wurden.
 
-=head3 stmtBody() - Liefere Rumpf für ein Subselect
+=head3 stmtBody() - Liefere Rumpf fÃ¼r ein Subselect
 
 =head4 Synopsis
 
@@ -88,12 +88,12 @@ selektiert wurden.
 
 =head4 Description
 
-Liefere den Rumpf des (Select-)Statement. Der Rumpf ist das ürsprüngliche
+Liefere den Rumpf des (Select-)Statement. Der Rumpf ist das Ã¼rsprÃ¼ngliche
 Statement ohne Select- und Order-By-Klausel.
 
 =head4 Example
 
-Ursprüngliches Select:
+UrsprÃ¼ngliches Select:
 
   SELECT
       per_vorname
@@ -137,13 +137,13 @@ eine Referenz auf die Liste.
 =item -distinct => $bool (Default: 0)
 
 Liefere in der Resultatliste nur verschiedene Kolumenwerte. Wird ein
-Hash geliefert, ist dies zwangsläufig der Fall. Der Wert findet
+Hash geliefert, ist dies zwangslÃ¤ufig der Fall. Der Wert findet
 sich in der Resultatliste an der Stelle seines ersten Auftretens.
 
 =item -hash => $bool (Default: 0)
 
 Liefere einen Hash bzw. eine Hashreferenz (Quiq::Hash) mit den
-Kolumnenwerten als Schlüssel und 1 als Wert.
+Kolumnenwerten als SchlÃ¼ssel und 1 als Wert.
 
 =item -notNull => $bool (Default: 0)
 
@@ -153,7 +153,7 @@ Ignoriere Nullwerte, d.h. nimm sie nicht ins Resultat auf.
 
 =head2 Tests
 
-=head3 isRaw() - Prüfe, ob Raw-Tabelle
+=head3 isRaw() - PrÃ¼fe, ob Raw-Tabelle
 
 =head4 Synopsis
 
@@ -173,7 +173,7 @@ Ignoriere Nullwerte, d.h. nimm sie nicht ins Resultat auf.
 
 =item -sloppy => $bool (Default: 0)
 
-Wenn der gesuchte Datensatz nicht existiert, löse keine Exception aus,
+Wenn der gesuchte Datensatz nicht existiert, lÃ¶se keine Exception aus,
 sondern liefere undef.
 
 =back
@@ -181,10 +181,10 @@ sondern liefere undef.
 =head4 Description
 
 Durchsuche die Tabelle nach dem ersten Datensatz, dessen
-Attribut $key den Wert $val besitzt und liefere diesen zurück.
-Erfüllt kein Datensatz das Kriterium, wird eine Exception ausgelöst.
+Attribut $key den Wert $val besitzt und liefere diesen zurÃ¼ck.
+ErfÃ¼llt kein Datensatz das Kriterium, wird eine Exception ausgelÃ¶st.
 
-=head3 select() - Suche Datensätze
+=head3 select() - Suche DatensÃ¤tze
 
 =head4 Synopsis
 
@@ -192,13 +192,13 @@ Erfüllt kein Datensatz das Kriterium, wird eine Exception ausgelöst.
 
 =head4 Description
 
-Durchsuche die Tabelle nach den Datensätzen, die Test-Methode
-$testSub erfüllen und liefere die Liste dieser Datensätze zurück.
+Durchsuche die Tabelle nach den DatensÃ¤tzen, die Test-Methode
+$testSub erfÃ¼llen und liefere die Liste dieser DatensÃ¤tze zurÃ¼ck.
 Im Skalarkontext liefere ein neues Tabellen-Objekt.
 
 =head4 Example
 
-Schränke Produkt-Tabelle auf Produkte mit einem Preis > 100 ein:
+SchrÃ¤nke Produkt-Tabelle auf Produkte mit einem Preis > 100 ein:
 
   my $sub = sub {
       my $row = shift;
@@ -224,8 +224,8 @@ Kolumnen-Trennzeichen.
 
 =item -rowClass => $rowClass (Default: 'Quiq::Database::Row::Object')
 
-Name der Datensatzklasse, auf die die Datensätze geblesst werden.
-Die Datensatzklasse entscheidet auch über die Tabellenklasse.
+Name der Datensatzklasse, auf die die DatensÃ¤tze geblesst werden.
+Die Datensatzklasse entscheidet auch Ã¼ber die Tabellenklasse.
 
 =item -rowStatus => '0'|'U'|'I'|'D' (Default: 'I')
 
@@ -235,13 +235,13 @@ Setze den initialen Datensatz-Status.
 
 =head4 Description
 
-Lade Datensätze aus Datei $file in eine Datensatz-Tabelle und
-liefere eine Referenz auf dieses Objekt zurück.
+Lade DatensÃ¤tze aus Datei $file in eine Datensatz-Tabelle und
+liefere eine Referenz auf dieses Objekt zurÃ¼ck.
 
 B<Dateiformat>
 
-Die erste Zeile enthält die Kolumentitel, alle weiteren Zeilen die
-Datensätze. Die Kolumen werden per | getrennt.
+Die erste Zeile enthÃ¤lt die Kolumentitel, alle weiteren Zeilen die
+DatensÃ¤tze. Die Kolumen werden per | getrennt.
 
 =head4 Example
 
@@ -259,12 +259,12 @@ Datensätze. Die Kolumen werden per | getrennt.
 
 =head4 Description
 
-Sichere die Datensätze der Tabelle in Datei $file.
-Die Methode liefert keinen Wert zurück.
+Sichere die DatensÃ¤tze der Tabelle in Datei $file.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head2 Miscellaneous
 
-=head3 elapsed() - Dauer seit Beginn der SQL_Ausführung
+=head3 elapsed() - Dauer seit Beginn der SQL_AusfÃ¼hrung
 
 =head4 Synopsis
 
@@ -280,10 +280,10 @@ Die Methode liefert keinen Wert zurück.
 =head4 Description
 
 Analysiere den Tabelleninhalt und liefere eine Liste von
-Kolumnenformat-Objekten zurück. Diese können zur tabellarischen
+Kolumnenformat-Objekten zurÃ¼ck. Diese kÃ¶nnen zur tabellarischen
 Formatierung der Kolumnenwerte herangezogen werden.
 
-Die Analyse wird nur einmal durchgeführt und die resultierende
+Die Analyse wird nur einmal durchgefÃ¼hrt und die resultierende
 Liste im Tabellenobjekt gespeichert. Ist der Parameter $force
 angegeben und "wahr", wird eine Neuberechnung forciert.
 
@@ -293,7 +293,7 @@ angegeben und "wahr", wird eine Neuberechnung forciert.
 
   $n = $tab->width;
 
-=head3 count() - Liefere Anzahl der Datensätze
+=head3 count() - Liefere Anzahl der DatensÃ¤tze
 
 =head4 Synopsis
 
@@ -305,7 +305,7 @@ angegeben und "wahr", wird eine Neuberechnung forciert.
 
   $tab->pop;
 
-=head3 push() - Füge Datensatz am Ende hinzu
+=head3 push() - FÃ¼ge Datensatz am Ende hinzu
 
 =head4 Synopsis
 
@@ -321,20 +321,20 @@ angegeben und "wahr", wird eine Neuberechnung forciert.
 
 Liefere den Namen der Default-Rowklasse: 'Quiq::Database::Row::Object'
 
-Auf die Default-Rowklasse werden Datensätze instantiiert, für die
+Auf die Default-Rowklasse werden DatensÃ¤tze instantiiert, fÃ¼r die
 bei der Instantiierung einer Table-Klasse keine Row-Klasse
 explizit angegeben wurde.
 
 =head4 Details
 
-Als Default-Rowklasse wird für die Quiq::Database::ResultSet-
+Als Default-Rowklasse wird fÃ¼r die Quiq::Database::ResultSet-
 Klassenhierarchie 'Quiq::Database::Row::Object' definiert.
 
 Die Methode wird in der Subklasse Quiq::Database::ResultSet::Array
-überschrieben. Für diesen Zweig ist die Default-Rowklasse
+Ã¼berschrieben. FÃ¼r diesen Zweig ist die Default-Rowklasse
 'Quiq::Database::Row::Array'.
 
-=head3 asExcel() - Tabellen-Repräsentation in Excel-Format
+=head3 asExcel() - Tabellen-ReprÃ¤sentation in Excel-Format
 
 =head4 Synopsis
 
@@ -354,7 +354,7 @@ Pfad der Ausgabedatei.
 
 Schreibe die Tabelle im Excel-Format auf Datei $file.
 
-=head3 asString() - String-Repräsentation der Tabelle
+=head3 asString() - String-ReprÃ¤sentation der Tabelle
 
 =head4 Synopsis
 
@@ -364,11 +364,11 @@ Schreibe die Tabelle im Excel-Format auf Datei $file.
 
 =head4 Description
 
-Liefere eine String-Repräsentation der Tabelle mit $colSep
+Liefere eine String-ReprÃ¤sentation der Tabelle mit $colSep
 als Datensatz-Trenner (Default: "\t") und $rowSep als
 Kolumnentrenner (Default: "\n").
 
-=head3 asTable() - Tabellen-Repräsentation der Tabellendaten
+=head3 asTable() - Tabellen-ReprÃ¤sentation der Tabellendaten
 
 =head4 Synopsis
 
@@ -384,7 +384,7 @@ Erzeuge eine farbige Ausgabe mit ANSI Colors.
 
 =item -info => $n (Default: 3)
 
-Umfang an Information, die über die Daten hinaus ausgegeben wird:
+Umfang an Information, die Ã¼ber die Daten hinaus ausgegeben wird:
 
 =over 4
 
@@ -394,7 +394,7 @@ Nur Daten.
 
 =item Z<>1
 
-Numerierung der Kolumnen, Anzahl Zeilen, Ausführungszeit.
+Numerierung der Kolumnen, Anzahl Zeilen, AusfÃ¼hrungszeit.
 
 =item Z<>2
 
@@ -408,13 +408,13 @@ Informationsumfang 2 plus SQL-Statement.
 
 =item -msg => $msg
 
-Füge $msg zur Statistik-Zeile hinzu.
+FÃ¼ge $msg zur Statistik-Zeile hinzu.
 
 =back
 
 =head4 Description
 
-Liefere eine einfache Tabellen-Repräsentation der Tabellendaten.
+Liefere eine einfache Tabellen-ReprÃ¤sentation der Tabellendaten.
 
 =head4 Example
 
@@ -448,7 +448,7 @@ Beispiel-Ausgabe:
   
   0.093s, 10 rows - *MORE ROWS EXIST*
 
-=head3 diffReport() - Report über Differenzen
+=head3 diffReport() - Report Ã¼ber Differenzen
 
 =head4 Synopsis
 
@@ -462,14 +462,14 @@ Beispiel-Ausgabe:
 
 =head4 Returns
 
-Tabellen-Objekt (für Method-Chaining)
+Tabellen-Objekt (fÃ¼r Method-Chaining)
 
 =head4 Description
 
-Kehre die Reihenfolge der Datensätze innerhalb des Tabellenobjekts
-um und liefere eine Referenz auf das Tabellenobjekt zurück.
+Kehre die Reihenfolge der DatensÃ¤tze innerhalb des Tabellenobjekts
+um und liefere eine Referenz auf das Tabellenobjekt zurÃ¼ck.
 
-Diese Methode ist nützlich, wenn die ersten N Datensätze einer
+Diese Methode ist nÃ¼tzlich, wenn die ersten N DatensÃ¤tze einer
 geordneten Selektion in umgekehrter Reihenfolge ausgegeben werden
 sollen.
 

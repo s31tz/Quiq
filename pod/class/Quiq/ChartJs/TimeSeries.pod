@@ -41,7 +41,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head3 Diagramm
 
-(Folgendes Diagramm erscheint nur in HTML - außer auf
+(Folgendes Diagramm erscheint nur in HTML - auÃŸer auf
 meta::cpan, da der HTML-Code dort gestrippt wird. Es zeigt 720 Messwerte
 einer Windgeschwindigkeits-Messung)
 
@@ -137,12 +137,12 @@ einer Windgeschwindigkeits-Messung)
 
 =head1 DESCRIPTION
 
-Diese Klasse ist ein Perl-Wrapper für die Erzeugung für
+Diese Klasse ist ein Perl-Wrapper fÃ¼r die Erzeugung fÃ¼r
 Zeitreihen-Plots auf Basis von Chart.js. Chart.js ist
 eine JavaScript-Bibliothek, die Diagramme auf einem
-HTML5 <canvas> darstellt. Chart.js bietet viele Möglichkeiten der
+HTML5 <canvas> darstellt. Chart.js bietet viele MÃ¶glichkeiten der
 Diagramm-Generierung. Die Einstellungen werden per Datenstruktur
-an den Chart-Konstruktor übergeben. Die Perl-Klasse ist darauf
+an den Chart-Konstruktor Ã¼bergeben. Die Perl-Klasse ist darauf
 optimiert, einen speziellen Typ von Diagramm zu erzeugen: einen
 Zeitreihen-Plot. In einem Zeitreihen-Plot werden die Werte eines
 I<Parameters> einer bestimmten I<Einheit> (unit) gegen die
@@ -151,9 +151,9 @@ die Werteachse.
 
 =head2 Diagramm-Eigenschaften und wie sie in Chart.js konfiguriert werden
 
-=head3 Übergabe der Daten
+=head3 Ãœbergabe der Daten
 
-Zeitreihendaten werden als Array von Punkten übergeben:
+Zeitreihendaten werden als Array von Punkten Ã¼bergeben:
 
   data: {
       datasets: [{
@@ -170,12 +170,12 @@ Jeder Punkt in __POINTS__ ist ein JS-Objekt mit der Struktur:
   }
 
 Hierbei ist __JAVASCRIPT_EPOCH__ der Zeitpunkt in Unix Epoch
-mal 1000 (also in Millisekunden-Auflösung).
+mal 1000 (also in Millisekunden-AuflÃ¶sung).
 
-=head3 Diagramm mit konstanter Höhe und variabler Breite
+=head3 Diagramm mit konstanter HÃ¶he und variabler Breite
 
 Das <canvas>-Element wird in ein Parent-Element eingebettet, welches
-die Höhe __HEIGHT__ zugewiesen bekommt:
+die HÃ¶he __HEIGHT__ zugewiesen bekommt:
 
   <div style="height: __HEIGHT__px">
       <canvas id="__NAME__"></canvas>
@@ -187,8 +187,8 @@ In den Chart-Optionen wird definiert:
        maintainAspectRatio: false,
   }
 
-Damit ist das Diagramm fest auf __HEIGHT__ Pixel Höhe eingestellt,
-passt sich in der Breite aber dem zur Verfügung stehenden Raum an,
+Damit ist das Diagramm fest auf __HEIGHT__ Pixel HÃ¶he eingestellt,
+passt sich in der Breite aber dem zur VerfÃ¼gung stehenden Raum an,
 auch nach einem Resize.
 
 =head3 Konfiguration der Zeitachse
@@ -233,7 +233,7 @@ gesetzt ist.
 
 =item *
 
-Eine Zeitachse wird speziell über die Unterstruktur C<time: ...>
+Eine Zeitachse wird speziell Ã¼ber die Unterstruktur C<time: ...>
 konfiguriert.
 
 =item *
@@ -248,13 +248,13 @@ werden die Grenzen aus den Daten ermittelt.
 
 =item *
 
-Die Skalierung ergibt sich aus dem zur Verfügung stehenden Raum.
-Chart.js entscheidet sich für eine Auflösung aus den 9 Kategorien
+Die Skalierung ergibt sich aus dem zur VerfÃ¼gung stehenden Raum.
+Chart.js entscheidet sich fÃ¼r eine AuflÃ¶sung aus den 9 Kategorien
 C<millisecond> .. C<year>.
 
 =item *
 
-Die Tick-Beschriftung für die einzelnen Kategorien wird durch
+Die Tick-Beschriftung fÃ¼r die einzelnen Kategorien wird durch
 die Substuktur C<displayFormats: ...> definiert. Diese sollte
 komplett durchdefiniert werden, da Defaults von Chart.js nicht
 besonders sinnvoll sind.
@@ -265,8 +265,8 @@ Wie die Zeit im Tooltip dargestellt wird, definiert C<tooltipFormat:>.
 
 =item *
 
-Bei längeren Tick-Beschriftungen kann Chart.js diese gekippt
-darstellen. Da Zeitangaben länger sind, sollte die gekippte
+Bei lÃ¤ngeren Tick-Beschriftungen kann Chart.js diese gekippt
+darstellen. Da Zeitangaben lÃ¤nger sind, sollte die gekippte
 Darstellung forciert werden. Die gekippte Darstellung wird forciert,
 wenn C<minRotation:> I<und> C<maxRotation> definiert werden. Dann
 unterbleibt eine gerade Beschriftung, denn ein Wechsel zwischen
@@ -274,7 +274,7 @@ gerader und gekippter Beschriftung wirkt uneinheitlich.
 
 =back
 
-=head3 Raum unter dem Graph einfärben
+=head3 Raum unter dem Graph einfÃ¤rben
 
   data: {
       datasets: [{
@@ -284,7 +284,7 @@ gerader und gekippter Beschriftung wirkt uneinheitlich.
 
 =head3 Konfigurations-Datenstruktur insgesamt
 
-Die Perl-Klasse übergibt folgende Datenstruktur an den Konstruktor
+Die Perl-Klasse Ã¼bergibt folgende Datenstruktur an den Konstruktor
 der JavaScript-Klasse Chart, wobei die Platzhalter __XXXX__
 ersetzt werden, meist durch den Wert des betreffenden Klassen-Attributs
 xxxx. Die Liste aller Attribute siehe Abschnitt L<Attributes|"Attributes">.
@@ -407,7 +407,7 @@ dass der Wert aus den Daten ermittelt wird.
 
 =item tMax => $jsEpoch (Default: 'undefined')
 
-Größter Wert auf der Zeitachse. Der Default 'undefined' bedeutet,
+GrÃ¶ÃŸter Wert auf der Zeitachse. Der Default 'undefined' bedeutet,
 dass der Wert aus den Daten ermittelt wird.
 
 =item yMin => $val (Default: 'undefined')
@@ -417,13 +417,13 @@ dass der Wert aus den Daten ermittelt wird.
 
 =item yMax => $val (Default: 'undefined')
 
-Größter Wert auf der Y-Achse. Der Default 'undefined' bedeutet,
+GrÃ¶ÃŸter Wert auf der Y-Achse. Der Default 'undefined' bedeutet,
 dass der Wert aus den Daten ermittelt wird.
 
 =item height => $height (Default: 300)
 
-Die Höhe des Diagramms. Eine Breite wird nicht angegeben, diese passt
-sich dem zur Verfügung stehenden Raum an.
+Die HÃ¶he des Diagramms. Eine Breite wird nicht angegeben, diese passt
+sich dem zur VerfÃ¼gung stehenden Raum an.
 
 =item lineColor => $color (Default: 'rgb(255,0,0,1)')
 
@@ -437,8 +437,8 @@ von Chart.js voreingestellte Wert 0.4 verwendet wird.
 
 =item name => $name (Default: 'plot')
 
-Name des Plot. Der Name wird als CSS-Id für die Zeichenfläche
-(Canvas) und als Variablenname für die Instanz verwendet.
+Name des Plot. Der Name wird als CSS-Id fÃ¼r die ZeichenflÃ¤che
+(Canvas) und als Variablenname fÃ¼r die Instanz verwendet.
 
 =item parameter => $name
 
@@ -456,7 +456,7 @@ Millisekunden) ist und $y ein beliebiger Y-Wert.
 
 Referenz auf eine Subroutine, die fr jedes Element der Liste @points
 einen Datenpunkt liefert, wie ihn die Klasse erwartet (s.o.). Ist kein
-rowCallback definiert, werden die Elemente aus @points unverändert
+rowCallback definiert, werden die Elemente aus @points unverÃ¤ndert
 verwendet.
 
 =item pointRadius => $n (Default: 0)
@@ -474,7 +474,7 @@ Zeige den Median an.
 
 =item title => $str (Default: I<Name des Parameters>)
 
-Titel, der über das Diagramm geschrieben wird.
+Titel, der Ã¼ber das Diagramm geschrieben wird.
 
 =item unit => $str
 
@@ -490,7 +490,7 @@ Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 Klassenmethoden
 
@@ -506,7 +506,7 @@ URL (String)
 
 =head4 Description
 
-Liefere einen CDN URL für Chart.js in der Version $version.
+Liefere einen CDN URL fÃ¼r Chart.js in der Version $version.
 
 =head2 Objektmethoden
 
@@ -549,7 +549,7 @@ damit alle Diagramme gleich aussehen (?)
 
 =item *
 
-Höhe des Diagramms per JS setzen statt im HTML?
+HÃ¶he des Diagramms per JS setzen statt im HTML?
 
 =item *
 

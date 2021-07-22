@@ -10,13 +10,13 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Die Klasse implementiert einen HTTP-Client für GET- und POST-Requests.
+Die Klasse implementiert einen HTTP-Client fÃ¼r GET- und POST-Requests.
 
-Die zentrale Methode ist $class->L<sendReceive|"sendReceive() - Führe HTTP-Request aus">(). Diese sendet eine
+Die zentrale Methode ist $class->L<sendReceive|"sendReceive() - FÃ¼hre HTTP-Request aus">(). Diese sendet eine
 HTTP-Request-Message, die der Aufrufer konfiguriert hat, an einen
-Server (URL), und gibt die HTTP-Response-Message des Servers zurück.
+Server (URL), und gibt die HTTP-Response-Message des Servers zurÃ¼ck.
 Die Methode beherrscht GET- und POSTS-Requests. Auf ihrer Basis
-sind die spezielleren Methoden $class->L<get|"get() - Führe GET-Request aus">() und $class->L<post|"post() - Führe POST-Request aus">()
+sind die spezielleren Methoden $class->L<get|"get() - FÃ¼hre GET-Request aus">() und $class->L<post|"post() - FÃ¼hre POST-Request aus">()
 implementiert. Die HTTP-Messages, sowohl gesendete als auch empfangene,
 sind Instanzen der Klasse Quiq::HTTP::Message.
 
@@ -45,7 +45,7 @@ Siehe quiq-http-client
 
 =head2 Klassenmethoden
 
-=head3 sendReceive() - Führe HTTP-Request aus
+=head3 sendReceive() - FÃ¼hre HTTP-Request aus
 
 =head4 Synopsis
 
@@ -61,7 +61,7 @@ Die HTTP-Operation: 'post' oder 'get'.
 
 =item $url
 
-Der URL, gegen den die Operation ausgeführt wird.
+Der URL, gegen den die Operation ausgefÃ¼hrt wird.
 
 =item $sMsg
 
@@ -81,16 +81,16 @@ Gib die kommunizierten Daten (Request, Response) und Metainformation
 
 =item -redirect => $bool (Default: 1)
 
-Führe Redirects automatisch aus.
+FÃ¼hre Redirects automatisch aus.
 
 =back
 
 =head4 Description
 
-Führe HTTP Request vom Typ $op gegen URL $url mit HTTP-Nachricht $sMsg aus
-und liefere die vom Server gelieferte Antwort $rMsg zurück.
+FÃ¼hre HTTP Request vom Typ $op gegen URL $url mit HTTP-Nachricht $sMsg aus
+und liefere die vom Server gelieferte Antwort $rMsg zurÃ¼ck.
 
-=head3 get() - Führe GET-Request aus
+=head3 get() - FÃ¼hre GET-Request aus
 
 =head4 Synopsis
 
@@ -102,7 +102,7 @@ und liefere die vom Server gelieferte Antwort $rMsg zurück.
 
 =item $url
 
-Der URL, gegen den der GET-Request ausgeführt wird.
+Der URL, gegen den der GET-Request ausgefÃ¼hrt wird.
 
 =item $sMsg
 
@@ -113,14 +113,14 @@ Quiq::Http::Message.
 
 =head4 Options
 
-Siehe Methode L<sendReceive|"sendReceive() - Führe HTTP-Request aus">().
+Siehe Methode L<sendReceive|"sendReceive() - FÃ¼hre HTTP-Request aus">().
 
 =head4 Description
 
-Führe HTTP POST-Request mit URL $url aus und liefere die vom Server
-gelieferte Antwort zurück.
+FÃ¼hre HTTP POST-Request mit URL $url aus und liefere die vom Server
+gelieferte Antwort zurÃ¼ck.
 
-=head3 post() - Führe POST-Request aus
+=head3 post() - FÃ¼hre POST-Request aus
 
 =head4 Synopsis
 
@@ -132,18 +132,18 @@ gelieferte Antwort zurück.
 
 =item $url
 
-Der URL, gegen den der GET-Request ausgeführt wird.
+Der URL, gegen den der GET-Request ausgefÃ¼hrt wird.
 
 =back
 
 =head4 Options
 
-Siehe Methode L<sendReceive|"sendReceive() - Führe HTTP-Request aus">().
+Siehe Methode L<sendReceive|"sendReceive() - FÃ¼hre HTTP-Request aus">().
 
 =head4 Description
 
-Führe HTTP POST-Request gegen URL $url und mit HTTP-Nachricht $sMsg aus
-und liefere die vom Server gelieferte Antwort zurück.
+FÃ¼hre HTTP POST-Request gegen URL $url und mit HTTP-Nachricht $sMsg aus
+und liefere die vom Server gelieferte Antwort zurÃ¼ck.
 
 =head1 VERSION
 

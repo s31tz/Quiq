@@ -24,7 +24,7 @@ Datei lesen:
   }
   $fh->close;
 
-Zähler-Datei mit Locking:
+ZÃ¤hler-Datei mit Locking:
 
   my $fh = Quiq::FileHandle->new('+>>',$file,-lock=>'EX');
   $fh->seek(0);
@@ -39,14 +39,14 @@ Siehe auch Quiq::LockedCounter.
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine Dateihandle, über die
-Daten gelesen oder geschrieben werden können.
+Ein Objekt der Klasse reprÃ¤sentiert eine Dateihandle, Ã¼ber die
+Daten gelesen oder geschrieben werden kÃ¶nnen.
 
 =head1 METHODS
 
 =head2 Konstruktor
 
-=head3 new() - Öffne Dateihandle
+=head3 new() - Ã–ffne Dateihandle
 
 =head4 Synopsis
 
@@ -70,26 +70,26 @@ falls er nicht existiert.
 
 =item -lock => 'EX'|'SH'|'EXNB'|'SHNB' (Default: kein Lock)
 
-Locke die Dateihandle nach dem Öffnen im angegebenen Lock-Modus.
+Locke die Dateihandle nach dem Ã–ffnen im angegebenen Lock-Modus.
 Folgende Lockmodes werden unterschieden: 'SH' (shared lock), 'EX'
 (exclusive lock).  Durch den Zusatz 'NB' (also Lockmode 'SHNB' der 'EXNB')
-wird die Operation "non blocking" ausgeführt, d.h. wenn der Lock nicht
-sofort erworben werden kann, wird eine Exception ausgelöst.
+wird die Operation "non blocking" ausgefÃ¼hrt, d.h. wenn der Lock nicht
+sofort erworben werden kann, wird eine Exception ausgelÃ¶st.
 
-Wurde die Datei vom Konstruktor geöffnet, schließt er sie, wenn
+Wurde die Datei vom Konstruktor geÃ¶ffnet, schlieÃŸt er sie, wenn
 der Lock nicht erworben werden kann. Andernfalls bleibt die
-Dateihandle geöffnet.
+Dateihandle geÃ¶ffnet.
 
 =back
 
 =head4 Description
 
 Instantiiere Dateihandle-Objekt und liefere eine Referenz auf dieses
-Objekt zurück.
+Objekt zurÃ¼ck.
 
 =head4 Examples
 
-Filehandle-Objekt für STDOUT:
+Filehandle-Objekt fÃ¼r STDOUT:
 
   $fh = Quiq::FileHandle->new(\*STDOUT);
 
@@ -105,7 +105,7 @@ Schreiben nach STDOUT:
   $fh = $class->new('>','');
   $fh = $class->new('>','-');
 
-=head3 destroy() - Schließe Dateihandle
+=head3 destroy() - SchlieÃŸe Dateihandle
 
 =head4 Synopsis
 
@@ -117,8 +117,8 @@ close()
 
 =head4 Description
 
-Schließe Dateihandle. Die Methode liefert keinen Wert zurück.
-Nach Aufruf der Methode ist die Objektreferenz ungültig.
+SchlieÃŸe Dateihandle. Die Methode liefert keinen Wert zurÃ¼ck.
+Nach Aufruf der Methode ist die Objektreferenz ungÃ¼ltig.
 
 =head2 Lesen
 
@@ -130,10 +130,10 @@ Nach Aufruf der Methode ist die Objektreferenz ungültig.
 
 =head4 Description
 
-Lies die nächste die nächsten $n I<Zeichen> von Dateihandle $fh
-und liefere diese zurück. Ist das Dateiende erreicht, liefere undef.
+Lies die nÃ¤chste die nÃ¤chsten $n I<Zeichen> von Dateihandle $fh
+und liefere diese zurÃ¼ck. Ist das Dateiende erreicht, liefere undef.
 
-=head3 readData() - Lies Daten mit Längenangabe
+=head3 readData() - Lies Daten mit LÃ¤ngenangabe
 
 =head4 Synopsis
 
@@ -141,23 +141,23 @@ und liefere diese zurück. Ist das Dateiende erreicht, liefere undef.
 
 =head4 Description
 
-Lies Daten in der Repräsentation
+Lies Daten in der ReprÃ¤sentation
 
   <LENGTH><DATA>
 
-und liefere <DATA> zurück. <LENGTH> ist ein 32 Bit Integer und <DATA>
-sind beliebige Daten mit <LENGTH> Bytes Länge.
+und liefere <DATA> zurÃ¼ck. <LENGTH> ist ein 32 Bit Integer und <DATA>
+sind beliebige Daten mit <LENGTH> Bytes LÃ¤nge.
 
-Wurden die Daten in einem Encoding wie UTF-8 geschrieben, müssen diese
+Wurden die Daten in einem Encoding wie UTF-8 geschrieben, mÃ¼ssen diese
 nach dem Einlesen anscheinend nicht dekodiert werden. Warum?
 
-Wurden die Daten $data in einem Encoding wie UTF-8 geschrieben, müssen
-diese anschließend decodiert werden mit
+Wurden die Daten $data in einem Encoding wie UTF-8 geschrieben, mÃ¼ssen
+diese anschlieÃŸend decodiert werden mit
 
   Encode::decode('utf-8',$data);
 
 Auf der FileHandle $fh das Encoding zu definieren, ist I<nicht>
-richtig, da die Längenangabe diesem Encoding nicht unterliegt!
+richtig, da die LÃ¤ngenangabe diesem Encoding nicht unterliegt!
 
 =head4 See Also
 
@@ -171,8 +171,8 @@ writeData()
 
 =head4 Description
 
-Lies die nächste Zeile von Dateihandle $fh und liefere diese zurück.
-Schlägt dies fehl, wirf eine Exception.
+Lies die nÃ¤chste Zeile von Dateihandle $fh und liefere diese zurÃ¼ck.
+SchlÃ¤gt dies fehl, wirf eine Exception.
 
 =head3 readLines() - Lies mehrere Zeilen von Dateihandle
 
@@ -182,8 +182,8 @@ Schlägt dies fehl, wirf eine Exception.
 
 =head4 Description
 
-Lies die nächsten $n Zeilen von Dateihandle $fh und liefere diese als
-Liste zurück. Der Zeilentrenner am Ende jeder Zeile wird entfernt.
+Lies die nÃ¤chsten $n Zeilen von Dateihandle $fh und liefere diese als
+Liste zurÃ¼ck. Der Zeilentrenner am Ende jeder Zeile wird entfernt.
 Im Skalarkontext liefere eine Referenz auf die Liste, wenn
 Zeilen gelesen wurden, sonst C<undef>.
 
@@ -205,8 +205,8 @@ Liefere Chunks von 1000 Pfaden:
 
 =head4 Description
 
-Lies die nächste Zeile von Dateihandle $fh, entferne den Zeilentrenner
-mit chomp() und liefere das Resultat zurück.
+Lies die nÃ¤chste Zeile von Dateihandle $fh, entferne den Zeilentrenner
+mit chomp() und liefere das Resultat zurÃ¼ck.
 
 =head3 readLineNoWhiteSpace() - Lies Zeile und entferne Whitespace am Ende
 
@@ -216,15 +216,15 @@ mit chomp() und liefere das Resultat zurück.
 
 =head4 Description
 
-Lies die nächste Zeile von Dateihandle $fh, entferne
+Lies die nÃ¤chste Zeile von Dateihandle $fh, entferne
 jeglichen Whitespace am Zeilenende (mit s/\s+$//) und liefere
-das Resultat zurück.
+das Resultat zurÃ¼ck.
 
-Diese Funktion ist nützlich, wenn verschiedene Zeilentrenner
-CRLF oder LF vorkommen können und Zeilen nur mit Whitespace
+Diese Funktion ist nÃ¼tzlich, wenn verschiedene Zeilentrenner
+CRLF oder LF vorkommen kÃ¶nnen und Zeilen nur mit Whitespace
 zu Leerzeilen reduziert werden sollen.
 
-=head3 getc() - Lies nächstes Zeichen
+=head3 getc() - Lies nÃ¤chstes Zeichen
 
 =head4 Synopsis
 
@@ -242,9 +242,9 @@ String
 
 =head4 Description
 
-Lies den Rest von Dateihandle $fh liefere diesen zurück.
+Lies den Rest von Dateihandle $fh liefere diesen zurÃ¼ck.
 
-Die Methode ist nützlich, wenn der gesamte Inhalt einer Datei ab einer
+Die Methode ist nÃ¼tzlich, wenn der gesamte Inhalt einer Datei ab einer
 bestimmten Position gelesen werden soll.
 
 =head4 Example
@@ -270,9 +270,9 @@ write()
 =head4 Description
 
 Schreibe Daten @data auf Dateihandle $fh. Die Methode liefert
-keinen Wert zurück.
+keinen Wert zurÃ¼ck.
 
-=head3 writeData() - Schreibe Daten mit Längenangabe
+=head3 writeData() - Schreibe Daten mit LÃ¤ngenangabe
 
 =head4 Synopsis
 
@@ -280,26 +280,26 @@ keinen Wert zurück.
 
 =head4 Description
 
-Schreibe die Daten $data in der Repräsentation
+Schreibe die Daten $data in der ReprÃ¤sentation
 
   <LENGTH><DATA>
 
-Hierbei ist <LENGTH> ein 32 Bit Integer, der die Länge der
+Hierbei ist <LENGTH> ein 32 Bit Integer, der die LÃ¤nge der
 darauffolgenden Daten <DATA> in Bytes angibt.
 
-Liegen die Daten $data in einem Encoding wie UTF-8 vor, müssen diese
+Liegen die Daten $data in einem Encoding wie UTF-8 vor, mÃ¼ssen diese
 zuvor encodiert werden mit
 
   Encode::encode('utf-8',$data);
 
 Auf der FileHandle $fh das Encoding zu definieren, ist I<nicht>
-richtig, da die Längenangabe diesem Encoding nicht unterliegt!
+richtig, da die LÃ¤ngenangabe diesem Encoding nicht unterliegt!
 
 =head4 See Also
 
 readData()
 
-=head3 truncate() - Kürze Datei
+=head3 truncate() - KÃ¼rze Datei
 
 =head4 Synopsis
 
@@ -308,8 +308,8 @@ readData()
 
 =head4 Description
 
-Kürze Datei auf Länge $length. Ist $length nicht angegeben, kürze
-Datei auf Länge 0.
+KÃ¼rze Datei auf LÃ¤nge $length. Ist $length nicht angegeben, kÃ¼rze
+Datei auf LÃ¤nge 0.
 
 =head2 Positionieren
 
@@ -323,7 +323,7 @@ Datei auf Länge 0.
 =head4 Description
 
 Setze die Position der Filehandle in der Datei. Die Methode liefert
-keinen Wert zurück. Genaue Funktionsbeschreibung siehe
+keinen Wert zurÃ¼ck. Genaue Funktionsbeschreibung siehe
 Perl-Dokumentation (perldoc -f seek).
 
 =head3 tell() - Liefere Position in Datei
@@ -348,7 +348,7 @@ Funktionsbeschreibung siehe Perl-Dokumentation (perldoc -f tell).
 =head4 Description
 
 Locke die Datei im Lock-Modus $lockMode. Die Methode liefert keinen
-Wert zurück.
+Wert zurÃ¼ck.
 
 Folgende Lockmodes werden unterschieden:
 
@@ -384,7 +384,7 @@ liefere "falsch".
 =head4 Description
 
 Hebe Sperre auf Dateihandle $fh auf. Die Methode liefert keinen
-Wert zurück.
+Wert zurÃ¼ck.
 
 =head2 Encoding
 
@@ -406,12 +406,12 @@ Bezeichnung des Encoding.
 
 =head4 Returns
 
-FileHandle-Objekt (für Method-Chaining)
+FileHandle-Objekt (fÃ¼r Method-Chaining)
 
 =head4 Description
 
-Definiere für Filehandle $fh das Encoding $encoding. D.h. alle Daten
-werden automatisch gemäß diesem Encoding beim Schreiben encodiert
+Definiere fÃ¼r Filehandle $fh das Encoding $encoding. D.h. alle Daten
+werden automatisch gemÃ¤ÃŸ diesem Encoding beim Schreiben encodiert
 bzw. beim Lesen dekodiert.
 
 =head2 Verschiedenes
@@ -423,7 +423,7 @@ bzw. beim Lesen dekodiert.
   $fh->autoFlush;
   $fh->autoFlush($bool);
 
-=head3 binmode() - Aktiviere Binärmodus oder Layer
+=head3 binmode() - Aktiviere BinÃ¤rmodus oder Layer
 
 =head4 Synopsis
 
@@ -432,7 +432,7 @@ bzw. beim Lesen dekodiert.
 
 =head4 Description
 
-Schalte Filehandle in Binärmodus oder setze Layer $layer. Genaue
+Schalte Filehandle in BinÃ¤rmodus oder setze Layer $layer. Genaue
 Funktionsbeschreibung siehe Perl-Dokumentation (perldoc -f binmode).
 
 =head2 Klassenmethoden
@@ -445,7 +445,7 @@ Funktionsbeschreibung siehe Perl-Dokumentation (perldoc -f binmode).
 
 =head4 Returns
 
-Die Methode liefert keinen Wert zurrück
+Die Methode liefert keinen Wert zurrÃ¼ck
 
 =head4 Description
 
@@ -465,7 +465,7 @@ String
 =head4 Description
 
 Lies alle Eingaben von STDIN und liefere diese als eine
-Zeichenkette zurück.
+Zeichenkette zurÃ¼ck.
 
 =head1 VERSION
 

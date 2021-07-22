@@ -29,7 +29,7 @@ abgesichert sind.
 
 Schalte Pufferung auf Dateihandle ein oder aus.
 
-Der Aufruf ist äquivalent zu
+Der Aufruf ist Ã¤quivalent zu
 
   $oldFh = select $fh;
   $| = $bool;
@@ -43,7 +43,7 @@ perldoc -f select
 
   Quiq::Perl->autoFlush(*STDOUT);
 
-=head3 binmode() - Aktiviere Binärmodus oder setze Layer
+=head3 binmode() - Aktiviere BinÃ¤rmodus oder setze Layer
 
 =head4 Synopsis
 
@@ -52,8 +52,8 @@ perldoc -f select
 
 =head4 Description
 
-Schalte Filehandle $fh in Binärmodus oder setze Layer $layer.
-Die Methode ist eine Überdeckung der Perl-Funktion binmode und prüft
+Schalte Filehandle $fh in BinÃ¤rmodus oder setze Layer $layer.
+Die Methode ist eine Ãœberdeckung der Perl-Funktion binmode und prÃ¼ft
 deren Returnwert. Im Fehlerfall wirft die Methode eine Exception.
 
 =head4 See Also
@@ -73,7 +73,7 @@ perldoc -f binmode
 =head4 Description
 
 Schreibe Daten @data auf Dateihandle $fh. Die Methode ist eine
-Überdeckung der Perl-Funktion print und prüft deren Returnwert.
+Ãœberdeckung der Perl-Funktion print und prÃ¼ft deren Returnwert.
 Im Fehlerfall wirft die Methode eine Exception.
 
 =head4 See Also
@@ -94,7 +94,7 @@ perldoc -f print
 
 Lade Klasse $class per use. Im Fehlerfall wirft die Methdoe eine Exception.
 Ist $sloppy wahr, wird keine Exception geworfen, sondern ein boolscher
-Wert: 1 für erfolgreiche Ausführung, 0 für fehlgeschlagen. Die globale
+Wert: 1 fÃ¼r erfolgreiche AusfÃ¼hrung, 0 fÃ¼r fehlgeschlagen. Die globale
 Variable $@ gibt den Grund an.
 
 =head4 See Also
@@ -103,7 +103,7 @@ L<loadClass|"loadClass() - Lade Klasse, falls nicht existent">()
 
 =head2 Sonstige Operationen
 
-=head3 perlDoFile() - Überdeckung für do()
+=head3 perlDoFile() - Ãœberdeckung fÃ¼r do()
 
 =head4 Synopsis
 
@@ -111,9 +111,9 @@ L<loadClass|"loadClass() - Lade Klasse, falls nicht existent">()
 
 =head4 Description
 
-Überdeckung für die Perl-Funktion do() in der Variante do($file). Die
+Ãœberdeckung fÃ¼r die Perl-Funktion do() in der Variante do($file). Die
 Funktion liefert den Wert des letzten ausgewerteten Ausdrucks bei
-Ausführung der Datei $file. Im Fehlerfall wirft die Funktion
+AusfÃ¼hrung der Datei $file. Im Fehlerfall wirft die Funktion
 eine Exception.
 
 Genaue Funktionsbeschreibung siehe Perl-Dokumentation.
@@ -143,7 +143,7 @@ Inhalt Konfigurationsdatei:
 =head4 Description
 
 Wandele $sigil ('$', '@' oder '%') in Datentyp-Bezeichner ('SCALAR',
-'ARRAY' oder 'HASH') und liefere diesen zurück.
+'ARRAY' oder 'HASH') und liefere diesen zurÃ¼ck.
 
 =head2 Symboltabellen
 
@@ -156,7 +156,7 @@ Wandele $sigil ('$', '@' oder '%') in Datentyp-Bezeichner ('SCALAR',
 =head4 Description
 
 Liefere eine Referenz auf den "Symbol Table Hash" (Stash) des
-Package $package. Der Hash enthält für jede globale Variable und
+Package $package. Der Hash enthÃ¤lt fÃ¼r jede globale Variable und
 jedes Unterpackage einen Eintrag. Existiert der Stash nicht (und
 damit auch nicht das Package), liefere undef.
 
@@ -172,7 +172,7 @@ damit auch nicht das Package), liefere undef.
 =head4 Description
 
 Liefere die Liste der existierenden Packages, die im Stash
-des Package $package und darunter enthalten sind, einschließlich
+des Package $package und darunter enthalten sind, einschlieÃŸlich
 Package $package selbst. Im Skalarkontext liefere eine Referenz
 auf die Liste. Wird die Methode ohne Argument aufgerufen
 wird Package 'main' angenommen.
@@ -200,13 +200,13 @@ Liste in sortierter Form
 
 =item *
 
-Liste, eingeschränkt auf Packages, deren Name einen Regex erfüllt:
+Liste, eingeschrÃ¤nkt auf Packages, deren Name einen Regex erfÃ¼llt:
 
   @arr = Quiq::Perl->packages->select(qr/patch\d+/);
 
 =item *
 
-Liste aller Packages unterhalb und einschließlich Package X:
+Liste aller Packages unterhalb und einschlieÃŸlich Package X:
 
   @arr = Quiq::Perl->packages('X');
 
@@ -222,11 +222,11 @@ Liste aller Packages unterhalb und einschließlich Package X:
 
 Erzeuge Klasse $newClass, falls sie noch nicht existiert, und
 definiere die Klassen @baseClasses als deren Basisklassen. Die
-Methode liefert keinen Wert zurück.
+Methode liefert keinen Wert zurÃ¼ck.
 
 Die Basisklassen werden per "use base" geladen.
 
-=head3 classExists() - Prüfe Existenz von Klasse/Package
+=head3 classExists() - PrÃ¼fe Existenz von Klasse/Package
 
 =head4 Synopsis
 
@@ -238,7 +238,7 @@ packageExists()
 
 =head4 Description
 
-Prüfe, ob die Perl-Klasse bzw. das Package $class in-memory
+PrÃ¼fe, ob die Perl-Klasse bzw. das Package $class in-memory
 existiert, also von Perl bereits geladen wurde. Liefere I<wahr>,
 wenn Klasse existiert, andernfalls I<falsch>.
 
@@ -273,7 +273,7 @@ der Klasse noch nicht gibt.
 =head4 Description
 
 Liefere die Liste der *aller* Basisklassen der Klasse $class,
-einschließlich UNIVERSAL und deren Basisklassen.
+einschlieÃŸlich UNIVERSAL und deren Basisklassen.
 
 =head4 Example
 
@@ -397,19 +397,19 @@ Liste in sortierter Form
 
 =item *
 
-Liste, eingeschränkt auf Klassen, deren Name einen Regex erfüllt:
+Liste, eingeschrÃ¤nkt auf Klassen, deren Name einen Regex erfÃ¼llt:
 
   @arr = Quiq::Perl->subClasses('Pkg1')->select(qr/[45]/);
 
 =back
 
-=head3 nextMethod() - Finde nächste Methoden-Instanz
+=head3 nextMethod() - Finde nÃ¤chste Methoden-Instanz
 
 =head4 Synopsis
 
   ($nextClass,$nextMeth) = $this->nextMethod($class,$name,$startClass);
 
-=head3 classNameToPath() - Übersetze Klassenname in Klassenpfad
+=head3 classNameToPath() - Ãœbersetze Klassenname in Klassenpfad
 
 =head4 Synopsis
 
@@ -417,14 +417,14 @@ Liste, eingeschränkt auf Klassen, deren Name einen Regex erfüllt:
 
 =head4 Description
 
-Übersetze den Klassennamen $className in den entsprechenden
-Klassenpfad (ohne Dateiendung) und liefere diesen zurück.
+Ãœbersetze den Klassennamen $className in den entsprechenden
+Klassenpfad (ohne Dateiendung) und liefere diesen zurÃ¼ck.
 
 =head4 Example
 
   'A::B::C' => 'A/B/C'
 
-=head3 classPathToName() - Übersetze Klassenpfad in Klassenname
+=head3 classPathToName() - Ãœbersetze Klassenpfad in Klassenname
 
 =head4 Synopsis
 
@@ -432,9 +432,9 @@ Klassenpfad (ohne Dateiendung) und liefere diesen zurück.
 
 =head4 Description
 
-Übersetze Klassenpfad $classPath (ist eine Endung vorhanden, wird
+Ãœbersetze Klassenpfad $classPath (ist eine Endung vorhanden, wird
 sie entfernt) in den entsprechenden Klassennamen und liefere
-diesen zurück.
+diesen zurÃ¼ck.
 
 =head4 Example
 
@@ -454,9 +454,9 @@ diesen zurück.
 
 Weise dem Typeglob-Eintrag $sym in der Symboltabelle des Package
 $package die Referenz $ref zu. Die Methode liefert keinen Wert
-zurück.
+zurÃ¼ck.
 
-Der Aufruf ist äquivalent zu:
+Der Aufruf ist Ã¤quivalent zu:
 
   no strict 'refs';
   *{"$package\::$sym"} = $ref;
@@ -470,7 +470,7 @@ Ist $package nicht angegeben wird das Package des Aufrufers
 
 =item *
 
-Alias für Subroutine aus anderer Klasse:
+Alias fÃ¼r Subroutine aus anderer Klasse:
 
   Quiq::Perl->createAlias('MyClass',mySub=>\&MyClass1::mySub1);
 
@@ -491,7 +491,7 @@ Eintrag einer Closure in die Symboltabelle:
 =head4 Description
 
 Erzeuge einen globalen Hash in Package $package und liefere eine Referenz
-diesen zurück.
+diesen zurÃ¼ck.
 
 =head4 Example
 
@@ -531,7 +531,7 @@ die Referenz kann geblesst werden:
 
 Setze Package-Hash mit dem Namen $name auf den von $ref
 referenzierten Wert, also auf %$ref und liefere eine Referenz
-auf die Variable zurück.
+auf die Variable zurÃ¼ck.
 
 Die Methode kopiert den Wert, sie erzeugt keinen Alias!
 
@@ -556,7 +556,7 @@ Setze Paket-Hash 'h' auf den Wert %hash:
 =head4 Description
 
 Erzeuge ein globales Array in Package $package und liefere eine
-Referenz dieses zurück.
+Referenz dieses zurÃ¼ck.
 
 =head4 Example
 
@@ -596,7 +596,7 @@ die Referenz kann geblesst werden:
 
 Setze Package-Array mit dem Namen $name auf den von $ref
 referenzierten Wert, also auf @$ref und liefere eine Referenz
-auf die Variable zurück.
+auf die Variable zurÃ¼ck.
 
 Die Methode kopiert den Wert, sie erzeugt keinen Alias!
 
@@ -621,7 +621,7 @@ Setze Paket-Array 'a' auf den Wert @arr:
 =head4 Description
 
 Setze Package-Skalar mit dem Namen $name auf den Wert $val
-und liefere eine Referenz auf die Variable zurück.
+und liefere eine Referenz auf die Variable zurÃ¼ck.
 
 =head4 Example
 
@@ -686,7 +686,7 @@ Ermittele Wert von Paket-Skalar 'n':
 Setze Paketvariable vom Typ $sigil ('$', '@' oder '%') mit dem Namen
 $name auf den von $ref referenzierten Wert (also $$ref
 (falls Skalar) oder @$ref (falls Array) oder %$ref (falls Hash))
-und liefere eine Referenz auf die Variable zurück.
+und liefere eine Referenz auf die Variable zurÃ¼ck.
 
 Die Subroutine kopiert den Wert, sie erzeugt keinen Alias!
 
@@ -764,7 +764,7 @@ Referenz auf die Subroutine.
 
 =head4 Description
 
-Füge Subroutine $ref zu Package $package unter dem Namen $name hinzu.
+FÃ¼ge Subroutine $ref zu Package $package unter dem Namen $name hinzu.
 Existiert eine Package-Subroutine mit dem Namen bereits,
 wird diese ersetzt.
 
@@ -790,7 +790,7 @@ oder
 
 =head4 Description
 
-Liefere Referenz auf Subroutine $name in Package $package. Enthält
+Liefere Referenz auf Subroutine $name in Package $package. EnthÃ¤lt
 das Package keine Subroutine mit dem Namen $name, liefere undef.
 
 =head2 Suchpfade
@@ -804,7 +804,7 @@ das Package keine Subroutine mit dem Namen $name, liefere undef.
 =head4 Description
 
 Liefere die Liste der I<grundlegenden> Suchpfade des aktuell laufenden
-Perl-Interpreters. Ergänzungen durch
+Perl-Interpreters. ErgÃ¤nzungen durch
 
 =over 2
 
@@ -842,7 +842,7 @@ Die Liste entspricht dem Ergebnis des Aufrufs
 
 =item *
 
-L<additionalIncPaths|"additionalIncPaths() - Zusätzliche Modul-Suchpfade">()
+L<additionalIncPaths|"additionalIncPaths() - ZusÃ¤tzliche Modul-Suchpfade">()
 
 =item *
 
@@ -864,7 +864,7 @@ L<incPaths|"incPaths() - Alle Modul-Suchpfade">()
   /usr/local/lib/site_perl
   .
 
-=head3 additionalIncPaths() - Zusätzliche Modul-Suchpfade
+=head3 additionalIncPaths() - ZusÃ¤tzliche Modul-Suchpfade
 
 =head4 Synopsis
 
@@ -872,8 +872,8 @@ L<incPaths|"incPaths() - Alle Modul-Suchpfade">()
 
 =head4 Description
 
-Liefere die zusätzlichen Suchpfade des aktuell laufenden
-Perl-Programms, also die Suchpfade, die über die grundlegenden
+Liefere die zusÃ¤tzlichen Suchpfade des aktuell laufenden
+Perl-Programms, also die Suchpfade, die Ã¼ber die grundlegenden
 Suchpfade des Perl_interpreters hinausgehen.
 
 =head4 See Also
@@ -912,7 +912,7 @@ L<basicIncPaths|"basicIncPaths() - Grundlegende Modul-Suchpfade">()
 
 =item *
 
-L<additionalIncPaths|"additionalIncPaths() - Zusätzliche Modul-Suchpfade">()
+L<additionalIncPaths|"additionalIncPaths() - ZusÃ¤tzliche Modul-Suchpfade">()
 
 =back
 
@@ -931,9 +931,9 @@ L<additionalIncPaths|"additionalIncPaths() - Zusätzliche Modul-Suchpfade">()
 =head4 Description
 
 Lies den POD-Code aus Datei $file bzw. Quelltext $text und liefere
-diesen zurück. Ist ein Encoding definiert, dekodiere den
+diesen zurÃ¼ck. Ist ein Encoding definiert, dekodiere den
 gelieferten POD-Code entsprechend. Im Array-Kontext liefere
-zusätzlich zum POD-Code das Encoding.
+zusÃ¤tzlich zum POD-Code das Encoding.
 
 =head3 getPodValues() - Liefere Content von POD-Abschnitten
 
@@ -952,10 +952,10 @@ zusätzlich zum POD-Code das Encoding.
 =head4 Description
 
 Entferne alle POD-Abschnitte aus dem Quelltext $code und liefere
-den resultierenden Quelltext zurück. Wird eine Referenz auf
-den Quelltext übergeben, erfolgt die Manipulation in-place.
+den resultierenden Quelltext zurÃ¼ck. Wird eine Referenz auf
+den Quelltext Ã¼bergeben, erfolgt die Manipulation in-place.
 
-Auf den POD-Abschnitt folgende Leerzeilen (die außerhalb des
+Auf den POD-Abschnitt folgende Leerzeilen (die auÃŸerhalb des
 POD-Code liegen) werden ebenfalls entfernt.
 
 =head1 VERSION

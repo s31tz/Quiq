@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Html::Widget - Basisklasse für HTML-Widgets
+Quiq::Html::Widget - Basisklasse fÃ¼r HTML-Widgets
 
 =head1 BASE CLASS
 
@@ -10,18 +10,18 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Die Klasse implementiert Funktionalität, die allen Widget-Klassen
+Die Klasse implementiert FunktionalitÃ¤t, die allen Widget-Klassen
 gemeinsam ist. Sie besitzt keinen Konstruktor, setzt also in den
 abgeleiteten Widget-Klassen die Existenz gewisser Attribute
 voraus.
 
-=head2 Grundsätzliches über Widget-Klassen
+=head2 GrundsÃ¤tzliches Ã¼ber Widget-Klassen
 
 Die Klassen generieren HTML ohne visuelle Eigenschaften. Visuelle
 Eigenschaften sollten per CSS definiert werden. Die Verbindung zur
-Stylesheet-Definition wird über die Objektattribute C<class> und
+Stylesheet-Definition wird Ã¼ber die Objektattribute C<class> und
 C<id> hergestellt. Das Attribut C<style> existiert, sollte aber
-möglichst nicht benutzt werden, damit der HTML-Quelltext frei von
+mÃ¶glichst nicht benutzt werden, damit der HTML-Quelltext frei von
 CSS-Eigenschaften bleibt.
 
 =over 2
@@ -40,7 +40,7 @@ oder ein Array von Werten.
 =item *
 
 Jedes Widget ist entweder sichtbar oder unsichtbar, was mit
-$w->hidden() geprüft werden kann.
+$w->hidden() geprÃ¼ft werden kann.
 
 =item *
 

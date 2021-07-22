@@ -12,20 +12,20 @@ L<Quiq::Html::Table::Base|https://github.com/s31tz/Quiq/tree/master/pod/class/Qu
 
 Die Klasse erzeugt eine HTML-Tabelle aus einer Liste von
 Objekten. Jedes Objekt wird durch eine Zeile dargestellt. Alle
-Zeilen- (tr-Elemente) und Zellenattribute (td-Elemente) können
+Zeilen- (tr-Elemente) und Zellenattribute (td-Elemente) kÃ¶nnen
 gesetzt werden. Die Klasse ist daher sehr flexibel.
 
-Für jedes Objekt wird die Methode $e->rowCallback() gerufen (falls
+FÃ¼r jedes Objekt wird die Methode $e->rowCallback() gerufen (falls
 nicht angegeben, werden die Daten ohne Verarbeitung kopiert).  Die
 Methode bekommt das Objekt und seine (0-basierte) Position in der
-Liste der Objekte (Attribut "rows") übergeben. Die Methode liefert
-die Spezifikation für die Zeile (tr) und ihre Zellen (td) zurück,
+Liste der Objekte (Attribut "rows") Ã¼bergeben. Die Methode liefert
+die Spezifikation fÃ¼r die Zeile (tr) und ihre Zellen (td) zurÃ¼ck,
 wobei jede Spezifikation ein Array ist, das unmittelbar an die
-Methode tag() übergeben wird.
+Methode tag() Ã¼bergeben wird.
 
 =head1 ATTRIBUTES
 
-Zusätzlich zu den Attributen der Basisklasse definiert die Klasse
+ZusÃ¤tzlich zu den Attributen der Basisklasse definiert die Klasse
 folgende Attribute:
 
 =over 4
@@ -52,19 +52,19 @@ Setze die Titel @titles auch als Footer.
 
 =item rowCallback => $sub (Default: undef)
 
-Referenz auf eine Subroutine, die für jedes Element die
-darzustellende Zeileninformation (für tr- und td-Tag) liefert.
+Referenz auf eine Subroutine, die fÃ¼r jedes Element die
+darzustellende Zeileninformation (fÃ¼r tr- und td-Tag) liefert.
 Ist kein rowCallback definiert, werden die Row-Daten
-unverändert verwendet.
+unverÃ¤ndert verwendet.
 
 =item rowCallbackArguments => \@args (Default: [])
 
-Liste von Argumenten, die I<zusätzlich> zu den Standardargumenten
-an die Subroutine rowCallback() übergeben werden.
+Liste von Argumenten, die I<zusÃ¤tzlich> zu den Standardargumenten
+an die Subroutine rowCallback() Ã¼bergeben werden.
 
 =item rows => \@rows (Default: [])
 
-Liste der Elemente. Für jedes Element wird die Callback-Methode
+Liste der Elemente. FÃ¼r jedes Element wird die Callback-Methode
 (Attribut rowCallback) aufgerufen.
 
 =item titles => \@titles (Default: [])
@@ -75,7 +75,7 @@ Liste der Kolumnentitel.
 
 =head1 EXAMPLES
 
-Attribute von tr- und td-Elemeten setzen. Für jedes Element
+Attribute von tr- und td-Elemeten setzen. FÃ¼r jedes Element
 wird eine Arrayreferenz geliefert:
 
   $e = Quiq::Html::Table::List->new(
@@ -94,8 +94,8 @@ wird eine Arrayreferenz geliefert:
   );
   $html = $e->html($h);
 
-Lediglich Werte ausgeben. Für das tr-Element wird C<undef> geliefert,
-für die td-Elemente ein skalarer Wert (der Content des Elements):
+Lediglich Werte ausgeben. FÃ¼r das tr-Element wird C<undef> geliefert,
+fÃ¼r die td-Elemente ein skalarer Wert (der Content des Elements):
 
   $e = Quiq::Html::Table::List->new(
       titles => [qw/Id Name Vorname/],
@@ -125,7 +125,7 @@ für die td-Elemente ein skalarer Wert (der Content des Elements):
 =head4 Description
 
 Instantiiere ein Tabellenobjekt mit den Eingenschaften @keyVal und
-liefere eine Referenz auf dieses Objekt zurück.
+liefere eine Referenz auf dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -138,7 +138,7 @@ liefere eine Referenz auf dieses Objekt zurück.
 
 =head4 Description
 
-Generiere HTML-Code für Tabellenobjekt $e und liefere diesen zurück.
+Generiere HTML-Code fÃ¼r Tabellenobjekt $e und liefere diesen zurÃ¼ck.
 Bei Aufruf als Klassenmethode wird das Tabellenobjekt von
 der Methode aus den Argumenten @keyVal instantiiert.
 

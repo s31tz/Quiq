@@ -55,9 +55,9 @@ Referenz auf die Liste.
 =head4 Description
 
 Ermittele die Breite des breitesten Label in Pixeln und liefere
-diesen Wert zurück.
+diesen Wert zurÃ¼ck.
 
-=head3 height() - Höhe des höchsten Labels
+=head3 height() - HÃ¶he des hÃ¶chsten Labels
 
 =head4 Synopsis
 
@@ -65,8 +65,8 @@ diesen Wert zurück.
 
 =head4 Description
 
-Ermittele die Höhe des höchsten Label in Pixeln und liefere
-diesen Wert zurück.
+Ermittele die HÃ¶he des hÃ¶chsten Label in Pixeln und liefere
+diesen Wert zurÃ¼ck.
 
 =head1 VERSION
 

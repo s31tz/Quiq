@@ -10,11 +10,11 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Abstraktion für GD- und TrueType-Fonts, die von GD nicht gemacht wird.
+Abstraktion fÃ¼r GD- und TrueType-Fonts, die von GD nicht gemacht wird.
 
 =head2 Geometrie der (monospaced) GD-Fonts
 
-  Name             Breite Höhe
+  Name             Breite HÃ¶he
   ---------------- ------ ----
   gdTinyFont         5      8
   gdSmallFont        6     13
@@ -56,14 +56,14 @@ TrueType-Font instantiieren
 =head4 Description
 
 Instantiiere GD- oder TrueType-Font und liefere eine Referenz auf
-dieses Objekt zurück. Wird bei einem TrueType-Font keine Fontgröße
+dieses Objekt zurÃ¼ck. Wird bei einem TrueType-Font keine FontgrÃ¶ÃŸe
 angegeben, wird 10pt angenommen.
 
 Ein TrueType-Font kann auch mit einem einzigen Argument - als
 Arrayreferenz [$name,$pt] - angegeben werden.
 
-Wird ein bereits instantiiertes Font-Objekt als Parameter übergeben,
-wird dieses einfach zurückgeliefert.
+Wird ein bereits instantiiertes Font-Objekt als Parameter Ã¼bergeben,
+wird dieses einfach zurÃ¼ckgeliefert.
 
 =head2 Primitive Operationen
 
@@ -79,7 +79,7 @@ Liefere den Namen des Font. Bei einem GD-Font ist dies der Name, wie er
 beim Konstruktor angegeben wurde. Bei einem TrueType-Font ist es der
 Grundname der Datei, also ohne Pfad und Endung C<.ttf>.
 
-=head3 pt() - Größe des Font
+=head3 pt() - GrÃ¶ÃŸe des Font
 
 =head4 Synopsis
 
@@ -87,10 +87,10 @@ Grundname der Datei, also ohne Pfad und Endung C<.ttf>.
 
 =head4 Description
 
-Liefere die Größe des Font. Bei einem GD-Font C<undef>, bei einem
-TrueType-Font die Größe in pt.
+Liefere die GrÃ¶ÃŸe des Font. Bei einem GD-Font C<undef>, bei einem
+TrueType-Font die GrÃ¶ÃŸe in pt.
 
-=head3 isTrueType() - Prüfe auf TrueType-Font
+=head3 isTrueType() - PrÃ¼fe auf TrueType-Font
 
 =head4 Synopsis
 
@@ -123,12 +123,12 @@ Gib Informationen auf STDDER aus.
 
 =head4 Description
 
-Liefere den Platzbedarf (Breite, Höhe) und den x- und y-Offset
+Liefere den Platzbedarf (Breite, HÃ¶he) und den x- und y-Offset
 der Zeichenkette $str.
 
 B<Geometrie>
 
-TrueType-Fonts können um einen beliebigen Winkel gedreht werden.
+TrueType-Fonts kÃ¶nnen um einen beliebigen Winkel gedreht werden.
 
           4,5
           /\
@@ -146,8 +146,8 @@ TrueType-Fonts können um einen beliebigen Winkel gedreht werden.
   $xOffset = -$bounds[6]
   $yOffset = $up? 0: -$bounds[5]
 
-Von dieser Möglichkeit machen wir allerdings keinen Gebrauch. Wir
-lassen lediglich 0 und 90 Grad zu. Das sind die Möglichkeiten, die
+Von dieser MÃ¶glichkeit machen wir allerdings keinen Gebrauch. Wir
+lassen lediglich 0 und 90 Grad zu. Das sind die MÃ¶glichkeiten, die
 die GD-Fonts erlauben.
 
 =head3 charWidth() - Liefere (maximale) Breite eines Fontzeichens
@@ -179,7 +179,7 @@ Zeichen gleich.
 
 Bei TrueType-Fonts wird die Breite der Zeichenkette "M" ermittelt.
 
-=head3 charHeight() - Liefere (maximale) Höhe eines Fontzeichens
+=head3 charHeight() - Liefere (maximale) HÃ¶he eines Fontzeichens
 
 =head4 Synopsis
 
@@ -201,12 +201,12 @@ Vertikaler Text.
 
 =head4 Description
 
-Liefere die maximale Höhe eines Fontzeichnes.
+Liefere die maximale HÃ¶he eines Fontzeichnes.
 
-Da die GD-Fonts fixed/monospaced Fonts sind, ist die Höhe
+Da die GD-Fonts fixed/monospaced Fonts sind, ist die HÃ¶he
 aller Zeichen gleich.
 
-Ist der Font ein TrueType-Font wird die Höhe der Zeichenkette
+Ist der Font ein TrueType-Font wird die HÃ¶he der Zeichenkette
 "Xy" bestimmt.
 
 =head3 digitWidth() - Liefere Breite einer Ziffer
@@ -228,10 +228,10 @@ Vertikaler Text.
 =head4 Description
 
 Liefere die Breite einer Ziffer. Alle Ziffern eines Font sollten
-dieselbe Breite haben. Für GD-Fonts ist dies ohnehin der Fall.
+dieselbe Breite haben. FÃ¼r GD-Fonts ist dies ohnehin der Fall.
 Bei TrueType-Fonts ermitteln wir die Breite der "0".
 
-=head3 digitHeight() - Liefere Höhe einer Ziffer
+=head3 digitHeight() - Liefere HÃ¶he einer Ziffer
 
 =head4 Synopsis
 
@@ -249,9 +249,9 @@ Vertikaler Text.
 
 =head4 Description
 
-Liefere die Höhe einer Ziffer. Alle Ziffern eines Font sollten
-dieselbe Höhe haben. Für GD-Fonts ist dies ohnehin der Fall.
-Bei TrueType-Fonts ermitteln wir die Höhe der "0".
+Liefere die HÃ¶he einer Ziffer. Alle Ziffern eines Font sollten
+dieselbe HÃ¶he haben. FÃ¼r GD-Fonts ist dies ohnehin der Fall.
+Bei TrueType-Fonts ermitteln wir die HÃ¶he der "0".
 
 =head3 stringWidth() - Horizontaler Platzbedarf einer Zeichenkette
 
@@ -295,15 +295,15 @@ Liefere den horizontalen Platzbedarf der Zeichenkette $str.
 
 =head2 Alignment
 
-Die folgenden Methoden liefern den Offset, der benötigt wird, wenn
+Die folgenden Methoden liefern den Offset, der benÃ¶tigt wird, wenn
 ein Text eng an eine rechte oder obere Grenze ausgerichtet werden soll,
 wie z.B. bei der Beschriftung einer X- oder Y-Achse.
 
-Die Offsets sind Font-abhängig. Für die GD-Fonts und den TrueType-Font
-pala bis 20pt ist der Offset ausgearbeitet. Für andere TrueType-Fonts
-und Fontgrößen müssen die Methoden u.U. erweitert werden.
+Die Offsets sind Font-abhÃ¤ngig. FÃ¼r die GD-Fonts und den TrueType-Font
+pala bis 20pt ist der Offset ausgearbeitet. FÃ¼r andere TrueType-Fonts
+und FontgrÃ¶ÃŸen mÃ¼ssen die Methoden u.U. erweitert werden.
 
-=head3 alignRightOffset() - Korrektur-Offset für Ausrichtung an rechten Rand
+=head3 alignRightOffset() - Korrektur-Offset fÃ¼r Ausrichtung an rechten Rand
 
 =head4 Synopsis
 
@@ -311,11 +311,11 @@ und Fontgrößen müssen die Methoden u.U. erweitert werden.
 
 =head4 Description
 
-Der Korrektur-Offset ist so bemessen, dass der Text möglichst
+Der Korrektur-Offset ist so bemessen, dass der Text mÃ¶glichst
 dicht an einen rechten Rand angrenzt, z.B. das Label an den Tick
 einer Y-Achse.
 
-=head3 alignLeftOffset() - Korrektur-Offset für Ausrichtung an linkem Rand
+=head3 alignLeftOffset() - Korrektur-Offset fÃ¼r Ausrichtung an linkem Rand
 
 =head4 Synopsis
 
@@ -323,11 +323,11 @@ einer Y-Achse.
 
 =head4 Description
 
-Der Korrektur-Offset ist so bemessen, dass der Text möglichst
+Der Korrektur-Offset ist so bemessen, dass der Text mÃ¶glichst
 dicht an einen linken Rand angrenzt, z.B. das Label an den Tick
 einer Y-Achse auf der rechten Seite.
 
-=head3 alignTopOffset() - Korrektur-Offset für Ausrichtung an oberen Rand
+=head3 alignTopOffset() - Korrektur-Offset fÃ¼r Ausrichtung an oberen Rand
 
 =head4 Synopsis
 
@@ -335,11 +335,11 @@ einer Y-Achse auf der rechten Seite.
 
 =head4 Description
 
-Der Korrektur-Offset ist so bemessen, dass der Text möglichst
+Der Korrektur-Offset ist so bemessen, dass der Text mÃ¶glichst
 dicht an einen oberen Rand angrenzt, z.B. das Label an den Tick
 einer X-Achse.
 
-=head3 hCenterOffset() - Korrektur für horizontal zentrierten Text
+=head3 hCenterOffset() - Korrektur fÃ¼r horizontal zentrierten Text
 
 =head4 Synopsis
 
@@ -347,7 +347,7 @@ einer X-Achse.
 
 =head4 Description
 
-Bei horizontal zentriertem Text ist manchmal eine Korrektur nötig,
+Bei horizontal zentriertem Text ist manchmal eine Korrektur nÃ¶tig,
 die diese Methode liefert.
 
 =head1 VERSION

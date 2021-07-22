@@ -55,7 +55,7 @@ Ohne Kolumnennamen:
   # Objekt instantiieren
   $tab = Quiq::Table->new(3,\@rows);
   
-  # Werte der Kolumne 1 (0-basierte Zählung)
+  # Werte der Kolumne 1 (0-basierte ZÃ¤hlung)
   
   @values = $tab->values(1);
   say "@values";
@@ -72,8 +72,8 @@ Ohne Kolumnennamen:
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine Tabelle, also eine Liste
-von Arrays identischer Größe. Die Kolumnen können über ihre Position
+Ein Objekt der Klasse reprÃ¤sentiert eine Tabelle, also eine Liste
+von Arrays identischer GrÃ¶ÃŸe. Die Kolumnen kÃ¶nnen Ã¼ber ihre Position
 oder ihren Namen (sofern definiert) angesprochen werden.
 Die Klasse kann die Daten in verschiedenen Formaten tabellarisch
 ausgegeben.
@@ -120,7 +120,7 @@ Referenz auf Tabellen-Objekt
 =head4 Description
 
 Instantiiere ein Tabellen-Objekt und liefere eine Referenz auf dieses
-Objekt zurück.
+Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -182,7 +182,7 @@ Integer
 
 Liefere die Position der Kolumne $column in den Zeilen-Arrays.
 Die Position ist 0-basiert. Ist das Argument eine Zahl (Position),
-liefere diese unverändert zurück.
+liefere diese unverÃ¤ndert zurÃ¼ck.
 
 =head3 properties() - Eigenschaften einer Kolumne
 
@@ -208,12 +208,12 @@ Properties-Objekt (Quiq::Properties)
 =head4 Description
 
 Ermittele die Eigenschaften der Werte der Kolumne $column und liefere
-ein Objekt, das diese Eigenschaften abfragbar zur Verfügung stellt,
-zurück. Die Eigenschaften werden gecacht, so dass bei einem wiederholten
-Aufruf die Eigenschaften nicht erneut ermittelt werden müssen. Wird die
-Tabelle mit push() erweitert, wird der Cache automatisch gelöscht.
+ein Objekt, das diese Eigenschaften abfragbar zur VerfÃ¼gung stellt,
+zurÃ¼ck. Die Eigenschaften werden gecacht, so dass bei einem wiederholten
+Aufruf die Eigenschaften nicht erneut ermittelt werden mÃ¼ssen. Wird die
+Tabelle mit push() erweitert, wird der Cache automatisch gelÃ¶scht.
 
-=head3 push() - Füge Zeile hinzu
+=head3 push() - FÃ¼ge Zeile hinzu
 
 =head4 Synopsis
 
@@ -231,11 +231,11 @@ Liste von Zeilendaten (Strings).
 
 =head4 Description
 
-Füge eine Zeile mit den Kolumnenwerten @arr zur Tabelle hinzu. Die Anzahl der
-Elemente in @arr muss mit der Anzahl der Kolumnen übereinstimmen,
-sonst wird eine Exception geworfen. Durch das Hinzufügen einer Zeile
+FÃ¼ge eine Zeile mit den Kolumnenwerten @arr zur Tabelle hinzu. Die Anzahl der
+Elemente in @arr muss mit der Anzahl der Kolumnen Ã¼bereinstimmen,
+sonst wird eine Exception geworfen. Durch das HinzufÃ¼gen einer Zeile
 werden die gecachten Kolumneneigenschaften - sofern vorhanden -
-gelöscht (siehe Methode L<properties|"properties() - Eigenschaften einer Kolumne">()).
+gelÃ¶scht (siehe Methode L<properties|"properties() - Eigenschaften einer Kolumne">()).
 
 =head3 rows() - Liste der Zeilen
 
@@ -317,8 +317,8 @@ Liefere die Anzahl der Kolumnen der Tabelle.
 
 =item -colorize => $sub
 
-Callback-Funktion, die für jede Zelle gerufen wird und eine Termnal-Farbe
-für die jeweilige Zelle liefert. Die Funktion hat die Struktur:
+Callback-Funktion, die fÃ¼r jede Zelle gerufen wird und eine Termnal-Farbe
+fÃ¼r die jeweilige Zelle liefert. Die Funktion hat die Struktur:
 
   sub {
       my ($tab,$row,$pos,$val) = @_;

@@ -12,10 +12,10 @@ L<Quiq::Config|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Config.p
 
 Die Klasse kapselt den Zugriff auf eine Konfigurationsdatei, in
 der Eingenschaften von einer oder mehrerer Datenbanken hinterlegt sind.
-Es können beliebige Eigenschaften spezifiziert werden.
+Es kÃ¶nnen beliebige Eigenschaften spezifiziert werden.
 Speziell wird die Abfrage des Universal Database Locators (UDL)
-unterstützt. Die Datei darf wegen etwaig enthaltener Passwörter
-nur für den Owner lesbar/schreibbar sein. Ist sie es nicht, wird
+unterstÃ¼tzt. Die Datei darf wegen etwaig enthaltener PasswÃ¶rter
+nur fÃ¼r den Owner lesbar/schreibbar sein. Ist sie es nicht, wird
 eine Exception geworfen.
 
 =head2 Aufbau der Konfigurationsdatei
@@ -39,9 +39,9 @@ eine Exception geworfen.
 =item *
 
 Der Konfigurationshash {...} wird im Konstruktor zu einem
-ungelockten Quiq::Hash instantiiert. Entsprechend können die
+ungelockten Quiq::Hash instantiiert. Entsprechend kÃ¶nnen die
 Methoden der Klasse Quiq::Hash zum Lesen der
-Konfigurationseinträge genutzt werden.
+KonfigurationseintrÃ¤ge genutzt werden.
 
 =back
 
@@ -90,7 +90,7 @@ Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf dieses
-Objekt zurück.
+Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -117,7 +117,7 @@ Universal Database Locator (String).
 =head4 Description
 
 Ermittele den Universal Database Locator (UDL) der Datenbank $database
-und liefere diesen zurück.
+und liefere diesen zurÃ¼ck.
 
 =head1 VERSION
 

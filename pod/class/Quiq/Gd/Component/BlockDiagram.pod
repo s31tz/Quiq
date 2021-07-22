@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Gd::Component::BlockDiagram - Farbige Blöcke in einer Fläche
+Quiq::Gd::Component::BlockDiagram - Farbige BlÃ¶cke in einer FlÃ¤che
 
 =head1 BASE CLASS
 
@@ -20,7 +20,7 @@ Breite der Grafik in Pixeln.
 
 =item B<< height => $int >> (Default: keiner)
 
-Höhe der Grafik in Pixeln.
+HÃ¶he der Grafik in Pixeln.
 
 =item xMin => $f (Default: Minimum der X-Werte)
 
@@ -84,7 +84,7 @@ Signatur:
 
 Instantiiere ein Blockdiagramm-Objekt mit den Eigenschaften @keyVal
 (s. Abschnitt L<ATTRIBUTES|"ATTRIBUTES">) und liefere eine Referenz auf das Objekt
-zurück.
+zurÃ¼ck.
 
 =head2 Zeichnen
 
@@ -98,7 +98,7 @@ zurück.
 
 =head4 Returns
 
-Liste der gezeichneten Blöcke. Im Skalarkontext eine Referenz auf
+Liste der gezeichneten BlÃ¶cke. Im Skalarkontext eine Referenz auf
 die Liste. Ein Listenelement hat die Komponenten:
 
   [$obj,$x1,$y1,$x2,$y2]

@@ -25,14 +25,14 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =item $program (Default: 'xterm')
 
-X-Terminal-Programm. Mögliche Werte: 'xterm', 'gnome-terminal'.
+X-Terminal-Programm. MÃ¶gliche Werte: 'xterm', 'gnome-terminal'.
 
 =back
 
 =head4 Description
 
 Instantiiere ein X-Terminal-Fenster-Objekt und liefere eine
-Referenz auf dieses Objekt zurück.
+Referenz auf dieses Objekt zurÃ¼ck.
 
 =head2 Attributmethoden
 
@@ -48,11 +48,11 @@ String
 
 =head4 Description
 
-Liefere den Namen des X-Terminal-Programms (siehe Konstruktor) zurück.
+Liefere den Namen des X-Terminal-Programms (siehe Konstruktor) zurÃ¼ck.
 
 =head2 Objektmethoden
 
-=head3 launch() - Öffne X-Term und führe Kommando aus
+=head3 launch() - Ã–ffne X-Term und fÃ¼hre Kommando aus
 
 =head4 Synopsis
 
@@ -76,7 +76,7 @@ Breite des Fensters in Zeichen.
 
 =item $height
 
-Höhe des Fensters in Zeichen.
+HÃ¶he des Fensters in Zeichen.
 
 =item $cmdLine
 

@@ -18,7 +18,7 @@ CSS Klasse des Konstruktes.
 
 =item disabled => $bool (Default: 0)
 
-Das gesamte Konstrukt ist disabled. Keine Auswahl möglich.
+Das gesamte Konstrukt ist disabled. Keine Auswahl mÃ¶glich.
 
 =item hidden => $bool (Default: 0)
 
@@ -34,7 +34,7 @@ Liste der Label rechts neben den Radio-Buttons.
 
 =item name => $name (Default: undef)
 
-Name, unter dem der ausgewählte Button kommuniziert wird.
+Name, unter dem der ausgewÃ¤hlte Button kommuniziert wird.
 
 =item onClick => \@onClick (Default: [])
 
@@ -42,7 +42,7 @@ Liste der OnClick-Handler.
 
 =item options => \@options (Default: []) 
 
-Liste der Radio-Button-Werte. Der Wert des ausgewählten Radio Button
+Liste der Radio-Button-Werte. Der Wert des ausgewÃ¤hlten Radio Button
 wird gesendet.
 
 =item orientation => 'h'|'v' (Default: 'h')
@@ -68,7 +68,7 @@ Wenn wahr, liefere C<undef> als Widget-Code.
 =item value => $value (Default: undef)
 
 Aktueller Wert. Stimmt dieser mit dem Wert (s. Attribut option)
-eines der Radio Buttons überein, wird dieser Radio-Button
+eines der Radio Buttons Ã¼berein, wird dieser Radio-Button
 aktiviert.
 
 =back
@@ -86,7 +86,7 @@ aktiviert.
 =head4 Description
 
 Instantiiere ein RadioButtonBar-Objekt und liefere eine Referenz
-auf dieses Objekt zurück.
+auf dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -100,7 +100,7 @@ auf dieses Objekt zurück.
 =head4 Description
 
 Generiere den HTML-Code des RadioButtonBar-Objekts und liefere
-diesen zurück. Als Klassenmethode gerufen, wird das Objekt intern
+diesen zurÃ¼ck. Als Klassenmethode gerufen, wird das Objekt intern
 erzeugt und mit den Attributen @keyVal instantiiert.
 
 =head1 VERSION

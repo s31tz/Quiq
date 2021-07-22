@@ -97,9 +97,9 @@ AnsiColor-Objekt
 
 =head4 Description
 
-Instantiiere ein Objekt der Klasse und liefere dieses zurück. Durch
+Instantiiere ein Objekt der Klasse und liefere dieses zurÃ¼ck. Durch
 den Parameter $bool wird entschieden, ob die Methode
-L<str|"str() - Formatiere String mit Colorcodes">() ihren Rückgabewert mit
+L<str|"str() - Formatiere String mit Colorcodes">() ihren RÃ¼ckgabewert mit
 oder ohne ANSI Colorcodes liefert.
 
 =head2 Objektmethoden
@@ -130,7 +130,7 @@ Liefere wahr, wenn ANSI Colorcodes aktiviert sind, anderfalls falsch.
 
 =item $attr
 
-Attribut-Spezifikation gemäß Term::ANSIColor (siehe auch
+Attribut-Spezifikation gemÃ¤ÃŸ Term::ANSIColor (siehe auch
 L<Terminal-Eigenschaften|"Terminal-Eigenschaften">).
 
 =item $str
@@ -145,11 +145,11 @@ Zeichenkette mit ANSI Colorcodes (String)
 
 =head4 Description
 
-Formatiere Zeichenkette $str mit ANSI Colorcodes gemäß
-Spezifikation $attr und liefere das Resultat zurück. Die
+Formatiere Zeichenkette $str mit ANSI Colorcodes gemÃ¤ÃŸ
+Spezifikation $attr und liefere das Resultat zurÃ¼ck. Die
 Colorcodes werden der Zeichenkette vorangestellt und mit dem
 Colorcode 'reset' beendet. Ist die Erzeugung von Colorcodes
-abgeschaltet (siehe Konstruktor), wird die Zeichenkette unverändert
+abgeschaltet (siehe Konstruktor), wird die Zeichenkette unverÃ¤ndert
 geliefert.
 
 =head3 strLn() - Formatiere Zeile mit Colorcodes
@@ -168,7 +168,7 @@ Siehe L<str|"str() - Formatiere String mit Colorcodes">()
 
 =head4 Description
 
-Wie L<str|"str() - Formatiere String mit Colorcodes">(), nur dass der Rückgabewert mit einem Newline beendet wird.
+Wie L<str|"str() - Formatiere String mit Colorcodes">(), nur dass der RÃ¼ckgabewert mit einem Newline beendet wird.
 
 =head1 VERSION
 

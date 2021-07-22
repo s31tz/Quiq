@@ -10,7 +10,7 @@ L<Quiq::Database::Row::Object|https://github.com/s31tz/Quiq/tree/master/pod/clas
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen Datensatz, der über mehreren
+Ein Objekt der Klasse reprÃ¤sentiert einen Datensatz, der Ã¼ber mehreren
 Tabellen gebildet ist.
 
 Die DML-Operationen C<select>, C<insert>, C<update>, C<delete>
@@ -37,7 +37,7 @@ Select-Template (String)
 =head4 Description
 
 Liefere das Select-Template der Klasse. Dieses ist auf der
-Klassenvariablen C<$Select> definiert und enthält typischerweise
+Klassenvariablen C<$Select> definiert und enthÃ¤lt typischerweise
 Platzhalter, die bei einer Selektion durch die Selektionsskriterien
 ersetzt werden.
 
@@ -46,7 +46,7 @@ die Methode L<selectStmt|"selectStmt() - Liefere Select-Statement der Klasse">()
 
 =head4 Example
 
-Beispiel für die Definition eines Select-Template auf der
+Beispiel fÃ¼r die Definition eines Select-Template auf der
 Klassenvariable C<$select>:
 
   our $Select = <<'__SQL__';
@@ -66,9 +66,9 @@ Klassenvariable C<$select>:
 
 Die Select-Klausel ist notwendig, da das Statement sonst nicht
 syntaktisch korrekt gebildet ist. Die Platzhalter C<%WHERE%>,
-C<%ORDERBY%> usw. müssen nicht erscheinen, da optionale Klauseln
+C<%ORDERBY%> usw. mÃ¼ssen nicht erscheinen, da optionale Klauseln
 bei entsprechenden Selektionskriterien am Ende des Statement
-hinzugefügt werden.
+hinzugefÃ¼gt werden.
 
 =head3 selectStmt() - Liefere Select-Statement der Klasse
 
@@ -82,7 +82,7 @@ Select-Statement (String)
 
 =head4 Description
 
-Liefere ein Select-Statement der Klasse gemäß den Selektionskriterien
+Liefere ein Select-Statement der Klasse gemÃ¤ÃŸ den Selektionskriterien
 C<@select>. Die Selektionskriterien werden in das Muster-Statement
 eingesetzt (siehe L<selectTemplate|"selectTemplate() - Liefere Select-Template der Klasse">().
 
@@ -115,8 +115,8 @@ Datensatz
 =head4 Description
 
 Wandele den Datensatz $row in einen Datensatz der Klasse $newClass
-und liefere das Resultat zurück. Es ist ein fataler Fehler, wenn der
-Datensatz keine zur Klasse $newClass gehörende Kolumne besitzt.
+und liefere das Resultat zurÃ¼ck. Es ist ein fataler Fehler, wenn der
+Datensatz keine zur Klasse $newClass gehÃ¶rende Kolumne besitzt.
 
 =head4 Details
 
@@ -130,7 +130,7 @@ Kopiere $row nach $newRow
 
 =item 2.
 
-Schränke $newRow auf die Kolumnen von $newClass ein
+SchrÃ¤nke $newRow auf die Kolumnen von $newClass ein
 
 =item 3.
 

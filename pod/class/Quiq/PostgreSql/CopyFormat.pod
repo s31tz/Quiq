@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::PostgreSql::CopyFormat - Erzeuge Daten für PostgreSQL COPY-Kommando
+Quiq::PostgreSql::CopyFormat - Erzeuge Daten fÃ¼r PostgreSQL COPY-Kommando
 
 =head1 BASE CLASS
 
@@ -15,13 +15,13 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
   # Instantiiere Objekt
   my $cpy = Quiq::PostgreSql::CopyFormat->new($width);
   
-  # Übersetze Array in COPY-Zeile
+  # Ãœbersetze Array in COPY-Zeile
   my $line = $cpy->arrayToLine(\@arr);
 
 =head1 DESCRIPTION
 
 Die Klasse dient zur Umwandlung von Daten, so dass sie vom
-PostgreSQL COPY-Kommando verarbeitet werden können.
+PostgreSQL COPY-Kommando verarbeitet werden kÃ¶nnen.
 
 =head1 ATTRIBUTES
 
@@ -59,12 +59,12 @@ Objekt
 
 =head4 Description
 
-Instantiiere ein Objekt der Klasse für die Behandlung von Daten mit
-$width Kolumnen und liefere eine Referenz auf dieses Objekt zurück.
+Instantiiere ein Objekt der Klasse fÃ¼r die Behandlung von Daten mit
+$width Kolumnen und liefere eine Referenz auf dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
-=head3 arrayToLine() - Übersetze Array in eine COPY-Zeile
+=head3 arrayToLine() - Ãœbersetze Array in eine COPY-Zeile
 
 =head4 Synopsis
 
@@ -82,11 +82,11 @@ Array mit $width Komponenten.
 
 =head4 Returns
 
-Zeile für eine COPY-Datei (String)
+Zeile fÃ¼r eine COPY-Datei (String)
 
 =head4 Description
 
-Erzeuge aus den Komponenten des Arrays @arr eine Datenzeile für
+Erzeuge aus den Komponenten des Arrays @arr eine Datenzeile fÃ¼r
 das PostgreSQL COPY Kommando.
 
 =head1 VERSION

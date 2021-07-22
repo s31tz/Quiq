@@ -10,25 +10,25 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Diese Klasse ist ein Perl-Wrapper für die Erzeugung einer Gruppe
+Diese Klasse ist ein Perl-Wrapper fÃ¼r die Erzeugung einer Gruppe
 von XY-Diagrammen auf Basis von Plotly.js, Beispiel siehe
 L<Plotly.js: Plotten und analysieren einer Gruppe von Zeitreihen|http://fseitz.de/blog/index.php?/archives/157-Plotly.js-Plotten-und-analysieren-einer-Gruppe-von-Zeitreihen.html>.
 
 Die Diagrammgruppe zeichnet sich dadurch aus, dass durch alle
 Plots der Gruppe synchron gescrollt werden kann. In dem Diagramm,
 dessen Rangeslider aktiviert ist, kann mit der linken Maustaste im
-Plot ein Zeitbereich ausgewählt und anschließend mit dem
+Plot ein Zeitbereich ausgewÃ¤hlt und anschlieÃŸend mit dem
 Rangeslider durch den Gesamtbereich gescrollt werden. Das Zoomen
-und Scrollen findet dabei über allen Diagrammen synchron
-statt. Bei Doppelklick in den Plot-Breich wird der ursprüngliche
-Zustand wieder hergestellt. Beim Überfahren der Plots mit der Maus
-wird das Koordinatenpaar des nächstgelegenen Punktes
-angezeigt. Über das Menü "Shape" kann die Kurvenform eingestellt
+und Scrollen findet dabei Ã¼ber allen Diagrammen synchron
+statt. Bei Doppelklick in den Plot-Breich wird der ursprÃ¼ngliche
+Zustand wieder hergestellt. Beim Ãœberfahren der Plots mit der Maus
+wird das Koordinatenpaar des nÃ¤chstgelegenen Punktes
+angezeigt. Ãœber das MenÃ¼ "Shape" kann die Kurvenform eingestellt
 und mittels des Buttons "Download as PNG" der aktuelle
 Diagramm-Zustand als Grafik heruntergeladen werden.
 
-Es gibt zwei Möglichkeiten, die Plot-Daten in die Diagramme zu
-übertragen:
+Es gibt zwei MÃ¶glichkeiten, die Plot-Daten in die Diagramme zu
+Ã¼bertragen:
 
 =over 4
 
@@ -48,16 +48,16 @@ L<Cross-Origin Resource Sharing|http://fseitz.de/blog/index.php?/archives/159-Aj
 =back
 
 Das  Laden per Ajax-Request hat den Vorteil, dass das Holen der
-Daten parallel geschieht während die Diagramme auf der Seite
+Daten parallel geschieht wÃ¤hrend die Diagramme auf der Seite
 schon (leer) angezeigt werden, d.h. der Seitenaufbau ist schneller
 und die Daten werden performanter besorgt.
 
 =head2 Parameter-Objekte
 
 Bei der Instantiierung des DiagramGroup-Objekts wird dem Konstruktor
-eine Liste von Parameter-Objekten übergeben. Jeder Parameter wird
-in ein Diagramm geplottet. Folgende Information wird für die
-Darstellung des Diagramms ohne Daten benötigt:
+eine Liste von Parameter-Objekten Ã¼bergeben. Jeder Parameter wird
+in ein Diagramm geplottet. Folgende Information wird fÃ¼r die
+Darstellung des Diagramms ohne Daten benÃ¶tigt:
 
 =over 2
 
@@ -79,7 +79,7 @@ Kleinster Wert der X-Achse
 
 =item *
 
-Größter Wert der X-Achse
+GrÃ¶ÃŸter Wert der X-Achse
 
 =item *
 
@@ -87,15 +87,15 @@ Kleinster Wert der Y-Achse
 
 =item *
 
-Größter Wert der Y-Achse
+GrÃ¶ÃŸter Wert der Y-Achse
 
 =back
 
 Die Daten selbst werden entweder als Arrays B<x>, B<y> (und ggf. B<z>)
-übergeben oder, was vorzuziehen ist, per asynchronem Ajax-Aufruf
+Ã¼bergeben oder, was vorzuziehen ist, per asynchronem Ajax-Aufruf
 geladen, via B<url>.
 
-Beispiel für eine Vorab-Selektion der grundlegenden Diagramm-Daten:
+Beispiel fÃ¼r eine Vorab-Selektion der grundlegenden Diagramm-Daten:
 
   my $parT = $db->select(qq~
       SELECT
@@ -187,8 +187,8 @@ mit 1.
     ...
   </div>
 
-Über die Id kann das jeweilige DOM-Objekt von CSS/JavaScript aus
-eindeutig adressiert werden, über die Klasse die Menge der
+Ãœber die Id kann das jeweilige DOM-Objekt von CSS/JavaScript aus
+eindeutig adressiert werden, Ã¼ber die Klasse die Menge der
 gleichartigen DOM-Objekte.
 
 =over 4
@@ -235,34 +235,34 @@ Klasse aller Rangeslider.
 
 =item debug => $bool (Default: 0)
 
-Zeige über dem Diagramm die Formatierungsgrößen an, die bei
-unterschiedlicher Höhe oder Fontgröße angepasst werden müssen.
+Zeige Ã¼ber dem Diagramm die FormatierungsgrÃ¶ÃŸen an, die bei
+unterschiedlicher HÃ¶he oder FontgrÃ¶ÃŸe angepasst werden mÃ¼ssen.
 
 =item diagrams => \@diagrams
 
 Liste der Diagramm-Objekte. Die Diagramm-Objekte sind vom Typ
 B<< Quiq::PlotlyJs::XY::Diagram >> und definieren die Metadaten
-für die einzelnen Diagramme der Diagramm-Gruppe.
+fÃ¼r die einzelnen Diagramme der Diagramm-Gruppe.
 
 =item fontSize => $n
 
-Fontgröße der Achsenbeschriftungen. Aus dieser Größe wird die Größe
+FontgrÃ¶ÃŸe der Achsenbeschriftungen. Aus dieser GrÃ¶ÃŸe wird die GrÃ¶ÃŸe
 der sonstigen Fonts (Titel, Y-Titel) abgeleitet.
 
 =item height => $n (Default: 300)
 
-Höhe eines Diagramms in Pixeln.
+HÃ¶he eines Diagramms in Pixeln.
 
 =item name => $name (Default: 'dgr')
 
-Name der Diagramm-Gruppe. Der Name wird als CSS-Id für den
-äußeren div-Container der Diagramm-Gruppe und als Namespace
-für die Funktionen genutzt.
+Name der Diagramm-Gruppe. Der Name wird als CSS-Id fÃ¼r den
+Ã¤uÃŸeren div-Container der Diagramm-Gruppe und als Namespace
+fÃ¼r die Funktionen genutzt.
 
 =item shape => $shape (Default: scatter: 'Spline', scattergl: 'Linear')
 
-Anfangsauswahl des Shape-Menüs auf allen Diagrammen. Der Default
-hängt von Attribut type ab.
+Anfangsauswahl des Shape-MenÃ¼s auf allen Diagrammen. Der Default
+hÃ¤ngt von Attribut type ab.
 
 =item strict => $bool (Default: 1)
 
@@ -270,9 +270,9 @@ Melde Fehler mittels alert(), nicht nur via console.log().
 
 =item type => 'scatter'|'scattergl' (Default: 'scatter')
 
-Art des Diagramms. Bei 'scattergl' ist der Umgang mit größeren Datenmengen
+Art des Diagramms. Bei 'scattergl' ist der Umgang mit grÃ¶ÃŸeren Datenmengen
 performanter, insbesondere bei der Anzeige von Markert. Allerdings wird
-die Kurvenform 'spline' nicht unterstützt und im Rangeslider
+die Kurvenform 'spline' nicht unterstÃ¼tzt und im Rangeslider
 wird keine verkleinerte Form des Graphs angezeigt.
 
 =item xAxisType => 'date'|'linear' (Default: 'date')
@@ -292,7 +292,7 @@ Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -319,14 +319,14 @@ B<Leeres Diagramm>
 
 Besitzt ein Parameter keine Daten (die Arrays x und y sind leer),
 wird der Plot-Bereich des betreffenden Diagramms leer dargestellt.
-Die Achsen werden gemäß xMin, xMax, yMin, yMax skaliert. Fehlen
+Die Achsen werden gemÃ¤ÃŸ xMin, xMax, yMin, yMax skaliert. Fehlen
 auch diese Angaben, nimmt Plotly.js eine Default-Achsen-Skalierung
 vor (Zeitbereich: C<2000-01-01 00:00:00> bis C<2001-01-01 00:00:00>,
 Y-Wertebereich: C<-1> bis C<4>).
 
 =head2 Private Methoden
 
-=head3 htmlDiagram() - Generiere HTML für ein Diagramm
+=head3 htmlDiagram() - Generiere HTML fÃ¼r ein Diagramm
 
 =head4 Synopsis
 
@@ -338,7 +338,7 @@ Y-Wertebereich: C<-1> bis C<4>).
 
 =item $h
 
-Generator für HTML-Code.
+Generator fÃ¼r HTML-Code.
 
 =item $i
 
@@ -352,9 +352,9 @@ HTML-Code (String)
 
 =head4 Description
 
-Genererie den HTML-Code für ein Diagramm und liefere diesen zurück.
+Genererie den HTML-Code fÃ¼r ein Diagramm und liefere diesen zurÃ¼ck.
 
-=head3 jsDiagram() - Generiere JavaScript für ein Diagramm
+=head3 jsDiagram() - Generiere JavaScript fÃ¼r ein Diagramm
 
 =head4 Synopsis
 
@@ -384,7 +384,7 @@ JavaScript-Code (String)
 
 =head4 Description
 
-Genererie den JavaScript-Code für ein Diagramm und liefere diesen zurück.
+Genererie den JavaScript-Code fÃ¼r ein Diagramm und liefere diesen zurÃ¼ck.
 
 =head1 VERSION
 

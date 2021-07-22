@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Test::Class - Basisklasse für Testklassen
+Quiq::Test::Class - Basisklasse fÃ¼r Testklassen
 
 =head1 BASE CLASS
 
@@ -10,9 +10,9 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Quiq::Test::Class ist eine Basisklasse für Testklassen (Unit-Tests). Als
+Quiq::Test::Class ist eine Basisklasse fÃ¼r Testklassen (Unit-Tests). Als
 Vorbild diente Test::Class, welches nicht zu den Perl Kernmodulen
-zählt. Einige Details sind anders, etliche Funktionalität ist
+zÃ¤hlt. Einige Details sind anders, etliche FunktionalitÃ¤t ist
 nicht implementiert, da sie (noch) nicht gebraucht wird.
 
 =head2 Testmethoden
@@ -31,13 +31,13 @@ besitzt folgenden Aufbau:
 Hierbei ist NAME der Name der Testmethode, TYPE der Typ der
 Testmethode und N die Anzahl der Tests innerhalb der Methode.
 Der Typ Forech hat keinen Parameter N. Jede Testmethode besitzt einen
-Parameter - das Testobjekt, das an alle Testmethoden übergeben wird
-(Beschreibung siehe unten). Die Methode liefert keinen Wert zurück.
+Parameter - das Testobjekt, das an alle Testmethoden Ã¼bergeben wird
+(Beschreibung siehe unten). Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head2 Aufrufreihenfolge
 
 MEMO: Die Foreach-Methoden werden entgegen der unten stehenden Beschreibung
-zuerst aufgerufen! Die Testzählung muss anders implementiert werden,
+zuerst aufgerufen! Die TestzÃ¤hlung muss anders implementiert werden,
 Test::More erlaubt die Angabe der Gesamtanzahl nun auch am Ende
 (Funktion done_testing()).
 
@@ -47,22 +47,22 @@ Test::More erlaubt die Angabe der Gesamtanzahl nun auch am Ende
 
 Init(N)
 
-Zunächst werden alle Methoden vom Typ Init(N) aufgerufen. In diesen
-Methoden können jegliche Vorabprüfungen vor Ausführung des eigentlichen
-Testcodes durchgeführt werden, z.B. ob die Systemumgebung die Ausführung
-der Tests überhaupt gestattet oder ob das Modul überhaupt ladbar ist.
+ZunÃ¤chst werden alle Methoden vom Typ Init(N) aufgerufen. In diesen
+Methoden kÃ¶nnen jegliche VorabprÃ¼fungen vor AusfÃ¼hrung des eigentlichen
+Testcodes durchgefÃ¼hrt werden, z.B. ob die Systemumgebung die AusfÃ¼hrung
+der Tests Ã¼berhaupt gestattet oder ob das Modul Ã¼berhaupt ladbar ist.
 
 =item *
 
 Foreach
 
-Danach werden die Methoden vom Typ Foreach aufgerufen. Diese führen
-selbst keine Tests durch, sondern liefern jeweils eine Liste, über
-deren Elementen der anschließende
+Danach werden die Methoden vom Typ Foreach aufgerufen. Diese fÃ¼hren
+selbst keine Tests durch, sondern liefern jeweils eine Liste, Ã¼ber
+deren Elementen der anschlieÃŸende
 Startup/Setup/Test/Teardown/Shutdown-Zyklus
 wiederholt durchlaufen wird. Bei jedem Iterationsschritt wird der
-nächste Wert als zweiter Parameter (erster ist das Testobjekt) an die
-Testmethoden übergeben.
+nÃ¤chste Wert als zweiter Parameter (erster ist das Testobjekt) an die
+Testmethoden Ã¼bergeben.
 
 =item *
 
@@ -90,7 +90,7 @@ aufgerufen, am Ende alle Testmethoden vom Typ Shutdown(N).
 Ignore...
 
 Beginnt der Typ mit der Zeichenkette "Ignore", wird die betreffende
-Testmethode ignoriert, also nicht ausgeführt. Dies kann angewendet
+Testmethode ignoriert, also nicht ausgefÃ¼hrt. Dies kann angewendet
 werden, um Testmethoden als Ganzes auszukommentieren, z.B. wenn
 eine Reihe von Tests umgearbeitet werden.
 
@@ -100,29 +100,29 @@ eine Reihe von Tests umgearbeitet werden.
 
 Das Testobjekt wird vor Aufruf der ersten Testmethode instaniiert
 und nach Aufruf der letzten Testmethode destrukturiert, es wird
-also an alle Testmethoden, unabhängig von ihrem Typ, übergeben.
+also an alle Testmethoden, unabhÃ¤ngig von ihrem Typ, Ã¼bergeben.
 
-Mittels der Methoden set() und get() können Schlüssel/Wert-Paare
+Mittels der Methoden set() und get() kÃ¶nnen SchlÃ¼ssel/Wert-Paare
 auf dem Test gesetzt und abgefragt werden. Auf diese Weise
-können Objekte von den Startup- und Setup-Methoden an die
+kÃ¶nnen Objekte von den Startup- und Setup-Methoden an die
 Test-Methoden weitergegeben und dort abgefragt werden.
 
 =head2 Gruppierung von Testmethoden
 
-Testmethoden können mittels des Subroutine-Attributs Group(Regex)
-gruppiert werden. Diese Möglichkeit kann dazu genutzt werden,
+Testmethoden kÃ¶nnen mittels des Subroutine-Attributs Group(Regex)
+gruppiert werden. Diese MÃ¶glichkeit kann dazu genutzt werden,
 um bestimmte Setup-, Test- und Teardown-Methoden zu einer Einheit
 zusammenzufassen.
 
-=head2 Folgende Tests überspringen
+=head2 Folgende Tests Ã¼berspringen
 
 Mitunter sind die Testmethoden einer Testklasse ganz oder ab einem
 bestimmten Punkt nicht anwendbar, weil bestimmte Voraussetzungen auf
 dem System nicht vorhanden sind, z.B. ein bestimmtes Modul. In dem Fall
-sollen alle folgenden Tests übergangen werden.
+sollen alle folgenden Tests Ã¼bergangen werden.
 
-Eine Überprüfung der Voraussetzungen in der ersten Testmethode
-kann folgendermaßen vorgenommen werden:
+Eine ÃœberprÃ¼fung der Voraussetzungen in der ersten Testmethode
+kann folgendermaÃŸen vorgenommen werden:
 
   sub initMethod : Init(0) {
       my $self = shift;
@@ -146,11 +146,11 @@ kann folgendermaßen vorgenommen werden:
 =head4 Description
 
 Instantiiere ein Testobjekt und liefere eine Referenz auf dieses
-Objekt zurück.
+Objekt zurÃ¼ck.
 
 Das Testobjekt kennt die Testmethoden, die zur Klasse $class und
-ihren Basisklassen gehören. Ferner ist es Träger der Attribut/Wert-Paare,
-die mittels set() und get() gesetzt und abgefragt werden können.
+ihren Basisklassen gehÃ¶ren. Ferner ist es TrÃ¤ger der Attribut/Wert-Paare,
+die mittels set() und get() gesetzt und abgefragt werden kÃ¶nnen.
 
 =head2 Getter/Setter
 
@@ -175,11 +175,11 @@ Attribut nicht, wird eine Exception geworfen.
 =head4 Description
 
 Setze die angegebenen Attribut/Wert-Paare auf dem Testobjekt. Die Methode
-liefert keinen Wert zurück.
+liefert keinen Wert zurÃ¼ck.
 
-Die Methode ermöglicht Startup- und Setup-Methoden, Attribute auf dem
+Die Methode ermÃ¶glicht Startup- und Setup-Methoden, Attribute auf dem
 Testobjekt zu setzen, die in den Test-, Shutdown- und
-Teardown-Methoden abgefragt werden können.
+Teardown-Methoden abgefragt werden kÃ¶nnen.
 
 =head2 Directories
 
@@ -204,7 +204,7 @@ Erzeuge Verzeichnis, falls es nicht existiert.
 
 Liefere den Pfad zum Fixture-Verzeichnis der Testklasse. Ist Parameter
 $subpath angegeben, wird diese Zeichenkette, per / getrennt, zum Pfad
-hinzugefügt.
+hinzugefÃ¼gt.
 
 =head3 testDir() - Liefere Pfad zum Testverzeichnis
 
@@ -217,15 +217,15 @@ hinzugefügt.
 
 Liefere den Pfad zum Testverzeichnis. Ist Parameter $subPath
 angegeben, wird diese Zeichenkette, per / getrennt, zum Pfad
-hinzugefügt.
+hinzugefÃ¼gt.
 
 Das Testverzeichnis ist das Verzeichnis, in dem die Datei Test.pm
 (Definition der Testklasse) liegt. Die Methode kann als Objekt- oder
 als Klassemethode gerufen werden. Der Aufruf als Klassenmethode ist
-nützlich, wenn auf die Testverzeichnisse anderer Testklassen
+nÃ¼tzlich, wenn auf die Testverzeichnisse anderer Testklassen
 zugegriffen werden soll.
 
-=head3 testPath() - Liefere vollständigen Pfad zu Testverzeichnis/datei
+=head3 testPath() - Liefere vollstÃ¤ndigen Pfad zu Testverzeichnis/datei
 
 =head4 Synopsis
 
@@ -253,7 +253,7 @@ Folgende Typen von Testmethoden sind definiert:
   Teardown
   Shutdown
 
-=head3 runTests() - Führe Testmethoden aus
+=head3 runTests() - FÃ¼hre Testmethoden aus
 
 =head4 Synopsis
 
@@ -261,10 +261,10 @@ Folgende Typen von Testmethoden sind definiert:
 
 =head4 Description
 
-Führe die Tests der Testklasse bzw. des Testobjekts $this aus.
-Die Methode liefert keinen Wert zurück.
+FÃ¼hre die Tests der Testklasse bzw. des Testobjekts $this aus.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
-=head3 skipAllTests() - Übergehe alle folgenden Tests
+=head3 skipAllTests() - Ãœbergehe alle folgenden Tests
 
 =head4 Synopsis
 
@@ -276,9 +276,9 @@ skipAll()
 
 =head4 Description
 
-Setze Abbruchmeldung $msg auf dem Testobjekt und übergehe alle
+Setze Abbruchmeldung $msg auf dem Testobjekt und Ã¼bergehe alle
 folgenden Tests aller Testmethoden. Die Methode
-liefert keinen Wert zurück.
+liefert keinen Wert zurÃ¼ck.
 
 =head3 skipTest() - Brich Test-Methode ab
 
@@ -289,9 +289,9 @@ liefert keinen Wert zurück.
 
 =head4 Description
 
-Setze Abbruchmeldung $msg auf dem Testobjekt und übergehe alle
-folgenden Tests bzw. die nächsten $n Tests der aktuellen Testmethode.
-Die Methode liefert keinen Wert zurück.
+Setze Abbruchmeldung $msg auf dem Testobjekt und Ã¼bergehe alle
+folgenden Tests bzw. die nÃ¤chsten $n Tests der aktuellen Testmethode.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head2 Testmethoden
 
@@ -326,15 +326,15 @@ kann, wenn in der Testklasse das Modul C<Test::More> genutzt wird.
 Der Nameclash zwischen den C<Test::More>-Funktionen und den
 gleich benannten C<< Quiq::Test::Class >>-Methoden kann damit umgangen werden.
 Alte Testklassen, die C<Test::More> direkt benutzen, sollten portiert
-werden. Wenn dies vollständig passiert ist, können die Aliase entfallen.
+werden. Wenn dies vollstÃ¤ndig passiert ist, kÃ¶nnen die Aliase entfallen.
 
-=head3 useOk() - Prüfe, ob Modul geladen werden kann
+=head3 useOk() - PrÃ¼fe, ob Modul geladen werden kann
 
 =head4 Synopsis
 
   $bool = $test->useOk($module);
 
-=head3 syntaxOk() - Prüfe Syntax eines Perl-Programms
+=head3 syntaxOk() - PrÃ¼fe Syntax eines Perl-Programms
 
 =head4 Synopsis
 
@@ -348,7 +348,7 @@ werden. Wenn dies vollständig passiert ist, können die Aliase entfallen.
 =item $program
 
 Name oder Pfad des Programms. Ist kein absoluter Pfad angegeben,
-wird das Programm über die Environment-Variable PATH gesucht.
+wird das Programm Ã¼ber die Environment-Variable PATH gesucht.
 
 =back
 
@@ -356,7 +356,7 @@ wird das Programm über die Environment-Variable PATH gesucht.
 
 nichts
 
-=head3 ok() - Prüfe, ob boolscher Wert wahr ist
+=head3 ok() - PrÃ¼fe, ob boolscher Wert wahr ist
 
 =head4 Synopsis
 
@@ -367,7 +367,7 @@ nichts
 
 okTest()
 
-=head3 in() - Prüfe, ob Wert dem erwarteten Wert entspricht
+=head3 in() - PrÃ¼fe, ob Wert dem erwarteten Wert entspricht
 
 =head4 Synopsis
 
@@ -378,7 +378,7 @@ okTest()
 
 inTest()
 
-=head3 is() - Prüfe, ob Wert dem erwarteten Wert entspricht
+=head3 is() - PrÃ¼fe, ob Wert dem erwarteten Wert entspricht
 
 =head4 Synopsis
 
@@ -389,7 +389,7 @@ inTest()
 
 isTest()
 
-=head3 isnt() - Prüfe, ob Wert vom erwarteten Wert abweicht
+=head3 isnt() - PrÃ¼fe, ob Wert vom erwarteten Wert abweicht
 
 =head4 Synopsis
 
@@ -400,7 +400,7 @@ isTest()
 
 isntTest()
 
-=head3 isText() - Prüfe, ob Wert dem erwarteten Wert entspricht
+=head3 isText() - PrÃ¼fe, ob Wert dem erwarteten Wert entspricht
 
 =head4 Synopsis
 
@@ -410,10 +410,10 @@ isntTest()
 =head4 Description
 
 Im Unterschied zur Methode is(), wird auf das Argument $expected
-die Methode Quiq::Unindent->trimNl() angewendet. Dies ermöglicht
+die Methode Quiq::Unindent->trimNl() angewendet. Dies ermÃ¶glicht
 den einfachen Vergleich im Falle eines mehrzeiligen Textes.
 
-=head3 floatIs() - Prüfe, ob Float-Wert dem erwarteten Wert entspricht
+=head3 floatIs() - PrÃ¼fe, ob Float-Wert dem erwarteten Wert entspricht
 
 =head4 Synopsis
 
@@ -428,7 +428,7 @@ auf $places Nachkommastellen gerundet wurden. Ist $places nicht
 angegeben oder C<undef>, wird die Anzahl der Nachkommastellen
 von $expected genommen.
 
-=head3 isClass() - Prüfe, ob Referenz zur erwarteten Klasse gehört
+=head3 isClass() - PrÃ¼fe, ob Referenz zur erwarteten Klasse gehÃ¶rt
 
 =head4 Synopsis
 
@@ -440,14 +440,14 @@ von $expected genommen.
 Vergleiche die die Klasse von $ref gegen $class. Der Test ist
 erfolgreich, wenn ref($ref) und $class identisch sind.
 
-=head3 isDeeply() - Prüfe, ob Datenstrukturen identisch sind
+=head3 isDeeply() - PrÃ¼fe, ob Datenstrukturen identisch sind
 
 =head4 Synopsis
 
   $bool = $test->isDeeply($gotRef,$expectedRef);
   $bool = $test->isDeeply($gotref,$expectedRef,$text);
 
-=head3 like() - Prüfe, ob Wert regulären Ausdruck matcht
+=head3 like() - PrÃ¼fe, ob Wert regulÃ¤ren Ausdruck matcht
 
 =head4 Synopsis
 
@@ -458,7 +458,7 @@ erfolgreich, wenn ref($ref) und $class identisch sind.
 
 likeTest()
 
-=head3 unlike() - Prüfe, ob Wert regulären Ausdruck nicht matcht
+=head3 unlike() - PrÃ¼fe, ob Wert regulÃ¤ren Ausdruck nicht matcht
 
 =head4 Synopsis
 
@@ -469,7 +469,7 @@ likeTest()
 
 unlikeTest()
 
-=head3 cmpOk() - Prüfe, ob Vergleich wahr ist
+=head3 cmpOk() - PrÃ¼fe, ob Vergleich wahr ist
 
 =head4 Synopsis
 
@@ -492,7 +492,7 @@ Vergleich auf numerische Verschiedenheit:
 
 =head2 Private Methoden
 
-=head3 MODIFY_CODE_ATTRIBUTES() - Callback für Subroutines mit Attributen
+=head3 MODIFY_CODE_ATTRIBUTES() - Callback fÃ¼r Subroutines mit Attributen
 
 =head4 Synopsis
 
@@ -500,11 +500,11 @@ Vergleich auf numerische Verschiedenheit:
 
 =head4 Description
 
-Methode, die von Perl zur Compilezeit für jede Subroutine mit
+Methode, die von Perl zur Compilezeit fÃ¼r jede Subroutine mit
 Attributen gerufen wird.
 
-Die Methode instantiiert ein Methodenobjekt für jede Testmethode und
-speichert sie zur späteren Analyse in der klassenglobalen Liste
+Die Methode instantiiert ein Methodenobjekt fÃ¼r jede Testmethode und
+speichert sie zur spÃ¤teren Analyse in der klassenglobalen Liste
 @Methods.
 
 =head1 VERSION

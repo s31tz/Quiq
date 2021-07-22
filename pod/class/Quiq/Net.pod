@@ -2,13 +2,13 @@
 
 =head1 NAME
 
-Quiq::Net - Allgemeine Netzwerkfunktionalität
+Quiq::Net - Allgemeine NetzwerkfunktionalitÃ¤t
 
 =head1 METHODS
 
 =head2 Klassenmethoden
 
-=head3 checkPort() - Prüfe, ob Port belegt ist
+=head3 checkPort() - PrÃ¼fe, ob Port belegt ist
 
 =head4 Synopsis
 
@@ -34,8 +34,8 @@ Bool
 
 =head4 Description
 
-Prüfe, ob Port $port auf Host $host belegt, also von einem Prozess
-geöffnet ist. Falls ja, lefere I<wahr>, andernfalls I<falsch>.
+PrÃ¼fe, ob Port $port auf Host $host belegt, also von einem Prozess
+geÃ¶ffnet ist. Falls ja, lefere I<wahr>, andernfalls I<falsch>.
 
 =head1 VERSION
 

@@ -11,7 +11,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 =head1 DESCRIPTION
 
 Ein Objekt der Klasse stellt eine Schnittstelle zu einem
-CA Harvest SCM Server zur Verfügung.
+CA Harvest SCM Server zur VerfÃ¼gung.
 
 =head1 SEE ALSO
 
@@ -51,14 +51,14 @@ Passwort (-pw).
 
 =item credentialsFile => $file
 
-Datei (Pfad) mit verschlüsseltem Benuternamen und Passwort (-eh).
-Diese Authentisierungsmethode ist gegenüber user und password
-aus Sicherheitsgründen vorzuziehen.
+Datei (Pfad) mit verschlÃ¼sseltem Benuternamen und Passwort (-eh).
+Diese Authentisierungsmethode ist gegenÃ¼ber user und password
+aus SicherheitsgrÃ¼nden vorzuziehen.
 
 =item hsqlCredentialsFile => $file
 
-Wie credentialsFile, nur für das hsql-Kommando, falls hierfür
-eine andere Authentisierung nötig ist.
+Wie credentialsFile, nur fÃ¼r das hsql-Kommando, falls hierfÃ¼r
+eine andere Authentisierung nÃ¶tig ist.
 
 =item broker => $broker
 
@@ -83,13 +83,13 @@ Workspace-Dateien aus- und eingecheckt werden.
 
 =item udl => $udl
 
-Universal Database Locator für die CASCM-Datenbank. Ist dieser
+Universal Database Locator fÃ¼r die CASCM-Datenbank. Ist dieser
 definiert, wird die CASCM-Datenbank direkt zugegriffen, nicht
-über das Programm hsql.
+Ã¼ber das Programm hsql.
 
 =item keepTempFiles => $bool (Default: 0)
 
-Lösche Temporäre Dateien nicht.
+LÃ¶sche TemporÃ¤re Dateien nicht.
 
 =item color => $bool (Default: 1)
 
@@ -97,11 +97,11 @@ Schreibe Ausgabe mit ANSI Colorcodes.
 
 =item dryRun => $bool (Default: 0)
 
-Führe keine ändernden Kommandos aus.
+FÃ¼hre keine Ã¤ndernden Kommandos aus.
 
 =item verbose => $bool (Default: 1)
 
-Schreibe Information über die Kommandoausführung nach STDERR.
+Schreibe Information Ã¼ber die KommandoausfÃ¼hrung nach STDERR.
 
 =back
 
@@ -112,11 +112,11 @@ Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 Datei bearbeiten
 
-=head3 abstract() - Übersicht über Inhalt von Packages
+=head3 abstract() - Ãœbersicht Ã¼ber Inhalt von Packages
 
 =head4 Synopsis
 
@@ -134,11 +134,11 @@ Regex, der die Packages matcht, deren Inhalt angezeigt werden soll
 
 =head4 Returns
 
-Übersicht (String)
+Ãœbersicht (String)
 
 =head4 Description
 
-Erzeuge eine Übersicht über die Packages, deren Name den Regex $regex
+Erzeuge eine Ãœbersicht Ã¼ber die Packages, deren Name den Regex $regex
 matcht, und ihren Inhalt.
 
 =head4 Example
@@ -203,7 +203,7 @@ Datei mit Repository-Pfadangabe.
 
 Package, dem die ausgecheckte Datei (mit reservierter Version)
 beim Einchecken zugeordnet wird. Das Package muss I<nicht> auf der
-untersten Stufe stehen. Befindet es sich auf einer höheren Stufe, wird
+untersten Stufe stehen. Befindet es sich auf einer hÃ¶heren Stufe, wird
 intern ein Transportpackage erzeugt, das die Dateien zu der Stufe
 des Package bewegt.
 
@@ -220,18 +220,18 @@ Ausgabe der CASCM-Kommandos (String)
 Checke die Repository-Datei $repoFile aus und lade Version $version
 in den Editor. Wird die Datei bearbeitet, d.h. nach dem Verlassen
 des Editors ist ihr Inhalt ein anderer als vorher, wird dieser Stand
-(nach Rückfage) als neue Version eingecheckt. Andernfalls wird
-ohne Änderung eingecheckt, wobei die Vergabe einer neuen Versionsnummer
+(nach RÃ¼ckfage) als neue Version eingecheckt. Andernfalls wird
+ohne Ã„nderung eingecheckt, wobei die Vergabe einer neuen Versionsnummer
 unterbleibt.
 
-Das Editieren einer älteren Version kann genutzt werden,
-um eine in Arbeit befindliche Version zu übergehen. Ein weiteres Mal
+Das Editieren einer Ã¤lteren Version kann genutzt werden,
+um eine in Arbeit befindliche Version zu Ã¼bergehen. Ein weiteres Mal
 auf die zuvor aktuelle Version angewandt, kann die aktuelle Version
 wieder reaktiviert werden.
 
 =head4 Example
 
-Bearbeite eine ältere Version, so dass diese vor der unfertigen
+Bearbeite eine Ã¤ltere Version, so dass diese vor der unfertigen
 aktuellen Version promotet werden kann.
 
 Aktueller Stand:
@@ -253,7 +253,7 @@ Alte Version editieren und zur neusten Version machen:
   $ dss-repo create PACKAGE3
   $ dss-repo edit DATEI PACKAGE3 0
 
-Nächster Stand:
+NÃ¤chster Stand:
 
   $ $ dss-repo find-item DATEI
   1 item_path
@@ -273,11 +273,11 @@ hervorgegangen ist, kann nach Produktion promotet werden ohne den
 unfertigen Code aus Version 1.
 
 Unfertigen Stand wieder zum aktuellen Stand machen, u.U. mit den
-gleichen vormaligen Änderungen:
+gleichen vormaligen Ã„nderungen:
 
   $ dss-repo edit DATEI PACKAGE2 1
 
-Nächster Stand:
+NÃ¤chster Stand:
 
   $ dss-repo find-item DATEI
   1 item_path
@@ -315,11 +315,11 @@ nichts
 
 =head4 Description
 
-Öffne die Repository-Datei $repoFile im Pager.
+Ã–ffne die Repository-Datei $repoFile im Pager.
 
 =head2 Externe Dateien
 
-=head3 putFiles() - Füge Dateien zum Repository hinzu
+=head3 putFiles() - FÃ¼ge Dateien zum Repository hinzu
 
 =head4 Synopsis
 
@@ -333,7 +333,7 @@ nichts
 
 Package, dem die Dateien innerhalb von CASCM zugeordnet werden. Das
 Package muss I<nicht> auf der untersten Stufe stehen. Befindet es sich
-auf einer höheren Stufe, wird intern ein Transportpackage erzeugt,
+auf einer hÃ¶heren Stufe, wird intern ein Transportpackage erzeugt,
 das die Dateien zu der Stufe des Package bewegt.
 
 =item $repoDir
@@ -343,7 +343,7 @@ kopiert werden. Dies ist ein I<relativer> Pfad.
 
 =item @files
 
-Liste von Dateien I<außerhalb> des Workspace.
+Liste von Dateien I<auÃŸerhalb> des Workspace.
 
 =back
 
@@ -353,7 +353,7 @@ Liste von Dateien I<außerhalb> des Workspace.
 
 =item -force => $bool (Default: 0)
 
-Prüfe nicht, ob hinzugefügte Datei und Repository-Datei identisch sind.
+PrÃ¼fe nicht, ob hinzugefÃ¼gte Datei und Repository-Datei identisch sind.
 
 =back
 
@@ -364,16 +364,16 @@ Konkatenierte Ausgabe der der checkout- und checkin-Kommandos (String)
 =head4 Description
 
 Kopiere die Dateien @files in das Workspace-Verzeichnis $repoDir
-und checke sie anschließend ein, d.h. füge sie zum Repository hinzu.
+und checke sie anschlieÃŸend ein, d.h. fÃ¼ge sie zum Repository hinzu.
 Eine Datei, die im Workspace-Verzeichnis schon vorhanden ist, wird
 zuvor ausgecheckt.
 
-Mit dieser Methode ist es möglich, sowohl neue Dateien zum Workspace
-hinzuzufügen als auch bereits existierende Dateien im Workspace
-zu aktualisieren. Dies geschieht für den Aufrufer transparent, er
-braucht sich um die Unterscheidung nicht zu kümmern.
+Mit dieser Methode ist es mÃ¶glich, sowohl neue Dateien zum Workspace
+hinzuzufÃ¼gen als auch bereits existierende Dateien im Workspace
+zu aktualisieren. Dies geschieht fÃ¼r den Aufrufer transparent, er
+braucht sich um die Unterscheidung nicht zu kÃ¼mmern.
 
-=head3 putDir() - Füge Dateien eines Verzeichnisbaums zum Repository hinzu
+=head3 putDir() - FÃ¼ge Dateien eines Verzeichnisbaums zum Repository hinzu
 
 =head4 Synopsis
 
@@ -392,7 +392,7 @@ Das Package sollte sich auf der untersten Stufe befinden.
 
 Quellverzeichnis, dem die Dateien entnommen werden. Die Pfade
 I<innerhalb> von $dir werden als Repository-Pfade verwendet.
-Die Repository-Pfade müssen vorab existieren, sonst wird eine
+Die Repository-Pfade mÃ¼ssen vorab existieren, sonst wird eine
 Exception geworfen.
 
 =back
@@ -403,7 +403,7 @@ Konkatenierte Ausgabe der der checkout- und checkin-Kommandos (String)
 
 =head4 Description
 
-Füge alle Dateien in Verzeichnis $dir via Methode put()
+FÃ¼ge alle Dateien in Verzeichnis $dir via Methode put()
 zum Repository hinzu bzw. aktualisiere sie.
 
 =head2 Workspace-Dateien
@@ -436,7 +436,7 @@ Ausgabe des Kommandos (String)
 =head4 Description
 
 Checke die Workspace-Dateien @repoFiles aus und liefere die
-Ausgabe des Kommandos zurück.
+Ausgabe des Kommandos zurÃ¼ck.
 
 =head3 checkin() - Checke Workspace-Datei ein
 
@@ -464,9 +464,9 @@ Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Checke die Workspace-Datei $repoFile ein, d.h. übertrage ihren Stand
+Checke die Workspace-Datei $repoFile ein, d.h. Ã¼bertrage ihren Stand
 als neue Version ins Repository, ordne diese dem Package $package zu
-und liefere die Ausgabe des Kommandos zurück.
+und liefere die Ausgabe des Kommandos zurÃ¼ck.
 
 =head3 versionNumber() - Versionsnummer Repository-Datei
 
@@ -510,8 +510,8 @@ Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Ermittele die Versionsinformation über Datei $repoFile und liefere
-diese zurück.
+Ermittele die Versionsinformation Ã¼ber Datei $repoFile und liefere
+diese zurÃ¼ck.
 
 =head3 getVersion() - Speichere Version einer Datei
 
@@ -543,13 +543,13 @@ Zielverzeichnis, in dem die Repository-Datei gespeichert wird.
 
 =item -sloppy => $bool (Default: 0)
 
-Prüfe nicht, ob die angegebene Version existiert. Dies spart
+PrÃ¼fe nicht, ob die angegebene Version existiert. Dies spart
 einen CASCM Aufruf und ist sinnvoll, wenn die Richtigkeit der
 Versionsnummer gesichert ist, siehe deleteToVersion().
 
 =item -versionSuffix => $bool (Default: 1)
 
-Hänge die Version an den Dateinamen an.
+HÃ¤nge die Version an den Dateinamen an.
 
 =back
 
@@ -560,7 +560,7 @@ Pfad der Datei (String)
 =head4 Description
 
 Speichere die Repository-Datei $repoFile der Version $version in
-Verzeichnis $destDir und liefere den Pfad der Datei zurück.
+Verzeichnis $destDir und liefere den Pfad der Datei zurÃ¼ck.
 
 =head3 diff() - Differenz zwischen zwei Versionen
 
@@ -594,9 +594,9 @@ Differenz (String)
 
 Ermittele die Differenz zwischen den beiden Versionen $version1 und
 $version2 der Repository-Datei $repoFile und liefere das Ergebnis
-zurück.
+zurÃ¼ck.
 
-=head3 deleteVersion() - Lösche höchste Version von Repository-Datei
+=head3 deleteVersion() - LÃ¶sche hÃ¶chste Version von Repository-Datei
 
 =head4 Synopsis
 
@@ -609,41 +609,41 @@ zurück.
 
 =item $repoFile
 
-Der Pfad der zu löschenden Repository-Datei.
+Der Pfad der zu lÃ¶schenden Repository-Datei.
 
-=item $version (Default: I<höchste Versionsnummer>)
+=item $version (Default: I<hÃ¶chste Versionsnummer>)
 
-Version der Datei, die gelöscht werden soll.
+Version der Datei, die gelÃ¶scht werden soll.
 
 =back
 
 =head4 Returns
 
-Wahrheitswert: 1, wenn Löschung ausgeführt wurde, andernfalls 0.
+Wahrheitswert: 1, wenn LÃ¶schung ausgefÃ¼hrt wurde, andernfalls 0.
 
 =head4 Description
 
-Lösche die höchste Version oder bis zur Version $version die
+LÃ¶sche die hÃ¶chste Version oder bis zur Version $version die
 Repository-Datei $repoFile. Befinden sich davon eine oder mehrere
-Versionen nicht auf der untersten Stufe, wird ein temporäres
-Transport-Package erzeugt und die Versionen darüber vor dem Löschen
+Versionen nicht auf der untersten Stufe, wird ein temporÃ¤res
+Transport-Package erzeugt und die Versionen darÃ¼ber vor dem LÃ¶schen
 auf die unterste Ebene bewegt.
 
 =head4 Examples
 
-Höchste Version der Datei C<lib/MetaData.pm> löschen:
+HÃ¶chste Version der Datei C<lib/MetaData.pm> lÃ¶schen:
 
   $scm->deleteVersion('lib/MetaData.pm');
 
-Alle Versionen der Datei C<lib/MetaData.pm> löschen:
+Alle Versionen der Datei C<lib/MetaData.pm> lÃ¶schen:
 
   $scm->deleteVersion('lib/MetaData.pm',0);
 
-Die Versionen bis 110 der Datei C<lib/MetaData.pm> löschen:
+Die Versionen bis 110 der Datei C<lib/MetaData.pm> lÃ¶schen:
 
   $scm->deleteVersion('lib/MetaData.pm',110);
 
-=head3 passVersion() - Überhole die aktuelle mit älterer Version
+=head3 passVersion() - Ãœberhole die aktuelle mit Ã¤lterer Version
 
 =head4 Synopsis
 
@@ -655,15 +655,15 @@ Die Versionen bis 110 der Datei C<lib/MetaData.pm> löschen:
 
 =item $repoFile
 
-Der Pfad der zu löschenden Repository-Datei.
+Der Pfad der zu lÃ¶schenden Repository-Datei.
 
 =item $version
 
-Ältere Version, die die neuere Version überholen soll.
+Ã„ltere Version, die die neuere Version Ã¼berholen soll.
 
 =item $package
 
-Package, dem die neue ältere Version hinzugefügt wird.
+Package, dem die neue Ã¤ltere Version hinzugefÃ¼gt wird.
 
 =back
 
@@ -673,11 +673,11 @@ Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Erzeuge eine neue Version von $repoFile mit der älteren Version $version
-und füge diese zu Package $package hinzu. Dies ist nützlich, wenn an der
+Erzeuge eine neue Version von $repoFile mit der Ã¤lteren Version $version
+und fÃ¼ge diese zu Package $package hinzu. Dies ist nÃ¼tzlich, wenn an der
 aktuellen Version vorbeigezogen werden soll.
 
-=head3 reduceVersion() - Mache die neueste Version zu früherer Version
+=head3 reduceVersion() - Mache die neueste Version zu frÃ¼herer Version
 
 =head4 Synopsis
 
@@ -693,20 +693,20 @@ Der Pfad der Repository-Datei.
 
 =item $version
 
-Versionsnummer, auf die die neuste Version zurückgeführt werden soll.
+Versionsnummer, auf die die neuste Version zurÃ¼ckgefÃ¼hrt werden soll.
 
 =back
 
 =head4 Returns
 
-Boolean. 1, wenn Operation ausgeführt wurde, sonst 0. 0 wird geliefert,
-wenn der Nutzer die Rückfrage nach der Löschung der Dateien mit
+Boolean. 1, wenn Operation ausgefÃ¼hrt wurde, sonst 0. 0 wird geliefert,
+wenn der Nutzer die RÃ¼ckfrage nach der LÃ¶schung der Dateien mit
 "nein" beantwortet.
 
 =head4 Description
 
-Sichere den Quelltext der neusten Version, lösche alle Versionen bis
-und einschließlich Version $version und checke den gesicherten Quelltext
+Sichere den Quelltext der neusten Version, lÃ¶sche alle Versionen bis
+und einschlieÃŸlich Version $version und checke den gesicherten Quelltext
 ein. Der Ergebnis ist, dass die neuste Version zu Version $version wird.
 
 =head3 package() - Package einer Version
@@ -740,7 +740,7 @@ Package-Name (String).
 
 =back
 
-=head3 findItem() - Zeige Information über Item an
+=head3 findItem() - Zeige Information Ã¼ber Item an
 
 =head4 Synopsis
 
@@ -798,7 +798,7 @@ Package, das die per removeItem() entfernte Datei aufnimmt.
 
 =item $removePackage
 
-Package, das die per putFiles() hinzugefügte Datei aufnimmt.
+Package, das die per putFiles() hinzugefÃ¼gte Datei aufnimmt.
 
 =back
 
@@ -808,13 +808,13 @@ Ausgabe der Kommandos (String)
 
 =head4 Description
 
-Entferne Datei $repoFile aus dem Repository und füge sie unter
+Entferne Datei $repoFile aus dem Repository und fÃ¼ge sie unter
 dem neuen Repository-Pfad $repoDir wieder zum Repository hinzu.
 Verschiebe sie also innerhalb der Repository-Verzeichnisstruktur. Die
-entfernte Datei wird zu Package $removePackage hinzugefügt und die
+entfernte Datei wird zu Package $removePackage hinzugefÃ¼gt und die
 neue Datei zu Package $putPackage.
 
-=head3 removeItems() - Lösche Items
+=head3 removeItems() - LÃ¶sche Items
 
 =head4 Synopsis
 
@@ -826,11 +826,11 @@ neue Datei zu Package $putPackage.
 
 =item @repoFiles
 
-Die Pfade der zu löschenden Repository-Dateien.
+Die Pfade der zu lÃ¶schenden Repository-Dateien.
 
 =item $package
 
-Package, in das die Löschung eingetragen wird.
+Package, in das die LÃ¶schung eingetragen wird.
 
 =back
 
@@ -841,9 +841,9 @@ Ausgabe des Kommandos (String)
 =head4 Description
 
 Erzeuge neue Versionen der Items @repoFiles, welche die Items als zu
-Löschen kennzeichnen und trage diese in das Package $package ein.
+LÃ¶schen kennzeichnen und trage diese in das Package $package ein.
 Wird das Package promotet, werden die Items auf der betreffenden
-Stufe gelöscht.
+Stufe gelÃ¶scht.
 
 =head3 repoFileToFile() - Expandiere Repo-Pfad zu absolutem Pfad
 
@@ -868,7 +868,7 @@ Pfad (String)
 =head4 Description
 
 Expandiere den Reository-Dateipfad zu einem absoluten Dateipfad
-und liefere diesen zurück.
+und liefere diesen zurÃ¼ck.
 
 =head2 Packages
 
@@ -900,9 +900,9 @@ Ausgabe des Kommandos (String)
 =head4 Description
 
 Erzeuge Package $package auf Stufe $state und liefere die Ausgabe
-des Kommandos zurück.
+des Kommandos zurÃ¼ck.
 
-=head3 deletePackages() - Lösche Package
+=head3 deletePackages() - LÃ¶sche Package
 
 =head4 Synopsis
 
@@ -914,7 +914,7 @@ des Kommandos zurück.
 
 =item @package
 
-Namen der Packages, die gelöscht werden sollwn.
+Namen der Packages, die gelÃ¶scht werden sollwn.
 
 =back
 
@@ -924,8 +924,8 @@ Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Lösche die Packages @packages und liefere die Ausgabe der
-Kommandos zurück.
+LÃ¶sche die Packages @packages und liefere die Ausgabe der
+Kommandos zurÃ¼ck.
 
 =head3 renamePackage() - Benenne Package um
 
@@ -943,7 +943,7 @@ Bisheriger Name des Package.
 
 =item $newName
 
-Zukünftiger Name des Package.
+ZukÃ¼nftiger Name des Package.
 
 =back
 
@@ -954,7 +954,7 @@ Ausgabe des Kommandos (String)
 =head4 Description
 
 Benenne Package $oldName in $newName um und liefere die Ausgabe
-des Kommandos zurück.
+des Kommandos zurÃ¼ck.
 
 =head3 showPackage() - Inhalt von Packages
 
@@ -964,13 +964,13 @@ des Kommandos zurück.
 
 =head4 Returns
 
-Datensätze oder Ergebnismengen-Objekt
+DatensÃ¤tze oder Ergebnismengen-Objekt
 (Quiq::Database::ResultSet::Array)
 
 =head4 Description
 
 Ermittele die in den Packages @packages enthaltenen Items und
-ihrer Versions und liefere diese Ergebnismenge zurück.
+ihrer Versions und liefere diese Ergebnismenge zurÃ¼ck.
 
 =head4 Example
 
@@ -983,7 +983,7 @@ ihrer Versions und liefere diese Ergebnismenge zurück.
   5 username
   6 versionstatus
 
-=head3 switchPackage() - Übertrage Item in anderes Paket
+=head3 switchPackage() - Ãœbertrage Item in anderes Paket
 
 =head4 Synopsis
 
@@ -1003,7 +1003,7 @@ Name des Zielpakets (to package).
 
 =item @files (Default: I<alle Dateien>)
 
-Dateien (versions), die übertragen werden sollen.
+Dateien (versions), die Ã¼bertragen werden sollen.
 
 =back
 
@@ -1013,12 +1013,12 @@ Ausgabe des Kommandos (String)
 
 =head4 Description
 
-Übertrage die Dateien @files von Paket $fromPackage in Paket $toPackage.
-Sind keine Dateien angegeben, übertrage alle Dateien aus $fromPackage.
+Ãœbertrage die Dateien @files von Paket $fromPackage in Paket $toPackage.
+Sind keine Dateien angegeben, Ã¼bertrage alle Dateien aus $fromPackage.
 
-Per Default werden I<alle> Versionen einer Datei übertragen. Soll eine
-bestimmte Version übertragen werden, wird der Suffix :VERSION an
-den Dateinamen angehängt.
+Per Default werden I<alle> Versionen einer Datei Ã¼bertragen. Soll eine
+bestimmte Version Ã¼bertragen werden, wird der Suffix :VERSION an
+den Dateinamen angehÃ¤ngt.
 
 =head3 promote() - Promote Packages
 
@@ -1047,7 +1047,7 @@ Ausgabe des Kommandos (String)
 =head4 Description
 
 Promote die Package @packages von der Stufe $state auf die
-darüberliegende Stufe und liefere die Ausgabe des Kommandos zurück.
+darÃ¼berliegende Stufe und liefere die Ausgabe des Kommandos zurÃ¼ck.
 
 =head3 demote() - Demote Packages
 
@@ -1076,7 +1076,7 @@ Ausgabe des Kommandos (String)
 =head4 Description
 
 Demote die Packages @packages der Stufe $state auf die darunterliegende
-Stufe, und liefere die Ausgabe des Kommandos zurück.
+Stufe, und liefere die Ausgabe des Kommandos zurÃ¼ck.
 
 =head3 movePackage() - Bringe Package auf Zielstufe
 
@@ -1104,7 +1104,7 @@ Package, das bewegt werden soll.
 
 =item -askUser => $bool (Default: 0)
 
-Frage den Benutzer, ob er die Post-Deployment-Bestätigung erhalten hat.
+Frage den Benutzer, ob er die Post-Deployment-BestÃ¤tigung erhalten hat.
 
 =back
 
@@ -1115,8 +1115,8 @@ Ausgabe des Kommandos (String)
 =head4 Description
 
 Bringe das Package $package von der aktuellen Stufe auf die Zielstufe
-$state und liefere die Ausgabe des Kommandos zurück. Liegt die Zielstufe
-über der aktuellen Stufe, wird das Package promotet, andernfalls demotet.
+$state und liefere die Ausgabe des Kommandos zurÃ¼ck. Liegt die Zielstufe
+Ã¼ber der aktuellen Stufe, wird das Package promotet, andernfalls demotet.
 
 =head3 packageState() - Stufe des Pakets
 
@@ -1162,7 +1162,7 @@ Existiert das Package nicht, liefere einen Leerstring ('').
 
 =item $likePattern
 
-Schränke die Liste auf Packages ein, deren Name $likePattern matchen.
+SchrÃ¤nke die Liste auf Packages ein, deren Name $likePattern matchen.
 
 =back
 
@@ -1213,7 +1213,7 @@ Zu synchronisierendes Workspace-Verzeichnis.
 =head4 Description
 
 Bringe das Workspace-Verzeichnis $repoDir auf den Stand des Repository
-und liefere die Ausgabe des Kommandos zurück. Ist kein Verzeichnis
+und liefere die Ausgabe des Kommandos zurÃ¼ck. Ist kein Verzeichnis
 angegeben, aktualisiere den gesamten Workspace.
 
 =head2 States
@@ -1226,7 +1226,7 @@ angegeben, aktualisiere den gesamten Workspace.
 
 =head2 Database
 
-=head3 sql() - Führe SQL aus
+=head3 sql() - FÃ¼hre SQL aus
 
 =head4 Synopsis
 
@@ -1253,9 +1253,9 @@ Ergebnismengen-Objekt (Quiq::Database::ResultSet::Array)
 
 =head4 Description
 
-Führe ein SELECT-Statement gegen die CASCM-Datenbank aus und liefere
-ein Ergebnismengen-Objekt zurück. Das SELECT-Statement kann als
-String $sql übergeben werden oder sich in einer Datei $file befinden.
+FÃ¼hre ein SELECT-Statement gegen die CASCM-Datenbank aus und liefere
+ein Ergebnismengen-Objekt zurÃ¼ck. Das SELECT-Statement kann als
+String $sql Ã¼bergeben werden oder sich in einer Datei $file befinden.
 
 =head2 Private Methoden
 
@@ -1267,7 +1267,7 @@ String $sql übergeben werden oder sich in einer Datei $file befinden.
 
 =head4 Description
 
-CASCM kennt mehrere Authentisierungsmöglichkeiten, die sich durch
+CASCM kennt mehrere AuthentisierungsmÃ¶glichkeiten, die sich durch
 Aufrufoptionen unterscheiden. Diese Methode liefert die passenden Optionen
 zu den beim Konstruktor-Aufruf angegebenen Authentisierungs-Informationen.
 unterschieden werden:
@@ -1276,7 +1276,7 @@ unterschieden werden:
 
 =item 1.
 
-Authentisierung durch Datei mit verschlüsselten Credentials (-eh)
+Authentisierung durch Datei mit verschlÃ¼sselten Credentials (-eh)
 
 =item 2.
 
@@ -1286,7 +1286,7 @@ Authentisiertung durch Benutzername/Passwor (-usr, -pw)
 
 Bevorzugt ist Methode 1, da sie sicherer ist als Methode 2.
 
-=head3 runCmd() - Führe Kommando aus
+=head3 runCmd() - FÃ¼hre Kommando aus
 
 =head4 Synopsis
 
@@ -1318,11 +1318,11 @@ Inhalt der Ausgabedatei, die das Kommando geschrieben hat.
 
 =head4 Description
 
-Führe das CA Harvest SCM Kommando $cmd mit den Optionen des
+FÃ¼hre das CA Harvest SCM Kommando $cmd mit den Optionen des
 Kommandozeilenobjekts $c aus und liefere den Inhalt der Ausgabedatei
-zurück.
+zurÃ¼ck.
 
-=head3 runSql() - Führe SQL-Statement aus
+=head3 runSql() - FÃ¼hre SQL-Statement aus
 
 =head4 Synopsis
 
@@ -1344,10 +1344,10 @@ Ergebnismengen-Objekt (Quiq::Database::ResultSet::Array)
 
 =head4 Description
 
-Führe SELECT-Statement $sql auf der CASCM-Datenbank aus und liefere
-die Ergebnismenge zurück. Ist ein UDL definiert (s. Konstruktoraufruf)
-wird die Selektion direkt auf der Datenbank ausgeführt, andernfalls
-über das CASCM-Kommando hsql.
+FÃ¼hre SELECT-Statement $sql auf der CASCM-Datenbank aus und liefere
+die Ergebnismenge zurÃ¼ck. Ist ein UDL definiert (s. Konstruktoraufruf)
+wird die Selektion direkt auf der Datenbank ausgefÃ¼hrt, andernfalls
+Ã¼ber das CASCM-Kommando hsql.
 
 =head1 VERSION
 

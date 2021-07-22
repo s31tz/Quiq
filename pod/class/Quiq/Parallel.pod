@@ -10,10 +10,10 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 EXAMPLE
 
-Minimales Veranschaulichungsbeispiel: Lasse 50 Prozesse für
-jeweils eine Sekunde schlafen. Die Ausführungsdauer beträgt
-ungefähr 50/I<Anzahl CPUs> Sekunden, da immer I<Anzahl CPUs>
-Prozesse parallel ausgeführt werden.
+Minimales Veranschaulichungsbeispiel: Lasse 50 Prozesse fÃ¼r
+jeweils eine Sekunde schlafen. Die AusfÃ¼hrungsdauer betrÃ¤gt
+ungefÃ¤hr 50/I<Anzahl CPUs> Sekunden, da immer I<Anzahl CPUs>
+Prozesse parallel ausgefÃ¼hrt werden.
 
   Quiq::Parallel->runArray([1..50],sub {
       my ($elem,$i) = @_;
@@ -21,9 +21,9 @@ Prozesse parallel ausgeführt werden.
       return;
   });
 
-Bei großen Datenmengen oder wenn die Gesamtmenge vorab nicht bekannt
-ist, bietet sich die Methode $class->L<runFetch|"runFetch() - Führe Subroutine parallel über gefetchten Elementen aus">() an. Hier ein
-Beispiel mit einer unbekannt großen Datenbank-Selektion:
+Bei groÃŸen Datenmengen oder wenn die Gesamtmenge vorab nicht bekannt
+ist, bietet sich die Methode $class->L<runFetch|"runFetch() - FÃ¼hre Subroutine parallel Ã¼ber gefetchten Elementen aus">() an. Hier ein
+Beispiel mit einer unbekannt groÃŸen Datenbank-Selektion:
 
   my $cur = $db->select("
           <SELECT Statement>
@@ -48,7 +48,7 @@ Beispiel mit einer unbekannt großen Datenbank-Selektion:
 
 =head2 Parallele Berechnung
 
-=head3 runArray() - Führe Subroutine parallel über Arrayelementen aus
+=head3 runArray() - FÃ¼hre Subroutine parallel Ã¼ber Arrayelementen aus
 
 =head4 Synopsis
 
@@ -60,23 +60,23 @@ Beispiel mit einer unbekannt großen Datenbank-Selektion:
 
 =item @elements
 
-Die Elemente, auf denen die Berechnung einzeln durchgeführt wird.
+Die Elemente, auf denen die Berechnung einzeln durchgefÃ¼hrt wird.
 
 =item $sub
 
-Die Subroutine, die für jedes Element in @elements ausgeführt wird.
+Die Subroutine, die fÃ¼r jedes Element in @elements ausgefÃ¼hrt wird.
 
 =back
 
 =head4 Options
 
-Die gleichen wie L<runFetch|"runFetch() - Führe Subroutine parallel über gefetchten Elementen aus">().
+Die gleichen wie L<runFetch|"runFetch() - FÃ¼hre Subroutine parallel Ã¼ber gefetchten Elementen aus">().
 
 =head4 Returns
 
 nichts
 
-=head3 runFetch() - Führe Subroutine parallel über gefetchten Elementen aus
+=head3 runFetch() - FÃ¼hre Subroutine parallel Ã¼ber gefetchten Elementen aus
 
 =head4 Synopsis
 
@@ -88,13 +88,13 @@ nichts
 
 =item $fetchSub
 
-Subroutine, die das nächste gefetchte Element liefert:
+Subroutine, die das nÃ¤chste gefetchte Element liefert:
 
   $e = $fetchSub->($i); # $i-ter Fetch-Aufruf
 
 =item $execSub
 
-Subroutine, die für jedes gefetchte Element ausgeführt wird.
+Subroutine, die fÃ¼r jedes gefetchte Element ausgefÃ¼hrt wird.
 
 =back
 
@@ -128,7 +128,7 @@ Aufrufreihenfolge) zusammengefasst werden. Dies geschieht nach
 Beendigung des letzten Prozesses. Wird '-' als Dateiname angegeben,
 wird die Ausgabe nach STDOUT geschrieben. ACHTUNG: Bricht das
 steuernde Programm ab, wird keine Ausgabe produziert. Die
-Ausgabedateien verschwinden mit dem temporären Verzeichnis,
+Ausgabedateien verschwinden mit dem temporÃ¤ren Verzeichnis,
 in dem sie gespeichert werden.
 
 =item -progressMeter => $bool (Default: 1)
@@ -137,7 +137,7 @@ Zeige Fortschrittsanzeige an.
 
 =item -progressNameSub => sub {}
 
-Liefere die Bezeichnung des Elements für die Fortschrittsanzeige.
+Liefere die Bezeichnung des Elements fÃ¼r die Fortschrittsanzeige.
 Dies ist erforderlich, wenn das Element ein Objekt ist. Beispiel:
 
   -progressNameSub => sub {
@@ -155,9 +155,9 @@ nichts
 
 Verarbeite die Elemente, die von Subroutine $fetchSub geliefert
 werden, mit der Subroutine $execSub mit parallel laufenden
-Prozessen. Per Default wird für die Anzahl der parallelen Prozesse
-die Anzahl der CPUs des ausführenden Rechners gewählt. Mit
-der Option -maxProcesses kann eine abweichende Anzahl gewählt
+Prozessen. Per Default wird fÃ¼r die Anzahl der parallelen Prozesse
+die Anzahl der CPUs des ausfÃ¼hrenden Rechners gewÃ¤hlt. Mit
+der Option -maxProcesses kann eine abweichende Anzahl gewÃ¤hlt
 werden.
 
 Tipp: Die Anzahl der vorhandenen CPUs liefert die Methode

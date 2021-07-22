@@ -18,7 +18,7 @@ Instantiiere Objekt, vereinbare Zeitraster und Werte
       -offset => 300,
   );
 
-F¸ge Temperatur-Daten hinzu
+F√ºge Temperatur-Daten hinzu
 
   for my $row (Temperature->select($db,@where)) {
       $tsy->add($row->time,$row->latitude,$row->longitude,
@@ -26,7 +26,7 @@ F¸ge Temperatur-Daten hinzu
       );
   }
 
-F¸ge Windgeschwindigkeits-Daten hinzu
+F√ºge Windgeschwindigkeits-Daten hinzu
 
   for my $row (WindSpeed->select($db,@where)) {
       $tsy->add($row->time,$row->latitude,$row->longitude,
@@ -46,7 +46,7 @@ Die resultierende Tabelle besitzt folgende Kolumnen:
 
   0 Time               (Rasterpunkt)
   1 Latitude           (Breite des Geo-Mittelpunkts)
-  2 Longitude          (L‰nge des Geo-Mittelpunkts)
+  2 Longitude          (L√§nge des Geo-Mittelpunkts)
   3 Temperature        (Mittelwert)
   4 Temperature_Count  (Anzahl Werte)
   5 Temperature_StdDev (Standardabweichung)
@@ -84,8 +84,8 @@ legt das Zeitraster auf 5, 15, 25, 35, 45, 55 Minuten.
 
 =item -geoCoordinates => $bool (Default: 0)
 
-Die Messerwerte haben zus‰tzlich zur Zeit eine Ortskoordinate.
-Wenn gesetzt, erwartet die Methode L<add|"add() - F¸ge Parameterwerte hinzu">() zus‰tzlich die
+Die Messerwerte haben zus√§tzlich zur Zeit eine Ortskoordinate.
+Wenn gesetzt, erwartet die Methode L<add|"add() - F√ºge Parameterwerte hinzu">() zus√§tzlich die
 Ortsangaben $latitude und $longitude.
 
 =item -minTime => $t (Default: undef)
@@ -105,22 +105,22 @@ legt die Rasterpunkte auf 5, 15, 25, 35, 45, 55 Minuten.
 =item -window => $s (Default: undef)
 
 Betrachte nur Daten, die innerhalb von $s Sekunden um einen Rasterpunkt
-liegen. Ignoriere Daten, die auﬂerhalb liegen.
+liegen. Ignoriere Daten, die au√üerhalb liegen.
 
 =back
 
 =head4 Description
 
-Instantiiere Synchronizer-Objekt f¸r die Parameter @param mit einem
+Instantiiere Synchronizer-Objekt f√ºr die Parameter @param mit einem
 Zeitraster von $interval Sekunden und liefere eine Referenz auf
-dieses Objekt zur¸ck.
+dieses Objekt zur√ºck.
 
 Die Liste @param vereinbart die Parameternamen, die auch bei add()
 und rows() angegeben werden.
 
 =head2 Methoden
 
-=head3 add() - F¸ge Parameterwerte hinzu
+=head3 add() - F√ºge Parameterwerte hinzu
 
 =head4 Synopsis
 
@@ -129,12 +129,12 @@ und rows() angegeben werden.
 
 =head4 Description
 
-F¸ge Wert $value des Parameters $param zur Zeit $time (Unixtime)
+F√ºge Wert $value des Parameters $param zur Zeit $time (Unixtime)
 und (optional) dem Ort ($latitude, $longitude) hinzu.  Die Methode
-liefert keinen Wert zur¸ck. Es kˆnnen mehrere Parameter/Wert-Paare
-f¸r dieselbe Zeit und demselben Ort hinzugef¸gt werden.
+liefert keinen Wert zur√ºck. Es k√∂nnen mehrere Parameter/Wert-Paare
+f√ºr dieselbe Zeit und demselben Ort hinzugef√ºgt werden.
 
-=head3 addParameter() - F¸ge Parameter hinzu
+=head3 addParameter() - F√ºge Parameter hinzu
 
 =head4 Synopsis
 
@@ -142,8 +142,8 @@ f¸r dieselbe Zeit und demselben Ort hinzugef¸gt werden.
 
 =head4 Description
 
-F¸ge den zus‰tzlichen Parameter $param zum Objekt hinzu.
-Die Methode liefert keinen Wert zur¸ck.
+F√ºge den zus√§tzlichen Parameter $param zum Objekt hinzu.
+Die Methode liefert keinen Wert zur√ºck.
 
 =head3 parameters() - Liefere Liste der Parameterbezeichner
 
@@ -172,7 +172,7 @@ eine Referenz auf die Liste.
 
 =item -noValue => $str (Default: '')
 
-Zeichenkette f¸r "Wert nicht vorhanden".
+Zeichenkette f√ºr "Wert nicht vorhanden".
 
 =item -timeFormat => $fmt (Default: 'yyyymmddhhmmss')
 
@@ -182,7 +182,7 @@ Format der Zeitkolumne.
 
 =head4 Description
 
-Die erste Kolumne enth‰lt die Zeit. Wenn bei Konstruktor die
+Die erste Kolumne enth√§lt die Zeit. Wenn bei Konstruktor die
 Option -geoCoordinates gesetzt wurde, folgen geografische Breite
 und Lnge.  Danach folgen die angegebenen Parameter mit ihren
 Kolumnen.
@@ -193,11 +193,11 @@ B<Parameter-Optionen>
 
 =item meanValue => $bool
 
-Generiere Kolumne mit Mittelwert ¸ber den Werten im Intervall.
+Generiere Kolumne mit Mittelwert √ºber den Werten im Intervall.
 
 =item stdDeviation => $bool
 
-Generiere Kolumne mit Standardabweichung ¸ber den Werten im Intervall.
+Generiere Kolumne mit Standardabweichung √ºber den Werten im Intervall.
 
 =item min => $bool
 
@@ -205,7 +205,7 @@ Generiere Kolumne mit kleinstem Wert im Intervall.
 
 =item max => $bool
 
-Generiere Kolumne mit grˆﬂtem Wert im Intervall.
+Generiere Kolumne mit gr√∂√ütem Wert im Intervall.
 
 =item roundTo => $n
 

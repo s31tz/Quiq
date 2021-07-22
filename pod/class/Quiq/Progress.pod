@@ -47,7 +47,7 @@ Ohne Gesamtanzahl der Schritte. Anmerkungen:
 
 =item *
 
-die Ausgabe der Prozentangabe wird unterdr¸ckt
+die Ausgabe der Prozentangabe wird unterdr√ºckt
 
 =item *
 
@@ -139,7 +139,7 @@ Referenz auf Progress-Objekt
 
 =head2 Schritt setzen
 
-=head3 step() - Setze Progress-Objekt auf n‰chsten Schritt
+=head3 step() - Setze Progress-Objekt auf n√§chsten Schritt
 
 =head4 Synopsis
 
@@ -191,8 +191,8 @@ Gesamtanzahl der Schritte nicht bekannt, liefere einen Leersting.
 =head4 Description
 
 Liefere Zeitinformation in der Form "HhMmSs/HhMmSs(HhMmSs)". Der erste
-Teil ist die bislang verstrichene Zeit, der zweite Teil die gesch‰tzte
-Gesamtzeit, der dritte Teil ist die gesch‰tzte verbleibende Zeit.
+Teil ist die bislang verstrichene Zeit, der zweite Teil die gesch√§tzte
+Gesamtzeit, der dritte Teil ist die gesch√§tzte verbleibende Zeit.
 
 Liefere die Zeitinformation in der Form "HhMmSs", wenn die Anzahl
 der Gesamtschritte (N) nicht bekannt ist.
@@ -275,7 +275,7 @@ Verarbeitungsstand in Prozent.
 =item $time
 
 Zeitinformation in der Form "HhMmSs/HhMmSs". Der erste Teil ist die
-bislang verstrichene Zeit, der zweite Teil die gesch‰tzte Gesamtzeit.
+bislang verstrichene Zeit, der zweite Teil die gesch√§tzte Gesamtzeit.
 
 =item $performance
 
@@ -309,7 +309,7 @@ die Meldung eingesetzt.
 
 =item $fmt
 
-Formatelement f¸r sprintf(), erweitert um folgende Platzhalter:
+Formatelement f√ºr sprintf(), erweitert um folgende Platzhalter:
 
 =over 4
 
@@ -346,7 +346,7 @@ an den Anfang gesetzt. Beispiel:
 
 =item @args
 
-Ausgabe-Zeichenketten oder Argumente f¸r sprintf-Platzhalter.
+Ausgabe-Zeichenketten oder Argumente f√ºr sprintf-Platzhalter.
 
 =back
 
@@ -362,10 +362,10 @@ Erzeugte Meldung
 
 =head4 Description
 
-Erzeuge eine Fortschrittsmeldung und liefere diese zur¸ck.
+Erzeuge eine Fortschrittsmeldung und liefere diese zur√ºck.
 
-Die Methode ist f¸r die eine einzeilige Ausgabe konzipiert, die
-sich kontnuierlich ¸berschreibt, bis das Ende der Verarbeitung
+Die Methode ist f√ºr die eine einzeilige Ausgabe konzipiert, die
+sich kontnuierlich √ºberschreibt, bis das Ende der Verarbeitung
 erreicht ist. Die letzte Meldung bleibt stehen.
 
 =over 4
@@ -378,7 +378,7 @@ Durchschittswerten - noch einmal mit "\n" am Zeilenende.
 
 =item 2.
 
-Die zweite Form erzeugt die Meldung f¸r den aktuellen Schritt
+Die zweite Form erzeugt die Meldung f√ºr den aktuellen Schritt
 und beendet sie mit "\r".
 
 =item 3.
@@ -388,7 +388,7 @@ Objekt auf Schritt $i gesetzt wird.
 
 =back
 
-Ist bislang kein Schritt ausgef¸hrt worden, liefert die Methode einen
+Ist bislang kein Schritt ausgef√ºhrt worden, liefert die Methode einen
 Leerstring ("").
 
 =head3 warn() - Erzeuge Warnung
@@ -404,11 +404,11 @@ Leerstring ("").
 
 =item $fmt
 
-Formatelement f¸r sprintf().
+Formatelement f√ºr sprintf().
 
 =item @args
 
-Ausgabe-Zeichenketten oder Argumente f¸r sprintf-Platzhalter.
+Ausgabe-Zeichenketten oder Argumente f√ºr sprintf-Platzhalter.
 
 =back
 
@@ -427,7 +427,7 @@ Erzeugte Meldung
 Schreibe Warnung nach STDERR, die oberhalb der Fortschrittsanzeige
 erscheint:
 
-  warn $pro->warn("WARNING: Pfad erf¸llt Regex nicht: $file");
+  warn $pro->warn("WARNING: Pfad erf√ºllt Regex nicht: $file");
 
 =head1 VERSION
 

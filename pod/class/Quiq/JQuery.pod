@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::JQuery - Basisfunktionalit‰t zu jQuery
+Quiq::JQuery - Basisfunktionalit√§t zu jQuery
 
 =head1 BASE CLASS
 

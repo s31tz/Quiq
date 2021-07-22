@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::SoapWsdlServiceCgi::Demo - Demo für SOAP Web Service
+Quiq::SoapWsdlServiceCgi::Demo - Demo fÃ¼r SOAP Web Service
 
 =head1 BASE CLASS
 

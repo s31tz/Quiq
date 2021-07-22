@@ -22,7 +22,7 @@ L<Quiq::File::Image|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Fil
   # Breite
   $width = $img->width; # 3000
   
-  # Höhe
+  # HÃ¶he
   $height = $img->height; # 2250
   
   # Name
@@ -32,7 +32,7 @@ L<Quiq::File::Image|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Fil
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine Bilddatei, die Teil
+Ein Objekt der Klasse reprÃ¤sentiert eine Bilddatei, die Teil
 einer Bildsequenz ist. Der Dateiname hat den Aufbau
 
   NNNNNN-WIDTHxHEIGHT[-NAME].EXT
@@ -66,7 +66,7 @@ Referenz auf das Bilddatei-Objekt.
 =head4 Description
 
 Instantiiere Datei $file als Bilddatei-Objekt und liefere eine
-Referenz auf dieses Objekt zurück.
+Referenz auf dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -101,7 +101,7 @@ Integer >= 1
 
 Liefere die Breite des Bildes.
 
-=head3 height() - Höhe des Bildes
+=head3 height() - HÃ¶he des Bildes
 
 =head4 Synopsis
 
@@ -113,7 +113,7 @@ Integer >= 1
 
 =head4 Description
 
-Liefere die Höhe des Bildes.
+Liefere die HÃ¶he des Bildes.
 
 =head3 text() - Text des Dateinamens
 

@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::File::Audio - Informationen über Audio-Datei
+Quiq::File::Audio - Informationen Ã¼ber Audio-Datei
 
 =head1 BASE CLASS
 
@@ -21,11 +21,11 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 =head4 Description
 
 Instantiiere ein Audio-Datei-Objekt und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 Meta-Information
 
-=head3 artist() - Künstler
+=head3 artist() - KÃ¼nstler
 
 =head4 Synopsis
 
@@ -33,11 +33,11 @@ dieses Objekt zurück.
 
 =head4 Description
 
-Liefere den Künstler der Audio-Datei.
+Liefere den KÃ¼nstler der Audio-Datei.
 
 =head4 See Also
 
-L<extractMetaData|"extractMetaData() - Ermittele Künstler und Titel">()
+L<extractMetaData|"extractMetaData() - Ermittele KÃ¼nstler und Titel">()
 
 =head3 title() - Titel
 
@@ -51,7 +51,7 @@ Liefere den Titel der Audio-Datei.
 
 =head4 See Also
 
-L<extractMetaData|"extractMetaData() - Ermittele Künstler und Titel">()
+L<extractMetaData|"extractMetaData() - Ermittele KÃ¼nstler und Titel">()
 
 =head2 Objektmethoden
 
@@ -73,7 +73,7 @@ Liefere die Bitrate der Audion-Datei (z.Zt. als Zeichenkette).
 
 =head4 Description
 
-Liefere die Länge (Dauer) der Audio-Datei in Sekunden
+Liefere die LÃ¤nge (Dauer) der Audio-Datei in Sekunden
 (ggf. mit Nachkommastellen).
 
 =head3 extension() - Extension
@@ -88,7 +88,7 @@ Liefere die Extension der Audio-Datei.
 
 =head4 See Also
 
-L<extractMetaData|"extractMetaData() - Ermittele Künstler und Titel">()
+L<extractMetaData|"extractMetaData() - Ermittele KÃ¼nstler und Titel">()
 
 =head3 file() - Dateiname
 
@@ -113,7 +113,7 @@ Liefere den Dateinamen (Pfad) der Audio-Datei.
 Analysiere die Audio-Datei mit ffprobe und weise die ermittelten
 Eigenschaften an die betreffenden Attribute des Objektes zu.
 
-=head3 extractMetaData() - Ermittele Künstler und Titel
+=head3 extractMetaData() - Ermittele KÃ¼nstler und Titel
 
 =head4 Synopsis
 
@@ -128,7 +128,7 @@ Es wird vorausgesetzt, dass der Dateiname folgenden Aufbau hat:
 
   <Path>/<Artist> - <Title>.<Extension>
 
-Die Methode liefert keinen Wert zurück.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head1 VERSION
 

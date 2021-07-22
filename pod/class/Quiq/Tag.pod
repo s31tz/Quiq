@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Tag - Erzeuge Markup-Code gemäß XML-Regeln
+Quiq::Tag - Erzeuge Markup-Code gemÃ¤ÃŸ XML-Regeln
 
 =head1 BASE CLASS
 
@@ -20,54 +20,54 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
   $code = $p->tag('person',
       firstname => 'Lieschen',
-      lastname => 'Müller',
+      lastname => 'MÃ¼ller',
   );
 
 liefert
 
-  <person firstname="Lieschen" lastname="Müller" />
+  <person firstname="Lieschen" lastname="MÃ¼ller" />
 
 =head3 Tag mit Content
 
-  $code = $p->tag('bold','sehr schön');
+  $code = $p->tag('bold','sehr schÃ¶n');
 
 liefert
 
-  <bold>sehr schön</bold>
+  <bold>sehr schÃ¶n</bold>
 
-Enthält der Content, wie hier, keine Zeilenumbrüche, werden Begin-
+EnthÃ¤lt der Content, wie hier, keine ZeilenumbrÃ¼che, werden Begin-
 und End-Tag unmittelbar um den Content gesetzt. Andernfalls wird
-der Content eingerückt mehrzeilig zwischen Begin- und End-Tag
-gesetzt. Siehe nächstes Beispiel.
+der Content eingerÃ¼ckt mehrzeilig zwischen Begin- und End-Tag
+gesetzt. Siehe nÃ¤chstes Beispiel.
 
 =head3 Tag mit Unterstruktur
 
   $code = $p->tag('person','-',
       $p->tag('firstname','Lieschen'),
-      $p->tag('lastname','Müller'),
+      $p->tag('lastname','MÃ¼ller'),
   );
 
 erzeugt
 
   <person>
     <firstname>Lieschen</firstname>
-    <lastname>Müller</lastname>
+    <lastname>MÃ¼ller</lastname>
   </person>
 
 Das Bindestrich-Argument (C<'-'>) bewirkt, dass die nachfolgenden
-Argumente zum Content des Tag konkateniert werden. Die umständlichere
-Formulierung wäre:
+Argumente zum Content des Tag konkateniert werden. Die umstÃ¤ndlichere
+Formulierung wÃ¤re:
 
   $code = $p->tag('person',$p->cat(
       $p->tag('firstname','Lieschen'),
-      $p->tag('lastname','Müller'),
+      $p->tag('lastname','MÃ¼ller'),
   ));
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse erzeugt Markup-Code gemäß den Regeln von XML.
-Mit den beiden Methoden L<tag|"tag() - Erzeuge Tag-Code">() und L<cat|"cat() - Füge Sequenz zusammen">() kann Markup-Code
-beliebiger Komplexität erzeugt werden.
+Ein Objekt der Klasse erzeugt Markup-Code gemÃ¤ÃŸ den Regeln von XML.
+Mit den beiden Methoden L<tag|"tag() - Erzeuge Tag-Code">() und L<cat|"cat() - FÃ¼ge Sequenz zusammen">() kann Markup-Code
+beliebiger KomplexitÃ¤t erzeugt werden.
 
 =head1 METHODS
 
@@ -86,7 +86,7 @@ Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz
-auf dieses Objekt zurück.
+auf dieses Objekt zurÃ¼ck.
 
 =head2 Generierung
 
@@ -145,10 +145,10 @@ Elementen definiert. Aufbau:
   )
 
 Der Hash muss nicht jedes Element definieren. Nicht-vorkommende
-Elemente gemäß Default-Formatierung formatiert (siehe -fmt)
+Elemente gemÃ¤ÃŸ Default-Formatierung formatiert (siehe -fmt)
 besitzen keine Default-Attribute.
 
-=item -fmt => 'c'|'e'|'E'|'i'|'m'|'p'|'P'|'v' (Default: gemäß $elem)
+=item -fmt => 'c'|'e'|'E'|'i'|'m'|'p'|'P'|'v' (Default: gemÃ¤ÃŸ $elem)
 
 Art der Content-Formatierung.
 
@@ -179,9 +179,9 @@ Wie 'e', nur ohne Newline am Ende (in HTML: img, input, ...):
 
 =item 'i' (inline):
 
-Der Content wird belassen wie er ist. Dies ist nützlich für
-Tags, die in Fließtext eingesetzt werden. Ein Newline wird
-nicht angehängt.
+Der Content wird belassen wie er ist. Dies ist nÃ¼tzlich fÃ¼r
+Tags, die in FlieÃŸtext eingesetzt werden. Ein Newline wird
+nicht angehÃ¤ngt.
 
   Text Text <TAG ...>Text Text
   Text</TAG> Text Text
@@ -191,7 +191,7 @@ nicht angehängt.
 =item 'm' (multiline):
 
 Content wird auf eigene Zeile(n) zwischen Begin- und End-Tag
-gesetzt und um -ind=>$n Leerzeichen eingerückt:
+gesetzt und um -ind=>$n Leerzeichen eingerÃ¼ckt:
 
   <TAG ...>
     CONTENT
@@ -201,9 +201,9 @@ Ist der Content leer, wird nur ein End-Tag gesetzt:
 
   <TAG ... />\n
 
-=item 'M' (multiline, ohne Einrückung):
+=item 'M' (multiline, ohne EinrÃ¼ckung):
 
-Wie 'm', nur ohne Einrückung (in HTML: html, ...):
+Wie 'm', nur ohne EinrÃ¼ckung (in HTML: html, ...):
 
   <TAG ...>
   CONTENT
@@ -211,16 +211,16 @@ Wie 'm', nur ohne Einrückung (in HTML: html, ...):
 
 =item 'p' (protect):
 
-Der Content wird geschützt, indem dieser einzeilig gemacht
+Der Content wird geschÃ¼tzt, indem dieser einzeilig gemacht
 (LF und CR werden durch &#10; und &#13; ersetzt) und unmittelbar
 zwischen Begin- und End-Tag gesetzt wird
 (in HTML: pre, textarea, ...):
 
   <TAG ...>CONTENT</TAG>\n
 
-=item 'P' (protect, Einrückung entfernen):
+=item 'P' (protect, EinrÃ¼ckung entfernen):
 
-Wie 'p', nur dass die Einrückung des Content entfernt wird.
+Wie 'p', nur dass die EinrÃ¼ckung des Content entfernt wird.
 
 =item 'v' (variable) = Default-Formatierung:
 
@@ -229,7 +229,7 @@ und End-Tag gesetzt:
 
   <TAG ...>CONTENT</TAG>\n
 
-Ist der Content mehrzeilig, wird er eingerückt:
+Ist der Content mehrzeilig, wird er eingerÃ¼ckt:
 
   <TAG ...>
     CONTENT
@@ -266,9 +266,9 @@ durch ihre Werte.
 
 =head4 Description
 
-Erzeuge den Code eines Tag und liefere diesen zurück.
+Erzeuge den Code eines Tag und liefere diesen zurÃ¼ck.
 
-=head3 cat() - Füge Sequenz zusammen
+=head3 cat() - FÃ¼ge Sequenz zusammen
 
 =head4 Synopsis
 
@@ -297,8 +297,8 @@ die angegebenen Werte.
 
 =head4 Description
 
-Füge die Arguments @args zusammen und liefere den resultierenden
-Code zurück.
+FÃ¼ge die Arguments @args zusammen und liefere den resultierenden
+Code zurÃ¼ck.
 
 =head1 VERSION
 

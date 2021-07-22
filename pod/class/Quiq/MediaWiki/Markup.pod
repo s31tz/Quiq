@@ -10,10 +10,10 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen Generator für das
+Ein Objekt der Klasse reprÃ¤sentiert einen Generator fÃ¼r das
 MediaWiki-Markup. Die Methoden der Klasse erzeugen den
-Markup-Code, ohne dass man sich um die Details der Syntax kümmern
-muss. Die Implementierung ist nicht vollständig, sondern wird
+Markup-Code, ohne dass man sich um die Details der Syntax kÃ¼mmern
+muss. Die Implementierung ist nicht vollstÃ¤ndig, sondern wird
 nach Bedarf erweitert.
 
 =head2 Links
@@ -44,7 +44,7 @@ CSS-Regeln: L<https://www.mediawiki.org/wiki/Manual:CSS>
 
 =item *
 
-Globale Community Site für Wikimedia-Projekte:
+Globale Community Site fÃ¼r Wikimedia-Projekte:
 L<https://meta.wikimedia.org/>
 
 =back
@@ -62,12 +62,12 @@ L<https://meta.wikimedia.org/>
 =head4 Description
 
 Instantiiere einen MediaWiki Markup Generator und liefere
-eine Referenz auf dieses Objekt zurück.
+eine Referenz auf dieses Objekt zurÃ¼ck.
 
-=head2 Blöcke
+=head2 BlÃ¶cke
 
-Der Code von Blöcken wird mit einer Leerzeile am Ende erzeugt, so
-dass alle Blöcke einfach konkateniert werden können.
+Der Code von BlÃ¶cken wird mit einer Leerzeile am Ende erzeugt, so
+dass alle BlÃ¶cke einfach konkateniert werden kÃ¶nnen.
 
 =head3 code() - Erzeuge Code-Abschnitt
 
@@ -95,11 +95,11 @@ Markup-Code (String)
 
 =head4 Description
 
-Erzeuge den MediaWiki Markup-Code für einen Code-Block mit dem
-Text $text und liefere diesen zurück. Ist $text undef oder ein
+Erzeuge den MediaWiki Markup-Code fÃ¼r einen Code-Block mit dem
+Text $text und liefere diesen zurÃ¼ck. Ist $text undef oder ein
 Leerstring, wird ein Leerstring geliefert. Andernfalls wird $text
-per trim() von einer etwaigen Einrückung befreit, bevor er um
-zwei Leerzeichen eingerückt wird.
+per trim() von einer etwaigen EinrÃ¼ckung befreit, bevor er um
+zwei Leerzeichen eingerÃ¼ckt wird.
 
 =head4 See Also
 
@@ -128,7 +128,7 @@ erzeugt
 
 =item *
 
-Eine Einrückung der Quelle wird automatisch entfernt:
+Eine EinrÃ¼ckung der Quelle wird automatisch entfernt:
 
   $gen->code(q~
       Dies ist
@@ -164,10 +164,10 @@ Markup-Code (String)
 
 =head4 Description
 
-Erzeuge den MediaWiki Markup-Code für einen Kommentar mit dem
-Text $text und liefere diesen zurück. Ist $text undef oder ein
+Erzeuge den MediaWiki Markup-Code fÃ¼r einen Kommentar mit dem
+Text $text und liefere diesen zurÃ¼ck. Ist $text undef oder ein
 Leerstring, wird ein Leerstring geliefert. Andernfalls wird $text
-per trim() von einer etwaigen Einrückung befreit.
+per trim() von einer etwaigen EinrÃ¼ckung befreit.
 
 Ist der Kommentar einzeilig, wird die Kommentar-Klammer auf die
 gleiche Zeile gesetzt:
@@ -176,7 +176,7 @@ gleiche Zeile gesetzt:
 
 Ist der Kommentar mehrzeilig, wird die Kommentar-Klammer auf
 separate Zeilen gesetzt und der Text um zwei Leerzeichen
-eingerückt:
+eingerÃ¼ckt:
 
   <!--
     TEXT
@@ -236,8 +236,8 @@ Markup-Code (String)
 
 =head4 Description
 
-Erzeuge den MediaWiki Markup-Code für eine horizontale Trennline
-und liefere diesen zurück.
+Erzeuge den MediaWiki Markup-Code fÃ¼r eine horizontale Trennline
+und liefere diesen zurÃ¼ck.
 
 =head4 See Also
 
@@ -269,7 +269,7 @@ erzeugt
 
 =item align => $align
 
-Mögliche Werte: left, right, center, none.
+MÃ¶gliche Werte: left, right, center, none.
 
 =item alt => $str
 
@@ -286,16 +286,16 @@ Bildbeschriftung.
 =item file => $file
 
 (Pflichtangabe) Name der Datei. Hier wird nur der Dateiname, bestehend
-aus NAME.EXT benötigt. Ein etwaiger Pfad, sofern vorhanden, wird entfernt.
+aus NAME.EXT benÃ¶tigt. Ein etwaiger Pfad, sofern vorhanden, wird entfernt.
 Die Datei muss zuvor ins MediaWiki hochgeladen worden sein.
 
 =item format => $format
 
-Mögliche Werte: frameless, frame, thumb.
+MÃ¶gliche Werte: frameless, frame, thumb.
 
 =item height => $height
 
-Höhe des Bildes.
+HÃ¶he des Bildes.
 
 =item link => $url
 
@@ -307,7 +307,7 @@ Seitennumer im Falle eines PDF.
 
 =item valign => $valign
 
-Mögliche Werte: baseline, sub, super, top, text-top, middle, bottom,
+MÃ¶gliche Werte: baseline, sub, super, top, text-top, middle, bottom,
 text-bottom.
 
 =item width => $width
@@ -322,7 +322,7 @@ Markup-Code (String)
 
 =head4 Description
 
-Erzeuge den MediaWiki Markup-Code für ein Bild und liefere diesen zurück.
+Erzeuge den MediaWiki Markup-Code fÃ¼r ein Bild und liefere diesen zurÃ¼ck.
 
 =head4 See Also
 
@@ -359,7 +359,7 @@ erzeugt
 
 =item $type
 
-Typ der Liste. Mögliche Typen einer Liste:
+Typ der Liste. MÃ¶gliche Typen einer Liste:
 
 =over 4
 
@@ -378,7 +378,7 @@ Definitionsliste.
 =back
 
 Die Typangabe kann auch aus mehreren Typangaben zusammengesetzt
-sein, wie es bei geschachtelten Listen benötigt wird, z.B. "*#*".
+sein, wie es bei geschachtelten Listen benÃ¶tigt wird, z.B. "*#*".
 
 =item $key
 
@@ -396,7 +396,7 @@ Markup-Code (String)
 
 =head4 Description
 
-Erzeuge den MediaWiki Markup-Code für ein Listenelement des Typs
+Erzeuge den MediaWiki Markup-Code fÃ¼r ein Listenelement des Typs
 $type und mit Wert $val. Im Falle einer Definitonsliste verwende
 den Definitionsterm $key.
 
@@ -480,7 +480,7 @@ produziert
 
 =item $type
 
-Typ der Liste. Mögliche Werte:
+Typ der Liste. MÃ¶gliche Werte:
 
 =over 4
 
@@ -501,7 +501,7 @@ Definitionsliste.
 =item @items
 
 Liste der List-Items. Im Falle einer Definitionsliste ist dies
-eine Liste von Schlüssel/Wert-Paaren. In allen anderen Fällen ist
+eine Liste von SchlÃ¼ssel/Wert-Paaren. In allen anderen FÃ¤llen ist
 es eine Liste von skalaren Werten.
 
 =back
@@ -512,9 +512,9 @@ Markup-Code (String)
 
 =head4 Description
 
-Erzeuge den MediaWiki Markup-Code für eine Liste des Typs $type
-mit den Elementen @items und liefere diesen zurück. Listen
-können auch geschachtelt werden. Siehe Examples.
+Erzeuge den MediaWiki Markup-Code fÃ¼r eine Liste des Typs $type
+mit den Elementen @items und liefere diesen zurÃ¼ck. Listen
+kÃ¶nnen auch geschachtelt werden. Siehe Examples.
 
 =head4 See Also
 
@@ -577,7 +577,7 @@ produziert
                'Birne',
                'Pflaume',
            ]),
-           'Gemüse',
+           'GemÃ¼se',
            $gen->list('*',[
                'Gurke',
                'Spinat',
@@ -591,7 +591,7 @@ produziert
        #* Apfel
        #* Birne
        #* Pflaume
-       # Gemüse
+       # GemÃ¼se
        #* Gurke
        #* Spinat
        #* Tomate
@@ -618,10 +618,10 @@ Markup-Code (String)
 
 =head4 Description
 
-Erzeuge den MediaWiki Markup-Code für einen Paragraphen mit dem
-Text $text und liefere diesen zurück. Ist $text undef oder ein
+Erzeuge den MediaWiki Markup-Code fÃ¼r einen Paragraphen mit dem
+Text $text und liefere diesen zurÃ¼ck. Ist $text undef oder ein
 Leerstring, wird ein Leerstring geliefert. Andernfalls wird $text
-per trim() von einer etwaigen Einrückung befreit.
+per trim() von einer etwaigen EinrÃ¼ckung befreit.
 
 =head4 See Also
 
@@ -650,7 +650,7 @@ erzeugt
 
 =item *
 
-Eine Einrückung wird automatisch entfernt:
+Eine EinrÃ¼ckung wird automatisch entfernt:
 
   $gen->paragraph(q~
       Dies ist
@@ -664,7 +664,7 @@ erzeugt
 
 =back
 
-=head3 section() - Erzeuge Abschnittsüberschrift
+=head3 section() - Erzeuge AbschnittsÃ¼berschrift
 
 =head4 Synopsis
 
@@ -690,9 +690,9 @@ Markup-Code (String)
 
 =head4 Description
 
-Erzeuge den MediaWiki Markup-Code für einen Abschnitt der Tiefe
-$level und der Abschnittsüberschrift $title und liefere diesen
-zurück.
+Erzeuge den MediaWiki Markup-Code fÃ¼r einen Abschnitt der Tiefe
+$level und der AbschnittsÃ¼berschrift $title und liefere diesen
+zurÃ¼ck.
 
 =head4 See Also
 
@@ -706,11 +706,11 @@ Syntax: L<https://www.mediawiki.org/wiki/Help:Formatting>
 
 =head4 Example
 
-  $gen->section(3,'Eine Überschrift');
+  $gen->section(3,'Eine Ãœberschrift');
 
 produziert
 
-  === Eine Überschrift ===
+  === Eine Ãœberschrift ===
 
 =head3 table() - Erzeuge Tabelle
 
@@ -720,14 +720,14 @@ produziert
 
 =head4 Arguments
 
-Die Argumentliste @keyVal wird gebildet über folgenden
-Schlüssel/Wert-Paaren:
+Die Argumentliste @keyVal wird gebildet Ã¼ber folgenden
+SchlÃ¼ssel/Wert-Paaren:
 
 =over 4
 
 =item alignments => \@alignments (Default: [])
 
-Liste der Kolumnen-Ausrichtungen. Mögliche Werte je Kolumne: 'left',
+Liste der Kolumnen-Ausrichtungen. MÃ¶gliche Werte je Kolumne: 'left',
 'right', 'center'.
 
 =item bodyBackground => $color (Default: '#ffffff')
@@ -752,7 +752,7 @@ Liste der Kolumnentitel.
 
 =item valueCallback => sub {...} (Default: keiner)
 
-Subroutine, die für I<jeden> Wert (caption, title, row value) aufgerufen
+Subroutine, die fÃ¼r I<jeden> Wert (caption, title, row value) aufgerufen
 wird:
 
   valueCallback => sub {
@@ -775,11 +775,11 @@ Markup-Code (String)
 
 =head4 Description
 
-Erzeuge den MediaWiki Markup-Code für eine Tabelle und liefere diesen
-zurück.
+Erzeuge den MediaWiki Markup-Code fÃ¼r eine Tabelle und liefere diesen
+zurÃ¼ck.
 
 Das Aussehen der MediaWiki-Tabelle wird durch CSS-Angaben bestimmt,
-die in den Wiki-Code eingestreut werden. Die Grundlage hierfür bietet
+die in den Wiki-Code eingestreut werden. Die Grundlage hierfÃ¼r bietet
 die Standard-CSS-Klasse "wikitable" (siehe Link unten).
 
 =head4 See Also
@@ -853,7 +853,7 @@ was in der Darstellung so aussieht
   +----------------------------+
            Eine Tabelle
 
-=head3 tableOfContents() - Setze oder unterdrücke Inhaltsverzeichnis
+=head3 tableOfContents() - Setze oder unterdrÃ¼cke Inhaltsverzeichnis
 
 =head4 Synopsis
 
@@ -866,7 +866,7 @@ was in der Darstellung so aussieht
 =item $bool
 
 Wenn wahr, wird an der aktuellen Position das Inhaltsverzeichnis
-der Seite gesetzt. Wenn falsch, wird kein Inhaltsverzeichnis für
+der Seite gesetzt. Wenn falsch, wird kein Inhaltsverzeichnis fÃ¼r
 die Seite gesetzt, auch nicht automatisch.
 
 =back
@@ -877,8 +877,8 @@ Markup-Code (String)
 
 =head4 Description
 
-Erzeuge den MediaWiki Markup-Code für das Setzen oder Unterdrücken
-des Inhaltsverzeichnisses und liefere diesen zurück.
+Erzeuge den MediaWiki Markup-Code fÃ¼r das Setzen oder UnterdrÃ¼cken
+des Inhaltsverzeichnisses und liefere diesen zurÃ¼ck.
 
 =head4 See Also
 
@@ -906,7 +906,7 @@ erzeugt
 
 =item *
 
-Inhaltsverzeichnis unterdrücken
+Inhaltsverzeichnis unterdrÃ¼cken
 
   $gen->tableOfContents(0);
 
@@ -926,11 +926,11 @@ erzeugt
 
 =head4 Description
 
-Erzeuge Inline-Segment für Text $text und liefere den
-resultierenden Wiki-Code zurück. Ist $text undef oder ein
+Erzeuge Inline-Segment fÃ¼r Text $text und liefere den
+resultierenden Wiki-Code zurÃ¼ck. Ist $text undef oder ein
 Leerstring, wird ein Leerstring geliefert. Andernfalls wird $text
-per trim() von einer etwaigen Einrückung befreit und einzeilig
-gemacht, d.h. Zeilenumbrüche in $text werden entfernt.
+per trim() von einer etwaigen EinrÃ¼ckung befreit und einzeilig
+gemacht, d.h. ZeilenumbrÃ¼che in $text werden entfernt.
 
 Es existieren die Formatierungen:
 
@@ -968,7 +968,7 @@ Der Text wird nicht interpretiert. Erzeugt:
 
 =item codeWithFormatting
 
-Inline-Formatierungen wie bold und italic sind möglich. Erzeugt:
+Inline-Formatierungen wie bold und italic sind mÃ¶glich. Erzeugt:
 
   <code>TEXT</code>
 
@@ -1002,7 +1002,7 @@ Syntax: L<https://www.mediawiki.org/wiki/Help:Formatting>
 
 =back
 
-=head3 indent() - Erzeuge Einrückung
+=head3 indent() - Erzeuge EinrÃ¼ckung
 
 =head4 Synopsis
 
@@ -1014,8 +1014,8 @@ Markup-Code (String)
 
 =head4 Description
 
-Erzeuge den MediaWiki Markup-Code für eine Einrückung der Tiefe $n
-und liefere diesen zurück.
+Erzeuge den MediaWiki Markup-Code fÃ¼r eine EinrÃ¼ckung der Tiefe $n
+und liefere diesen zurÃ¼ck.
 
 =head4 See Also
 
@@ -1047,7 +1047,7 @@ erzeugt
 
 =item $type
 
-Art des Link. Mögliche Werte: 'internal', 'external'.
+Art des Link. MÃ¶gliche Werte: 'internal', 'external'.
 
 =item $destination
 
@@ -1065,8 +1065,8 @@ Markup-Code (String)
 
 =head4 Description
 
-Erzeuge den MediaWiki Markup-Code für einen internen oder externen
-Link und liefere diesen zurück.
+Erzeuge den MediaWiki Markup-Code fÃ¼r einen internen oder externen
+Link und liefere diesen zurÃ¼ck.
 
 =head4 See Also
 
@@ -1107,7 +1107,7 @@ erzeugt
 
 =head2 Sonstiges
 
-=head3 protect() - Schütze Metazeichen
+=head3 protect() - SchÃ¼tze Metazeichen
 
 =head4 Synopsis
 
@@ -1115,7 +1115,7 @@ erzeugt
 
 =head4 Description
 
-Schütze alle Metazeichen in Text $text, so dass das Resultat als Inhalt
+SchÃ¼tze alle Metazeichen in Text $text, so dass das Resultat als Inhalt
 in eine MediaWiki-Seite eingesetzt werden kann.
 
 =head2 Testseite
@@ -1129,7 +1129,7 @@ in eine MediaWiki-Seite eingesetzt werden kann.
 =head4 Description
 
 Erzeuge eine Seite mit MediaWiki-Markup. Diese Seite kann in ein
-MediaWiki übertragen und dort optisch begutachtet werden.
+MediaWiki Ã¼bertragen und dort optisch begutachtet werden.
 
 =head4 Example
 

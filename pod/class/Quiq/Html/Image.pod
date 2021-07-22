@@ -10,7 +10,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen Image-Block. Ein
+Ein Objekt der Klasse reprÃ¤sentiert einen Image-Block. Ein
 Image-Block stellt ein Bild alleinstehend dar, optional mit
 Link und Bildunterschrift.
 
@@ -30,7 +30,7 @@ optional.
 
 Das Aussehen des Image-Block kann via CSS gestaltet werden. Hier
 einige Selektoren, mit denen Bestandteile des Konstrukts in CSS
-angesprochen werden können:
+angesprochen werden kÃ¶nnen:
 
 =over 4
 
@@ -40,7 +40,7 @@ Der gesamte Block.
 
 =item .CLASS .prefix
 
-Der Präfix-Text der Bildunterschrift ("Abbildung N:").
+Der PrÃ¤fix-Text der Bildunterschrift ("Abbildung N:").
 
 =item .CLASS .caption
 
@@ -48,7 +48,7 @@ Der Text der Bildunterschrift.
 
 =back
 
-Hierbei ist CLASS der über das Attribut C<class> setzbare
+Hierbei ist CLASS der Ã¼ber das Attribut C<class> setzbare
 CSS-Klassenname.
 
 =head1 ATTRIBUTES
@@ -65,7 +65,7 @@ Text der Bildunterschrift.
 
 =item captionPrefix => $text
 
-Präfix-Text der Bildunterschrift, z.B. "Abbildung 1:".
+PrÃ¤fix-Text der Bildunterschrift, z.B. "Abbildung 1:".
 
 =item class => $name
 
@@ -73,7 +73,7 @@ CSS-Klasse des Image-Blocks.
 
 =item height => $n
 
-Höhe des Bildes in Pixeln.
+HÃ¶he des Bildes in Pixeln.
 
 =item href => $url
 
@@ -159,7 +159,7 @@ Image-Block-Objekt (Referenz)
 =head4 Description
 
 Instantiiere ein Image-Block-Objekt und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -176,7 +176,7 @@ dieses Objekt zurück.
 
 =item $h
 
-Objekt für die HTML-Generierung, d.h. eine Instanz der Klasse
+Objekt fÃ¼r die HTML-Generierung, d.h. eine Instanz der Klasse
 Quiq::Html::Tag.
 
 =item @keyVal
@@ -192,7 +192,7 @@ HTML-Code (String)
 =head4 Description
 
 Generiere den HTML-Code des Image-Blocks und liefere diesen
-zurück. Als Klassenmethode gerufen, wird das Objekt intern
+zurÃ¼ck. Als Klassenmethode gerufen, wird das Objekt intern
 mit den Attributen @keyVal instantiiert.
 
 =head1 VERSION

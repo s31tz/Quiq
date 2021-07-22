@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::System - Information über das System und seine Umgebung
+Quiq::System - Information Ã¼ber das System und seine Umgebung
 
 =head1 BASE CLASS
 
@@ -51,7 +51,7 @@ Sys::Hostname
 =head4 Description
 
 Liefere die IP-Adresse des Systems (Aufruf ohne Parameter) oder die
-IP-Adresse für $hostname.
+IP-Adresse fÃ¼r $hostname.
 
 Die IP-Adresse des Systems ist die IP-Adresse zu dem Hostnamen,
 den Quiq::System->hostname() liefert.
@@ -82,7 +82,7 @@ Gib non-ASCII-Zeichen im Encoding der Umgebung auf STDOUT aus:
 
   my $encoding = Quiq::System->encoding;
   binmode STDOUT,":encoding($encoding)";
-  print "äöüßÄÖÜ\n";
+  print "Ã¤Ã¶Ã¼ÃŸÃ„Ã–Ãœ\n";
 
 =head2 User
 

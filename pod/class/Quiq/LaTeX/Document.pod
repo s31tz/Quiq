@@ -64,7 +64,7 @@ Der Rumpf des Dokuments.
 
 =item compactCode => $bool (Default: 1)
 
-Erzeuge den LaTeX Code ohne zusätzliche Leerzeilen und Kommentare.
+Erzeuge den LaTeX Code ohne zusÃ¤tzliche Leerzeilen und Kommentare.
 
 =item date => $str
 
@@ -98,13 +98,13 @@ Das Font-Encoding.
 
 =item fontSize => $fontSize (Default: undef)
 
-Die Größe des Hauptfont. Mogliche Werte für die Standard LaTeX
+Die GrÃ¶ÃŸe des Hauptfont. Mogliche Werte fÃ¼r die Standard LaTeX
 Dokumentklassen article etc.: '10pt', '11pt', '12pt'. Die
-KOMA-Script Klassen 'scrartcl' etc. erlauben weitere Fontgrößen.
+KOMA-Script Klassen 'scrartcl' etc. erlauben weitere FontgrÃ¶ÃŸen.
 
 =item geometry => $str (Default: 'height=22.5cm,bottom=3.8cm' bei a4paper)
 
-Gegenüber der Grundeinstellung abweichende Seitenmaße.
+GegenÃ¼ber der Grundeinstellung abweichende SeitenmaÃŸe.
 
 =item language => $language (Default: 'ngerman')
 
@@ -116,22 +116,22 @@ Dukument-Optionen.
 
 =item packages => \@arr (Default: [])
 
-Liste der Packages, die zusätzlich geladen werden sollen.
-Die Elemente sind Schlüssel/Wert-Paare der Art:
+Liste der Packages, die zusÃ¤tzlich geladen werden sollen.
+Die Elemente sind SchlÃ¼ssel/Wert-Paare der Art:
 
   $package => \@options
 
 =item paperSize => $paperSize (Default: 'a4paper')
 
-Die Größe des Papiers, die die das Dokument gesetzt wird.
+Die GrÃ¶ÃŸe des Papiers, die die das Dokument gesetzt wird.
 
 =item parIndent => $length (Default: undef)
 
-Tiefe der Absatzeinrückung.
+Tiefe der AbsatzeinrÃ¼ckung.
 
 =item parSkip => $length (Default: undef)
 
-Vertikaler Abstand zwischen Absätzen.
+Vertikaler Abstand zwischen AbsÃ¤tzen.
 
 =item preamble => $str | \@arr (Default: '')
 
@@ -154,9 +154,9 @@ ein Titelabschnitt erzeugt.
 
 =item titlePageStyle => $pageStyle
 
-Seitenstil der ersten Seite. Mögliche Werte: 'empty' (Kopf-
-und Fußzeile leer), 'plain' (nur Fuß mit Seitennummer), 'headings'
-(Kopf mit Abschnittstiteln, Fuß mit Seitennummer).
+Seitenstil der ersten Seite. MÃ¶gliche Werte: 'empty' (Kopf-
+und FuÃŸzeile leer), 'plain' (nur FuÃŸ mit Seitennummer), 'headings'
+(Kopf mit Abschnittstiteln, FuÃŸ mit Seitennummer).
 
 =item tocDepth => $n
 
@@ -172,7 +172,7 @@ Dokument-Objekt
 =head4 Description
 
 Instantiiere ein LaTeX Dokument-Objekt und liefere eine Referenz
-auf dieses Objekt zurück.
+auf dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -186,7 +186,7 @@ auf dieses Objekt zurück.
 =head4 Description
 
 Generiere den LaTeX-Code des Objekts und liefere diesen
-zurück. Als Klassenmethode gerufen, wird das Objekt intern erzeugt
+zurÃ¼ck. Als Klassenmethode gerufen, wird das Objekt intern erzeugt
 und mit den Attributen @keyVal instantiiert.
 
 =head1 VERSION

@@ -10,8 +10,8 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repr‰sentiert das Resultat einer
-Statement-Ausf¸hrung auf einer Relationalen Datenbank.
+Ein Objekt der Klasse repr√§sentiert das Resultat einer
+Statement-Ausf√ºhrung auf einer Relationalen Datenbank.
 
 =head1 METHODS
 
@@ -26,9 +26,9 @@ Statement-Ausf¸hrung auf einer Relationalen Datenbank.
 =head4 Description
 
 Instantiiere ein Cursor-Objekt mit den Attributen @keyVal
-und liefere dieses zur¸ck.
+und liefere dieses zur√ºck.
 
-=head3 close() - Schlieﬂe Cursor
+=head3 close() - Schlie√üe Cursor
 
 =head4 Synopsis
 
@@ -40,7 +40,7 @@ destroy()
 
 =head4 Description
 
-Schlieﬂe Cursor. Die Methode liefert keinen Wert zur¸ck.
+Schlie√üe Cursor. Die Methode liefert keinen Wert zur√ºck.
 
 =head2 Akzessoren
 
@@ -63,7 +63,7 @@ Schlieﬂe Cursor. Die Methode liefert keinen Wert zur¸ck.
 
   $db = $cur->db;
 
-=head3 hits() - Liefere Anzahl der getroffenen Datens‰tze
+=head3 hits() - Liefere Anzahl der getroffenen Datens√§tze
 
 =head4 Synopsis
 
@@ -72,7 +72,7 @@ Schlieﬂe Cursor. Die Methode liefert keinen Wert zur¸ck.
 =head4 Description
 
 Liefere die Anzahl der von einem INSERT, UPDATE oder DELETE
-getroffenen Dates‰tze.
+getroffenen Dates√§tze.
 
 =head3 id() - Liefere Wert der Autoincrement-Kolumne
 
@@ -96,7 +96,7 @@ Liefere den Wert der Autoinkrement-Kolumne nach einem INSERT.
 
 =head4 Description
 
-Liefere die von save() durchgef¸hrte Datensatz-Operation: 0, 'I', 'U'
+Liefere die von save() durchgef√ºhrte Datensatz-Operation: 0, 'I', 'U'
 oder 'D'.
 
 =head3 rowClass() - Liefere Namen der Datensatz-Klasse
@@ -113,8 +113,8 @@ oder 'D'.
 
 =head4 Description
 
-Liefere das SQL-Statement, wie es an das DBMS ¸bermittelt und von
-ihm ausgef¸hrt wurde. Das von der Methode gelieferte Statement
+Liefere das SQL-Statement, wie es an das DBMS √ºbermittelt und von
+ihm ausgef√ºhrt wurde. Das von der Methode gelieferte Statement
 kann von dem Statement, das beim Aufruf angegeben wurde, verschieden
 sein, da ggf. interne Transformationsschritte auf das Statement
 anwendet wurden.
@@ -142,7 +142,7 @@ Liefere die Anzahl der Kolumnen.
 
 =head2 Tests
 
-=head3 fromCache() - Liefert der Cursor Datens‰tze aus dem Cache?
+=head3 fromCache() - Liefert der Cursor Datens√§tze aus dem Cache?
 
 =head4 Synopsis
 
@@ -150,10 +150,10 @@ Liefere die Anzahl der Kolumnen.
 
 =head4 Description
 
-Liefere wahr, wenn der Cursor Datens‰tze aus dem Cache liefert,
+Liefere wahr, wenn der Cursor Datens√§tze aus dem Cache liefert,
 andernfalls falsch.
 
-=head3 isSelect() - Liefert der Cursor Datens‰tze?
+=head3 isSelect() - Liefert der Cursor Datens√§tze?
 
 =head4 Synopsis
 
@@ -161,24 +161,24 @@ andernfalls falsch.
 
 =head4 Description
 
-Liefere wahr, wenn der Cursor Datens‰tze liefert,
+Liefere wahr, wenn der Cursor Datens√§tze liefert,
 andernfalls falsch.
 
 =head2 Zeitmessung
 
-=head3 startTime() - Liefere Startzeitpunkt der Statement-Ausf¸hrung
+=head3 startTime() - Liefere Startzeitpunkt der Statement-Ausf√ºhrung
 
 =head4 Synopsis
 
   $time = $cur->startTime;
 
-=head3 execTime() - Liefere Dauer der Statement-Ausf¸hrung
+=head3 execTime() - Liefere Dauer der Statement-Ausf√ºhrung
 
 =head4 Synopsis
 
   $time = $cur->execTime;
 
-=head3 elapsed() - Liefere Dauer seit Start der Statement-Ausf¸hrung
+=head3 elapsed() - Liefere Dauer seit Start der Statement-Ausf√ºhrung
 
 =head4 Synopsis
 
@@ -190,7 +190,7 @@ time()
 
 =head2 Bind
 
-=head3 bind() - Binde Werte an Statement und f¸hre Statement aus
+=head3 bind() - Binde Werte an Statement und f√ºhre Statement aus
 
 =head4 Synopsis
 
@@ -199,13 +199,13 @@ time()
 =head4 Description
 
 Binde eine Liste von Werten an die Platzhalter eines zuvor
-pr‰parierten SQL-Statements und f¸hre dieses Statement auf der
-Datenbank aus. Die Anzahl der Werte muﬂ ein Vielfaches der Anzahl der
+pr√§parierten SQL-Statements und f√ºhre dieses Statement auf der
+Datenbank aus. Die Anzahl der Werte mu√ü ein Vielfaches der Anzahl der
 Bind-Variablen sein.
 
 =head2 Fetch
 
-=head3 export() - Schreibe Datens‰tze in Datei
+=head3 export() - Schreibe Datens√§tze in Datei
 
 =head4 Synopsis
 
@@ -227,7 +227,7 @@ Pfad der Datei. Im Falle von '-' STDOUT.
 
 =item -limit => $n (Default: 0)
 
-Schreibe maximal $n Datens‰tze. 0 = Keine Begrenzung.
+Schreibe maximal $n Datens√§tze. 0 = Keine Begrenzung.
 
 =item -titles => $bool (Default: 0)
 
@@ -237,11 +237,11 @@ Schreibe als erste Zeile die Kolumentitel.
 
 =head4 Description
 
-Exportiere die Datenes‰tze des Cursors in Datei $file. Die Datens‰tze
+Exportiere die Datenes√§tze des Cursors in Datei $file. Die Datens√§tze
 werden im COPY-Format geschrieben, d.h. Kolumnentrenner ist C<\t> und
 Zeilentrenner ist C<\n>.
 
-=head3 fetch() - Liefere n‰chsten Datensatz der Ergebnismenge
+=head3 fetch() - Liefere n√§chsten Datensatz der Ergebnismenge
 
 =head4 Synopsis
 
@@ -249,7 +249,7 @@ Zeilentrenner ist C<\n>.
 
 =head4 Description
 
-Liefere den n‰chsten Datensatz aus der Ergebnismenge. Ist das Ende der
+Liefere den n√§chsten Datensatz aus der Ergebnismenge. Ist das Ende der
 Ergebnismenge erreicht, liefere undef.
 
 =head3 fetchAll() - Liefere gesamte Ergebnismenge
@@ -266,24 +266,24 @@ Ergebnismenge erreicht, liefere undef.
 
 =item $autoClose (Default: 0)
 
-Ist Parameter $autoClose angegeben und wahr, schlieﬂe den Cursor
+Ist Parameter $autoClose angegeben und wahr, schlie√üe den Cursor
 automatisch.
 
 =item $limit (Default: 0)
 
-Fetche maximal $limit Datens‰tze. Falls 0, fetche alle Datens‰tze.
+Fetche maximal $limit Datens√§tze. Falls 0, fetche alle Datens√§tze.
 
 =back
 
 =head4 Returns
 
-Liste der Datens‰tze (List-Kontext) der ein Resultset-Objekt
+Liste der Datens√§tze (List-Kontext) der ein Resultset-Objekt
 (Skalar-Kontect).
 
 =head4 Description
 
-Liefere die Ergebnismenge als Liste von Datens‰tzen oder als
-Tabelle. Ist der Parameter $autoClose angegeben und "wahr" schlieﬂe
+Liefere die Ergebnismenge als Liste von Datens√§tzen oder als
+Tabelle. Ist der Parameter $autoClose angegeben und "wahr" schlie√üe
 den Cursor automatisch.
 
 =head1 VERSION

@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Html::List - HTML-Aufzählungsliste
+Quiq::Html::List - HTML-AufzÃ¤hlungsliste
 
 =head1 BASE CLASS
 
@@ -10,7 +10,7 @@ L<Quiq::Html::Base|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html
 
 =head1 DESCRIPTION
 
-Die Klasse dient der Erzeugung von Aufzählungslisten in HTML.
+Die Klasse dient der Erzeugung von AufzÃ¤hlungslisten in HTML.
 Sie kann die Listenarten
 
 =over 2
@@ -38,7 +38,7 @@ erzeugen. Siehe Abschnitt L<EXAMPLES|"EXAMPLES">.
 =item isText => $bool (Default: 0)
 
 Der Content aller List-Items besteht aus Text, d.h. <, >, & werden
-geschützt.
+geschÃ¼tzt.
 
 =item items => \@arr (Default: [])
 
@@ -46,7 +46,7 @@ Content der List-Items.
 
 =item type => 'ordered' | 'unordered' | 'description' (Default: 'unordered')
 
-Legt fest, ob die Aufzählungsliste eine I<Ordered List> (<ol>), eine
+Legt fest, ob die AufzÃ¤hlungsliste eine I<Ordered List> (<ol>), eine
 I<Unordered List> (<ul>) oder eine I<Description List> (<dl>) ist.
 
 =back
@@ -111,8 +111,8 @@ liefert
 
 =head4 Description
 
-Instantiiere ein Aufzählungslisten-Objekt und liefere eine
-Referenz auf dieses Objekt zurück.
+Instantiiere ein AufzÃ¤hlungslisten-Objekt und liefere eine
+Referenz auf dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -125,8 +125,8 @@ Referenz auf dieses Objekt zurück.
 
 =head4 Description
 
-Generiere den HTML-Code eines Aufzählungslisten-Objekts und liefere
-diesen zurück. Als Klassenmethode gerufen, wird das Objekt intern
+Generiere den HTML-Code eines AufzÃ¤hlungslisten-Objekts und liefere
+diesen zurÃ¼ck. Als Klassenmethode gerufen, wird das Objekt intern
 erzeugt und mit den Attributen @keyVal instantiiert.
 
 =head1 VERSION

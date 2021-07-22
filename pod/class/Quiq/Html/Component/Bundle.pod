@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Html::Component::Bundle - Bündel von HTML-Komponenten
+Quiq::Html::Component::Bundle - BÃ¼ndel von HTML-Komponenten
 
 =head1 BASE CLASS
 
@@ -29,13 +29,13 @@ L<Quiq::List|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/List.pod>
   @js | $js = $b->js;
   @ready | $ready = $b->ready;
   
-  # Platzhalter-Liste für HTML
+  # Platzhalter-Liste fÃ¼r HTML
   @keyVal = $b->htmlPlaceholders;
 
 =head1 DESCRIPTION
 
 Ein Objekt der Klasse speichert mehrere HTML-Komponenten
-vom Typ Quiq::Html::Component und stellt Methoden zur Verfügung,
+vom Typ Quiq::Html::Component und stellt Methoden zur VerfÃ¼gung,
 deren Bestandteile abzufragen.
 
 =head1 SEE ALSO
@@ -76,7 +76,7 @@ Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head3 component() - Liefere HTML-Komponente
 
@@ -138,7 +138,7 @@ Array-Elemente, im Skalarkontext deren Konkatenation.
 Liefere den HTML-Code der Komponenten. Im Arraykontext die Liste der
 Array-Elemente, im Skalarkontext deren Konkatenation.
 
-=head3 htmlPlaceholders() - Platzhalterliste für HTML
+=head3 htmlPlaceholders() - Platzhalterliste fÃ¼r HTML
 
 =head4 Synopsis
 
@@ -146,11 +146,11 @@ Array-Elemente, im Skalarkontext deren Konkatenation.
 
 =head4 Returns
 
-Liste von Schlüssel/Wert-Paaren
+Liste von SchlÃ¼ssel/Wert-Paaren
 
 =head4 Description
 
-Liefere die Liste von Schlüssel/Wert-Paaren für eine
+Liefere die Liste von SchlÃ¼ssel/Wert-Paaren fÃ¼r eine
 HTML-Platzhalterersetzung.
 
 =head3 js() - JavaScript-Code der Komponenten

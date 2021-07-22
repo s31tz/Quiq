@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Html::Table::Base - Basisklasse für tabellengenerierende Klassen
+Quiq::Html::Table::Base - Basisklasse fÃ¼r tabellengenerierende Klassen
 
 =head1 BASE CLASS
 
@@ -10,13 +10,13 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Diese Klasse dient als Basisklasse für speziellere tabellengenerierende
+Diese Klasse dient als Basisklasse fÃ¼r speziellere tabellengenerierende
 Klassen. Sie organisiert "des Drumherum" einer HTML-Tabelle.
 Insbesondere besitzt sie die Attribute des table-Tag und rendert diesen.
 Die Zeilen werden von der Klasse nicht behandelt, dies ist Aufgabe
 der speziellen, abgeleiteten Klasse.
 
-Abgeleitete Klassen rufen für die Basisfunktionalität den Konstruktor
+Abgeleitete Klassen rufen fÃ¼r die BasisfunktionalitÃ¤t den Konstruktor
 und die html-Methode dieser Klasse auf.
 
 =head1 ATTRIBUTES
@@ -49,9 +49,9 @@ CSS-Id der Tabelle.
 
 =item indentPos => $n (Default: 0)
 
-Rücke den HTML-Code bis auf die erste Zeile um $n Leerzeichen ein.
-Diese Option ist nützlich, wenn die Tabelle für einen Platzhalter mit
-der Einrücktiefe $n in den HTML-Code eingesetzt werden soll.
+RÃ¼cke den HTML-Code bis auf die erste Zeile um $n Leerzeichen ein.
+Diese Option ist nÃ¼tzlich, wenn die Tabelle fÃ¼r einen Platzhalter mit
+der EinrÃ¼cktiefe $n in den HTML-Code eingesetzt werden soll.
 
 =item style => $cssCode (Default: undef)
 
@@ -76,7 +76,7 @@ Wert des width-Attributs der Tabelle.
 =head4 Description
 
 Instantiiere ein Tabellenobjekt mit den Eingenschaften @keyVal und
-liefere eine Referenz auf dieses Objekt zurück.
+liefere eine Referenz auf dieses Objekt zurÃ¼ck.
 
 Da der Konstruktor von einer Subklasse gerufen wird, kann die Subklasse
 den Umfang der Attribute erweitern.
@@ -111,7 +111,7 @@ Methode das Objekt instantiieren soll.
 
 =head4 Description
 
-Generiere den HTML-Code der Tablle und liefere diesen zurück.
+Generiere den HTML-Code der Tablle und liefere diesen zurÃ¼ck.
 
 =head1 VERSION
 

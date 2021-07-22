@@ -10,10 +10,10 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine Tabelle, die in Form
+Ein Objekt der Klasse reprÃ¤sentiert eine Tabelle, die in Form
 eines ASCII-Texts gegeben ist. Diese Darstellung wird an den
-Konstruktor übergeben und von diesem analysiert. Die Klasse stellt
-Methoden zur Verfügung, um die Eigenschaften der Tabelle abzufragen.
+Konstruktor Ã¼bergeben und von diesem analysiert. Die Klasse stellt
+Methoden zur VerfÃ¼gung, um die Eigenschaften der Tabelle abzufragen.
 
 =head2 Aufbau einer ASCII-Tabelle
 
@@ -27,10 +27,10 @@ Eine ASCII-Tabelle hat den allgemeinen Aufbau:
    4321 ABCD  ABCD
 
 Die Tabelle besteht aus einem Tabellen-Kopf und einem
-Tabellen-Körper. Der Kopf enthält die Kolumnen-Titel und der
-Körper die Kolumnen-Daten. Die beiden Bereiche werden durch eine
+Tabellen-KÃ¶rper. Der Kopf enthÃ¤lt die Kolumnen-Titel und der
+KÃ¶rper die Kolumnen-Daten. Die beiden Bereiche werden durch eine
 Trennzeile aus Bindestrichen (-) und Leerzeichen (SPACE)
-getrennt. Außer der Trennung in Kopf und Körper definiert die
+getrennt. AuÃŸer der Trennung in Kopf und KÃ¶rper definiert die
 Trennzeile durch die Bindestriche die Anzahl, Lage und
 Breite der einzelnen Kolumnen.
 
@@ -42,14 +42,14 @@ Zeichenpostion 11 bis 16. Die Positionsangaben sind zeilenbezogen
 und 0-basiert.
 
 Aus der Anordnung der Werte in einer Kolumne - I<sowohl im Kopf als
-auch im Körper> - ergibt sich, ob die Kolumne links, rechts oder
+auch im KÃ¶rper> - ergibt sich, ob die Kolumne links, rechts oder
 zentriert ausgerichtet ist. Bei einer links ausgerichteten
 Kolumne belegen I<alle> (nichtleeren) Werte die erste Zeichenpositon.
 Bei einer rechts ausgerichteten Kolumne belegen I<alle> (nichtleeren)
 Werte die letzte Zeichenpositon. Bei einer zentrierten Kolumne
 sind die Werte weder eindeutig links noch rechts ausgerichtet.
 
-Der Tabellen-Kopf, also die Titel, können mehrzeilig sein:
+Der Tabellen-Kopf, also die Titel, kÃ¶nnen mehrzeilig sein:
 
     Right Left
   Aligned Aligned Centered
@@ -59,7 +59,7 @@ Der Tabellen-Kopf, also die Titel, können mehrzeilig sein:
       321 ABC        ABC
      4321 ABCD      ABCD
 
-Die Titel sind optional, können also auch fehlen:
+Die Titel sind optional, kÃ¶nnen also auch fehlen:
 
   ----- ---- ------
       1 A      A
@@ -67,7 +67,7 @@ Die Titel sind optional, können also auch fehlen:
     321 ABC   ABC
    4321 ABCD  ABCD
 
-Die Kolumnenwerte können ebenfalls mehrzeilig sein:
+Die Kolumnenwerte kÃ¶nnen ebenfalls mehrzeilig sein:
 
     Right Left
   Aligned Aligned        Centered
@@ -81,11 +81,11 @@ Die Kolumnenwerte können ebenfalls mehrzeilig sein:
           row
 
 Bei einer Tabelle mit mehrzeiligen Kolumnenwerten werden die
-Zeilen durch Trennzeilen getrennt, gleichgültig, ob die einzelne
-Zeile einen mehrzeiligen Kolumnenwert enhält oder nicht (siehe
+Zeilen durch Trennzeilen getrennt, gleichgÃ¼ltig, ob die einzelne
+Zeile einen mehrzeiligen Kolumnenwert enhÃ¤lt oder nicht (siehe
 Zeile 2). Die Trennzeile kann eine einfache Leerzeile sein oder
 Bindestriche enthalten wie die Trennzeile zwischen Tabellen-Kopf
-und -Körper:
+und -KÃ¶rper:
 
     Right Left
   Aligned Aligned        Centered
@@ -105,8 +105,8 @@ Ferner gilt hinsichtlich der Formatierung:
 
 =item *
 
-Ist die Tabelle eingerückt, wird diese Einrückung automatisch
-entfernt. Die Einrückung muss aus Leerzeichen bestehen.
+Ist die Tabelle eingerÃ¼ckt, wird diese EinrÃ¼ckung automatisch
+entfernt. Die EinrÃ¼ckung muss aus Leerzeichen bestehen.
 
 =item *
 
@@ -141,7 +141,7 @@ Tabellen-Objekt
 =head4 Description
 
 Instantiiere ein Tabellen-Objekt und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 Eigenschaften
 
@@ -181,8 +181,8 @@ Referenz auf die Liste.
 
 =head4 Description
 
-Liefere die Liste der Kolumnenausrichtungen der Domäne $domain.
-Mögliche Ausrichtungen:
+Liefere die Liste der Kolumnenausrichtungen der DomÃ¤ne $domain.
+MÃ¶gliche Ausrichtungen:
 
 =over 2
 
@@ -192,11 +192,11 @@ Zentriert (centered).
 
 =item *
 
-Rechtsbündig (right aligned).
+RechtsbÃ¼ndig (right aligned).
 
 =item *
 
-Linksbündig (left aligned).
+LinksbÃ¼ndig (left aligned).
 
 =back
 
@@ -352,7 +352,7 @@ ASCII-Tabelle (String)
 =head4 Description
 
 Liefere die Tabelle als Zeichenkette, wie sie dem Konstruktor
-übergeben wurde, jedoch ohne Einrückung.
+Ã¼bergeben wurde, jedoch ohne EinrÃ¼ckung.
 
 =head1 VERSION
 

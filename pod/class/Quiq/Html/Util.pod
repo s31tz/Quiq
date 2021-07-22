@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Html::Util - Hilfsmethoden für die HTML-Generierung
+Quiq::Html::Util - Hilfsmethoden fÃ¼r die HTML-Generierung
 
 =head1 BASE CLASS
 
@@ -12,7 +12,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head2 Klassenmethoden
 
-=head3 insertDurationBytes() - Füge Ausführungszeit und Byteanzahl ein
+=head3 insertDurationBytes() - FÃ¼ge AusfÃ¼hrungszeit und Byteanzahl ein
 
 =head4 Synopsis
 

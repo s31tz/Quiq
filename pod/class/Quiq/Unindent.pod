@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Unindent - Entferne Einrückung von "Here Document" oder String-Literal
+Quiq::Unindent - Entferne EinrÃ¼ckung von "Here Document" oder String-Literal
 
 =head1 SYNOPSIS
 
@@ -10,7 +10,7 @@ Klasse laden:
 
   use Quiq::Unindent;
 
-Eingerücktes "Here Document":
+EingerÃ¼cktes "Here Document":
 
   {
       $text = Quiq::Unindent->hereDoc(<<'    EOT');
@@ -21,7 +21,7 @@ Eingerücktes "Here Document":
       print $text;
   }
 
-Eingerücktes mehrzeiliges String-Literal:
+EingerÃ¼cktes mehrzeiliges String-Literal:
 
   {
       $text = Quiq::Unindent->string('
@@ -32,22 +32,22 @@ Eingerücktes mehrzeiliges String-Literal:
       print $text;
   }
 
-Resultat in beiden Fällen:
+Resultat in beiden FÃ¤llen:
 
   Dies ist
   ein Text
 
 =head1 DESCRIPTION
 
-Die Klasse stellt Methoden zur Verfügung, mit denen die in der
-Regel unerwünschte Einrückung von eingerückten mehrzeiligen
+Die Klasse stellt Methoden zur VerfÃ¼gung, mit denen die in der
+Regel unerwÃ¼nschte EinrÃ¼ckung von eingerÃ¼ckten mehrzeiligen
 String-Literalen und "Here Documents" entfernt werden kann.
 
 =head1 METHODS
 
 =head2 Klassenmethoden
 
-=head3 hereDoc() - Entferne Einrückung von "Here Document"
+=head3 hereDoc() - Entferne EinrÃ¼ckung von "Here Document"
 
 =head4 Synopsis
 
@@ -69,21 +69,21 @@ Fortsetzungszeichen. Siehe Quiq::String->joinLines().
 
 =item $text
 
-Eingerückter Text.
+EingerÃ¼ckter Text.
 
 =back
 
 =head4 Description
 
-Entferne von allen Zeilen die tiefste Einrückung, die allen Zeilen
-gemeinsam ist, und liefere die resultierende Zeichenkette zurück,
+Entferne von allen Zeilen die tiefste EinrÃ¼ckung, die allen Zeilen
+gemeinsam ist, und liefere die resultierende Zeichenkette zurÃ¼ck,
 wobei
 
 =over 2
 
 =item *
 
-alle Sub-Einrückungen erhalten bleiben
+alle Sub-EinrÃ¼ckungen erhalten bleiben
 
 =item *
 
@@ -91,7 +91,7 @@ alle Leerzeilen erhalten bleiben, auch am Anfang und am Ende
 
 =back
 
-Ist der Ende-Marker eingerückt, muss dessen Einrückung bei der
+Ist der Ende-Marker eingerÃ¼ckt, muss dessen EinrÃ¼ckung bei der
 Vereinbarung des Markers angegeben werden. Siehe C<<< <<' EOT' >>> in
 den Beispielen.
 
@@ -101,7 +101,7 @@ den Beispielen.
 
 =item 1.
 
-Gegenüberstellung der Syntax
+GegenÃ¼berstellung der Syntax
 
   {
       $text = Quiq::Unindent->hereDoc(<<'    EOT');
@@ -110,7 +110,7 @@ Gegenüberstellung der Syntax
       EOT
   }
 
-ist äquivalent zu
+ist Ã¤quivalent zu
 
   {
       $text = <<'EOT';
@@ -121,7 +121,7 @@ ist äquivalent zu
 
 =item 2.
 
-Sub-Einrückungen und Leerzeilen
+Sub-EinrÃ¼ckungen und Leerzeilen
 
   {
       $text = Quiq::Unindent->hereDoc(<<'    EOT');
@@ -145,11 +145,11 @@ ergibt
   |zweiter Absatz.
   |
 
-d.h. Sub-Einrückungen und Leerzeilen bleiben erhalten.
+d.h. Sub-EinrÃ¼ckungen und Leerzeilen bleiben erhalten.
 
 =back
 
-=head3 string() - Entferne Einrückung von mehrzeiligem String-Literal
+=head3 string() - Entferne EinrÃ¼ckung von mehrzeiligem String-Literal
 
 =head4 Synopsis
 
@@ -171,13 +171,13 @@ Fortsetzungszeichen. Siehe Quiq::String->joinLines().
 
 =item $text
 
-Eingerückter Text.
+EingerÃ¼ckter Text.
 
 =back
 
 =head4 Description
 
-Wie Methode L<hereDoc|"hereDoc() - Entferne Einrückung von "Here Document"">(), wobei über die Einrückung hinaus
+Wie Methode L<hereDoc|"hereDoc() - Entferne EinrÃ¼ckung von "Here Document"">(), wobei Ã¼ber die EinrÃ¼ckung hinaus
 
 =over 2
 
@@ -191,9 +191,9 @@ die Leerzeichen am Ende entfernt werden (sofern vorhanden)
 
 =back
 
-Diese (zusätzlichen) Manipulationen sorgen dafür, dass der
+Diese (zusÃ¤tzlichen) Manipulationen sorgen dafÃ¼r, dass der
 Leerraum entfernt wird, der dadurch entsteht, wenn die
-Anführungsstriche auf einer eigenen Zeile stehen.
+AnfÃ¼hrungsstriche auf einer eigenen Zeile stehen.
 
 =head4 Examples
 
@@ -201,7 +201,7 @@ Anführungsstriche auf einer eigenen Zeile stehen.
 
 =item 1.
 
-Gegenüberstellung der Syntax:
+GegenÃ¼berstellung der Syntax:
 
   {
       $text = Quiq::Unindent->string('
@@ -210,7 +210,7 @@ Gegenüberstellung der Syntax:
       ');
   }
 
-ist äquivalent zu
+ist Ã¤quivalent zu
 
   {
       $text = 'Dies ist
@@ -239,7 +239,7 @@ Varianten
 
 =back
 
-=head3 trim() - Entferne Einrückung und Whitespace am Anfang und Ende
+=head3 trim() - Entferne EinrÃ¼ckung und Whitespace am Anfang und Ende
 
 =head4 Synopsis
 
@@ -256,14 +256,14 @@ Fortsetzungszeichen. Siehe Quiq::String->joinLines().
 
 =item $strIn
 
-Eingerückter Text.
+EingerÃ¼ckter Text.
 
 =back
 
 =head4 Description
 
-Wie die Methoden L<hereDoc|"hereDoc() - Entferne Einrückung von "Here Document"">() und L<string|"string() - Entferne Einrückung von mehrzeiligem String-Literal">(), wobei über die
-Einrückung hinaus
+Wie die Methoden L<hereDoc|"hereDoc() - Entferne EinrÃ¼ckung von "Here Document"">() und L<string|"string() - Entferne EinrÃ¼ckung von mehrzeiligem String-Literal">(), wobei Ã¼ber die
+EinrÃ¼ckung hinaus
 
 =over 2
 
@@ -277,12 +277,12 @@ jeglicher Leerraum am Ende entfernt wird
 
 =back
 
-Diese (zusätzlichen) Manipulationen sorgen dafür, dass der Text
-als solches - d.h. ohne Einrückung und ohne Leerraum am Anfang und
+Diese (zusÃ¤tzlichen) Manipulationen sorgen dafÃ¼r, dass der Text
+als solches - d.h. ohne EinrÃ¼ckung und ohne Leerraum am Anfang und
 am Ende - geliefert wird.
 
-Die Methode ist speziell für die I<interne> Bearbeitung eines
-mehrzeiligen, ggf. mit einer Einrückung versehenen Parameterns
+Die Methode ist speziell fÃ¼r die I<interne> Bearbeitung eines
+mehrzeiligen, ggf. mit einer EinrÃ¼ckung versehenen Parameterns
 geeignet.
 
 =head4 Examples
@@ -331,7 +331,7 @@ Interne Anwendung
       ...
   }
 
-Aufruf mit eingerücktem String-Literal, das I<intern> behandelt wird:
+Aufruf mit eingerÃ¼cktem String-Literal, das I<intern> behandelt wird:
 
   $db->select("
       SELECT
@@ -361,14 +361,14 @@ Fortsetzungszeichen. Siehe Quiq::String->joinLines().
 
 =item $strIn
 
-Eingerückter Text.
+EingerÃ¼ckter Text.
 
 =back
 
 =head4 Description
 
-Wie die Methode L<trim|"trim() - Entferne Einrückung und Whitespace am Anfang und Ende">(), jedoch wird am Ende genau ein Newline
-angehängt, sofern der Sting nicht leer ist.
+Wie die Methode L<trim|"trim() - Entferne EinrÃ¼ckung und Whitespace am Anfang und Ende">(), jedoch wird am Ende genau ein Newline
+angehÃ¤ngt, sofern der Sting nicht leer ist.
 
 =head1 VERSION
 

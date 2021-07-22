@@ -34,8 +34,8 @@ Achsengrafik in Bild rendern:
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine gezeichnete X- oder Y-Achse
-einschließlich Ticks und Labeln. Mit den Methoden C<< $g->width() >>
+Ein Objekt der Klasse reprÃ¤sentiert eine gezeichnete X- oder Y-Achse
+einschlieÃŸlich Ticks und Labeln. Mit den Methoden C<< $g->width() >>
 und C<< $g->height() >> kann der Platzbedarf der Achse ermittelt werden,
 I<bevor> sie konkret gezeichnet wird.
 
@@ -66,7 +66,7 @@ Farbe der Ticks.
 =item tickDirection => $direction (Default: 'd' bei X-Achse, 'l' bei Y-Achse)
 
 Richtung, die die Ticks der Achse sowie die Label gezeichnet werden.
-Mögliche Werte bei einer X-Achse: 'u' (up), 'd' (down). Mögliche Werte
+MÃ¶gliche Werte bei einer X-Achse: 'u' (up), 'd' (down). MÃ¶gliche Werte
 bei einer Y-Achse: 'l' (left), 'r' (right).
 
 =item tickLabelGap => $n (Default: 1)
@@ -75,7 +75,7 @@ Abstand zwischen Tick und Label.
 
 =item tickLength => $n (Default: 4)
 
-Länge eines beschrifteten Tick.
+LÃ¤nge eines beschrifteten Tick.
 
 =back
 
@@ -85,11 +85,11 @@ Quelltext:
 
   r1-gd-graphic-axis-example
 
-=head2 X-Achse bei verschiedenen Fontgrößen
+=head2 X-Achse bei verschiedenen FontgrÃ¶ÃŸen
 
     [Bild nur im Browser sichtbar]
 
-=head2 Y-Achse bei verschiedenen Fontgrößen
+=head2 Y-Achse bei verschiedenen FontgrÃ¶ÃŸen
 
     [Bild nur im Browser sichtbar]
 
@@ -115,7 +115,7 @@ Quelltext:
 
 Instantiiere die Grafik einer X- oder Y-Achse mit den
 Darstellungseigenschaften @keyVal (s. Abschnitt L<ATTRIBUTES|"ATTRIBUTES">) und
-liefere eine Referenz auf das Objekt zurück.
+liefere eine Referenz auf das Objekt zurÃ¼ck.
 
 =head2 Rendern
 
@@ -144,7 +144,7 @@ des Achsen-Minimums.
 
 =head2 Objektmethoden
 
-=head3 length() - Länge der Achse
+=head3 length() - LÃ¤nge der Achse
 
 =head4 Synopsis
 
@@ -152,7 +152,7 @@ des Achsen-Minimums.
 
 =head4 Description
 
-Liefere die Länge der Achse (= Achsenlinie) in Pixeln.
+Liefere die LÃ¤nge der Achse (= Achsenlinie) in Pixeln.
 
 =head3 width() - Breite der Achsen-Grafik
 
@@ -163,10 +163,10 @@ Liefere die Länge der Achse (= Achsenlinie) in Pixeln.
 =head4 Description
 
 Liefere die Gesamt-Breite der Achsen-Grafik in Pixeln. Im Falle
-einer X-Achse kann die Achsen-Grafik wegen überstehender Label-Texte
-links und rechts breiter sein als die Länge der Achse.
+einer X-Achse kann die Achsen-Grafik wegen Ã¼berstehender Label-Texte
+links und rechts breiter sein als die LÃ¤nge der Achse.
 
-=head3 height() - Höhe der Achsen-Grafik
+=head3 height() - HÃ¶he der Achsen-Grafik
 
 =head4 Synopsis
 
@@ -174,9 +174,9 @@ links und rechts breiter sein als die Länge der Achse.
 
 =head4 Description
 
-Liefere die Gesamt-Höhe der Achsen-Grafik in Pixeln. Im Falle
-einer Y-Achse kann die Achsen-Grafik wegen überstehender Label-Texte
-oben und unten höher sein als die Länge der Achse.
+Liefere die Gesamt-HÃ¶he der Achsen-Grafik in Pixeln. Im Falle
+einer Y-Achse kann die Achsen-Grafik wegen Ã¼berstehender Label-Texte
+oben und unten hÃ¶her sein als die LÃ¤nge der Achse.
 
 =head1 VERSION
 

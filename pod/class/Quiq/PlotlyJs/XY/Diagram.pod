@@ -14,13 +14,13 @@ Ein Objekt der Klasse speichert Metadaten zu einem XY-Diagramm,
 das von der Klasse B<< Quiq::PlotlyJs::XY::DiagramGroup >>
 geplottet wird.
 
-Die zu plottenden Daten können entweder mittels der Komponenten B<x>,
-B<y> (und ggf. B<z>) übergeben werden oder sie werden per
+Die zu plottenden Daten kÃ¶nnen entweder mittels der Komponenten B<x>,
+B<y> (und ggf. B<z>) Ã¼bergeben werden oder sie werden per
 Ajax-Aufruf geholt, wenn das Attribut B<url> gesetzt ist.
 
 Es ist sinnvoll, die Wertebereiche B<xMin>, B<xMax>, B<yMin>, B<yMax>
 explizit vorzugeben. Dies ist nicht zwingend erforderlich, da
-Plotly.js die Wertebereiche auch selbständig setzt, dann aber nach
+Plotly.js die Wertebereiche auch selbstÃ¤ndig setzt, dann aber nach
 eigenen Kriterien. Ist kein Y-Wertebereich vorgegeben, wird z.B. bei
 B<fill: 'tozeroy'> die Y-Achse bis 0 ausgedeht, auch wenn alle
 Y-Werte > 0 sind.
@@ -38,7 +38,7 @@ Y-Werte > 0 sind.
 =head4 Attributes
 
 Pflichtangaben sind B<fett> wiedergegeben. Die zu plottenden Daten
-werden entweder per B<x>, B<y> (und ggf. B<z>) übergeben oder via
+werden entweder per B<x>, B<y> (und ggf. B<z>) Ã¼bergeben oder via
 B<url> besorgt.
 
 =over 4
@@ -46,13 +46,13 @@ B<url> besorgt.
 =item color => $color (Default: '#ff0000')
 
 Farbe, in der die Kurve und Titel dargestellt werden. Alle Schreibweisen,
-die in CSS erlaubt sind, sind zulässig, also NAME, #XXXXXX
+die in CSS erlaubt sind, sind zulÃ¤ssig, also NAME, #XXXXXX
 oder rgb(NNN,NNN,NNN,NNN).
 
 =item html => $html
 
-HTML-Code der zum Div-Container des Diagramms hinzugefügt wird,
-z.B. um absolut postionierte Divs über den Diagramm-Bereich zu legen.
+HTML-Code der zum Div-Container des Diagramms hinzugefÃ¼gt wird,
+z.B. um absolut postionierte Divs Ã¼ber den Diagramm-Bereich zu legen.
 
 =item B<< title => $title >>
 
@@ -71,7 +71,7 @@ Kleinster Wert der X-Achse.
 
 =item xMax => $val
 
-Größter Wert der X-Achse.
+GrÃ¶ÃŸter Wert der X-Achse.
 
 =item y => \@y
 
@@ -83,7 +83,7 @@ Kleinster Wert der Y-Achse.
 
 =item yMax => $val
 
-Größter Wert der Y-Achse.
+GrÃ¶ÃŸter Wert der Y-Achse.
 
 =item B<< yTitle => $str >>
 
@@ -104,8 +104,8 @@ Referenz auf Array von Z-Werten. Dies ist eine Liste von Markerfarben.
 
 =item zName => $name
 
-Name für die Liste der Markerfarben. Wird der Liste der
-Markerfarben ein Name gegeben, erscheint eine zusätzliche Option
+Name fÃ¼r die Liste der Markerfarben. Wird der Liste der
+Markerfarben ein Name gegeben, erscheint eine zusÃ¤tzliche Option
 in der Shape-Auswahlliste.
 
 =back
@@ -117,7 +117,7 @@ Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head1 VERSION
 

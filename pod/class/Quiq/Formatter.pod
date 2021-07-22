@@ -25,9 +25,9 @@ Path-Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
-dieses Objekt zurück. Da die Klasse ausschließlich Klassenmethoden
-enthält, hat das Objekt ausschließlich die Funktion, eine abkürzende
-Aufrufschreibweise zu ermöglichen.
+dieses Objekt zurÃ¼ck. Da die Klasse ausschlieÃŸlich Klassenmethoden
+enthÃ¤lt, hat das Objekt ausschlieÃŸlich die Funktion, eine abkÃ¼rzende
+Aufrufschreibweise zu ermÃ¶glichen.
 
 =head2 Zahlen
 
@@ -39,8 +39,8 @@ Aufrufschreibweise zu ermöglichen.
 
 =head4 Description
 
-Entferne unnötige Nullen von einer Zahl, forciere als Dezimaltrennzeichen
-einen Punkt (anstelle eines Komma) und liefere das Resultat zurück.
+Entferne unnÃ¶tige Nullen von einer Zahl, forciere als Dezimaltrennzeichen
+einen Punkt (anstelle eines Komma) und liefere das Resultat zurÃ¼ck.
 
 =head4 Example
 
@@ -101,18 +101,18 @@ Reduzierte ISO-Zeitdarstellung (String)
 
 =head4 Description
 
-Erzeuge eine "reduzierte" ISO-Zeitdarstellung für Zeitpunkt $time
+Erzeuge eine "reduzierte" ISO-Zeitdarstellung fÃ¼r Zeitpunkt $time
 relativ zu Bezugszeitpunkt $now. Die I<unreduzierte> ISO-Zeitdarstellung
 hat das Format:
 
   YYYY-MM-DD HH:MM:SS
 
 Die I<reduzierte> Dastellung ist identisch aufgebaut, nur dass alle
-führenden Zeitkomponenten fehlen, die zum Bezugszeitpunkt $now
+fÃ¼hrenden Zeitkomponenten fehlen, die zum Bezugszeitpunkt $now
 identisch sind.
 
-Diese Darstellung ist nützlich, um in einer Liste von Zeiten die
-nah am aktuellen Zeipunkt liegenden Zeiten leichter erkennen zu können,
+Diese Darstellung ist nÃ¼tzlich, um in einer Liste von Zeiten die
+nah am aktuellen Zeipunkt liegenden Zeiten leichter erkennen zu kÃ¶nnen,
 z.B. in einer Verzeichnisliste:
 
   $ quiq-ls ~/dvl

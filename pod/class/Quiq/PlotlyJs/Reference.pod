@@ -22,8 +22,8 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 Die L<Dokumentation zu Plotly.js|https://plot.ly/javascript/> ist
 umfangreich. Ein wichtiger Teil davon, die
 L<Full Reference|https://plot.ly/javascript/reference/> mit der Beschreibung aller
-Attribute ist allerdings umständlich zu handhaben. Diese Klasse
-erzeugt eine L<übersichtlichere Fassung der Full Reference|https://s31tz.github.io/plotlyjs-reference.html>.
+Attribute ist allerdings umstÃ¤ndlich zu handhaben. Diese Klasse
+erzeugt eine L<Ã¼bersichtlichere Fassung der Full Reference|https://s31tz.github.io/plotlyjs-reference.html>.
 
 =head1 EXAMPLE
 
@@ -65,12 +65,12 @@ Wurzelknoten des Dokument-Baums (Object)
 
 =head4 Description
 
-Parse das Originaldokument, überführe es in einen Dokumentbaum
-und liefere eine Referenz auf den Wurzelknoten dieses Baums zurück.
+Parse das Originaldokument, Ã¼berfÃ¼hre es in einen Dokumentbaum
+und liefere eine Referenz auf den Wurzelknoten dieses Baums zurÃ¼ck.
 
-=head2 HTML-Repräsentation
+=head2 HTML-ReprÃ¤sentation
 
-=head3 asHtml() - Erzeuge HTML-Repräsentation
+=head3 asHtml() - Erzeuge HTML-ReprÃ¤sentation
 
 =head4 Synopsis
 
@@ -92,11 +92,11 @@ Quiq::Html::Tag Objekt.
 
 =item -document => $bool (Default: 0)
 
-Erzeuge ein vollständiges HTML-Dokument.
+Erzeuge ein vollstÃ¤ndiges HTML-Dokument.
 
 =item -indent => $n (Default: 22)
 
-Rücke die Ebenen um $n Pixel ein.
+RÃ¼cke die Ebenen um $n Pixel ein.
 
 =back
 

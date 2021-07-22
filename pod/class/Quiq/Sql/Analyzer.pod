@@ -19,7 +19,7 @@ L<Quiq::Dbms|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Dbms.pod>
 
 =head2 Objektmethoden
 
-=head3 isCreateFunction() - Prüfe auf CREATE FUNCTION
+=head3 isCreateFunction() - PrÃ¼fe auf CREATE FUNCTION
 
 =head4 Synopsis
 
@@ -41,8 +41,8 @@ Boolean
 
 =head4 Description
 
-Prüfe, ob SQL-Statement $stmt ein C<CREATE FUNCTION> oder C<CREATE OR
-REPLACE FUNCTION> Statement enthält. Wenn ja, liefere 1, andernfalls 0.
+PrÃ¼fe, ob SQL-Statement $stmt ein C<CREATE FUNCTION> oder C<CREATE OR
+REPLACE FUNCTION> Statement enthÃ¤lt. Wenn ja, liefere 1, andernfalls 0.
 
 =head1 VERSION
 

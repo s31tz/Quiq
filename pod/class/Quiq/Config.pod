@@ -17,10 +17,10 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse Quiq::Config repräsentiert eine Menge von
+Ein Objekt der Klasse Quiq::Config reprÃ¤sentiert eine Menge von
 Attribut/Wert-Paaren, die in einer Perl-Datei definiert sind.
 
-Beispiel für den Inhalt einer Konfigurationsdatei:
+Beispiel fÃ¼r den Inhalt einer Konfigurationsdatei:
 
   host => 'localhost',
   datenbank => 'entw1',
@@ -28,7 +28,7 @@ Beispiel für den Inhalt einer Konfigurationsdatei:
 
 =head2 Platzhalterersetzung
 
-Im Wert einer Konfigurationsvariable können Platzhalter
+Im Wert einer Konfigurationsvariable kÃ¶nnen Platzhalter
 eingebettet sein. Ein solcher Platzhalter wird mit Prozentzeichen
 (%) begrenzt und beim Lese-Zugriff durch den Wert der betreffenden
 Konfigurationsvariable ersetzt. Beispiel:
@@ -51,8 +51,8 @@ Konfigurationsvariable ersetzt. Beispiel:
 =item %CWD%
 
 Wird durch den Pfad des aktuellen Verzeichnisses ersetzt.
-Anwendungsfall: Testkonfiguration für Zugriff auf aktuelles
-Verzeichnis über einen Dienst wie FTP:
+Anwendungsfall: Testkonfiguration fÃ¼r Zugriff auf aktuelles
+Verzeichnis Ã¼ber einen Dienst wie FTP:
 
   test.conf
   ---------
@@ -83,17 +83,17 @@ dem Inhalt $text.
 
 =item -secure => $bool (Default: 0)
 
-Prüfe die Sicherheit der Datei. Wenn gesetzt, wird geprüft,
-ob die Datei nur für den Benutzer lesbar/schreibbar ist.
+PrÃ¼fe die Sicherheit der Datei. Wenn gesetzt, wird geprÃ¼ft,
+ob die Datei nur fÃ¼r den Benutzer lesbar/schreibbar ist.
 
 =back
 
 =head4 Description
 
 [1] Instantiiere Konfigurationsobjekt aus einer der Dateien @files
-und liefere eine Referenz auf dieses Objekt zurück. Beginnt $file
+und liefere eine Referenz auf dieses Objekt zurÃ¼ck. Beginnt $file
 mit einer Tilde (~), wird sie zum Homedir des rufenden Users
-expandiert. Die erste gefundene Datei wird geöffnet.
+expandiert. Die erste gefundene Datei wird geÃ¶ffnet.
 
 [2] Als Parameter ist der Konfigurationscode als Zeichenkette
 der Form "$key => $val, ..." angegeben.

@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::PostgreSql::Psql - Wrapper für psql
+Quiq::PostgreSql::Psql - Wrapper fÃ¼r psql
 
 =head1 BASE CLASS
 
@@ -16,7 +16,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Die Klasse stellt einen Wrapper für den PostgreSQL-Client psql dar.
+Die Klasse stellt einen Wrapper fÃ¼r den PostgreSQL-Client psql dar.
 
 =head1 METHODS
 
@@ -45,7 +45,7 @@ Der Name muss in der Datenbank-Konfigurationsdatei definiert sein.
 
 =item -command => $cmd
 
-Führe Kommando $cmd aus und terminiere die Verbindung.
+FÃ¼hre Kommando $cmd aus und terminiere die Verbindung.
 
 =item -echo => $bool (Default: I<wenn -script 1, sonst 0>)
 
@@ -57,12 +57,12 @@ Logge Sitzung nach Datei $file.
 
 =item -script => $file
 
-Führe SQL-Skript $file aus und terminiere die Verbindung.
+FÃ¼hre SQL-Skript $file aus und terminiere die Verbindung.
 
 =item -showInternal => $bool (Default: 0)
 
 Gib die Queries aus, die psql im Zusammenhang mit Backslash-Kommandos
-intern ausführt.
+intern ausfÃ¼hrt.
 
 =item -stopOnError => $bool (Default: I<wenn -script 1, sonst 0>)
 
@@ -70,18 +70,18 @@ Terminiere beim ersten Fehler.
 
 =item -debug => $bool (Default: 0)
 
-Gib das ausgeführte psql-Kommando auf STDOUT aus.
+Gib das ausgefÃ¼hrte psql-Kommando auf STDOUT aus.
 
 =back
 
 =head4 Returns
 
-Bei interaktiver Sitzung 0. Bei Skript- oder Kommando-Ausführung
+Bei interaktiver Sitzung 0. Bei Skript- oder Kommando-AusfÃ¼hrung
 wie bei psql(1).
 
 =head4 Description
 
-Rufe psql auf und führe eine Anmeldung durch, auch bei
+Rufe psql auf und fÃ¼hre eine Anmeldung durch, auch bei
 Passwort-Authentisierung. Die Datenbank kann per Name kontaktiert werden
 kann, wenn der UDL in die Konfiguration (s. Quiq::Database::Config)
 eingetragen wurde.

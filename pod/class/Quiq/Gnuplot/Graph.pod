@@ -10,7 +10,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen Graph.
+Ein Objekt der Klasse reprÃ¤sentiert einen Graph.
 
 =head1 METHODS
 
@@ -24,7 +24,7 @@ Ein Objekt der Klasse repräsentiert einen Graph.
 
 =head2 Objektmethoden
 
-=head3 hasData() - Prüfe, ob Graph Daten hat
+=head3 hasData() - PrÃ¼fe, ob Graph Daten hat
 
 =head4 Synopsis
 

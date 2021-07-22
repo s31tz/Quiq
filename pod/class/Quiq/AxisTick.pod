@@ -10,11 +10,11 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Tick-Objekt repräsentiert eine Postion auf einer Plot-Achse, an
+Ein Tick-Objekt reprÃ¤sentiert eine Postion auf einer Plot-Achse, an
 der eine Markierung - mit oder ohne Label - gesetzt wird.
 Das Tick-Objekt ist einem Achsen-Objekt zugeordnet.
-Über das Tick-Objekt gelangt eine Klasse, die eine Plot-Achse zeichnet,
-an alle Information, die zum Zeichnen des Tick nötig ist.
+Ãœber das Tick-Objekt gelangt eine Klasse, die eine Plot-Achse zeichnet,
+an alle Information, die zum Zeichnen des Tick nÃ¶tig ist.
 
 =head1 ATTRIBUTES
 
@@ -57,7 +57,7 @@ Wert des Tick.
 =head4 Description
 
 Instantiiere ein Tick-Objekt und liefere eine Referenz auf dieses
-Objekt zurück.
+Objekt zurÃ¼ck.
 
 =head2 Attributmethoden
 
@@ -104,7 +104,7 @@ Liefere das Tick-Label, also die Achsenbeschriftung.
 Liefere die Breite des Tick. Bei einem Tick mit Label wird die Breite
 des Tick von seinem Label bestimmt.
 
-=head3 height() - Höhe des Tick
+=head3 height() - HÃ¶he des Tick
 
 =head4 Synopsis
 
@@ -112,7 +112,7 @@ des Tick von seinem Label bestimmt.
 
 =head4 Description
 
-Liefere die Höhe des Tick. Bei einem Tick mit Label wird die Höhe
+Liefere die HÃ¶he des Tick. Bei einem Tick mit Label wird die HÃ¶he
 des Tick von seinem Label bestimmt.
 
 =head1 VERSION

@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::ContentProcessor::File - Basisklasse für Ausgabe-Dateien
+Quiq::ContentProcessor::File - Basisklasse fÃ¼r Ausgabe-Dateien
 
 =head1 BASE CLASS
 

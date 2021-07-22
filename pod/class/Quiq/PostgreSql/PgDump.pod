@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::PostgreSql::PgDump - Wrapper für pg_dump
+Quiq::PostgreSql::PgDump - Wrapper fÃ¼r pg_dump
 
 =head1 BASE CLASS
 
@@ -16,7 +16,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Die Klasse stellt einen Wrapper für den PostgreSQL-Client pg_dump dar.
+Die Klasse stellt einen Wrapper fÃ¼r den PostgreSQL-Client pg_dump dar.
 
 =head1 EXAMPLE
 
@@ -52,7 +52,7 @@ Alle Optionen von C<pg_dump>, plus
 
 =item -debug => $bool (Default: 0)
 
-Gib das ausgeführte pg_dump-Kommando auf STDOUT aus.
+Gib das ausgefÃ¼hrte pg_dump-Kommando auf STDOUT aus.
 
 =back
 

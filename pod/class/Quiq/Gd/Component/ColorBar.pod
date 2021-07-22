@@ -20,7 +20,7 @@ Breite der Grafik in Pixeln.
 
 =item B<< height => $int >> (Default: keiner)
 
-Höhe der Grafik in Pixeln.
+HÃ¶he der Grafik in Pixeln.
 
 =item colors => \@colors (Default: [])
 
@@ -75,7 +75,7 @@ Grafik:
 
 Instantiiere ein Grafik-Objekt mit den Eigenschaften @keyVal
 (s. Abschnitt L<ATTRIBUTES|"ATTRIBUTES">) und liefere eine Referenz auf das Objekt
-zurück.
+zurÃ¼ck.
 
 =head2 Zeichnen
 
@@ -90,7 +90,7 @@ zurück.
 =head4 Description
 
 Zeichne die Grafik in Bild $img an Position ($x,$y).
-Die Methode liefert keinen Wert zurück.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head2 Objektmethoden
 

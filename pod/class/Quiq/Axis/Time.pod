@@ -25,18 +25,18 @@ L<Quiq::Axis|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Axis.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert die Definition einer Zeit-Achse
+Ein Objekt der Klasse reprÃ¤sentiert die Definition einer Zeit-Achse
 eines XY-Plots. Die Achse kann eine X- oder eine Y-Achse sein.
 Die Klasse berechnet eine geeignete Einteilung der Achse in Ticks
-und Unter-Ticks unter Berücksichtigung der echten Breite/Höhe der
+und Unter-Ticks unter BerÃ¼cksichtigung der echten Breite/HÃ¶he der
 Tick-Label. Die betreffenden Tick-Objekte werden von den Methoden
 $ax->ticks() und $ax->subTicks() geliefert.
 
 =head2 Font-Klasse
 
-Die Achseneinteilung kann für beliebige Fonts berechnet werden. Es
+Die Achseneinteilung kann fÃ¼r beliebige Fonts berechnet werden. Es
 wird lediglich vorausgesetzt, dass die Font-Klasse zwei Methoden zur
-Berechnung der Label-Breite und der Label-Höhe implementiert:
+Berechnung der Label-Breite und der Label-HÃ¶he implementiert:
 
   $n = $fnt->stringWidth($str);
   $n = $fnt->stringHeight($str);
@@ -51,11 +51,11 @@ Orientierung der Achse: 'x' oder 'y'.
 
 =item font => $font (Default: keiner)
 
-Font für die Tick-Label.
+Font fÃ¼r die Tick-Label.
 
 =item length => $int (Default: keiner)
 
-Länge der Achse.
+LÃ¤nge der Achse.
 
 =item min => $float (Default: keiner)
 
@@ -63,7 +63,7 @@ Kleinster Wert auf der Achse.
 
 =item max => $float (Default: keiner)
 
-Größter Wert auf der Achse.
+GrÃ¶ÃŸter Wert auf der Achse.
 
 =item minTickGap => $int (Default: 5)
 
@@ -71,7 +71,7 @@ Mindestabstand zwischen zwei Ticks: C<< LABELL<lt>--minTickGap-->LABEL >>
 
 =item debug => $bool (Default: 0)
 
-Gib Information über die Tickberechnung auf STDERR aus.
+Gib Information Ã¼ber die Tickberechnung auf STDERR aus.
 
 =back
 
@@ -89,7 +89,7 @@ Gib Information über die Tickberechnung auf STDERR aus.
 
 Instantiiere ein Achsen-Objekt auf Basis der Angaben @keyVal,
 berechne die beste Achseneinteilung, und liefere eine Referenz auf
-das Objekt zurück.
+das Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -105,9 +105,9 @@ Siehe Basisklasse
 
 =head4 Description
 
-Liefere für Schrittweite $step den ersten Tick in Weltkoordinaten.
+Liefere fÃ¼r Schrittweite $step den ersten Tick in Weltkoordinaten.
 
-=head3 labelSize() - Tickgröße in Pixeln
+=head3 labelSize() - TickgrÃ¶ÃŸe in Pixeln
 
 =head4 Synopsis
 
@@ -115,7 +115,7 @@ Liefere für Schrittweite $step den ersten Tick in Weltkoordinaten.
 
 =head4 Description
 
-Liefere für Wert $val den Platzbedarf des Label in Pixeln.
+Liefere fÃ¼r Wert $val den Platzbedarf des Label in Pixeln.
 FIXME: Wert in Label wandeln.
 
 =head3 label() - Liefere Achsenlabel zu Wert
@@ -126,7 +126,7 @@ FIXME: Wert in Label wandeln.
 
 =head4 Description
 
-Liefere das Achsenlabel für Wert $val.
+Liefere das Achsenlabel fÃ¼r Wert $val.
 
 =head1 VERSION
 

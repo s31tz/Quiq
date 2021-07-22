@@ -21,10 +21,10 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
   # Array der enthaltenen Objekte
   @obj = $lst->elements;
   
-  # Füge Objekt zur Liste hinzu (am Ende)
+  # FÃ¼ge Objekt zur Liste hinzu (am Ende)
   $obj = $lst->push($obj);
   
-  # Wähle Objekte aus
+  # WÃ¤hle Objekte aus
   
   @objects = $lst->grep(sub {
       my ($obj,$i,@args) = @_;
@@ -40,7 +40,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
       return (...);
   };
   
-  # Iteriere über alle Objekte
+  # Iteriere Ã¼ber alle Objekte
   
   $lst->loop(@args,sub {
       my ($obj,$i,@args) = @_
@@ -54,7 +54,7 @@ Mit den Methoden der Klasse kann auf dieser Liste operiert werden.
 
 =head1 EXAMPLES
 
-Bilde die Summe über einem Attributwert:
+Bilde die Summe Ã¼ber einem Attributwert:
 
   use Hash::Util 'sum';
   $sum = sum $lst->map(sub {
@@ -63,7 +63,7 @@ Bilde die Summe über einem Attributwert:
       return $x;
   });
 
-Füge Werte zu einer Zeichenkette zusammen:
+FÃ¼ge Werte zu einer Zeichenkette zusammen:
 
   $str = join "\n",$lst->map(sub {
       my $obj = shift;
@@ -126,9 +126,9 @@ Listen-Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf dieses
-Objekt zurück. Der Aufruf ohne Argument ist äquivalent zu einem
+Objekt zurÃ¼ck. Der Aufruf ohne Argument ist Ã¤quivalent zu einem
 Aufruf mit einem leeren Array. Das Array und die Objekte werden nicht
-kopiert, es wird lediglich die übergebene Referenz gespeichert, d.h.
+kopiert, es wird lediglich die Ã¼bergebene Referenz gespeichert, d.h.
 alle Operationen finden auf den Originalstrukturen statt.
 
 =head2 Objektmethoden
@@ -161,7 +161,7 @@ Liste von Objekten. Im Skalarkontext eine Referenz auf die Liste.
 
 Liefere das Array der in der Liste gespeicherten Objekte.
 
-=head3 grep() - Wähle Objekte aus
+=head3 grep() - WÃ¤hle Objekte aus
 
 =head4 Synopsis
 
@@ -173,7 +173,7 @@ Liefere das Array der in der Liste gespeicherten Objekte.
 
 =item $sub
 
-Subroutine, die für jedes Objekt prüft, ob es in der Ergebnismenge
+Subroutine, die fÃ¼r jedes Objekt prÃ¼ft, ob es in der Ergebnismenge
 enthalten ist. Die Subroutine hat die Signatur
 
   sub {
@@ -191,11 +191,11 @@ Liste von Objekten. Im Skalarkontext eine Referenz auf eine
 
 =head4 Description
 
-Rufe die Subroutine $sub für jedes Element der Liste auf. Liefert die
+Rufe die Subroutine $sub fÃ¼r jedes Element der Liste auf. Liefert die
 Subroutine wahr, wird das betreffende Objekt in die Ergebnismenge
-übernommen, sonst nicht.
+Ã¼bernommen, sonst nicht.
 
-=head3 loop() - Iteriere über allen Elementen
+=head3 loop() - Iteriere Ã¼ber allen Elementen
 
 =head4 Synopsis
 
@@ -212,7 +212,7 @@ manipuliert werden. Die Liste kann leer sein.
 
 =item $sub
 
-Subroutine, die für jedes Objekt aufgerufen wird.
+Subroutine, die fÃ¼r jedes Objekt aufgerufen wird.
 Die Subroutine hat die Signatur
 
   sub {
@@ -224,8 +224,8 @@ Die Subroutine hat die Signatur
 
 =head4 Description
 
-Rufe die Subroutine $sub für jedes Element der Liste auf. Innerhalb der
-Subroutine können die Strukturen, auf die @args verweist, manipuliert
+Rufe die Subroutine $sub fÃ¼r jedes Element der Liste auf. Innerhalb der
+Subroutine kÃ¶nnen die Strukturen, auf die @args verweist, manipuliert
 werden.
 
 =head3 map() - Bilde Objekte auf Werte ab
@@ -240,7 +240,7 @@ werden.
 
 =item $sub
 
-Subroutine, die für jedes Objekt eine Liste von Werten liefert.
+Subroutine, die fÃ¼r jedes Objekt eine Liste von Werten liefert.
 Die Subroutine hat die Signatur
 
   sub {
@@ -257,11 +257,11 @@ Array aller Werte. Im Skalarkontext eine Referenz auf das Array.
 
 =head4 Description
 
-Rufe die Subroutine $sub für jedes Element der Liste auf, sammele
+Rufe die Subroutine $sub fÃ¼r jedes Element der Liste auf, sammele
 alle gelieferten Werte ein und liefere das resultierende Array
-zurück.
+zurÃ¼ck.
 
-=head3 push() - Füge Objekt am Ende der Liste hinzu
+=head3 push() - FÃ¼ge Objekt am Ende der Liste hinzu
 
 =head4 Synopsis
 
@@ -283,8 +283,8 @@ Objekt
 
 =head4 Description
 
-Füge Objekt $obj am Ende der Liste hinzu und liefere eine Referenz auf
-dieses Objekt zurück.
+FÃ¼ge Objekt $obj am Ende der Liste hinzu und liefere eine Referenz auf
+dieses Objekt zurÃ¼ck.
 
 =head1 VERSION
 

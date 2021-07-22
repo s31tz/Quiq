@@ -40,14 +40,14 @@ Die Klasse stellt
 
 =head2 Zweck der Klasse
 
-Die Klasse unterstützt die Entwicklung von portablen Datenbankanwendungen,
-d.h. Anwendungen, die unter mehreren DBMSen lauffähig sein sollen. Dies
-wird erreicht, indem die Klasse Methoden zur Verfügung stellt, die zum
+Die Klasse unterstÃ¼tzt die Entwicklung von portablen Datenbankanwendungen,
+d.h. Anwendungen, die unter mehreren DBMSen lauffÃ¤hig sein sollen. Dies
+wird erreicht, indem die Klasse Methoden zur VerfÃ¼gung stellt, die zum
 DBMS den passenden SQL-Code erzeugen.
 
-=head2 Unterstützte Datenbanksysteme
+=head2 UnterstÃ¼tzte Datenbanksysteme
 
-Folgende DBMSe werden von der Klasse unterstützt:
+Folgende DBMSe werden von der Klasse unterstÃ¼tzt:
 
   Oracle
   PostgreSQL
@@ -67,10 +67,10 @@ Folgende DBMSe werden von der Klasse unterstützt:
 =head4 Description
 
 Zerlege $stmt in den Statement-Rumpf und eine Liste von
-Stringliteral-Werten und liefere diese beiden Bestandteile zurück.
+Stringliteral-Werten und liefere diese beiden Bestandteile zurÃ¼ck.
 
-Statement-Rumpf und Stringliteralwerte können unabhängig bearbeitet
-und anschließend mit sprintf() wieder zusammengefügt werden.
+Statement-Rumpf und Stringliteralwerte kÃ¶nnen unabhÃ¤ngig bearbeitet
+und anschlieÃŸend mit sprintf() wieder zusammengefÃ¼gt werden.
 
 =head4 Example
 
@@ -82,7 +82,7 @@ Zerlege Statement in Bestandteile:
   "SELECT '%s', '%s' FROM x WHERE x = '%s' AND y = '%s''%s'"
   ('a','b','c','d','e')
 
-Füge Bestandteile wieder zusammen:
+FÃ¼ge Bestandteile wieder zusammen:
 
   $stmt2 = sprintf($stmt2,@arr);
   =>
@@ -97,11 +97,11 @@ Füge Bestandteile wieder zusammen:
 =head4 Description
 
 Ersetze die Platzhalter ? in SQL-Statement $stmt durch die
-Werte @val und liefere das resultierende Statement zurück.
+Werte @val und liefere das resultierende Statement zurÃ¼ck.
 
-Diese Methode ist für Debugging-Zwecke nützlich, wenn mit
-Platzhaltern gearbeitet wird, aber man das aufgelöste Statement
-sehen möchte.
+Diese Methode ist fÃ¼r Debugging-Zwecke nÃ¼tzlich, wenn mit
+Platzhaltern gearbeitet wird, aber man das aufgelÃ¶ste Statement
+sehen mÃ¶chte.
 
 =head4 Example
 
@@ -120,7 +120,7 @@ sehen möchte.
 =head4 Description
 
 Entferne die Select-Klausel am Anfang von Select-Statement $stmt
-und liefere das resultierende Statement zurück.
+und liefere das resultierende Statement zurÃ¼ck.
 
 Als Select-Klausel wird alles vom Beginn des Statement
 bis zur FROM-Klausel angesehen.
@@ -134,12 +134,12 @@ bis zur FROM-Klausel angesehen.
 =head4 Description
 
 Entferne die Order By-Klausel vom Ende des Select-Statement $stmt
-und liefere das resultierende Statement zurück.
+und liefere das resultierende Statement zurÃ¼ck.
 
 Als Select-Klausel wird alles von der ORDER BY-Klausel bis zum
 Ende des Statment angesehen.
 
-=head3 checkName() - Prüfe Bezeichner
+=head3 checkName() - PrÃ¼fe Bezeichner
 
 =head4 Synopsis
 
@@ -148,7 +148,7 @@ Ende des Statment angesehen.
 
 =head4 Description
 
-Prüfe und manipuliere Bezeichner $name, so dass er den Konventionen
+PrÃ¼fe und manipuliere Bezeichner $name, so dass er den Konventionen
 des DBMS entspricht.
 
 B<Oracle>
@@ -157,7 +157,7 @@ B<Oracle>
 
 =item *
 
-Ist der Bezeichner länger als 30 Zeichen, kürze ihn auf 29
+Ist der Bezeichner lÃ¤nger als 30 Zeichen, kÃ¼rze ihn auf 29
 Zeichen und ersetze das 30. Zeichen durch #.
 
 =back
@@ -172,10 +172,10 @@ Zeichen und ersetze das 30. Zeichen durch #.
 
 Erzeuge aus einer Liste von SQL-Statements ein einzelnes Skript,
 das von einem Client-Programm wie SQL*Plus, psql bzw. mysql
-ausgeführt werden kann.
+ausgefÃ¼hrt werden kann.
 
 Die SQL-Statements bzw. SQL-Kommentare in @stmt haben am Ende
-weder Newline noch Semikolon. Diese Methode fügt sie hinzu
+weder Newline noch Semikolon. Diese Methode fÃ¼gt sie hinzu
 und konkateniert alle Statements zu einer Zeichenkette.
 
 Folgende Manipulationen werden vorgenommen:
@@ -190,7 +190,7 @@ SQL-Statements erhalten am Ende ein Semikolon und ein Newline.
 
 Kommentare erhalten am Ende ein Newline und werden von den umgebenden
 SQL-Statements abgesetzt, indem vor und nach ihnen eine Leerzeile
-eingefügt wird.
+eingefÃ¼gt wird.
 
 =back
 
@@ -198,7 +198,7 @@ Diverse Details werden unterschieden (siehe EXAMPLES).
 
 =head4 Example
 
-So verhält es sich im Detail:
+So verhÃ¤lt es sich im Detail:
 
   $script = Quiq::Sql->stmtListToScript(
       '-- TEXT1',
@@ -240,7 +240,7 @@ wird zu:
 
 =head2 Data Types
 
-Methoden für die portable Spezifikation von Kolumnen-Datentypen.
+Methoden fÃ¼r die portable Spezifikation von Kolumnen-Datentypen.
 
 =head3 dataType() - Wandele portablen Datentyp-Bezeichner in DBMS-Typ-Bezeichner
 
@@ -252,8 +252,8 @@ Methoden für die portable Spezifikation von Kolumnen-Datentypen.
 =head4 Description
 
 Wandele den portablen Datentyp $portableType in den entsprechenden
-DBMS-spezifischen Typ und liefere diesen zurück. Im Skalarkontext
-liefere den Typbezeichner einschließlich etwaiger Argumente,
+DBMS-spezifischen Typ und liefere diesen zurÃ¼ck. Im Skalarkontext
+liefere den Typbezeichner einschlieÃŸlich etwaiger Argumente,
 im Listkontext liefere Typ und Argumente getrennt.
 
 B<Typ-Abbildung>
@@ -306,13 +306,13 @@ Einige Konvertierungen im Falle von Oracle:
 Generiere aus der portablen Kolumnen-Spezifikation @colDef eine
 DBMS-spezifische Kolumnen-Definition, die als Zeichenkette
 nach dem Kolumnennamen in ein CREATE TABLE oder ALTER TABLE Statement
-eingesetzt werden kann, und liefere diese zurück.
+eingesetzt werden kann, und liefere diese zurÃ¼ck.
 
 Die Methode wird von den Methoden createTable() und addColumn()
 genutzt.
 
 Die Kolumnen-Spezifikation @colDef besteht aus einer
-nicht-leeren Aufzählung von folgenden Schlüssel/Wert-Paaren:
+nicht-leeren AufzÃ¤hlung von folgenden SchlÃ¼ssel/Wert-Paaren:
 
 =over 4
 
@@ -332,12 +332,12 @@ Kolumne ist Pflichtfeld.
 
 =item autoIncrement => $bool
 
-Das DBMS erzeugt beim Einfügen eines Datensatzes einen
+Das DBMS erzeugt beim EinfÃ¼gen eines Datensatzes einen
 eindeutigen Wert (SQLite und MySQL).
 
 =item primaryKey => $bool
 
-Kolumne ist Primärschlüsselkolumne.
+Kolumne ist PrimÃ¤rschlÃ¼sselkolumne.
 
 =item type => $type
 
@@ -345,23 +345,23 @@ Portabler Kolumnentyp.
 
 =item oracleType => $oracleType
 
-Kolumnentyp für Oracle.
+Kolumnentyp fÃ¼r Oracle.
 
 =item postgresqlType => $postgresqlType
 
-Kolumnentyp für PostgreSQL.
+Kolumnentyp fÃ¼r PostgreSQL.
 
 =item sqliteType => $sqliteType
 
-Kolumnentyp für SQLite.
+Kolumnentyp fÃ¼r SQLite.
 
 =item mysqlType => $mysqlType
 
-Kolumnentyp für MySQL.
+Kolumnentyp fÃ¼r MySQL.
 
 =back
 
-Der Kolumnentyp ist für eine Kolumnenspezifikation zwingend. Er
+Der Kolumnentyp ist fÃ¼r eine Kolumnenspezifikation zwingend. Er
 wird als portabler Typ (type=>$type) oder als DBMS-spezifischer
 Typ (<dbms>Type=>$type) angegeben. Ist beides angegeben, hat der
 DBMS-spezifische Typ Vorrang.
@@ -375,7 +375,7 @@ Das Attribut autoIncrement ist nicht portabel, es ist
 =item *
 
 Portabler Typ wird verwendet, wenn nichts anderes
-für das DBMS angegeben ist:
+fÃ¼r das DBMS angegeben ist:
 
   $sql = Quiq::Sql->new('Oracle');
   $type = $sql->columnDef(
@@ -409,7 +409,7 @@ DBMS-Typ wird verwendet, wenn angegeben:
 =head4 Description
 
 Setze an den Anfang jeder Zeile in $text die Zeichenfolge '-- '
-und liefert das Resultat zurück.
+und liefert das Resultat zurÃ¼ck.
 
 Whitespace am Ende wird entfernt, d.h. der SQL-Kommentar endet
 wie die SQL-Statements per Default nicht mit einem Newline.
@@ -517,13 +517,13 @@ B<PostgreSQL>
 
 =item *
 
-Anstelle eines einzelnen Schema können mehrere Schemata, mit Komma
-getrennt, aufgezählt werden.
+Anstelle eines einzelnen Schema kÃ¶nnen mehrere Schemata, mit Komma
+getrennt, aufgezÃ¤hlt werden.
 
 =item *
 
-Die Setzung sollte sofort mit COMMIT bestätigt werden, da
-sie im Falle eines ROLLBACK sonst verfällt.
+Die Setzung sollte sofort mit COMMIT bestÃ¤tigt werden, da
+sie im Falle eines ROLLBACK sonst verfÃ¤llt.
 
 =back
 
@@ -534,11 +534,11 @@ B<SQLite>
 SQLite hat das Konzept mehrerer Schemata, von denen eins das
 Default-Schema ist, nicht.
 
-Bei einer SQLite-Datenbank gibt es per Default keinen Schema-Präfix,
-dieser wird erst durch ATTACH einer Datenbank eingeführt.
+Bei einer SQLite-Datenbank gibt es per Default keinen Schema-PrÃ¤fix,
+dieser wird erst durch ATTACH einer Datenbank eingefÃ¼hrt.
 
-Ein Tabellenname ohne Schema wird immer über allen Attachten Datenbanken
-aufgelöst. Die zuerst hinzugefügte Tabelle ist der Dafault.
+Ein Tabellenname ohne Schema wird immer Ã¼ber allen Attachten Datenbanken
+aufgelÃ¶st. Die zuerst hinzugefÃ¼gte Tabelle ist der Dafault.
 
 B<MySQL>
 
@@ -576,7 +576,7 @@ B<MySQL>
 
 =head4 Description
 
-Werte für $charset:
+Werte fÃ¼r $charset:
 
   iso-8859-1
   utf-8
@@ -675,7 +675,7 @@ splitTablename()
 =head4 Description
 
 Zerlege den Tabellennamen $name in die Komponenten $schema und $table.
-Besitzt der Tabellennamen keinen Schema-Präfix, wird eine Exception
+Besitzt der Tabellennamen keinen Schema-PrÃ¤fix, wird eine Exception
 geworfen. Dies geschieht nicht, wenn der Parameter $sloppy gesetzt
 und wahr ist. In dem Fall wird keine Exception geworfen, sondern als
 Schemaname C<undef> geliefert.
@@ -696,7 +696,7 @@ Schemaname C<undef> geliefert.
 
 =item -reference => [[\@cols => $refTable,@opt], ...]
 
-Liste von Fremdschlüssel-Verweisen.
+Liste von FremdschlÃ¼ssel-Verweisen.
 
 =item -tableSpace => $tableSpaceName (Default: keiner)
 
@@ -711,14 +711,14 @@ Tabellentyp bei MySQL: 'InnoDb', 'MyISAM'.
 
 =head4 Description
 
-Generiere ein CREATE TABLE Statement und liefere dieses zurück.
+Generiere ein CREATE TABLE Statement und liefere dieses zurÃ¼ck.
 
-Für jede Kolumne wird ihr Name $colName und ihr Typ.
+FÃ¼r jede Kolumne wird ihr Name $colName und ihr Typ.
 
 Der Kolumnentyp wird als portabler Typ (type=>$type)
 oder als DBMS-spezifischer Typ (<dbms>Type=>$type) angegeben.
-Ist beides angegeben, hat der DBMS-spezifische Typ Priorität.
-Für die portablen Typen siehe Methode columnType().
+Ist beides angegeben, hat der DBMS-spezifische Typ PrioritÃ¤t.
+FÃ¼r die portablen Typen siehe Methode columnType().
 
 Alle weiteren Angaben in @colOpts sind optional.
 
@@ -732,13 +732,13 @@ Kolumne ist Pflichtfeld.
 
 =item autoIncrement => $bool
 
-Das DBMS erzeugt beim Einfügen eines Datensatzes einen
+Das DBMS erzeugt beim EinfÃ¼gen eines Datensatzes einen
 eindeutigen Wert (nicht Oracle und PostgreSQL, diese
 haben das Konzept der Sequenz).
 
 =item primaryKey => $bool
 
-Kolumne ist Primärschlüsselkolumne.
+Kolumne ist PrimÃ¤rschlÃ¼sselkolumne.
 
 =item type => $type
 
@@ -746,19 +746,19 @@ Portabler Kolumnentyp.
 
 =item oracleType => $oracleType
 
-Kolumnentyp für Oracle.
+Kolumnentyp fÃ¼r Oracle.
 
 =item postgresqlType => $postgresqlType
 
-Kolumnentyp für PostgreSQL.
+Kolumnentyp fÃ¼r PostgreSQL.
 
 =item sqliteType => $sqliteType
 
-Kolumnentyp für SQLite.
+Kolumnentyp fÃ¼r SQLite.
 
 =item mysqlType => $mysqlType
 
-Kolumnentyp für MySQL.
+Kolumnentyp fÃ¼r MySQL.
 
 =back
 
@@ -790,14 +790,14 @@ in den DBMS-Typ umgewandelt.
 =head4 Description
 
 Legalisiere Tabellennamen durch Quotierung, wenn dieser Sonderzeichen
-enthält. Dies geschieht bei MySQL durch Backticks, z.B. bei Tabellen,
-deren Name einen Bindestrich enthält:
+enthÃ¤lt. Dies geschieht bei MySQL durch Backticks, z.B. bei Tabellen,
+deren Name einen Bindestrich enthÃ¤lt:
 
   Meine-Tabelle -> `Meine-Tabelle`
   Mein-Schema.Meine-Tabelle -> `Meine-Schema`.`Meine-Tabelle`
 
-Für die anderen DBMSe ist das Feature aktuell nicht implementiert,
-d.h. es wird immer der unveränderte Tabellenname zurückgegeben.
+FÃ¼r die anderen DBMSe ist das Feature aktuell nicht implementiert,
+d.h. es wird immer der unverÃ¤nderte Tabellenname zurÃ¼ckgegeben.
 
 =head2 Columns
 
@@ -810,7 +810,7 @@ d.h. es wird immer der unveränderte Tabellenname zurückgegeben.
 =head4 Description
 
 Erzeuge SQL-Statement, das der Tabelle $table die Kolumne $column
-mit der Spezifikation @colDef hinzufügt. Die portable
+mit der Spezifikation @colDef hinzufÃ¼gt. Die portable
 Kolumnen-Spezifikation @colDef wird von Methode columnDef()
 in die DBMS-spezifische Zeichenkette gewandelt.
 
@@ -830,7 +830,7 @@ B<MySQL Syntax>
 
   ALTER TABLE table ADD COLUMN column type ...
 
-Die Punkte stehen für zusätzliche optionale Kolumnen-Angaben, wie
+Die Punkte stehen fÃ¼r zusÃ¤tzliche optionale Kolumnen-Angaben, wie
 "DEFAULT expr", "NOT NULL", "PRIMARY KEY" usw.
 
 =head3 dropColumn() - Generiere ALTER TABLE Statement, das eine Kolumne entfernt
@@ -850,7 +850,7 @@ B<Oracle, PostgreSQL, MySQL Syntax>
 
 B<SQLite Syntax>
 
-  Eine Kolumne kann nicht entfernt werden (geprüft 3.6.13)
+  Eine Kolumne kann nicht entfernt werden (geprÃ¼ft 3.6.13)
 
 =head3 modifyColumn() - Generiere ALTER TABLE Statement, das eine Kolumne modifiziert
 
@@ -861,7 +861,7 @@ B<SQLite Syntax>
 =head4 Description
 
 Erzeuge SQL-Statement, das in Tabelle $table die Kolumne $column
-modifiziert. Verändert wird die Eigenschaft $property auf Wert
+modifiziert. VerÃ¤ndert wird die Eigenschaft $property auf Wert
 $value.
 
 B<NULL>
@@ -879,11 +879,11 @@ B<NULL>
 =item MySQL:
 
   NOT NULL scheint nicht ohne Kenntnis des Kolumnentyps
-  manipuliert werden zu können (5.1.41).
+  manipuliert werden zu kÃ¶nnen (5.1.41).
 
 =item SQLite:
 
-  Eine Kolumne kann nicht modifiziert werden (geprüft 3.6.22)
+  Eine Kolumne kann nicht modifiziert werden (geprÃ¼ft 3.6.22)
 
 =back
 
@@ -902,11 +902,11 @@ B<NOT NULL>
 =item MySQL:
 
   NOT NULL scheint nicht ohne Kenntnis des Kolumnentyps
-  manipuliert werden zu können (5.1.41).
+  manipuliert werden zu kÃ¶nnen (5.1.41).
 
 =item SQLite:
 
-  Eine Kolumne kann nicht modifiziert werden (geprüft 3.6.22)
+  Eine Kolumne kann nicht modifiziert werden (geprÃ¼ft 3.6.22)
 
 =back
 
@@ -928,7 +928,7 @@ B<TYPE>
 
 =item SQLite:
 
-  Eine Kolumne kann nicht modifiziert werden (geprüft 3.6.22)
+  Eine Kolumne kann nicht modifiziert werden (geprÃ¼ft 3.6.22)
 
 =back
 
@@ -983,7 +983,7 @@ Name des Constraint.
 
 =item -exceptionTable => $tableName (Default: keiner)
 
-Constraint-Verletzende Datensätze werden in Tabelle $tableName
+Constraint-Verletzende DatensÃ¤tze werden in Tabelle $tableName
 protokollliert (nur Oracle).
 
 =item -tableSpace => $tableSpaceName (Default: keiner)
@@ -1027,7 +1027,7 @@ Name des Constraint.
 
 =item -defer => $bool (Default: 0)
 
-Constraint-Fehler wird verzögert gemeldet.
+Constraint-Fehler wird verzÃ¶gert gemeldet.
 
 =item -disable => $bool (Default: 0)
 
@@ -1035,17 +1035,17 @@ Constraint wird erzeugt, ist aber abgeschaltet.
 
 =item -exceptionTable => $tableName (Default: keiner)
 
-Constraint-Verletzende Datensätze werden in Tabelle $tableName
+Constraint-Verletzende DatensÃ¤tze werden in Tabelle $tableName
 protokollliert (nur Oracle).
 
 =item -onDelete => 'cascade'|'null' (Default: keiner)
 
-Legt fest, was bei Löschung des Parent-Datensatzes passieren soll.
+Legt fest, was bei LÃ¶schung des Parent-Datensatzes passieren soll.
 
 =item -refTableCols => \@refTableCols (Default: undef)
 
 Liste der Kolumnen in der referenzierten Tabelle.
-Bei MySQL müssen die referenzierten Kolumnen aufgezählt werden, auch wenn
+Bei MySQL mÃ¼ssen die referenzierten Kolumnen aufgezÃ¤hlt werden, auch wenn
 ein Primary Key auf der referenzierten Tabelle definiert ist.
 
 =back
@@ -1096,7 +1096,7 @@ Name des Constraint (nicht PostgreSQL).
 
 =item -exceptionTable => $tableName (Default: keiner)
 
-Constraint-Verletzende Datensätze werden in Tabelle $tableName
+Constraint-Verletzende DatensÃ¤tze werden in Tabelle $tableName
 protokollliert (nur Oracle).
 
 =back
@@ -1134,7 +1134,7 @@ Name des Constraint.
 
 =item -exceptionTable => $tableName (Default: keiner)
 
-Constraint-Verletzende Datensätze werden in Tabelle $tableName
+Constraint-Verletzende DatensÃ¤tze werden in Tabelle $tableName
 protokollliert (nur Oracle).
 
 =back
@@ -1170,7 +1170,7 @@ Name des Constraint.
 
 =item -exceptionTable => $tableName (Default: keiner)
 
-Constraint-Verletzende Datensätze werden in Tabelle $tableName
+Constraint-Verletzende DatensÃ¤tze werden in Tabelle $tableName
 protokollliert (nur Oracle).
 
 =item -tableSpace => $tableSpaceName (Default: keiner)
@@ -1183,8 +1183,8 @@ Name des Tablespace, in dem der Index erzeugt wird
 =head4 Description
 
 Liefere ein SQL-Statement zur Erzeugung eines UNIQUE-Constraint
-auf Tabelle $tableName über den Kolumnen @colNames und liefere
-dieses zurück.
+auf Tabelle $tableName Ã¼ber den Kolumnen @colNames und liefere
+dieses zurÃ¼ck.
 
 B<Oracle Syntax>
 
@@ -1203,7 +1203,7 @@ B<PostgreSQL Syntax>
 
 =head2 Index
 
-=head3 indexName() - Liefere Namen für Index
+=head3 indexName() - Liefere Namen fÃ¼r Index
 
 =head4 Synopsis
 
@@ -1230,13 +1230,13 @@ Name des Tablespace, in dem der Index erzeugt wird
 
 =item -unique => $bool (Default: 0)
 
-Statement für Unique Index.
+Statement fÃ¼r Unique Index.
 
 =back
 
 =head4 Description
 
-Generiere ein CREATE INDEX Statement und liefere dieses zurück.
+Generiere ein CREATE INDEX Statement und liefere dieses zurÃ¼ck.
 
 B<Oracle Syntax>
 
@@ -1268,7 +1268,7 @@ B<MySQL Syntax>
 
 =head4 Description
 
-Generiere ein DROP INDEX Statement und liefere dieses zurück.
+Generiere ein DROP INDEX Statement und liefere dieses zurÃ¼ck.
 
 B<Syntax>
 
@@ -1295,7 +1295,7 @@ Lasse die Sequenz mit Startwert $n beginnen.
 =head4 Description
 
 Generiere Statements zur Erzeugung von Sequenz $name und liefere
-diese zurück.
+diese zurÃ¼ck.
 
 Unter Oracle und PostgreSQL, die das Konzept der Sequenz haben,
 wird ein CREATE SEQUENCE Statement generiert.
@@ -1303,9 +1303,9 @@ wird ein CREATE SEQUENCE Statement generiert.
 Unter MySQL und SQLite, die das Konzept der Sequenz nicht haben,
 wird eine Tabelle (CREATE TABLE) mit Autoinkrement-Kolumne zur
 Simulation einer Sequenz erzeugt. Ist die Option -startWith angegeben,
-wird zusätzlich ein INSERT-Statement generiert.
+wird zusÃ¤tzlich ein INSERT-Statement generiert.
 
-=head3 dropSequence() - Generiere SQL-Statement zum Löschen einer Sequenz
+=head3 dropSequence() - Generiere SQL-Statement zum LÃ¶schen einer Sequenz
 
 =head4 Synopsis
 
@@ -1313,8 +1313,8 @@ wird zusätzlich ein INSERT-Statement generiert.
 
 =head4 Description
 
-Generiere SQL-Statement zum Löschen von Sequenz $name und liefere
-dieses zurück.
+Generiere SQL-Statement zum LÃ¶schen von Sequenz $name und liefere
+dieses zurÃ¼ck.
 
 Unter Oracle und PostgreSQL, die das Konzept der Sequenz haben,
 wird ein DROP SEQUENCE Statement generiert.
@@ -1346,7 +1346,7 @@ Unter PostgreSQL wird der Wert mit ALTER SEQUENCE gesetzt.
 
 Unter MySQL und SQLite, die das Konzept der Sequenz nicht haben,
 wird die Sequenz-Tabelle geleert und der Wert als neuer
-Datensatz hinzugefügt. Einschränkung: Der Sequenzwert kann
+Datensatz hinzugefÃ¼gt. EinschrÃ¤nkung: Der Sequenzwert kann
 hochgesetzt, aber nicht verringert werden!
 
 =back
@@ -1366,7 +1366,7 @@ hochgesetzt, aber nicht verringert werden!
 =item $signature
 
 Signatur der Funktion, also Name mit Typ-Parameterliste und ggf.
-Schema-Präfix.
+Schema-PrÃ¤fix.
 
 =item $body
 
@@ -1419,7 +1419,7 @@ B<PostgreSQL>
 =item $signature
 
 Signatur der Funktion, also Name mit Typ-Parameterliste und ggf.
-Schema-Präfix.
+Schema-PrÃ¤fix.
 
 =back
 
@@ -1442,7 +1442,7 @@ B<PostgreSQL>
 =item $signature
 
 Signatur der Funktion, also Name mit Typ-Parameterliste und
-Schema-Präfix.
+Schema-PrÃ¤fix.
 
 =item $schema
 
@@ -1505,7 +1505,7 @@ B<Oracle>
 
 =item *
 
-Oracle-Trigger können eine Prozedur können einen
+Oracle-Trigger kÃ¶nnen eine Prozedur kÃ¶nnen einen
 Trigger-Body definieren.
 
 =back
@@ -1530,7 +1530,7 @@ B<PostgreSQL>
 
 =item *
 
-Trigger können eine Prozedur aufrufen (-execute=>$proc) aber keinen
+Trigger kÃ¶nnen eine Prozedur aufrufen (-execute=>$proc) aber keinen
 Trigger-Body definieren.
 
 =item *
@@ -1585,7 +1585,7 @@ B<PostgreSQL>
 
 =head4 Description
 
-Generiere ein CREATE VIEW Statement und liefere dieses zurück.
+Generiere ein CREATE VIEW Statement und liefere dieses zurÃ¼ck.
 
 =head3 dropView() - Generiere DROP VIEW Statement
 
@@ -1595,7 +1595,7 @@ Generiere ein CREATE VIEW Statement und liefere dieses zurück.
 
 =head4 Description
 
-Generiere ein DROP VIEW Statement und liefere dieses zurück.
+Generiere ein DROP VIEW Statement und liefere dieses zurÃ¼ck.
 
 =head2 Privileges
 
@@ -1607,7 +1607,7 @@ Generiere ein DROP VIEW Statement und liefere dieses zurück.
 
 =head4 Description
 
-Generiere ein GRANT-Statement und liefere dieses zurück.
+Generiere ein GRANT-Statement und liefere dieses zurÃ¼ck.
 
 =head4 Example
 
@@ -1627,7 +1627,7 @@ generiert
 
 =back
 
-=head3 grantUser() - Generiere GRANT Statement für Benutzerrechte
+=head3 grantUser() - Generiere GRANT Statement fÃ¼r Benutzerrechte
 
 =head4 Synopsis
 
@@ -1639,7 +1639,7 @@ generiert
 
 =item *
 
-Oracle GRANT für Benutzer
+Oracle GRANT fÃ¼r Benutzer
 
   $stmt = $sql->grantUser('user1','connect, resource, dba');
 
@@ -1692,14 +1692,14 @@ Anfang des Statement.
 =item -with => @withElements
 
 Liste von WITH-Elementen. Dies ist eine Liste von
-Schlüssel/Wert-Paaren der Art
+SchlÃ¼ssel/Wert-Paaren der Art
 
   $name => $select, ...
 
 =item -select => @selectExpr (Default: '*')
 
-Generiere eine SELECT-Klausel aus den Ausdrücken @selectExpr.  Die
-Ausdrücke werden mit Komma separiert. Ist kein Select-Ausdrück
+Generiere eine SELECT-Klausel aus den AusdrÃ¼cken @selectExpr.  Die
+AusdrÃ¼cke werden mit Komma separiert. Ist kein Select-AusdrÃ¼ck
 spezifiziert, wird '*' angenommen.
 
 Platzhalter: %SELECT%
@@ -1708,19 +1708,19 @@ Platzhalter: %SELECT%
 
 Generiere "SELECT DISTINCT" statement.
 
-Schlüsselwort "DISTINCT" wird in %SELECT%-Platzhalter mit eingsetzt.
+SchlÃ¼sselwort "DISTINCT" wird in %SELECT%-Platzhalter mit eingsetzt.
 
 =item -hint => $hint
 
-Setze im Statement hinter das Schlüsselwort SELECT einen
+Setze im Statement hinter das SchlÃ¼sselwort SELECT einen
 Hint, d.h. einen Kommentar in der Form /*+ ... */. (nur Oracle)
 
 hint wird in %SELECT%-Platzhalter mit eingsetzt.
 
 =item -from => @fromExpr
 
-Generiere eine FROM-Klausel aus den Ausdrücken @fromExpr.
-Die Ausdrücke werden mit Komma separiert. Die FROM-Klausel ist
+Generiere eine FROM-Klausel aus den AusdrÃ¼cken @fromExpr.
+Die AusdrÃ¼cke werden mit Komma separiert. Die FROM-Klausel ist
 bei Oracle eine Pflichtangabe.
 
 Platzhalter: %FROM%
@@ -1731,29 +1731,29 @@ Tabellennamen interpretiert.
 
 =item -where => @whereExpr
 
-Generiere eine WHERE-Klausel aus den Ausdrücken @whereExpr.
-Die Ausdrücke werden mit 'AND' separiert.
+Generiere eine WHERE-Klausel aus den AusdrÃ¼cken @whereExpr.
+Die AusdrÃ¼cke werden mit 'AND' separiert.
 
 Platzhalter: %WHERE%
 
 =item -groupBy => @groupExpr
 
-Generiere eine GROUP BY-Klausel aus den Ausdrücken @groupExpr.
-Die Ausdrücke werden mit Komma separiert.
+Generiere eine GROUP BY-Klausel aus den AusdrÃ¼cken @groupExpr.
+Die AusdrÃ¼cke werden mit Komma separiert.
 
 Platzhalter: %GROUPBY%
 
 =item -having => @havingExpr
 
-Generiere eine HAVING-Klausel aus den Ausdrücken @havingExpr.
-Die Ausdrücke werden mit Komma separiert.
+Generiere eine HAVING-Klausel aus den AusdrÃ¼cken @havingExpr.
+Die AusdrÃ¼cke werden mit Komma separiert.
 
 Platzhalter: %HAVING%
 
 =item -orderBy => @orderExpr
 
-Generiere eine ORDER BY-Klausel aus den Ausdrücken @orderExpr.
-Die Ausdrücke werden mit Komma separiert.
+Generiere eine ORDER BY-Klausel aus den AusdrÃ¼cken @orderExpr.
+Die AusdrÃ¼cke werden mit Komma separiert.
 
 Platzhalter: %ORDERBY%
 
@@ -1771,7 +1771,7 @@ Platzhalter: %OFFSET%
 
 =item -stmt => $stmt
 
-Liefere $stmt als Statement. Enthält $stmt Platzhalter,
+Liefere $stmt als Statement. EnthÃ¤lt $stmt Platzhalter,
 werden diese durch die entsprechenden Komponenten ersetzt
 (noch nicht implementiert).
 
@@ -1780,10 +1780,10 @@ werden diese durch die entsprechenden Komponenten ersetzt
 =head4 Description
 
 Konstruiere ein SELECT-Statement aus den Parametern und liefere
-dieses zurück.
+dieses zurÃ¼ck.
 
-Ist das erste Argument keine Option und enthält es Whitespace,
-wird es als SQL-Statement interpretiert. Enthält es kein Whitespace, wird
+Ist das erste Argument keine Option und enthÃ¤lt es Whitespace,
+wird es als SQL-Statement interpretiert. EnthÃ¤lt es kein Whitespace, wird
 es als Tabellenname interpretiert.
 
 B<Besonderheiten>
@@ -1801,13 +1801,13 @@ wird "FROM dual" generiert.
 
 Oracle: LIMIT und OFFSET
 
-Oracle unterstützt weder LIMIT noch OFFSET.
+Oracle unterstÃ¼tzt weder LIMIT noch OFFSET.
 
 Im Falle von Oracle wird keine LIMIT-Klausel generiert, sondern
 die WHERE-Klausel um "ROWNUM <= $n" erweitert.
 
 Ist im Falle von Oracle OFFSET angegeben, wird eine Exception
-ausgelöst.
+ausgelÃ¶st.
 
 =back
 
@@ -1920,20 +1920,20 @@ SELECT mit Statement-Muster
 
 =head4 Description
 
-Generiere ein INSERT-Statement für Tabelle $table mit den Kolumnen
+Generiere ein INSERT-Statement fÃ¼r Tabelle $table mit den Kolumnen
 und Werten %keyVal bzw. @keyVal bzw. @keys,@vals und liefere
-dieses zurück.
+dieses zurÃ¼ck.
 
-Schlüssel/Wert-Paare ohne Wert (Leerstring, undef) werden
+SchlÃ¼ssel/Wert-Paare ohne Wert (Leerstring, undef) werden
 ausgelassen. Damit ist sichergestellt, dass der Defaultwert der
 Kolumne verwendet wird, wenn einer auf der Datenbank deklariert
 ist.
 
 Ist der Kolumnenwert eine String-Referenz, wird der Wert ohne
-Anführungsstriche in das Statement eingesetzt. Auf diese Weise
-können per SQL berechnete Werte (Expressions) eingesetzt werden.
+AnfÃ¼hrungsstriche in das Statement eingesetzt. Auf diese Weise
+kÃ¶nnen per SQL berechnete Werte (Expressions) eingesetzt werden.
 
-Ist die Liste der Schlüssel/Wert-Paare leer oder sind alle
+Ist die Liste der SchlÃ¼ssel/Wert-Paare leer oder sind alle
 Werte leer, wird ein Null-Statement (Leerstring) geliefert.
 
 =head4 Example
@@ -1942,7 +1942,7 @@ Werte leer, wird ein Null-Statement (Leerstring) geliefert.
 
 =item *
 
-Normales INSERT, Schlüssel/Wert-Paare
+Normales INSERT, SchlÃ¼ssel/Wert-Paare
 
   $stmt = $sql->insert('person',
       per_id => 10,
@@ -1968,7 +1968,7 @@ Normales INSERT, Schlüssel/Wert-Paare
 
 =item *
 
-Normales Insert, Schlüssel und Werte als getrennte Listen
+Normales Insert, SchlÃ¼ssel und Werte als getrennte Listen
 
   @keys = qw/per_id per_vorname per_nachname per_geburtstag/;
   @vals = (10,'Hanno','Seitz',undef);
@@ -2073,8 +2073,8 @@ INSERT mit Platzhaltern
 
 =head4 Description
 
-Generiere ein INSERT-Statement für Tabelle $table mit den Kolumnen
-@keys  und den Datensätzen @records. @records ist eine Liste von
+Generiere ein INSERT-Statement fÃ¼r Tabelle $table mit den Kolumnen
+@keys  und den DatensÃ¤tzen @records. @records ist eine Liste von
 Arrays mit gleich vielen Elementen wie @keys.
 
 =head4 Example
@@ -2119,7 +2119,7 @@ Arrays mit gleich vielen Elementen wie @keys.
 
 =item -hint => $hint (Default: undef)
 
-Füge Hint (Oracle) in Statement ein.
+FÃ¼ge Hint (Oracle) in Statement ein.
 
 =back
 
@@ -2187,9 +2187,9 @@ Füge Hint (Oracle) in Statement ein.
 =head4 Description
 
 Generiere Funktionsaufruf "<OP>(<EXPR1>, <EXPR2>, ...)" und
-liefere diesen zurück.
+liefere diesen zurÃ¼ck.
 
-Diese Methode wird zur Generierung von portablen Funktionsausdrücken
+Diese Methode wird zur Generierung von portablen FunktionsausdrÃ¼cken
 wie UPPER, LOWER, MIN, MAX, SUBSTR, etc. benutzt.
 
 =head3 opRel() - Generiere rechte Seite eines Vergleichsausdrucks
@@ -2200,7 +2200,7 @@ wie UPPER, LOWER, MIN, MAX, SUBSTR, etc. benutzt.
 
 =head4 Description
 
-Generiere Ausdruck "<OP> <EXPR>" und liefere diesen zurück.
+Generiere Ausdruck "<OP> <EXPR>" und liefere diesen zurÃ¼ck.
 
 =head3 opAS() - Generiere AS-Ausdruck (Alias)
 
@@ -2210,7 +2210,7 @@ Generiere Ausdruck "<OP> <EXPR>" und liefere diesen zurück.
 
 =head4 Description
 
-Generiere Ausdruck "<EXPR> AS <NAME>" und liefere diesen zurück.
+Generiere Ausdruck "<EXPR> AS <NAME>" und liefere diesen zurÃ¼ck.
 
 =head3 opBETWEEN() - Generiere BETWEEN-Ausdruck
 
@@ -2220,7 +2220,7 @@ Generiere Ausdruck "<EXPR> AS <NAME>" und liefere diesen zurück.
 
 =head4 Description
 
-Generiere Ausdruck "BETWEEN <EXPR1> AND <EXPR2>" und liefere diesen zurück.
+Generiere Ausdruck "BETWEEN <EXPR1> AND <EXPR2>" und liefere diesen zurÃ¼ck.
 
 =head3 opCASEXPR() - Generiere CASE-Ausdruck
 
@@ -2230,7 +2230,7 @@ Generiere Ausdruck "BETWEEN <EXPR1> AND <EXPR2>" und liefere diesen zurück.
 
 =head4 Description
 
-Für diff() implementiert, funktioniert aber nicht.
+FÃ¼r diff() implementiert, funktioniert aber nicht.
 
 =head3 opCAST() - Generiere CAST-Ausdruck (Wandlung Datentyp)
 
@@ -2246,7 +2246,7 @@ Für diff() implementiert, funktioniert aber nicht.
 
 =head4 Description
 
-Generiere Ausdruck "IN / NOT IN (VAL1, VAL2, ...)" und liefere diesen zurück.
+Generiere Ausdruck "IN / NOT IN (VAL1, VAL2, ...)" und liefere diesen zurÃ¼ck.
 
 =head2 Expressions
 
@@ -2259,7 +2259,7 @@ Generiere Ausdruck "IN / NOT IN (VAL1, VAL2, ...)" und liefere diesen zurück.
 =head4 Description
 
 Generiere einen SQL Bezeichner-Ausdruck zum portablen Ausdruck $expr
-und liefere den generierten Ausdruck zurück.
+und liefere den generierten Ausdruck zurÃ¼ck.
 
 Ein Bezeichner-Ausdruck ist ein Ausdruck, wie er in der Select-Liste
 und auf der linken Seite von WHERE-Klausel-Bedingungen vorkommt.
@@ -2313,7 +2313,7 @@ Portabler Ausdruck mit Stringreferenz (wird String-Literal)
 =head4 Description
 
 Generiere einen SQL Wert-Ausdruck zum portablen Ausdruck $expr
-und liefere den generierten Ausdruck zurück.
+und liefere den generierten Ausdruck zurÃ¼ck.
 
 Ein Wert-Ausdruck ist ein Ausdruck, wie er auf der rechten Seite
 von WHERE-Klausel-Bedingungen vorkommt. Er zeichnet sich dadurch aus,
@@ -2366,7 +2366,7 @@ Portabler Ausdruck mit Stringreferenz (wird Identifier-Ausdruck)
 =head4 Description
 
 Generiere die rechte Seite eines WHERE-Ausdrucks zum portablen
-Ausdruck $expr und liefere den generierten Ausdruck zurück.
+Ausdruck $expr und liefere den generierten Ausdruck zurÃ¼ck.
 
 Der Ausdruck besteht aus einem Operator gefolgt von einem Wert-Ausdruck.
 
@@ -2423,9 +2423,9 @@ Portabler Ausdruck mit Stringreferenz (wird Identifier-Ausdruck)
 
 =head4 Description
 
-Verdoppele alle in $str enthaltenen einfachen Anführungsstriche,
-fasse den gesamten String in einfache Anführungsstriche ein und
-liefere das Resultat zurück.
+Verdoppele alle in $str enthaltenen einfachen AnfÃ¼hrungsstriche,
+fasse den gesamten String in einfache AnfÃ¼hrungsstriche ein und
+liefere das Resultat zurÃ¼ck.
 
 Ist der String leer ('' oder undef) liefere einen Leerstring
 (kein leeres String-Literal!). Ist $default angegeben, liefere diesen
@@ -2439,7 +2439,7 @@ postgresql.conf abgeschaltet werden mit der Setzung:
 
 =head4 Examples
 
-Eingebettete Anführungsstriche:
+Eingebettete AnfÃ¼hrungsstriche:
 
   $sel->stringLiteral('Sie hat's');
   =>
@@ -2465,9 +2465,9 @@ Leerstring, wenn kein Wert:
 
 =head4 Description
 
-Wandele die Liste von Schlüssel/Wert-Paaren @keyVal in eine WITH-Klausel
-(ohne WITH-Schlüsselwort) und liefere diese zurück. Der Wert ist jeweils
-ein SELECT-Statement und der Schlüssel ein Bezeichner für das Statement.
+Wandele die Liste von SchlÃ¼ssel/Wert-Paaren @keyVal in eine WITH-Klausel
+(ohne WITH-SchlÃ¼sselwort) und liefere diese zurÃ¼ck. Der Wert ist jeweils
+ein SELECT-Statement und der SchlÃ¼ssel ein Bezeichner fÃ¼r das Statement.
 
 =head4 Example
 
@@ -2497,21 +2497,21 @@ liefert
 =head4 Description
 
 Wandele die Liste von From-Elementen, @from, in eine FROM-Klausel
-und liefere diese zurück.
+und liefere diese zurÃ¼ck.
 
 Die Elemente werden mit Komma als Trennzeichen konkateniert und
-folgendermaßen behandelt:
+folgendermaÃŸen behandelt:
 
 =over 4
 
 =item 'string'
 
-Eine Zeichenkette wird nicht verändert.
+Eine Zeichenkette wird nicht verÃ¤ndert.
 
 =item ['AS',$alias,$fromExpr]
 
 Es wird ein FROM-Alias erzeugt. Dieser hat entweder den Aufbau
-"expr AS alias" oder "fromExpr alias", abhängig vom DBMS.
+"expr AS alias" oder "fromExpr alias", abhÃ¤ngig vom DBMS.
 Oracle akzeptiert "fromExpr AS alias" nicht.
 
 =back
@@ -2525,9 +2525,9 @@ Oracle akzeptiert "fromExpr AS alias" nicht.
 =head4 Description
 
 Wenn +null in @where vorkommt, werden alle folgenden
-leeren Bedingungen nicht übergangen.
+leeren Bedingungen nicht Ã¼bergangen.
 
-=head3 setClause() - Liefere SET-Klausel für UPDATE-Statement
+=head3 setClause() - Liefere SET-Klausel fÃ¼r UPDATE-Statement
 
 =head4 Synopsis
 
@@ -2562,7 +2562,7 @@ Liefere NOT EXISTS Klausel.
 
   $str = $sql->notExists(@select);
 
-=head3 union() - Verknüpfe Statements mit UNION
+=head3 union() - VerknÃ¼pfe Statements mit UNION
 
 =head4 Synopsis
 
@@ -2584,8 +2584,8 @@ String
 
 =head4 Description
 
-Verknüpfe die (SELECT-)Statements @stmts per UNION und liefere das
-resultierende Statement zurück.
+VerknÃ¼pfe die (SELECT-)Statements @stmts per UNION und liefere das
+resultierende Statement zurÃ¼ck.
 
 =head2 Spezielle Konstrukte
 

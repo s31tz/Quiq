@@ -14,7 +14,7 @@ Modul laden:
 
   use Quiq::Html::Pygments;
 
-Liefere die CSS-Regeln für Pygments-Style 'emacs', eingeschränkt
+Liefere die CSS-Regeln fÃ¼r Pygments-Style 'emacs', eingeschrÃ¤nkt
 auf einen Container 'highlight', der den gehighlighteten Code
 aufnimmt:
 
@@ -23,7 +23,7 @@ aufnimmt:
   # ...
   # #f8f8f8
 
-Erzeuge Syntax-Highlighting für Perl-Code $code. Der gelieferte
+Erzeuge Syntax-Highlighting fÃ¼r Perl-Code $code. Der gelieferte
 HTML-Code $html muss in einen Container 'highlight' (s.o.)
 eingebettet werden, damit die oben erzeugten CSS-Regeln greifen:
 
@@ -34,7 +34,7 @@ Liefere die Namen aller Pygments-Styles:
   @styles = Quiq::Html::Pygments->styles;
 
 Liefere eine HTML-Seite mit einem Darstellungsbeispiel
-für jeden Pygments-Style. Gehighlightet wird der Code $code
+fÃ¼r jeden Pygments-Style. Gehighlightet wird der Code $code
 der Programmiersprache $lang:
 
   $html = Quiq::Html::Pygments->stylesPage($h,$lang,$code);
@@ -44,13 +44,13 @@ der Programmiersprache $lang:
 Diese Klasse stellt eine Schnittstelle zum Pygments Syntax
 Highlighting Paket dar, speziell zum Syntax Highlighting in HTML.
 Die Methoden der Klassen liefern die CSS-Regeln und den HTML-Code,
-um gehighlighteten Quelltext in HTML-Seiten integrieren zu können.
+um gehighlighteten Quelltext in HTML-Seiten integrieren zu kÃ¶nnen.
 
 =head1 METHODS
 
 =head2 Klassenmethoden
 
-=head3 css() - CSS-Information für Highlighting in HTML
+=head3 css() - CSS-Information fÃ¼r Highlighting in HTML
 
 =head4 Synopsis
 
@@ -64,20 +64,20 @@ um gehighlighteten Quelltext in HTML-Seiten integrieren zu können.
 
 =item $style (Default: 'default')
 
-Name des Pygments-Style, für den die CSS-Information geliefert wird.
+Name des Pygments-Style, fÃ¼r den die CSS-Information geliefert wird.
 
-Mögliche Werte: abap, algol, algol_nu, arduino, autumn, borland,
+MÃ¶gliche Werte: abap, algol, algol_nu, arduino, autumn, borland,
 bw, colorful, default, emacs, friendly, fruity, igor, lovelace,
 manni, monokai, murphy, native, paraiso-dark, paraiso-light,
 pastie, perldoc, rainbow_dash, rrt, tango, trac, vim, vs, xcode.
 
-Die definitiv gültige Liste der Stylenamen liefert die Methode
+Die definitiv gÃ¼ltige Liste der Stylenamen liefert die Methode
 styles().
 
-=item $selector (Default: I<kein zusätzlicher Selektor>)
+=item $selector (Default: I<kein zusÃ¤tzlicher Selektor>)
 
-Zusätzlicher CSS-Selektor, der den CSS-Regeln vorangestellt
-wird. Der Selektor schränkt den Gültigkeitsbereich der CSS-Regeln
+ZusÃ¤tzlicher CSS-Selektor, der den CSS-Regeln vorangestellt
+wird. Der Selektor schrÃ¤nkt den GÃ¼ltigkeitsbereich der CSS-Regeln
 auf ein Parent-Element ein. Ist kein Selektor angegeben, gelten
 die CSS-Regeln global.
 
@@ -90,13 +90,13 @@ werden nur die CSS-Regeln geliefert.
 
 =head4 Description
 
-Liefere die CSS-Regeln für die Vordergrund-Darstellung von
-Syntax-Elementen und die zugehörige Hintergrundfarbe für
+Liefere die CSS-Regeln fÃ¼r die Vordergrund-Darstellung von
+Syntax-Elementen und die zugehÃ¶rige Hintergrundfarbe fÃ¼r
 Pygments-Style $style.
 
 =head4 Example
 
-Gib die CSS-Regeln für den Pyments-Style 'emacs' aus:
+Gib die CSS-Regeln fÃ¼r den Pyments-Style 'emacs' aus:
 
   print scalar Quiq::Html::Pygments->css('emacs');
   __END__
@@ -106,7 +106,7 @@ Gib die CSS-Regeln für den Pyments-Style 'emacs' aus:
   .k { color: #AA22FF; font-weight: bold } /* Keyword */
   .o { color: #666666 } /* Operator */
 
-Gib die CSS-Regeln für den Pyments-Style 'emacs' und
+Gib die CSS-Regeln fÃ¼r den Pyments-Style 'emacs' und
 Parent-Elemente der Klasse 'highlight' aus:
 
   print scalar Quiq::Html::Pygments->css('emacs','.syntax');
@@ -147,7 +147,7 @@ HTML-Code mit gehighlightetem Quelltext (String)
 
 =head4 Description
 
-Liefere den HTML-Code mit dem Syntax-Highlighting für Quelltext $code
+Liefere den HTML-Code mit dem Syntax-Highlighting fÃ¼r Quelltext $code
 der Sprache $lang.
 
 =head3 styles() - Liste der Pygments-Styles
@@ -163,9 +163,9 @@ Liste von Pygments Stylenamen (Array of Strings).
 =head4 Description
 
 Ermittele die Liste der Namen aller Pygments-Styles und liefere diese
-zurück. Im Skalarkontext liefere ein Referenz auf die Liste.
+zurÃ¼ck. Im Skalarkontext liefere ein Referenz auf die Liste.
 
-Interaktiv lässt sich die (kommentierte) Liste aller Styles
+Interaktiv lÃ¤sst sich die (kommentierte) Liste aller Styles
 ermitteln mit:
 
   $ pygmentize -L styles
@@ -200,11 +200,11 @@ HTML-Seite (String)
 
 =head4 Description
 
-Erzeuge für Codebeispiel $code der Sprache (des "Lexers") $lang
+Erzeuge fÃ¼r Codebeispiel $code der Sprache (des "Lexers") $lang
 eine HTML-Seite mit allen Pygments-Styles und liefere diese
-zurück.
+zurÃ¼ck.
 
-Diese Seite bietet Hilfestellung für die Entscheidung, welcher
+Diese Seite bietet Hilfestellung fÃ¼r die Entscheidung, welcher
 Style am besten passt.
 
 =head4 Example

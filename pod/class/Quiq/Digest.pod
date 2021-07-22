@@ -24,7 +24,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =item @data
 
-Skalare Werte beliebiger Anzahl und Länge.
+Skalare Werte beliebiger Anzahl und LÃ¤nge.
 
 =back
 
@@ -34,8 +34,8 @@ Skalare Werte beliebiger Anzahl und Länge.
 
 =head4 Description
 
-Erzeuge einen MD5 Message Digest für die Daten @data und liefere diesen
-als 32 Zeichen langen Hex-String zurück.
+Erzeuge einen MD5 Message Digest fÃ¼r die Daten @data und liefere diesen
+als 32 Zeichen langen Hex-String zurÃ¼ck.
 
 =head1 VERSION
 

@@ -10,15 +10,15 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt dieser Klasse repräsentiert eine HTTP-Nachricht. Eine
+Ein Objekt dieser Klasse reprÃ¤sentiert eine HTTP-Nachricht. Eine
 HTTP-Nachricht besteht aus einer oder mehreren Kopfzeilen (Header) und
 einem optionalen Rumpf (Body). Kopfzeilen und Rumpf werden von der Klasse
 als Attribute implementiert, die durch Methoden der Klasse manipuliert
-werden können. Eine HTTP-Nachricht, die versendet werden kann,
-entsteht durch Erzeugen einer Stringrepräsentation des Objekts.
+werden kÃ¶nnen. Eine HTTP-Nachricht, die versendet werden kann,
+entsteht durch Erzeugen einer StringreprÃ¤sentation des Objekts.
 
-Die Klasse kann für HTTP-Requests als auch für HTTP-Responses
-verwendet werden. Ggf. müssen weitere Header eingeführt werden.
+Die Klasse kann fÃ¼r HTTP-Requests als auch fÃ¼r HTTP-Responses
+verwendet werden. Ggf. mÃ¼ssen weitere Header eingefÃ¼hrt werden.
 
 MEMO: Die Klasse ist nach dem Vorbild von R1::HttpResponse entstanden.
 Diese sollte so angepasst werden, dass sie Quiq::Http::Message
@@ -41,7 +41,7 @@ generiert auf STDOUT
   
   Hello world
 
-=head2 HTTP-Nachricht über Socket schicken (siehe auch Quiq::Http::Client)
+=head2 HTTP-Nachricht Ã¼ber Socket schicken (siehe auch Quiq::Http::Client)
 
   my $sock = Quiq::Socket->new($host,$port);
   
@@ -89,7 +89,7 @@ Referenz auf HTTP-Objekt.
 
 Instantiiere ein HTTP Nachrichten-Objekt mit den Eigenschaften @keyVal.
 
-Folgende Eigenschaften können (u.a.) gesetzt werden:
+Folgende Eigenschaften kÃ¶nnen (u.a.) gesetzt werden:
 
 =over 2
 
@@ -130,7 +130,7 @@ body => $data
 Zum Setzen von Eigenschaften siehe auch die Methoden $msg->L<set|"set() - Setze Objekteigenschaften">()
 und $msg->L<fromString|"fromString() - Setze Objektattribute aus Zeichenkette">().
 
-Ist eine ungerade Anzahl an Parametern angegeben, wird zunächst
+Ist eine ungerade Anzahl an Parametern angegeben, wird zunÃ¤chst
 die (ggf. leere) Liste von Attribut/Wert-Paaren @keyVal zugewiesen.
 Alle weiteren Eigenschaften werden via Handle $fh, Datei $file
 oder String $str gewonnen.
@@ -145,11 +145,11 @@ oder String $str gewonnen.
 
 =head4 Returns
 
-Die Methode liefert keinen Wert zurück.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head4 Description
 
-Setze die Objekteigenschaften @keyVal. Für die Liste der
+Setze die Objekteigenschaften @keyVal. FÃ¼r die Liste der
 Eigenschaften siehe L<new|"new() - Instantiiere ein HTTP Nachrichten-Objekt">().
 
 =head4 Examples
@@ -201,7 +201,7 @@ Beispiel: Die Kopfzeile "Content-Type" wird von der
 Methode contentType() verwaltet.
 
 Der Wert einer Kopfzeilen-Methode ist nicht immer eine Zeichenkette.
-Er kann auch eine Datenstruktur sein. Dies hängt von der jeweiligen
+Er kann auch eine Datenstruktur sein. Dies hÃ¤ngt von der jeweiligen
 Kopfzeile ab. Im Skalarkontext wird eine Referenz auf die Datenstruktur
 geliefert, im Array-Kontext die Liste der Elemente (siehe L<contentType|"contentType() - Setze/Liefere Content-Type Header">()
 oder L<setCookie|"setCookie() - Setze/Liefere Set-Cookie Header">()).
@@ -265,7 +265,7 @@ und ist eine textuelle Beschreibung des Statuscode.
 
 =head4 Description
 
-Setze/Liefere den Zeichensatz, der ergänzend im Content-Type
+Setze/Liefere den Zeichensatz, der ergÃ¤nzend im Content-Type
 Header angegeben wird.
 
 =head3 authorization() - Setze/Liefere Authorization-Information
@@ -344,16 +344,16 @@ Header angegeben wird.
 =head4 Description
 
 Definiere Cookie $name mit Wert $value und Optionen @options.
-Existiert Cookie $name bereits, wird seine Definition überschrieben.
-Die Methode liefert beim Setzen keinen Wert zurück.
+Existiert Cookie $name bereits, wird seine Definition Ã¼berschrieben.
+Die Methode liefert beim Setzen keinen Wert zurÃ¼ck.
 
 Ohne Parameter gerufen liefert die Methode die Liste der
-Cookie-Objekte zurück. Im Skalarkontext wird eine Referenz auf
+Cookie-Objekte zurÃ¼ck. Im Skalarkontext wird eine Referenz auf
 die Liste geliefert.
 
 =head4 Example
 
-Generiere Id und setze permanenten Cookie, der nach 5 Jahren abläuft:
+Generiere Id und setze permanenten Cookie, der nach 5 Jahren ablÃ¤uft:
 
   $id = Quiq::Converter->intToWord(time);
   $http->setCookie(
@@ -393,13 +393,13 @@ Sein Wert wird geliefert durch:
 
   $ref = $http->bodyRef;
 
-=head3 append() - Füge Daten zum Rumpf hinzu
+=head3 append() - FÃ¼ge Daten zum Rumpf hinzu
 
 =head4 Synopsis
 
   $http->append($data);
 
-=head2 Externe Repräsentation
+=head2 Externe ReprÃ¤sentation
 
 =head3 fromString() - Setze Objektattribute aus Zeichenkette
 

@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Program - Basisklasse für Programme
+Quiq::Program - Basisklasse fÃ¼r Programme
 
 =head1 BASE CLASSES
 
@@ -36,7 +36,7 @@ Optionen und Argumente:
 
 =head2 Programmsteuerung
 
-=head3 run() - Führe Programm-Klassen aus
+=head3 run() - FÃ¼hre Programm-Klassen aus
 
 =head4 Synopsis
 
@@ -57,8 +57,8 @@ Siehe Methode L<new|"new() - Instantiiere Programm-Objekt">()
 
 Terminiere das Programm mit Exitcode $exitCode. Ist kein Exitcode
 angegeben, terminiere mit dem Exitcode der auf dem Programmobjekt
-gesetzt ist. Die Methode kehrt nicht zurück. Nach ihrem Aufruf wird
-die Methode L<finish|"finish() - Abschließender Code vor Programmende">() ausgeführt.
+gesetzt ist. Die Methode kehrt nicht zurÃ¼ck. Nach ihrem Aufruf wird
+die Methode L<finish|"finish() - AbschlieÃŸender Code vor Programmende">() ausgefÃ¼hrt.
 
 =head2 Getter/Setter
 
@@ -96,15 +96,15 @@ Pfadkomponente von $0.
 
 =head4 Description
 
-Exception-Handler, der unbehandelte Exceptions der Anwendung fängt.
-Kann von der Programmklasse bei Bedarf überschrieben werden.
+Exception-Handler, der unbehandelte Exceptions der Anwendung fÃ¤ngt.
+Kann von der Programmklasse bei Bedarf Ã¼berschrieben werden.
 Das Default-Verhalten ist, dass der Exception-Text auf STDERR
 ausgegeben und der Exitcode auf 99 gesetzt wird.
 
 Das Programm terminiert nicht sofort, sondern die Methode
-L<finish|"finish() - Abschließender Code vor Programmende">() wird noch ausgeführt.
+L<finish|"finish() - AbschlieÃŸender Code vor Programmende">() wird noch ausgefÃ¼hrt.
 
-=head3 finish() - Abschließender Code vor Programmende
+=head3 finish() - AbschlieÃŸender Code vor Programmende
 
 =head4 Synopsis
 
@@ -159,16 +159,16 @@ L<finish|"finish() - Abschließender Code vor Programmende">() wird noch ausgefüh
 
 Liefere das Standard-Encoding, das in der Systemumgebung eingestellt ist.
 Im Konstruktor werden STDIN, STDOUT und STDERR auf dieses Encoding
-eingestellt, d.h. Eingaben und Ausgaben automatisch gemäß dieses
+eingestellt, d.h. Eingaben und Ausgaben automatisch gemÃ¤ÃŸ dieses
 Encodings gewandelt.
 
-=head3 decode() - Dekodiere Zeichenkette gemäß Standard-Encoding
+=head3 decode() - Dekodiere Zeichenkette gemÃ¤ÃŸ Standard-Encoding
 
 =head4 Synopsis
 
   $str = $prg->decode($str);
 
-=head3 encode() - Enkodiere Zeichenkette gemäß Standard-Encoding
+=head3 encode() - Enkodiere Zeichenkette gemÃ¤ÃŸ Standard-Encoding
 
 =head4 Synopsis
 
@@ -218,7 +218,7 @@ Hash-Objekt mit den Optionen.
 
 =item $argA
 
-Referenz auf Array mit mindestens $minArgs und höchstens
+Referenz auf Array mit mindestens $minArgs und hÃ¶chstens
 $maxArgs Argumenten.
 
 =back
@@ -227,17 +227,17 @@ $maxArgs Argumenten.
 
 Liefere die Argumente und Optionen des Programmaufs. Werden weniger als
 $minArgs oder mehr als $maxArgs Argumente oder nicht deklarierte
-Optionen übergeben, wird eine Exception geworfen. Ist $sloppy gesetzt,
-wird im Falle überzähliger Parameter I<keine> Exception geworfen.
-Die überzähligen Parameter bleiben in @ARGV erhalten.
+Optionen Ã¼bergeben, wird eine Exception geworfen. Ist $sloppy gesetzt,
+wird im Falle Ã¼berzÃ¤hliger Parameter I<keine> Exception geworfen.
+Die Ã¼berzÃ¤hligen Parameter bleiben in @ARGV erhalten.
 
 Im Skalarkontext wird nur $opt geliefert, wenn keine Argumente erwartet
 werden ($minArgs und $maxArgs sind 0), andernfalls $argA. Letzteres
-ist nützlich, wenn C<-help> die einzige Option ist.
+ist nÃ¼tzlich, wenn C<-help> die einzige Option ist.
 
 =head2 Zusicherungen
 
-=head3 assert() - Prüfe Werte
+=head3 assert() - PrÃ¼fe Werte
 
 =head4 Synopsis
 
@@ -245,15 +245,15 @@ ist nützlich, wenn C<-help> die einzige Option ist.
 
 =head4 Description
 
-Prüfe Werte durch Methoden der Klasse Quiq::Assert. Ist eine
+PrÃ¼fe Werte durch Methoden der Klasse Quiq::Assert. Ist eine
 Zusicherung verletzt, wird die betreffende Exception in die
 Ausgabe der Programm-Hilfeseite umgesetzt. Die Subroutine
-erhält als Argument ein instantiiertes Quiq::Assert-Objekt.
+erhÃ¤lt als Argument ein instantiiertes Quiq::Assert-Objekt.
 
 =head4 Example
 
-  Prüfe die Werte der Variablen $system und $user gegen eine Menge
-  möglicher Werte:
+  PrÃ¼fe die Werte der Variablen $system und $user gegen eine Menge
+  mÃ¶glicher Werte:
   
       $self->assert(sub {
           my $a = shift;
@@ -329,7 +329,7 @@ Sekunden (Float)
 
 =head4 Description
 
-Ermittele die vergangene Zeit in Sekunden und liefere diese zurück.
+Ermittele die vergangene Zeit in Sekunden und liefere diese zurÃ¼ck.
 
 =head2 Logging
 
@@ -342,7 +342,7 @@ Ermittele die vergangene Zeit in Sekunden und liefere diese zurück.
 
 =head4 Description
 
-Schreibe eine Logmeldung nach STDERR, wenn $level größer oder gleich
+Schreibe eine Logmeldung nach STDERR, wenn $level grÃ¶ÃŸer oder gleich
 dem eingestellten Loglevel ($prg->logLevel) ist. Ist $level nicht
 angegeben, wird 1 angenommen.
 
@@ -350,7 +350,7 @@ Die Logmeldung wird per
 
   printf STDERR $fmt,@args;
 
-erzeugt. Endet $fmt nicht mit einem Newline, wird es hinzugefügt.
+erzeugt. Endet $fmt nicht mit einem Newline, wird es hinzugefÃ¼gt.
 
 Per Default ist der LogLevel 0. Er wird mit
 
@@ -369,11 +369,11 @@ Ist $fmt eine Zahl, muss der Level $level explizit angegeben werden.
 =item *
 
 Die Argumente der Methode werden I<immer> ausgewertet, auch wenn
-kein Logging erfolgt. Ist damit ein größerer Aufwand verbunden,
+kein Logging erfolgt. Ist damit ein grÃ¶ÃŸerer Aufwand verbunden,
 kann es sinnvoll sein, eine Bedingung zu formulieren:
 
   if ($level >= $prg->logLevel) {
-      # $msg mit großem Aufwand erzeugen
+      # $msg mit groÃŸem Aufwand erzeugen
       $prg->log($level,$msg);
   }
 
@@ -403,7 +403,7 @@ Ist $exitCode != 0, wird der Hilfetext auf STDERR ausgegeben.
 =item *
 
 Ist $msg angegeben, wird die Hilfeseite oben und unten um Text $msg
-ergänzt (jeweils mit Leerzeile abgetrennt).
+ergÃ¤nzt (jeweils mit Leerzeile abgetrennt).
 
 =item *
 

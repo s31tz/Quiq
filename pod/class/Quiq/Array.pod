@@ -10,7 +10,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert ein Array. Jede der Methoden kann
+Ein Objekt der Klasse reprÃ¤sentiert ein Array. Jede der Methoden kann
 sowohl auf ein Objekt der Klasse als auch als Klassenmethode
 auf ein ungeblesstes oder eine andere Klasse geblesstes
 Perl-Array angewendet werden.
@@ -37,7 +37,7 @@ Aufruf als Klassenmethode:
 =head4 Description
 
 Instantiiere ein Array-Objekt und liefere eine Referenz auf dieses
-Objekt zurück. Ohne Angabe einer Array-Referenz wird ein leeres
+Objekt zurÃ¼ck. Ohne Angabe einer Array-Referenz wird ein leeres
 Array-Objekt instantiiert.
 
 =head2 Operationen
@@ -56,7 +56,7 @@ compare()
 =head4 Description
 
 Vergleiche die Elemente der Arrays @$arr1 und @arr2 und liefere
-Referenzen auf drei Arrays (Mengen) zurück:
+Referenzen auf drei Arrays (Mengen) zurÃ¼ck:
 
 =over 4
 
@@ -78,7 +78,7 @@ als auch in @arr2 enthalten sind.
 =back
 
 Die drei Ergebnislisten sind als Mengen zu sehen: Jedes Element taucht
-in einer der drei Listen höchstens einmal auf, auch wenn es in den
+in einer der drei Listen hÃ¶chstens einmal auf, auch wenn es in den
 Eingangslisten mehrfach vorkommt.
 
 Die gelieferten Arrays sind auf die Klasse geblesst.
@@ -91,7 +91,7 @@ Die gelieferten Arrays sind auf die Klasse geblesst.
 
 Verwalte Objekte auf Datenbank
 
-Die Methode ist nützlich, wenn eine Menge von Objekten
+Die Methode ist nÃ¼tzlich, wenn eine Menge von Objekten
 auf einer Datenbank identisch zu einer Menge von Elementen
 einer Benutzerauswahl gehalten werden soll. Die Objekte werden
 durch ihre Objekt-Id identifiziert. Die Liste der
@@ -100,15 +100,15 @@ Benutzerauswahl sei @idsUser. Dann liefert der Aufruf
 
   ($idsNew,$idsDel) = $idsUserA->different(\@idsDb);
 
-mit @$idsNew die Liste der zur Datenbank hinzuzufügenden Objekte und
+mit @$idsNew die Liste der zur Datenbank hinzuzufÃ¼genden Objekte und
 mit @$idsDel die Liste der von der Datenbank zu entfernenden Objekte.
-Die Liste der identischen Objekte wird hier nicht benötigt.
+Die Liste der identischen Objekte wird hier nicht benÃ¶tigt.
 
 =item *
 
-Prüfe zwei Arrays auf Identiät
+PrÃ¼fe zwei Arrays auf IdentiÃ¤t
 
-Prüfe, ob zwei Arrays die gleichen Elemente enthalten, aber nicht
+PrÃ¼fe, ob zwei Arrays die gleichen Elemente enthalten, aber nicht
 unbedingt in der gleichen Reihenfolge:
 
   ($only1,$only2) = $arr1->different(\@arr2);
@@ -127,7 +127,7 @@ unbedingt in der gleichen Reihenfolge:
 
 =head4 Description
 
-Dekodiere die Elemente des Arrays gemäß Encoding $encoding.
+Dekodiere die Elemente des Arrays gemÃ¤ÃŸ Encoding $encoding.
 
 =head3 exists() - Teste, ob Element existiert
 
@@ -158,9 +158,9 @@ extractPair()
 
 Durchsuche @arr nach Element $key und liefere das folgende
 Element $val. Beide Elemente werden aus @arr entfernt. Kommt $key
-in @arr nicht vor, liefere undef und lasse @arr unverändert.
+in @arr nicht vor, liefere undef und lasse @arr unverÃ¤ndert.
 Vergleichsoperator ist eq. Per Default wird das Array paarweise
-durchsucht, d.h. der Defaultwert für $step ist 2. Wird $step auf
+durchsucht, d.h. der Defaultwert fÃ¼r $step ist 2. Wird $step auf
 1 gesetzt, kann jedes Element den gesuchten $key enthalten.
 
 =head3 eq() - Vergleiche Arrays per eq
@@ -177,7 +177,7 @@ wenn alle Elemente identisch sind, andernfalls "falsch".
 
 Sind zwei Elemente undef, gelten sie als identisch.
 
-=head3 findPairValue() - Liefere Wert zu Schlüssel
+=head3 findPairValue() - Liefere Wert zu SchlÃ¼ssel
 
 =head4 Synopsis
 
@@ -204,7 +204,7 @@ ist eq.
 =head4 Description
 
 Durchsuche @arr vom Anfang her nach Element $val und liefere
-dessen Index zurück. Kommt $str in @arr nicht vor, liefere -1.
+dessen Index zurÃ¼ck. Kommt $str in @arr nicht vor, liefere -1.
 Vergleichsoperator ist eq.
 
 =head3 last() - Liefere letztes Element
@@ -214,7 +214,7 @@ Vergleichsoperator ist eq.
   $e = $arr->last;
   $e = $class->last(\@arr);
 
-=head3 maxLength() - Länge des längsten Elements
+=head3 maxLength() - LÃ¤nge des lÃ¤ngsten Elements
 
 =head4 Synopsis
 
@@ -223,8 +223,8 @@ Vergleichsoperator ist eq.
 
 =head4 Description
 
-Ermittele die Länge des längsten Arrayelements und liefere diese
-zurück.
+Ermittele die LÃ¤nge des lÃ¤ngsten Arrayelements und liefere diese
+zurÃ¼ck.
 
 =head3 pick() - Liefere Elemente nach Position heraus
 
@@ -238,9 +238,9 @@ zurück.
 =head4 Description
 
 Picke jedes $n-te Array-Element ab Positon $m heraus, bilde aus diesen
-Elementen ein neues Array und liefere dieses zurück.
+Elementen ein neues Array und liefere dieses zurÃ¼ck.
 
-=head3 push() - Füge Element am Ende hinzu
+=head3 push() - FÃ¼ge Element am Ende hinzu
 
 =head4 Synopsis
 
@@ -257,9 +257,9 @@ Elementen ein neues Array und liefere dieses zurück.
 =head4 Description
 
 Wende Test $test auf alle Arrayelemente an und liefere ein Array mit
-den Elementen zurück, die den Test erfüllen.
+den Elementen zurÃ¼ck, die den Test erfÃ¼llen.
 
-Folgende Arten von Tests sind möglich:
+Folgende Arten von Tests sind mÃ¶glich:
 
 =over 4
 
@@ -270,12 +270,12 @@ Wende Regex-Test auf jedes Element an.
 =item Code-Referenz sub { CODE }
 
 Wende Subroutine-Test auf jedes Element an. Als erster
-Parameter wird das zu testende Element übergeben. Die
+Parameter wird das zu testende Element Ã¼bergeben. Die
 Subroutine muss einen boolschen Wert liefern.
 
 =back
 
-=head3 shuffle() - Verwürfele Array-Elemente
+=head3 shuffle() - VerwÃ¼rfele Array-Elemente
 
 =head4 Synopsis
 
@@ -294,17 +294,17 @@ Das zu mischende Array.
 
 =item $factor (Default: 100)
 
-Faktor für die Anzahl der Vertauschungsoperationen. Es werden
-I<Arraygröße> * $factor Vertauschungsoperationen ausgeführt.
+Faktor fÃ¼r die Anzahl der Vertauschungsoperationen. Es werden
+I<ArraygrÃ¶ÃŸe> * $factor Vertauschungsoperationen ausgefÃ¼hrt.
 
 =back
 
 =head4 Description
 
 Mische die Elemente des Array @arr, d.h. bringe sie in eine
-zufällige Reihenfolge. Die Operation wird in-place ausgeführt.
+zufÃ¤llige Reihenfolge. Die Operation wird in-place ausgefÃ¼hrt.
 
-Die Methode liefert keinen Wert zurück.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head3 sort() - Sortiere Elemente alphanumerisch
 
@@ -318,10 +318,10 @@ Die Methode liefert keinen Wert zurück.
 Sortiere die Elemente des Array alphanumerisch.
 
 Im Skalar-Kontext sortiere die Elemente "in place" und liefere
-die Array-Referenz zurück (Method-Chaining).
+die Array-Referenz zurÃ¼ck (Method-Chaining).
 
-Im List-Kontext liefere die Elemente sortiert zurück, ohne
-den Inhalt des Array zu verändern.
+Im List-Kontext liefere die Elemente sortiert zurÃ¼ck, ohne
+den Inhalt des Array zu verÃ¤ndern.
 
 =head3 toHash() - Erzeuge Hash aus Array
 
@@ -353,12 +353,12 @@ Hash. Im Skalarkontext wird eine Referenz auf den Hash geliefert.
 =head4 Description
 
   Erzeuge aus Array @$arr bzw. @arr einen Hash mit den Werten des Array
-  als Schlüssel und dem Wert $val als deren Werte und liefere diesen zurück.
+  als SchlÃ¼ssel und dem Wert $val als deren Werte und liefere diesen zurÃ¼ck.
   Ist $val nicht angegeben, werden alle Werte des Hash auf 1 gesetzt.
 
 =head2 Numerische Operationen
 
-=head3 gcd() - Größter gemeinsamer Teiler
+=head3 gcd() - GrÃ¶ÃŸter gemeinsamer Teiler
 
 =head4 Synopsis
 
@@ -367,9 +367,9 @@ Hash. Im Skalarkontext wird eine Referenz auf den Hash geliefert.
 
 =head4 Description
 
-Berechne den größten gemeinsamen Teiler (greatest common divisor)
-der natürlichen Zahlen in Array @$arr bzw. @arr und liefere diesen
-zurück. Ist das Array leer, wird C<undef> geliefert. Enthält das
+Berechne den grÃ¶ÃŸten gemeinsamen Teiler (greatest common divisor)
+der natÃ¼rlichen Zahlen in Array @$arr bzw. @arr und liefere diesen
+zurÃ¼ck. Ist das Array leer, wird C<undef> geliefert. EnthÃ¤lt das
 Array nur ein Element, wird dessen Wert geliefert.
 
 =head3 min() - Ermittele numerisches Minimum
@@ -381,7 +381,7 @@ Array nur ein Element, wird dessen Wert geliefert.
 
 =head4 Description
 
-Ermittele die kleinste Zahl und liefere diese zurück. Enthält
+Ermittele die kleinste Zahl und liefere diese zurÃ¼ck. EnthÃ¤lt
 $arr keine Elemente, liefere undef.
 
 =head3 max() - Ermittele numerisches Maximum
@@ -393,7 +393,7 @@ $arr keine Elemente, liefere undef.
 
 =head4 Description
 
-Ermittele die größte Zahl und liefere diese zurück. Enthält $arr
+Ermittele die grÃ¶ÃŸte Zahl und liefere diese zurÃ¼ck. EnthÃ¤lt $arr
 keine Elemente, liefere undef.
 
 =head3 minMax() - Ermittele numerisches Minimum und Maximum
@@ -405,8 +405,8 @@ keine Elemente, liefere undef.
 
 =head4 Description
 
-Ermittele die kleinste und die größte Zahl und liefere die beiden Werte
-zurück. Enthält $arr keine Elemente, wird jeweils C<undef> geliefert.
+Ermittele die kleinste und die grÃ¶ÃŸte Zahl und liefere die beiden Werte
+zurÃ¼ck. EnthÃ¤lt $arr keine Elemente, wird jeweils C<undef> geliefert.
 
 =head3 average() - Berechne Mittelwert
 
@@ -422,7 +422,7 @@ meanValue()
 =head4 Description
 
 Berechne das Arithmetische Mittel und liefere dieses
-zurück. Enthält $arr keine Elemente, liefere undef.
+zurÃ¼ck. EnthÃ¤lt $arr keine Elemente, liefere undef.
 
 =head3 standardDeviation() - Berechne Standardabweichung
 
@@ -433,7 +433,7 @@ zurück. Enthält $arr keine Elemente, liefere undef.
 
 =head4 Description
 
-Berechne die Standardabweichung und liefere diese zurück. Enthält
+Berechne die Standardabweichung und liefere diese zurÃ¼ck. EnthÃ¤lt
 $arr keine Elemente, liefere undef.
 
 =head3 variance() - Berechne Varianz
@@ -445,7 +445,7 @@ $arr keine Elemente, liefere undef.
 
 =head4 Description
 
-Berechne die Varianz und liefere diese zurück. Enthält das Array
+Berechne die Varianz und liefere diese zurÃ¼ck. EnthÃ¤lt das Array
 keine Elemente, liefere undef.
 
 =head3 median() - Ermittele den Median
@@ -457,12 +457,12 @@ keine Elemente, liefere undef.
 
 =head4 Description
 
-Ermittele den Median und liefere diesen zurück. Enthält das Array
+Ermittele den Median und liefere diesen zurÃ¼ck. EnthÃ¤lt das Array
 keine Elemente, liefere undef.
 
 =head2 Dump/Restore
 
-=head3 dump() - Erzeuge einzeilige, externe Repräsentation
+=head3 dump() - Erzeuge einzeilige, externe ReprÃ¤sentation
 
 =head4 Synopsis
 
@@ -473,7 +473,7 @@ keine Elemente, liefere undef.
 
 =head4 Description
 
-Liefere eine einzeilige, externe Repräsentation für Array $arr bzw. @arr
+Liefere eine einzeilige, externe ReprÃ¤sentation fÃ¼r Array $arr bzw. @arr
 im Format
 
   elem0|elem1|...|elemN
@@ -487,7 +487,7 @@ Elementen werden folgende Wandlungen vorgenommen:
   LF       -> \n
   CR       -> \r
 
-=head3 restore() - Wandele einzeilige, externe Repräsentation in Array
+=head3 restore() - Wandele einzeilige, externe ReprÃ¤sentation in Array
 
 =head4 Synopsis
 
@@ -496,8 +496,8 @@ Elementen werden folgende Wandlungen vorgenommen:
 
 =head4 Description
 
-Wandele einzeilige, externe Array-Repräsentation (siehe Methode dump())
-in ein Array-Objekt und liefere dieses zurück.
+Wandele einzeilige, externe Array-ReprÃ¤sentation (siehe Methode dump())
+in ein Array-Objekt und liefere dieses zurÃ¼ck.
 
 =head1 VERSION
 

@@ -17,7 +17,7 @@ Quiq::Stacktrace - Generiere und visualisiere einen Stacktrace
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert die Aufrufhierarchie des
+Ein Objekt der Klasse reprÃ¤sentiert die Aufrufhierarchie des
 laufenden Perl-Programms zum Zeitpunkt der Instantiierung des
 Stacktrace-Objektes.
 
@@ -60,7 +60,7 @@ Aufrufreihenfolge wieder. Jede Zeile beschreibt einen Subroutine-Aufruf:
   |     |     |  +-- Datei, in der der Aufruf steht
   |     |     +-- Zeilennummer, an der der Aufruf in der Datei steht
   |     +-- Name der aufgerufenen Subroutine
-  +-- Package, zu dem die Subroutine gehört
+  +-- Package, zu dem die Subroutine gehÃ¶rt
 
 Die in eckigen Klammern genannte Quelltextposition kann bei
 Aufruf von vi(1) oder less(1) benutzt werden, um unmittelbar auf die
@@ -96,20 +96,20 @@ $i erreicht werden.
 =item $i (Default: 0)
 
 Anzahl der Stackframes vom Ende des Stacktrace, die nicht
-berücksichtigt werden. Ist $i == 0 (was der Default ist), werden
-alle Frames berücksichtigt.
+berÃ¼cksichtigt werden. Ist $i == 0 (was der Default ist), werden
+alle Frames berÃ¼cksichtigt.
 
 =back
 
 =head4 Description
 
 Instantiiere ein Stacktrace-Objekt und liefere eine Referenz auf diese
-Objekt zurück. Das Stacktrace-Objekt repräsentiert die Aufruf-Hierarchie
+Objekt zurÃ¼ck. Das Stacktrace-Objekt reprÃ¤sentiert die Aufruf-Hierarchie
 des laufenden Perl-Programms zum Zeitpunkt der Instantiierung. Letztes
 Element in der Hierarchie ist der Konstruktor-Aufruf. Soll der
 Stacktrace vorher enden,
 
-=head2 Externe Repräsentation
+=head2 Externe ReprÃ¤sentation
 
 =head3 asString() - Visualisiere Stacktrace-Objekt
 
@@ -131,7 +131,7 @@ Siehe L<new|"new() - Konstruktor">().
 =head4 Description
 
 Visualisiere das Stacktrace-Objekt in Form einer Zeichenkette und liefere
-diese zurück. Aufbau der Zeichenkette siehe Abschnitt DESCRIPTION.
+diese zurÃ¼ck. Aufbau der Zeichenkette siehe Abschnitt DESCRIPTION.
 
 =head1 VERSION
 

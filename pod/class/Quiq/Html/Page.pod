@@ -41,7 +41,7 @@ Kommentar am Anfang der Seite.
 
 Liste der HTML-Komponenten, die in die Seite eingesetzt werden.
 Die Komponentenbestandteile werden automatisch zu den Seitenbestandteilen
-hinzugefüht. Im Seiten-HTML-Code wird der HTML-Code der Komponente
+hinzugefÃ¼ht. Im Seiten-HTML-Code wird der HTML-Code der Komponente
 an der Postion des Platzhalters __<NAME>__ eingesetzt.
 
 =item encoding => $charset (Default: 'utf-8')
@@ -54,7 +54,7 @@ Kopf der Seite.
 
 =item load => \@arr
 
-Liste von Ladeanweisungen für CSS- und JavaScript-Dateien. Die
+Liste von Ladeanweisungen fÃ¼r CSS- und JavaScript-Dateien. Die
 Ladeanweisungen werden vor anderem CSS- und JavaScript-Code
 (s. Attribute javaScript und styleSheet) in den Head der Seite
 geschrieben. Eine CSS-Datei wird durch die Angabe eines Paars
@@ -76,7 +76,7 @@ Oder kurz (da die Dateiendungen den Typ verraten):
 
 =item noNewline => $bool (Default: 0)
 
-Füge kein Newline am Ende der Seite hinzu.
+FÃ¼ge kein Newline am Ende der Seite hinzu.
 
 =item placeholders => \@keyVal (Default: [])
 
@@ -87,7 +87,7 @@ ihre Werte.
 
 URL oder JavaScript-Code am Ende der Seite. Mehrfach-Definition,
 wenn Array-Referenz. Das Attribut kann mehrfach auftreten, die
-Werte werden zu einer Liste zusammengefügt.
+Werte werden zu einer Liste zusammengefÃ¼gt.
 
 =item javaScriptToHead => $bool (Default: 0)
 
@@ -96,7 +96,7 @@ den Head der HTML-Seite.
 
 =item ready => $jsCode (Default: [])
 
-Führe JavaScript-Code $jsCode aus, wenn das DOM geladen ist.
+FÃ¼hre JavaScript-Code $jsCode aus, wenn das DOM geladen ist.
 Dies ist so implementiert, dass der Code in einen jQuery
 ready-Handler eingebettet wird:
 
@@ -111,7 +111,7 @@ auftreten, es werden dann mehrere ready-Handler aufgesetzt.
 
 Einzelne Style-Spezifikation oder Liste von Style-Spezifikationen.
 Siehe Methode Quiq::Css->style(). Das Attribut kann mehrfach
-auftreten, die Werte werden zu einer Liste zusammengefügt.
+auftreten, die Werte werden zu einer Liste zusammengefÃ¼gt.
 
 =item title => $str (Default: undef)
 
@@ -119,7 +119,7 @@ Titel der Seite.
 
 =item topIndentation => $n (Default: 2)
 
-Einrückung des Inhalts der obersten Elemente <head> und <body>.
+EinrÃ¼ckung des Inhalts der obersten Elemente <head> und <body>.
 
 =back
 

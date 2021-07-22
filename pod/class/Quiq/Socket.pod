@@ -20,7 +20,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine TCP-Verbindung zu einem Server.
+Ein Objekt der Klasse reprÃ¤sentiert eine TCP-Verbindung zu einem Server.
 Der Verbindungsaufbau erfolgt mit der Instantiierung des Objekts.
 
 Die Klasse ist abgeleitet von IO::Socket::INET und besitzt folglich
@@ -52,7 +52,7 @@ Sende GET-Request an Google und gib die Antwort aus:
 
 =item -sloppy => $bool (Default: 0)
 
-Wirf keine Exception, wenn der Verbindungsaufbau fehlschlägt, sondern
+Wirf keine Exception, wenn der Verbindungsaufbau fehlschlÃ¤gt, sondern
 liefere C<undef>.
 
 =back
@@ -60,7 +60,7 @@ liefere C<undef>.
 =head4 Description
 
 Baue eine TCP-Verbindung zu Host $host und Port $port auf
-und liefere eine Referenz auf das Socket-Objekt zurück.
+und liefere eine Referenz auf das Socket-Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -73,9 +73,9 @@ und liefere eine Referenz auf das Socket-Objekt zurück.
 =head4 Description
 
 Lies alle Daten bis der Socket geschlossen wird. Die Methode ist
-nützlich, um eine HTTP-Antwort zu lesen.
+nÃ¼tzlich, um eine HTTP-Antwort zu lesen.
 
-=head3 close() - Schließe Socket
+=head3 close() - SchlieÃŸe Socket
 
 =head4 Synopsis
 

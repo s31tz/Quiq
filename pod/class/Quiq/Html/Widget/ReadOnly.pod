@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Html::Widget::ReadOnly - Nicht-änderbarer Text
+Quiq::Html::Widget::ReadOnly - Nicht-Ã¤nderbarer Text
 
 =head1 BASE CLASS
 
@@ -47,7 +47,7 @@ Wenn wahr, liefere C<undef> als Widget-Code.
 
 =item value => $str (Default: undef)
 
-Wert (vom Anwender nicht änderbar).
+Wert (vom Anwender nicht Ã¤nderbar).
 
 =back
 

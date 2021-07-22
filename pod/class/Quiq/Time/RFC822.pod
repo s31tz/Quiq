@@ -10,7 +10,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Die von der Klasse generierte Zeitangabe wird f¸r Expires und
+Die von der Klasse generierte Zeitangabe wird f√ºr Expires und
 Set-Cookie HTTP-Header verwendet.
 
 =head1 SEE ALSO
@@ -37,7 +37,7 @@ Zeitangabe nach RFC 822
 =head4 Description
 
 Konvertiere Argument $val in eine Zeitangabe nach RFC 822 und
-liefere diese zur¸ck.
+liefere diese zur√ºck.
 
 B<Zeitangabe nach RFC 822>
 
@@ -49,7 +49,7 @@ Als Argument $val ist eine Uhrzeit (des heutigen oder morgigen
 Tages im Format HH:MM), ein bestimmter Zeitpunkt in Unix-Zeit
 (Sekunden seit 1.1.1970 00:00, GMT), ein Zeitoffset in Sekunden,
 Minuten, Stunden, Tagen oder Jahren (relativ zum aktuellen Zeitpunkt)
-oder 'now' und 0 zul‰ssig:
+oder 'now' und 0 zul√§ssig:
 
   N         (Unix-Zeit)
   HH:MM     (Zeitpunkt in der Zukunft)

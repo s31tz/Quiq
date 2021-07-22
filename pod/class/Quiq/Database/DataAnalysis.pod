@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Database::DataAnalysis - Führe Datenanalyse durch
+Quiq::Database::DataAnalysis - FÃ¼hre Datenanalyse durch
 
 =head1 BASE CLASS
 
@@ -10,8 +10,8 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Führe eine Analyse auf den Daten einer Relation (Tabelle oder View) oder
-eines SQL-Statements durch, das Daten liefert (üblicherweise ein
+FÃ¼hre eine Analyse auf den Daten einer Relation (Tabelle oder View) oder
+eines SQL-Statements durch, das Daten liefert (Ã¼blicherweise ein
 SELECT-Statement). Das Analyseergebnis kann mit den Methoden der Klasse
 ausgegeben werden.
 
@@ -19,7 +19,7 @@ ausgegeben werden.
 
 =head2 Konstruktor
 
-=head3 new() - Führe Datenanalyse durch
+=head3 new() - FÃ¼hre Datenanalyse durch
 
 =head4 Synopsis
 
@@ -51,13 +51,13 @@ Siehe Quiq::Database::Connection/sql().
 =item -enumLimit => $n (Default: 10)
 
 Bis zu dieser Anzahl an unterschiedlichen Werten werden diese einzelnen
-Werte in der Kolumne "DISTINCT <column>" aufgezählt.
+Werte in der Kolumne "DISTINCT <column>" aufgezÃ¤hlt.
 
 =item -valLenLimit => $n (Default: 30)
 
-Bis zu dieser Länge werden die Werte der Kolumnen "MIN(<column>)" und
-"MAX(<column>)" angezeigt. Längere Werte werden auf die Länge $n-3
-gekürzt und um drei Punkte (...) ergänzt.
+Bis zu dieser LÃ¤nge werden die Werte der Kolumnen "MIN(<column>)" und
+"MAX(<column>)" angezeigt. LÃ¤ngere Werte werden auf die LÃ¤nge $n-3
+gekÃ¼rzt und um drei Punkte (...) ergÃ¤nzt.
 
 =back
 
@@ -73,17 +73,17 @@ Objekt mit dem Ergebnis der Datenanalyse.
 
 =head4 Description
 
-Führe eine Datenanalyse für Datenquelle @select (Tabelle, View, Statement)
-durch und liefere ein Objekt, das das Analyseergebnis repräsentiert,
-zurück. Folgende Information wird für alle Kolumnen der Datenquelle
+FÃ¼hre eine Datenanalyse fÃ¼r Datenquelle @select (Tabelle, View, Statement)
+durch und liefere ein Objekt, das das Analyseergebnis reprÃ¤sentiert,
+zurÃ¼ck. Folgende Information wird fÃ¼r alle Kolumnen der Datenquelle
 ermittelt:
 
   COUNT(DISTINCT <column>) - Anzahl der verschiedenen Werte
   COUNT(<column>)          - Anzahl der Werte, die nicht NULL sind
-  MIN(LENGTH(<column>))    - Länge des kürzesten Werts
-  MAX(LENGTH(<column>))    - Länge des längsten Werts
-  MIN(<column>)            - Kleinster Wert (gemäß Datentyp)
-  MAX(<column>)            - Größter Wert (gemäß Datentyp)
+  MIN(LENGTH(<column>))    - LÃ¤nge des kÃ¼rzesten Werts
+  MAX(LENGTH(<column>))    - LÃ¤nge des lÃ¤ngsten Werts
+  MIN(<column>)            - Kleinster Wert (gemÃ¤ÃŸ Datentyp)
+  MAX(<column>)            - GrÃ¶ÃŸter Wert (gemÃ¤ÃŸ Datentyp)
 
 Ferner wird ermittelt:
 

@@ -39,7 +39,7 @@ Differenzen (String)
 =head4 Description
 
 Vergleiche die Zeichenketten $str1 und $str2 per diff(1) und liefere
-das Ergebnis zurück. Unterschiede im Umfang an Whitespace werden
+das Ergebnis zurÃ¼ck. Unterschiede im Umfang an Whitespace werden
 ignoriert (diff-Option C<--ignore-space-change> ist gesetzt).
 
 =head4 See Also

@@ -10,14 +10,14 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen "Abschnitt". Abschnitte werden
+Ein Objekt der Klasse reprÃ¤sentiert einen "Abschnitt". Abschnitte werden
 von C<< Quiq::Section::Parser >> geparst und instantiiert.
 
-Ein Abschnittsobjekt gibt Auskunft über den Inhalt des Abschnitts
+Ein Abschnittsobjekt gibt Auskunft Ã¼ber den Inhalt des Abschnitts
 und dessen "Ort" (Dateiname und Zeilennummer). Das Objekt ist readonly,
-d.h. die Objekteigenschaften können gelesen aber nicht gesetzt werden.
+d.h. die Objekteigenschaften kÃ¶nnen gelesen aber nicht gesetzt werden.
 
-Abschnittsobjekte können in einer hierarchischen Beziehung stehen.
+Abschnittsobjekte kÃ¶nnen in einer hierarchischen Beziehung stehen.
 Ein Abschnitts-Objekt kann Unter-Abschnitte haben.
 
 =head1 ATTRIBUTES
@@ -34,7 +34,7 @@ Klammerung des Abschnittsbezeichners.
 
 =item [2] keyA
 
-Liste der Schlüssel.
+Liste der SchlÃ¼ssel.
 
 =item [3] keyValH
 
@@ -75,15 +75,15 @@ Zeilennummer in Quelldatei.
 
 =item $type
 
-Abschnitts-Typ einschließlich Klammern (sofern vorhanden).
+Abschnitts-Typ einschlieÃŸlich Klammern (sofern vorhanden).
 
 =item $keyValH
 
-Referenz auf Schlüssel/Wert-Hash.
+Referenz auf SchlÃ¼ssel/Wert-Hash.
 
 =item $keyA
 
-Referenz auf Schlüssel-Array.
+Referenz auf SchlÃ¼ssel-Array.
 
 =item $content
 
@@ -95,7 +95,7 @@ Quelltext des Abschnitts.
 
 =item $file
 
-Name der Datei, die den Abschnitt enthält. Im Falle von STDIN ist
+Name der Datei, die den Abschnitt enthÃ¤lt. Im Falle von STDIN ist
 ist der Dateiname "-", im Falle einer In-Memory-Datei ist der
 Dateiname "C<(source)>".
 
@@ -112,7 +112,7 @@ Referenz auf Abschnitts-Objekt
 =head4 Description
 
 Instantiiere ein Abschnittsobjekt und liefere eine Referenz
-auf das Objekt zurück.
+auf das Objekt zurÃ¼ck.
 
 =head2 Abschnittsinformation
 
@@ -152,7 +152,7 @@ Ist Parameter $brackets angegeben, setze die Klammerung auf diesen Wert.
 =head4 Details
 
 Die Klamerung um den Abschnitts-Bezeichner ist optional.
-Sie besteht aus der öffnenden und schließenden Klammer,
+Sie besteht aus der Ã¶ffnenden und schlieÃŸenden Klammer,
 ist also "[]", "<>" oder "()" oder "{}".
 
 =head3 fullType() - Liefere Abschnittsbezeichner mit Klammerung
@@ -163,10 +163,10 @@ ist also "[]", "<>" oder "()" oder "{}".
 
 =head4 Description
 
-Liefere den vollständigen Abschnittsbezeichner einschließlich
+Liefere den vollstÃ¤ndigen Abschnittsbezeichner einschlieÃŸlich
 der Klammern.
 
-=head3 keys() - Liefere die Liste der Schlüssel
+=head3 keys() - Liefere die Liste der SchlÃ¼ssel
 
 =head4 Synopsis
 
@@ -174,7 +174,7 @@ der Klammern.
 
 =head4 Description
 
-Liefere die Liste der Schlüssel. Im Skalarkontext liefere eine
+Liefere die Liste der SchlÃ¼ssel. Im Skalarkontext liefere eine
 Referenz auf die Liste.
 
 =head3 keyValHash() - Liefere den Attributhash
@@ -229,7 +229,7 @@ Inhalt mit Newline (String)
 
 Dateiname (String)
 
-=head3 mtime() - Liefere Zeitpunkt der letzten Änderung der Datei
+=head3 mtime() - Liefere Zeitpunkt der letzten Ã„nderung der Datei
 
 =head4 Synopsis
 
@@ -281,7 +281,7 @@ Quelltext (String)
 
 Skalar-Referenz
 
-=head3 deleteSource() - Lösche Quelltext
+=head3 deleteSource() - LÃ¶sche Quelltext
 
 =head4 Synopsis
 
@@ -291,7 +291,7 @@ Skalar-Referenz
 
 nichts
 
-=head3 transferSource() - Übertrage Quelltext von Sub-Abschnitten auf Abschnitt
+=head3 transferSource() - Ãœbertrage Quelltext von Sub-Abschnitten auf Abschnitt
 
 =head4 Synopsis
 
@@ -303,9 +303,9 @@ nichts
 
 =head4 Description
 
-Füge die Quelltexte aller Sub-Abschnitte von Abschnitt $sec zum
+FÃ¼ge die Quelltexte aller Sub-Abschnitte von Abschnitt $sec zum
 Abschnitt hinzu. Die Quelltexte der Sub-Abschnitte werden von
-diesen gelöscht.
+diesen gelÃ¶scht.
 
 =head3 removeEofMarker() - Entferne "# eof" von Quelltext und Content
 
@@ -319,7 +319,7 @@ nichts
 
 =head2 Attribute
 
-=head3 append() - Füge Zeichenkette zu Wert hinzu
+=head3 append() - FÃ¼ge Zeichenkette zu Wert hinzu
 
 =head4 Synopsis
 
@@ -331,7 +331,7 @@ nichts
 
 =item $key
 
-Schlüssel, dessen Wert ergänzt wird.
+SchlÃ¼ssel, dessen Wert ergÃ¤nzt wird.
 
 =back
 
@@ -341,10 +341,10 @@ Wert (String)
 
 =head4 Description
 
-Füge Zeichenkette $str zum Wert des Schlüssels $key hinzu
-und liefere den resultierenden Wert zurück.
+FÃ¼ge Zeichenkette $str zum Wert des SchlÃ¼ssels $key hinzu
+und liefere den resultierenden Wert zurÃ¼ck.
 
-=head3 get() - Liefere Wert zu Schlüssel
+=head3 get() - Liefere Wert zu SchlÃ¼ssel
 
 =head4 Synopsis
 
@@ -357,7 +357,7 @@ und liefere den resultierenden Wert zurück.
 
 =item $key bzw. @keys
 
-Schlüssel, deren Wert geliefert wird.
+SchlÃ¼ssel, deren Wert geliefert wird.
 
 =back
 
@@ -367,12 +367,12 @@ Wert (Skalar-Kontext) oder Wertliste (Array-Kontext)
 
 =head4 Description
 
-Liefere den Wert zu Schlüssel $key bzw. die liste der Werte zu den
-Schlüsseln @keys. Beginnt der $key mit einem Großbuchstaben, ist
-es ein fataler Fehler, wenn zu dem Schlüssel mehrere Werte existieren.
-Solche Schlüssel müssen mit $obj->L<getArray|"getArray() - Liefere Wertliste zu Schlüssel">() abgefragt werden.
+Liefere den Wert zu SchlÃ¼ssel $key bzw. die liste der Werte zu den
+SchlÃ¼sseln @keys. Beginnt der $key mit einem GroÃŸbuchstaben, ist
+es ein fataler Fehler, wenn zu dem SchlÃ¼ssel mehrere Werte existieren.
+Solche SchlÃ¼ssel mÃ¼ssen mit $obj->L<getArray|"getArray() - Liefere Wertliste zu SchlÃ¼ssel">() abgefragt werden.
 
-=head3 getArray() - Liefere Wertliste zu Schlüssel
+=head3 getArray() - Liefere Wertliste zu SchlÃ¼ssel
 
 =head4 Synopsis
 
@@ -384,7 +384,7 @@ Solche Schlüssel müssen mit $obj->L<getArray|"getArray() - Liefere Wertliste zu 
 
 =item $key
 
-Schlüssel dessen Wertliste geliefert wird.
+SchlÃ¼ssel dessen Wertliste geliefert wird.
 
 =back
 
@@ -394,9 +394,9 @@ Wert bzw. Werte
 
 =head4 Description
 
-Liefere die Wertliste von Schlüssel $key.
+Liefere die Wertliste von SchlÃ¼ssel $key.
 
-=head3 getBool() - Liefere boolschen Wert zu Schlüssel
+=head3 getBool() - Liefere boolschen Wert zu SchlÃ¼ssel
 
 =head4 Synopsis
 
@@ -409,7 +409,7 @@ Liefere die Wertliste von Schlüssel $key.
 
 =item $key
 
-Schlüssel, dessen Wert geliefert wird.
+SchlÃ¼ssel, dessen Wert geliefert wird.
 
 =item $default
 
@@ -423,7 +423,7 @@ Wert (Skalar)
 
 =head4 Description
 
-Liefere boolschen Wert zu Schlüssel $key.
+Liefere boolschen Wert zu SchlÃ¼ssel $key.
 
 =head3 getMandatory() - Liefere Wert eines Pflichtattributs
 
@@ -437,7 +437,7 @@ Liefere boolschen Wert zu Schlüssel $key.
 
 =item $key
 
-Schlüssel, dessen Wert geliefert wird.
+SchlÃ¼ssel, dessen Wert geliefert wird.
 
 =back
 
@@ -447,10 +447,10 @@ Wert (Skalar)
 
 =head4 Description
 
-Wie $sec->L<get|"get() - Liefere Wert zu Schlüssel">(), nur dass ein Wert existieren muss, sonst
+Wie $sec->L<get|"get() - Liefere Wert zu SchlÃ¼ssel">(), nur dass ein Wert existieren muss, sonst
 wird eine Exception geworfen.
 
-=head3 getRef() - Liefere Referenz auf Schlüsselwert
+=head3 getRef() - Liefere Referenz auf SchlÃ¼sselwert
 
 =head4 Synopsis
 
@@ -466,9 +466,9 @@ wird eine Exception geworfen.
 
 Durchsuche die Liste der Abschnitts-Objekte ($self,@sections)
 nach dem ersten Attribut aus @keys, das einen Wert besitzt und
-liefere das Schlüssel/Wert-Paar zurück. Ist der Wert 'NULL',
-wird '' (Leerstring) geliefert. Auf diese Weise kann auf "höherer Ebene"
-definierter Wert außer Kraft gesetzt werden.
+liefere das SchlÃ¼ssel/Wert-Paar zurÃ¼ck. Ist der Wert 'NULL',
+wird '' (Leerstring) geliefert. Auf diese Weise kann auf "hÃ¶herer Ebene"
+definierter Wert auÃŸer Kraft gesetzt werden.
 
 =head3 try() - Werte abfragen ohne Exception
 
@@ -479,7 +479,7 @@ definierter Wert außer Kraft gesetzt werden.
 
 =head4 Description
 
-Wie L<get|"get() - Liefere Wert zu Schlüssel">(), nur dass im Falle eines unerlaubten Schlüssels
+Wie L<get|"get() - Liefere Wert zu SchlÃ¼ssel">(), nur dass im Falle eines unerlaubten SchlÃ¼ssels
 keine Exception geworfen, sondern C<undef> geliefert wird.
 
 =head3 memoize() - Ermittele Wert und cache ihn auf Attribut
@@ -495,7 +495,7 @@ definiert (Wert ist C<undef>), wird die Methode $sec->$sub($key)
 gerufen, der Wert berechnet und auf dem Attribut $key gespeichert.
 Weitere Aufrufe liefern diesen Wert, ohne dass er neu berechnet wird.
 
-Die Methode ist nützlich, um in Objektmethoden eingebettet zu werden,
+Die Methode ist nÃ¼tzlich, um in Objektmethoden eingebettet zu werden,
 die einen berechneten Wert liefern, der nicht immer wieder neu
 gerechnet werden soll.
 
@@ -523,7 +523,7 @@ Die Methode ist identisch zu $sec->L<memoize|"memoize() - Ermittele Wert und cac
 Referenz ermittelt und automatisch zu einer schwachen Referenz
 gemacht wird.
 
-=head3 set() - Setze Schlüssel auf Wert
+=head3 set() - Setze SchlÃ¼ssel auf Wert
 
 =head4 Synopsis
 
@@ -535,7 +535,7 @@ gemacht wird.
 
 =item @keyVal
 
-Schlüssel/Wert-Paare, die gesetzt werden.
+SchlÃ¼ssel/Wert-Paare, die gesetzt werden.
 
 =back
 
@@ -555,7 +555,7 @@ nichts
 
 =item @keyVal
 
-Liste der Schlüssel/Wert-Paare.
+Liste der SchlÃ¼ssel/Wert-Paare.
 
 =back
 
@@ -565,7 +565,7 @@ I<nichts>
 
 =head4 Description
 
-Setze Schlüssel ohne Wert, d.h. wenn der Wert ein Leerstring ist,
+Setze SchlÃ¼ssel ohne Wert, d.h. wenn der Wert ein Leerstring ist,
 setze ihn auf den angegebenen Defaultwert.
 
 =head4 Example
@@ -577,7 +577,7 @@ setze ihn auf den angegebenen Defaultwert.
       PackageMenuHeight => 34,
   );
 
-=head3 add() - Füge Schlüssel und Wert hinzu
+=head3 add() - FÃ¼ge SchlÃ¼ssel und Wert hinzu
 
 =head4 Synopsis
 
@@ -589,7 +589,7 @@ setze ihn auf den angegebenen Defaultwert.
 
 =item @keyVal
 
-Schlüssel/Wert-Paare, die gesetzt werden.
+SchlÃ¼ssel/Wert-Paare, die gesetzt werden.
 
 =back
 
@@ -597,7 +597,7 @@ Schlüssel/Wert-Paare, die gesetzt werden.
 
 nichts
 
-=head3 push() - Füge Element zu Arraykomponente hinzu
+=head3 push() - FÃ¼ge Element zu Arraykomponente hinzu
 
 =head4 Synopsis
 
@@ -613,14 +613,14 @@ Arraykomponente.
 
 =item $val
 
-Wert, der zum Array am Ende hinzugefügt wird.
+Wert, der zum Array am Ende hinzugefÃ¼gt wird.
 
 =back
 
 =head4 Description
 
-Füge Wert $val zur Arraykomponente $key hinzu. Die Methode liefert keinen
-Wert zurück.
+FÃ¼ge Wert $val zur Arraykomponente $key hinzu. Die Methode liefert keinen
+Wert zurÃ¼ck.
 
 =head3 weaken() - Erzeuge schwache Referenz
 
@@ -631,11 +631,11 @@ Wert zurück.
 
 =head4 Description
 
-Mache die Referenz von Schlüssel $key zu einer schwachen Referenz
-und liefere sie zurück. Ist eine Referenz $ref als Parameter angegeben,
+Mache die Referenz von SchlÃ¼ssel $key zu einer schwachen Referenz
+und liefere sie zurÃ¼ck. Ist eine Referenz $ref als Parameter angegeben,
 setze die Referenz zuvor.
 
-=head3 validate() - Prüfe und ergänze Attribute
+=head3 validate() - PrÃ¼fe und ergÃ¤nze Attribute
 
 =head4 Synopsis
 
@@ -647,12 +647,12 @@ setze die Referenz zuvor.
 
 =item $contentAllowed
 
-Wenn falsch, erlaubt der Abschnitt keinen Content (außer "# eof"
+Wenn falsch, erlaubt der Abschnitt keinen Content (auÃŸer "# eof"
 als Dateiende-Markierung).
 
 =item @keys
 
-Liste der zulässigen Abschnittsattribute
+Liste der zulÃ¤ssigen Abschnittsattribute
 
 =back
 
@@ -668,17 +668,17 @@ Die Methode finalisiert das Abschnittsobjekt in folgender Weise:
 
 =item *
 
-Sie prüft, dass wenn kein Content erlaubt ist, keiner existiert.
+Sie prÃ¼ft, dass wenn kein Content erlaubt ist, keiner existiert.
 
 =item *
 
-Sie prüft, dass nur Schlüssel im Objekt vorkommen, die in @keys
-vorkommen. Kommt ein anderer Schlüssel im Objekt vor, wird eine
+Sie prÃ¼ft, dass nur SchlÃ¼ssel im Objekt vorkommen, die in @keys
+vorkommen. Kommt ein anderer SchlÃ¼ssel im Objekt vor, wird eine
 Exception geworfen.
 
 =item *
 
-Sie fügt Schlüssel aus @keys zum Objekt hinzu, die das Objekt nicht hat.
+Sie fÃ¼gt SchlÃ¼ssel aus @keys zum Objekt hinzu, die das Objekt nicht hat.
 
 =back
 
@@ -712,12 +712,12 @@ Detailinformation zum Fehler.
 
 =head4 Returns
 
-Die Methode kehrt nicht zurück
+Die Methode kehrt nicht zurÃ¼ck
 
 =head4 Description
 
 Die Methode wirft eine Exception mit dem Fehlertext $msg und den
-als Schlüssel/Wert-Paare angegebenen Informationen @keyVal. Ferner
+als SchlÃ¼ssel/Wert-Paare angegebenen Informationen @keyVal. Ferner
 wird von der Methode der Dateiname und die Zeilennummer des
 Abschnitts ergnzt. Die Exception beinhaltet keinen Stacktrace.
 
@@ -732,8 +732,8 @@ Abschnitts ergnzt. Die Exception beinhaltet keinen Stacktrace.
 
 =head4 Description
 
-Erzeuge beim ersten Aufruf eine Akzessor-Methode für einen Schlüssel
-des Schlüssel/Wert-Hashs und führe den betreffenden Methodenaufruf
+Erzeuge beim ersten Aufruf eine Akzessor-Methode fÃ¼r einen SchlÃ¼ssel
+des SchlÃ¼ssel/Wert-Hashs und fÃ¼hre den betreffenden Methodenaufruf
 durch.
 
 =head1 VERSION

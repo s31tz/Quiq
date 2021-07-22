@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Template - Klasse für HTML/XML/Text-Generierung
+Quiq::Template - Klasse fÃ¼r HTML/XML/Text-Generierung
 
 =head1 BASE CLASS
 
@@ -59,7 +59,7 @@ Resultat C<$str>:
 
 =item -lineContinuation => $type (Default: undef)
 
-Art der Zeilenfortsetzung. Mögliche Werte:
+Art der Zeilenfortsetzung. MÃ¶gliche Werte:
 
 =over 4
 
@@ -70,14 +70,14 @@ Keine Zeilenfortsetzung.
 =item 'backslash'
 
 Endet eine Zeile mit einem Backslash, entferne Whitespace am
-Anfang der Folgezeile und füge den Rest zur Zeile hinzu.
+Anfang der Folgezeile und fÃ¼ge den Rest zur Zeile hinzu.
 
-Dies kann für eine Zeile unterdrückt werden, indem der Backslash am
+Dies kann fÃ¼r eine Zeile unterdrÃ¼ckt werden, indem der Backslash am
 Ende der Zeile durch einen davorgestellten Backslash maskiert wird.
 In dem Fall wird statt einer Fortsetzung der Zeile der maskierende
 Backslash entfernt.
 
-Diese Option ist nützlich, wenn ein Template-Text im Editor auf
+Diese Option ist nÃ¼tzlich, wenn ein Template-Text im Editor auf
 eine bestimmte Breite (z.B. 80 Zeichen/Zeile) begrenzt sein soll,
 aber der generierte Text breiter sein darf.
 
@@ -87,14 +87,14 @@ aber der generierte Text breiter sein darf.
 
 Ersetze bei replace() immer nur den ersten von mehreren identischen
 Platzhaltern. Dies ist z.B. in HTML bei Ersetzung von mehreren
-Checkboxen mit gleichem Namen nützlich.
+Checkboxen mit gleichem Namen nÃ¼tzlich.
 
 =back
 
 =head4 Description
 
 Instantiiere ein Template vom Typ $type aus Datei $file oder String $str
-und liefere eine Referenz auf dieses Objekt zurück.
+und liefere eine Referenz auf dieses Objekt zurÃ¼ck.
 
 Template-Typen:
 
@@ -112,7 +112,7 @@ Entities ersetzt.
 
 =item 'text'
 
-Text-Template. Werte werden unverändert eingesetzt.
+Text-Template. Werte werden unverÃ¤ndert eingesetzt.
 
 =back
 
@@ -141,10 +141,10 @@ Text mit Platzhaltern.
 =head4 Description
 
 Ersetze in Template $text die Platzhalter durch die Werte aus
-@keyVal und liefere den resultierenden Text zurück. Die Methode
+@keyVal und liefere den resultierenden Text zurÃ¼ck. Die Methode
 ist eine Vereinfachung, sie instantiiert intern ein Template-Objekt,
 wendet darauf die Methode replace() an und liefert den
-resultierenden Text zurück.
+resultierenden Text zurÃ¼ck.
 
 Eine Tilde (~) kann als Zeilenfortsetzungszeichen im
 Template verwendet werden.
@@ -178,17 +178,17 @@ Template verwendet werden.
 
 =head4 Returns
 
-Referenz auf das Template-Objekt (für Method-Chaining)
+Referenz auf das Template-Objekt (fÃ¼r Method-Chaining)
 
 =head4 Description
 
 Ersetze alle Platzhalter durch ihre Werte. Platzhalter und
-Werte werden als Paare @keyVal übergeben.
+Werte werden als Paare @keyVal Ã¼bergeben.
 
 Der Wert kann ein String, eine Arrayrefernz, eine Codereferenz oder
 ein Template-Objekt sein. Siehe Methode L<value|"value() - Liefere Platzhalter-Wert als Zeichenkette">().
 
-Es wird für jeden Platzhalter mit einem Wert ungleich C<undef> geprüft,
+Es wird fÃ¼r jeden Platzhalter mit einem Wert ungleich C<undef> geprÃ¼ft,
 ob dieser im Template vorkommt. Wenn nicht, wird eine Exception geworfen.
 
 =head4 Example
@@ -231,7 +231,7 @@ liefert keinen String, sondern eine Referenz auf ein Array von
 Template-Objekten. Wie jeder Platzhalterwert wird dieser von der
 Methode $tpl->L<value|"value() - Liefere Platzhalter-Wert als Zeichenkette">() in einen String (oder C<undef>) umgesetzt.
 
-=head3 key() - Liefere Schlüssel und Ersetzungsattribut(e)
+=head3 key() - Liefere SchlÃ¼ssel und Ersetzungsattribut(e)
 
 =head4 Synopsis
 
@@ -240,7 +240,7 @@ Methode $tpl->L<value|"value() - Liefere Platzhalter-Wert als Zeichenkette">() i
 
 =head4 Description
 
-Als Schlüssel $arg kann
+Als SchlÃ¼ssel $arg kann
 
 =over 4
 
@@ -261,13 +261,13 @@ eine Arrayreferenz
 angegeben sein.
 
 MEMO: Die Methode ist so gestaltet, dass (weitere) Einsetzungsattribute
-definiert werden können, wenn als Platzhalter eine Arrayreferenz
-übergeben wird, z.B.
+definiert werden kÃ¶nnen, wenn als Platzhalter eine Arrayreferenz
+Ã¼bergeben wird, z.B.
 
   ['__ITEMS__',call=>sub {...}]
 
-Die Ersetzungsattribute werden im Arraykontext neben dem Schlüssel
-zurückgegeben und können in replace() den Ersetzungsvorgang in
+Die Ersetzungsattribute werden im Arraykontext neben dem SchlÃ¼ssel
+zurÃ¼ckgegeben und kÃ¶nnen in replace() den Ersetzungsvorgang in
 spezieller Weise steuern. Dies wird aber noch nicht genutzt.
 
 =head3 value() - Liefere Platzhalter-Wert als Zeichenkette
@@ -290,7 +290,7 @@ Liefere String.
 =item Arrayreferenz:
 
 Ermittele die Zeichenketten-Werte aller Array-Elemente,
-konkateniere diese mit "\n" und liefere das Resultat zurück.
+konkateniere diese mit "\n" und liefere das Resultat zurÃ¼ck.
 
 =item Corereferenz:
 
@@ -300,7 +300,7 @@ Returnwerts.
 =item Template-Objekt:
 
 Rufe Methode L<asString|"asString() - Liefere Inhalt">() des Objekts auf und liefere
-das Resultat zurück.
+das Resultat zurÃ¼ck.
 
 =back
 
@@ -323,8 +323,8 @@ oder
   ...
   <!--/optional-->
 
-<optional>-Konstrukte können geschachtelt sein. Sie werden von innen
-nach außen aufgelöst.
+<optional>-Konstrukte kÃ¶nnen geschachtelt sein. Sie werden von innen
+nach auÃŸen aufgelÃ¶st.
 
 B<Attribute>
 
@@ -332,7 +332,7 @@ B<Attribute>
 
 =item default="VALUE"
 
-Enthält der Inhalt einen unersetzten Platzhalter, ersetze den
+EnthÃ¤lt der Inhalt einen unersetzten Platzhalter, ersetze den
 Inhalt durch VALUE.
 
 =item placeholder="NAME"

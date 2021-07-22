@@ -12,7 +12,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head2 Eigenschaften
 
-=head3 maxLineLength() - Länge der längsten Zeile
+=head3 maxLineLength() - LÃ¤nge der lÃ¤ngsten Zeile
 
 =head4 Synopsis
 
@@ -30,12 +30,12 @@ Ein String, typischerweise mehrzeilig.
 
 =head4 Returns
 
-Länge der längsten Zeile (Integer)
+LÃ¤nge der lÃ¤ngsten Zeile (Integer)
 
 =head4 Description
 
-Ermittele die Länge der längsten Zeile und liefere diese zurück. Newline
-wird nicht mitgezählt.
+Ermittele die LÃ¤nge der lÃ¤ngsten Zeile und liefere diese zurÃ¼ck. Newline
+wird nicht mitgezÃ¤hlt.
 
 =head2 Encoding
 
@@ -70,9 +70,9 @@ UTF-16/32 mit BOM
 und $otherEncoding. Ist $otherEncoding nicht angegeben, wird
 ISO-8859-1 angenommen.
 
-=head2 Einrückung
+=head2 EinrÃ¼ckung
 
-=head3 indent() - Rücke Text ein
+=head3 indent() - RÃ¼cke Text ein
 
 =head4 Synopsis
 
@@ -85,10 +85,10 @@ ISO-8859-1 angenommen.
 
 =item -indentBlankLines => $bool (Default: 0)
 
-Rücke auch Leerzeilen ein. Per Default werden nur Zeilen mit
-wenigstens einem Zeichen eingerückt.
+RÃ¼cke auch Leerzeilen ein. Per Default werden nur Zeilen mit
+wenigstens einem Zeichen eingerÃ¼ckt.
 
-Diese Option ist nützlich, wenn die Funktion zum Auskommentieren
+Diese Option ist nÃ¼tzlich, wenn die Funktion zum Auskommentieren
 genutzt werden soll.
 
 =item -strip => $bool (Default: 0)
@@ -100,11 +100,11 @@ geschieht dies nicht.
 
 =head4 Description
 
-Rücke den Text $str um Zeichenkette $indentStr ein und liefere
-das Resultat zurück.
+RÃ¼cke den Text $str um Zeichenkette $indentStr ein und liefere
+das Resultat zurÃ¼ck.
 
-Die Einrück-Zeichenkette $indentStr wird jeder Zeile von $str
-hinzugefügt, außer Leerzeilen.
+Die EinrÃ¼ck-Zeichenkette $indentStr wird jeder Zeile von $str
+hinzugefÃ¼gt, auÃŸer Leerzeilen.
 
 =head4 Example
 
@@ -112,7 +112,7 @@ hinzugefügt, außer Leerzeilen.
 
 =item *
 
-Texteinrückung um vier Leerzeichen
+TexteinrÃ¼ckung um vier Leerzeichen
 
   $class->indent($txt,' ' x 4);
   
@@ -122,7 +122,7 @@ Texteinrückung um vier Leerzeichen
 
 =back
 
-=head3 determineIndentation() - Einrücktiefe eines Textes
+=head3 determineIndentation() - EinrÃ¼cktiefe eines Textes
 
 =head4 Synopsis
 
@@ -130,20 +130,20 @@ Texteinrückung um vier Leerzeichen
 
 =head4 Description
 
-Ermittele die Einrücktiefe des Textes $str und liefere diese zurück.
-Die Einrücktiefe ist der größte gemeinsame Teiler aller
-Zeilen-Einrückungen. Beispiel:
+Ermittele die EinrÃ¼cktiefe des Textes $str und liefere diese zurÃ¼ck.
+Die EinrÃ¼cktiefe ist der grÃ¶ÃŸte gemeinsame Teiler aller
+Zeilen-EinrÃ¼ckungen. Beispiel:
 
   |Dies
   |    ist
   |       ein
   |           Test
 
-Einrücktiefe ist 4.
+EinrÃ¼cktiefe ist 4.
 
-WICHTIG: Für die Einrückung zählen nur Leerzeichen, keine Tabs!
+WICHTIG: FÃ¼r die EinrÃ¼ckung zÃ¤hlen nur Leerzeichen, keine Tabs!
 
-=head3 reduceIndentation() - Reduziere Einrücktiefe eines Textes
+=head3 reduceIndentation() - Reduziere EinrÃ¼cktiefe eines Textes
 
 =head4 Synopsis
 
@@ -152,7 +152,7 @@ WICHTIG: Für die Einrückung zählen nur Leerzeichen, keine Tabs!
 
 =head4 Description
 
-Reduziere die Einrücktiefe des Textes $str auf Tiefe $n.
+Reduziere die EinrÃ¼cktiefe des Textes $str auf Tiefe $n.
 
 =head4 Example
 
@@ -163,7 +163,7 @@ Text:
   |        ein
   |            Test
 
-Reduktion auf Einrücktiefe 2:
+Reduktion auf EinrÃ¼cktiefe 2:
 
   Quiq::String->reduceIndentation(2,$str);
 
@@ -174,7 +174,7 @@ Resultat:
   |    ein
   |      Test
 
-=head3 removeIndentation() - Entferne Text-Einrückung
+=head3 removeIndentation() - Entferne Text-EinrÃ¼ckung
 
 =head4 Synopsis
 
@@ -187,17 +187,17 @@ Resultat:
 
 =item -addNL => $bool (Default: 0)
 
-Nach dem Entfernen aller NEWLINEs am Ende füge ein NEWLINE hinzu.
+Nach dem Entfernen aller NEWLINEs am Ende fÃ¼ge ein NEWLINE hinzu.
 
 =back
 
 =head4 Description
 
-[1] Entferne Text-Einrückung aus Zeichenkette $str und liefere das
-Resultat zurück.
+[1] Entferne Text-EinrÃ¼ckung aus Zeichenkette $str und liefere das
+Resultat zurÃ¼ck.
 
-[2] Wird eine Referenz auf $str übergeben, wird die
-Zeichenkette "in place" manipuliert und nichts zurückgegeben.
+[2] Wird eine Referenz auf $str Ã¼bergeben, wird die
+Zeichenkette "in place" manipuliert und nichts zurÃ¼ckgegeben.
 
 =over 2
 
@@ -208,19 +208,19 @@ NEWLINEs am Anfang werden entfernt.
 =item *
 
 Whitespace (SPACEs, TABs, NEWLINEs) am Ende wird entfernt.
-Das Resultat endet also grundsätzlich nicht mit einem NEWLINE.
+Das Resultat endet also grundsÃ¤tzlich nicht mit einem NEWLINE.
 
 =item *
 
-Die Methode kehrt zurück, wenn $str anschließend nicht mit wenigstens
+Die Methode kehrt zurÃ¼ck, wenn $str anschlieÃŸend nicht mit wenigstens
 einem Whitespace-Zeichen beginnt, denn dann existiert keine
-Einrückung, die zu entfernen wäre.
+EinrÃ¼ckung, die zu entfernen wÃ¤re.
 
 =item *
 
-Die Einrückung von $str ist die längste Folge von SPACEs
+Die EinrÃ¼ckung von $str ist die lÃ¤ngste Folge von SPACEs
 und TABs, die allen Zeilen von $str gemeinsam ist,
-ausgenommen Leerzeilen. Diese Einrückung wird am Anfang
+ausgenommen Leerzeilen. Diese EinrÃ¼ckung wird am Anfang
 aller Zeilen von $str entfernt.
 
 =item *
@@ -235,11 +235,11 @@ Eine Leerzeile ist eine Zeile, die nur aus Whitespace besteht.
 
 =item *
 
-Einrückung entfernen, Leerzeile übergehen:
+EinrÃ¼ckung entfernen, Leerzeile Ã¼bergehen:
 
   |
   |  Dies ist
-  |              <- Leerzeile ohne Einrückung
+  |              <- Leerzeile ohne EinrÃ¼ckung
   |  ein Test-
   |  Text.
   |
@@ -253,7 +253,7 @@ wird zu
 
 =item *
 
-Tiefere Einrückung bleibt bestehen:
+Tiefere EinrÃ¼ckung bleibt bestehen:
 
   |
   |    Dies ist
@@ -269,7 +269,7 @@ wird zu
 
 =back
 
-=head3 removeIndentationNl() - Entferne Text-Einrückung
+=head3 removeIndentationNl() - Entferne Text-EinrÃ¼ckung
 
 =head4 Synopsis
 
@@ -288,33 +288,33 @@ wird zu
 =head4 Description
 
 Entferne alle Kommentare aus Quelltext $code und liefere das
-Resultat zurück. Die Kommentarzeichen werden durch die Parameter
+Resultat zurÃ¼ck. Die Kommentarzeichen werden durch die Parameter
 $start und $stop definiert. Siehe Abschnitt Examples.
 
 Die Methode entfernt nicht nur die Kommentare selbst, sondern
 auch nachfolgenden oder vorausgehenden Whitespace, so dass
-kein überflüssiger Leerraum entsteht.
+kein Ã¼berflÃ¼ssiger Leerraum entsteht.
 
 Im Falle von einzeiligen Kommentaren (d.h. nur $start ist
 definiert), wird vorausgesetzt, dass dem Kommentarzeichen (der
-Kommentar-Zeichenkette) im Quelltext zusätzlich ein Leerzeichen
+Kommentar-Zeichenkette) im Quelltext zusÃ¤tzlich ein Leerzeichen
 oder Tab vorausgeht, sofern es nicht am Anfang der Zeile
 steht. D.h.
 
-  my $ind = ' ' x 4; # Einrückung
+  my $ind = ' ' x 4; # EinrÃ¼ckung
                     ^ ^
-                    hier müssen Leerzeichen (oder Tabs) stehen
+                    hier mÃ¼ssen Leerzeichen (oder Tabs) stehen
   
-  my $ind = ' ' x 4;# Einrückung
+  my $ind = ' ' x 4;# EinrÃ¼ckung
                     ^
                     Wird nicht erkannt!
   
-  my $ind = ' ' x 4; #Einrückung
+  my $ind = ' ' x 4; #EinrÃ¼ckung
                      ^
                      Wird nicht erkannt!
 
 Im Falle von mehrzeiligen Kommentaren ($start und $stop sind
-definiert) ist dies das vorausgehende Leereichen nicht nötig.
+definiert) ist dies das vorausgehende Leereichen nicht nÃ¶tig.
 
 =head4 Examples
 
@@ -348,13 +348,13 @@ SQL:
 
 =head4 Description
 
-Fasse Zeichenkette $str in einfache Anführungsstriche (') ein und liefere
-das Resultat zurück. Enthält die Zeichenkette bereits einfache
-Anführungsstriche, werden diese per Backslash geschützt.
+Fasse Zeichenkette $str in einfache AnfÃ¼hrungsstriche (') ein und liefere
+das Resultat zurÃ¼ck. EnthÃ¤lt die Zeichenkette bereits einfache
+AnfÃ¼hrungsstriche, werden diese per Backslash geschÃ¼tzt.
 
 =head2 Zeilenfortsetzungen
 
-=head3 joinLines() - Füge Zeilen mit Zeilenfortsetzungszeichen zusammen
+=head3 joinLines() - FÃ¼ge Zeilen mit Zeilenfortsetzungszeichen zusammen
 
 =head4 Synopsis
 
@@ -378,14 +378,14 @@ Text mit Zeilenfortsetzungszeichen
 
 Vereinige alle Zeilen in $text, die auf das Zeilenfortsetzungszeichen
 $char enden, mit der Folgezeile zusammen und liefere das Resultat
-zurück. Whitespace am Anfang der Folgezeile wird entfernt.
+zurÃ¼ck. Whitespace am Anfang der Folgezeile wird entfernt.
 
 Wird das Zeilenfortsetzungszeichen verdoppelt, bleibt es stehen
 und die Zeilen werden nicht zusammengefasst.
 
 B<Anmerkung:> Der Backslash (\) ist als Fortsetzungszeichen nicht
 so gut geeignet, da er von Perl interpretiert wird und
-in Zeichenketten mit doppelten Anführungsstrichen verdoppelt
+in Zeichenketten mit doppelten AnfÃ¼hrungsstrichen verdoppelt
 werden muss.
 
 =head4 Example
@@ -405,7 +405,7 @@ wenn es verdoppelt wird:
 
 =head2 Umbruch
 
-=head3 wrap() - Umbreche Fließtext
+=head3 wrap() - Umbreche FlieÃŸtext
 
 =head4 Synopsis
 
@@ -417,16 +417,16 @@ wenn es verdoppelt wird:
 
 =item -width => $n (Default: 70)
 
-Maximale Zeilenbreite des resultierenden Fließtextes (sofern kein
-einzelnes Wort länger als die Zeilenbreite ist).
+Maximale Zeilenbreite des resultierenden FlieÃŸtextes (sofern kein
+einzelnes Wort lÃ¤nger als die Zeilenbreite ist).
 
 =back
 
 =head4 Description
 
-Umbreche Fließext $text, so dass die Zeilenlänge $width möglichst
-nicht überschritten wird. Sie kann überschritten werden, wenn ein
-Wort länger als $width ist, sonst ist die Zeilenlänge <= $width.
+Umbreche FlieÃŸext $text, so dass die ZeilenlÃ¤nge $width mÃ¶glichst
+nicht Ã¼berschritten wird. Sie kann Ã¼berschritten werden, wenn ein
+Wort lÃ¤nger als $width ist, sonst ist die ZeilenlÃ¤nge <= $width.
 
 Whitespace:
 
@@ -450,7 +450,7 @@ bleiben, muss jeder Paragraph einzeln umbrochen werden.
 
 =head4 Example
 
-Maximale Zeilenlänge auf 12 Zeichen begrenzen:
+Maximale ZeilenlÃ¤nge auf 12 Zeichen begrenzen:
 
   $txt = "Dies ist ein Test mit einem kurzen Text.";
   $txt = Quiq::String->wrap($txt,-width=>12);

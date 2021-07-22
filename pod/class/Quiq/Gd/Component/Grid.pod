@@ -10,14 +10,14 @@ L<Quiq::Gd::Component|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/G
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse definiert ein Gitter für den Hintergrund
+Ein Objekt der Klasse definiert ein Gitter fÃ¼r den Hintergrund
 (oder Vordergrund, je nach Reihenfolge beim Zeichnen) eines
 XY-Plot. Das Gitter besteht aus gepunkteten Linien an den
 Haupt-Ticks der X- und der Y-Achse.
 
 =head1 ATTRIBUTES
 
-Fett hervorgehobene Attribute sind Pflicht-Attribute. Sie müssen
+Fett hervorgehobene Attribute sind Pflicht-Attribute. Sie mÃ¼ssen
 beim Konstruktoraufruf immer angegeben werden.
 
 =over 4
@@ -121,7 +121,7 @@ Grafik:
 
 Instantiiere ein Grafik-Objekt mit den Eigenschaften @keyVal
 (s. Abschnitt L<ATTRIBUTES|"ATTRIBUTES">) und liefere eine Referenz auf das
-Objekt zurück.
+Objekt zurÃ¼ck.
 
 =head2 Zeichnen
 

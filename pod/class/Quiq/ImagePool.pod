@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::ImagePool - Speicher für Bild-Dateien
+Quiq::ImagePool - Speicher fÃ¼r Bild-Dateien
 
 =head1 BASE CLASS
 
@@ -40,7 +40,7 @@ Pfad zum Pool-Verzeichnises.
 =head4 Description
 
 Liefere den Pfad des Wurzelverzeichnissess des Image-Pool. Ist
-Argument $subPath angegeben, füge diesen Pfad zum Wurzelverzeichnis
+Argument $subPath angegeben, fÃ¼ge diesen Pfad zum Wurzelverzeichnis
 hinzu.
 
 =head4 Example
@@ -89,22 +89,22 @@ Exception geworfen.
 
 =item $op
 
-Bezeichner für die angewendete Bild-Operation.
+Bezeichner fÃ¼r die angewendete Bild-Operation.
 
 =item @args
 
-Argumente für die Bild-Operation.
+Argumente fÃ¼r die Bild-Operation.
 
 =back
 
 =head4 Description
 
-Generiere einen Cache-Pfad für Bild $img und Bild-Operation $op
-mit den Argumenten @args und liefere diesen zurück.
+Generiere einen Cache-Pfad fÃ¼r Bild $img und Bild-Operation $op
+mit den Argumenten @args und liefere diesen zurÃ¼ck.
 
 =head2 Bilder
 
-=head3 images() - Bilder gemäß Suchkriterium
+=head3 images() - Bilder gemÃ¤ÃŸ Suchkriterium
 
 =head4 Synopsis
 
@@ -124,7 +124,7 @@ Bezeichner Bild-Sequenz.
 
 =over 4
 
-=item -count => $n (Default: 0 = keine Beschränkung)
+=item -count => $n (Default: 0 = keine BeschrÃ¤nkung)
 
 Liefere maximal $n Bilder.
 

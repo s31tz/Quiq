@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Schedule - Matrix von zeitlichen Vorgängen
+Quiq::Schedule - Matrix von zeitlichen VorgÃ¤ngen
 
 =head1 BASE CLASS
 
@@ -10,9 +10,9 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ordne eine Menge von zeitlichen Vorgängen (z.B. gelaufene Prozesse)
-in einer Reihe von Zeitschienen (Matrix) an. Finden Vorgänge parallel
-statt (also zeitlich überlappend), hat die Matrix mehr als eine
+Ordne eine Menge von zeitlichen VorgÃ¤ngen (z.B. gelaufene Prozesse)
+in einer Reihe von Zeitschienen (Matrix) an. Finden VorgÃ¤nge parallel
+statt (also zeitlich Ã¼berlappend), hat die Matrix mehr als eine
 Zeitschiene.
 
 =head1 METHODS
@@ -56,8 +56,8 @@ Matrix-Objekt
 
 =head4 Description
 
-Instantiiere ein Matrix-Objekt für die Vorgänge @objects und
-liefere eine Referenz auf dieses Objekt zurück.
+Instantiiere ein Matrix-Objekt fÃ¼r die VorgÃ¤nge @objects und
+liefere eine Referenz auf dieses Objekt zurÃ¼ck.
 
 B<Algorithmus>
 
@@ -74,8 +74,8 @@ sortiert.
 
 =item 3.
 
-Es wird über die Objekte iteriert. Das aktuelle Objekt wird zu der
-ersten Zeitschiene hinzugefügt, die frei ist. Eine Zeitschiene
+Es wird Ã¼ber die Objekte iteriert. Das aktuelle Objekt wird zu der
+ersten Zeitschiene hinzugefÃ¼gt, die frei ist. Eine Zeitschiene
 ist frei, wenn sie leer ist oder der Ende-Zeitpunkt des letzten
 Elements vor dem Anfangs-Zeitpunkt des aktuellen Objekts liegt.
 
@@ -83,7 +83,7 @@ Elements vor dem Anfangs-Zeitpunkt des aktuellen Objekts liegt.
 
 =head2 Objektmethoden
 
-=head3 entries() - Einträge der Prozess-Matrix
+=head3 entries() - EintrÃ¤ge der Prozess-Matrix
 
 =head4 Synopsis
 
@@ -92,13 +92,13 @@ Elements vor dem Anfangs-Zeitpunkt des aktuellen Objekts liegt.
 
 =head4 Returns
 
-Liste von Prozess-Matrix-Einträgen (Array of Quiq::Hash). Im
+Liste von Prozess-Matrix-EintrÃ¤gen (Array of Quiq::Hash). Im
 Skalarkontext eine Referenz auf die Liste.
 
 =head4 Description
 
-Liefere die Liste der Einträge in der Prozess-Matrix. Ist $i
-angegeben, nur die Einträge der Zeitleiste $i. Ein Eintrag ist
+Liefere die Liste der EintrÃ¤ge in der Prozess-Matrix. Ist $i
+angegeben, nur die EintrÃ¤ge der Zeitleiste $i. Ein Eintrag ist
 ein Quiq:Hash-Objekt mit den Attributen:
 
 =over 4
@@ -117,11 +117,11 @@ Ende-Zeitpunkt in Unix Epoch.
 
 =item object
 
-Referenz auf das ursprüngliche Objekt.
+Referenz auf das ursprÃ¼ngliche Objekt.
 
 =back
 
-=head3 maxLength() - Maximale Anzahl Einträge in einer Zeitleiste
+=head3 maxLength() - Maximale Anzahl EintrÃ¤ge in einer Zeitleiste
 
 =head4 Synopsis
 
@@ -133,9 +133,9 @@ Integer
 
 =head4 Description
 
-Liefere die maximale Anzahl an Einträgen in einer Zeitschiene.
+Liefere die maximale Anzahl an EintrÃ¤gen in einer Zeitschiene.
 
-=head3 minTime() - Frühester Anfangs-Zeitpunkt
+=head3 minTime() - FrÃ¼hester Anfangs-Zeitpunkt
 
 =head4 Synopsis
 
@@ -147,9 +147,9 @@ Float
 
 =head4 Description
 
-Liefere den frühesten Anfangs-Zeitpunkt über allen Objekten.
+Liefere den frÃ¼hesten Anfangs-Zeitpunkt Ã¼ber allen Objekten.
 
-=head3 maxTime() - Spätester Ende-Zeitpunkt
+=head3 maxTime() - SpÃ¤tester Ende-Zeitpunkt
 
 =head4 Synopsis
 
@@ -161,7 +161,7 @@ Float
 
 =head4 Description
 
-Liefere den spätesten Ende-Zeitpunkt  über allen Objekten.
+Liefere den spÃ¤testen Ende-Zeitpunkt  Ã¼ber allen Objekten.
 
 =head3 width() - Breite der Matrix
 

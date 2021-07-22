@@ -10,7 +10,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen Datensatz.
+Ein Objekt der Klasse reprÃ¤sentiert einen Datensatz.
 
 =head1 METHODS
 
@@ -29,35 +29,35 @@ Name der Tabellenklasse (String)
 =head4 Description
 
 Ermittele den Namen der Tabellenklasse zur Datensatzklasse
-und liefere diesen zurück.
+und liefere diesen zurÃ¼ck.
 
 =head4 Details
 
 Eine Tabellenklasse speichert die Ergebnismenge einer Selektion.
 
-Die bei einer Selektion verwendete Tabellenklasse hängt von der
+Die bei einer Selektion verwendete Tabellenklasse hÃ¤ngt von der
 Datensatz-Klasse ab. Es gelten die Defaults:
 
 =over 2
 
 =item *
 
-Tabellenklasse bei Objekt-Datensätzen: C<< Quiq::Database::ResultSet::Object >>
+Tabellenklasse bei Objekt-DatensÃ¤tzen: C<< Quiq::Database::ResultSet::Object >>
 
 =item *
 
-Tabellenklasse bei Array-Datensätzen: C<< Quiq::Database::ResultSet::Array >>
+Tabellenklasse bei Array-DatensÃ¤tzen: C<< Quiq::Database::ResultSet::Array >>
 
 =back
 
 Abweichend vom Default kann eine abgeleitete Datensatzklasse die
-Tabellenklasse über die Klassenvariable
+Tabellenklasse Ã¼ber die Klassenvariable
 
   our $TableClass = '...';
 
 festlegen.
 
-Ferner ist es möglich, die Tabellenklasse bei der Selektion per
+Ferner ist es mÃ¶glich, die Tabellenklasse bei der Selektion per
 Option festzulegen:
 
   $tab = $rowClass->select($db,
@@ -73,11 +73,11 @@ Option festzulegen:
 =head4 Description
 
 Erzeuge eine Datensatz-Tabelle mit Kolumnentiteln @titles und den
-Datensätzen @rows und liefere eine Referenz auf dieses Objekt zurück.
+DatensÃ¤tzen @rows und liefere eine Referenz auf dieses Objekt zurÃ¼ck.
 
 =head4 Example
 
-Instanttierung über spezifische Datensatz-Klasse:
+Instanttierung Ã¼ber spezifische Datensatz-Klasse:
 
   $tab = Person->makeTable(
       [qw/per_id per_vorname per_nachname per_geburtsdatum/],
@@ -87,7 +87,7 @@ Instanttierung über spezifische Datensatz-Klasse:
       qw/3 Susi Sorglos 1992-10-23/,
   );
 
-Instanttierung über anonyme Datensatz-Klasse:
+Instanttierung Ã¼ber anonyme Datensatz-Klasse:
 
   $tab = Quiq::Database::Row::Object->makeTable(
       [qw/per_id per_vorname per_nachname per_geburtsdatum/],

@@ -10,11 +10,11 @@ L<Quiq::Database::Row|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/D
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repr‰sentiert einen Datensatz mit
-einer einfachen Array-Repr‰sentation.
+Ein Objekt der Klasse repr√§sentiert einen Datensatz mit
+einer einfachen Array-Repr√§sentation.
 
 Das Objekt ist eine Liste von Attributwerten, es besitzt
-keine weitere Information ¸ber Titel, Datensatz-Status usw.
+keine weitere Information √ºber Titel, Datensatz-Status usw.
 
 =head1 METHODS
 
@@ -30,7 +30,7 @@ keine weitere Information ¸ber Titel, Datensatz-Status usw.
 =head4 Description
 
 Instantiiere ein Datensatz-Array-Objekt mit den Kolumnenwerten
-@values und liefere eine Referenz auf dieses Objekt zur¸ck.
+@values und liefere eine Referenz auf dieses Objekt zur√ºck.
 
 Beim einparametrigen Aufruf wird @values einfach auf die
 Klasse geblesst.
@@ -54,8 +54,8 @@ Liefere den Datensatz als Array, entweder in Form einer Referenz
 (Skalarkontext) oder als Array von Werten (Listkontext).
 
 Da der Datensatz bereits ein Array ist, scheint die Methode
-¸berfl¸ssig. Sie existiert jedoch, damit Object-Rows und
-Array-Rows einheitlich behandelt werden kˆnnen.
+√ºberfl√ºssig. Sie existiert jedoch, damit Object-Rows und
+Array-Rows einheitlich behandelt werden k√∂nnen.
 
 =head3 asString() - Liefere Datensatz als Zeichenkette
 
@@ -76,7 +76,7 @@ werden.
 
   $newRow = $row->copy;
 
-=head3 isRaw() - Liefere, ob Klasse Raw-Datens‰tze repr‰sentiert
+=head3 isRaw() - Liefere, ob Klasse Raw-Datens√§tze repr√§sentiert
 
 =head4 Synopsis
 

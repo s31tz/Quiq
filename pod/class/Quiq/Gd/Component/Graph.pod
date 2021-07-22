@@ -10,8 +10,8 @@ L<Quiq::Gd::Component|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/G
 
 =head1 DESCRIPTION
 
-Das Objekt repräsentiert einen Graph entlang der Weltkoordinaten @x und @y.
-Per Default wird der Graph über der gesamten Fläche des Bildes gezeichnet.
+Das Objekt reprÃ¤sentiert einen Graph entlang der Weltkoordinaten @x und @y.
+Per Default wird der Graph Ã¼ber der gesamten FlÃ¤che des Bildes gezeichnet.
 Durch die Angabe C<< colors=>\@colors >> kann als dritte Dimension ein Farbwert
 entlang des Graphen gezeichnet werden. Punkte und Linien werden in diesen
 Farben gezeichnet, sofern per (C<pointColor>) oder (C<lineColor>) nichts
@@ -29,7 +29,7 @@ Breite der Grafik in Pixeln.
 
 =item B<< height => $int >> (Default: keiner)
 
-Höhe der Grafik in Pixeln.
+HÃ¶he der Grafik in Pixeln.
 
 =item x => \@x (Default: [])
 
@@ -47,7 +47,7 @@ L<Graph mit verschiedenfarbigen Datenpunkten und Linien|"Graph mit verschiedenfa
 
 =item lineColor => $color (Default: Defaultfarbe)
 
-Farbe der Verbindungslinien. FIMXE: Verhältnis zu Attribut colors
+Farbe der Verbindungslinien. FIMXE: VerhÃ¤ltnis zu Attribut colors
 beschreiben.
 
 =item lineThickness => $n (Default: 1)
@@ -73,7 +73,7 @@ Ende des Y-Wertebereichs (Weltkoodinate).
 =item xMaxDelta => $f (Default: undef)
 
 Maximaler Abstand zwischen zwei benachbarten Punkten in X-Richtung.
-Wird dieser Abstand überschritten, werden die Punkte nicht
+Wird dieser Abstand Ã¼berschritten, werden die Punkte nicht
 durch eine Linie verbunden.
 
 =item yMaxDelta => $f (Default: undef)
@@ -86,9 +86,9 @@ Farbe, in der alle Datenpunkte gezeichnet werden.
 
 =item pointSize => $n (Default: 1)
 
-Größe des Punktes in Pixeln. Der Punkt wird gemäß C<pointStyle>
+GrÃ¶ÃŸe des Punktes in Pixeln. Der Punkt wird gemÃ¤ÃŸ C<pointStyle>
 dargestellt. Der Wert sollte ungerade sein: 1, 3, 5, usw., damit
-die Darstellung mittig über dem Datenpunkt stattfindet.
+die Darstellung mittig Ã¼ber dem Datenpunkt stattfindet.
 
 =item pointStyle => $style (Default: 'square')
 
@@ -96,9 +96,9 @@ Darstellung des Punktes: 'square', 'circle'.
 
 =item adaptPlotRegion => $bool (Default: 0)
 
-Ist die Punktgröße > 1 (s. Attribut C<pointSize>), erweitere den
+Ist die PunktgrÃ¶ÃŸe > 1 (s. Attribut C<pointSize>), erweitere den
 Plotbereich (Attribute C<xMin>, C<xMax>, C<yMin>, C<yMax>) derart,
-dass die Datenpunkte auch am Rand vollständig gezeichnet werden.
+dass die Datenpunkte auch am Rand vollstÃ¤ndig gezeichnet werden.
 
 =back
 
@@ -154,8 +154,8 @@ Im Browser:
 
     [Nur im Browser sichtbar]
 
-Wir setzen die Punktfarbe und die Punktgröße. Die Endpunkte sind
-abgeschnitten, da ein Teil von ihnen außerhalb des Bildes liegt.
+Wir setzen die Punktfarbe und die PunktgrÃ¶ÃŸe. Die Endpunkte sind
+abgeschnitten, da ein Teil von ihnen auÃŸerhalb des Bildes liegt.
 
 =head2 Graph mit verschiedenfarbigen Datenpunkten und Linien
 
@@ -203,10 +203,10 @@ kann die Punkt- oder Linienfarbe auf eine bestimmte Farbe
 festgelegt werden (beide im Falle von C<colors> fix
 einzustellen, macht wenig Sinn, denn dann hat C<colors> keinen
 Effekt mehr). Die Endpunkte sind hier im Gegensatz zum
-vorigen Beispiel vollständig dargestellt, da wir das Bild um 4 Pixel
-breiter und höher gemacht haben als den Plotbereich.
+vorigen Beispiel vollstÃ¤ndig dargestellt, da wir das Bild um 4 Pixel
+breiter und hÃ¶her gemacht haben als den Plotbereich.
 
-=head2 Größe Plotregion anpassen mit adaptPlotRegion
+=head2 GrÃ¶ÃŸe Plotregion anpassen mit adaptPlotRegion
 
 Code:
 
@@ -246,7 +246,7 @@ Im Browser:
     [Nur im Browser sichtbar]
 
 Mit C<adaptPlotRegion> wird der Plotbereich so verkleinert, dass
-Punkte am Rand vollständig sichtbar sind.
+Punkte am Rand vollstÃ¤ndig sichtbar sind.
 
 =head1 METHODS
 
@@ -262,7 +262,7 @@ Punkte am Rand vollständig sichtbar sind.
 
 Instantiiere ein Grafik-Objekt mit den Eigenschaften @keyVal
 (s. Abschnitt L<ATTRIBUTES|"ATTRIBUTES">) und liefere eine Referenz auf das Objekt
-zurück.
+zurÃ¼ck.
 
 =head2 Zeichnen
 
@@ -277,7 +277,7 @@ zurück.
 =head4 Description
 
 Zeichne die Grafik in Bild $img an Position ($x,$y).
-Die Methode liefert keinen Wert zurück.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head2 Objektmethoden
 

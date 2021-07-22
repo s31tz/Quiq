@@ -53,7 +53,7 @@ Ein UDL hat den Aufbau:
 
 Ein Objekt der Klasse kapselt einen UDL und bietet Methoden,
 um auf die einzelnen Komponenten zuzugreifen. Kommen Metazeichen
-im Passwort oder den Options vor, können diese mit \ maskiert werden.
+im Passwort oder den Options vor, kÃ¶nnen diese mit \ maskiert werden.
 
 =head1 ATTRIBUTES
 
@@ -85,7 +85,7 @@ Der Name des Hosts, auf dem die Datenbank sich befindet.
 
 =item port = $str
 
-Der Port, über welchen die Netzverbindung aufgebaut wird.
+Der Port, Ã¼ber welchen die Netzverbindung aufgebaut wird.
 
 =item options => \%hash
 
@@ -131,7 +131,7 @@ UDL-Objekt
 =head4 Description
 
 Instantiiere ein UDL-Objekt und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 Akzessoren
 
@@ -208,8 +208,8 @@ Setze/Liefere Hash mit den UDL-Optionen.
 
 =head4 Description
 
-Zerlege den UDL $udl in seine Komponenten und liefere diese zurück.
-Für eine Komponente, die nicht im URL enthalten ist, wird ein
+Zerlege den UDL $udl in seine Komponenten und liefere diese zurÃ¼ck.
+FÃ¼r eine Komponente, die nicht im URL enthalten ist, wird ein
 Leerstring ('') geliefert.
 
 =head2 Objektmethoden
@@ -222,10 +222,10 @@ Leerstring ('') geliefert.
 
 =head4 Description
 
-Liefere die Datanbank API-Klasse. Über diese findet intern der
+Liefere die Datanbank API-Klasse. Ãœber diese findet intern der
 Verbindungsaufbau zur Datenbank statt.
 
-Die API-Klasse für das DBI-API ist:
+Die API-Klasse fÃ¼r das DBI-API ist:
 
   Quiq::Database::Api::Dbi::Connection
 
@@ -277,7 +277,7 @@ Verbindung zur Datenbank aufzubauen.
 =head4 Description
 
 Liefere UDL oder setze UDL als Ganzes aus String oder Liste von
-Schlüssel/Wert-Paaren. Die Methode liefert keinen Wert zurück.
+SchlÃ¼ssel/Wert-Paaren. Die Methode liefert keinen Wert zurÃ¼ck.
 
 Der Aufruf ohne Parameter ist identisch zum Aufruf von asString().
 

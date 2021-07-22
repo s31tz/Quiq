@@ -59,7 +59,7 @@ Workbook-Objekt
 =head4 Description
 
 Erzeuge ein Excel Workbook-Objekt und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head1 VERSION
 

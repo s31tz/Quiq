@@ -16,10 +16,10 @@ nicht vorgegeben, sondern per Objektattribut gesetzt, ebenso wie
 die Liste der Widgets. Die Methode html() der Klasse setzt die
 Widgets in das Layout ein.
 
-Für jedes Widget enthält das Layout einen Platzhalter, der sich
+FÃ¼r jedes Widget enthÃ¤lt das Layout einen Platzhalter, der sich
 aus dem Namen des Widget herleitet. Der Platzhalter wird gebildet,
-indem der Widget-Name in Großbuchstaben gewandelt und um zwei
-Unterstriche am Anfang und am Ende ergänzt wird.
+indem der Widget-Name in GroÃŸbuchstaben gewandelt und um zwei
+Unterstriche am Anfang und am Ende ergÃ¤nzt wird.
 
 Beispiele:
 
@@ -42,7 +42,7 @@ nicht in das Layout eingesetzt, sondern als Hidden-Inputs
 =item *
 
 C<< <!--optional ...--> >> Meta-Tags werden nach dem
-Einsetzen der Widgets in das Layout aufgelöst.
+Einsetzen der Widgets in das Layout aufgelÃ¶st.
 
 =back
 
@@ -57,7 +57,7 @@ wird kein C<form>-Tag erzeugt.
 
 =item hidden => \@keyVal (Default: [])
 
-Schlüssel/Wert-Paare, die als Hidden-Widgets gesetzt werden.
+SchlÃ¼ssel/Wert-Paare, die als Hidden-Widgets gesetzt werden.
 
 =item layout => $html (Default: '')
 
@@ -94,7 +94,7 @@ Der Code
           ),
           Quiq::Html::Widget::TextField->new(
               name => 'nachname',
-              value => 'Müller',
+              value => 'MÃ¼ller',
           ),
           Quiq::Html::Widget::Button->new(
               id => 'speichern',
@@ -115,7 +115,7 @@ erzeugt
   </tr>
   <tr>
     <td>Nachname:</td>
-    <td><input type="text" name="nachname" value="Müller" /></td>
+    <td><input type="text" name="nachname" value="MÃ¼ller" /></td>
   </tr>
   <tr>
     <td></td>
@@ -141,7 +141,7 @@ erzeugt.
 =head4 Description
 
 Instantiiere ein Formular-Objekt mit den Eigenschaften @keyVal und
-liefere eine Referenz auf dieses Objekt zurück.
+liefere eine Referenz auf dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -155,7 +155,7 @@ liefere eine Referenz auf dieses Objekt zurück.
 =head4 Description
 
 Generiere den HTML-Code des Formular-Objekts und liefere diesen
-zurück. Als Klassenmethode gerufen, wird das Objekt intern erzeugt
+zurÃ¼ck. Als Klassenmethode gerufen, wird das Objekt intern erzeugt
 und mit den Attributen @keyVal instantiiert.
 
 =head1 VERSION

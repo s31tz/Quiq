@@ -46,7 +46,7 @@ Bezeichner in SnakeCase
 =head4 Description
 
 Wandele einen in CamelCase geschriebenen Bezeichner in einen
-SnakeCase Bezeichner und liefere diesen zurück.
+SnakeCase Bezeichner und liefere diesen zurÃ¼ck.
 
 CamelCase:
 
@@ -65,7 +65,7 @@ SnakeCase:
 =head4 Description
 
 Wandele einen in SnakeCase geschriebenen Bezeichner in einen
-CamelCase Bezeichner und liefere diesen zurück.
+CamelCase Bezeichner und liefere diesen zurÃ¼ck.
 
 SnakeCase:
 
@@ -91,9 +91,9 @@ CamelCase:
 =head4 Description
 
 Ersetze in $text die Zeichen &, < und > durch HTML-Entities und
-liefere das Resultat zurück.
+liefere das Resultat zurÃ¼ck.
 
-=head3 doubleDecode() - Wandele doppelt enkodiertes UTF-8 zurück
+=head3 doubleDecode() - Wandele doppelt enkodiertes UTF-8 zurÃ¼ck
 
 =head4 Synopsis
 
@@ -102,7 +102,7 @@ liefere das Resultat zurück.
 
 =head4 Description
 
-Wandele doppelt enkodiertes UTF-8 zurück in einfach enkodiertes UTF-8.
+Wandele doppelt enkodiertes UTF-8 zurÃ¼ck in einfach enkodiertes UTF-8.
 Behandelt werden aktuell nur deutsche Umlaute und Sz.
 
 =head3 umlautToAscii() - Wandele deutsche Umlaute und SZ nach ASCII
@@ -114,8 +114,8 @@ Behandelt werden aktuell nur deutsche Umlaute und Sz.
 
 =head4 Description
 
-Schreibe ä, Ä, ö, Ö, ü, Ü, ß in ae, Ae, oe, Oe, ue, Ue, ss um
-und liefere das Resultat zurück. Wird eine Stringreferenz angegeben,
+Schreibe Ã¤, Ã„, Ã¶, Ã–, Ã¼, Ãœ, ÃŸ in ae, Ae, oe, Oe, ue, Ue, ss um
+und liefere das Resultat zurÃ¼ck. Wird eine Stringreferenz angegeben,
 findet die Umschreibung "in-place" statt.
 
 Die Methode setzt voraus, dass der String korrekt dekodiert wurde.
@@ -132,9 +132,9 @@ Die Methode setzt voraus, dass der String korrekt dekodiert wurde.
 
 Wandele deutsche Zahldarstellung mit Punkt (.) als Stellen-Trenner und
 Komma (,) als Dezimaltrennzeichen in eine Zahl der Programmiersprache
-und liefere das Resultat zurück.
+und liefere das Resultat zurÃ¼ck.
 
-=head3 intToWord() - Wandele positive ganze Zahl in Wort über Alphabet
+=head3 intToWord() - Wandele positive ganze Zahl in Wort Ã¼ber Alphabet
 
 =head4 Synopsis
 
@@ -147,11 +147,11 @@ Zeichenkette
 
 =head4 Description
 
-Wandele positive ganze Zahl $n in ein Wort über dem Alphabet
-$alphabet und liefere dieses zurück. Für 0 liefere
+Wandele positive ganze Zahl $n in ein Wort Ã¼ber dem Alphabet
+$alphabet und liefere dieses zurÃ¼ck. FÃ¼r 0 liefere
 einen Leerstring.
 
-Das Alphabet, über welchem die Worte gebildet werden, wird in Form
+Das Alphabet, Ã¼ber welchem die Worte gebildet werden, wird in Form
 einer Zeichenkette angegeben, in der jedes Zeichen einmal
 vorkommt. Per Default wird das Alphabet
 
@@ -172,7 +172,7 @@ verwendet. Die Funktion implementiert folgende Abbildung:
   53 -> 'BA'
   ...
 
-=head2 Längen
+=head2 LÃ¤ngen
 
 =head3 ptToPx() - Rechne Punkt (pt) in Pixel (px) um
 
@@ -200,7 +200,7 @@ Pixel-Wert (Number)
 
 =head4 Description
 
-Rechne Punkt in Pixel um und liefere das Resultat zurück.
+Rechne Punkt in Pixel um und liefere das Resultat zurÃ¼ck.
 
   1 Punkt = 1/0.75 Pixel
 
@@ -230,7 +230,7 @@ Punkt-Wert (Number)
 
 =head4 Description
 
-Rechne Pixel in Punkt um und liefere das Resultat zurück.
+Rechne Pixel in Punkt um und liefere das Resultat zurÃ¼ck.
 
   1 Pixel = 0.75 Punkt
 
@@ -275,12 +275,12 @@ Es wird vorausgesetzt, dass der Timestamp das Format
 hat.
 
 Fehlende Teile werden als 0 angenommen, so dass insbesondere
-auch folgende Formate gewandelt werden können:
+auch folgende Formate gewandelt werden kÃ¶nnen:
 
   YYYY-MM-DD HH24:MI:SS    (keine Sekundenbruchteile)
   YYYY-MM-DD               (kein Zeitanteil)
 
-Diese Methode ist z.B. nützlich, um einen Oracle-Timestamp
+Diese Methode ist z.B. nÃ¼tzlich, um einen Oracle-Timestamp
 (in lokaler Zeit) nach Epoch zu wandeln.
 
 =head3 epochToTimestamp() - Wandele Epoch in Timestamp in lokaler Zeit
@@ -292,7 +292,7 @@ Diese Methode ist z.B. nützlich, um einen Oracle-Timestamp
 =head4 Description
 
 Wandele Epoch-Wert $t in einen Timestamp der lokalen Zeitzone um
-und liefere diesen zurück.
+und liefere diesen zurÃ¼ck.
 
 =head4 See Also
 
@@ -300,7 +300,7 @@ L<timestampToEpoch|"timestampToEpoch() - Wandele Timestamp in lokaler Zeit nach 
 
 =head2 Array/Hash
 
-=head3 stringToKeyVal() - Wandele Zeichenkette in Schüssel/Wert-Paare
+=head3 stringToKeyVal() - Wandele Zeichenkette in SchÃ¼ssel/Wert-Paare
 
 =head4 Synopsis
 
@@ -308,9 +308,9 @@ L<timestampToEpoch|"timestampToEpoch() - Wandele Timestamp in lokaler Zeit nach 
 
 =head4 Description
 
-Liefere die in der Zeichenkette enthaltenen Schlüssel/Wert-Paare.
+Liefere die in der Zeichenkette enthaltenen SchlÃ¼ssel/Wert-Paare.
 
-Die Schlüssel/Wert-Paare haben die Form:
+Die SchlÃ¼ssel/Wert-Paare haben die Form:
 
   $key="$val"
 
@@ -322,15 +322,15 @@ oder
 
   $key={$val}
 
-Wenn $val kein Whitespace enthält, können die Anführungsstriche
+Wenn $val kein Whitespace enthÃ¤lt, kÃ¶nnen die AnfÃ¼hrungsstriche
 weggelassen werden:
 
   $key=$val
 
 =head4 Caveats
 
-Wenn $val mit einem doppelten Anführungsstrich beginnt, darf $val
-keine doppelten Anführungsstiche enthalten.
+Wenn $val mit einem doppelten AnfÃ¼hrungsstrich beginnt, darf $val
+keine doppelten AnfÃ¼hrungsstiche enthalten.
 
 =head4 Example
 

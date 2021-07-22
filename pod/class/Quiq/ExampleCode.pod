@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::ExampleCode - Führe Beispielcode aus
+Quiq::ExampleCode - FÃ¼hre Beispielcode aus
 
 =head1 BASE CLASS
 
@@ -10,16 +10,16 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 SYNOPSIS
 
-(1) Code $code ausführen und den Code selbst und sein Resultat nach
+(1) Code $code ausfÃ¼hren und den Code selbst und sein Resultat nach
 STDOUT schreiben. Das Resultat (Skalar- oder List-Kontext) wird
-direkt zurückgeliefert.
+direkt zurÃ¼ckgeliefert.
 
   my $exa = Quiq::ExampleCode->new;
   $res|@res = $exa->execute($code,-variables=>\@keyval);
   ...
 
-(2) Code $code ausführen und den Code selbst und sein Resultat in
-Form eines Objektes zurückliefern. Die Ausgabe auf STDOUT
+(2) Code $code ausfÃ¼hren und den Code selbst und sein Resultat in
+Form eines Objektes zurÃ¼ckliefern. Die Ausgabe auf STDOUT
 unterbleibt.
 
   my $exa = Quiq::ExampleCode->new(
@@ -27,7 +27,7 @@ unterbleibt.
       -verbose => 0,
   );
 
-Ausführung im Skalar-Kontext:
+AusfÃ¼hrung im Skalar-Kontext:
 
   $obj = $exa->execute($code,-variables=>\@keyval);
   my $code = $obj->code;
@@ -43,8 +43,8 @@ Im List-Kontext:
 
 =head1 DESCRIPTION
 
-Die Klasse dient zum Ausführen von Beispielcode in Perl. Beispielcode
-ist dadurch gekennzeichnet, dass der Code und sein Resultat gegenüber
+Die Klasse dient zum AusfÃ¼hren von Beispielcode in Perl. Beispielcode
+ist dadurch gekennzeichnet, dass der Code und sein Resultat gegenÃ¼ber
 gestellt werden.
 
 =head1 EXAMPLES
@@ -110,18 +110,18 @@ oder (in anderer Reihenfolge):
 
 =item -fileHandle => $fh (Default: \*STDOUT)
 
-FileHandle, über die Informationen über die ausgeführten Beispiele
+FileHandle, Ã¼ber die Informationen Ã¼ber die ausgefÃ¼hrten Beispiele
 ausgegeben wird.
 
 =item -objectReturn => $bool (Default: 0)
 
-Liefere bei Aufruf von $exa->L<execute|"execute() - Führe Beispielcode aus">() nicht den Wert des
+Liefere bei Aufruf von $exa->L<execute|"execute() - FÃ¼hre Beispielcode aus">() nicht den Wert des
 Beispielcode, sondern ein Objekt, das den Beispielcode und
-den Wert enthält.
+den Wert enthÃ¤lt.
 
 =item -verbose => $bool (Default: 1)
 
-Gib Informationen über die ausgeführten Beispiele auf
+Gib Informationen Ã¼ber die ausgefÃ¼hrten Beispiele auf
 der FileHandle -fileHandle aus.
 
 =back
@@ -129,11 +129,11 @@ der FileHandle -fileHandle aus.
 =head4 Description
 
 Instantiiere ein Example-Objekt und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 Variablen setzen
 
-=head3 setVariable() - Setze Variable für Beispielcode-Ausführung
+=head3 setVariable() - Setze Variable fÃ¼r Beispielcode-AusfÃ¼hrung
 
 =head4 Synopsis
 
@@ -141,11 +141,11 @@ dieses Objekt zurück.
 
 =head4 Description
 
-Setze Variable, so dass die folgende Kommando-Ausführung (Methode
-L<execute|"execute() - Führe Beispielcode aus">()) im Kontext der Klasse Quiq::ExampleCode ausgeführt werden
-kann. Die Methode liefert keinen Wert zurück.
+Setze Variable, so dass die folgende Kommando-AusfÃ¼hrung (Methode
+L<execute|"execute() - FÃ¼hre Beispielcode aus">()) im Kontext der Klasse Quiq::ExampleCode ausgefÃ¼hrt werden
+kann. Die Methode liefert keinen Wert zurÃ¼ck.
 
-Anstelle mittels dieser Methode, können die Variablen auch beim Aufruf
+Anstelle mittels dieser Methode, kÃ¶nnen die Variablen auch beim Aufruf
 selbst mit der Option -variables angegeben werden.
 
 =head4 Example
@@ -156,9 +156,9 @@ selbst mit der Option -variables angegeben werden.
       y => $y,
   );
 
-=head2 Beispielcode ausführen
+=head2 Beispielcode ausfÃ¼hren
 
-=head3 execute() - Führe Beispielcode aus
+=head3 execute() - FÃ¼hre Beispielcode aus
 
 =head4 Synopsis
 
@@ -171,39 +171,39 @@ selbst mit der Option -variables angegeben werden.
 =item -asStringCallback => $subRef (Default: undef)
 
 Subroutine-Referenz, die das Resultat des Beispiel-Code in
-eine Stringrepräsentation wandelt, die auf dem Bildschirm ausgegeben
+eine StringreprÃ¤sentation wandelt, die auf dem Bildschirm ausgegeben
 werden kann.
 
 =item -listContext => $bool (Default: Wert von wantarray)
 
-Führe den Beispiel-Code im List-Kontext aus. Eine explizite
-Setzung ist nur im Falle von -objectReturn=>1 nötig
+FÃ¼hre den Beispiel-Code im List-Kontext aus. Eine explizite
+Setzung ist nur im Falle von -objectReturn=>1 nÃ¶tig
 
 =item -objectReturn => $bool (Default: 0)
 
-Liefere bei Aufruf von $exa->L<execute|"execute() - Führe Beispielcode aus">() nicht den Wert des
+Liefere bei Aufruf von $exa->L<execute|"execute() - FÃ¼hre Beispielcode aus">() nicht den Wert des
 Beispielcode, sondern ein Objekt, das den Beispielcode und
-den Wert enthält.
+den Wert enthÃ¤lt.
 
 =item -variables => \@keyVal (Default: [])
 
-Setze die angegebenen Variablen im Ausführungskontext des
+Setze die angegebenen Variablen im AusfÃ¼hrungskontext des
 Beispiel-Code.
 
 =item -verbose => $bool (Default: Konstruktor-Setzung)
 
-Gib Informationen über die ausgeführten Beispiele auf
+Gib Informationen Ã¼ber die ausgefÃ¼hrten Beispiele auf
 der FileHandle -fileHandle aus.
 
 =back
 
 =head4 Description
 
-Führe Beispielcode $code aus und liefere das Resultat der Ausführung
-$res (Skalar-Kontext) oder @res (Listen-Kontext) zurück.
+FÃ¼hre Beispielcode $code aus und liefere das Resultat der AusfÃ¼hrung
+$res (Skalar-Kontext) oder @res (Listen-Kontext) zurÃ¼ck.
 
 Ist beim Konstruktor die Option -verbose gesetzt worde, wird
-zusätzlich der Beispielcode und das Resultat ausgegeben.
+zusÃ¤tzlich der Beispielcode und das Resultat ausgegeben.
 
 =head4 Example
 
@@ -218,7 +218,7 @@ Der Aufruf
       );
   |);
 
-führt zu der Ausgabe
+fÃ¼hrt zu der Ausgabe
 
   $ffm->videoToImages('video.mp4','img',
       -aspectRatio => '4:3',

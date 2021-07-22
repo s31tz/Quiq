@@ -11,18 +11,18 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 =head1 DESCRIPTION
 
 Diese Klasse implementiert Methoden zur Kommunikation mit einem
-MediaWiki über die sogenannte MediaWiki-API.
+MediaWiki Ã¼ber die sogenannte MediaWiki-API.
 
-Die MediaWiki-API wird über api.php (statt index.php) angesprochen.
+Die MediaWiki-API wird Ã¼ber api.php (statt index.php) angesprochen.
 Die Doku der API wird angezeigt, wenn api.php ohne Parameter
 oder mit "action=help&recursivesubmodules=1" (alles auf einer Seite)
 aufgerufen wird.
 
-Die MediaWiki-API empfängt und liefert alle Daten in UTF-8.
+Die MediaWiki-API empfÃ¤ngt und liefert alle Daten in UTF-8.
 
 Insbesondere implementiert die Klasse die Methode $mw->L<load|"load() - Lade Seite oder Mediendatei ins Wiki">(), mit
 welcher sowohl Seiten als auch Mediendateien (z.B. Bilder)
-"intelligent" geladen werden können.
+"intelligent" geladen werden kÃ¶nnen.
 
 Bei Angabe der Option -debug => 1 bei Aufruf des Konstruktors
 wird die gesamte Kommunikation auf STDERR protokolliert.
@@ -48,7 +48,7 @@ Client-Implementierung: quik-mediawiki
 
 =head1 EXAMPLES
 
-Beispiele für MediaWiki URLs:
+Beispiele fÃ¼r MediaWiki URLs:
 
 =over 2
 
@@ -89,11 +89,11 @@ API-URL des MediaWiki, z.B. L<https://en.wikipedia.org/w/api.php>.
 
 =item $user
 
-Benutzername (für automatisches Login statt explizites Login).
+Benutzername (fÃ¼r automatisches Login statt explizites Login).
 
 =item $password
 
-Passwort (für automatisches Login statt explizites Login).
+Passwort (fÃ¼r automatisches Login statt explizites Login).
 
 =back
 
@@ -118,18 +118,18 @@ Client-Objekt (Referenz)
 
 =head4 Description
 
-Instantiiere einen Client für die MediaWiki-API $url und liefere eine
-Referenz auf dieses Objekt zurück.
+Instantiiere einen Client fÃ¼r die MediaWiki-API $url und liefere eine
+Referenz auf dieses Objekt zurÃ¼ck.
 
-Der Konstruktor-Aufruf löst I<keinen> Server-Request aus. Sind
+Der Konstruktor-Aufruf lÃ¶st I<keinen> Server-Request aus. Sind
 $user und $password angegeben, wird der Benutzer erst mit dem
 ersten Token-Request eingeloggt. Er wird also nur eingeloggt, wenn
-es nötig ist. Vorteil: Ein Client, bei dem sich erst im Laufe der
-Ausführung herausstellt, ob er Requests ausführt, muss nicht vorab
-einen - ggf.  unnötigen - Login-Request ausführen. (De facto besteht
+es nÃ¶tig ist. Vorteil: Ein Client, bei dem sich erst im Laufe der
+AusfÃ¼hrung herausstellt, ob er Requests ausfÃ¼hrt, muss nicht vorab
+einen - ggf.  unnÃ¶tigen - Login-Request ausfÃ¼hren. (De facto besteht
 ein Login-Request aus zwei Requests, da mit dem ersten Aufruf
 lediglich der Login-Token geliefert wird.) Solange der Client
-Requests ausführt, die kein Login benötigen, werden diese beiden
+Requests ausfÃ¼hrt, die kein Login benÃ¶tigen, werden diese beiden
 Requests ebenfalls gespart.
 
 Bei Angabe der Option -debug => 1 bei Aufruf des Konstruktors
@@ -165,13 +165,13 @@ Response (Hash-Referenz)
 
 Melde den Benutzer $user mit Passwort $password auf dem
 MediaWiki-Server an. Alternativ ist ein automatisches Login
-möglich, was eleganter ist. Siehe Konstruktor.
+mÃ¶glich, was eleganter ist. Siehe Konstruktor.
 
 =head4 Example
 
   $ perl -MQuiq::MediaWiki::Client -E 'Quiq::MediaWiki::Client->new("http://lxv0103.ruv.de:8080/api.php",-debug=>1)->login("XV882JS","<PASSWORD>")'
 
-=head3 getToken() - Besorge Token für Operation
+=head3 getToken() - Besorge Token fÃ¼r Operation
 
 =head4 Synopsis
 
@@ -183,7 +183,7 @@ möglich, was eleganter ist. Siehe Konstruktor.
 
 =item $action
 
-Operation, für die das Token benötigt wird.
+Operation, fÃ¼r die das Token benÃ¶tigt wird.
 
 =back
 
@@ -193,9 +193,9 @@ Token (String)
 
 =head4 Description
 
-Besorge vom Server ein Token zum Ausführen von Operation $action und
-liefere dieses zurück. Da das Token je Session für alle Seiten identisch
-ist, cachen wir die Tokens, so dass nur eine Serveranfrage nötig ist.
+Besorge vom Server ein Token zum AusfÃ¼hren von Operation $action und
+liefere dieses zurÃ¼ck. Da das Token je Session fÃ¼r alle Seiten identisch
+ist, cachen wir die Tokens, so dass nur eine Serveranfrage nÃ¶tig ist.
 
 =head3 editPage() - Speichere Seite
 
@@ -295,12 +295,12 @@ Page-Objekt (Hash-Referenz)
 =head4 Description
 
 Ermittele die Seite mit der Page-Id $pageId bzw. dem Titel $title und
-liefere diese zurück. Die Methode erkennt eine Page-Id daran, dass
-der Wert ausschließlich aus Ziffern besteht. Alles andere wird als
+liefere diese zurÃ¼ck. Die Methode erkennt eine Page-Id daran, dass
+der Wert ausschlieÃŸlich aus Ziffern besteht. Alles andere wird als
 Seitentitel interpretiert.
 
 Der geliefere Hash besitzt folgende Komponenten, die auch per
-Accessor-Methode abgefragt werden können:
+Accessor-Methode abgefragt werden kÃ¶nnen:
 
 =over 2
 
@@ -381,7 +381,7 @@ Titel der Seite.
 
 =item $newTitle
 
-Zukünftiger Titel der Seite.
+ZukÃ¼nftiger Titel der Seite.
 
 =back
 
@@ -391,7 +391,7 @@ Zukünftiger Titel der Seite.
 
 =item -reason => $text
 
-Grund für die Umbenennung.
+Grund fÃ¼r die Umbenennung.
 
 =item -redirect => $bool (Default: 1)
 
@@ -411,7 +411,7 @@ in $newTitle um. Die alte Seite existiert weiterhin. Das Wiki
 richtet automatisch eine Umleitung von der alten zur neuen
 Seite ein, sofern beim Aufruf nicht -redirect => 0 angegeben wird.
 
-=head3 siteInfo() - Liefere Information über Server
+=head3 siteInfo() - Liefere Information Ã¼ber Server
 
 =head4 Synopsis
 
@@ -435,7 +435,7 @@ Response (Hash-Referenz)
 =head4 Description
 
 Ermittele die Server-Eigenschaften (genauer: Eigenschaften-Gruppen)
-@properties und liefere das Resultat zurück. Sind keine
+@properties und liefere das Resultat zurÃ¼ck. Sind keine
 Properties angegeben, werden I<alle> (zur Zeit der Implementierung
 bekannten) Properties abgefragt.
 
@@ -476,7 +476,7 @@ Response
 
 =head4 Description
 
-Lade die lokale Mediendatei $file über die Upload-Schnittstelle ins
+Lade die lokale Mediendatei $file Ã¼ber die Upload-Schnittstelle ins
 MediaWiki hoch. Dies ist typischerweise eine Bilddatei.
 
 =head4 See Also
@@ -518,9 +518,9 @@ L<File Upload per LWP|http://lwp.interglacial.com/ch05_07.htm>
 =head4 Description
 
 Ermittele die Versionsnummer des MediaWiki-Servers und liefere
-diese zurück. Die Information wird im Objekt gecached.
+diese zurÃ¼ck. Die Information wird im Objekt gecached.
 
-=head2 Höhere Operationen
+=head2 HÃ¶here Operationen
 
 =head3 load() - Lade Seite oder Mediendatei ins Wiki
 
@@ -535,13 +535,13 @@ diese zurück. Die Information wird im Objekt gecached.
 =item $cacheDir
 
 Pfad zum Spiegel-Verzeichnis. Der Inhalt des Spiegel-Verzeichnisses wird
-von der Methode verwaltet. Es enthält Kopien der geladenen Dateien.
+von der Methode verwaltet. Es enthÃ¤lt Kopien der geladenen Dateien.
 
 =item $file
 
 Pfad der Datei, die geladen werden soll. Dies kann eine Seitendatei
 (*.mw) oder eine sonstige Datei sein (*.png, *.jpg, *.gif, ...),
-die über die Upload-Schnittstelle des MediaWiki geladen werden kann.
+die Ã¼ber die Upload-Schnittstelle des MediaWiki geladen werden kann.
 
 =back
 
@@ -551,8 +551,8 @@ die über die Upload-Schnittstelle des MediaWiki geladen werden kann.
 
 =item -force => $bool (Default: 0)
 
-Lade die Datei ins Wiki, auch wenn sie sich nicht geändert hat
-(gegenüber dem Cache).
+Lade die Datei ins Wiki, auch wenn sie sich nicht geÃ¤ndert hat
+(gegenÃ¼ber dem Cache).
 
 =back
 
@@ -563,23 +563,23 @@ nichts
 =head4 Description
 
 Lade Seite oder Mediendatei $file ins Wiki. Hierbei wird ein
-"intelligentes" Verfahren angewendet, das verschiedene Sonderfälle
-berücksichtigt (siehe unten). Eine Kopie der hochgeladenen Datei
+"intelligentes" Verfahren angewendet, das verschiedene SonderfÃ¤lle
+berÃ¼cksichtigt (siehe unten). Eine Kopie der hochgeladenen Datei
 wird im Cache-Verzeichnis $cacheDir abgelegt. Ist die Cache-Version
-eines früheren Aufrufs identisch zu zur aktuellen Version $file,
-kehrt der Aufruf sofort zurück (außer bei Option -force => 1).
-Den Schlüssel stellt der Dateiname dar. Dieser muss über
-allen Dateien eindeutig sein und darf sich extern nicht ändern.
+eines frÃ¼heren Aufrufs identisch zu zur aktuellen Version $file,
+kehrt der Aufruf sofort zurÃ¼ck (auÃŸer bei Option -force => 1).
+Den SchlÃ¼ssel stellt der Dateiname dar. Dieser muss Ã¼ber
+allen Dateien eindeutig sein und darf sich extern nicht Ã¤ndern.
 
 Die Datei einer Seite muss die Endung *.mw besitzen und sowohl den
 Titel als auch den Inhalt der Seite als Record (siehe
 Quiq::Record) enthalten. Eine Mediendatei (*.png, *.jpg, ...)
-wird wie sie ist an die Methode übergeben.
+wird wie sie ist an die Methode Ã¼bergeben.
 
 In der Cache-Datei einer Seite speichert die Methode die Page-Id
-der Seite. Dadurch kann die Methode auch bei Titeländerungen die
+der Seite. Dadurch kann die Methode auch bei TitelÃ¤nderungen die
 Seite im Wiki ermitteln und vor dem Speichern eine move-Operation
-ausführen. Die Fälle im Einzelnen:
+ausfÃ¼hren. Die FÃ¤lle im Einzelnen:
 
 =over 4
 
@@ -598,7 +598,7 @@ Die Datei existiert nicht im Cache
 
 =item *
 
-Die Datei existiert im Cache und ist gegenüber der externen
+Die Datei existiert im Cache und ist gegenÃ¼ber der externen
 Datei verschieden
 
 =item *
@@ -607,13 +607,13 @@ Option -force ist gesetzt
 
 =back
 
-=item Aufruf wird mit Fehlermeldung zurückgewiesen
+=item Aufruf wird mit Fehlermeldung zurÃ¼ckgewiesen
 
 Die Datei ist eine Seite und soll gespeichert werden, wobei ein
 Unterschied zwischen Cache- und Wiki-Datei festgestellt wird.
 Das bedeutet, im Wiki wurde die Datei seit dem letzten Speichern
-geändert. Der Aufruf ist nur durch Setzen der Option -force möglich,
-denn die Änderung muss händisch in die externe Datei eingepflegt
+geÃ¤ndert. Der Aufruf ist nur durch Setzen der Option -force mÃ¶glich,
+denn die Ã„nderung muss hÃ¤ndisch in die externe Datei eingepflegt
 werden.
 
 =item Seite wird vor dem Speichern umbenannt
@@ -642,11 +642,11 @@ Die HTTP Request-Methode: 'GET' oder 'POST'.
 
 =item $action
 
-Die Aktion, die ausgeführt werden soll, z.B. 'query'.
+Die Aktion, die ausgefÃ¼hrt werden soll, z.B. 'query'.
 
 =item @keyVal
 
-Die Liste der Schlüssel/Wert-Paare, die an den Server übermittelt werden,
+Die Liste der SchlÃ¼ssel/Wert-Paare, die an den Server Ã¼bermittelt werden,
 entweder als URL-Parameter im Falle von GET oder im Body des Requests
 im Falle von POST.
 
@@ -658,13 +658,13 @@ Dekodiertes JSON in UTF-8 als Perl-Hash
 
 =head4 Description
 
-Grundlegende Methode, über die sämtliche Interaktion mit dem
-MediaWiki-Server läuft. Die Interaktion besteht in einem Austausch
-von Schlüssel/Wert-Paaren via HTTP mittels GET oder POST. Der Client
-sendet mit einem Request eine Menge von Schlüssel/Wert-Paaren und erhält
-vom Server in der Response eine Menge von Schlüssel/Wert-Paaren zurück.
+Grundlegende Methode, Ã¼ber die sÃ¤mtliche Interaktion mit dem
+MediaWiki-Server lÃ¤uft. Die Interaktion besteht in einem Austausch
+von SchlÃ¼ssel/Wert-Paaren via HTTP mittels GET oder POST. Der Client
+sendet mit einem Request eine Menge von SchlÃ¼ssel/Wert-Paaren und erhÃ¤lt
+vom Server in der Response eine Menge von SchlÃ¼ssel/Wert-Paaren zurÃ¼ck.
 In beide Richtungen wird UTF-8 Encoding vorausgesetzt. D.h. die
-@keyVal-Elemente müssen UTF-8 kodiert sein, die Elemente in der
+@keyVal-Elemente mÃ¼ssen UTF-8 kodiert sein, die Elemente in der
 Response $res sind es ebenfalls.
 
 =head2 Response Handling
@@ -716,10 +716,10 @@ auf
       @keyVal
   }
 
-also auf ein Element und liefere dieses zurück.
+also auf ein Element und liefere dieses zurÃ¼ck.
 
-Enthält die Seitenliste mehr als ein Element, oder handelt es sich um
-ein ungültiges (als "missing" gekennzeichnetes) Element, wird eine
+EnthÃ¤lt die Seitenliste mehr als ein Element, oder handelt es sich um
+ein ungÃ¼ltiges (als "missing" gekennzeichnetes) Element, wird eine
 Exception geworfen.
 
 =head2 Logging
@@ -732,7 +732,7 @@ Exception geworfen.
 
 =head4 Description
 
-Schreibe den Text $text unter der Überschrift $title nach STDERR.
+Schreibe den Text $text unter der Ãœberschrift $title nach STDERR.
 
 =head1 VERSION
 

@@ -20,7 +20,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
   $argA = $class->extract(1,$properties,$encoding,\@params,
       $maxArgs,@optRef);
   
-  # Options/Property-Wertpaare per Optionsobjekt zurückgeben
+  # Options/Property-Wertpaare per Optionsobjekt zurÃ¼ckgeben
   ($argA,$opt) = $class->extract(0,$properties,$encoding,\@params,
       $maxArgs,@optVal);
 
@@ -40,7 +40,7 @@ spezifiziert sind. Argumente gibt es nicht.
 
 =item $encoding
 
-Programm-Parameter müssen ggf. dekodiert werden. Dies geschieht,
+Programm-Parameter mÃ¼ssen ggf. dekodiert werden. Dies geschieht,
 wenn mit diesem Parameter ein Encoding vereinbart wird. Sollen die
 Parameter nicht dekodiert werden, was bei der Verarbeitung von
 Methodenparametern typischerweise der Fall ist, wird C<undef>
@@ -54,9 +54,9 @@ Parameterliste, z.B. @ARGV oder @_.
 
 Anzahl der maximal zu extrahierenden Argumente (Argument =
 Parameter, der nicht mit einem Bindestrich beginnt). Die Anzahl
-der tatsächlich extrahierten Argumente kann niedriger sein, wenn
+der tatsÃ¤chlich extrahierten Argumente kann niedriger sein, wenn
 weniger Argumente vorhanden sind. Sind mehr Argumente in @params
-vorhanden, bleiben die überzähligen Argumente in @params
+vorhanden, bleiben die Ã¼berzÃ¤hligen Argumente in @params
 stehen. C<undef> bedeutet eine unbegrenzte Anzahl.
 
 =item @optVal
@@ -83,31 +83,31 @@ Array-Objekt mit den (maximal $maxArgs) Argumenten aus @params.
 
 =item $opt
 
-Hash-Objekt mit den Optionen aus @params gemäß @optVal.
+Hash-Objekt mit den Optionen aus @params gemÃ¤ÃŸ @optVal.
 
 =back
 
 =head4 Description
 
 Extrahiere Argumente und Optionen aus der Parameterliste @params.
-Enthält die Parameterliste mehr Argumente oder Optionen als
-vorgegeben sind, bleiben diese in @params stehen. Dies eröffnet
-die Möglichkeit, Argumente und Optionen über mehrere
+EnthÃ¤lt die Parameterliste mehr Argumente oder Optionen als
+vorgegeben sind, bleiben diese in @params stehen. Dies erÃ¶ffnet
+die MÃ¶glichkeit, Argumente und Optionen Ã¼ber mehrere
 Aufrufebenen sukzessive zu verarbeiten.
 
 B<Fehlerbehandlung>
 
-Die Methode kennt keine Fehler. Überzählige Argumente oder Optionen,
+Die Methode kennt keine Fehler. ÃœberzÃ¤hlige Argumente oder Optionen,
 die nicht in der Optionsliste @optVal (bzw. @optRef) vorkommen, bleiben
 in @params, werden also nicht extrahiert. Die Anzahl der Argumente
 $maxArgs ist eine I<maximale> Anzahl, die unterschritten werden kann.
 
 Es obliegt dem Aufrufer, durch Tests auf @params und @$argA zu
-prüfen, ob beim Aufruf des Programms oder der Methode zu viele
+prÃ¼fen, ob beim Aufruf des Programms oder der Methode zu viele
 Parameter (= @params wurde nicht komplett geleert) oder zu wenige
-Parameter (= @$argA enthält nicht genügend Elemente) übergeben wurden.
+Parameter (= @$argA enthÃ¤lt nicht genÃ¼gend Elemente) Ã¼bergeben wurden.
 
-Eine mögliche Wrapper-Methode für eine finale Parameterverarbeitung,
+Eine mÃ¶gliche Wrapper-Methode fÃ¼r eine finale Parameterverarbeitung,
 die bei zu wenig/zu vielen Argumenten oder nicht vereinbarten
 Optionen eine Exception wirft:
 
@@ -134,8 +134,8 @@ Optionen eine Exception wirft:
 =head2 Spezialisierte Methoden
 
 Die nachfolgenden Methoden sind auf Basis der Methode extract()
-implementiert. Sie realsieren Vereinfachungen für bestimmte
-Anwendungsfälle.
+implementiert. Sie realsieren Vereinfachungen fÃ¼r bestimmte
+AnwendungsfÃ¤lle.
 
 =head3 extractPropertiesToObject() - Extrahiere Properties und weise sie an Hash-Objekt zu
 
@@ -164,14 +164,14 @@ Hash-Objekt mit Eigenschaften (und Optionen)
 =head4 Description
 
 Extrahiere Properties (und Optionen) aus der Parameterliste @params.
-Enthält die Parameterliste unbekannte Properties (oder Optionen),
+EnthÃ¤lt die Parameterliste unbekannte Properties (oder Optionen),
 wird eine Exception geworfen. Die Methode wird typischerweise
 zur Verarbeitung von Methodenparametern genutzt.
 
 =head4 Example
 
 Methode, die eine WikiMedia-Tabelle generiert. Die Tabelleneigenschaften
-werden als Property/Wert-Paare übergeben:
+werden als Property/Wert-Paare Ã¼bergeben:
 
   sub table {
       my $self = shift;
@@ -212,7 +212,7 @@ Liste der Properties (und ggf. Optionen) und ihrer Variablenreferenzen.
 =head4 Description
 
 Extrahiere Properties (und ggf. Optionen) aus der Parameterliste @params.
-Enthält die Parameterliste unbekannte Properties (oder Optionen)
+EnthÃ¤lt die Parameterliste unbekannte Properties (oder Optionen)
 wird eine Exception geworfen. Die Methode wird typischerweise
 zur Verarbeitung von Methodenparametern genutzt.
 
@@ -254,14 +254,14 @@ Referenz auf die Liste der extrahierten Argumente.
 
 =item $opt
 
-Hash-Objekt mit den Optionen aus @params gemäß @optVal.
+Hash-Objekt mit den Optionen aus @params gemÃ¤ÃŸ @optVal.
 
 =back
 
 =head4 Description
 
 Extrahiere Argumente und Optionen aus der Parameterliste @params.
-Enthält die Parameterliste unbekannte Optionen oder zu wenige
+EnthÃ¤lt die Parameterliste unbekannte Optionen oder zu wenige
 oder zu viele Argumente, wird eine Exception geworfen.
 
 =head1 VERSION

@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Database::ResultSet::Object - Liste von Datensätzen in Objekt-Repräsentation
+Quiq::Database::ResultSet::Object - Liste von DatensÃ¤tzen in Objekt-ReprÃ¤sentation
 
 =head1 BASE CLASS
 
@@ -10,12 +10,12 @@ L<Quiq::Database::ResultSet|https://github.com/s31tz/Quiq/tree/master/pod/class/
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine Liste von gleichartigen
-Datensätzen in Objekt-Repräsentation.
+Ein Objekt der Klasse reprÃ¤sentiert eine Liste von gleichartigen
+DatensÃ¤tzen in Objekt-ReprÃ¤sentation.
 
 =head1 METHODS
 
-=head2 Subklassenfunktionalität
+=head2 SubklassenfunktionalitÃ¤t
 
 =head3 lookupSub() - Suche Datensatz
 
@@ -26,8 +26,8 @@ Datensätzen in Objekt-Repräsentation.
 =head4 Description
 
 Durchsuche die Tabelle nach dem ersten Datensatz, dessen
-Attribut $key den Wert $val besitzt und liefere diesen zurück.
-Erfüllt kein Datensatz das Kriterium, liefere undef.
+Attribut $key den Wert $val besitzt und liefere diesen zurÃ¼ck.
+ErfÃ¼llt kein Datensatz das Kriterium, liefere undef.
 
 =head3 index() - Indiziere Tabelle nach Kolumne(n)
 
@@ -50,11 +50,11 @@ ist).
 
 =head4 Description
 
-Generiere einen Hash mit den Werten der Kolumen @keys als Schlüssel
+Generiere einen Hash mit den Werten der Kolumen @keys als SchlÃ¼ssel
 und mit dem Datensatz als Wert. Im skalaren Kontext liefere eine
 Referenz auf den Hash.
 
-Wird der Index über mehreren Keys gebildet, werden die einzelnen
+Wird der Index Ã¼ber mehreren Keys gebildet, werden die einzelnen
 Werte im Hash mit einem senkrechten Strich ('|') getrennt.
 
 =head3 min() - Numerisches Minimum der Kolumne
@@ -63,7 +63,7 @@ Werte im Hash mit einem senkrechten Strich ('|') getrennt.
 
   $min = $tab->min($key);
 
-=head3 maxLength() - Maximale Länge der Kolumnenwerte
+=head3 maxLength() - Maximale LÃ¤nge der Kolumnenwerte
 
 =head4 Synopsis
 
@@ -90,7 +90,7 @@ Werte im Hash mit einem senkrechten Strich ('|') getrennt.
 
 =head2 Verschiedenes
 
-=head3 sort() - Sortiere Datensätze
+=head3 sort() - Sortiere DatensÃ¤tze
 
 =head4 Synopsis
 
@@ -98,13 +98,13 @@ Werte im Hash mit einem senkrechten Strich ('|') getrennt.
 
 =head4 Description
 
-Sortiere die Datensätze gemäß der anonymen Sortierfunktion $sub.
+Sortiere die DatensÃ¤tze gemÃ¤ÃŸ der anonymen Sortierfunktion $sub.
 
 ACHTUNG: Die Sortierfunktion muss mit Prototype ($$) vereinbart
 werden, damit die Elemente per Parameter und nicht mittels
-der globalen Variablen $a und $b übergeben werden. Denn die globalen
+der globalen Variablen $a und $b Ã¼bergeben werden. Denn die globalen
 Variablen befinden sich in einem anderen Package als dem, in dem
-die Sortierfunktion aufgerufen wird. Für eine korrekte
+die Sortierfunktion aufgerufen wird. FÃ¼r eine korrekte
 Definition siehe Beispiel.
 
 =head4 Example
@@ -114,7 +114,7 @@ Definition siehe Beispiel.
       uc($a->pfad) cmp uc($b->pfad);
   });
 
-=head3 absorbModifications() - Absorbiere Datensatz-Änderungen
+=head3 absorbModifications() - Absorbiere Datensatz-Ã„nderungen
 
 =head4 Synopsis
 
@@ -128,7 +128,7 @@ nichts
 
 $row->absorbModifications()
 
-=head3 addAttribute() - Füge Attribut zu allen Datensätzen hinzu
+=head3 addAttribute() - FÃ¼ge Attribut zu allen DatensÃ¤tzen hinzu
 
 =head4 Synopsis
 
@@ -151,7 +151,7 @@ Attributwert.
 
 =head4 Description
 
-Füge Attribut $key mit Wert $val zu allen Datensätzen der
+FÃ¼ge Attribut $key mit Wert $val zu allen DatensÃ¤tzen der
 Ergebnismenge hinzu. Ist $val nicht angegeben, setze den Wert auf
 den Nullwert (Leerstring).
 
@@ -172,10 +172,10 @@ nichts
 =head4 Description
 
 Normalisiere die Zahldarstellung der genannten Kolumnen. D.h. entferne
-unnötige Nullen und forciere als Dezimaltrennzeichen einen Punkt
+unnÃ¶tige Nullen und forciere als Dezimaltrennzeichen einen Punkt
 (anstelle eines Komma).
 
-=head3 addChildType() - Füge Kind-Datensatz-Typ zu allen Datensätzen hinzu
+=head3 addChildType() - FÃ¼ge Kind-Datensatz-Typ zu allen DatensÃ¤tzen hinzu
 
 =head4 Synopsis
 
@@ -184,15 +184,15 @@ unnötige Nullen und forciere als Dezimaltrennzeichen einen Punkt
 
 =head4 Description
 
-Füge Kind-Datensatz-Typ $type mit Datensatz-Klasse $rowClass und
-den Kolumnentiteln @titles zu allen Datensätzen des ResultSet $tab
+FÃ¼ge Kind-Datensatz-Typ $type mit Datensatz-Klasse $rowClass und
+den Kolumnentiteln @titles zu allen DatensÃ¤tzen des ResultSet $tab
 hinzu.
 
-Findet die Verknüfung zwischen den Datensätzen des ResultSet
-selbst statt, müssen $rowClass und \@titles nicht angegeben
+Findet die VerknÃ¼fung zwischen den DatensÃ¤tzen des ResultSet
+selbst statt, mÃ¼ssen $rowClass und \@titles nicht angegeben
 werden. Es werden dann die Angaben aus $tab genommen.
 
-=head3 selectChilds() - Selektiere Kind-Datensätze
+=head3 selectChilds() - Selektiere Kind-DatensÃ¤tze
 
 =head4 Synopsis
 
@@ -205,23 +205,23 @@ werden. Es werden dann die Angaben aus $tab genommen.
 
 =item -type => $type (Default: "$foreignTable.$foreignKeyColumn")
 
-Bezeichner für den Satz an Kind-Objekten.
+Bezeichner fÃ¼r den Satz an Kind-Objekten.
 
 =item I<Select-Optionen>
 
-Select-Optionen, die der Selektion der Kinddatensätze
-hinzugefügt werden.
+Select-Optionen, die der Selektion der KinddatensÃ¤tze
+hinzugefÃ¼gt werden.
 
 =back
 
 =head4 Description
 
-Selektiere alle Datensätze der Tabelle $foreignTable, deren
+Selektiere alle DatensÃ¤tze der Tabelle $foreignTable, deren
 Kolumne $foreignKeyColumn auf die Kolumne $primaryKeyColumn
-verweist und liefere diese zurück.
+verweist und liefere diese zurÃ¼ck.
 
-Die Kind-Datensätze werden ihren Eltern-Datensätzen zugeordnet
-und können per
+Die Kind-DatensÃ¤tze werden ihren Eltern-DatensÃ¤tzen zugeordnet
+und kÃ¶nnen per
 
   @childRows = $row->childs("$foreignTable,$foreignKeyColumn");
 
@@ -234,10 +234,10 @@ abgefragt werden. Z.B.
   -select=>@titles oder -oderBy=>@titles
 
 Mittels der Option C<< -type=>$type >> kann ein anderer Typbezeichner
-anstelle von "$foreignTable,$foreignKeyColumn" für den Satz an
-Kinddatensätzen vereinbart werden.
+anstelle von "$foreignTable,$foreignKeyColumn" fÃ¼r den Satz an
+KinddatensÃ¤tzen vereinbart werden.
 
-=head3 selectParents() - Selektiere Parent-Datensätze
+=head3 selectParents() - Selektiere Parent-DatensÃ¤tze
 
 =head4 Synopsis
 
@@ -250,20 +250,20 @@ Kinddatensätzen vereinbart werden.
 
 =item -type => $type (Default: $foreignKeyColumn)
 
-Bezeichner für den Parent-Datensatz beim Child-Datensatz.
+Bezeichner fÃ¼r den Parent-Datensatz beim Child-Datensatz.
 
 =item I<Select-Optionen>
 
 Select-Optionen, die der Selektion der Parent-Datensatzes
-hinzugefügt werden.
+hinzugefÃ¼gt werden.
 
 =back
 
 =head4 Description
 
-Selektiere alle Datensätze der Tabelle $parentTable, auf die
+Selektiere alle DatensÃ¤tze der Tabelle $parentTable, auf die
 von der Kolumne $foreignKeyColumn aller in Tabelle $tab
-enthaltenen Datensätze verwiesen wird und liefere diese zurück.
+enthaltenen DatensÃ¤tze verwiesen wird und liefere diese zurÃ¼ck.
 
 Der Parent-Datensatz wird jeweils seinem Kind-Datensatz
 zugeordnet und kann per
@@ -273,10 +273,10 @@ zugeordnet und kann per
 abgefragt werden.
 
 Mittels der Option C<< -type=>$type >> kann ein anderer Typbezeichner
-anstelle von "$foreignKeyColumn" für den Parent-Datensatz
+anstelle von "$foreignKeyColumn" fÃ¼r den Parent-Datensatz
 vereinbart werden.
 
-=head3 selectParentRows() - Selektiere Datensätze via Schlüsselkolumne
+=head3 selectParentRows() - Selektiere DatensÃ¤tze via SchlÃ¼sselkolumne
 
 =head4 Synopsis
 
@@ -288,7 +288,7 @@ vereinbart werden.
 
 =item Array-Kontext
 
-Liste von Datensätzen
+Liste von DatensÃ¤tzen
 
 =item Skalar-Kontext
 
@@ -298,16 +298,16 @@ Tabellenobjekt (Quiq::Database::ResultSet::Object)
 
 =head4 Description
 
-Die Methode ermöglicht es, Fremschlüsselverweise einer Selektion
-durch effiziente Nachselektion aufzulösen.
+Die Methode ermÃ¶glicht es, FremschlÃ¼sselverweise einer Selektion
+durch effiziente Nachselektion aufzulÃ¶sen.
 
-Die Methode selektiert die Elterndatensätze der Tabellen-Klasse
-C<$pClass> zu den Fremdschlüsselwerten der Kolumne C<$fkTitle> und
-den zusätzlichen Selektionsdirektiven C<@select>. Die
+Die Methode selektiert die ElterndatensÃ¤tze der Tabellen-Klasse
+C<$pClass> zu den FremdschlÃ¼sselwerten der Kolumne C<$fkTitle> und
+den zusÃ¤tzlichen Selektionsdirektiven C<@select>. Die
 Selektionsdirektiven sind typischerweise C<-select> und C<-orderBy>.
 
 Die Klasse C<$pClass> muss eine Tabellenklasse sein, denn nur diese
-definiert eine Primäschlüsselkolumne.
+definiert eine PrimÃ¤schlÃ¼sselkolumne.
 
 =head4 Example
 

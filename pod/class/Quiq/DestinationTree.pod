@@ -18,13 +18,13 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
   $dt->addFile($file,$content);
   $dt->addDir($dir);
   ...
-  # Überzählige Dateien und Verzeichnisse entfernen
+  # ÃœberzÃ¤hlige Dateien und Verzeichnisse entfernen
   $dt->cleanup;
 
 =head1 DESCRIPTION
 
 Die Klasse verwaltet die Dateien und Unterverzeichnisse von
-einem oder mehreren Zielverzeichnissen. Sie ist für Dateigeneratoren
+einem oder mehreren Zielverzeichnissen. Sie ist fÃ¼r Dateigeneratoren
 gedacht, die den Inhalt ihrer Zielverzeichnisse komplett
 kontrollieren.
 
@@ -46,19 +46,19 @@ kontrollieren.
 
 Entferne alle Dateien und Verzeichnisse, die generiert wurden.
 
-Diese Option ist für ein "make clean" nützlich. Im Unterschied
+Diese Option ist fÃ¼r ein "make clean" nÃ¼tzlich. Im Unterschied
 zu einem $tree->cleanup() direkt nach Objektinstantiierung,
 werden hierbei Dateien, die mit -writeInitially=>1 erzeugt wurden,
-nur dann gelöscht, wenn sie nicht modifiziert wurden. Wurden
+nur dann gelÃ¶scht, wenn sie nicht modifiziert wurden. Wurden
 sie modifiziert, bleiben sie erhalten.
 
 =item -dryRun => $bool (Default: 0)
 
-Ändere nichts, zeige die Operationen nur an.
+Ã„ndere nichts, zeige die Operationen nur an.
 
 =item -exclude => $regex (Default: keiner)
 
-Schließe alle Dateien, die Regex $regex erfüllen von der Betrachtung
+SchlieÃŸe alle Dateien, die Regex $regex erfÃ¼llen von der Betrachtung
 aus. D.h. diese werden vom Nutzer der Klasse nicht verwaltet (weder
 erzeugt noch entfernt).
 
@@ -75,7 +75,7 @@ differiert.
 
 =item -include => $regex (Default: keiner)
 
-Berücksichtige nur Dateien, die Regex $regex erfüllen, alle anderen
+BerÃ¼cksichtige nur Dateien, die Regex $regex erfÃ¼llen, alle anderen
 werden von der Klasse nicht verwaltet (weder erzeugt noch entfernt).
 
 =item -inHandle => $fh (Default: \*STDIN)
@@ -84,11 +84,11 @@ Filehandle, von der Benutzereingaben gelesen werden.
 
 =item -language => 'de'|'en' (Default: 'de')
 
-Sprache für die Kommunikation mit dem Benutzer.
+Sprache fÃ¼r die Kommunikation mit dem Benutzer.
 
 =item -prefix => $str (Default: '')
 
-Setze Zeichenkette $str an den Anfang jeder Änderungsmeldung.
+Setze Zeichenkette $str an den Anfang jeder Ã„nderungsmeldung.
 Beispiel: C<< -prefix=>'* ' >>
 
 =item -quiet => $bool (Default: 0)
@@ -103,15 +103,15 @@ Filehandle, auf die Ausgaben geschrieben werden.
 
 =head4 Description
 
-Instantiiere ein Dateibaumobjekt über den Verzeichnissen @dirs
-und liefere eine Referenz auf dieses Objekt zurück. Die Verzeichnisse
-in @dirs müssen nicht existieren. Hat ein Verzeichnis die Form
+Instantiiere ein Dateibaumobjekt Ã¼ber den Verzeichnissen @dirs
+und liefere eine Referenz auf dieses Objekt zurÃ¼ck. Die Verzeichnisse
+in @dirs mÃ¼ssen nicht existieren. Hat ein Verzeichnis die Form
 "DIR/*" wird nicht rekursiv in DIR abgestiegen, sondern nur
 die Dateien (nicht die Verzeichnisse) in DIR werden verwaltet.
 
 =head2 Objektmethoden
 
-=head3 addDir() - Füge Verzeichnis zum Dateibaum hinzu
+=head3 addDir() - FÃ¼ge Verzeichnis zum Dateibaum hinzu
 
 =head4 Synopsis
 
@@ -119,7 +119,7 @@ die Dateien (nicht die Verzeichnisse) in DIR werden verwaltet.
 
 =head4 Description
 
-Füge Verzeichnis $dir zum Dateibaum hinzu. Die Methode liefert 1, wenn
+FÃ¼ge Verzeichnis $dir zum Dateibaum hinzu. Die Methode liefert 1, wenn
 das Verzeichnis effektiv erzeugt wurde (s.u.)  oder 0, wenn dies nicht
 der Fall war.
 
@@ -127,8 +127,8 @@ Das Verzeichnis wird effektiv nur erzeugt, wenn es noch nicht
 existiert. In dem Fall schreibt die Methode eine entsprechende Meldung
 auf den Ausgabekanal und liefert als Returnwert 1.
 
-Der Rückgabewert kann benutzt werden, um im Falle der
-Verzeichniserzeugung weitere Aktionen auszuführen, wie z.B. das Setzen
+Der RÃ¼ckgabewert kann benutzt werden, um im Falle der
+Verzeichniserzeugung weitere Aktionen auszufÃ¼hren, wie z.B. das Setzen
 von Verzeichnisrechten.
 
 =head3 paths() - Liefere die Liste der Pfade
@@ -139,7 +139,7 @@ von Verzeichnisrechten.
 
 =head4 Description
 
-Liefere die Liste der Pfade, die zu den Zielverzeichnissen gehören.
+Liefere die Liste der Pfade, die zu den Zielverzeichnissen gehÃ¶ren.
 
 =over 2
 
@@ -149,7 +149,7 @@ Die Reihenfolge ist undefiniert.
 
 =item *
 
-Die Liste enthält sowohl Verzeichnisse also auch Dateien.
+Die Liste enthÃ¤lt sowohl Verzeichnisse also auch Dateien.
 
 =back
 
@@ -161,7 +161,7 @@ Nur Dateien erhalten:
 
   @paths = grep {!-d} $tree->paths;
 
-=head3 addFile() - Füge Datei zum Dateibaum hinzu
+=head3 addFile() - FÃ¼ge Datei zum Dateibaum hinzu
 
 =head4 Synopsis
 
@@ -188,7 +188,7 @@ Encodiere/decodiere die Daten mit Encoding $encoding.
 =item -force => $bool (Default: 0)
 
 Forciere das Schreiben der Datei ohne den Dateiinhalt zu vergleichen.
-Die Option ist nützlich, wenn der Aufrufer bereits festgestellt hat,
+Die Option ist nÃ¼tzlich, wenn der Aufrufer bereits festgestellt hat,
 dass eine Differenz besteht.
 
 =item -generate => $bool (Default: 0)
@@ -203,48 +203,48 @@ nicht existiert oder Option -generate I<wahr> ist.
 
 =item -onUpdate => sub { ... } (Default: undef)
 
-Führe Subroutine aus, I<bevor> Datei $file geschrieben wird.
+FÃ¼hre Subroutine aus, I<bevor> Datei $file geschrieben wird.
 
 =item -quiet => $bool (Default: 0)
 
-Unterdrücke Ausgabe der Meldung.
+UnterdrÃ¼cke Ausgabe der Meldung.
 
 =item -skipEmptyFiles => $bool
 
-Übergehe Dateien mit leerem Inhalt.
+Ãœbergehe Dateien mit leerem Inhalt.
 
 =item -writeInitially => $bool (Default: 0)
 
 Schreibe Datei nur, wenn sie nicht existiert.
 
-Diese Option ist nützlich, wenn von einer Datei ein anfängliches
-Muster erzeugt werden soll, das anschließend manuell bearbeitet werden
-kann. Die manuell bearbeitete Datei soll danach natürlich nicht mehr
-vom Muster überschieben werden.
+Diese Option ist nÃ¼tzlich, wenn von einer Datei ein anfÃ¤ngliches
+Muster erzeugt werden soll, das anschlieÃŸend manuell bearbeitet werden
+kann. Die manuell bearbeitete Datei soll danach natÃ¼rlich nicht mehr
+vom Muster Ã¼berschieben werden.
 
 =back
 
 =head4 Description
 
-Füge Datei $file mit dem Inhalt $data zum Dateibaum hinzu. Die
+FÃ¼ge Datei $file mit dem Inhalt $data zum Dateibaum hinzu. Die
 Methode liefert 0, wenn die Datei nicht geschrieben wurde,
 1, wenn die Datei existiert hat und geschrieben wurde, 2, wenn
 die Datei neu erzeugt wurde.
 
 Ist $data C<undef> wird die Datei nicht geschrieben, bleibt
-aber weiter bestehen. Dies ist nützlich, wenn es teuer ist, den Inhalt
+aber weiter bestehen. Dies ist nÃ¼tzlich, wenn es teuer ist, den Inhalt
 der Datei zu generieren, und bekannt ist, dass sich am Inhalt nichts
-geändert hat.
+geÃ¤ndert hat.
 
 Die Datei wird effektiv geschrieben, wenn sie nicht existiert oder der
 Inhalt differiert. In dem Fall schreibt die Methode eine entsprechende
 Meldung nach STDERR und liefert als Returnwert 1.
 
-Der Rückgabewert kann benutzt werden, um im Falle des Schreibens
-der Datei weitere Aktionen auszuführen, wie z.B. das Setzen von
+Der RÃ¼ckgabewert kann benutzt werden, um im Falle des Schreibens
+der Datei weitere Aktionen auszufÃ¼hren, wie z.B. das Setzen von
 Dateirechten.
 
-=head3 obsoletePaths() - Liste der überzähligen Pfade
+=head3 obsoletePaths() - Liste der Ã¼berzÃ¤hligen Pfade
 
 =head4 Synopsis
 
@@ -257,7 +257,7 @@ Inhalt eines Verzeichnisses typischerweise vor dem Verzeichnis
 kommt. Dies ist aber nicht garantiert, da Punkt "." und Bindestrich
 "-" vor dem Verzeichnistrenner "/" kommen.
 
-=head3 removePath() - Lösche Datei oder Verzeichnis aus Baum
+=head3 removePath() - LÃ¶sche Datei oder Verzeichnis aus Baum
 
 =head4 Synopsis
 
@@ -265,13 +265,13 @@ kommt. Dies ist aber nicht garantiert, da Punkt "." und Bindestrich
 
 =head4 Description
 
-Lösche Datei oder Verzeichnis $path aus dem Zielbaum. Liefere 1, wenn
-die Löschung durchgeführt wurde, andernfalls 0.
+LÃ¶sche Datei oder Verzeichnis $path aus dem Zielbaum. Liefere 1, wenn
+die LÃ¶schung durchgefÃ¼hrt wurde, andernfalls 0.
 
-Im Falle eines Verzeichnisses wird die Löschung nur durchgeführt, wenn
-das Verzeichnis leer ist. Dateien werden grundsätzlich gelöscht.
+Im Falle eines Verzeichnisses wird die LÃ¶schung nur durchgefÃ¼hrt, wenn
+das Verzeichnis leer ist. Dateien werden grundsÃ¤tzlich gelÃ¶scht.
 
-=head3 cleanup() - Entferne überzählige Pfade aus dem Zielbaum
+=head3 cleanup() - Entferne Ã¼berzÃ¤hlige Pfade aus dem Zielbaum
 
 =head4 Synopsis
 
@@ -281,7 +281,7 @@ das Verzeichnis leer ist. Dateien werden grundsätzlich gelöscht.
 
 =head4 Returns
 
-Anzahl oder Liste der gelöschten Pfade (Skalarkontext/Arraykontext)
+Anzahl oder Liste der gelÃ¶schten Pfade (Skalarkontext/Arraykontext)
 
 =head4 Description
 
@@ -289,15 +289,15 @@ Entferne alle Dateien und Verzeichnisse aus dem Zielbaum, die obsolet
 geworden sind, die seit Objekt-Instantiierung also nicht via
 $tree->addFile() oder $tree->addDir() angelegt wurden.
 
-Ist der Parameter $ask angegeben und wahr, wird vor der Löschung
-eine Rückfrage auf STDERR gestellt, ob die Löschung wirklich erfolgen
+Ist der Parameter $ask angegeben und wahr, wird vor der LÃ¶schung
+eine RÃ¼ckfrage auf STDERR gestellt, ob die LÃ¶schung wirklich erfolgen
 soll. Wird diese nicht mit 'y' beantwortet (auf STDIN), findet
-kein Löschen statt und die Methode liefert 0.
+kein LÃ¶schen statt und die Methode liefert 0.
 
 Ist ferner der Parameter $timer angegeben, wird die Antwortzeit
 des Benutzers auf dessen Wert aufaddiert.
 
-=head3 close() - Schließe Zielbaumvergleich ab
+=head3 close() - SchlieÃŸe Zielbaumvergleich ab
 
 =head4 Synopsis
 
@@ -305,10 +305,10 @@ des Benutzers auf dessen Wert aufaddiert.
 
 =head4 Description
 
-Schließe Zielbaumvergeleich ab. Nach Aufruf kann die Objektreferenz
-nicht mehr verwendet werden. Die Methode liefert keinen Wert zurück.
+SchlieÃŸe Zielbaumvergeleich ab. Nach Aufruf kann die Objektreferenz
+nicht mehr verwendet werden. Die Methode liefert keinen Wert zurÃ¼ck.
 
-=head3 getText() - Liefere Übersetzung
+=head3 getText() - Liefere Ãœbersetzung
 
 =head4 Synopsis
 
@@ -316,11 +316,11 @@ nicht mehr verwendet werden. Die Methode liefert keinen Wert zurück.
 
 =head4 Returns
 
-Übersetzten Text (String)
+Ãœbersetzten Text (String)
 
 =head4 Description
 
-Liefere die Übersetzung zum deutschen Text $textDe.
+Liefere die Ãœbersetzung zum deutschen Text $textDe.
 
 =head1 VERSION
 
@@ -336,7 +336,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2020 Frank Seitz
+Copyright (C) 2021 Frank Seitz
 
 =head1 LICENSE
 

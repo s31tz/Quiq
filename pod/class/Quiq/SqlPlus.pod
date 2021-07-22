@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::SqlPlus - Erzeuge Code für SQL*Plus
+Quiq::SqlPlus - Erzeuge Code fÃ¼r SQL*Plus
 
 =head1 BASE CLASS
 
@@ -129,7 +129,7 @@ erzeugt
 =item $name
 
 Name des Skripts. Der Name wird in einen Kommentar an den Anfang
-des Skripts gesetzt und für die Benennung der Logdatei genutzt
+des Skripts gesetzt und fÃ¼r die Benennung der Logdatei genutzt
 
   NAME-YYYYMMDDHHMMSS.log
 
@@ -160,15 +160,15 @@ Skripots gesetzt, sonst ROLLBACK.
 
 =item -before => $sql
 
-SQL*Plus-Code, der I<vor> $sql ausgeführt wird.
+SQL*Plus-Code, der I<vor> $sql ausgefÃ¼hrt wird.
 
 =item -beforeAndAfter => $sql
 
-SQL*Plus-Code, der vor I<und> nach $sql ausgeführt wird.
+SQL*Plus-Code, der vor I<und> nach $sql ausgefÃ¼hrt wird.
 
 =item -after => $sql
 
-SQL*Plus-Code, der I<nach> $sql ausgeführt wird.
+SQL*Plus-Code, der I<nach> $sql ausgefÃ¼hrt wird.
 
 =back
 

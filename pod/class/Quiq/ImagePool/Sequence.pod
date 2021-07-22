@@ -18,7 +18,7 @@ Pfad der Datei.
 
 =item oHash
 
-Geordneter Hash der Schlüssel/Definitions-Paare.
+Geordneter Hash der SchlÃ¼ssel/Definitions-Paare.
 
 =item imageList
 
@@ -52,8 +52,8 @@ Liste aller Bilder.
 
 =head4 Description
 
-Instantiiere ein Sequenz-Objekt aus Datei $file, verknüpfe es mit
-Bildliste $lst und liefere eine Referenz auf dieses Objekt zurück.
+Instantiiere ein Sequenz-Objekt aus Datei $file, verknÃ¼pfe es mit
+Bildliste $lst und liefere eine Referenz auf dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -78,7 +78,7 @@ Liefere die Anzahl der Range-Definitionen.
 Liefere die Liste aller Range-Bezeichner. Im Skalarkontext liefere
 eine Referenz auf die Liste.
 
-=head3 exists() - Prüfe, ob Range existiert
+=head3 exists() - PrÃ¼fe, ob Range existiert
 
 =head4 Synopsis
 
@@ -86,7 +86,7 @@ eine Referenz auf die Liste.
 
 =head4 Description
 
-Prüfe, ob Range $key existiert. Wenn ja, liefere 1, sonst 0.
+PrÃ¼fe, ob Range $key existiert. Wenn ja, liefere 1, sonst 0.
 
 =head3 def() - Liefere Range-Definition
 
@@ -106,7 +106,7 @@ Liefere die Definition ($spec,$modifier) des Range $key.
 
 =head4 Description
 
-Liefere die Spezifikation (Aufzählung der Bildnummern) für Range $key.
+Liefere die Spezifikation (AufzÃ¤hlung der Bildnummern) fÃ¼r Range $key.
 
 =head3 specImages() - Liefere die Bilder eines Range
 
@@ -138,7 +138,7 @@ eine Referenz auf die Liste.
 
 =head4 Description
 
-Liefere oder setze den Modifier für Range $key.
+Liefere oder setze den Modifier fÃ¼r Range $key.
 
 =head2 Bilder
 

@@ -12,7 +12,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head2 Klassenmethoden
 
-=head3 aspectRatio() - Seitenverhältnis eines Bildes
+=head3 aspectRatio() - SeitenverhÃ¤ltnis eines Bildes
 
 =head4 Synopsis
 
@@ -20,8 +20,8 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head4 Description
 
-Liefere das Seitenverhältnis eines Bildes, gegeben dessen
-Breite und Höhe. Mögliche Rückgabewerte: '16:9', '4:3' oder (bei
+Liefere das SeitenverhÃ¤ltnis eines Bildes, gegeben dessen
+Breite und HÃ¶he. MÃ¶gliche RÃ¼ckgabewerte: '16:9', '4:3' oder (bei
 anderen Seitenverhltnissen) der Quotient $width/$height.
 
 =head3 edit() - Editiere Bild mit Bildbearbeitungsprogramm
@@ -59,7 +59,7 @@ Nutze Programm $program zum Editieren des Bildes.
 Editiere Bilddatei $file mit Programm $program. Ist ein Backupverzeichnis
 $backupDir gegeben, wird die unbearbeitete Datei unter einer laufenden
 Nummer plus Extension dorthin gesichert, aber nur, wenn die Bilddatei
-tatsächlich geändert wurde.
+tatsÃ¤chlich geÃ¤ndert wurde.
 
 =head3 findImages() - Suche Bild-Dateien
 
@@ -78,7 +78,7 @@ Liefere Objekte vom Typ $class statt Dateinamen.
 
 =item -sort => 'mtime'|'name' (Default: undef)
 
-Sortiere die Bilder primär nach Zeit (und sekundär nach Name)
+Sortiere die Bilder primÃ¤r nach Zeit (und sekundÃ¤r nach Name)
 oder nach Name. Per Default werden die Bilder unsortiert geliefert.
 
 =back
@@ -89,7 +89,7 @@ Liefere die Liste aller Bild-Dateien, die in @filesAndDirs
 vorkommen. Vereichnisse werden rekursiv nach Bild-Dateien durchsucht.
 Als Bild-Dateien werden alle Dateien angesehen, die eine
 Bild-Extension (.jpg, .png, .gif) besitzen. Bei Dateien ohne
-Extension wird mittels Quiq::Image->type() geprüft, ob es sich
+Extension wird mittels Quiq::Image->type() geprÃ¼ft, ob es sich
 um eine Bild-Datei handelt.
 
 =head3 standardName() - Standard-Name eines Bildes
@@ -104,13 +104,13 @@ um eine Bild-Datei handelt.
 
 =item -name => $name
 
-Ergänzender Text zum Bild.
+ErgÃ¤nzender Text zum Bild.
 
 =back
 
 =head4 Description
 
-Erzeuge einen Standard-Bild-Namen und liefere diesen zurück.
+Erzeuge einen Standard-Bild-Namen und liefere diesen zurÃ¼ck.
 Ein Standard-Bild-Name hat den Aufbau:
 
   NNNNNN-WIDTHxHEIGHT[-NAME].EXT
@@ -121,7 +121,7 @@ Hierbei ist:
 
 =item NNNNNN
 
-Die Bildnummer $i. Diese wird mit führenden Nullen auf sechs
+Die Bildnummer $i. Diese wird mit fÃ¼hrenden Nullen auf sechs
 Stellen gebracht.
 
 =item WIDTH
@@ -130,11 +130,11 @@ Die Breite des Bildes.
 
 =item HEIGHT
 
-Die Höhe des Bildes.
+Die HÃ¶he des Bildes.
 
 =item NAME
 
-Ein ergänzender Text zum Bild. Dieser ist optional. Leerzeichen
+Ein ergÃ¤nzender Text zum Bild. Dieser ist optional. Leerzeichen
 werden durch Bindestriche (-) ersetzt.
 
 =item EXT
@@ -180,7 +180,7 @@ liefere einen Leerstring ('').
 =head4 Description
 
 Ermittele den Typ der Bilddatei $file anhand seiner Magic-Bytes
-und liefere diesen zurück. Drei Bildtypen werden erkannt:
+und liefere diesen zurÃ¼ck. Drei Bildtypen werden erkannt:
 
 =over 2
 
@@ -202,7 +202,7 @@ Wird der Bildtyp nicht erkannt, wirft die Methode eine Exception,
 sofern nicht die Option -sloppy gesetzt ist.
 
 Anstelle eines Dateinamens kann auch eine Skalarreferenz
-(in-memory Bild) übergeben werden.
+(in-memory Bild) Ã¼bergeben werden.
 
 =head1 VERSION
 

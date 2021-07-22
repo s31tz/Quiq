@@ -46,7 +46,7 @@ Referenz auf das Bildsequenz-Objekt
 =head4 Description
 
 Instantiiere Bildsequenz-Objekt aus den Bilddateien \@images und
-liefere eine Referenz auf dieses Objekt zurück.
+liefere eine Referenz auf dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -104,7 +104,7 @@ nichts
 
 Exportiere die Bildsequenz nach Verzeichnis $destDir. Existiert
 $destDir nicht, wird es erzeugt. Existiert das Verzeichnis, wird
-die Bildsequenz angehängt.
+die Bildsequenz angehÃ¤ngt.
 
 =head3 morph() - Exportiere Bildsequenz mit Zwischenbildern
 
@@ -135,7 +135,7 @@ nichts
 Exportiere die Bildsequenz nach Verzeichnis $destDir mit jeweils
 $n gemorphten Zwischenbildern. Existiert $destDir nicht, wird es
 erzeugt. Existiert das Verzeichnis, wird die Bildsequenz
-angehängt.
+angehÃ¤ngt.
 
 =head3 generate() - Erzeuge Video
 
@@ -159,16 +159,16 @@ Die zu erzeugende Video-Datei, z.B. '2018-07-28-anreise.mp4'.
 
 =item -dryRun => $bool (Default: 0)
 
-Zeige Änderungen, führe sie aber nicht aus.
+Zeige Ã„nderungen, fÃ¼hre sie aber nicht aus.
 
 =item -endFrames => $sec (Default: 1)
 
-Dauer der am Ende des Clip hinzugefügten "Ende-Frames" in
+Dauer der am Ende des Clip hinzugefÃ¼gten "Ende-Frames" in
 Sekunden.  Ist der Wert negativ, wird der Clip auf diese Dauer
-verlängert (ist der Clip länger, wird der Default genommen).  Die
-End-Frames verlängern den Clip bis zur vollen Sekunde plus $sec-1
-Sekunden. D.h. der Wert 1 füllt bis zur nächsten vollen Sekunde
-auf. Bei 0 werden keine End-Frames hinzugefügt (was nicht ratsam
+verlÃ¤ngert (ist der Clip lÃ¤nger, wird der Default genommen).  Die
+End-Frames verlÃ¤ngern den Clip bis zur vollen Sekunde plus $sec-1
+Sekunden. D.h. der Wert 1 fÃ¼llt bis zur nÃ¤chsten vollen Sekunde
+auf. Bei 0 werden keine End-Frames hinzugefÃ¼gt (was nicht ratsam
 ist, da ffmpeg dann am Clip-Ende seltsame Ergebnisse produziert).
 
 =item -framerate => $n (Default: 8)
@@ -177,7 +177,7 @@ Anzahl Bilder pro Sekunde.
 
 =item -preset => $preset (Default: 'ultrafast')
 
-Satz an vorgewählten Optionen, für Encoding-Zeit
+Satz an vorgewÃ¤hlten Optionen, fÃ¼r Encoding-Zeit
 vs. Kompressionsrate. Schnellstes Encoding: 'ultrafast', beste
 Kompression: 'veryslow'. Siehe Quiq::FFmpeg, imagesToVideo().
 
@@ -229,11 +229,11 @@ SHA1 Digest
 
 =head4 Description
 
-Berechne den SHA1 Hash-Wert für die Sequenz und liefere diesen zurück.
-Der Hash-Wert wird gebildet über allen Bilddateien, derem Pfad,
-deren Größe und Änderungszeitpunkt.
+Berechne den SHA1 Hash-Wert fÃ¼r die Sequenz und liefere diesen zurÃ¼ck.
+Der Hash-Wert wird gebildet Ã¼ber allen Bilddateien, derem Pfad,
+deren GrÃ¶ÃŸe und Ã„nderungszeitpunkt.
 
-Anhand des SHA1 Hash-Werts läßt sich prüfen, ob eine Änderung an
+Anhand des SHA1 Hash-Werts lÃ¤ÃŸt sich prÃ¼fen, ob eine Ã„nderung an
 der Bildsequenz stattgefunden hat und eine teure Operation wie das
 (erneute) Rendern eines Video notwendig ist.
 
@@ -247,7 +247,7 @@ der Bildsequenz stattgefunden hat und eine teure Operation wie das
 
 =head4 Returns
 
-Bildsquenz-Objekt (für Chaining)
+Bildsquenz-Objekt (fÃ¼r Chaining)
 
 =head4 Description
 
@@ -262,7 +262,7 @@ d.h. entferne alle anderen
 
 =head4 Returns
 
-Bildsquenz-Objekt (für Chaining)
+Bildsquenz-Objekt (fÃ¼r Chaining)
 
 =head4 Description
 

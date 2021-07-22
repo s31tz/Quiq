@@ -26,19 +26,19 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
   $col->name('red'); # setzen
   $name = $col->name; # abfragen
   
-  # Externe Repräsentation
+  # Externe ReprÃ¤sentation
   
   $hex = $col->hexString; # 'ff0000' - hex. RGB-String
   @rgb = $col->rgb; # (255,0,0) - dez. RGB-Tripel
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine Farbe des RGB-Farbraums,
+Ein Objekt der Klasse reprÃ¤sentiert eine Farbe des RGB-Farbraums,
 also ein Tripel (R, G, B). Das Objekt kann aus verschiedenen
-externen Repräsentationen instantiiert werden und seinerseits
-verschiedene externe Repräsentationen liefern. Ferner kann die
-Helligkeit der Farbe ermittelt werden, was für eine Fontauswahl
-nützlich sein kann. Außerdem kann der Farbe ein Name zugewiesen
+externen ReprÃ¤sentationen instantiiert werden und seinerseits
+verschiedene externe ReprÃ¤sentationen liefern. Ferner kann die
+Helligkeit der Farbe ermittelt werden, was fÃ¼r eine Fontauswahl
+nÃ¼tzlich sein kann. AuÃŸerdem kann der Farbe ein Name zugewiesen
 werden.
 
 =head1 METHODS
@@ -57,7 +57,7 @@ werden.
 =head4 Description
 
 Instantiiere eine RGB-Farbe und liefere eine Referenz
-auf das Objekt zurück.
+auf das Objekt zurÃ¼ck.
 
 =head2 Farbeigenschaften
 
@@ -70,7 +70,7 @@ auf das Objekt zurück.
 =head4 Description
 
 Liefere die Helligkeit der Farbe im Wertebereich 0 (schwarz) bis
-255 (weiß). Bei einem Wert < 128 ist die Farbe dunkel, andernfalls hell.
+255 (weiÃŸ). Bei einem Wert < 128 ist die Farbe dunkel, andernfalls hell.
 
 Die Methode kann genutzt werden um zu entscheiden, welche Textfarbe
 auf einem Hintergrund mit der Farbe genutzt werden sollte.
@@ -104,7 +104,7 @@ L<http://fseitz.de/blog/index.php?/archives/112-Helligkeit-von-Farben-des-RGB-Fa
 
 =head4 Description
 
-Das Farbobjekt besitzt zunächst keinen Namen. Mit dieser Methode
+Das Farbobjekt besitzt zunÃ¤chst keinen Namen. Mit dieser Methode
 kann der Farbe jedoch ein Name zugewiesen und abgefragt werden.
 
 Wurde dem Farbobjekt kein Name zugewiesen, liefert die Methode
@@ -117,7 +117,7 @@ einen Leerstring.
   $name = $col->name;
   -> 'red'
 
-=head2 Externe Repräsentationen
+=head2 Externe ReprÃ¤sentationen
 
 =head3 hexString() - Farbwert als Hex-String
 

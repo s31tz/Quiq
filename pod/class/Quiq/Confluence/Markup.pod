@@ -10,12 +10,12 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen Generator für das
+Ein Objekt der Klasse reprÃ¤sentiert einen Generator fÃ¼r das
 Wiki-Markup von Confluence. Die Methoden der Klasse erzeugen
 dieses Markup, ohne dass man sich um die Details der Syntax
-kümmern muss.
+kÃ¼mmern muss.
 
-Als Grundlage für die Implementierung dient die
+Als Grundlage fÃ¼r die Implementierung dient die
 Confluence-Dokumentation:
 
 =over 2
@@ -30,7 +30,7 @@ L<Macros|https://confluence.atlassian.com/doc/macros-139387.html>
 
 =back
 
-Die Implementierung ist nicht vollständig, sondern wird nach Bedarf
+Die Implementierung ist nicht vollstÃ¤ndig, sondern wird nach Bedarf
 erweitert.
 
 =head1 METHODS
@@ -46,7 +46,7 @@ erweitert.
 =head4 Description
 
 Instantiiere einen Confluence Wiki-Markup Generator und liefere
-eine Referenz auf dieses Objekt zurück.
+eine Referenz auf dieses Objekt zurÃ¼ck.
 
 =head2 Allgemeine Syntax
 
@@ -66,10 +66,10 @@ heading()
 Confluence-Doku: L<Heading|https://confluence.atlassian.com/doc/confluence-wiki-markup-251003035.html#ConfluenceWikiMarkup-Headings>
 
 Erzeuge einen Abschnitt der Ebene $level mit dem Titel $title und
-dem (optionalen) Abschnitts-Körper $body und liefere den
-resultierenden Code zurück. Ist $body nicht angegeben oder ein
+dem (optionalen) Abschnitts-KÃ¶rper $body und liefere den
+resultierenden Code zurÃ¼ck. Ist $body nicht angegeben oder ein
 Leerstring, wird nur der Titel erzeugt. Andernfalls wird $body per
-trim() von einer etwaigen Einrückung befreit.
+trim() von einer etwaigen EinrÃ¼ckung befreit.
 
 =head4 Examples
 
@@ -99,7 +99,7 @@ erzeugt
 
 =item *
 
-Eine Einrückung wird automatisch entfernt:
+Eine EinrÃ¼ckung wird automatisch entfernt:
 
   $gen->section(1,'Test',q~
       Dies ist ein Test.
@@ -122,9 +122,9 @@ erzeugt
 =head4 Description
 
 Erzeuge einen Paragraph und liefere den resultierenden Wiki-Code
-zurück. Ist $text nicht angegeben oder ein Leerstring, wird ein
+zurÃ¼ck. Ist $text nicht angegeben oder ein Leerstring, wird ein
 Leerstring geliefert. Andernfalls wird $text per trim() von einer
-etwaigen Einrückung befreit und Zeilenumbrüche durch Leerzeichen
+etwaigen EinrÃ¼ckung befreit und ZeilenumbrÃ¼che durch Leerzeichen
 ersetzt, da ein Paragraph in Confluence-Wiki Syntax einzeilig ist.
 
 =head4 Examples
@@ -143,7 +143,7 @@ erzeugt
 
 =item *
 
-Eine Einrückung wird automatisch entfernt:
+Eine EinrÃ¼ckung wird automatisch entfernt:
 
   $gen->paragraph(q~
       Dies ist
@@ -170,13 +170,13 @@ erzeugt
 
 =item -collapse => $bool (Confluence-Default: 0)
 
-Zeige den Code-Block zusammengeklappt an. Durch Betätigung eines
+Zeige den Code-Block zusammengeklappt an. Durch BetÃ¤tigung eines
 Link kann er aufgeklappt werden.
 
 =item -firstLine => $n (Confluence-Default: 1)
 
 Wenn Option C<-lineNumbers> gesetzt ist, die Nummer der ersten Zeile,
-ggf. mit führenden Nullen. Z.B. C<0001>.
+ggf. mit fÃ¼hrenden Nullen. Z.B. C<0001>.
 
 =item -lineNumbers => $bool (Confluence-Default: 0)
 
@@ -184,12 +184,12 @@ Nummeriere die Zeilen durch.
 
 =item -theme => $theme (Confluence-Default: 'Confluence')
 
-Das Farbschema für die Darstellungs des Code-Blocks. Mögliche
+Das Farbschema fÃ¼r die Darstellungs des Code-Blocks. MÃ¶gliche
 Werte siehe o.g. Confluence-Doku.
 
 =item -title => $title (Confluence-Default: kein Titel)
 
-Füge einen Titel zum Code-Block hinzu.
+FÃ¼ge einen Titel zum Code-Block hinzu.
 
 =back
 
@@ -197,8 +197,8 @@ Füge einen Titel zum Code-Block hinzu.
 
 Confluence Doku: L<Code Block Macro|https://confluence.atlassian.com/doc/code-block-macro-139390.html>
 
-Erzeuge ein Code-Macro für Code $code mit Syntax-Typ $type und
-liefere den resultierenden Wiki-Code zurück. Die Liste der verfügbaren
+Erzeuge ein Code-Macro fÃ¼r Code $code mit Syntax-Typ $type und
+liefere den resultierenden Wiki-Code zurÃ¼ck. Die Liste der verfÃ¼gbaren
 Syntax-Typen findet sich in o.g. Confluence-Doku.
 
 =head4 Examples
@@ -245,9 +245,9 @@ Zeige einen Text-Block monospaced ohne weitere Formatierung an.
 
 Anmerkung: Dieses Makro ist nicht geeignet, um eine Formatierung
 innerhalb eines Paragraphen zu verhindern, da der Text als
-eigenständiger Block (mit oder ohne Umrandung) dargestellt wird.
+eigenstÃ¤ndiger Block (mit oder ohne Umrandung) dargestellt wird.
 Es entspricht einem Code-Block-Makro ohne Syntax-Highlighting,
-bei dem zusätzlich die Umrandung unterdrückt werden kann.
+bei dem zusÃ¤tzlich die Umrandung unterdrÃ¼ckt werden kann.
 
 =head4 Examples
 
@@ -255,7 +255,7 @@ bei dem zusätzlich die Umrandung unterdrückt werden kann.
 
 =item *
 
-Anzeige eines regulären Ausdrucks:
+Anzeige eines regulÃ¤ren Ausdrucks:
 
   $gen->noFormat('m|/([^/]+)xxx{5}$|',
       -noPanel => 1,
@@ -313,7 +313,7 @@ Farbe des Titel-Textes. Wert: wie HTML.
 Confluence-Doku: L<Panel Macro|https://confluence.atlassian.com/doc/panel-macro-51872380.html>
 
 Erzeuge ein Panel-Macro mit Inhalt $body und liefere den
-resultierenden Wiki-Code zurück.
+resultierenden Wiki-Code zurÃ¼ck.
 
 =head3 tableOfContents() - Inhaltsverzeichnis (toc)
 
@@ -327,7 +327,7 @@ resultierenden Wiki-Code zurück.
 
 =item -type => 'list'|'flat' (Confluence-Default: 'list')
 
-Listenartiges oder horizontales Menü.
+Listenartiges oder horizontales MenÃ¼.
 
 =item -outline => $bool (Confluence-Default: 0)
 
@@ -340,7 +340,7 @@ square, decimal, lower-alpha, lower-roman, upper-roman).
 
 =item -indent => $indent
 
-Einrücktiefe zwischen den Ebenen (nur Liste). Wert: CSS-Einheit
+EinrÃ¼cktiefe zwischen den Ebenen (nur Liste). Wert: CSS-Einheit
 (z.B. 10px).
 
 =item -separator => $separator (Confluence-Default: 'brackets')
@@ -354,16 +354,16 @@ Die niedrigste Ebene, die in das Inhaltsverzeichnis aufgenommen wird.
 
 =item -maxLevel => $n (Confluence-Default: 7)
 
-Die höchste Ebene, die in das Inhaltsverzeichnis aufgenommen wird.
+Die hÃ¶chste Ebene, die in das Inhaltsverzeichnis aufgenommen wird.
 
 =item -include => $regex
 
-Regulärer Ausdruck, der die Abschnittstitel matcht, die in das
+RegulÃ¤rer Ausdruck, der die Abschnittstitel matcht, die in das
 Inhaltsverzweichnis aufgenommen werden.
 
 =item -exclude => $regex
 
-Regulärer Ausdruck, der die Abschnittstitel matcht, die I<nicht>
+RegulÃ¤rer Ausdruck, der die Abschnittstitel matcht, die I<nicht>
 in das Inhaltsverzweichnis aufgenommen werden.
 
 =item -printable => $bool (Confluence-Default: 1)
@@ -386,7 +386,7 @@ Verwende absolute URLs.
 Confluence-Doku: L<Table of Contents Macro|https://confluence.atlassian.com/doc/table-of-contents-macro-182682099.html>
 
 Erzeuge ein Inhaltsverzeichnis-Macro und liefere den
-resultierenden Wiki-Code zurück.
+resultierenden Wiki-Code zurÃ¼ck.
 
 =head2 Text-Formatierung
 
@@ -401,8 +401,8 @@ resultierenden Wiki-Code zurück.
 
 Confluence-Doku: L<Text Effects|https://confluence.atlassian.com/doc/confluence-wiki-markup-251003035.html#ConfluenceWikiMarkup-TextEffects>
 
-Erzeuge Formatierung $format für Text $text und liefere den
-resultierenden Wiki-Code zurück.
+Erzeuge Formatierung $format fÃ¼r Text $text und liefere den
+resultierenden Wiki-Code zurÃ¼ck.
 
 Es existieren die Formatierungen:
 
@@ -455,8 +455,8 @@ protect
 =back
 
 Das Format 'protect' ist eine Erweiterung der
-Confluence-Formatierungen. Es schützt die Zeichen in $text, so
-dass diese formatierungsfrei dargestellt werden. Geschützt werden
+Confluence-Formatierungen. Es schÃ¼tzt die Zeichen in $text, so
+dass diese formatierungsfrei dargestellt werden. GeschÃ¼tzt werden
 die Zeichen:
 
   - * _ + ^ ~ [ ] { }
@@ -481,7 +481,7 @@ eines Backslash (\) verhindert.
 =head4 Description
 
 Generiere eine Seite mit Wiki-Markup. Das Markup kann nach Confluence
-übertragen und dort optisch begutachtet werden.
+Ã¼bertragen und dort optisch begutachtet werden.
 
 =head4 Examples
 
@@ -489,13 +489,13 @@ Generiere eine Seite mit Wiki-Markup. Das Markup kann nach Confluence
 
 =item *
 
-Test-Seite von der Kommandozeile ins Wiki übertragen:
+Test-Seite von der Kommandozeile ins Wiki Ã¼bertragen:
 
   $ quiq-confluence test-page | quiq-confluence update-page PAGE_ID
 
 =item *
 
-Manuelle Übertragung:
+Manuelle Ãœbertragung:
 
 =over 4
 
@@ -507,9 +507,9 @@ Markup generieren:
 
 =item 2.
 
-In Confluence die Zielseite zum Editieren öffnen und Option
-"Markup {}" wählen. Ausgabe aus 1. per copy-and-paste in den
-Dialog übertragen und diesen speichern.
+In Confluence die Zielseite zum Editieren Ã¶ffnen und Option
+"Markup {}" wÃ¤hlen. Ausgabe aus 1. per copy-and-paste in den
+Dialog Ã¼bertragen und diesen speichern.
 
 =back
 

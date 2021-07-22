@@ -93,7 +93,7 @@ Klasse:
 
 =item *
 
-tr-Angabe C<'my-title'> ist äquivalent zu C<< class=>'my-title' >>
+tr-Angabe C<'my-title'> ist Ã¤quivalent zu C<< class=>'my-title' >>
 
 =item *
 
@@ -156,7 +156,7 @@ HTML:
 =head4 Description
 
 Instantiiere ein Tabellen-Objekt und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -170,7 +170,7 @@ dieses Objekt zurück.
 =head4 Description
 
 Generiere den HTML-Code des Tabellen-Objekts und liefere diesen
-zurück. Als Klassenmethode gerufen, wird das Objekt intern erzeugt
+zurÃ¼ck. Als Klassenmethode gerufen, wird das Objekt intern erzeugt
 und mit den Attributen @keyVal instantiiert.
 
 =head1 VERSION

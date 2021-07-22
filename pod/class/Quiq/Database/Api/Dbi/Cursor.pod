@@ -10,7 +10,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen DBI-Datenbank-Cursor.
+Ein Objekt der Klasse reprÃ¤sentiert einen DBI-Datenbank-Cursor.
 
 =head1 ATTRIBUTES
 
@@ -23,7 +23,7 @@ DBI Statement-Handle.
 =item bindVars => $n
 
 Anzahl an Bind-Variablen, die im Statement enthalten sind. Ist
-die Anzahl größer 0, handelt es sich um einen Bind-Cursor.
+die Anzahl grÃ¶ÃŸer 0, handelt es sich um einen Bind-Cursor.
 
 =item titles => \@titles
 
@@ -32,7 +32,7 @@ sich um einen Select-Cursor.
 
 =item hits => $n
 
-Anzahl der getroffenen Datensätze.
+Anzahl der getroffenen DatensÃ¤tze.
 
 =item id => $id
 
@@ -53,9 +53,9 @@ Id nach INSERT in Tabelle mit AUTOINCREMENT-Kolumne (MySQL, SQLite)
 =head4 Description
 
 Instantiiere ein Cursor-Objekt mit den Attributen @keyVal
-und liefere dieses zurück.
+und liefere dieses zurÃ¼ck.
 
-=head3 destroy() - Schließe Cursor
+=head3 destroy() - SchlieÃŸe Cursor
 
 =head4 Synopsis
 
@@ -63,8 +63,8 @@ und liefere dieses zurück.
 
 =head4 Description
 
-Schließe Cursor. Die Objektreferenz ist anschließend ungültig.
-Die Methode liefert keinen Wert zurück.
+SchlieÃŸe Cursor. Die Objektreferenz ist anschlieÃŸend ungÃ¼ltig.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head2 Akzessoren
 
@@ -86,7 +86,7 @@ waren.
   @arr|$arr = $cur->bindTypes(@dataTypes);
   @arr|$arr = $cur->bindTypes;
 
-=head3 hits() - Liefere die Anzahl der getroffenen Datensätze
+=head3 hits() - Liefere die Anzahl der getroffenen DatensÃ¤tze
 
 =head4 Synopsis
 
@@ -94,11 +94,11 @@ waren.
 
 =head4 Description
 
-Liefere die Anzahl der Datesätze, die bei der Ausführung des
+Liefere die Anzahl der DatesÃ¤tze, die bei der AusfÃ¼hrung des
 Statement getroffen wurden. Im Falle einer Selektion ist dies die
-Anzahl der (bislang) gelesenen Datensätze.
+Anzahl der (bislang) gelesenen DatensÃ¤tze.
 
-=head3 id() - Liefere die Id des eingefügten Datensatzes
+=head3 id() - Liefere die Id des eingefÃ¼gten Datensatzes
 
 =head4 Synopsis
 
@@ -112,7 +112,7 @@ Anzahl der (bislang) gelesenen Datensätze.
 
 =head2 Objektmethoden
 
-=head3 bind() - Führe Bind-Statement aus
+=head3 bind() - FÃ¼hre Bind-Statement aus
 
 =head4 Synopsis
 
@@ -120,10 +120,10 @@ Anzahl der (bislang) gelesenen Datensätze.
 
 =head4 Description
 
-Führe Bind-Statement aus und liefere einen (neuen) Cursor über
-das Resultat der Statement-Ausführung zurück.
+FÃ¼hre Bind-Statement aus und liefere einen (neuen) Cursor Ã¼ber
+das Resultat der Statement-AusfÃ¼hrung zurÃ¼ck.
 
-=head3 fetch() - Liefere den nächsten Datensatz
+=head3 fetch() - Liefere den nÃ¤chsten Datensatz
 
 =head4 Synopsis
 
@@ -131,7 +131,7 @@ das Resultat der Statement-Ausführung zurück.
 
 =head4 Description
 
-Liefere eine Referenz auf den nächsten Datensatz der Ergebnismenge.
+Liefere eine Referenz auf den nÃ¤chsten Datensatz der Ergebnismenge.
 Ist das Ende der Ergebnismenge erreicht, liefere undef.
 
 Der Datensatz ist ein Array mit den Kolumnenwerten.
@@ -139,8 +139,8 @@ Der Datensatz ist ein Array mit den Kolumnenwerten.
 Bei DBI liefert jeder Aufruf dieselbe Referenz, so dass das Array vom
 Aufrufer normalerweise kopiert werden muss.
 
-Nullwerte werden durch einen Leerstring repräsentiert.
-Da DBI einen Nullwert durch undef repräsentiert, nimmt die
+Nullwerte werden durch einen Leerstring reprÃ¤sentiert.
+Da DBI einen Nullwert durch undef reprÃ¤sentiert, nimmt die
 Methode eine Abbildung von undef auf '' vor.
 
 =head1 VERSION

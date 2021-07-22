@@ -73,8 +73,8 @@ geworfen, es sei denn, die Option -sloppy ist gesetzt.
 
 =head4 Description
 
-Liefere die Bild-Teilmenge $key. Der Schlüssel $key kann die
-Ausprägungen annehmen:
+Liefere die Bild-Teilmenge $key. Der SchlÃ¼ssel $key kann die
+AusprÃ¤gungen annehmen:
 
 =over 2
 

@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::JQuery::Function - Nützliche Funktionen für jQuery
+Quiq::JQuery::Function - NÃ¼tzliche Funktionen fÃ¼r jQuery
 
 =head1 BASE CLASS
 
@@ -10,7 +10,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Diese Klasse erweitert das jQuery-Objekt um nützliche Funktionen.
+Diese Klasse erweitert das jQuery-Objekt um nÃ¼tzliche Funktionen.
 
 =head1 METHODS
 
@@ -29,9 +29,9 @@ Path-Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
-dieses Objekt zurück. Da die Klasse nur Klassenmethoden enthält,
-hat das Objekt lediglich die Aufgabe, eine abkürzende
-Aufrufschreibweise zu ermöglichen.
+dieses Objekt zurÃ¼ck. Da die Klasse nur Klassenmethoden enthÃ¤lt,
+hat das Objekt lediglich die Aufgabe, eine abkÃ¼rzende
+Aufrufschreibweise zu ermÃ¶glichen.
 
 =head2 Klassenmethoden
 
@@ -44,7 +44,7 @@ Aufrufschreibweise zu ermöglichen.
 =head4 Description
 
 Die JavaScript-Funktion formatiert ein JavaScript Datums-Objekt
-gemäß dem angegebenen Muster:
+gemÃ¤ÃŸ dem angegebenen Muster:
 
   str = $.formatDate(d,fmt);
 
@@ -146,7 +146,7 @@ JQuery Ready-Handler (String)
 =head4 Description
 
 Fasse JavaScript-Code $js in einen JQuery Ready-Handler ein und liefere
-den resultierenden JavaScript-Code zurück. Der Ready-Handler hat
+den resultierenden JavaScript-Code zurÃ¼ck. Der Ready-Handler hat
 den Aufbau
 
   $(function() {

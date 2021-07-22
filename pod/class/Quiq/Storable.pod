@@ -10,8 +10,8 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Die Klasse ist ein objektorientierter Wrapper für das Core-Modul
-Storable, speziell für die Funktionen freeze(), thaw(), clone().
+Die Klasse ist ein objektorientierter Wrapper fÃ¼r das Core-Modul
+Storable, speziell fÃ¼r die Funktionen freeze(), thaw(), clone().
 
 =head1 METHODS
 
@@ -52,16 +52,16 @@ Pfad der Cachedatei.
 
 =item $timeout
 
-Dauer in Sekunden, die die Cachdatei gültig ist. Falls nicht angegeben
-oder C<undef>, ist die Cachdatei unbegrenzt lange gültig. Ist $timeout
-negativ, verfällt die Cachdatei, wenn sie abs($timeout) Sekunden
+Dauer in Sekunden, die die Cachdatei gÃ¼ltig ist. Falls nicht angegeben
+oder C<undef>, ist die Cachdatei unbegrenzt lange gÃ¼ltig. Ist $timeout
+negativ, verfÃ¤llt die Cachdatei, wenn sie abs($timeout) Sekunden
 nicht zugegriffen wurde (mit jedem Aufruf wird die Datei in diesem
 Fall getouched).
 
 =item $sub
 
 Subroutine, die die Datenstruktur aufbaut und eine Referenz auf
-diese zurückliefert.
+diese zurÃ¼ckliefert.
 
 =back
 
@@ -69,11 +69,11 @@ diese zurückliefert.
 
 Existiert Datei $file, deserialisiere die enthaltene Datenstruktur.
 Andernfalls erzeuge die Datenstruktur durch Aufruf der Subroutine $sub
-und speichere das Resultat in Datei $file. In beiden Fällen liefere eine
-Referenz auf die Datenstuktur zurück.
+und speichere das Resultat in Datei $file. In beiden FÃ¤llen liefere eine
+Referenz auf die Datenstuktur zurÃ¼ck.
 
-Soll die Datenstuktur erneut generiert werden, genügt es, die Datei
-zuvor zu löschen.
+Soll die Datenstuktur erneut generiert werden, genÃ¼gt es, die Datei
+zuvor zu lÃ¶schen.
 
 =head4 Example
 

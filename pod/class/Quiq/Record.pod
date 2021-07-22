@@ -10,14 +10,14 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Ein Text-Record ist eine Folge von Schlüssel/Wert-Paaren
+Ein Text-Record ist eine Folge von SchlÃ¼ssel/Wert-Paaren
 in Textform, wobei
 
 =over 2
 
 =item *
 
-ein Schlüssel eine Folge von alphanumerischen Zeichen oder
+ein SchlÃ¼ssel eine Folge von alphanumerischen Zeichen oder
 Unterstrich ('_') oder Bindestrich ('-') ist, und
 
 =item *
@@ -26,35 +26,35 @@ ein Wert ein beliebiger einzeiliger oder mehrzeiliger Text ist.
 
 =back
 
-Stringrepräsentation:
+StringreprÃ¤sentation:
 
-  Schlüssel1:
+  SchlÃ¼ssel1:
       Wert1
-  Schlüssel2:
+  SchlÃ¼ssel2:
       Wert2
   ...
 
 oder
 
-  Schlüssel1: Wert1
-  Schlüssel2: Wert2
+  SchlÃ¼ssel1: Wert1
+  SchlÃ¼ssel2: Wert2
   ...
 
 oder ein Mischung aus beidem oder
 
-  @@Schlüssel@@
+  @@SchlÃ¼ssel@@
   Wert1
-  @@Schlüsse2@@
+  @@SchlÃ¼sse2@@
   Wert2
 
-Um die dritte Repräsentation (mit @@Schlüssel@@) zu erzeugen, muss
+Um die dritte ReprÃ¤sentation (mit @@SchlÃ¼ssel@@) zu erzeugen, muss
 als Option -format => '@' angegeben werden.
 
 =head1 METHODS
 
 =head2 Klassenmethoden
 
-=head3 fromString() - Lies Schlüssel/Wert-Paare aus String
+=head3 fromString() - Lies SchlÃ¼ssel/Wert-Paare aus String
 
 =head4 Synopsis
 
@@ -64,8 +64,8 @@ als Option -format => '@' angegeben werden.
 =head4 Description
 
 Lies Text-Record aus Zeichenkette $str, zerlege ihn in
-Schlüssel/Wert-Paare und liefere die Liste der
-Schlüssel/Wert-Paare zurück. Im Skalarkontext liefere eine
+SchlÃ¼ssel/Wert-Paare und liefere die Liste der
+SchlÃ¼ssel/Wert-Paare zurÃ¼ck. Im Skalarkontext liefere eine
 Referenz auf die Liste.
 
 =over 2
@@ -76,13 +76,13 @@ NEWLINEs am Anfang und am Ende eines Werts werden entfernt.
 
 =item *
 
-Eine Einrückung innerhalb eines mehrzeiligen Werts wird entfernt.
-Eine Einrückung ist die längste Folge von Leerzeichen oder Tabs, die
+Eine EinrÃ¼ckung innerhalb eines mehrzeiligen Werts wird entfernt.
+Eine EinrÃ¼ckung ist die lÃ¤ngste Folge von Leerzeichen oder Tabs, die
 allen Zeilen eines mehrzeiligen Werts gemeinsam ist.
 
 =back
 
-=head3 fromFile() - Lies Schlüssel/Wert-Paare aus Datei
+=head3 fromFile() - Lies SchlÃ¼ssel/Wert-Paare aus Datei
 
 =head4 Synopsis
 
@@ -94,7 +94,7 @@ allen Zeilen eines mehrzeiligen Werts gemeinsam ist.
 
 =item $file
 
-Datei, die den Record enthält.
+Datei, die den Record enthÃ¤lt.
 
 =back
 
@@ -110,9 +110,9 @@ Character Encoding, z.B. 'UTF-8'.
 
 =head4 Description
 
-Wie L<fromString|"fromString() - Lies Schlüssel/Wert-Paare aus String">, nur dass der Record aus Datei $file gelesen wird.
+Wie L<fromString|"fromString() - Lies SchlÃ¼ssel/Wert-Paare aus String">, nur dass der Record aus Datei $file gelesen wird.
 
-=head3 toString() - Schreibe Schlüssel/Wert-Paare auf String
+=head3 toString() - Schreibe SchlÃ¼ssel/Wert-Paare auf String
 
 =head4 Synopsis
 
@@ -137,15 +137,15 @@ Im Falle von '@' erzeuge das Format:
 
 =item -indent => $n (Default: 4)
 
-Tiefe der Einrückung.
+Tiefe der EinrÃ¼ckung.
 
 =item -ignoreNull => $bool (Default: 0)
 
-Ignoriere Schlüssel/Wert-Paare, bei denen der Wert null ist.
+Ignoriere SchlÃ¼ssel/Wert-Paare, bei denen der Wert null ist.
 
 =item -space => $n (Default: 0)
 
-Anzahl Leerzeilen zwischen den Einträgen.
+Anzahl Leerzeilen zwischen den EintrÃ¤gen.
 
 =item -strip => $bool (Default: 1)
 
@@ -155,10 +155,10 @@ Entferne Leerzeilen am Anfang und Whitespace am Ende des Werts.
 
 =head4 Description
 
-Generiere für die Schlüssel/Wert-Paare @keyVal eine Text-Record
-Repräsentation und liefere diese zurück.
+Generiere fÃ¼r die SchlÃ¼ssel/Wert-Paare @keyVal eine Text-Record
+ReprÃ¤sentation und liefere diese zurÃ¼ck.
 
-=head3 toFile() - Schreibe Schlüssel/Wert-Paare auf Datei
+=head3 toFile() - Schreibe SchlÃ¼ssel/Wert-Paare auf Datei
 
 =head4 Synopsis
 
@@ -167,12 +167,12 @@ Repräsentation und liefere diese zurück.
 
 =head4 Options
 
-Siehe L<toString|"toString() - Schreibe Schlüssel/Wert-Paare auf String">
+Siehe L<toString|"toString() - Schreibe SchlÃ¼ssel/Wert-Paare auf String">
 
 =head4 Description
 
-Wie L<toString|"toString() - Schreibe Schlüssel/Wert-Paare auf String">, nur dass der Record auf eine Datei geschrieben wird.
-Die Methode liefert keinen Wert zurück.
+Wie L<toString|"toString() - Schreibe SchlÃ¼ssel/Wert-Paare auf String">, nur dass der Record auf eine Datei geschrieben wird.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head1 VERSION
 

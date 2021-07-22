@@ -14,23 +14,23 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
   
   my $a = Quiq::Assert->new;
   
-  # Universeller Test (hier: Prüfe, ob Wert einen Punkt (.) enthält)
+  # Universeller Test (hier: PrÃ¼fe, ob Wert einen Punkt (.) enthÃ¤lt)
   $a->check('a.b',sub {index(shift,'.') >= 0});
   
-  # Prüfe, ob Wert in Aufzählung vorkommt
+  # PrÃ¼fe, ob Wert in AufzÃ¤hlung vorkommt
   $a->isEnumValue('Birne',['Apfel','Birne','Pflaume']);
   
-  # Prüfe, ob Wert nicht leer ist
+  # PrÃ¼fe, ob Wert nicht leer ist
   $a->isNotNull('xyz');
   
-  # Prüfe, ob Wert eine Zahl ist
+  # PrÃ¼fe, ob Wert eine Zahl ist
   $a->isNumber(3.14159);
 
 =head1 DESCRIPTION
 
-Die Klasse stellt Methoden zur Verfügung, mit denen eine Eingenschaft
-eines Werts geprüft werden kann. Im Erfolgsfall kehrt die jeweilige
-Methode zurück, im Fehlerfall wirft sie eine Exception.
+Die Klasse stellt Methoden zur VerfÃ¼gung, mit denen eine Eingenschaft
+eines Werts geprÃ¼ft werden kann. Im Erfolgsfall kehrt die jeweilige
+Methode zurÃ¼ck, im Fehlerfall wirft sie eine Exception.
 
 =head1 EXAMPLE
 
@@ -85,22 +85,22 @@ Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
-dieses Objekt zurück. Da die Klasse ausschließlich Klassenmethoden
-enthält, hat das Objekt lediglich die Funktion, eine abkürzende
-Aufrufschreibweise zu ermöglichen.
+dieses Objekt zurÃ¼ck. Da die Klasse ausschlieÃŸlich Klassenmethoden
+enthÃ¤lt, hat das Objekt lediglich die Funktion, eine abkÃ¼rzende
+Aufrufschreibweise zu ermÃ¶glichen.
 
 =head2 Zusicherungen
 
-Die folgenden Testmethoden können sowohl als Klassen- als auch als
+Die folgenden Testmethoden kÃ¶nnen sowohl als Klassen- als auch als
 Objektmethoden gerufen werden. Im Void-Kontext gerufen, werfen sie
 eine Exception, wenn die Bedingung verletzt ist, andernfalls 0 oder 1.
 
-=head3 check() - Prüfe beliebige Bedingung
+=head3 check() - PrÃ¼fe beliebige Bedingung
 
 =head4 Synopsis
 
   $this->check($val,@opt,$sub);         # Exception
-  $bool = $this->check($val,@opt,$sub); # Rückgabewert
+  $bool = $this->check($val,@opt,$sub); # RÃ¼ckgabewert
 
 =head4 Arguments
 
@@ -108,11 +108,11 @@ eine Exception, wenn die Bedingung verletzt ist, andernfalls 0 oder 1.
 
 =item $val
 
-Wert, der geprüft wird.
+Wert, der geprÃ¼ft wird.
 
 =item $sub
 
-Prüf-Subroutine. Ist die Bedingung erfüllt, liefert sie "wahr",
+PrÃ¼f-Subroutine. Ist die Bedingung erfÃ¼llt, liefert sie "wahr",
 andernfalls "falsch".
 
 =back
@@ -124,8 +124,8 @@ andernfalls "falsch".
 =item -name => $str
 
 Name, der bei Verletzung der Bedingung als Teil der Fehlermeldung
-ausgegeben wird. Dies kann der Name der geprüften Variable,
-des geprüften Parameters o.ä. sein.
+ausgegeben wird. Dies kann der Name der geprÃ¼ften Variable,
+des geprÃ¼ften Parameters o.Ã¤. sein.
 
 =back
 
@@ -135,18 +135,18 @@ Boolean
 
 =head4 Description
 
-Prüfe den Wert $val daraufhin, ob er die Prüfung $sub besteht.
+PrÃ¼fe den Wert $val daraufhin, ob er die PrÃ¼fung $sub besteht.
 Ist dies nicht der Fall, wirf eine Exception, wenn die Methode im
 Void-Kontext gerufen wurde, andernfalls 0. Ein leerer Wert verletzt
-die Bedingung nicht (die Subroutine wird für einen leeren Wert nicht
+die Bedingung nicht (die Subroutine wird fÃ¼r einen leeren Wert nicht
 gerufen).
 
-=head3 pathExists() - Prüfe Existenz von Pfad
+=head3 pathExists() - PrÃ¼fe Existenz von Pfad
 
 =head4 Synopsis
 
   $this->pathExists($path);         # Exception
-  $bool = $this->pathExists($path); # Rückgabewert
+  $bool = $this->pathExists($path); # RÃ¼ckgabewert
 
 =head4 Aliases
 
@@ -178,16 +178,16 @@ Boolean
 
 =head4 Description
 
-Prüfe, ob Pfad $path existiert. Ist dies nicht der Fall, wirf eine
+PrÃ¼fe, ob Pfad $path existiert. Ist dies nicht der Fall, wirf eine
 Exception, wenn die Methode im Void-Kontext gerufen wurde, andernfalls 0.
 Ein leerer Wert verletzt die Bedingung nicht.
 
-=head3 isEnumValue() - Prüfe auf Enthaltensein in Enum
+=head3 isEnumValue() - PrÃ¼fe auf Enthaltensein in Enum
 
 =head4 Synopsis
 
   $this->isEnumValue($val,\@values,@opt);         # Exception
-  $bool = $this->isEnumValue($val,\@values,@opt); # Rückgabewert
+  $bool = $this->isEnumValue($val,\@values,@opt); # RÃ¼ckgabewert
 
 =head4 Arguments
 
@@ -195,7 +195,7 @@ Ein leerer Wert verletzt die Bedingung nicht.
 
 =item $val
 
-Wert, der geprüft wird.
+Wert, der geprÃ¼ft wird.
 
 =item @values
 
@@ -210,8 +210,8 @@ Liste der Enum-Werte.
 =item -name => $str
 
 Name, der bei Verletzung der Bedingung als Teil der Fehlermeldung
-ausgegeben wird. Dies kann der Name der geprüften Variable,
-des geprüften Parameters o.ä. sein.
+ausgegeben wird. Dies kann der Name der geprÃ¼ften Variable,
+des geprÃ¼ften Parameters o.Ã¤. sein.
 
 =back
 
@@ -221,17 +221,17 @@ Boolean
 
 =head4 Description
 
-Prüfe den Wert $val daraufhin, dass er in Liste @values enthalten ist.
+PrÃ¼fe den Wert $val daraufhin, dass er in Liste @values enthalten ist.
 Ist dies nicht der Fall, wirf eine Exception, wenn die Methode
 im Void-Kontext gerufen wurde, andernfalls 0. Ein leerer Wert verletzt
 die Bedingung nicht.
 
-=head3 isNotNull() - Prüfe auf nichtleeren Wert
+=head3 isNotNull() - PrÃ¼fe auf nichtleeren Wert
 
 =head4 Synopsis
 
   $this->isNotNull($val,@opt);         # Exception
-  $bool = $this->isNotNull($val,@opt); # Rückgabewert
+  $bool = $this->isNotNull($val,@opt); # RÃ¼ckgabewert
 
 =head4 Arguments
 
@@ -239,7 +239,7 @@ die Bedingung nicht.
 
 =item $val
 
-Wert, der geprüft wird.
+Wert, der geprÃ¼ft wird.
 
 =back
 
@@ -250,8 +250,8 @@ Wert, der geprüft wird.
 =item -name => $str
 
 Name, der bei Verletzung der Bedingung als Teil der Fehlermeldung
-ausgegeben wird. Dies kann der Name der geprüften Variable,
-des geprüften Parameters o.ä. sein.
+ausgegeben wird. Dies kann der Name der geprÃ¼ften Variable,
+des geprÃ¼ften Parameters o.Ã¤. sein.
 
 =back
 
@@ -261,16 +261,16 @@ Boolean
 
 =head4 Description
 
-Prüfe den Wert $val daraufhin, dass er nichtleer, also weder
+PrÃ¼fe den Wert $val daraufhin, dass er nichtleer, also weder
 undefiniert noch ein Leerstring ist. Ist er leer, wirf eine Exception,
 wenn die Methode im Void-Kontext gerufen wurde, andernfalls 0.
 
-=head3 isNumber() - Prüfe auf dezimale Zahldarstellung
+=head3 isNumber() - PrÃ¼fe auf dezimale Zahldarstellung
 
 =head4 Synopsis
 
   $this->isNumber($val,@opt);         # Exception
-  $bool = $this->isNumber($val,@opt); # Rückgabewert
+  $bool = $this->isNumber($val,@opt); # RÃ¼ckgabewert
 
 =head4 Arguments
 
@@ -278,7 +278,7 @@ wenn die Methode im Void-Kontext gerufen wurde, andernfalls 0.
 
 =item $val
 
-Wert, der geprüft wird.
+Wert, der geprÃ¼ft wird.
 
 =back
 
@@ -289,8 +289,8 @@ Wert, der geprüft wird.
 =item -name => $str
 
 Name, der bei Verletzung der Bedingung als Teil der Fehlermeldung
-ausgegeben wird. Dies kann der Name der geprüften Variable,
-des geprüften Parameters o.ä. sein.
+ausgegeben wird. Dies kann der Name der geprÃ¼ften Variable,
+des geprÃ¼ften Parameters o.Ã¤. sein.
 
 =back
 
@@ -300,7 +300,7 @@ Boolean
 
 =head4 Description
 
-Prüfe den Wert $val daraufhin, dass er eine dezimale Zahl darstellt.
+PrÃ¼fe den Wert $val daraufhin, dass er eine dezimale Zahl darstellt.
 Ist dies nicht der Fall, wirf eine Exception, wenn die Methode im
 Void-Kontext gerufen wurde, andernfalls 0. Ein leerer Wert verletzt
 die Bedingung nicht.

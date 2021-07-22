@@ -30,12 +30,12 @@ Entferne die Optionen I<nicht> aus der Argumentliste.
 =item -mode => 'strict'|'sloppy' (Default: 'strict')
 
 Im Falle von C<< -mode=>'strict' >> (dem Default), wird eine Exception
-ausgelöst, wenn eine unbekannte Option vorkommt. Im Falle von
-C<< -mode=>'sloppy' >> wird das Argument stillschweigend übergangen.
+ausgelÃ¶st, wenn eine unbekannte Option vorkommt. Im Falle von
+C<< -mode=>'sloppy' >> wird das Argument stillschweigend Ã¼bergangen.
 
 =item -properties => $bool (Default: 0)
 
-Argumentliste aus Schlüssel/Wert-Paaren, bei denen die Schlüssel
+Argumentliste aus SchlÃ¼ssel/Wert-Paaren, bei denen die SchlÃ¼ssel
 nicht mit einem Bindestrich (-) beginnen. Eine Unterscheidung
 zwischen Optionen und Argumenten gibt es nicht.
 
@@ -51,7 +51,7 @@ Extrahiere die Optionen @keyVal aus der Argumentliste @args und
 weise sie im Void-Kontext Variablen zu oder im Skalar-Kontext
 einem Optionsobjekt.
 
-B<Schreibweisen für eine Option>
+B<Schreibweisen fÃ¼r eine Option>
 
 Eine Option kann auf verschiedene Weisen angegeben werden.
 
@@ -72,13 +72,13 @@ getrennt angegeben ist.
 
 Die Schreibweise mit einem Bindestrich wird typischerweise bei
 Methodenaufrufen angegeben. In Perl ist bei einem Bindestrich
-kein Quoting nötig. Die Option besteht aus I<zwei> Argumenten.
+kein Quoting nÃ¶tig. Die Option besteht aus I<zwei> Argumenten.
 
 Beide Schreibweisen sind gleichberechtigt, so dass derselbe Code
 sowohl Programm- als auch Methodenoptionen verarbeiten kann.
 
 Ist C<< -properties=>1 >> gesetzt, ist die Argumentliste eine
-Abfolge Schlüssel/Wert-Paaren ohne Bindestrich als
+Abfolge SchlÃ¼ssel/Wert-Paaren ohne Bindestrich als
 Options-Kennzeichen:
 
   a 1 b 2 c 3
@@ -107,8 +107,8 @@ Instantiierung eines Options-Objekts:
   }
 
 Das gelieferte Options-Objekt $opt ist eine Quiq::Hash-Instanz.
-Die Schlüssel haben keine führenden Bindestriche. Eine Abfrage
-des Optionswerts ist per Methode möglich:
+Die SchlÃ¼ssel haben keine fÃ¼hrenden Bindestriche. Eine Abfrage
+des Optionswerts ist per Methode mÃ¶glich:
 
   $verbose = $opt->verbose;
 
@@ -169,7 +169,7 @@ Abfrage mehrerer Optionen:
 =head4 Description
 
 Extrahiere alle Option/Wert-Paare aus @arr und liefere diese als Liste
-zurück. Im Skalarkontext liefere eine Referenz auf die Liste.
+zurÃ¼ck. Im Skalarkontext liefere eine Referenz auf die Liste.
 
 =head3 extractMulti() - Extrahiere Mehrwert-Optionen
 
@@ -183,22 +183,22 @@ zurück. Im Skalarkontext liefere eine Referenz auf die Liste.
 
 =item -sloppy => $bool (Default: 0)
 
-Übergehe unbekannte Optionen.
+Ãœbergehe unbekannte Optionen.
 
 =back
 
 =head4 Description
 
-Extrahiere aus Array @arr die Werte zu den angegebenen Schlüsseln
+Extrahiere aus Array @arr die Werte zu den angegebenen SchlÃ¼sseln
 $key und weise diese an die Variablen-Referenzen $ref zu.
-Die Methode liefert keinen Wert zurück.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 Eine Referenz kann eine Skalar- oder eine Arrayreferenz sein.
 Im Fall einer Skalarreferenz wird der Wert zugewiesen.
 Im Falle einer Array-Referenz werden mehrere aufeinanderfolgende
 Werte in dem Array gesammelt.
 
-Für das Hinzufügen einer Default-Option, siehe Beispiel.
+FÃ¼r das HinzufÃ¼gen einer Default-Option, siehe Beispiel.
 
 =head4 Example
 

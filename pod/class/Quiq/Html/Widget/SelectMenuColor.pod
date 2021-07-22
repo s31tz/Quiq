@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Html::Widget::SelectMenuColor - Selectmenü mit farbigen Einträgen
+Quiq::Html::Widget::SelectMenuColor - SelectmenÃ¼ mit farbigen EintrÃ¤gen
 
 =head1 BASE CLASS
 
@@ -10,7 +10,7 @@ L<Quiq::Html::Widget::SelectMenu|https://github.com/s31tz/Quiq/tree/master/pod/c
 
 =head1 ATTRIBUTES
 
-Siehe Basisklasse. Zusätzlich:
+Siehe Basisklasse. ZusÃ¤tzlich:
 
 =over 4
 
@@ -21,8 +21,8 @@ auf den Hintergrund an.
 
 =item colors=> \@colors (Default: [])
 
-Liste der Farbwerte für die Elemente der Auswahlliste. Es sind
-alle Farbwerte (außer ($r,$g,$b)) möglich, die der Konstruktor
+Liste der Farbwerte fÃ¼r die Elemente der Auswahlliste. Es sind
+alle Farbwerte (auÃŸer ($r,$g,$b)) mÃ¶glich, die der Konstruktor
 der Klasse Quiq::Color akzeptiert.
 
 =item undefIf => $bool (Default: 0)
@@ -33,7 +33,7 @@ Wenn wahr, liefere C<undef> als Widget-Code.
 
 =head1 EXAMPLES
 
-Erzeuge Auswahlmenü mit farbigen Texten:
+Erzeuge AuswahlmenÃ¼ mit farbigen Texten:
 
   $w = Quiq::Html::Widget::SelectMenuColor->new(
       id => 'smc1',
@@ -45,7 +45,7 @@ Erzeuge Auswahlmenü mit farbigen Texten:
   );
   print $w->html($h);
 
-Erzeuge Auswahlmenü mit farbigen Hintergründen:
+Erzeuge AuswahlmenÃ¼ mit farbigen HintergrÃ¼nden:
 
   $w = Quiq::Html::Widget::SelectMenuColor->new(
       id => 'smc1',

@@ -26,9 +26,9 @@ CASE:
 
 =head1 METHODS
 
-=head2 Ausdrücke
+=head2 AusdrÃ¼cke
 
-=head3 alias() - Ergänze Ausdruck um Alias
+=head3 alias() - ErgÃ¤nze Ausdruck um Alias
 
 =head4 Synopsis
 
@@ -44,7 +44,7 @@ Ausdruck, wie er in einer Select-Liste auftreten kann (expr).
 
 =item $alias
 
-Alias für den Ausdruck.
+Alias fÃ¼r den Ausdruck.
 
 =back
 
@@ -54,8 +54,8 @@ Ausdruck mit Alias (String)
 
 =head4 Description
 
-Ergänze den Ausdruck $expr um den Alias $alias und liefere das
-Resultat zurück.
+ErgÃ¤nze den Ausdruck $expr um den Alias $alias und liefere das
+Resultat zurÃ¼ck.
 
 =head4 Example
 
@@ -105,7 +105,7 @@ CASE-Ausdruck (String)
 
 =head4 Description
 
-Erzeuge einen CASE-Ausdruck und liefere diesen zurück.
+Erzeuge einen CASE-Ausdruck und liefere diesen zurÃ¼ck.
 
 =head4 Examples
 
@@ -113,7 +113,7 @@ Erzeuge einen CASE-Ausdruck und liefere diesen zurück.
 
 =item *
 
-Übersetze Wochentagsnummer in Wochentagskürzel (SQLite)
+Ãœbersetze Wochentagsnummer in WochentagskÃ¼rzel (SQLite)
 
   $sql = $s->case("strftime('%w', datum)",0=>'So',1=>'Mo',2=>'Di',
       3=>'Mi',4=>'Do',5=>'Fr',6=>'Sa');
@@ -130,7 +130,7 @@ Erzeuge einen CASE-Ausdruck und liefere diesen zurück.
 
 =item *
 
-Übersetze 1, 0 in 'Ja', 'Nein', einzeiliger Ausdruck
+Ãœbersetze 1, 0 in 'Ja', 'Nein', einzeiliger Ausdruck
 
   $sql = $s->case('bearbeitet',1=>'Ja','Nein',-fmt=>'i');
   ==>
@@ -146,7 +146,7 @@ Ausdruck statt Sting-Literal (NULL)
 
 =back
 
-=head2 Elementare Ausdrücke
+=head2 Elementare AusdrÃ¼cke
 
 =head3 expr() - Erzeuge Ausdruck
 
@@ -161,7 +161,7 @@ Ausdruck statt Sting-Literal (NULL)
 
 =item $expr
 
-Ausdruck, der unverändert geliefert wird.
+Ausdruck, der unverÃ¤ndert geliefert wird.
 
 =item $val
 
@@ -177,7 +177,7 @@ Ausdruck oder String-Literal (String)
 =head4 Description
 
 Liefere den Ausdruck $expr oder den in den in ein Stringliteral
-gewandelten Wert $val zurück.
+gewandelten Wert $val zurÃ¼ck.
 
 =head3 valExpr() - Erzeuge Wert-Ausdruck
 
@@ -197,7 +197,7 @@ $s->L<stringLiteral|"stringLiteral() - Erzeuge String-Literal">()).
 
 =item $expr
 
-Ausdruck, der unverändert geliefert wird.
+Ausdruck, der unverÃ¤ndert geliefert wird.
 
 =back
 
@@ -208,7 +208,7 @@ Stringliteral oder Ausdruck (String)
 =head4 Description
 
 Liefere den in den in ein Stringliteral gewandelten Wert $val
-oder den Ausdruck $expr zurück.
+oder den Ausdruck $expr zurÃ¼ck.
 
 =head3 stringLiteral() - Erzeuge String-Literal
 
@@ -241,9 +241,9 @@ Stringliteral oder Ausdruck (String)
 =head4 Description
 
 Wandele den Wert $val in ein SQL-Stringliteral und liefere dieses
-zurück. Hierbei werden alle in $str enthaltenen einfachen
-Anführungsstriche verdoppelt und der gesamte String in einfache
-Anführungsstriche eingefasst. Ist der String leer ('' oder undef)
+zurÃ¼ck. Hierbei werden alle in $str enthaltenen einfachen
+AnfÃ¼hrungsstriche verdoppelt und der gesamte String in einfache
+AnfÃ¼hrungsstriche eingefasst. Ist der String leer ('' oder undef)
 liefere einen Leerstring (kein leeres String-Literal!). Ist
 $default angegeben, liefere diesen Wert als Stringliteral.
 
@@ -259,7 +259,7 @@ in postgresql.conf abgeschaltet werden mit der Setzung:
 
 =item *
 
-Eingebettete Anführungsstriche
+Eingebettete AnfÃ¼hrungsstriche
 
   $s->stringLiteral("Sie hat's");
   ==>

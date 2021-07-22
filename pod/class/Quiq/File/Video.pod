@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::File::Video - Informationen über Video-Datei
+Quiq::File::Video - Informationen Ã¼ber Video-Datei
 
 =head1 BASE CLASS
 
@@ -31,7 +31,7 @@ Gib das ffprobe-Kommando auf STDOUT aus.
 =head4 Description
 
 Instantiiere ein Video-Datei-Objekt und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 Eigenschaften
 
@@ -55,7 +55,7 @@ Liefere den Dateinamen (Pfad) der Video-Datei.
 
 Liefere die Breite des Video in Pixeln, z.B. 1920.
 
-=head3 height() - Höhe
+=head3 height() - HÃ¶he
 
 =head4 Synopsis
 
@@ -63,9 +63,9 @@ Liefere die Breite des Video in Pixeln, z.B. 1920.
 
 =head4 Description
 
-Liefere die Höhe des Video in Pixeln, z.B. 1080.
+Liefere die HÃ¶he des Video in Pixeln, z.B. 1080.
 
-=head3 size() - Breite und Höhe
+=head3 size() - Breite und HÃ¶he
 
 =head4 Synopsis
 
@@ -73,9 +73,9 @@ Liefere die Höhe des Video in Pixeln, z.B. 1080.
 
 =head4 Description
 
-Liefere die Breite und Höhe des Video in Pixeln, z.B. (1920,1080).
+Liefere die Breite und HÃ¶he des Video in Pixeln, z.B. (1920,1080).
 
-=head3 aspectRatio() - Seitenverhältnis
+=head3 aspectRatio() - SeitenverhÃ¤ltnis
 
 =head4 Synopsis
 
@@ -83,7 +83,7 @@ Liefere die Breite und Höhe des Video in Pixeln, z.B. (1920,1080).
 
 =head4 Description
 
-Liefere das Seitenverhältnis des Video, z.B. '16:9'.
+Liefere das SeitenverhÃ¤ltnis des Video, z.B. '16:9'.
 
 =head3 bitrate() - Bitrate
 

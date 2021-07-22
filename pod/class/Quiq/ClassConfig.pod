@@ -22,7 +22,7 @@ Information definieren (Anwendungsbeispiel):
               domain => 'Integer',
               primaryKey => 1,
               notNull => 1,
-              description => 'Primärschlüssel',
+              description => 'PrimÃ¤rschlÃ¼ssel',
           },
           ...
       ],
@@ -43,10 +43,10 @@ Information suchen:
 
 =head1 DESCRIPTION
 
-Die Klasse ermöglicht, Information in Klassen zu hinterlegen und
-abzufragen. Anstatt hierfür Klassenvariablen mit C<our> zu
-definieren, verwaltet die Klasse sämliche Information in einem
-einzigen Hash (je Klasse natürlich) mit dem Namen
+Die Klasse ermÃ¶glicht, Information in Klassen zu hinterlegen und
+abzufragen. Anstatt hierfÃ¼r Klassenvariablen mit C<our> zu
+definieren, verwaltet die Klasse sÃ¤mliche Information in einem
+einzigen Hash (je Klasse natÃ¼rlich) mit dem Namen
 C<%ClassConfig>. Die Methoden der Klasse verwalten (erzeugen,
 setzen, lesen) diesen Hash.
 
@@ -66,7 +66,7 @@ setzen, lesen) diesen Hash.
 
 =item @keyVal
 
-Liste der Schlüssel/Wert-Paare
+Liste der SchlÃ¼ssel/Wert-Paare
 
 =back
 
@@ -77,7 +77,7 @@ Referenz auf den Hash
 =head4 Description
 
 Erzeuge einen globalen Hash in Klasse $class und weise diesem die
-Schlüssel/Wert-Paare @keyVal zu. Existiert der Hash bereits,
+SchlÃ¼ssel/Wert-Paare @keyVal zu. Existiert der Hash bereits,
 wird er nicht neu erzeugt.
 
 =head2 Information abfragen
@@ -95,7 +95,7 @@ wird er nicht neu erzeugt.
 
 =item $key bzw. @keys
 
-Schlüssel bzw. Liste von Schlüsseln.
+SchlÃ¼ssel bzw. Liste von SchlÃ¼sseln.
 
 =back
 
@@ -111,8 +111,8 @@ Wert bzw. Liste von Werten.
 
 =head4 Description
 
-Liefere die Werte zu den Schlüsseln @keys. Im Skalarkontext
-liefere den Wert des ersten Schlüssels.
+Liefere die Werte zu den SchlÃ¼sseln @keys. Im Skalarkontext
+liefere den Wert des ersten SchlÃ¼ssels.
 
 =head3 defMemoize() - Berechne und chache Klassen-Information
 
@@ -126,7 +126,7 @@ liefere den Wert des ersten Schlüssels.
 
 =item $key
 
-Schlüssel
+SchlÃ¼ssel
 
 =item $sub
 
@@ -153,7 +153,7 @@ Berechneter bzw. gecachter Wert
 =head4 Description
 
 Berechne den Wert per Subroutine $sub, speichere ihn unter dem
-Schlüssel $key und liefere ihn schließlich zurück. Der Wert wird
+SchlÃ¼ssel $key und liefere ihn schlieÃŸlich zurÃ¼ck. Der Wert wird
 nur beim ersten Aufruf berechnet, danach wird der gespeicherte
 Wert unmittelbar geliefert.
 
@@ -171,7 +171,7 @@ Wert unmittelbar geliefert.
 
 =item $key
 
-Schlüssel der Information.
+SchlÃ¼ssel der Information.
 
 =back
 
@@ -198,7 +198,7 @@ nicht, wird C<undef> geliefert.
 
 =item $key
 
-Schlüssel der Information.
+SchlÃ¼ssel der Information.
 
 =back
 
@@ -210,11 +210,11 @@ Liste der Werte. Im Skalarkontext eine Referenz auf die Liste.
 
 Durchlaufe die Klassenhierarchie I<von oben nach unten> und sammele
 alle Werte des Attributs $key ein und liefere die Liste der
-Werte zurück.
+Werte zurÃ¼ck.
 
-Diese Methode ist nützlich, wenn z.B. Attributnamen entlang
-einer Vererbungshierarchie definiert werden (je höher die Klasse
-desto allgemeiner das Attribut) und für eine gegebene Klasse
+Diese Methode ist nÃ¼tzlich, wenn z.B. Attributnamen entlang
+einer Vererbungshierarchie definiert werden (je hÃ¶her die Klasse
+desto allgemeiner das Attribut) und fÃ¼r eine gegebene Klasse
 die Liste der Attributnamen bestimmt werden soll.
 
 =head4 Example

@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::ContentProcessor::BaseType - Gemeinsame Funktionalit‰t aller Entit‰ten (abstrakte Basisklasse)
+Quiq::ContentProcessor::BaseType - Gemeinsame Funktionalit√§t aller Entit√§ten (abstrakte Basisklasse)
 
 =head1 BASE CLASSES
 
@@ -20,14 +20,14 @@ L<Quiq::ClassConfig|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Cla
 
 =head1 DESCRIPTION
 
-Diese abstrakte Basisklasse enth‰lt die gemeinsame Funktionalit‰t
+Diese abstrakte Basisklasse enth√§lt die gemeinsame Funktionalit√§t
 ihrer Subklassen.
 
 =head1 METHODS
 
 =head2 Eigenschaften
 
-=head3 attributes() - Liste der zul‰ssigen Abschnitts-Attribute
+=head3 attributes() - Liste der zul√§ssigen Abschnitts-Attribute
 
 =head4 Synopsis
 
@@ -40,8 +40,8 @@ eine Referenz auf die Liste geliefert.
 
 =head4 Description
 
-Ermittele die Liste der Namen der zul‰ssigen Abschnitts-Attribute
-entlang der Klassenhierarchie und liefere diese zur¸ck. Die
+Ermittele die Liste der Namen der zul√§ssigen Abschnitts-Attribute
+entlang der Klassenhierarchie und liefere diese zur√ºck. Die
 Liste ist alphabetisch sortiert.
 
 =head3 contentAllowed() - Inhalt im Abschnitt erlaubt?
@@ -56,7 +56,7 @@ Boolscher Wert
 
 =head4 Description
 
-Ermittele, ob Abschnitte des Entit‰tstyps einen Inhalt haben d¸rfen.
+Ermittele, ob Abschnitte des Entit√§tstyps einen Inhalt haben d√ºrfen.
 Wenn ja, liefert die Methode 1, andernfalls 0.
 
 =head1 VERSION

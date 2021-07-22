@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::TeX::Code - Generator für TeX Code
+Quiq::TeX::Code - Generator fÃ¼r TeX Code
 
 =head1 BASE CLASS
 
@@ -10,7 +10,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen TeX Code-Generator. Mit
+Ein Objekt der Klasse reprÃ¤sentiert einen TeX Code-Generator. Mit
 den Methoden der Klasse kann aus einem Perl-Programm heraus
 TeX-Code erzeugt werden.
 
@@ -27,7 +27,7 @@ TeX-Code erzeugt werden.
 =head4 Description
 
 Instantiiere einen TeX Code-Generator und liefere eine Referenz
-auf dieses Objekt zurück.
+auf dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -47,7 +47,7 @@ Codezeile mit sprintf Formatelementen.
 
 =item @args
 
-Argumente, die für die Formatelemente in $fmt eingesetzt
+Argumente, die fÃ¼r die Formatelemente in $fmt eingesetzt
 werden. Kommt eine Arrayreferenz vor, wird diese zu einem
 kommaseparierten String expandiert.
 
@@ -59,11 +59,11 @@ kommaseparierten String expandiert.
 
 =item -nl => $n (Default: 1)
 
-Beende den Code mit $n Zeilenumbrüchen.
+Beende den Code mit $n ZeilenumbrÃ¼chen.
 
 =item -pnl => $n (Default: 0)
 
-Beginne den Code mit $n Zeilenumbrüchen.
+Beginne den Code mit $n ZeilenumbrÃ¼chen.
 
 =back
 
@@ -73,7 +73,7 @@ TeX Code (String)
 
 =head4 Description
 
-Erzeuge eine TeX Codezeile und liefere das Resultat zurück.
+Erzeuge eine TeX Codezeile und liefere das Resultat zurÃ¼ck.
 
 =head4 Example
 
@@ -128,7 +128,7 @@ kommaseparierten String expandiert.
 
 =item -nl => $n (Default: 0)
 
-Beende den Code mit $n Zeilenumbrüchen.
+Beende den Code mit $n ZeilenumbrÃ¼chen.
 
 =back
 
@@ -138,10 +138,10 @@ TeX Code (String)
 
 =head4 Description
 
-Erzeuge TeX Code und liefere das Resultat zurück. Die Methode
+Erzeuge TeX Code und liefere das Resultat zurÃ¼ck. Die Methode
 ist identisch zu Methode $t->c(), nur dass per Default kein
-Newline am Ende des Code hinzugefügt wird. Das C<i> im
-Methodennamen steht für "inline".
+Newline am Ende des Code hinzugefÃ¼gt wird. Das C<i> im
+Methodennamen steht fÃ¼r "inline".
 
 =head4 Example
 
@@ -173,34 +173,34 @@ und produziert
 
 =item -nl => $n (Default: 1)
 
-I<Newline>, füge $n Zeilenumbrüche am Ende hinzu.
+I<Newline>, fÃ¼ge $n ZeilenumbrÃ¼che am Ende hinzu.
 
 =item -o => $options
 
 =item -o => \@options
 
-Füge eine Option/Optionsliste [...] hinzu. Ein Array wird in eine
-kommaseparierte Liste von Werten übersetzt.
+FÃ¼ge eine Option/Optionsliste [...] hinzu. Ein Array wird in eine
+kommaseparierte Liste von Werten Ã¼bersetzt.
 
 =item -p => $parameters
 
 =item -p => \@parameters
 
-Füge einen Parameter/eine Parameterliste {...} hinzu. Ein Array
-wird in eine kommaseparierte Liste von Werten übersetzt.
+FÃ¼ge einen Parameter/eine Parameterliste {...} hinzu. Ein Array
+wird in eine kommaseparierte Liste von Werten Ã¼bersetzt.
 
 =item -pnl => $n (Default: 0)
 
-I<Preceeding newline>, setze $n Zeilenumbrüche an den Anfang.
+I<Preceeding newline>, setze $n ZeilenumbrÃ¼che an den Anfang.
 
 =back
 
 =head4 Description
 
 Erzeuge ein TeX Macro und liefere den resultierenden Code
-zurück. Diese Methode zeichnet sich gegenüber den Methoden $t->c()
+zurÃ¼ck. Diese Methode zeichnet sich gegenÃ¼ber den Methoden $t->c()
 und $t->ci() dadurch aus, dass undefinierte/leere Optionen und
-Parameter vollständig weggelassen werden.
+Parameter vollstÃ¤ndig weggelassen werden.
 
 =head4 Examples
 
@@ -283,18 +283,18 @@ produziert
 
 =item -nl => $n (Default: 1)
 
-Füge $n Zeilenumbrüche am Ende hinzu.
+FÃ¼ge $n ZeilenumbrÃ¼che am Ende hinzu.
 
 =item -pnl => $n (Default: 0)
 
-Setze $n Zeilenumbrüche an den Anfang.
+Setze $n ZeilenumbrÃ¼che an den Anfang.
 
 =back
 
 =head4 Description
 
 Erzeuge einen TeX-Kommentar und liefere den resultierenden Code
-zurück.
+zurÃ¼ck.
 
 =head4 Examples
 
@@ -307,7 +307,7 @@ produziert
   % Dies ist
   % ein Kommentar
 
-=head3 modifyLength() - Wende Berechnung auf Länge an
+=head3 modifyLength() - Wende Berechnung auf LÃ¤nge an
 
 =head4 Synopsis
 
@@ -319,31 +319,31 @@ produziert
 
 =item $length
 
-Eine einfache TeX-Länge. Beispiel: '1ex'.
+Eine einfache TeX-LÃ¤nge. Beispiel: '1ex'.
 
 =item $expr
 
-Ein arithmetischer Ausdruck, der auf den Zahlenwert der Länge
-angewendet wird. Beispiel: '*2' (multipliziere Länge mit 2).
+Ein arithmetischer Ausdruck, der auf den Zahlenwert der LÃ¤nge
+angewendet wird. Beispiel: '*2' (multipliziere LÃ¤nge mit 2).
 
 =back
 
 =head4 Returns
 
-TeX-Länge (String)
+TeX-LÃ¤nge (String)
 
 =head4 Description
 
-Wende den arithmetischen Ausdruck $expr auf TeX-Länge $length an
-und liefere das Resultat zurück. Leerstring oder C<undef> werden
-unverändert geliefert.
+Wende den arithmetischen Ausdruck $expr auf TeX-LÃ¤nge $length an
+und liefere das Resultat zurÃ¼ck. Leerstring oder C<undef> werden
+unverÃ¤ndert geliefert.
 
 =head4 Example
 
   $l->modifyLength('1.5ex','*1.5');
   # 2.25ex
 
-=head3 toLength() - Wandele Länge in TeX-Länge
+=head3 toLength() - Wandele LÃ¤nge in TeX-LÃ¤nge
 
 =head4 Synopsis
 
@@ -355,13 +355,13 @@ unverändert geliefert.
 
 =item $val
 
-Länge, die in die TeX-Länge umgerechnet wird.
+LÃ¤nge, die in die TeX-LÃ¤nge umgerechnet wird.
 
 =back
 
 =head4 Returns
 
-TeX-Länge (String)
+TeX-LÃ¤nge (String)
 
 =head4 Examples
 
@@ -380,7 +380,7 @@ Angabe in Pixeln mit Einheit:
   $class->toLength('100px');
   # '75pt'
 
-Alle anderen Werte bleiben unverändert:
+Alle anderen Werte bleiben unverÃ¤ndert:
 
   $class->toLength($val);
   # $val

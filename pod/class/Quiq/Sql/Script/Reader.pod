@@ -23,13 +23,13 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 Die Klasse implementiert einen Leser von SQL-Skripten. Ein SQL-Skript
 ist eine Folge von SQL-Statements, die mit Semikolon I<am Ende einer
 Zeile> (also vor einem Newline) voneinander getrennt sind. Eine Instanz
-der Klasse liefert nacheinander die einzelnen Statements, die ausgeführt
-oder anderweitig verarbeitet werden können. Da das Skript sukzessive
-gelesen wird, können auch sehr große SQL-Skripte, z.B. von
+der Klasse liefert nacheinander die einzelnen Statements, die ausgefÃ¼hrt
+oder anderweitig verarbeitet werden kÃ¶nnen. Da das Skript sukzessive
+gelesen wird, kÃ¶nnen auch sehr groÃŸe SQL-Skripte, z.B. von
 Datenbank-Dumps, durch die Klasse verarbeitet werden.
 
-Leerzeilen am Anfang eines Statements werden entfernt, außerdem
-das abschließende Semikolon und darauffolgender Whitespace bis
+Leerzeilen am Anfang eines Statements werden entfernt, auÃŸerdem
+das abschlieÃŸende Semikolon und darauffolgender Whitespace bis
 zum Zeilenende.
 
 =head1 CAVEATS
@@ -53,7 +53,7 @@ Mehrere SQL-Statements I<auf einer Zeile> beherrscht die Klasse nicht.
 
 =item $dbms
 
-Name des DBMS, das die SQL-Statements des Skripts ausführen kann.
+Name des DBMS, das die SQL-Statements des Skripts ausfÃ¼hren kann.
 
 =item $file
 
@@ -72,7 +72,7 @@ Das SQL-Skript als Zeichenkette.
 =item -separator => $regex (Default: qr/;\s*$/)
 
 Statement-Separator. Per Default ein Semikolon (;) am Zeilenende.
-Andere Variante (geeigneter, wenn Prozeduren vorkommen können),
+Andere Variante (geeigneter, wenn Prozeduren vorkommen kÃ¶nnen),
 Semikolon allein auf Zeile: qr/^;\s*$/.
 
 =back
@@ -83,8 +83,8 @@ Reader-Objekt
 
 =head4 Description
 
-Instantiiere ein Reader-Objekt für DBMS $dbms und Datei $file bzw.
-Zeichenkette $str und liefere eine Referenz auf dieses Objekt zurück.
+Instantiiere ein Reader-Objekt fÃ¼r DBMS $dbms und Datei $file bzw.
+Zeichenkette $str und liefere eine Referenz auf dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -99,7 +99,7 @@ Zeichenkette $str und liefere eine Referenz auf dieses Objekt zurück.
 Beende die die Nutzung des Reader-Objekts. Nach Aufruf der Methode
 kann der Reader nicht mehr genutzt werden.
 
-=head3 nextStmt() - Nächstes Statement
+=head3 nextStmt() - NÃ¤chstes Statement
 
 =head4 Synopsis
 
@@ -111,8 +111,8 @@ SQL-Statemt (String)
 
 =head4 Description
 
-Liefere das nächste SQL-Statement des Skripts. Leere Statements werden
-übergangen. Ist das Ende erreicht, liefere C<undef>.
+Liefere das nÃ¤chste SQL-Statement des Skripts. Leere Statements werden
+Ã¼bergangen. Ist das Ende erreicht, liefere C<undef>.
 
 =head1 VERSION
 

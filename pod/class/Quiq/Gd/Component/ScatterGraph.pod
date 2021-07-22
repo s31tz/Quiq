@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Gd::Component::ScatterGraph - Farbpunkte in einer Fläche
+Quiq::Gd::Component::ScatterGraph - Farbpunkte in einer FlÃ¤che
 
 =head1 BASE CLASS
 
@@ -12,7 +12,7 @@ L<Quiq::Gd::Component::Graph|https://github.com/s31tz/Quiq/tree/master/pod/class
 
 Die Klasse erweitert die Basisklasse Quiq::Gd::Component::Graph um
 eine Z-Komponente. Die Werte dieser Komponente werden in Farbwerte
-übersetzt und in den Positionen der X,Y-Komponenten abgetragen.
+Ã¼bersetzt und in den Positionen der X,Y-Komponenten abgetragen.
 
 =head1 ATTRIBUTES
 
@@ -38,11 +38,11 @@ Bilde den Z-Wertebereich logarithmisch auf die Farbwerte ab.
 
 =item lowColor => $color (Default: undef)
 
-Farbe für Z-Werte, die zMin unterschreiten.
+Farbe fÃ¼r Z-Werte, die zMin unterschreiten.
 
 =item highColor => $color (Default: undef)
 
-Farbe für Z-Werte, die zMax überschreiten.
+Farbe fÃ¼r Z-Werte, die zMax Ã¼berschreiten.
 
 =back
 
@@ -115,7 +115,7 @@ Grafik:
 
 Instantiiere ein Grafik-Objekt mit den Eigenschaften @keyVal
 (s. Abschnitt L<ATTRIBUTES|"ATTRIBUTES">) und liefere eine Referenz auf das Objekt
-zurück.
+zurÃ¼ck.
 
 =head2 Zeichnen
 
@@ -130,7 +130,7 @@ zurück.
 =head4 Description
 
 Zeichne die Grafik in Bild $img an Position ($x,$y).
-Die Methode liefert keinen Wert zurück.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head2 Objektmethoden
 

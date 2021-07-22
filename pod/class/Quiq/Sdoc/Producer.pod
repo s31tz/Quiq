@@ -10,7 +10,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen Sdoc-Generator. Die
+Ein Objekt der Klasse reprÃ¤sentiert einen Sdoc-Generator. Die
 Methoden der Klasse erzeugen die Konstrukte, aus denen ein
 Sdoc-Dokument aufgebaut ist.
 
@@ -20,7 +20,7 @@ Sdoc-Dokument aufgebaut ist.
 
 =item indentation => $n (Default: 4)
 
-Einrücktiefe bei der Codegenerierung
+EinrÃ¼cktiefe bei der Codegenerierung
 
 =back
 
@@ -38,11 +38,11 @@ Einrücktiefe bei der Codegenerierung
 
 Instantiiere einen Sdoc-Generator mit den Eigenschaften @keyVal
 (s. Abschnitt L<Attributes|"ATTRIBUTES">) und liefere eine Referenz auf dieses
-Objekt zurück.
+Objekt zurÃ¼ck.
 
 =head4 Example
 
-Generiere Sdoc mit Einrückung 2:
+Generiere Sdoc mit EinrÃ¼ckung 2:
 
   $gen = Quiq::Sdoc::Producer->new(
       indentation => 2,
@@ -59,7 +59,7 @@ Generiere Sdoc mit Einrückung 2:
 =head4 Description
 
 Erzeuge einen Code-Abschnitt mit Text $text und liefere den
-resultierenden Sdoc-Code zurück.
+resultierenden Sdoc-Code zurÃ¼ck.
 
 =head4 Example
 
@@ -80,7 +80,7 @@ erzeugt
 =head4 Description
 
 Erzeuge einen Kommentar mit dem Text $text und liefere den
-resultierenden Sdoc-Code zurück.
+resultierenden Sdoc-Code zurÃ¼ck.
 
 =head4 Example
 
@@ -101,7 +101,7 @@ erzeugt
 =head4 Description
 
 Erzeuge eine Dokument-Definition mit den Eigenschaften @keyVal und
-liefere den resultierenden Sdoc-Code zurück.
+liefere den resultierenden Sdoc-Code zurÃ¼ck.
 
 =head3 format() - Format-Abschnitt
 
@@ -114,8 +114,8 @@ liefere den resultierenden Sdoc-Code zurück.
 
 =head4 Description
 
-Erzeuge einen Format-Abschnitt für die angegebenen Format/Code-Paare und
-liefere den resultierenden Sdoc-Code zurück.
+Erzeuge einen Format-Abschnitt fÃ¼r die angegebenen Format/Code-Paare und
+liefere den resultierenden Sdoc-Code zurÃ¼ck.
 
 =head3 paragraph() - Paragraph
 
@@ -126,7 +126,7 @@ liefere den resultierenden Sdoc-Code zurück.
 =head4 Description
 
 Erzeuge einen Paragraph mit Text $text und liefere den
-resultierenden Sdoc-Code zurück.
+resultierenden Sdoc-Code zurÃ¼ck.
 
 =head4 Example
 
@@ -147,7 +147,7 @@ erzeugt
 =head4 Description
 
 Erzeuge eine Tabelle mit der ASCII-Darstellung $text mit den Eigenschaften
-@keyVal und liefere den resultierenden Sdoc-Code zurück.
+@keyVal und liefere den resultierenden Sdoc-Code zurÃ¼ck.
 
 =head3 tableOfContents() - Inhaltsverzeichnis-Definition
 
@@ -158,7 +158,7 @@ Erzeuge eine Tabelle mit der ASCII-Darstellung $text mit den Eigenschaften
 =head4 Description
 
 Erzeuge eine Inhaltsverzeichnis-Definition mit den Eigenschaften
-@keyVal und liefere den resultierenden Sdoc-Code zurück.
+@keyVal und liefere den resultierenden Sdoc-Code zurÃ¼ck.
 
 =head3 section() - Abschnitt
 
@@ -170,8 +170,8 @@ Erzeuge eine Inhaltsverzeichnis-Definition mit den Eigenschaften
 =head4 Description
 
 Erzeuge einen Abschnitt der Tiefe $level mit dem Titel $title und
-dem Abschnitts-Körper $body und liefere den resultierenden
-Sdoc-Code zurück.
+dem Abschnitts-KÃ¶rper $body und liefere den resultierenden
+Sdoc-Code zurÃ¼ck.
 
 =head4 Example
 
@@ -194,8 +194,8 @@ erzeugt
 =head4 Description
 
 Erzeuge eine Definitions-Liste mit den Elementen @items (Array von
-Schlüssel/Wert-Paaren oder von zweielementigen Sub-Arrays) und
-liefere den resultierenden Sdoc-Code zurück.
+SchlÃ¼ssel/Wert-Paaren oder von zweielementigen Sub-Arrays) und
+liefere den resultierenden Sdoc-Code zurÃ¼ck.
 
 =head4 Examples
 
@@ -216,7 +216,7 @@ erzeugen
       Zwei\n
   \n
 
-Endet der Schlüssel mit einem Doppelpunkt, wie bei den Aufrufen
+Endet der SchlÃ¼ssel mit einem Doppelpunkt, wie bei den Aufrufen
 
   $gen->definitionList(['A:'=>'Eins','B:'=>'Zwei']);
 
@@ -244,7 +244,7 @@ was bedeutet, dass dieser mit gesetzt wird.
 =head4 Description
 
 Erzeuge einen EOF-Kommentar und liefere den resultierenden
-Sdoc-Code zurück.
+Sdoc-Code zurÃ¼ck.
 
 =head4 Example
 

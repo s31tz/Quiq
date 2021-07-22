@@ -15,18 +15,18 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
   # Instantiierung
   my $rng = Quiq::Range->new($spec);
   
-  # Übersetzung in ein Array von Integern
+  # Ãœbersetzung in ein Array von Integern
   my @arr = Quiq::Range->numbers;
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine Liste von Integern. Diese wird
-vom Nutzer spezifiziert als eine Aufzählung von Angaben der Art
+Ein Objekt der Klasse reprÃ¤sentiert eine Liste von Integern. Diese wird
+vom Nutzer spezifiziert als eine AufzÃ¤hlung von Angaben der Art
 
   N     einzelner Integer
   N-M   Bereich von Integern
 
-die durch Komma getrennt aufgezählt werden können. Beispiele:
+die durch Komma getrennt aufgezÃ¤hlt werden kÃ¶nnen. Beispiele:
 
   Spezfikation          Array von Integern
   --------------------- ----------------------------------
@@ -41,11 +41,11 @@ die durch Komma getrennt aufgezählt werden können. Beispiele:
 
 =item spec => $spec
 
-Die Spezifikation, die dem Konstruktur übergeben wurde.
+Die Spezifikation, die dem Konstruktur Ã¼bergeben wurde.
 
 =item numberA => \@numbers
 
-Die Übersetzung der Spezifikation in ein Array von Integern.
+Die Ãœbersetzung der Spezifikation in ein Array von Integern.
 
 =back
 
@@ -75,8 +75,8 @@ Objekt
 
 =head4 Description
 
-Instantiiere ein Objekt gemäß Spezifikation $spec und liefere eine
-Referenz auf dieses Objekt zurück.
+Instantiiere ein Objekt gemÃ¤ÃŸ Spezifikation $spec und liefere eine
+Referenz auf dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 

@@ -10,7 +10,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Diese Klasse ist ein Perl-Wrapper für die Erzeugung für
+Diese Klasse ist ein Perl-Wrapper fÃ¼r die Erzeugung fÃ¼r
 Zeitreihen-Plots auf Basis von Plotly.js.
 
 Dokumentation und Beispiele: L<https://plotly.com/javascript/>
@@ -20,39 +20,39 @@ Zeitformate: L<https://github.com/d3/d3/blob/master/API.md#time-formats-d3-time-
 =head2 Leeres Diagramm
 
 Ein Konstuktoraufruf ohne jegliche Angaben, also auch ohne Daten,
-ergibt ein leeres Diagramm. Die X-Achse umfasst den (willkürlich
-gewählten) Zeitbereich von C<2000-01-01 00:00:00> bis C<2001-01-01
-00:00:00>. Die Y-Achse umfasst den (willkürlich gewählten)
+ergibt ein leeres Diagramm. Die X-Achse umfasst den (willkÃ¼rlich
+gewÃ¤hlten) Zeitbereich von C<2000-01-01 00:00:00> bis C<2001-01-01
+00:00:00>. Die Y-Achse umfasst den (willkÃ¼rlich gewÃ¤hlten)
 Wertebereich C<-1> bis C<4>.
 
-=head2 Diagramm-Höhe
+=head2 Diagramm-HÃ¶he
 
-Die Diagramm-Höhe kann im div-Container, in der Layout-Konfiguration
+Die Diagramm-HÃ¶he kann im div-Container, in der Layout-Konfiguration
 oder in beiden gesetzt werden. Die Auswirkungen:
 
 =over 2
 
 =item *
 
-Wird die Höhe nur beim div-Container gesetzt, füllt Plotly
-die Höhe immer ganz aus. Wird z.B. der Rangeslider entfernt, rendert
-Plotly das Diagramm neu, so dass es wieder die gesamte Höhe ausfüllt.
-D.h. der Plotbereich wird höher. Der Inhalt des Diagramms ist
+Wird die HÃ¶he nur beim div-Container gesetzt, fÃ¼llt Plotly
+die HÃ¶he immer ganz aus. Wird z.B. der Rangeslider entfernt, rendert
+Plotly das Diagramm neu, so dass es wieder die gesamte HÃ¶he ausfÃ¼llt.
+D.h. der Plotbereich wird hÃ¶her. Der Inhalt des Diagramms ist
 nicht statisch. Das wollen wir nicht.
 
 =item *
 
-Wird die Höhe nur in der Layout-Konfiguration gesetzt, hat der
-div-Container zunächst die Höhe 0, bis das Diagramm
+Wird die HÃ¶he nur in der Layout-Konfiguration gesetzt, hat der
+div-Container zunÃ¤chst die HÃ¶he 0, bis das Diagramm
 (typischerweise im ready-Handler) aufgebaut wird. Das wollen wir
 auch nicht.
 
 =item *
 
-Wird die Höhe im div-Container I<und> in der Layout-Konfiguration
+Wird die HÃ¶he im div-Container I<und> in der Layout-Konfiguration
 gesetzt, ist der Bereich des Diagramms auf der Seite sofort
 sichtbar, der Inhalt kann aber aber statisch gehalten werden,
-indem beide Angaben gemeinsam geändert werden.
+indem beide Angaben gemeinsam geÃ¤ndert werden.
 
 =back
 
@@ -60,9 +60,9 @@ indem beide Angaben gemeinsam geändert werden.
 
 Im unteren Rand ist die Beschriftung der X-Achse und der
 Rangeslider angesiedelt. Die Beschriftung hat einen Platzbedarf von
-55 Pixeln, die Dicke des Rangesliders ist auf 20% der Plothöhe
-eingestellt. Wir nutzen folgende Formel, um aus der Höhe des
-Diagramms die Höhe des unteren Rands zu berechnen:
+55 Pixeln, die Dicke des Rangesliders ist auf 20% der PlothÃ¶he
+eingestellt. Wir nutzen folgende Formel, um aus der HÃ¶he des
+Diagramms die HÃ¶he des unteren Rands zu berechnen:
 
   bottomMargin = (height - 300) / 50 * 10 + 110;
 
@@ -70,14 +70,14 @@ Das ergibt folgende Werte (height->marginBottom):
 
   250->100, 300->110, 350->120, 400->130, 450->140,...
 
-Wenn wir den Rangeslider entfernen, reduzieren wir die Höhe des
+Wenn wir den Rangeslider entfernen, reduzieren wir die HÃ¶he des
 Diagramms und den unteren Rand um
 
   marginBottom - 55
 
 =head2 Titel-Positionierung
 
-Der Diagramm-Titel wird per Default leider ungünstig positioniert,
+Der Diagramm-Titel wird per Default leider ungÃ¼nstig positioniert,
 daher positionieren wir ihn selbst. Damit der Titel
 oberhalb des Plot-Bereichs positioniert werden kann, muss
 im Layout C<container> als Bezugsbereich vereinbart werden:
@@ -92,30 +92,30 @@ Hierbei ist $y0 ein Wert zwischen 0 und 1, der die vertikale
 Position innerhalb des Diagramms festlegt. 1 -> ganz oben unter dem
 Rand, 0 -> ganz unten unter (!) dem Rand.
 
-Ändert sich die Höhe des Diagramms, muss der Wert y auf
-die neue Höhe y1 umgerechnet werden:
+Ã„ndert sich die HÃ¶he des Diagramms, muss der Wert y auf
+die neue HÃ¶he y1 umgerechnet werden:
 
   y1 = 1 - (height0 * (1 - y0) / height1);
 
-=head2 Raum unter der Achse einfärben
+=head2 Raum unter der Achse einfÃ¤rben
 
-Ist beim Trace-Layout das Füllen unter der Achse angegeben mit
+Ist beim Trace-Layout das FÃ¼llen unter der Achse angegeben mit
 
   fill: 'tozeroy',
   fillcolor: '#e0e0e0',
 
 wird der Y-Wertebereich nach unten bis 0 ausgedehnt, wenn kein
-Y-Wertebereich explizit vorgegeben ist. Ist für die Y-Achse
+Y-Wertebereich explizit vorgegeben ist. Ist fÃ¼r die Y-Achse
 (Diagramm-Layout!) explizit ein Wertebereich vorgegeben
 
   range => [900,1000],
 
 findet die Ausdehnung bis 0 nicht statt, der Raum unter der
-Kurve wird dennoch wie gewünscht gefüllt.
+Kurve wird dennoch wie gewÃ¼nscht gefÃ¼llt.
 
 =head1 EXAMPLE
 
-(Folgendes Diagramm erscheint in HTML - außer auf meta::cpan, da der
+(Folgendes Diagramm erscheint in HTML - auÃŸer auf meta::cpan, da der
 HTML-Code dort gestrippt wird - es zeigt 720 Messwerte einer
 Windgeschwindigkeits-Messung)
 
@@ -240,26 +240,26 @@ Windgeschwindigkeits-Messung)
 =item class => $class (Default: 'plotly-timeseries')
 
 CSS-Klasse des div-Containers. Kann zur Definition eines Rahmens,
-von Außenabständen usw. genutzt werden.
+von AuÃŸenabstÃ¤nden usw. genutzt werden.
 
 =item color => $color (Default: '#ff0000')
 
 Farbe der Kurve und Titel (Haupttitel, Titel Y-Achse). Alle
-Schreibweisen, die in CSS erlaubt sind, sind zulässig,
-also NAME, #XXXXXX oder rgb(NNN,NNN,NNN). Dies gilt für alle Farben.
+Schreibweisen, die in CSS erlaubt sind, sind zulÃ¤ssig,
+also NAME, #XXXXXX oder rgb(NNN,NNN,NNN). Dies gilt fÃ¼r alle Farben.
 
 =item height => $n (Default: 400)
 
-Höhe des (gesamten) Diagramms in Pixeln.
+HÃ¶he des (gesamten) Diagramms in Pixeln.
 
 =item name => $name (Default: 'plot')
 
-Name des Plot. Der Name wird als CSS-Id für den Div-Container
-und als Variablenname für die JavaScript-Instanz verwendet.
+Name des Plot. Der Name wird als CSS-Id fÃ¼r den Div-Container
+und als Variablenname fÃ¼r die JavaScript-Instanz verwendet.
 
 =item title => $str
 
-Titel des Plot. Wird über das Diagramm gesetzt. Typischerweise
+Titel des Plot. Wird Ã¼ber das Diagramm gesetzt. Typischerweise
 der Name des gemessenen Parameters.
 
 =item x => \@x (Default: [])
@@ -284,7 +284,7 @@ Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 Klassenmethoden
 
@@ -336,7 +336,7 @@ JavaScript-Code (String)
 
 =head4 Description
 
-Liefere den JavaScript-Code für die Erzeugung Plot-Instanz.
+Liefere den JavaScript-Code fÃ¼r die Erzeugung Plot-Instanz.
 
 =head1 VERSION
 

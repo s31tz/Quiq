@@ -20,14 +20,14 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
   # /src/dir1 => /dest/dir2 (unterschiedlicher Verzeichnisname)
   Quiq::Rsync->exec('/src/dir1/','/dest/dir2');
   
-  # Änderungen anzeigen, aber nicht durchführen
+  # Ã„nderungen anzeigen, aber nicht durchfÃ¼hren
   Quiq::Rsync->exec($src,$dest,-dryRun=>1);
 
 =head1 DESCRIPTION
 
-Führe rsync(1) unter Kontrolle von Perl aus. Die Klasse stützt sich
-auf die Klasse File::Rsync ab und stellt gegenüber dieser eine
-spezialisierte, einfachere Schnittstelle zur Verfügung.
+FÃ¼hre rsync(1) unter Kontrolle von Perl aus. Die Klasse stÃ¼tzt sich
+auf die Klasse File::Rsync ab und stellt gegenÃ¼ber dieser eine
+spezialisierte, einfachere Schnittstelle zur VerfÃ¼gung.
 Eigenschaften:
 
 =over 2
@@ -43,7 +43,7 @@ im Fehlerfall wird eine Exception geworfen
 
 =item *
 
-eine Ausgabe findet nur im Fehlerfall und bei Änderungen statt,
+eine Ausgabe findet nur im Fehlerfall und bei Ã„nderungen statt,
 die statistische Ausgabe von rsync unterbleibt
 
 =back
@@ -52,7 +52,7 @@ die statistische Ausgabe von rsync unterbleibt
 
 =head2 Klassenmethoden
 
-=head3 exec() - Führe rsync-Kommando aus
+=head3 exec() - FÃ¼hre rsync-Kommando aus
 
 =head4 Synopsis
 
@@ -79,13 +79,13 @@ Ziel-Pfad
 
 =item -dryRun => $bool (Default: 0)
 
-Füge die Option --dry-run zur Kommandozeile hinzu, d.h. das
-rsync-Kommando wird ausgeführt, ohne dass Änderungen vorgenommen
+FÃ¼ge die Option --dry-run zur Kommandozeile hinzu, d.h. das
+rsync-Kommando wird ausgefÃ¼hrt, ohne dass Ã„nderungen vorgenommen
 werden.
 
 =item -print => $bool (Default: 1)
 
-Liefere die Ausgabe des rsync-Kommandos nicht nur zurück, sondern
+Liefere die Ausgabe des rsync-Kommandos nicht nur zurÃ¼ck, sondern
 gib sie auch auf STDOUT aus.
 
 =back
@@ -93,25 +93,25 @@ gib sie auch auf STDOUT aus.
 =head4 Returns
 
 Ausgabe des rsync-Kommandos, Beschreibung siehe oben (String). Im
-List-Kontext liefere zusätzlich das ausgeführte rsync-Kommando
+List-Kontext liefere zusÃ¤tzlich das ausgefÃ¼hrte rsync-Kommando
 (String, String).
 
 =head4 Description
 
-Führe rsync(1) für Quellpfad $src und Zielpfad $dest aus.
-Ohne Angabe von Optionen wird als Kommandozeile ausgeführt:
+FÃ¼hre rsync(1) fÃ¼r Quellpfad $src und Zielpfad $dest aus.
+Ohne Angabe von Optionen wird als Kommandozeile ausgefÃ¼hrt:
 
   rsync --archive --verbose --delete SRC DEST
 
 D.h. $src und $dest werden als Verzeichnisse angesehen, wobei
 Verzeichnis $dest auf exakt den gleichen Stand wie $src gebracht wird.
 
-Schlägt das Kommando fehl, wird eine Exception geworfen.
+SchlÃ¤gt das Kommando fehl, wird eine Exception geworfen.
 
-Die Ausgabe des rsync-Kommandos wird zurück geliefert,
+Die Ausgabe des rsync-Kommandos wird zurÃ¼ck geliefert,
 wobei einige Zeilen entfernt werden, so dass eine Ausgabe nur
-dann erscheint, wenn Änderungen durchgeführt wurden, d.h. die
-Zeilen über und unter PROTOKOLL werden entfernt:
+dann erscheint, wenn Ã„nderungen durchgefÃ¼hrt wurden, d.h. die
+Zeilen Ã¼ber und unter PROTOKOLL werden entfernt:
 
   sending incremental file list
   PROTOKOLL

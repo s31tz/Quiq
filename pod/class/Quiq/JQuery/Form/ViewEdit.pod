@@ -15,13 +15,13 @@ Bearbeiten von Daten, die typischerweise aus einer Datenbank
 stammen.
 
 Das Layout muss die Platzhalter C<__SAVE__>, C<__DELETE__> und
-C<__EDIT__> enthalten. Für diese werden intern drei Widgets
-generiert: für C<__SAVE__> und C<__DELETE__> ein Button zum
-Speichern bzw. Löschen, für C<__EDIT__> eine Checkbox zum
+C<__EDIT__> enthalten. FÃ¼r diese werden intern drei Widgets
+generiert: fÃ¼r C<__SAVE__> und C<__DELETE__> ein Button zum
+Speichern bzw. LÃ¶schen, fÃ¼r C<__EDIT__> eine Checkbox zum
 Umschalten zwischen Ansehen und Bearbeiten.
 
-Bei Betätigung der Button werden die Formulardaten an den
-action-URL gepostet. Im Erfolgsfall wird anschließend die
+Bei BetÃ¤tigung der Button werden die Formulardaten an den
+action-URL gepostet. Im Erfolgsfall wird anschlieÃŸend die
 onSuccess-Methode aufgerufen.
 
 =head2 CSS-Klassen
@@ -60,7 +60,7 @@ Speichern
 
 =item *
 
-Löschen
+LÃ¶schen
 
 =item *
 
@@ -68,8 +68,8 @@ Bearbeiten
 
 =back
 
-Die Beschriftungen (der Buttons) können über das Attribut text
-gendändert werden.
+Die Beschriftungen (der Buttons) kÃ¶nnen Ã¼ber das Attribut text
+gendÃ¤ndert werden.
 
 =head1 ATTRIBUTES
 
@@ -77,12 +77,12 @@ gendändert werden.
 
 =item action => $url (Default: undef)
 
-URL, an den die Daten bei bei Betätigung des Save- oder
+URL, an den die Daten bei bei BetÃ¤tigung des Save- oder
 des Delete-Buttons geschickt werden.
 
 =item hidden => \@keyVal (Default: [])
 
-Schlüssel/Wert-Paare, die als Hidden-Widgets gesetzt werden.
+SchlÃ¼ssel/Wert-Paare, die als Hidden-Widgets gesetzt werden.
 
 =item id (Default: undef)
 
@@ -90,7 +90,7 @@ Die DOM-Id des Formulars.
 
 =item instantiate => $bool (Default: 0)
 
-Füge die Plugin-Instantiierung beim Aufruf von html()
+FÃ¼ge die Plugin-Instantiierung beim Aufruf von html()
 zum HTML-Code hinzu.
 
 =item layout => $html (Default: '')
@@ -101,12 +101,12 @@ Widgets eingesetzt.
 =item onSucces => $javaScript (Default: undef)
 
 JavaScript-Methode, die nach einem erfolgreichen Ajax-Aufruf
-ausgeführt wird. Parameter: onSuccess(data,textStatus,jqXHR,op),
+ausgefÃ¼hrt wird. Parameter: onSuccess(data,textStatus,jqXHR,op),
 wobei op 'save' oder 'delete' ist.
 
 =item state => 'update' | 'insert' (Default: 'update')
 
-Anfänglicher Zusatand des Formulars:
+AnfÃ¤nglicher Zusatand des Formulars:
 
 =over 4
 
@@ -123,7 +123,7 @@ Nur der Save-Button wird im Edit-Modus freigeschaltet.
 =item text => \%keyVal (Default: s. Text)
 
 Die Beschriftungen der intern generierten Widgets alle oder einzeln
-geändert werden:
+geÃ¤ndert werden:
 
 =over 2
 
@@ -133,7 +133,7 @@ saveButton => 'Speichern',
 
 =item *
 
-deleteButton => 'Löschen',
+deleteButton => 'LÃ¶schen',
 
 =item *
 
@@ -163,7 +163,7 @@ Liste der Widgets, die in das Layout eingesetzt werden.
       |,
       text => {
           saveButton => 'Speichern',
-          deleteButton => 'Löschen',
+          deleteButton => 'LÃ¶schen',
           editCheckbox => 'Bearbeiten',
       },
       layout => $h->cat(
@@ -236,7 +236,7 @@ Webserver geliefert werden.
 =head4 Description
 
 Instantiiere ein Formular-Objekt und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 HTML-Generierung
 
@@ -250,7 +250,7 @@ dieses Objekt zurück.
 =head4 Description
 
 Generiere den HTML-Code des Widget-Objekts und liefere diesen
-zurück. Als Klassenmethode gerufen, wird das Objekt intern erzeugt
+zurÃ¼ck. Als Klassenmethode gerufen, wird das Objekt intern erzeugt
 und mit den Attributen @keyVal instantiiert.
 
 =head2 Widget-Instantiierung
@@ -264,7 +264,7 @@ und mit den Attributen @keyVal instantiiert.
 =head4 Description
 
 Liefere den JavaScript-Code, der das Widget instantiiert. Alle Parameter
-werden intern übergeben, dies sind die Attribute:
+werden intern Ã¼bergeben, dies sind die Attribute:
 
 =over 2
 

@@ -10,12 +10,12 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen Verbatim-Block in
+Ein Objekt der Klasse reprÃ¤sentiert einen Verbatim-Block in
 HTML. Ein Verbatim-Block gibt einen Text TEXT in
-Festbreitenschrift mit allen Leerzeichen und Zeilenumbrüchen
+Festbreitenschrift mit allen Leerzeichen und ZeilenumbrÃ¼chen
 identisch wieder. Innerhalb von TEXT ist HTML erlaubt. Der
 Verbatim-Block kann mit Zeilennummern ausgestattet werden.
-In dem Fall wird das HTML-Konstrukt um eine <table> ergänzt
+In dem Fall wird das HTML-Konstrukt um eine <table> ergÃ¤nzt
 und dadurch komplexer.
 
 Aufbau eines Verbatim-Blocks I<ohne> Zeilennummern:
@@ -43,13 +43,13 @@ Aufbau eines Verbatim-Blocks I<mit> Zeilennummern:
 Die in eckige Klammern eingefassten Bestandteile ([...]) sind
 optional.
 
-Das umgebende C<div> klammert das gesamte Konstrukt und ermöglicht
+Das umgebende C<div> klammert das gesamte Konstrukt und ermÃ¶glicht
 auch im Falle von Zeilennummer, dass der Hintergrund des Blocks
-über die gesamte Breite der Seite farbig hinterlegt werden kann.
+Ã¼ber die gesamte Breite der Seite farbig hinterlegt werden kann.
 
 Das Aussehen des Verbatim-Block kann via CSS gestaltet werden.
 Hier die Selektoren, mit denen einzelne Bestandteile des
-Konstrukts in CSS angesprochen werden können:
+Konstrukts in CSS angesprochen werden kÃ¶nnen:
 
 =over 4
 
@@ -79,7 +79,7 @@ Die Text-Spalte.
 
 =back
 
-Hierbei ist CLASS der über das Attribut C<class> änderbare
+Hierbei ist CLASS der Ã¼ber das Attribut C<class> Ã¤nderbare
 CSS-Klassenname. Default-Klassenname ist 'verbatim'.
 
 =head1 ATTRIBUTES
@@ -145,7 +145,7 @@ Verbatim-Abschnitts-Objekt (Referenz)
 =head4 Description
 
 Instantiiere ein Verbatim-Block-Objekt und liefere eine
-Referenz auf dieses Objekt zurück.
+Referenz auf dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -162,7 +162,7 @@ Referenz auf dieses Objekt zurück.
 
 =item $h
 
-Objekt für die HTML-Generierung, d.h. eine Instanz der Klasse
+Objekt fÃ¼r die HTML-Generierung, d.h. eine Instanz der Klasse
 Quiq::Html::Tag.
 
 =item @keyVal
@@ -178,7 +178,7 @@ HTML-Code (String)
 =head4 Description
 
 Generiere den HTML-Code des Verbatim-Blocks und liefere diesen
-zurück. Als Klassenmethode gerufen, wird das Objekt intern
+zurÃ¼ck. Als Klassenmethode gerufen, wird das Objekt intern
 mit den Attributen @keyVal instantiiert.
 
 =head1 VERSION

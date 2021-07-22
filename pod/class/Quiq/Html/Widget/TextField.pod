@@ -34,7 +34,7 @@ Widget ist (aktuell) unsichtbar.
 
 =item maxLength => $n (Default: Wert von "size")
 
-Maximale L‰nge des Eingabewerts in Zeichen. Ein Wert von "0" beutet
+Maximale L√§nge des Eingabewerts in Zeichen. Ein Wert von "0" beutet
 keine Eingabebegrenzung.
 
 =item name => $name (Default: undef)
@@ -47,7 +47,7 @@ JavaScript-Handler.
 
 =item readonly => $bool (Default: 0)
 
-Zeige das Feld und seinen Wert unver‰nderbar an.
+Zeige das Feld und seinen Wert unver√§nderbar an.
 
 =item size => $n (Default: undef)
 
@@ -63,7 +63,7 @@ Wenn wahr, liefere C<undef> als Widget-Code.
 
 =item value => $str (Default: undef)
 
-Anf‰nglicher Wert des Textfelds.
+Anf√§nglicher Wert des Textfelds.
 
 =back
 

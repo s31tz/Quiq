@@ -22,7 +22,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 Die Klasse stellt eine objektorientierte Schnittstelle zu
 Perls Directory Handles her. Mit den Methoden der Klasse kann
-ein Verzeichnis geöffnet und über seine Einträge iteriert werden.
+ein Verzeichnis geÃ¶ffnet und Ã¼ber seine EintrÃ¤ge iteriert werden.
 
 =head1 METHODS
 
@@ -36,10 +36,10 @@ ein Verzeichnis geöffnet und über seine Einträge iteriert werden.
 
 =head4 Description
 
-Instantiiere ein Dirhandle-Objekt für Verzeichnis $dir und liefere
-eine Referenz auf dieses Objekt zurück.
+Instantiiere ein Dirhandle-Objekt fÃ¼r Verzeichnis $dir und liefere
+eine Referenz auf dieses Objekt zurÃ¼ck.
 
-=head3 close() - Schließe Verzeichnis
+=head3 close() - SchlieÃŸe Verzeichnis
 
 =head4 Synopsis
 
@@ -47,11 +47,11 @@ eine Referenz auf dieses Objekt zurück.
 
 =head4 Description
 
-Schließe das Verzeichnis. Die Methode liefert keinen Wert zurück.
+SchlieÃŸe das Verzeichnis. Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head2 Operationen
 
-=head3 next() - Liefere nächsten Verzeichniseintrag
+=head3 next() - Liefere nÃ¤chsten Verzeichniseintrag
 
 =head4 Synopsis
 
@@ -59,7 +59,7 @@ Schließe das Verzeichnis. Die Methode liefert keinen Wert zurück.
 
 =head4 Description
 
-Liefere den nächsten Verzeichniseintrag. Die Einträge werden in
+Liefere den nÃ¤chsten Verzeichniseintrag. Die EintrÃ¤ge werden in
 der Reihenfolge geliefert, wie sie im Verzeichnis stehen, also
 de facto ungeordnet. Ist das Ende erreicht, liefere undef.
 

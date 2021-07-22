@@ -21,13 +21,13 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf dieses
-Objekt zurück. Da die Klasse ausschließlich Klassenmethoden enthält,
-hat das Objekt lediglich die Funktion, eine abkürzende Aufrufschreibweise
-zu ermöglichen.
+Objekt zurÃ¼ck. Da die Klasse ausschlieÃŸlich Klassenmethoden enthÃ¤lt,
+hat das Objekt lediglich die Funktion, eine abkÃ¼rzende Aufrufschreibweise
+zu ermÃ¶glichen.
 
 =head2 Datenbank-Anfragen
 
-=head3 functions() - Selektiere Informationen über Funktionen
+=head3 functions() - Selektiere Informationen Ã¼ber Funktionen
 
 =head4 Synopsis
 
@@ -45,13 +45,13 @@ Klauseln und Optionen. Siehe Quiq::Database::Connection->select().
 
 =head4 Returns
 
-Liste der Funktions-Datensätze. Im Skalarkontext ein ResultSet-Objekt.
+Liste der Funktions-DatensÃ¤tze. Im Skalarkontext ein ResultSet-Objekt.
 
 =head4 Description
 
-Suche Datenbank-Funktionen und liefere die Ergebnismenge zurück.
+Suche Datenbank-Funktionen und liefere die Ergebnismenge zurÃ¼ck.
 
-=head3 objects() - Selektiere Informationen über Objekte
+=head3 objects() - Selektiere Informationen Ã¼ber Objekte
 
 =head4 Synopsis
 
@@ -69,13 +69,13 @@ Klauseln und Optionen. Siehe Quiq::Database::Connection->select().
 
 =head4 Returns
 
-Liste der Objekt-Datensätze. Im Skalarkontext ein ResultSet-Objekt.
+Liste der Objekt-DatensÃ¤tze. Im Skalarkontext ein ResultSet-Objekt.
 
 =head4 Description
 
-Suche Objekte und liefere die Ergebnismenge zurück.
+Suche Objekte und liefere die Ergebnismenge zurÃ¼ck.
 
-=head3 views() - Selektiere Informationen über Views
+=head3 views() - Selektiere Informationen Ã¼ber Views
 
 =head4 Synopsis
 
@@ -93,11 +93,11 @@ Klauseln und Optionen. Siehe Quiq::Database::Connection->select().
 
 =head4 Returns
 
-Liste der View-Datensätze. Im Skalarkontext ein ResultSet-Objekt.
+Liste der View-DatensÃ¤tze. Im Skalarkontext ein ResultSet-Objekt.
 
 =head4 Description
 
-Suche Views und liefere die Ergebnismenge zurück.
+Suche Views und liefere die Ergebnismenge zurÃ¼ck.
 
 =head2 Hilfsmethoden
 
@@ -124,7 +124,7 @@ Umgeschriebenes CREATE FUNCTION Statement (String)
 
 =head4 Description
 
-PostgreSQL stellt die Funktion pg_get_functiondef(oid) zur Verfügung,
+PostgreSQL stellt die Funktion pg_get_functiondef(oid) zur VerfÃ¼gung,
 die den Quelltext einer Datenbankfunktion liefert. Leider ist
 der Quelltext manchmal fehlerbehaftet, zumindest in der Version 8.3.
 Diese Methode korrigiert diese Fehler.
@@ -143,7 +143,7 @@ SQL-Statement (String)
 
 =head4 Description
 
-Liefere ein SELECT-Statement, das Informationen über Funktionen
+Liefere ein SELECT-Statement, das Informationen Ã¼ber Funktionen
 abfragt. Folgende Information wird geliefert:
 
 =over 4
@@ -176,7 +176,7 @@ Name plus Argumentliste der Funktion in der Form:
 
 =item fnc_source
 
-Der vollständige Quelltext der Funktion. B<ACHTUNG:> Der Quelltext
+Der vollstÃ¤ndige Quelltext der Funktion. B<ACHTUNG:> Der Quelltext
 kann (zumindest bei PostgreSQL 8.3) Fehler enthalten, siehe Methode
 L<correctFunctionDef|"correctFunctionDef() - Korrigiere Quelltext einer Funktionsdefinition">(), die ggf. auf die Werte der Kolumne
 angewendet werden sollte.
@@ -184,7 +184,7 @@ angewendet werden sollte.
 =back
 
 Wird das Statement in eine WITH- oder FROM-Klausel Klausel eingebettet,
-können auch die Suchkriterien über obige Kolumnennamen formuliert werden:
+kÃ¶nnen auch die Suchkriterien Ã¼ber obige Kolumnennamen formuliert werden:
 
   $tab = $db->select(
       -with => Quiq::PostgreSql::Catalog->functionSelect,
@@ -205,7 +205,7 @@ SQL-Statement (String)
 
 =head4 Description
 
-Liefere ein SELECT-Statement, das Informationen über Objekte
+Liefere ein SELECT-Statement, das Informationen Ã¼ber Objekte
 abfragt. Folgende Information wird geliefert:
 
 =over 4
@@ -232,7 +232,7 @@ Name des Objekts.
 
 =item obj_longname
 
-Vollständiger Name des Objekts. Im Falle einer Funktion dessen
+VollstÃ¤ndiger Name des Objekts. Im Falle einer Funktion dessen
 Signatur. Bei allen anderen Objekten identisch zu obj_name.
 
 =item obj_source
@@ -242,7 +242,7 @@ Der Quelltext des Objekts im Falle von Funktionen und Views.
 =back
 
 Wird das Statement in eine WITH- oder FROM-Klausel Klausel eingebettet,
-können auch die Suchkriterien über obige Kolumnennamen formuliert werden:
+kÃ¶nnen auch die Suchkriterien Ã¼ber obige Kolumnennamen formuliert werden:
 
   $tab = $db->select(
       -with => Quiq::PostgreSql::Catalog->objectSelect,
@@ -261,7 +261,7 @@ SQL-Statement (String)
 
 =head4 Description
 
-Liefere ein SELECT-Statement, das Informationen über Views
+Liefere ein SELECT-Statement, das Informationen Ã¼ber Views
 abfragt. Folgende Information wird geliefert:
 
 =over 4
@@ -289,7 +289,7 @@ Der Quelltext der View.
 =back
 
 Wird das Statement in eine WITH- oder FROM-Klausel Klausel eingebettet,
-können auch die Suchkriterien über obige Kolumnennamen formuliert werden:
+kÃ¶nnen auch die Suchkriterien Ã¼ber obige Kolumnennamen formuliert werden:
 
   $tab = $db->select(
       -with => Quiq::PostgreSql::Catalog->viewSelect,

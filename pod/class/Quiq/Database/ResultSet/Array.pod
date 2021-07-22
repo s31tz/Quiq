@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Database::ResultSet::Array - Liste von Datens‰tzen in Array-Repr‰sentation
+Quiq::Database::ResultSet::Array - Liste von Datens√§tzen in Array-Repr√§sentation
 
 =head1 BASE CLASS
 
@@ -10,8 +10,8 @@ L<Quiq::Database::ResultSet|https://github.com/s31tz/Quiq/tree/master/pod/class/
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repr‰sentiert eine Liste von gleichartigen
-Datens‰tzen in Array-Repr‰sentation.
+Ein Objekt der Klasse repr√§sentiert eine Liste von gleichartigen
+Datens√§tzen in Array-Repr√§sentation.
 
 =head1 METHODS
 
@@ -26,7 +26,7 @@ Datens‰tzen in Array-Repr‰sentation.
 =head4 Description
 
 Liefere den Index der Kolumne mit dem Titel $title. Existiert die
-Kolumne nicht, lˆse eine Exception aus.
+Kolumne nicht, l√∂se eine Exception aus.
 
 =head3 defaultRowClass() - Liefere Namen der Default-Rowklasse
 
@@ -38,7 +38,7 @@ Kolumne nicht, lˆse eine Exception aus.
 
 Liefere den Namen der Default-Rowklasse: 'Quiq::Database::Row::Array'
 
-Auf die Default-Rowklasse werden Datens‰tze instantiiert, f¸r die
+Auf die Default-Rowklasse werden Datens√§tze instantiiert, f√ºr die
 bei der Instantiierung einer Table-Klasse keine Row-Klasse
 explizit angegeben wurde.
 
@@ -53,8 +53,8 @@ explizit angegeben wurde.
 =head4 Description
 
 Durchsuche die Tabelle nach dem ersten Datensatz, dessen
-Attribut $key den Wert $val besitzt und liefere diesen zur¸ck.
-Erf¸llt kein Datensatz das Kriterium, liefere undef.
+Attribut $key den Wert $val besitzt und liefere diesen zur√ºck.
+Erf√ºllt kein Datensatz das Kriterium, liefere undef.
 
 =head4 Details
 

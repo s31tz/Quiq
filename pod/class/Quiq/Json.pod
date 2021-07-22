@@ -44,18 +44,18 @@ erzeugt
       min: undefined,
   }
 
-Bei der Methode $j->L<object|"object() - Erzeuge Code für JSON-Objekt">()
+Bei der Methode $j->L<object|"object() - Erzeuge Code fÃ¼r JSON-Objekt">()
 
 =over 2
 
 =item *
 
-bleibt die Reihenfolge der Schlüssel/Wert-Paare erhalten
+bleibt die Reihenfolge der SchlÃ¼ssel/Wert-Paare erhalten
 
 =item *
 
-jedes Schlüssel/Wert-Paar beginnt auf einer eigenen Zeile und
-wird eingerückt
+jedes SchlÃ¼ssel/Wert-Paar beginnt auf einer eigenen Zeile und
+wird eingerÃ¼ckt
 
 =back
 
@@ -83,28 +83,28 @@ Bei der Methode $j->L<encode|"encode() - Wandele Perl- in JavaScript-Datenstrukt
 
 =item *
 
-werden die Schlüssel/Wert-Paare von JSON-Objekten
+werden die SchlÃ¼ssel/Wert-Paare von JSON-Objekten
 alphanumerisch sortiert (bei {...} ist die Reihenfolge sonst
 undefiniert)
 
 =item *
 
-gibt es keine Einrückung oder Leerraum nach dem :
+gibt es keine EinrÃ¼ckung oder Leerraum nach dem :
 
 =back
 
 =head1 DESCRIPTION
 
-Die Klasse ermöglicht die präzise Erzeugung von JavaScript-Datenstrukturen
-aus Perl heraus. Der Fokus liegt nicht auf der Übermittlung von Daten,
+Die Klasse ermÃ¶glicht die prÃ¤zise Erzeugung von JavaScript-Datenstrukturen
+aus Perl heraus. Der Fokus liegt nicht auf der Ãœbermittlung von Daten,
 sondern auf der Einsetzung der Strukturen in JavaScript-Quelltexte.
-Insofern gehen die Möglichketen der Klasse über JSON hinaus.
+Insofern gehen die MÃ¶glichketen der Klasse Ã¼ber JSON hinaus.
 Die JavaScript-Klasse Chart.js arbeitet z.B. mit einer komplexen
 Datenstruktur. Diese Struktur aus Perl heraus dynamisch erzeugen zu
-können, war der Anlass für die Entwicklung dieser Klasse.
-Das Perl-Modul JSON ist für diese Zwecke nicht geeignet, denn z.B.
+kÃ¶nnen, war der Anlass fÃ¼r die Entwicklung dieser Klasse.
+Das Perl-Modul JSON ist fÃ¼r diese Zwecke nicht geeignet, denn z.B.
 kann eine JavaScript-Datenstruktur Referenzen auf (inline definierte)
-JavaScript-Funktionen enthalten. Dies ist mit dieser Klasse möglich.
+JavaScript-Funktionen enthalten. Dies ist mit dieser Klasse mÃ¶glich.
 Weitere Vorteile dieser Klasse:
 
 =over 2
@@ -115,7 +115,7 @@ die Reihenfolge von Objektattributen bleibt erhalten
 
 =item *
 
-Werte können literal eingesetzt werden (z.B. Funktionsdefinionen,
+Werte kÃ¶nnen literal eingesetzt werden (z.B. Funktionsdefinionen,
 spezielle Werte wie C<true>, C<false>, C<null> usw.)
 
 =item *
@@ -126,8 +126,8 @@ lesbarerer Code
 
 =head1 EXAMPLE
 
-Ein realer Fall. Die Erzeugung einer Konfiguration für Chart.js. Wir
-nutzen hier die Aliase o() und c() für die Methoden object() und code().
+Ein realer Fall. Die Erzeugung einer Konfiguration fÃ¼r Chart.js. Wir
+nutzen hier die Aliase o() und c() fÃ¼r die Methoden object() und code().
 
   my @dataSets;
   my $title = 'Windspeed';
@@ -297,7 +297,7 @@ erzeugt
 
 =item indent => $n (Default: 4)
 
-Tiefe der Einrückung.
+Tiefe der EinrÃ¼ckung.
 
 =back
 
@@ -308,11 +308,11 @@ Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz
-auf dieses Objekt zurück.
+auf dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
-=head3 code() - Erzeuge Sourcecode für JSON-Datenstruktur
+=head3 code() - Erzeuge Sourcecode fÃ¼r JSON-Datenstruktur
 
 =head4 Synopsis
 
@@ -340,13 +340,13 @@ Sourecode (String). Im List-Kontext eine Referenz auf den Code.
 =head4 Description
 
 Erzeuge Sourcecode, der in eine JSON-Datenstruktur eingebettet
-werden kann, und liefere diesen zurück. Der Code
+werden kann, und liefere diesen zurÃ¼ck. Der Code
 
 =over 2
 
 =item *
 
-erhält die richtige Einrückung
+erhÃ¤lt die richtige EinrÃ¼ckung
 
 =item *
 
@@ -408,8 +408,8 @@ JSON-Code (String)
 
 =head4 Description
 
-Wandele $scalar nach JSON und liefere den resultierenden Code zurück.
-Die Übersetzung erfolgt (rekursiv) nach folgenden Regeln:
+Wandele $scalar nach JSON und liefere den resultierenden Code zurÃ¼ck.
+Die Ãœbersetzung erfolgt (rekursiv) nach folgenden Regeln:
 
 =over 4
 
@@ -428,7 +428,7 @@ Wird abgebildet auf: C<false>
 
 =item NUMBER
 
-Wird unverändert übernommen: NUMBER
+Wird unverÃ¤ndert Ã¼bernommen: NUMBER
 
 =item STRING
 
@@ -438,7 +438,7 @@ Wird abgebildet auf: 'STRING'
 
 Wird abgebildet auf: STRING (literale Einsetzung von STRING)
 
-Dies ist z.B. nützlich, wenn ein Teil der Datenstruktur
+Dies ist z.B. nÃ¼tzlich, wenn ein Teil der Datenstruktur
 abweichend formatiert werden soll.
 
 =item ARRAY_REF
@@ -448,11 +448,11 @@ Wird abgebildet auf: [ELEMENT1,ELEMENT2,...]
 =item HASH_REF
 
 Wird abgebildet auf: {KEY1:VALUE1,KEY2:VALUE2,...}. Im Falle des
-Werts undef, wird das betreffende Schlüssel/Wert-Paar weggelassen.
+Werts undef, wird das betreffende SchlÃ¼ssel/Wert-Paar weggelassen.
 
 =back
 
-=head3 object() - Erzeuge Code für JSON-Objekt
+=head3 object() - Erzeuge Code fÃ¼r JSON-Objekt
 
 =head4 Synopsis
 
@@ -469,7 +469,7 @@ o()
 
 =item @keyVal
 
-Liste der Schlüssel/Wert-Paare
+Liste der SchlÃ¼ssel/Wert-Paare
 
 =back
 
@@ -479,7 +479,7 @@ Liste der Schlüssel/Wert-Paare
 
 =item -indent => $bool (Default: 1)
 
-Rücke die Elemente des Hash ein.
+RÃ¼cke die Elemente des Hash ein.
 
 =back
 
@@ -489,12 +489,12 @@ JSON-Code (String). Im List-Kontext eine Referenz auf den Code.
 
 =head4 Description
 
-Erzeuge den Code für ein JSON-Objekt mit den Attribut/Wert-Paaren
-@keyVal und liefere diesen zurück.
+Erzeuge den Code fÃ¼r ein JSON-Objekt mit den Attribut/Wert-Paaren
+@keyVal und liefere diesen zurÃ¼ck.
 
 =head2 Hilfsmethoden
 
-=head3 key() - Schlüssel eines JSON-Objekts
+=head3 key() - SchlÃ¼ssel eines JSON-Objekts
 
 =head4 Synopsis
 
@@ -506,7 +506,7 @@ Erzeuge den Code für ein JSON-Objekt mit den Attribut/Wert-Paaren
 
 =item $key
 
-Schlüssel.
+SchlÃ¼ssel.
 
 =back
 
@@ -516,20 +516,20 @@ String
 
 =head4 Description
 
-Erzeuge den Code für den Schlüssel $key eines JSON-Objekts und
-liefere diesen zurück. Enthält der Schlüssel nur Zeichen, die
-in einem JavaScript-Bezeichner vorkommen dürfen, wird er unverändert
-geliefert, ansonsten wird er in einfache Anführungsstriche eingefasst.
+Erzeuge den Code fÃ¼r den SchlÃ¼ssel $key eines JSON-Objekts und
+liefere diesen zurÃ¼ck. EnthÃ¤lt der SchlÃ¼ssel nur Zeichen, die
+in einem JavaScript-Bezeichner vorkommen dÃ¼rfen, wird er unverÃ¤ndert
+geliefert, ansonsten wird er in einfache AnfÃ¼hrungsstriche eingefasst.
 
 =head4 Example
 
-Schlüssel aus dem Zeichenvorrat eines JavaScript-Bezeichners:
+SchlÃ¼ssel aus dem Zeichenvorrat eines JavaScript-Bezeichners:
 
   $str = $j->Quiq::Json('borderWidth');
   ==>
   "borderWidth"
 
-Schlüssel mit Zeichen, die nicht in einem JavaScript-Bezeichner vorkommen:
+SchlÃ¼ssel mit Zeichen, die nicht in einem JavaScript-Bezeichner vorkommen:
 
   $str = $j->Quiq::Json('border-width');
   ==>

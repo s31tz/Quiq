@@ -10,7 +10,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repr‰sentiert ein Label, also einen frei
+Ein Objekt der Klasse repr√§sentiert ein Label, also einen frei
 positionierbaren Text.
 
 =head1 METHODS

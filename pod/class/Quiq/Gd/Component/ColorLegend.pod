@@ -36,11 +36,11 @@ Kleinster Wert des Wertebereichs.
 
 =item max => $float (Default: keiner)
 
-Größter Wert des Wertebereichs.
+GrÃ¶ÃŸter Wert des Wertebereichs.
 
 =item logarithmic => $bool (Default: 0)
 
-Die Skala erhält eine logarithmische Einteilung (Basis 10).
+Die Skala erhÃ¤lt eine logarithmische Einteilung (Basis 10).
 
 =item labelColor => $color (Default: keiner)
 
@@ -48,29 +48,29 @@ Farbe der Beschriftung.
 
 =item labelFont => $font (Default: keiner)
 
-Font für die Beschriftung.
+Font fÃ¼r die Beschriftung.
 
 =item blockWidth => $int (Default: keiner)
 
-Breite der Überschreitungsblöcke in Pixeln. Hat nur eine Bedeutung, wenn
+Breite der ÃœberschreitungsblÃ¶cke in Pixeln. Hat nur eine Bedeutung, wenn
 C<ltColor> und/oder C<gtColor> definiert sind.
 
 =item blockHeight => $int (Default: keiner)
 
-Höhe der Farbblöcke in Pixeln.
+HÃ¶he der FarbblÃ¶cke in Pixeln.
 
 =item blockGap => $int (Default: keiner)
 
-Lücke zwischen den Farbblöcken in Pixeln. Hat nur eine Bedeutung, wenn
+LÃ¼cke zwischen den FarbblÃ¶cken in Pixeln. Hat nur eine Bedeutung, wenn
 C<blockLtColor> und/oder C<blockGtColor> definiert sind.
 
 =item blockLtColor => $color (Default: keiner)
 
-Farbe des Blocks, der die Werte, die I<min> unterschreiten, repräsentiert.
+Farbe des Blocks, der die Werte, die I<min> unterschreiten, reprÃ¤sentiert.
 
 =item blockGtColor => $color (Default: keiner)
 
-Farbe des Blocks, der die Werte, die I<max> überschreiten, repräsentiert.
+Farbe des Blocks, der die Werte, die I<max> Ã¼berschreiten, reprÃ¤sentiert.
 
 =item title => $str (Default: undef)
 
@@ -86,14 +86,14 @@ Font des Titels.
 
 =item titleGap => $int (Default: keiner)
 
-Vertikale Lücke zwischen dem Titel und den Farbblöcken in Pixeln.
+Vertikale LÃ¼cke zwischen dem Titel und den FarbblÃ¶cken in Pixeln.
 
 =back
 
 =head1 EXAMPLE
 
-Eine Farblegende mit Titel. Die Höhe des Bildes geben wir nicht vor,
-sie richtet sich nach der Höhe der Grafik. Wir ermitteln sie mit
+Eine Farblegende mit Titel. Die HÃ¶he des Bildes geben wir nicht vor,
+sie richtet sich nach der HÃ¶he der Grafik. Wir ermitteln sie mit
 $g->height. Die Farben definieren wir erst beim Rendern, da das Bild
 bei der Instantiierung des Grafik-Objekts noch nicht existiert.
 
@@ -124,7 +124,7 @@ bei der Instantiierung des Grafik-Objekts noch nicht existiert.
       labelColor => $img->color('ff00ff'),
   );
 
-Erzeugte Grafik (der Rahmen ist per CSS hinzugefügt):
+Erzeugte Grafik (der Rahmen ist per CSS hinzugefÃ¼gt):
 
     [Bild nur im Browser sichtbar]
 
@@ -142,7 +142,7 @@ Erzeugte Grafik (der Rahmen ist per CSS hinzugefügt):
 
 Instantiiere die Legende mit den Eigenschaften @keyVal
 (s. Abschnitt L<ATTRIBUTES|"ATTRIBUTES">) und liefere eine Referenz auf das Objekt
-zurück.
+zurÃ¼ck.
 
 =head2 Zeichnen
 
@@ -159,7 +159,7 @@ Zeichne die Legende in Bild $img an Position ($x,$y).
 
 =head2 Objektmethoden
 
-=head3 height() - Höhe der Farb-Legende
+=head3 height() - HÃ¶he der Farb-Legende
 
 =head4 Synopsis
 
@@ -167,7 +167,7 @@ Zeichne die Legende in Bild $img an Position ($x,$y).
 
 =head4 Description
 
-Liefere die Höhe der Legende. Die Höhe wird aus den Komponenten berechnet.
+Liefere die HÃ¶he der Legende. Die HÃ¶he wird aus den Komponenten berechnet.
 
 =head1 VERSION
 

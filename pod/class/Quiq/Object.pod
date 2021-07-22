@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Object - Basisklasse für alle Klassen der Klassenbibliothek
+Quiq::Object - Basisklasse fÃ¼r alle Klassen der Klassenbibliothek
 
 =head1 SYNOPSIS
 
@@ -22,12 +22,12 @@ Quiq::Object - Basisklasse für alle Klassen der Klassenbibliothek
 
 =head4 Description
 
-Objektorientierte Syntax für bless(). Blesse Objekt (Referenz) $ref auf
-Klasse $class und liefere die geblesste Referenz zurück. Dies geht
-natürlich nur, wenn $class eine direkte oder indirekte
+Objektorientierte Syntax fÃ¼r bless(). Blesse Objekt (Referenz) $ref auf
+Klasse $class und liefere die geblesste Referenz zurÃ¼ck. Dies geht
+natÃ¼rlich nur, wenn $class eine direkte oder indirekte
 Subklasse von Quiq::Object ist.
 
-Der Aufruf ist äquivalent zu:
+Der Aufruf ist Ã¤quivalent zu:
 
   $obj = bless $ref,$class;
 
@@ -45,7 +45,7 @@ Der Aufruf ist äquivalent zu:
 
 Blesse Objekt $obj auf Klasse $class um.
 
-Der Aufruf ist äquivalent zu:
+Der Aufruf ist Ã¤quivalent zu:
 
   bless $obj,$class;
 
@@ -53,7 +53,7 @@ Der Aufruf ist äquivalent zu:
 
   $hash->rebless('MyClass');
 
-=head2 Parameterübergabe
+=head2 ParameterÃ¼bergabe
 
 =head3 parameters() - Argumente und Optionen eines Methodenaufrufs
 
@@ -72,7 +72,7 @@ Der Aufruf ist äquivalent zu:
 
 Wirf keine Exception, wenn unerwartete Parameter (also Optionen und
 Argumente) in @param enthalten sind. Diese Parameter werden aus @param
-nicht entfernt, bleiben also für eine weitere Verarbeitung stehen.
+nicht entfernt, bleiben also fÃ¼r eine weitere Verarbeitung stehen.
 
 =item $minArgs
 
@@ -89,7 +89,7 @@ Liste der Parameter, typischerweise @_.
 =item @optRef
 
 Liste der erwarteten Optionen zusammen mit Referenzen auf die
-zugehörigen Optionsvariablen.
+zugehÃ¶rigen Optionsvariablen.
 
 =back
 
@@ -99,7 +99,7 @@ zugehörigen Optionsvariablen.
 
 =item $argA
 
-Referenz auf Array mit mindestens $minArgs und höchstens
+Referenz auf Array mit mindestens $minArgs und hÃ¶chstens
 $maxArgs Argumenten.
 
 =back
@@ -109,13 +109,13 @@ $maxArgs Argumenten.
 Liefere die Argumente und Optionen eines Methodenaufrufs. Die Methode
 kann eine Klassen- oder Objektmethode sein. Das Argument @params ist
 typischerweise @_. Parameters() behandelt den Fall sehr effizient,
-dass @params leer ist, denn dann kehrt parameters() sofort zurück.
+dass @params leer ist, denn dann kehrt parameters() sofort zurÃ¼ck.
 
 [1] Wenn die Methode eine feste Anzahl an Argumenten besitzt und diese
 von ihr selbst behandelt werden, ist die Nutzung am effizientesten.
-Denn die Argumente müssen von parameters() dann nicht kopiert werden und
+Denn die Argumente mÃ¼ssen von parameters() dann nicht kopiert werden und
 wenn der Methodenaufruf ohne Optionen erfolgt, kehrt parameters(),
-sofort zurück. Beispiel:
+sofort zurÃ¼ck. Beispiel:
 
   sub myMethod {
       my ($this,$arg1,$arg2,$arg3) = splice @_,0,4;
@@ -134,9 +134,9 @@ sofort zurück. Beispiel:
   }
 
 [2] Wie [1], nur dass keine Exception geworfen wird, wenn unbekannte
-Parameter übergeben werden. Diese bleiben in @_ stehen. Dies ist nützlich,
-wenn die Methode zusätzliche Parameter empfängt und diese unbesehen
-an eine andere Methode weiterleitet. Der Aufruf von parameters() ändert
+Parameter Ã¼bergeben werden. Diese bleiben in @_ stehen. Dies ist nÃ¼tzlich,
+wenn die Methode zusÃ¤tzliche Parameter empfÃ¤ngt und diese unbesehen
+an eine andere Methode weiterleitet. Der Aufruf von parameters() Ã¤ndert
 sich zu:
 
   $this->parameters(1,\@_,
@@ -144,11 +144,11 @@ sich zu:
       -opt2 => \$opt2,
   );
 
-[3], [4] Wie [1] bzw. [2], nur dass parameters() zusätzlich die
-Argumente der Methode behandelt. Dies ist nützlich, wenn die
+[3], [4] Wie [1] bzw. [2], nur dass parameters() zusÃ¤tzlich die
+Argumente der Methode behandelt. Dies ist nÃ¼tzlich, wenn die
 Methode eine I<variable> Anzahl an Argumenten hat. Diese werden
 von parameters() aus der Parameterliste "herausgefischt" und eine
-Referenz auf diese Liste zurückgegeben. Beispiel:
+Referenz auf diese Liste zurÃ¼ckgegeben. Beispiel:
 
   sub myMethod {
       my $this = shift;
@@ -188,7 +188,7 @@ gesetzt ist.
 
 =item -stacktrace => $bool (Default: 1)
 
-Ergänze den Exception-Text um einen Stacktrace.
+ErgÃ¤nze den Exception-Text um einen Stacktrace.
 
 =item -warning => $bool (Default: 0)
 
@@ -198,8 +198,8 @@ Wirf keine Exception, sondern gib lediglich eine Warnung aus.
 
 =head4 Description
 
-Wirf eine Exception mit dem Fehlertext $msg und den hinzugefügten
-Schlüssel/Wert-Paaren @keyVal. Die Methode kehrt nur zurück, wenn
+Wirf eine Exception mit dem Fehlertext $msg und den hinzugefÃ¼gten
+SchlÃ¼ssel/Wert-Paaren @keyVal. Die Methode kehrt nur zurÃ¼ck, wenn
 Option -warning gesetzt ist.
 
 =head2 Sonstiges
@@ -212,8 +212,8 @@ Option -warning gesetzt ist.
 
 =head4 Description
 
-Füge Codereferenz $ref unter dem Namen $name zur Klasse $this hinzu.
-Existiert die Methode bereits, wird sie überschrieben.
+FÃ¼ge Codereferenz $ref unter dem Namen $name zur Klasse $this hinzu.
+Existiert die Methode bereits, wird sie Ã¼berschrieben.
 
 =head4 Example
 
@@ -231,7 +231,7 @@ Existiert die Methode bereits, wird sie überschrieben.
 =head4 Description
 
 Ermitte den Pfad der .pm-Datei der Klasse $this und liefere
-diesen zurück. Die Klasse muss bereits geladen worden sein.
+diesen zurÃ¼ck. Die Klasse muss bereits geladen worden sein.
 
 =head4 Example
 
@@ -249,13 +249,13 @@ diesen zurück. Die Klasse muss bereits geladen worden sein.
 =head4 Description
 
 Liefere Klassenname und Objektreferenz zu Parameter $this und zeige
-auf dem dritten Rückgabewert an, ob die Methode als Klassen- oder
+auf dem dritten RÃ¼ckgabewert an, ob die Methode als Klassen- oder
 Objektmethode gerufen wurde.
 
 Ist $this ein Klassenname (eine Zeichenkette) liefere den Namen selbst
-und als Objektreferenz undef und als dritten Rückgabewert 1. Ist
+und als Objektreferenz undef und als dritten RÃ¼ckgabewert 1. Ist
 $this eine Objektreferenz, liefere den Klassennamen zur Objektreferenz
-sowie die Objektreferenz selbst und als dritten Rückgabewert 0.
+sowie die Objektreferenz selbst und als dritten RÃ¼ckgabewert 0.
 
 =head4 Example
 

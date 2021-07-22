@@ -12,7 +12,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head2 Klassenmethoden
 
-=head3 catIf() - Konkateniere Strings bei erfüllter Bedingung
+=head3 catIf() - Konkateniere Strings bei erfÃ¼llter Bedingung
 
 =head4 Synopsis
 
@@ -28,7 +28,7 @@ Bedingung
 
 =item sub {$expr,...}
 
-Ausdrücke, deren Resultat konkateniert wird.
+AusdrÃ¼cke, deren Resultat konkateniert wird.
 
 =back
 
@@ -39,11 +39,11 @@ String
 =head4 Description
 
 Ist Bedingung C<$bool> falsch, liefere einen Leerstring. Andernfalls
-konkateniere die Werte der Ausdrücke C<$expr, ...> und liefere das
-Resultat zurück. Evaluiert ein Ausdruck C<$expr> zu C<undef>, wird
+konkateniere die Werte der AusdrÃ¼cke C<$expr, ...> und liefere das
+Resultat zurÃ¼ck. Evaluiert ein Ausdruck C<$expr> zu C<undef>, wird
 der Wert durch einen Leerstring ersetzt.
 
-Die Methode ist logisch äquivalent zu
+Die Methode ist logisch Ã¤quivalent zu
 
   $str = !$bool? '': join '',$expr // '', ...;
 
@@ -64,7 +64,7 @@ B<Konkatenation bei zutreffender Bedingung>
   ==>
   'DiesisteinTest'
 
-=head3 listIf() - Liefere Liste bei erfüllter Bedingung
+=head3 listIf() - Liefere Liste bei erfÃ¼llter Bedingung
 
 =head4 Synopsis
 
@@ -81,7 +81,7 @@ Bedingung
 
 =item @list
 
-Liste, die bei erfüllter Bedingung geliefert wird.
+Liste, die bei erfÃ¼llter Bedingung geliefert wird.
 
 =back
 
@@ -91,10 +91,10 @@ String
 
 =head4 Description
 
-Ist Bedingung C<$bool> wahr, liefere @list bzw. den Rückgabewert
+Ist Bedingung C<$bool> wahr, liefere @list bzw. den RÃ¼ckgabewert
 von $sub->(), andernfalls eine leere Liste.
 
-Die Methode ist logisch äquivalent zu
+Die Methode ist logisch Ã¤quivalent zu
 
   !$bool? (): @list
 
@@ -104,12 +104,12 @@ bzw.
 
 B<Anmerkung>: Die erste Variante hat den Nachteil, dass @list auch
 dann ausgewertet wird, wenn $bool falsch ist. In dem Fall ist
-die äquivalente Formulierung normalerweise vorzuziehen.
+die Ã¤quivalente Formulierung normalerweise vorzuziehen.
 
 =head4 Example
 
 Setze Attribut C<ready> des Quiq::Html::Page-Objekts
-nur dann, wenn $refresh erfüllt ist:
+nur dann, wenn $refresh erfÃ¼llt ist:
 
   my $html = Quiq::Html::Page->html($h,
       ...

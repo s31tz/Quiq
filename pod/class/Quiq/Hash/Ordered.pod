@@ -10,10 +10,10 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen geordneten Hash. Ein
-geordneter Hash ist ein Hash, bei dem die Schlüssel/Wert-Paare
+Ein Objekt der Klasse reprÃ¤sentiert einen geordneten Hash. Ein
+geordneter Hash ist ein Hash, bei dem die SchlÃ¼ssel/Wert-Paare
 eine definierte Reihenfolge haben. Initial ist dies die
-Hinzufügereihenfolge.
+HinzufÃ¼gereihenfolge.
 
 =head1 METHODS
 
@@ -28,8 +28,8 @@ Hinzufügereihenfolge.
 =head4 Description
 
 Instantiiere einen geordneten Hash, setze die betreffenden
-Schlüssel/Wert-Paare und liefere eine Referenz auf dieses Objekt
-zurück.
+SchlÃ¼ssel/Wert-Paare und liefere eine Referenz auf dieses Objekt
+zurÃ¼ck.
 
 =head2 Getter/Setter
 
@@ -41,11 +41,11 @@ zurück.
 
 =head4 Description
 
-Liefere die Liste der Werte zu den angebenen Schlüsseln. Ist kein
-Schlüssel angegeben, liefere alle Werte. In Skalarkontext liefere
-keine Liste, sondern den Wert des ersten Schlüssels.
+Liefere die Liste der Werte zu den angebenen SchlÃ¼sseln. Ist kein
+SchlÃ¼ssel angegeben, liefere alle Werte. In Skalarkontext liefere
+keine Liste, sondern den Wert des ersten SchlÃ¼ssels.
 
-=head3 set() - Setze Schlüssel/Wert-Paare
+=head3 set() - Setze SchlÃ¼ssel/Wert-Paare
 
 =head4 Synopsis
 
@@ -57,9 +57,9 @@ nichts
 
 =head4 Description
 
-Setze die angegebenen Schlüssel/Wert-Paare.
+Setze die angegebenen SchlÃ¼ssel/Wert-Paare.
 
-=head3 setDelete() - Setze bzw. lösche Schlüssel/Wert-Paare
+=head3 setDelete() - Setze bzw. lÃ¶sche SchlÃ¼ssel/Wert-Paare
 
 =head4 Synopsis
 
@@ -67,13 +67,13 @@ Setze die angegebenen Schlüssel/Wert-Paare.
 
 =head4 Description
 
-Setze die angegebenen Schlüssel auf die angegebenen Werte. Wenn $val
-undef ist, lösche den betreffenden Schlüssel. Die Methode liefert
-keinen Wert zurück.
+Setze die angegebenen SchlÃ¼ssel auf die angegebenen Werte. Wenn $val
+undef ist, lÃ¶sche den betreffenden SchlÃ¼ssel. Die Methode liefert
+keinen Wert zurÃ¼ck.
 
 =head2 Miscellaneous
 
-=head3 clear() - Lösche Inhalt und setze Schlüssel/Wert-Paare
+=head3 clear() - LÃ¶sche Inhalt und setze SchlÃ¼ssel/Wert-Paare
 
 =head4 Synopsis
 
@@ -81,9 +81,9 @@ keinen Wert zurück.
 
 =head4 Description
 
-Lösche Inhalt und setze Schlüssel/Wert-Paare. Ist kein
-Schlüssel/Wert-Paar angegeben, wird nur der Inhalt gelöscht.
-Die Methode liefert keinen Wert zurück.
+LÃ¶sche Inhalt und setze SchlÃ¼ssel/Wert-Paare. Ist kein
+SchlÃ¼ssel/Wert-Paar angegeben, wird nur der Inhalt gelÃ¶scht.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head3 copy() - Kopiere Hash
 
@@ -93,9 +93,9 @@ Die Methode liefert keinen Wert zurück.
 
 =head4 Description
 
-Kopiere Hashobjekt und liefere eine Referenz auf die Kopie zurück.
+Kopiere Hashobjekt und liefere eine Referenz auf die Kopie zurÃ¼ck.
 
-=head3 delete() - Lösche Schlüssel
+=head3 delete() - LÃ¶sche SchlÃ¼ssel
 
 =head4 Synopsis
 
@@ -103,7 +103,7 @@ Kopiere Hashobjekt und liefere eine Referenz auf die Kopie zurück.
 
 =head4 Description
 
-Lösche die angegebenen Schlüssel. Die Methode liefert keinen Wert zurück.
+LÃ¶sche die angegebenen SchlÃ¼ssel. Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head3 increment() - Inkrementiere Wert
 
@@ -113,9 +113,9 @@ Lösche die angegebenen Schlüssel. Die Methode liefert keinen Wert zurück.
 
 =head4 Description
 
-Inkrementiere Wert zu Schlüssel $key und liefere das Resultat zurück.
+Inkrementiere Wert zu SchlÃ¼ssel $key und liefere das Resultat zurÃ¼ck.
 
-=head3 keys() - Liefere die Liste aller Schlüssel
+=head3 keys() - Liefere die Liste aller SchlÃ¼ssel
 
 =head4 Synopsis
 
@@ -123,7 +123,7 @@ Inkrementiere Wert zu Schlüssel $key und liefere das Resultat zurück.
 
 =head4 Description
 
-Liefere die Liste der Schlüssel des Hash. In skalarem Kontext
+Liefere die Liste der SchlÃ¼ssel des Hash. In skalarem Kontext
 liefere eine Referenz auf die Liste.
 
 =head3 hashSize() - Anzahl der Elemente
@@ -136,7 +136,7 @@ liefere eine Referenz auf die Liste.
 
 Liefere die Anzahl der Elemente.
 
-=head3 unshift() - Setze Schlüssel/Wert-Paar an den Anfang
+=head3 unshift() - Setze SchlÃ¼ssel/Wert-Paar an den Anfang
 
 =head4 Synopsis
 
@@ -144,9 +144,9 @@ Liefere die Anzahl der Elemente.
 
 =head4 Description
 
-Setze das angegebene Schlüssel/Wert-Paar, sofern der Schlüssel noch nicht
-existiert, an den Anfang. Existiert der Schlüssel, wird der Wert
-ersetzt. Die Methode liefert keinen Wert zurück.
+Setze das angegebene SchlÃ¼ssel/Wert-Paar, sofern der SchlÃ¼ssel noch nicht
+existiert, an den Anfang. Existiert der SchlÃ¼ssel, wird der Wert
+ersetzt. Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head3 values() - Liefere die Liste der Werte
 
@@ -156,12 +156,12 @@ ersetzt. Die Methode liefert keinen Wert zurück.
 
 =head4 Description
 
-Liefere die Liste der Werte in Schlüsselreihenfolge. In skalarem Kontext
+Liefere die Liste der Werte in SchlÃ¼sselreihenfolge. In skalarem Kontext
 liefere eine Referenz auf die Liste.
 
 =head2 Test Methods
 
-=head3 exists() - Prüfe Existenz eines Schlüssels
+=head3 exists() - PrÃ¼fe Existenz eines SchlÃ¼ssels
 
 =head4 Synopsis
 
@@ -169,7 +169,7 @@ liefere eine Referenz auf die Liste.
 
 =head4 Description
 
-Liefere "wahr", wenn der Hash den Schlüssel $key enthält,
+Liefere "wahr", wenn der Hash den SchlÃ¼ssel $key enthÃ¤lt,
 andernfalls "falsch".
 
 =head1 VERSION

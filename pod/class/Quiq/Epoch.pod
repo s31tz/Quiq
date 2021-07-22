@@ -14,7 +14,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =item Epoch-Wert
 
-Anzahl der Sekunden seit 1.1.1970, 0 Uhr UTC in hoher Auflösung,
+Anzahl der Sekunden seit 1.1.1970, 0 Uhr UTC in hoher AuflÃ¶sung,
 also mit Nachkommastellen.
 
 =item ISO-Zeitangabe
@@ -25,9 +25,9 @@ Zeitangabe in der Darstellung C<YYYY-MM-DD HH:MI:SS.X>.
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen Zeitpunkt. Die Klasse
+Ein Objekt der Klasse reprÃ¤sentiert einen Zeitpunkt. Die Klasse
 implementiert Operationen auf einem solchen Zeitpunkt. Der
-Zeitpunkt ist hochauflösend, umfasst also auch Sekundenbruchteile.
+Zeitpunkt ist hochauflÃ¶send, umfasst also auch Sekundenbruchteile.
 
 =head1 METHODS
 
@@ -43,9 +43,9 @@ Zeitpunkt ist hochauflösend, umfasst also auch Sekundenbruchteile.
 
 =head4 Description
 
-Instantiiere ein Zeitpunkt-Objekt für Epoch-Wert $epoch bzw.
+Instantiiere ein Zeitpunkt-Objekt fÃ¼r Epoch-Wert $epoch bzw.
 ISO-Zeitangabe $iso, letztere interpretiert in der lokalen
-Zeitzone, und liefere dieses Objekt zurück. Ist kein Argument
+Zeitzone, und liefere dieses Objekt zurÃ¼ck. Ist kein Argument
 angegeben, wird der aktuelle Zeitpunkt genommen.
 
 =head2 Zeitkomponenten
@@ -64,7 +64,7 @@ Integer
 
 Liefere Wochentagsnummer im Bereich 0-6, 0 = Sonntag.
 
-=head3 dayAbbr() - Abgekürzter Wochentagsname
+=head3 dayAbbr() - AbgekÃ¼rzter Wochentagsname
 
 =head4 Synopsis
 
@@ -76,7 +76,7 @@ String
 
 =head4 Description
 
-Liefere abgekürzten Wochentagsnamen (So, Mo, Di, Mi, Do, Fr, Sa).
+Liefere abgekÃ¼rzten Wochentagsnamen (So, Mo, Di, Mi, Do, Fr, Sa).
 
 =head3 dayName() - Wochentagsname
 
@@ -128,7 +128,7 @@ Die Dauer wird wie beim Konstruktor von Quiq::Duration angegeben.
 
 =head4 Returns
 
-Geändertes Epoch-Objekt (für Method-Chaining)
+GeÃ¤ndertes Epoch-Objekt (fÃ¼r Method-Chaining)
 
 =head4 Description
 
@@ -153,7 +153,7 @@ wird wie beim Konstruktor von Quiq::Duration angegeben.
 
 =head4 Returns
 
-Geändertes Epoch-Objekt (für Method-Chaining)
+GeÃ¤ndertes Epoch-Objekt (fÃ¼r Method-Chaining)
 
 =head4 Description
 
@@ -171,8 +171,8 @@ Anzahl Sekunden (Integer)
 
 =head4 Description
 
-Ermittele den aktuellen Offset der lokalen Zeitzone gegenüber UTC
-in Sekunden und liefere diesen zurück.
+Ermittele den aktuellen Offset der lokalen Zeitzone gegenÃ¼ber UTC
+in Sekunden und liefere diesen zurÃ¼ck.
 
 =head4 Example
 
@@ -182,7 +182,7 @@ in Sekunden und liefere diesen zurück.
 
 (in Zeitzone MESZ)
 
-=head2 Externe Repräsentation
+=head2 Externe ReprÃ¤sentation
 
 =head3 epoch() - Liefere Epoch-Wert
 
@@ -211,8 +211,8 @@ Liefere den Epoch-Wert des Zeitpunkts.
 Liefere die Zeitkomponenten Sekunden, Minuten, Stunden, Tag, Monat, Jahr
 in lokaler Zeit. Im Unterschied zu localtime() aus dem Perl Core sind
 Monat ($m) und Jahr (y) "richtig" wiedergegeben. d.h die Komponente $m
-muss nicht um 1 erhöht und die Komponente $y muss nicht um 1900
-erhöht werden.
+muss nicht um 1 erhÃ¶ht und die Komponente $y muss nicht um 1900
+erhÃ¶ht werden.
 
 =head4 Example
 
@@ -261,7 +261,7 @@ Zeit-Darstellung (String)
 
 =head4 Description
 
-Liefere eine externe Darstellung des Zeitpunkts gemäß Formatangabe $fmt.
+Liefere eine externe Darstellung des Zeitpunkts gemÃ¤ÃŸ Formatangabe $fmt.
 Der Zeitpunkt wird in der lokalen Zeitzone interpretiert.
 
 =head4 Example

@@ -64,19 +64,19 @@ Pfad der Bilddatei.
 
 =item height => $height
 
-Höhe in Pixel (ohne Angabe einer Einheit), auf die das Bild
-skaliert wird. Der Wert wird für LaTeX in pt umgerechnet (1px =
+HÃ¶he in Pixel (ohne Angabe einer Einheit), auf die das Bild
+skaliert wird. Der Wert wird fÃ¼r LaTeX in pt umgerechnet (1px =
 0.75pt).
 
 =item indent => $length
 
-Länge, mit der die Abbildung vom linken Rand eingerückt wird,
+LÃ¤nge, mit der die Abbildung vom linken Rand eingerÃ¼ckt wird,
 wenn sie links (Attribut C<align>) gesetzt wird.
 
 =item inline => $bool (Default: 0)
 
-Anstelle von Code für eine alleinstehende Abbildung wird Code
-für eine Inline-Grafik erzeugt.
+Anstelle von Code fÃ¼r eine alleinstehende Abbildung wird Code
+fÃ¼r eine Inline-Grafik erzeugt.
 
 =item label => $str
 
@@ -84,39 +84,39 @@ Anker der Abbildung.
 
 =item options => $str | \@arr
 
-Optionen, die an das Makro C<\includegraphics> übergeben werden.
+Optionen, die an das Makro C<\includegraphics> Ã¼bergeben werden.
 
 =item position => 'H','h','t','b','p' (Default: 'H')
 
-Positioniergspräferenz für das Gleitobjekt. Details siehe
+PositioniergsprÃ¤ferenz fÃ¼r das Gleitobjekt. Details siehe
 LaTeX-Package C<float>, das geladen werden muss.
 
 =item postVSpace => $length
 
-Vertikaler Leerraum, der nach der Abbildung hinzugefügt (positiver
+Vertikaler Leerraum, der nach der Abbildung hinzugefÃ¼gt (positiver
 Wert) oder abgezogen (negativer Wert) wird.
 
 =item link => $latex,
 
-Versieh das Bild mit einem Verweis. Übergeben wird der fertige
-LaTeX-Code für den Verweis auf das interne bzw. externe Ziel.  Der
-Code muss %s an der Stelle enthalten, wo die Methode den Code für
+Versieh das Bild mit einem Verweis. Ãœbergeben wird der fertige
+LaTeX-Code fÃ¼r den Verweis auf das interne bzw. externe Ziel.  Der
+Code muss %s an der Stelle enthalten, wo die Methode den Code fÃ¼r
 das Bild eingesetzen soll.
 
 =item scale => $factor
 
-Skalierungsfaktor. Der Skalierungsfaktor hat Priorität gegenüber
+Skalierungsfaktor. Der Skalierungsfaktor hat PrioritÃ¤t gegenÃ¼ber
 der Angabe von C<width> und C<height>.
 
 =item url => $url
 
 Versieh das Bild mit einem Verweis auf eine externe Ressource.
-Ist auch Attribut C<ref> gesetzt, hat dieses Priorität.
+Ist auch Attribut C<ref> gesetzt, hat dieses PrioritÃ¤t.
 
 =item width => $width
 
 Breite in Pixel (ohne Angabe einer Einheit), auf die das Bild
-skaliert wird. Der Wert wird für LaTeX in pt umgerechnet (1px =
+skaliert wird. Der Wert wird fÃ¼r LaTeX in pt umgerechnet (1px =
 0.75pt).
 
 =back
@@ -128,7 +128,7 @@ Figure-Objekt
 =head4 Description
 
 Instantiiere ein LaTeX Figure-Objekt und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -142,7 +142,7 @@ dieses Objekt zurück.
 =head4 Description
 
 Generiere den LaTeX-Code des Objekts und liefere diesen
-zurück. Als Klassenmethode gerufen, wird das Objekt intern erzeugt
+zurÃ¼ck. Als Klassenmethode gerufen, wird das Objekt intern erzeugt
 und mit den Attributen @keyVal instantiiert.
 
 =head1 VERSION

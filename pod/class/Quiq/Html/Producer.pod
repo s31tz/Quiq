@@ -10,10 +10,10 @@ L<Quiq::Html::Construct|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq
 
 =head1 DESCRIPTION
 
-Die Klasse vereinigt die Funktionalität der Klassen Quiq::Html::Tag
+Die Klasse vereinigt die FunktionalitÃ¤t der Klassen Quiq::Html::Tag
 und Quiq::Html::Construct und erlaubt somit die Generierung von
 einzelnen HTML-Tags und einfachen Tag-Konstrukten. Sie
-implementiert keine eigene Funktionalität, sondern erbt diese von
+implementiert keine eigene FunktionalitÃ¤t, sondern erbt diese von
 ihren Basisklassen. Der Konstruktor ist in der Basisklasse
 Quiq::Html::Tag implementiert.
 
@@ -23,7 +23,7 @@ Vererbungshierarchie:
       |
   Quiq::Html::Construct  (einfache Konstrukte aus HTML-Tags)
       |
-  Quiq::Html::Producer   (vereinigte Funktionalität)
+  Quiq::Html::Producer   (vereinigte FunktionalitÃ¤t)
 
 Einfacher Anwendungsfall:
 

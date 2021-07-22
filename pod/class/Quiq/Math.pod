@@ -25,9 +25,9 @@ Math-Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
-dieses Objekt zurück. Da die Klasse ausschließlich Klassenmethoden
-enthält, hat das Objekt nur die Funktion, eine abkürzende
-Aufrufschreibweise zu ermöglichen.
+dieses Objekt zurÃ¼ck. Da die Klasse ausschlieÃŸlich Klassenmethoden
+enthÃ¤lt, hat das Objekt nur die Funktion, eine abkÃ¼rzende
+Aufrufschreibweise zu ermÃ¶glichen.
 
 =head2 Konstanten
 
@@ -48,7 +48,7 @@ Aufrufschreibweise zu ermöglichen.
 
 =head4 Description
 
-Runde $x auf $n Nachkommastellen und liefere das Resultat zurück.
+Runde $x auf $n Nachkommastellen und liefere das Resultat zurÃ¼ck.
 
 Ist $normalize "wahr", wird die Zahl nach der Rundung mit
 normalizeNumber() normalisiert.
@@ -67,11 +67,11 @@ bei $n == 0 mittels roundToInt().
 
 =head4 Description
 
-Runde Zahl $x zu ganzer Zahl und liefere das Resultat zurück, nach
+Runde Zahl $x zu ganzer Zahl und liefere das Resultat zurÃ¼ck, nach
 folgender Regel:
 
-Für Nachkommastellen < .5 runde ab, für Nachkommastellen >= .5 runde auf.
-Für negative $x ist es umgekehrt.
+FÃ¼r Nachkommastellen < .5 runde ab, fÃ¼r Nachkommastellen >= .5 runde auf.
+FÃ¼r negative $x ist es umgekehrt.
 
 Folgender Ansatz funktioniert nicht
 
@@ -83,7 +83,7 @@ denn dieser gibt inkonsistente Ergebnisse
   1.5 => 2
   2.5 => 2
 
-=head3 roundMinMax() - Runde Breichsgrenzen auf nächsten geeigneten Wert
+=head3 roundMinMax() - Runde Breichsgrenzen auf nÃ¤chsten geeigneten Wert
 
 =head4 Synopsis
 
@@ -92,12 +92,12 @@ denn dieser gibt inkonsistente Ergebnisse
 =head4 Description
 
 Die Methode rundet $min ab und $max auf, so dass geeignete
-Bereichsgrenzen für eine Diagrammskala entstehen.
+Bereichsgrenzen fÃ¼r eine Diagrammskala entstehen.
 
-Sind $min und $max gleich, schaffen wir einen künstlichen Bereich
+Sind $min und $max gleich, schaffen wir einen kÃ¼nstlichen Bereich
 ($min-1,$max+1).
 
-Die Rundungsstelle leitet sich aus der Größe des Bereichs
+Die Rundungsstelle leitet sich aus der GrÃ¶ÃŸe des Bereichs
 $max-$min her.
 
 =head4 Examples
@@ -106,9 +106,9 @@ $max-$min her.
 
 8.53, 8.53 -> 7, 10
 
-=head2 Größter gemeinsamer Teiler
+=head2 GrÃ¶ÃŸter gemeinsamer Teiler
 
-=head3 gcd() - Größter gemeinsamer Teiler
+=head3 gcd() - GrÃ¶ÃŸter gemeinsamer Teiler
 
 =head4 Synopsis
 
@@ -116,19 +116,19 @@ $max-$min her.
 
 =head4 Description
 
-Berechne den größten gemeinsamen Teiler (greatest common divisor)
-der beiden natürlichen Zahlen $a und $b und liefere diesen
-zurück. Die Methode ist nach dem L<Euklidschen Algorithmus|https://de.wikipedia.org/wiki/Euklidischer_Algorithmus#Rekursive_Variante> implementiert.
+Berechne den grÃ¶ÃŸten gemeinsamen Teiler (greatest common divisor)
+der beiden natÃ¼rlichen Zahlen $a und $b und liefere diesen
+zurÃ¼ck. Die Methode ist nach dem L<Euklidschen Algorithmus|https://de.wikipedia.org/wiki/Euklidischer_Algorithmus#Rekursive_Variante> implementiert.
 
-=head2 Bogenmaß
+=head2 BogenmaÃŸ
 
-=head3 degreeToRad() - Wandele Grad in Bogenmaß (rad)
+=head3 degreeToRad() - Wandele Grad in BogenmaÃŸ (rad)
 
 =head4 Synopsis
 
   $rad = $this->degreeToRad($degree);
 
-=head3 radToDegree() - Wandele Bogenmaß (rad) in Grad
+=head3 radToDegree() - Wandele BogenmaÃŸ (rad) in Grad
 
 =head4 Synopsis
 
@@ -156,12 +156,12 @@ optional ist. Fehlt die Gewichtung, wird als Wert 1 angenommen.
 
 =head4 Returns
 
-Breite und Länge des geografischen Mittelpunkts
+Breite und LÃ¤nge des geografischen Mittelpunkts
 
 =head4 Description
 
 Berechne den geografischen Mittelpunkt der Geo-Koordination (plus
-optionaler Gewichtung) und liefere diesen zurück.
+optionaler Gewichtung) und liefere diesen zurÃ¼ck.
 
 Beschreibung des Alogrithmus siehe
 L<http://www.geomidpoint.com/example.html>
@@ -175,14 +175,14 @@ L<http://www.geomidpoint.com/example.html>
 =head4 Description
 
 Wandele eine geographische Ortsangabe in Grad, Minuten, Sekunden,
-Himmelsrichtung in eine dezimale Gradzahl und liefere diese zurück.
+Himmelsrichtung in eine dezimale Gradzahl und liefere diese zurÃ¼ck.
 
 =head4 Example
 
   50 6 44 N -> 50.11222
   50 6 44 S -> -50.11222
 
-=head3 geoDistance() - Entfernung zw. zwei Punkten auf der Erdoberfäche
+=head3 geoDistance() - Entfernung zw. zwei Punkten auf der ErdoberfÃ¤che
 
 =head4 Synopsis
 
@@ -191,7 +191,7 @@ Himmelsrichtung in eine dezimale Gradzahl und liefere diese zurück.
 =head4 Description
 
 Berechne die Entfernung zwischen den beiden Geokoordinaten ($lat1,$lon1)
-und (lat2,$lon2) und liefere die Distanz in Kilometern zurück. Die Angabe
+und (lat2,$lon2) und liefere die Distanz in Kilometern zurÃ¼ck. Die Angabe
 der Geokoordinaten ist in Grad.
 
 Der Berechnung liegt die Formel zugrunde:
@@ -207,7 +207,7 @@ Der Berechnung liegt die Formel zugrunde:
 
 =item *
 
-L<Prof. Dirk Reichhardt - Hinweise zur Berechnung von Abständen|http://wwwlehre.dhbw-stuttgart.de/~reichard/content/vorlesungen/lbs/uebungen/abstandsberechnung.pdf>
+L<Prof. Dirk Reichhardt - Hinweise zur Berechnung von AbstÃ¤nden|http://wwwlehre.dhbw-stuttgart.de/~reichard/content/vorlesungen/lbs/uebungen/abstandsberechnung.pdf>
 
 =item *
 
@@ -217,17 +217,17 @@ L<Blog Martin Kompf - Entfernungsberechnung|http://www.kompf.de/gps/distcalc.htm
 
 =head4 Examples
 
-Abstand zw. zwei Längengraden (359. und 360.) am Äquator:
+Abstand zw. zwei LÃ¤ngengraden (359. und 360.) am Ã„quator:
 
   sprintf '%.2f',Quiq::Math->geoDistance(0,359,0,360);
   # -> 111.12
 
-Abstand zw. zwei Längengraden am Pol:
+Abstand zw. zwei LÃ¤ngengraden am Pol:
 
   Quiq::Math->geoDistance(90,359,90,360);
   # -> 0
 
-=head3 latitudeDistance() - Abstand zwischen zwei Längengraden
+=head3 latitudeDistance() - Abstand zwischen zwei LÃ¤ngengraden
 
 =head4 Synopsis
 
@@ -235,8 +235,8 @@ Abstand zw. zwei Längengraden am Pol:
 
 =head4 Description
 
-Liefere den Abstand zwischen zwei Längengraden bei Breitengrad $lat.
-Die Methode ist eigentlich nicht nötig, da sie einen Spezialfall der
+Liefere den Abstand zwischen zwei LÃ¤ngengraden bei Breitengrad $lat.
+Die Methode ist eigentlich nicht nÃ¶tig, da sie einen Spezialfall der
 Mehode geoDistance() behandelt. Die Formel stammt von
 Wilhelm Petersen.
 
@@ -254,9 +254,9 @@ Faktor
 
 =head4 Description
 
-Liefere den Faktor für die Umrechung von Wertebereich in Pixelkoordinaten.
+Liefere den Faktor fÃ¼r die Umrechung von Wertebereich in Pixelkoordinaten.
 Die Werte werden transformiert auf einen Bildschirmabschnitt
-der Länge $length, dessen Randpunkte den Werten $min und $max
+der LÃ¤nge $length, dessen Randpunkte den Werten $min und $max
 entsprechen.
 
 =head3 pixelToValueFactor() - Umrechnungsfaktor von Pixel in Wertebereich
@@ -271,8 +271,8 @@ Faktor (Float)
 
 =head4 Description
 
-Liefere den Faktor für die Umrechung von Pixel in Werte
-entlang eines Bildschirmabschnitts der Länge $length, dessen Randpunkt
+Liefere den Faktor fÃ¼r die Umrechung von Pixel in Werte
+entlang eines Bildschirmabschnitts der LÃ¤nge $length, dessen Randpunkt
 dem Werteberich $min und $max entsprechen.
 
 =head3 valueToPixelX() - Transformiere Wert in X-Pixelkoordinate
@@ -300,7 +300,7 @@ ist $xMax. Die gelieferten Werte liegen im Bereich 0 .. $width-1.
 =head4 Description
 
 Transformiere Wert $yVal in eine Pixelkoordinate auf einer Y-Pixelachse
-der Höhe $height. Das Minimum des Wertebereichs ist $yMin, das Maximum
+der HÃ¶he $height. Das Minimum des Wertebereichs ist $yMin, das Maximum
 $yMax. Die gelieferten Werte liegen im Bereich $height-1 .. 0.
 Diese Methode geht von einem Kartesischen Koordinatensystem,
 also von einem Ursprung I<unten links> aus.
@@ -314,7 +314,7 @@ also von einem Ursprung I<unten links> aus.
 =head4 Description
 
 Transformiere Wert $yVal in eine Pixelkoordinate auf einer Y-Pixelachse
-der Höhe $height. Das Minimum des Wertebereichs ist $yMin und das Maximum
+der HÃ¶he $height. Das Minimum des Wertebereichs ist $yMin und das Maximum
 ist $yMax. Die gelieferten Werte liegen im Bereich $height-1 .. 0.
 
 =head2 Interpolation
@@ -332,13 +332,13 @@ Float
 =head4 Description
 
 Berechne durch lineare Interpolation den Wert y=f(x) zwischen
-den gegebenen Punkten y0=f(x0) und y1=f(x1) und liefere diesen zurück.
+den gegebenen Punkten y0=f(x0) und y1=f(x1) und liefere diesen zurÃ¼ck.
 
 Siehe: L<http://de.wikipedia.org/wiki/Interpolation_%28Mathematik%29#Lineare_Interpolation>
 
 =head2 Zahlen
 
-=head3 isNumber() - Prüfe, ob Skalar eine Zahl darstellt
+=head3 isNumber() - PrÃ¼fe, ob Skalar eine Zahl darstellt
 
 =head4 Synopsis
 
@@ -354,7 +354,7 @@ Siehe: L<http://de.wikipedia.org/wiki/Interpolation_%28Mathematik%29#Lineare_Int
 
 =head4 Description
 
-Berechnung gemäß der Mail von Wilhelm Petersen vom 2017-05-03:
+Berechnung gemÃ¤ÃŸ der Mail von Wilhelm Petersen vom 2017-05-03:
 
   $v = (abs($v2-($v3+$v1)/2)-abs(($v3-$v1)/2))/($t3/60-$t1/60);
 

@@ -20,16 +20,16 @@ L<Quiq::ClassConfig|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Cla
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen Datensatz, der aus einer
+Ein Objekt der Klasse reprÃ¤sentiert einen Datensatz, der aus einer
 einzelnen Datenbank-Tabelle stammt.
 
 Die DML-Operationen (select, insert, update, delete) der Klasse
 operieren auf der Tabelle. Entsprechend definiert die Klasse einen
 Tabellennamen. Dieser wird von der Methode L<tableName|"tableName() - Liefere Namen der Datenbanktabelle">() geliefert.
 
-Über eine Tabelle wird vorausgesetzt, dass diese eine
-Primärschlüssel-Kolumne besitzt. Deren Name wird von der Methode
-L<primaryKey|"primaryKey() - Liefere Namen der Primärschlüssel-Kolumne">() geliefert.
+Ãœber eine Tabelle wird vorausgesetzt, dass diese eine
+PrimÃ¤rschlÃ¼ssel-Kolumne besitzt. Deren Name wird von der Methode
+L<primaryKey|"primaryKey() - Liefere Namen der PrimÃ¤rschlÃ¼ssel-Kolumne">() geliefert.
 
 =head1 METHODS
 
@@ -52,7 +52,7 @@ Tabellenname (String)
 =head4 Description
 
 Bestimme den Namen der Datenbanktabelle, welche die Klasse kapselt,
-und liefere diesen zurück.
+und liefere diesen zurÃ¼ck.
 
 =head4 Example
 
@@ -72,17 +72,17 @@ Der Tabellenname ist per Default die in Kleinschreibung gewandelte
 letzte Komponente des Klassennamens.
 
 Abweichend vom Default kann die Datensatzklasse den Tabellennamen
-über die Klassenvariable
+Ã¼ber die Klassenvariable
 
   our $TableName = '...';
 
 festlegen.
 
-Die Methode kann in abgeleiteten Klassen überschrieben werden,
+Die Methode kann in abgeleiteten Klassen Ã¼berschrieben werden,
 um den Tabellennamen auf andere Weise zu bestimmen, z.B. um einen
-Schemapräfix aus einer weiteren Klassennamen-Komponente hinzuzufügen.
+SchemaprÃ¤fix aus einer weiteren Klassennamen-Komponente hinzuzufÃ¼gen.
 
-=head3 primaryKey() - Liefere Namen der Primärschlüssel-Kolumne
+=head3 primaryKey() - Liefere Namen der PrimÃ¤rschlÃ¼ssel-Kolumne
 
 =head4 Synopsis
 
@@ -90,8 +90,8 @@ Schemapräfix aus einer weiteren Klassennamen-Komponente hinzuzufügen.
 
 =head4 Description
 
-Bestimme den Namen der Primärschlüsselkolumne und liefere diesen zurück.
-Der Name wird folgendermaßen ermittelt:
+Bestimme den Namen der PrimÃ¤rschlÃ¼sselkolumne und liefere diesen zurÃ¼ck.
+Der Name wird folgendermaÃŸen ermittelt:
 
 =over 4
 
@@ -101,7 +101,7 @@ Der Name wird folgendermaßen ermittelt:
 
 =item 2.
 
-Ist 1. nicht der Fall, wird als Primärschlüsselkolumne die
+Ist 1. nicht der Fall, wird als PrimÃ¤rschlÃ¼sselkolumne die
 erste Kolumne der Ergebnistabelle angenommen.
 
 =back
@@ -114,11 +114,11 @@ erste Kolumne der Ergebnistabelle angenommen.
 
 =head4 Description
 
-Liefere die WHERE-Bedingung ($key=>$value) für den Datensatz $row,
-bestehend aus dem Namen der Primärschlüsselkolumne und deren Wert.
-Hat die Primärschlüsselkolumne keinen Wert, wirf eine Exception.
+Liefere die WHERE-Bedingung ($key=>$value) fÃ¼r den Datensatz $row,
+bestehend aus dem Namen der PrimÃ¤rschlÃ¼sselkolumne und deren Wert.
+Hat die PrimÃ¤rschlÃ¼sselkolumne keinen Wert, wirf eine Exception.
 
-Die Methode liefert die WHERE-Bedingung für UPDATEs und DELETEs
+Die Methode liefert die WHERE-Bedingung fÃ¼r UPDATEs und DELETEs
 auf dem Datensatz.
 
 =head3 nullRow() - Liefere Null-Datensatz
@@ -135,19 +135,19 @@ auf dem Datensatz.
 
   $stmt = $class->selectStmt($db,@select);
 
-=head3 insertStmt() - Liefere Insert-Statement für Datensatz
+=head3 insertStmt() - Liefere Insert-Statement fÃ¼r Datensatz
 
 =head4 Synopsis
 
   $stmt = $row->insertStmt($db);
 
-=head3 updateStmt() - Liefere Update-Statement für Datensatz
+=head3 updateStmt() - Liefere Update-Statement fÃ¼r Datensatz
 
 =head4 Synopsis
 
   $stmt = $row->updateStmt($db);
 
-=head3 deleteStmt() - Liefere Delete-Statement für Datensatz
+=head3 deleteStmt() - Liefere Delete-Statement fÃ¼r Datensatz
 
 =head4 Synopsis
 
@@ -163,14 +163,14 @@ auf dem Datensatz.
 
 =head4 Description
 
-Lade Datensatz mit Primärschlüssel $pkValue. Ist $pkValue nicht
+Lade Datensatz mit PrimÃ¤rschlÃ¼ssel $pkValue. Ist $pkValue nicht
 angegeben oder Null (Leerstring oder undef), liefere einen leeren
 Datensatz.
 
-Diese Methode ist nützlich, um ein Formular mit einem neuen
+Diese Methode ist nÃ¼tzlich, um ein Formular mit einem neuen
 oder existierenden Datensatz zu versorgen.
 
-=head3 insert() - Füge Datensatz zur Datenbank hinzu
+=head3 insert() - FÃ¼ge Datensatz zur Datenbank hinzu
 
 =head4 Synopsis
 
@@ -178,10 +178,10 @@ oder existierenden Datensatz zu versorgen.
 
 =head4 Description
 
-Füge den Datensatz zur Datenbank hinzu und liefere das Resultat der
-Ausführung zurück.
+FÃ¼ge den Datensatz zur Datenbank hinzu und liefere das Resultat der
+AusfÃ¼hrung zurÃ¼ck.
 
-Nach der Ausführung hat der Datensatz den Rowstatus 0.
+Nach der AusfÃ¼hrung hat der Datensatz den Rowstatus 0.
 
 =head3 update() - Aktualisiere Datensatz auf der Datenbank
 
@@ -192,11 +192,11 @@ Nach der Ausführung hat der Datensatz den Rowstatus 0.
 =head4 Description
 
 Aktualisiere den Datensatz auf der Datenbank und liefere das Resultat der
-Ausführung zurück.
+AusfÃ¼hrung zurÃ¼ck.
 
-Nach der Ausführung hat der Datensatz den Rowstatus 0.
+Nach der AusfÃ¼hrung hat der Datensatz den Rowstatus 0.
 
-=head3 delete() - Lösche Datensatz von der Datenbank
+=head3 delete() - LÃ¶sche Datensatz von der Datenbank
 
 =head4 Synopsis
 
@@ -204,10 +204,10 @@ Nach der Ausführung hat der Datensatz den Rowstatus 0.
 
 =head4 Description
 
-Lösche den Datensatz von der Datenbank und liefere das Resultat der
-Ausführung zurück.
+LÃ¶sche den Datensatz von der Datenbank und liefere das Resultat der
+AusfÃ¼hrung zurÃ¼ck.
 
-Nach der Ausführung hat der Datensatz den Rowstatus 'I'.
+Nach der AusfÃ¼hrung hat der Datensatz den Rowstatus 'I'.
 
 =head1 VERSION
 

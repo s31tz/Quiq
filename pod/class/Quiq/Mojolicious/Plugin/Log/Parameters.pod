@@ -23,8 +23,8 @@ jedem Request auf Loglevel C<debug> die Liste der empfangenen GET-
 und POST-Parameter ins Log ausgibt.
 
 Das Plugin ist bei der Entwicklung von Action-Seiten zu Formularen
-n¸tzlich, denn es macht sichtbar, welche Daten die Action-Seite
-empf‰ngt.
+n√ºtzlich, denn es macht sichtbar, welche Daten die Action-Seite
+empf√§ngt.
 
 =head1 METHODS
 
@@ -38,7 +38,7 @@ empf‰ngt.
 
 =head4 Description
 
-Diese Methode implementiert die Funktionalit‰t des Plugin. Sie
+Diese Methode implementiert die Funktionalit√§t des Plugin. Sie
 wird nicht direkt, sondern von Mojolicious aufgerufen.
 
 =head1 VERSION

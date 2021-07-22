@@ -22,7 +22,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
   # Breite
   $width = $nam->width; # 3000
   
-  # Höhe
+  # HÃ¶he
   $height = $nam->height; # 2250
   
   # Extension
@@ -33,7 +33,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert den Namen einer Bildsequenz-Datei.
+Ein Objekt der Klasse reprÃ¤sentiert den Namen einer Bildsequenz-Datei.
 Der Name einer Bildsequenz-Datei hat den Aufbau:
 
   NNNNNN-WIDTHxHEIGHT[-NAME].EXT
@@ -52,7 +52,7 @@ Breitenangabe
 
 =item heigth
 
-Höhenangabe
+HÃ¶henangabe
 
 =item text
 
@@ -93,7 +93,7 @@ Breite des Bildes
 
 =item $heigth
 
-Höhe des Bildes
+HÃ¶he des Bildes
 
 =item $ext
 
@@ -118,7 +118,7 @@ Referenz auf das Bilddateinamen-Objekt
 =head4 Description
 
 Instantiiere Bilddateinamen-Objekt und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 Akzessoren
 
@@ -150,7 +150,7 @@ Integer > 0
 
 Liefere die Breitenangabe aus dem Bilddateinamen.
 
-=head3 height() - Höhe
+=head3 height() - HÃ¶he
 
 =head4 Synopsis
 
@@ -162,7 +162,7 @@ Integer > 0
 
 =head4 Description
 
-Liefere die Höhenangabe aus dem Bilddateinamen.
+Liefere die HÃ¶henangabe aus dem Bilddateinamen.
 
 =head3 text() - Text
 
@@ -208,9 +208,9 @@ Bild-Dateiname (String)
 =head4 Description
 
 Bilde aus den Angaben Bildnummer (number), Bildbreite (width),
-Bildhöhe (height), dem optionalen Beschreibungstext (text) und der
+BildhÃ¶he (height), dem optionalen Beschreibungstext (text) und der
 Deteiendung (extension) einen Bild-Dateinamen und liefere diesen
-zurück.
+zurÃ¼ck.
 
 =head1 VERSION
 

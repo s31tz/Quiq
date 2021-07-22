@@ -15,10 +15,10 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
   # Instantiierung
   my $d = Quiq::Dbms->new($dbms);
   
-  # Namen der unterstützten Datenbanksysteme
+  # Namen der unterstÃ¼tzten Datenbanksysteme
   my @names = Quiq::Dbms->dbmsNames;
   
-  # Boolsche Variable für Tests
+  # Boolsche Variable fÃ¼r Tests
   
   ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) =
       $d->dbmsTestVector;
@@ -34,10 +34,10 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert ein Datenbanksystem, bestehend
+Ein Objekt der Klasse reprÃ¤sentiert ein Datenbanksystem, bestehend
 (lediglich) aus dem Namen des Datenbanksystems und dessen Version.
-Die Klasse stellt Testmethoden für die Art des DBMS zur Verfügung
-und ist daher vor allem als Basisklasse nützlich, z.B. für Klassen,
+Die Klasse stellt Testmethoden fÃ¼r die Art des DBMS zur VerfÃ¼gung
+und ist daher vor allem als Basisklasse nÃ¼tzlich, z.B. fÃ¼r Klassen,
 die SQL-Code generieren oder analysieren.
 
 =head1 ATTRIBUTES
@@ -86,13 +86,13 @@ DBMS-Objekt
 
 =head4 Description
 
-Instantiiere ein DBMS-Objekt für DBMS $dbms und liefere eine
-Referenz auf dieses Objekt zurück. Die Liste der unterstützten
-DBMSe siehe $class->L<dbmsNames|"dbmsNames() - Liste der Namen der unterstützten Datenbanksysteme">().
+Instantiiere ein DBMS-Objekt fÃ¼r DBMS $dbms und liefere eine
+Referenz auf dieses Objekt zurÃ¼ck. Die Liste der unterstÃ¼tzten
+DBMSe siehe $class->L<dbmsNames|"dbmsNames() - Liste der Namen der unterstÃ¼tzten Datenbanksysteme">().
 
 =head2 Klassenmethoden
 
-=head3 dbmsNames() - Liste der Namen der unterstützten Datenbanksysteme
+=head3 dbmsNames() - Liste der Namen der unterstÃ¼tzten Datenbanksysteme
 
 =head4 Synopsis
 
@@ -111,7 +111,7 @@ Liefere folgende Liste von DBMS-Namen (in dieser Reihenfolge):
 
 =head2 Objektmethoden
 
-=head3 dbmsTestVector() - Vektor für DBMS-Tests
+=head3 dbmsTestVector() - Vektor fÃ¼r DBMS-Tests
 
 =head4 Synopsis
 
@@ -123,14 +123,14 @@ Liefere einen Vektor von boolschen Werten, von denen genau einer
 wahr ist, und zwar derjenige, der dem DBMS entspricht, auf den das
 Objekt instantiiert ist.
 
-Die Methode ist für Programmcode nützlich, der DBMS-spezifische
+Die Methode ist fÃ¼r Programmcode nÃ¼tzlich, der DBMS-spezifische
 Unterscheidungen macht. Der Code braucht dann lediglich auf den
-Wert einer Variable prüfen
+Wert einer Variable prÃ¼fen
 
   if ($oracle) ...
 
-statt einen umständlichen und fehleranfälligen Stringvergleich
-durchzuführen
+statt einen umstÃ¤ndlichen und fehleranfÃ¤lligen Stringvergleich
+durchzufÃ¼hren
 
   if ($dbms eq 'Oracle') ...
 
@@ -142,7 +142,7 @@ durchzuführen
 
 =head4 Description
 
-Prüfe, ob das Datenbanksystem Oracle ist. Wenn ja, liefere wahr,
+PrÃ¼fe, ob das Datenbanksystem Oracle ist. Wenn ja, liefere wahr,
 sonst falsch.
 
 =head3 isPostgreSQL() - Teste auf PostgreSQL
@@ -153,7 +153,7 @@ sonst falsch.
 
 =head4 Description
 
-Prüfe, ob das Datenbanksystem PostgreSQL ist. Wenn ja, liefere wahr,
+PrÃ¼fe, ob das Datenbanksystem PostgreSQL ist. Wenn ja, liefere wahr,
 sonst falsch.
 
 =head3 isSQLite() - Teste auf SQLite
@@ -164,7 +164,7 @@ sonst falsch.
 
 =head4 Description
 
-Prüfe, ob das Datenbanksystem SQLite ist. Wenn ja, liefere wahr,
+PrÃ¼fe, ob das Datenbanksystem SQLite ist. Wenn ja, liefere wahr,
 sonst falsch.
 
 =head3 isMySQL() - Teste auf MySQL
@@ -175,7 +175,7 @@ sonst falsch.
 
 =head4 Description
 
-Prüfe, ob das Datenbanksystem MySQL ist. Wenn ja, liefere wahr,
+PrÃ¼fe, ob das Datenbanksystem MySQL ist. Wenn ja, liefere wahr,
 sonst falsch.
 
 =head3 isAccess() - Teste auf Access
@@ -186,7 +186,7 @@ sonst falsch.
 
 =head4 Description
 
-Prüfe, ob das Datenbanksystem Access ist. Wenn ja, liefere wahr,
+PrÃ¼fe, ob das Datenbanksystem Access ist. Wenn ja, liefere wahr,
 sonst falsch.
 
 =head3 isMSSQL() - Teste auf MSSQL
@@ -197,7 +197,7 @@ sonst falsch.
 
 =head4 Description
 
-Prüfe, ob das Datenbanksystem MSSQL ist. Wenn ja, liefere wahr,
+PrÃ¼fe, ob das Datenbanksystem MSSQL ist. Wenn ja, liefere wahr,
 sonst falsch.
 
 =head1 VERSION

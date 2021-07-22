@@ -10,7 +10,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen HTTP-Cookie gemäß der klassischen
+Ein Objekt der Klasse reprÃ¤sentiert einen HTTP-Cookie gemÃ¤ÃŸ der klassischen
 L<Netscape-Spezifikation|http://de.wikipedia.org/wiki/HTTP-Cookie#Cookie_nach_Netscape>. Die Klasse wird typischerweise verwendet,
 um Set-Cookie Header zu generieren.
 
@@ -47,11 +47,11 @@ nimmt der Browser den Pfad des URL an.
 Verfallszeitpunkt des Cookie nach RFC822 im Format
 "Wdy, DD Mon YYYY HH:MM:SS GMT" oder mit einer Zeitangabe nach
 Quiq::Time::RFC822 (siehe Abschnitt L<EXAMPLES|"EXAMPLES">). Fehlt die Angabe,
-verfällt der Cookie mit dem Schließen des Browsers.
+verfÃ¤llt der Cookie mit dem SchlieÃŸen des Browsers.
 
 =item secure => $bool (optional)
 
-Wenn wahr, wird der Cookie vom Browser nur über eine sichere
+Wenn wahr, wird der Cookie vom Browser nur Ã¼ber eine sichere
 HTTPS-Verbindung geschickt.
 
 =back
@@ -69,23 +69,23 @@ Cookie-Spezifikation von Netscape
 
 =head1 EXAMPLES
 
-=head2 Cookie für eine Browser-Sitzung
+=head2 Cookie fÃ¼r eine Browser-Sitzung
 
   my $cok = Quiq::Http::Cookie->new(sid=>4711);
   print 'Set-Cookie: ',$cok->asString;
   __END__
   Set-Cookie: sid=4711
 
-=head2 Cookie verfällt in einem Jahr (Aufruf am 2011-11-11 12:24:12 GMT)
+=head2 Cookie verfÃ¤llt in einem Jahr (Aufruf am 2011-11-11 12:24:12 GMT)
 
   my $cok = Quiq::Http::Cookie->new(sid=>4711,expires=>'+1y');
   print 'Set-Cookie: ',$cok->asString;
   __END__
   Set-Cookie: sid=4711; expires=Fri, 11-Nov-2012 12:24:12 GMT
 
-Die Angabe '+1y' wird von Methode L<asString|"asString() - Generiere Zeichenketten-Repräsentation">() durch Aufruf
-von Quiq::Time::RFC822->get() in eine gültige RFC822-Datumsangabe
-gewandelt. Weitere abkürzende Schreibweisen siehe dort.
+Die Angabe '+1y' wird von Methode L<asString|"asString() - Generiere Zeichenketten-ReprÃ¤sentation">() durch Aufruf
+von Quiq::Time::RFC822->get() in eine gÃ¼ltige RFC822-Datumsangabe
+gewandelt. Weitere abkÃ¼rzende Schreibweisen siehe dort.
 
 =head1 METHODS
 
@@ -106,11 +106,11 @@ Referenz auf das Cookie-Objekt.
 Instantiiere einen Cookie mit Name $name, Wert $value und den
 optionalen Attributen @keyVal.
 
-Siehe Abschnitt L<ATTRIBUTES|"ATTRIBUTES"> für mögliche Werte für @keyVal.
+Siehe Abschnitt L<ATTRIBUTES|"ATTRIBUTES"> fÃ¼r mÃ¶gliche Werte fÃ¼r @keyVal.
 
 =head2 Objektmethoden
 
-=head3 asString() - Generiere Zeichenketten-Repräsentation
+=head3 asString() - Generiere Zeichenketten-ReprÃ¤sentation
 
 =head4 Synopsis
 
@@ -118,12 +118,12 @@ Siehe Abschnitt L<ATTRIBUTES|"ATTRIBUTES"> für mögliche Werte für @keyVal.
 
 =head4 Returns
 
-Zeichnketten-Repräsentation des Cookie.
+Zeichnketten-ReprÃ¤sentation des Cookie.
 
 =head4 Description
 
-Generiere eine Zeichenketten-Repräsentation des Cookie, die als
-Wert für einen Set-Cookie Header eingesetzt werden kann.
+Generiere eine Zeichenketten-ReprÃ¤sentation des Cookie, die als
+Wert fÃ¼r einen Set-Cookie Header eingesetzt werden kann.
 
 =head1 VERSION
 

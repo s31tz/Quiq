@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Html::Widget::Hidden - Nicht sichtbares und nicht änderbares Formularelement
+Quiq::Html::Widget::Hidden - Nicht sichtbares und nicht Ã¤nderbares Formularelement
 
 =head1 BASE CLASS
 
@@ -11,7 +11,7 @@ L<Quiq::Html::Widget|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Ht
 =head1 DESCRIPTION
 
 Ein Hidden-Widget kommuniziert unter einem Namen einen oder
-mehrere Werte. Das Widget ist für den Anwender unsichtbar und
+mehrere Werte. Das Widget ist fÃ¼r den Anwender unsichtbar und
 sein Zustand kann von diesem nicht manipuliert werden.
 
 =head1 ATTRIBUTES
@@ -32,8 +32,8 @@ Wert bzw. Liste von Werten.
 
 =item hidden => 1
 
-Widget ist unsichtbar. Diese Eigenschaft gilt für Hidden-Widgets
-immer und ist nicht änderbar.
+Widget ist unsichtbar. Diese Eigenschaft gilt fÃ¼r Hidden-Widgets
+immer und ist nicht Ã¤nderbar.
 
 =item ignoreIfNull => $bool (Default: 0)
 

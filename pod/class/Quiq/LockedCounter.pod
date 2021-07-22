@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::LockedCounter - Persistenter Zähler mit Lock
+Quiq::LockedCounter - Persistenter ZÃ¤hler mit Lock
 
 =head1 BASE CLASS
 
@@ -18,8 +18,8 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Die Klasse realisiert einen Zähler mit Exklusiv-Lock. Der
-Zählerstand wird in einer Datei gespeichert. Die Datei wird
+Die Klasse realisiert einen ZÃ¤hler mit Exklusiv-Lock. Der
+ZÃ¤hlerstand wird in einer Datei gespeichert. Die Datei wird
 gelockt. Der Lock wird bis zur Destrukturierung des Objekts
 gehalten.
 
@@ -39,7 +39,7 @@ Objekt
 
 =head2 Operationen
 
-=head3 count() - Liefere Zählerstand
+=head3 count() - Liefere ZÃ¤hlerstand
 
 =head4 Synopsis
 
@@ -47,7 +47,7 @@ Objekt
 
 =head4 Returns
 
-Zählerstand (Integer)
+ZÃ¤hlerstand (Integer)
 
 =head3 file() - Liefere Dateipfad
 
@@ -59,7 +59,7 @@ Zählerstand (Integer)
 
 Dateipfad (String)
 
-=head3 increment() - Inkrementiere Zählerstand
+=head3 increment() - Inkrementiere ZÃ¤hlerstand
 
 =head4 Synopsis
 

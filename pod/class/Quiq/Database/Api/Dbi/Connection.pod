@@ -10,8 +10,8 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse Quiq::Database::Api::Dbi::Connection repräsentiert eine
-Verbindung zu einer Relationalen Datenbank über den DBI-Layer.
+Ein Objekt der Klasse Quiq::Database::Api::Dbi::Connection reprÃ¤sentiert eine
+Verbindung zu einer Relationalen Datenbank Ã¼ber den DBI-Layer.
 
 =head1 ATTRIBUTES
 
@@ -23,7 +23,7 @@ DBI Database Handle.
 
 =item dbms => $dbms
 
-Name des DBMS, für DBMS-spezifische Fallunterscheidungen.
+Name des DBMS, fÃ¼r DBMS-spezifische Fallunterscheidungen.
 
 =back
 
@@ -31,7 +31,7 @@ Name des DBMS, für DBMS-spezifische Fallunterscheidungen.
 
 =head2 Konstruktor/Destruktor
 
-=head3 new() - Öffne Datenbankverbindung
+=head3 new() - Ã–ffne Datenbankverbindung
 
 =head4 Synopsis
 
@@ -43,7 +43,7 @@ Name des DBMS, für DBMS-spezifische Fallunterscheidungen.
 
 =item -autoCommit => $bool (Default: 0)
 
-Öffne die Verbindung im Autocommit-Modus.
+Ã–ffne die Verbindung im Autocommit-Modus.
 
 =item -handle => $handle
 
@@ -54,9 +54,9 @@ Name des DBMS, für DBMS-spezifische Fallunterscheidungen.
 =head4 Description
 
 Instantiiere eine Datenbankverbindung und liefere eine Referenz
-auf dieses Objekt zurück.
+auf dieses Objekt zurÃ¼ck.
 
-=head3 destroy() - Schließe Datenbankverbindung
+=head3 destroy() - SchlieÃŸe Datenbankverbindung
 
 =head4 Synopsis
 
@@ -64,7 +64,7 @@ auf dieses Objekt zurück.
 
 =head4 Description
 
-Schließe die Datenbankverbindung. Die Methode liefert keinen Wert zurück.
+SchlieÃŸe die Datenbankverbindung. Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -77,11 +77,11 @@ Schließe die Datenbankverbindung. Die Methode liefert keinen Wert zurück.
 
 =head4 Description
 
-Ist der Strict-Modus eingeschaltet, führen alle Datenbank-Fehler
+Ist der Strict-Modus eingeschaltet, fÃ¼hren alle Datenbank-Fehler
 zu einer Exception. Diese Methode schaltet den Strict-Modus ein
-oder stellt den ursprüngliche Modus wieder her.
+oder stellt den ursprÃ¼ngliche Modus wieder her.
 
-=head3 maxBlobSize() - Liefere/Setze maximale Größe eines BLOB/TEXT-Werts (Oracle)
+=head3 maxBlobSize() - Liefere/Setze maximale GrÃ¶ÃŸe eines BLOB/TEXT-Werts (Oracle)
 
 =head4 Synopsis
 
@@ -90,18 +90,18 @@ oder stellt den ursprüngliche Modus wieder her.
 
 =head4 Description
 
-Liefere/Setze die maximale Größe eines BLOB/TEXT-Werts auf $n Bytes.
+Liefere/Setze die maximale GrÃ¶ÃŸe eines BLOB/TEXT-Werts auf $n Bytes.
 Defaulteinstellung ist 1024*1024 Bytes (1MB).
 
-Dieser Wert ist nur für Oracle relevant und wird bei der Selektion
-von BLOB/TEXT-Kolumnen benötigt. Ist der Wert einer BLOB/TEXT-Kolumne
-größer als die angegebene Anzahl an Bytes wird eine Exception
-ausgelöst.
+Dieser Wert ist nur fÃ¼r Oracle relevant und wird bei der Selektion
+von BLOB/TEXT-Kolumnen benÃ¶tigt. Ist der Wert einer BLOB/TEXT-Kolumne
+grÃ¶ÃŸer als die angegebene Anzahl an Bytes wird eine Exception
+ausgelÃ¶st.
 
 Bei anderen DBMSen als Oracle hat das Setzen keinen Effekt und der
 Returnwert ist immer 0.
 
-=head3 sql() - Führe SQL-Statement aus
+=head3 sql() - FÃ¼hre SQL-Statement aus
 
 =head4 Synopsis
 
@@ -109,11 +109,11 @@ Returnwert ist immer 0.
 
 =head4 Description
 
-Führe SQL-Statement $stmt auf der Datenbank $db aus, instantiiere ein
+FÃ¼hre SQL-Statement $stmt auf der Datenbank $db aus, instantiiere ein
 Resultat-Objekt $cur und liefere eine Referenz auf dieses Objekt
-zurück.
+zurÃ¼ck.
 
-Ist Parameter $forceExec angegeben und wahr, wird die Ausführung
+Ist Parameter $forceExec angegeben und wahr, wird die AusfÃ¼hrung
 des Statements forciert. Dies kann bei Oracle PL/SQL Code notwendig
 sein (siehe Doku zu Quiq::Database::Connection/sql).
 

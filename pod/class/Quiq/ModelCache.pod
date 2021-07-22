@@ -10,19 +10,19 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 SYNOPSIS
 
-Instantiiere das Modell-Objekt für eine Reihe von Tabellen:
+Instantiiere das Modell-Objekt fÃ¼r eine Reihe von Tabellen:
 
   $mod = Quiq::ModelCache->new($db,@types);
 
-Liefere alle Datensätze einer Tabelle:
+Liefere alle DatensÃ¤tze einer Tabelle:
 
   @rows|$tab = $mod->all($type);
 
-Liefere Datensatz zu Primärschlüssel:
+Liefere Datensatz zu PrimÃ¤rschlÃ¼ssel:
 
   $row = $mod->lookup($type,$id);
 
-Liefere zu einem Datensatz alle Kind-Datensätze einer Kind-Tabelle:
+Liefere zu einem Datensatz alle Kind-DatensÃ¤tze einer Kind-Tabelle:
 
   @rows|$tab = $mod->childs($row,$childType);
 
@@ -32,14 +32,14 @@ Liefere zu einem Datensatz den Eltern-Datensatz einer Eltern-Tabelle:
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse stellt einen Cache für eine Reihe von
+Ein Objekt der Klasse stellt einen Cache fÃ¼r eine Reihe von
 Tabellen/Views einer Datenbank dar. Mit den Methoden der Klasse
-kann über die Datensätze navigiert werden, wobei diese sukzessive
+kann Ã¼ber die DatensÃ¤tze navigiert werden, wobei diese sukzessive
 geladen werden. Tabellen, deren Inhalt nicht zugegriffen wird,
 werden auch nicht geladen.
 
-ACHTUNG: Da eine Tabelle/View beim ersten Zugriff vollständig geladen
-wird, ist die Klasse nicht für Tabellen mit Massendaten geeignet.
+ACHTUNG: Da eine Tabelle/View beim ersten Zugriff vollstÃ¤ndig geladen
+wird, ist die Klasse nicht fÃ¼r Tabellen mit Massendaten geeignet.
 
 =head1 EXAMPLES
 
@@ -70,7 +70,7 @@ Programm:
   Frank Seitz
     0176/78243503
 
-=head2 Kolumnen mit Präfix
+=head2 Kolumnen mit PrÃ¤fix
 
 Tabellen:
 
@@ -109,12 +109,12 @@ Programm:
 
 =head4 Description
 
-Instantiiere einen Cache für Modell-Objekte @types der Datenbank $db
-und liefere eine Referenz auf dieses Objekt zurück.
+Instantiiere einen Cache fÃ¼r Modell-Objekte @types der Datenbank $db
+und liefere eine Referenz auf dieses Objekt zurÃ¼ck.
 
 =head2 Navigation
 
-=head3 all() - Entitätsmenge
+=head3 all() - EntitÃ¤tsmenge
 
 =head4 Synopsis
 
@@ -122,10 +122,10 @@ und liefere eine Referenz auf dieses Objekt zurück.
 
 =head4 Description
 
-Liefere alle Datensätze vom Typ $type. Im Skalarkontext liefere ein
-Tabellenobjekt mit den Datensätzen.
+Liefere alle DatensÃ¤tze vom Typ $type. Im Skalarkontext liefere ein
+Tabellenobjekt mit den DatensÃ¤tzen.
 
-=head3 lookup() - Datensatz zu Schlüsselwert
+=head3 lookup() - Datensatz zu SchlÃ¼sselwert
 
 =head4 Synopsis
 
@@ -133,11 +133,11 @@ Tabellenobjekt mit den Datensätzen.
 
 =head4 Description
 
-Ermittele in der Tabelle $type den Datensatz mit dem Schlüsselwert $id
-und liefere diesen zurück. Existiert kein Datensatz mit dem
-Schlüsselwert $id, wird eine Exception geworfen.
+Ermittele in der Tabelle $type den Datensatz mit dem SchlÃ¼sselwert $id
+und liefere diesen zurÃ¼ck. Existiert kein Datensatz mit dem
+SchlÃ¼sselwert $id, wird eine Exception geworfen.
 
-=head3 childs() - Kind-Datensätze eines Datensatzes
+=head3 childs() - Kind-DatensÃ¤tze eines Datensatzes
 
 =head4 Synopsis
 
@@ -145,9 +145,9 @@ Schlüsselwert $id, wird eine Exception geworfen.
 
 =head4 Description
 
-Ermittele zu Datensatz $row alle Kind-Datensätze vom Typ $childType
-und liefere diese zurück. Im Skalarkontext liefere ein
-Tabellenobjekt mit diesen Datensätzen.
+Ermittele zu Datensatz $row alle Kind-DatensÃ¤tze vom Typ $childType
+und liefere diese zurÃ¼ck. Im Skalarkontext liefere ein
+Tabellenobjekt mit diesen DatensÃ¤tzen.
 
 =head3 parent() - Eltern-Datensatz eines Datensatzes
 
@@ -161,7 +161,7 @@ Liefere zu Datensatz $row dessen Eltern-Datensatz vom Typ $parentType.
 
 =head2 Kolumnen
 
-=head3 pk() - Name Primärschlüsselkolumne
+=head3 pk() - Name PrimÃ¤rschlÃ¼sselkolumne
 
 =head4 Synopsis
 
@@ -169,16 +169,16 @@ Liefere zu Datensatz $row dessen Eltern-Datensatz vom Typ $parentType.
 
 =head4 Description
 
-Liefere den Namen der Primärschlüsselkolumne des Modell-Objekts $type.
-Ohne vereinbarten Kolumnenpräfix lautet der Name
+Liefere den Namen der PrimÃ¤rschlÃ¼sselkolumne des Modell-Objekts $type.
+Ohne vereinbarten KolumnenprÃ¤fix lautet der Name
 
   id
 
-Mit vereinbarten Kolumnenpräfix lautet der Name
+Mit vereinbarten KolumnenprÃ¤fix lautet der Name
 
   <prefix>_id
 
-=head3 fk() - Name Fremdschlüsselkolumne
+=head3 fk() - Name FremdschlÃ¼sselkolumne
 
 =head4 Synopsis
 
@@ -186,14 +186,14 @@ Mit vereinbarten Kolumnenpräfix lautet der Name
 
 =head4 Description
 
-Liefere den Namen der Fremdschlüsselkolumne eines Modell-Objekts
-vom Typ $type für ein Parent-Modell-Objekt vom Typ $parentType.
+Liefere den Namen der FremdschlÃ¼sselkolumne eines Modell-Objekts
+vom Typ $type fÃ¼r ein Parent-Modell-Objekt vom Typ $parentType.
 
-Ohne vereinbarten Kolumnenpräfix für $type lautet der Name
+Ohne vereinbarten KolumnenprÃ¤fix fÃ¼r $type lautet der Name
 
   <parentType>_id
 
-Mit vereinbarten Kolumnenpräfix für $type lautet der Name
+Mit vereinbarten KolumnenprÃ¤fix fÃ¼r $type lautet der Name
 
   <prefix>_<parentType>_id
 

@@ -10,14 +10,14 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine Datei als ein Array von
+Ein Objekt der Klasse reprÃ¤sentiert eine Datei als ein Array von
 Zeilen. Die Zeilen sind ihrerseits Objekte (per Default Objekte
 der Klasse Quiq::LineProcessor::Line). Die Klasse stellt
-Methoden zur Manipulation des Arrays von Zeilen zur Verfügung.
+Methoden zur Manipulation des Arrays von Zeilen zur VerfÃ¼gung.
 
 =head2 Fehlerbehandlung
 
-Für eine Fehlerbehandlung können die Methoden $par->input()
+FÃ¼r eine Fehlerbehandlung kÃ¶nnen die Methoden $par->input()
 und $line->number() genutzt werden:
 
   $class->throw(
@@ -59,7 +59,7 @@ Klasse, auf die die Zeilen des Dokuments geblesst werden.
 
 =item -lineContinuation => $type (Default: undef)
 
-Art der Zeilenfortsetzung. Mögliche Werte:
+Art der Zeilenfortsetzung. MÃ¶gliche Werte:
 
 =over 4
 
@@ -70,9 +70,9 @@ Keine Zeilenfortsetzung.
 =item 'backslash'
 
 Endet eine Zeile mit einem Backslash, entferne Whitespace am
-Anfang der Folgezeile und füge den Rest zur Zeile hinzu.
+Anfang der Folgezeile und fÃ¼ge den Rest zur Zeile hinzu.
 
-Dies kann für eine Zeile unterdrückt werden, indem der Backslash am
+Dies kann fÃ¼r eine Zeile unterdrÃ¼ckt werden, indem der Backslash am
 Ende der Zeile durch einen davorgestellten Backslash maskiert wird.
 In dem Fall wird statt einer Fortsetzung der Zeile der maskierende
 Backslash entfernt.
@@ -80,15 +80,15 @@ Backslash entfernt.
 =item 'whitespace'
 
 Beginnt eine Zeile mit einem oder mehreren Leerzeichen oder TABs, wird
-sie zur vorhergehenden Zeile hinzugefügt. Die Leerzeichen und TABs am
+sie zur vorhergehenden Zeile hinzugefÃ¼gt. Die Leerzeichen und TABs am
 Zeilenanfang werden entfernt. Die Teile werden mit \n als Trenner
-zusammengefügt.
+zusammengefÃ¼gt.
 
 =back
 
 =item -skip => $regex (Default: undef)
 
-Überlies Zeilen, die Regex $regex erfüllen.
+Ãœberlies Zeilen, die Regex $regex erfÃ¼llen.
 
 =back
 
@@ -96,7 +96,7 @@ zusammengefügt.
 
 Instantiiere ein Dokument-Objekt aus Datei $file, aus Text
 $text oder aus den Zeilen @lines und liefere eine Referenz
-auf dieses Objekt zurück.
+auf dieses Objekt zurÃ¼ck.
 
 =head2 Akzessoren
 
@@ -142,7 +142,7 @@ eine Referenz auf die Liste.
 
 =head4 Description
 
-Entferne die erste Zeile aus dem Dokument und liefere diese zurück.
+Entferne die erste Zeile aus dem Dokument und liefere diese zurÃ¼ck.
 
 =head3 shiftLineIfEq() - Entferne erste Zeile, wenn bestimmter Inhalt
 
@@ -152,7 +152,7 @@ Entferne die erste Zeile aus dem Dokument und liefere diese zurück.
 
 =head4 Description
 
-Entferne die erste Zeile aus dem Dokument und liefere diese zurück,
+Entferne die erste Zeile aus dem Dokument und liefere diese zurÃ¼ck,
 sofern ihr Inhalt eq $str ist.
 
 =head3 removeEmptyLines() - Entferne Leerzeilen am Anfang
@@ -164,11 +164,11 @@ sofern ihr Inhalt eq $str ist.
 =head4 Description
 
 Entferne Leerzeilen am Anfang. Die Methode liefert
-keinen Wert zurück.
+keinen Wert zurÃ¼ck.
 
-=head2 Externe Repräsentation
+=head2 Externe ReprÃ¤sentation
 
-=head3 dump() - Erzeuge externe Repräsentation
+=head3 dump() - Erzeuge externe ReprÃ¤sentation
 
 =head4 Synopsis
 
@@ -177,8 +177,8 @@ keinen Wert zurück.
 
 =head4 Description
 
-Erzeuge eine externe Dokumentrepräsentation in Format $format
-für das gesamte Dokument und liefere diese zurück.
+Erzeuge eine externe DokumentreprÃ¤sentation in Format $format
+fÃ¼r das gesamte Dokument und liefere diese zurÃ¼ck.
 
 B<Formate>
 

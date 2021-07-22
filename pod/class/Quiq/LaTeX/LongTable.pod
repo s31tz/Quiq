@@ -41,7 +41,7 @@ produziert
   Links & Rechts & Zentriert \\ \hline
   \endhead
   \hline
-  \multicolumn{3}{r}{\emph{weiter nächste Seite}} \
+  \multicolumn{3}{r}{\emph{weiter nÃ¤chste Seite}} \
   \endfoot
   \caption{Ein Test}
   \endlastfoot
@@ -83,12 +83,12 @@ was im LaTeX-Dokument in etwa so aussieht
 
 =item align => $align (Default: 'c')
 
-Horizontale Ausrichtung der Tabelle auf der Seite. Mögliche Werte:
+Horizontale Ausrichtung der Tabelle auf der Seite. MÃ¶gliche Werte:
 'l', 'c'.
 
 =item alignments => \@alignments (Default: [])
 
-Liste der Kolumnen-Ausrichtungen. Mögliche Werte je Kolumne: 'l',
+Liste der Kolumnen-Ausrichtungen. MÃ¶gliche Werte je Kolumne: 'l',
 'r', 'c'.
 
 =item border => $border (Default: 'hHV' oder 'hvHV' bei multiLine)
@@ -98,8 +98,8 @@ sich aus den Zeichen 't', 'h', 'v', 'H', 'V' zusammensetzt.
 
 =item callbackArguments => \@arr (Default: [])
 
-Liste von zusätzlichen Argumenten, die an die Funktionen
-C<rowCallback> und C<titleCallback> übergeben werden.
+Liste von zusÃ¤tzlichen Argumenten, die an die Funktionen
+C<rowCallback> und C<titleCallback> Ã¼bergeben werden.
 
 =item caption => $str
 
@@ -107,12 +107,12 @@ Unterschrift zur Tabelle.
 
 =item indent => $length
 
-Einrückung der Tabelle vom linken Rand. Die Option C<align> darf
+EinrÃ¼ckung der Tabelle vom linken Rand. Die Option C<align> darf
 dann nicht gesetzt sein, auch nicht auf 'l'.
 
 =item label => $str
 
-Label der Tabelle, über welches sie referenziert werden kann.
+Label der Tabelle, Ã¼ber welches sie referenziert werden kann.
 
 =item language => 'german'|'english'
 
@@ -131,7 +131,7 @@ Liste der Tabellenzeilen.
 
 =item rowCallback => sub {} (Default: I<siehe unten>)
 
-Subroutine, die für jede Zeile in @rows die Zeileninformation
+Subroutine, die fÃ¼r jede Zeile in @rows die Zeileninformation
 liefert, die in den LaTeX-Code eingesetzt wird. Default:
 
   sub {
@@ -151,7 +151,7 @@ Farbe der Titelzeile.
 
 =item titleWrapper => $code
 
-Zeichenkette, die um jeden Kolumnentitel gelegt wird. Für C<%s>
+Zeichenkette, die um jeden Kolumnentitel gelegt wird. FÃ¼r C<%s>
 wird der Titel eingesetzt. Auf diesem Weg kann ein Makro
 auf jeden Titel angewendet werden. Z.B. serifenlosen, fetten Font
 einstellen:
@@ -181,7 +181,7 @@ LongTable-Objekt
 =head4 Description
 
 Instantiiere ein LaTeX LongTable-Objekt und liefere eine Referenz
-auf dieses Objekt zurück.
+auf dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -195,7 +195,7 @@ auf dieses Objekt zurück.
 =head4 Description
 
 Generiere den LaTeX-Code des Objekts und liefere diesen
-zurück. Als Klassenmethode gerufen, wird das Objekt intern erzeugt
+zurÃ¼ck. Als Klassenmethode gerufen, wird das Objekt intern erzeugt
 und mit den Attributen @keyVal instantiiert.
 
 =head1 VERSION

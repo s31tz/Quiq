@@ -18,7 +18,7 @@ CSS Klasse.
 
 =item disabled => $bool (Default: 0)
 
-Keine Eingabe möglich.
+Keine Eingabe mÃ¶glich.
 
 =item hidden => $bool (Default: 0)
 
@@ -42,7 +42,7 @@ OnClick-Handler.
 
 =item option => $value (Default: undef) 
 
-Wert, der gesendet wird, wenn der Radio-Button ausgewählt ist.
+Wert, der gesendet wird, wenn der Radio-Button ausgewÃ¤hlt ist.
 
 =item style => $style (Default: undef)
 
@@ -59,7 +59,7 @@ Wenn wahr, liefere C<undef> als Widget-Code.
 =item value => $value (Default: undef)
 
 Aktueller Wert. Stimmt dieser mit dem Wert des Attributs option
-überein, wird der Radio-Button aktiviert.
+Ã¼berein, wird der Radio-Button aktiviert.
 
 =back
 
@@ -76,7 +76,7 @@ Aktueller Wert. Stimmt dieser mit dem Wert des Attributs option
 =head4 Description
 
 Instantiiere ein RadioButton-Objekt und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -90,7 +90,7 @@ dieses Objekt zurück.
 =head4 Description
 
 Generiere den HTML-Code des RadioButton-Objekts und liefere
-diesen zurück. Als Klassenmethode gerufen, wird das Objekt intern
+diesen zurÃ¼ck. Als Klassenmethode gerufen, wird das Objekt intern
 erzeugt und mit den Attributen @keyVal instantiiert.
 
 =head1 VERSION

@@ -10,7 +10,7 @@ L<Quiq::Database::Row|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/D
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen Datensatz.
+Ein Objekt der Klasse reprÃ¤sentiert einen Datensatz.
 
 =head1 METHODS
 
@@ -29,11 +29,11 @@ Ein Objekt der Klasse repräsentiert einen Datensatz.
 
 Instantiiere ein Datensatz-Objekt mit den Kolumnen @titles und
 den Kolumnenwerten @values und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 Attributmethoden
 
-=head3 exists() - Prüfe, ob Datensatz-Attribut existiert
+=head3 exists() - PrÃ¼fe, ob Datensatz-Attribut existiert
 
 =head4 Synopsis
 
@@ -54,8 +54,8 @@ anderfalls "falsch".
 =head4 Description
 
 Liefere die Datensatz-Attributwerte zu den angegebenen
-Schlüsseln. In skalarem Kontext liefere keine Liste, sondern den
-Wert des ersten Schlüssels.
+SchlÃ¼sseln. In skalarem Kontext liefere keine Liste, sondern den
+Wert des ersten SchlÃ¼ssels.
 
 Ein Datensatz-Wert kann der Wert einer Kolumne oder das Ergebnis
 einer Berechnung sein.
@@ -80,8 +80,8 @@ sonst C<undef>.
 =head4 Description
 
 Setze die angegebenen Datensatz-Attribute. Es wird eine Exception
-ausgelöst, wenn ein Attribut zu setzen versucht wird, das nicht existiert.
-Die Methode liefert keinen Wert zurück.
+ausgelÃ¶st, wenn ein Attribut zu setzen versucht wird, das nicht existiert.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head3 init() - Initialisieren Datensatz-Attribute aus Objekt
 
@@ -92,11 +92,11 @@ Die Methode liefert keinen Wert zurück.
 =head4 Description
 
 Setze die Datensatz-Komunen in $row auf die Werte der Attribute in $obj.
-Eine Kolumne wird nur gesetzt, wenn $obj für sie einen Wert hat,
+Eine Kolumne wird nur gesetzt, wenn $obj fÃ¼r sie einen Wert hat,
 d.h. das Attribut muss existieren und es muss einen von '' und
 undef verschiedenen Wert haben.
 
-Die Methode liefert keinen Wert zurück.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head3 initFromCgi() - Initialisieren Datensatz-Attribute aus CGI-Objekt
 
@@ -108,7 +108,7 @@ Die Methode liefert keinen Wert zurück.
 
 Wie init(), nur dass ein CGI-Objekt per Methode param() befragt wird.
 
-=head3 addAttribute() - Füge Datensatz-Attribute hinzu
+=head3 addAttribute() - FÃ¼ge Datensatz-Attribute hinzu
 
 =head4 Synopsis
 
@@ -116,8 +116,8 @@ Wie init(), nur dass ein CGI-Objekt per Methode param() befragt wird.
 
 =head4 Description
 
-Füge die Attribute @keys zum Datensatz hinzu, sofern noch nicht existent.
-Die Methode liefert keinen Wert zurück.
+FÃ¼ge die Attribute @keys zum Datensatz hinzu, sofern noch nicht existent.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head3 removeColumn() - Entferne Datensatz-Kolumne(n)
 
@@ -128,7 +128,7 @@ Die Methode liefert keinen Wert zurück.
 =head4 Description
 
 Entferne die Kolumnen @keys aus dem Datensatz. Die Methode liefert
-keinen Wert zurück.
+keinen Wert zurÃ¼ck.
 
 =head3 add() - Setze Datensatz-Attribute forciert
 
@@ -144,9 +144,9 @@ setValue()
 
 Forciere das Setzen der Datensatz-Attribute @keyVal, d.h. erzeuge
 ein Datensatz-Attribut, falls es nicht existiert.
-Die Methode liefert keinen Wert zurück.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
-=head3 memoize() - Füge Datensatz-Attribute mit berechnetem Wert hinzu
+=head3 memoize() - FÃ¼ge Datensatz-Attribute mit berechnetem Wert hinzu
 
 =head4 Synopsis
 
@@ -174,7 +174,7 @@ und speichere ihn auf dem Attribut.
 Implementierung einer einfachen Attributmethode
 
 Dies setzt voraus, dass das Attribut vorhanden ist. Falls dies
-nicht der Fall ist, kann es mit $row->add(xxx=>$val) eingeführt
+nicht der Fall ist, kann es mit $row->add(xxx=>$val) eingefÃ¼hrt
 werden. Diese Form der Attributmethode wird von selbst per
 AUTOLOAD erzeugt, braucht also nicht implementiert werden
 
@@ -205,13 +205,13 @@ Eine Attributmethode, die eine Liste oder eine Arrayreferenz liefert
 =head4 Description
 
 Liefere/Setze den Status des Datensatzes. Der Status beschreibt
-den Änderungsstand des Datensatzes hinsichtlich seiner Kolumnenwerte.
+den Ã„nderungsstand des Datensatzes hinsichtlich seiner Kolumnenwerte.
 
 Folgende Status sind definiert:
 
 =over 4
 
-=item '0' (unverändert)
+=item '0' (unverÃ¤ndert)
 
 =back
 
@@ -237,13 +237,13 @@ Datenbank nicht.
 
 =over 4
 
-=item 'D' (zu löschen)
+=item 'D' (zu lÃ¶schen)
 
 =back
 
-Der Datensatz wurde zum Löschen markiert. Dies geschah durch Aufruf
-von $row->rowStatus('D'). Mit dem nächsen Aufruf von $row->save($db);
-wird die Löschoperation auf der Datenbank ausgeführt.
+Der Datensatz wurde zum LÃ¶schen markiert. Dies geschah durch Aufruf
+von $row->rowStatus('D'). Mit dem nÃ¤chsen Aufruf von $row->save($db);
+wird die LÃ¶schoperation auf der Datenbank ausgefÃ¼hrt.
 
 =head3 titles() - Liefere Kolumnentitel
 
@@ -267,7 +267,7 @@ Liefere die Liste der Kolumnentitel der Datensatz-Klasse.
 
 =back
 
-=head3 isModified() - Prüfe, ob Kolumne modifiziert wurde
+=head3 isModified() - PrÃ¼fe, ob Kolumne modifiziert wurde
 
 =head4 Synopsis
 
@@ -277,7 +277,7 @@ Liefere die Liste der Kolumnentitel der Datensatz-Klasse.
 
 Liefere 1, wenn die Kolumnen $title modifiziert wurde, andernfalls 0.
 
-=head3 modifiedColumns() - Liefere die Liste der geänderten Kolumnen
+=head3 modifiedColumns() - Liefere die Liste der geÃ¤nderten Kolumnen
 
 =head4 Synopsis
 
@@ -290,27 +290,27 @@ Liefere 1, wenn die Kolumnen $title modifiziert wurde, andernfalls 0.
 
 =item -columns => @colSpec (Default: alle Kolumnen)
 
-Einschränkung auf die angegebenen Kolumnen. Ist als Kolumnenname
+EinschrÃ¤nkung auf die angegebenen Kolumnen. Ist als Kolumnenname
 eine Arrayreferenz
 
   [$key=>$retKey]
 
-angegeben, wird Kolumne $key geprüft, aber $retKey als Kolumnenname
-geliefert. Dies ist bei View-Datensätzen nützlich, wenn $row ein
+angegeben, wird Kolumne $key geprÃ¼ft, aber $retKey als Kolumnenname
+geliefert. Dies ist bei View-DatensÃ¤tzen nÃ¼tzlich, wenn $row ein
 View-Datensatz ist, aber ein Tabellen-Datensatz manipuliert
 werden soll und die Kolumnennamen differieren.
 
 =item -withValue => $bool (Default: 0)
 
 Liefere nicht nur die Kolumnennamen, sondern auch deren Wert.
-Die Methode liefert in dem Fall die Datensatz-Änderungen
-als Schlüssel/Wert-Paare.
+Die Methode liefert in dem Fall die Datensatz-Ã„nderungen
+als SchlÃ¼ssel/Wert-Paare.
 
 =back
 
 =head4 Example
 
-Generiere eine SET-Klausel für ein UPDATE-Statement aus einem
+Generiere eine SET-Klausel fÃ¼r ein UPDATE-Statement aus einem
 View-Datensatz, dessen Kolumnen teilweise anders beannt sind,
 als die der zu aktualierenden Tabelle:
 
@@ -323,7 +323,7 @@ als die der zu aktualierenden Tabelle:
       -widthValues=>1,
   );
 
-=head3 setClauseFromModifiedRow() - Liefere SET-Klausel über geänderten Kolumnen
+=head3 setClauseFromModifiedRow() - Liefere SET-Klausel Ã¼ber geÃ¤nderten Kolumnen
 
 =head4 Synopsis
 
@@ -336,8 +336,8 @@ modifiedColumns()
 =head4 Example
 
 Auf einen View-Datensatz wurden Werte geschrieben. Wir wissen
-nicht, welche Information sich geändert hat. Die Methode
-setClauseFromModifiedRow() liefert uns die SET-Klausel für ein UPDATE:
+nicht, welche Information sich geÃ¤ndert hat. Die Methode
+setClauseFromModifiedRow() liefert uns die SET-Klausel fÃ¼r ein UPDATE:
 
   @setClause = $row->setClauseFromModifiedRow(
       [lieferantenid=>'lieferantid'],
@@ -355,10 +355,10 @@ setClauseFromModifiedRow() liefert uns die SET-Klausel für ein UPDATE:
       -where,artikelid => $artId,
   );
 
-Wurde keine der Kolumnen geändert, liefert setClauseFromModifiedRow() eine leere
+Wurde keine der Kolumnen geÃ¤ndert, liefert setClauseFromModifiedRow() eine leere
 Liste und $db->update() ist eine Nulloperation.
 
-=head3 absorbModifications() - Absorbiere Datensatz-Änderungen
+=head3 absorbModifications() - Absorbiere Datensatz-Ã„nderungen
 
 =head4 Synopsis
 
@@ -366,9 +366,9 @@ Liste und $db->update() ist eine Nulloperation.
 
 =head4 Description
 
-Setze den Datensatz-Status auf 0 (unverändert) und lösche den
-Änderungs-Hash. Nach Aufruf der Methode sind alle vorangegangenen
-Änderungen am Datensatz nicht mehr feststellbar.
+Setze den Datensatz-Status auf 0 (unverÃ¤ndert) und lÃ¶sche den
+Ã„nderungs-Hash. Nach Aufruf der Methode sind alle vorangegangenen
+Ã„nderungen am Datensatz nicht mehr feststellbar.
 
 Die Methode kann benutzt werden, um Datenkorrekturen, z.B. durch
 normalizeNumber(), verschwinden zu lassen.
@@ -377,15 +377,15 @@ normalizeNumber(), verschwinden zu lassen.
 
 $tab->absorbModifications()
 
-=head3 modificationInfo() - Liefere Information über Datensatz-Änderungen
+=head3 modificationInfo() - Liefere Information Ã¼ber Datensatz-Ã„nderungen
 
 =head4 Synopsis
 
   $str = $row->modificationInfo;
 
-=head2 Eltern-Datensätze
+=head2 Eltern-DatensÃ¤tze
 
-=head3 parentExists() - Prüfe, ob Eltern-Datensatz existiert
+=head3 parentExists() - PrÃ¼fe, ob Eltern-Datensatz existiert
 
 =head4 Synopsis
 
@@ -393,10 +393,10 @@ $tab->absorbModifications()
 
 =head4 Description
 
-Prüfe, ob ein Eltern-Datensätze vom Typ $type existiert.
+PrÃ¼fe, ob ein Eltern-DatensÃ¤tze vom Typ $type existiert.
 Falls ja, liefere I<wahr>, andernfalls I<falsch>.
 
-=head3 addParent() - Füge Eltern-Datensatz hinzu
+=head3 addParent() - FÃ¼ge Eltern-Datensatz hinzu
 
 =head4 Synopsis
 
@@ -404,7 +404,7 @@ Falls ja, liefere I<wahr>, andernfalls I<falsch>.
 
 =head4 Description
 
-Füge Datensatz $parentRow als Eltern-Datensatz vom Typ $type hinzu.
+FÃ¼ge Datensatz $parentRow als Eltern-Datensatz vom Typ $type hinzu.
 Die Referenz wird als schwache Referenz gekennzeichnet.
 
 =head3 getParent() - Liefere Eltern-Datensatz
@@ -418,9 +418,9 @@ Die Referenz wird als schwache Referenz gekennzeichnet.
 Liefere den Eltern-Datensatz vom Typ $type. Existiert keine
 Elterndatensatz vom Typ $type, liefere undef.
 
-=head2 Kind-Datensätze
+=head2 Kind-DatensÃ¤tze
 
-=head3 childTypeExists() - Prüfe, ob Kind-Datensatz-Typ existiert
+=head3 childTypeExists() - PrÃ¼fe, ob Kind-Datensatz-Typ existiert
 
 =head4 Synopsis
 
@@ -428,10 +428,10 @@ Elterndatensatz vom Typ $type, liefere undef.
 
 =head4 Description
 
-Prüfe, ob Kind-Datensätze des Typs $type zum Datensatz hinzugefügt
-werden können. Falls ja, liefere I<wahr>, andernfalls I<falsch>.
+PrÃ¼fe, ob Kind-DatensÃ¤tze des Typs $type zum Datensatz hinzugefÃ¼gt
+werden kÃ¶nnen. Falls ja, liefere I<wahr>, andernfalls I<falsch>.
 
-=head3 addChildType() - Füge Kind-Datensatz-Typ hinzu
+=head3 addChildType() - FÃ¼ge Kind-Datensatz-Typ hinzu
 
 =head4 Synopsis
 
@@ -439,15 +439,15 @@ werden können. Falls ja, liefere I<wahr>, andernfalls I<falsch>.
 
 =head4 Description
 
-Bevor Kind-Datensätze einem Datenstatz zugeordnet werden können, muss
-ein entsprechendes ResultSet-Objekt hinzugefügt werden. Dieses wird
+Bevor Kind-DatensÃ¤tze einem Datenstatz zugeordnet werden kÃ¶nnen, muss
+ein entsprechendes ResultSet-Objekt hinzugefÃ¼gt werden. Dieses wird
 per $type angesprochen. Z.B. liefert
 
   $tab = $row->getChilds($type);
 
 die Menge der zugeordenten Kind-Objekte vom Typ $type.
 
-=head3 addChild() - Füge Kind-Datensatz hinzu
+=head3 addChild() - FÃ¼ge Kind-Datensatz hinzu
 
 =head4 Synopsis
 
@@ -455,9 +455,9 @@ die Menge der zugeordenten Kind-Objekte vom Typ $type.
 
 =head4 Description
 
-Füge Datensatz $childRow als Kinddatensatz vom Typ $type hinzu.
+FÃ¼ge Datensatz $childRow als Kinddatensatz vom Typ $type hinzu.
 
-=head3 getChilds() - Liefere Kind-Datensätze
+=head3 getChilds() - Liefere Kind-DatensÃ¤tze
 
 =head4 Synopsis
 
@@ -465,7 +465,7 @@ Füge Datensatz $childRow als Kinddatensatz vom Typ $type hinzu.
 
 =head4 Description
 
-Liefere die Kind-Datensätze vom Typ $type.
+Liefere die Kind-DatensÃ¤tze vom Typ $type.
 
 =head2 Subklassen-Methoden
 
@@ -506,19 +506,19 @@ werden.
 =head4 Description
 
 Erstelle eine Kopie des Datensatzes $row und liefere eine Referenz
-auf die Kopie zurück.
+auf die Kopie zurÃ¼ck.
 
 Die Kopie ist identisch zum Original, bis darauf, dass der
-Daten-Hash und der Änderungs-Hash kopiert werden:
+Daten-Hash und der Ã„nderungs-Hash kopiert werden:
 
   Daten-Hash.........................: kopiert
   Referenz auf Titel-Liste...........: identisch
   Datensatz-Status...................: identisch
-  Änderungs-Hash.....................: kopiert
-  Referenz auf Kind-Datensätze-Hash..: identisch
-  Referenz auf Eltern-Datensätze-Hash: identisch
+  Ã„nderungs-Hash.....................: kopiert
+  Referenz auf Kind-DatensÃ¤tze-Hash..: identisch
+  Referenz auf Eltern-DatensÃ¤tze-Hash: identisch
 
-=head3 isRaw() - Liefere, ob Klasse Raw-Datensätze repräsentiert
+=head3 isRaw() - Liefere, ob Klasse Raw-DatensÃ¤tze reprÃ¤sentiert
 
 =head4 Synopsis
 
@@ -542,11 +542,11 @@ AnsiColor-Objekt.
 
 =item -indent => $n (Default: 4)
 
-Tiefe der Einrückung der Werte.
+Tiefe der EinrÃ¼ckung der Werte.
 
 =item -null => $str (Default: 'NULL')
 
-Gibt an, welcher Wert für einen Nullwert ausgegeben wird. Ist -null undef,
+Gibt an, welcher Wert fÃ¼r einen Nullwert ausgegeben wird. Ist -null undef,
 wird das Attribut nicht ausgegeben (weder Name noch Wert).
 Ist $null ein Leerstring (''), wird nur der Wert nicht ausgegeben.
 
@@ -575,14 +575,14 @@ Die Darstellung hat den Aufbau:
 
 =item -ignore => \@keys (Default: [])
 
-Übergehe die Attribute @keys, d.h. kopiere die Werte dieser
+Ãœbergehe die Attribute @keys, d.h. kopiere die Werte dieser
 Attribute nicht.
 
 =item -dontCopyNull => $bool (Default: 0)
 
 Kopiere keine Nullwerte, d.h. im Falle eines Nullwerts in
 Datensatz $row0 bleibt der Attributwert in $row erhalten.
-Mögliche Erweiterung: Liste von Kolumnennamen.
+MÃ¶gliche Erweiterung: Liste von Kolumnennamen.
 
 =back
 
@@ -590,9 +590,9 @@ Mögliche Erweiterung: Liste von Kolumnennamen.
 
 Setze die Datensatz-Attribute in $row auf deren Werte in $row0.
 Attribute, die in $row0 nicht vorkommen, werden nicht gesetzt.
-Die Methode liefert keinen Wert zurück.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
-Die Methode ist nützlich, wenn ein Datensatz auf der Datenbank
+Die Methode ist nÃ¼tzlich, wenn ein Datensatz auf der Datenbank
 aktualisiert werden soll und dessen neue Werte auf einem anderen
 Datensatz stehen.
 
@@ -604,35 +604,35 @@ Datensatz stehen.
 
 =head4 Description
 
-Aktualisiert den Datensatz $row gemäß seines Status auf der Datenbank
-$db und liefere das Resultat der Statement-Ausführung zurück.
+Aktualisiert den Datensatz $row gemÃ¤ÃŸ seines Status auf der Datenbank
+$db und liefere das Resultat der Statement-AusfÃ¼hrung zurÃ¼ck.
 
-Welche Datenbankoperation konkret ausgeführt wird, ergibt sich aus
+Welche Datenbankoperation konkret ausgefÃ¼hrt wird, ergibt sich aus
 dem Status des Datensatzes.
 
 B<Statuswerte>
 
 =over 4
 
-=item '0' (unverändert)
+=item '0' (unverÃ¤ndert)
 
-Es wird keine Datenbankoperation ausgeführt.
+Es wird keine Datenbankoperation ausgefÃ¼hrt.
 
 =item 'U' (modifiziert)
 
-Es wird eine Update-Operation auf der Datenbank ausgeführt, d.h. es
+Es wird eine Update-Operation auf der Datenbank ausgefÃ¼hrt, d.h. es
 wird die Methode $row->update() gerufen.
 
 =item 'I' (neu)
 
-Es wird eine Insert-Operation auf der Datenbank ausgeführt, d.h. es
+Es wird eine Insert-Operation auf der Datenbank ausgefÃ¼hrt, d.h. es
 wird die Methode $row->insert() gerufen.
 
 =back
 
-['D' (zu löschen)]
+['D' (zu lÃ¶schen)]
 
-  Es wird eine Delete-Operation auf der Datenbank ausgeführt, d.h. es
+  Es wird eine Delete-Operation auf der Datenbank ausgefÃ¼hrt, d.h. es
   wird die Methode $row->delete() gerufen.
 
 =head3 weaken() - Erzeuge schwache Referenz
@@ -644,13 +644,13 @@ wird die Methode $row->insert() gerufen.
 
 =head4 Description
 
-Mache die Referenz von Schlüssel $key zu einer schwachen Referenz
-und liefere sie zurück. Ist eine Referenz $ref als Parameter angegeben,
+Mache die Referenz von SchlÃ¼ssel $key zu einer schwachen Referenz
+und liefere sie zurÃ¼ck. Ist eine Referenz $ref als Parameter angegeben,
 setze die Referenz zuvor.
 
 =head2 DML Statements
 
-=head3 select() - Liefere Datensätze der Klasse
+=head3 select() - Liefere DatensÃ¤tze der Klasse
 
 =head4 Synopsis
 
@@ -662,7 +662,7 @@ setze die Referenz zuvor.
 
 =item -cursor => $bool (Default: 0)
 
-Liefere Cursor statt Liste der Datensätze.
+Liefere Cursor statt Liste der DatensÃ¤tze.
 
 =item -tableClass => $tableClass (Default: undef)
 
@@ -697,7 +697,7 @@ undef (Skalarkontext) bzw. eine leere Liste (Listkontext).
 
 Siehe $db->value().
 
-=head2 Kompatibilität
+=head2 KompatibilitÃ¤t
 
 =head3 toSbit() - Generiere Sbit-Datensatz
 
@@ -722,12 +722,12 @@ Referenz auf Sbit-Datensatz
 =head4 Description
 
 Generiere aus Datensatz I<$row> einen Sbit-Datensatz der Klasse
-I<$sbitClass> und liefere diesen zurück.
+I<$sbitClass> und liefere diesen zurÃ¼ck.
 
 =head4 Details
 
-Die Methode ist nützlich, wenn über die Klassenbibliothek
-selektiert, aber die weitere Verarbeitung über Klassen auf
+Die Methode ist nÃ¼tzlich, wenn Ã¼ber die Klassenbibliothek
+selektiert, aber die weitere Verarbeitung Ã¼ber Klassen auf
 Basis der Sbit-Klassenbibliothek erfolgt.
 
 =head2 Autoload

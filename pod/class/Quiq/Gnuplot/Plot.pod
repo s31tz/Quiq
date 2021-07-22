@@ -10,7 +10,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen Plot.
+Ein Objekt der Klasse reprÃ¤sentiert einen Plot.
 
 =head1 METHODS
 
@@ -31,7 +31,7 @@ Ein Objekt der Klasse repräsentiert einen Plot.
   $title = $plt->title;
   $title = $plt->title($title);
 
-=head3 addGraph() - Füge Graph zum Plot-Objekt hinzu
+=head3 addGraph() - FÃ¼ge Graph zum Plot-Objekt hinzu
 
 =head4 Synopsis
 
@@ -44,11 +44,11 @@ add()
 
 =head4 Description
 
-Füge Graph $gph oder einen Graph mit der Attributen @keyVal
+FÃ¼ge Graph $gph oder einen Graph mit der Attributen @keyVal
 zum Plot hinzu. In letzterem Fall instantiiert die Methode
 das Quiq::Gnuplot::Graph-Objekt.
 
-=head3 addArrow() - Füge Arrow zum Plot-Objekt hinzu
+=head3 addArrow() - FÃ¼ge Arrow zum Plot-Objekt hinzu
 
 =head4 Synopsis
 
@@ -57,11 +57,11 @@ das Quiq::Gnuplot::Graph-Objekt.
 
 =head4 Description
 
-Füge Arrow $arw oder einen Arrow mit der Attributen @keyVal
+FÃ¼ge Arrow $arw oder einen Arrow mit der Attributen @keyVal
 zum Plot hinzu. In letzterem Fall instantiiert die Methode
 selbst das Quiq::Gnuplot::Arrow-Objekt.
 
-=head3 addLabel() - Füge Label zum Plot-Objekt hinzu
+=head3 addLabel() - FÃ¼ge Label zum Plot-Objekt hinzu
 
 =head4 Synopsis
 
@@ -70,7 +70,7 @@ selbst das Quiq::Gnuplot::Arrow-Objekt.
 
 =head4 Description
 
-Füge Label $lab oder ein Label mit den Attributen @keyVal
+FÃ¼ge Label $lab oder ein Label mit den Attributen @keyVal
 zum Plot hinzu. In letzterem Fall instantiiert die Methode
 selbst das Quiq::Gnuplot::Label-Objekt.
 

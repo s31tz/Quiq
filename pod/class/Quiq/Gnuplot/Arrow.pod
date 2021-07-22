@@ -10,7 +10,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repr‰sentiert einen Arrow, also eine Linie
+Ein Objekt der Klasse repr√§sentiert einen Arrow, also eine Linie
 zwischen zwei Punkten mit optionaler Dekoration.
 
 =head1 METHODS

@@ -36,15 +36,15 @@ Anker gesetzt.
 
 =item colNumbers => $n (Default: 0)
 
-Setze eine Zeile mit Kolumnennummern. Die Mindest-Zeilenlänge ist $n
+Setze eine Zeile mit Kolumnennummern. Die Mindest-ZeilenlÃ¤nge ist $n
 (z.B. 79). Bei colNumbers=>0 werden keine Kolumnennummern gesetzt.
 
 =item escape => $bool (Default: 1)
 
-Schütze &, >, < in den Daten durch HTML-Entities. Wenn die Daten
-bereits geschützt sind, kann dies mit escape=>0 abgeschaltet werden.
-In dem Fall sind die ermittelten Zeilenlängen für Option
-colNumbers u.U. zu groß.
+SchÃ¼tze &, >, < in den Daten durch HTML-Entities. Wenn die Daten
+bereits geschÃ¼tzt sind, kann dies mit escape=>0 abgeschaltet werden.
+In dem Fall sind die ermittelten ZeilenlÃ¤ngen fÃ¼r Option
+colNumbers u.U. zu groÃŸ.
 
 =item language => 'Perl' (Default: undef)
 
@@ -58,7 +58,7 @@ mit $n. Bei lineNumbers=>0 wird keine Zeilennummer gesetzt.
 =item minLineNumberWidth => $n (Default: 2)
 
 Minimale Breite der Zeilennummern-Spalte in Zeichen. Ungenutzte Stellen
-werden mit Leerzeichen aufgefüllt.
+werden mit Leerzeichen aufgefÃ¼llt.
 
 =item source => $filename -or- $strRef (Default: undef)
 
@@ -106,10 +106,10 @@ Command failed: Blob/R1/Html/Listing/html-listing.pl pod%%CLASS-CODE%%
     PREFIX-table|Das gesamte Konstrukt (Tabelle)
     PREFIX-tr-odd|Ungerade Zeile
     PREFIX-tr-even|Gerade Zeile
-    PREFIX-td-ln|Zelle für Zeilennummer
-    PREFIX-td-cn|Zelle für Kolumnennummer
+    PREFIX-td-ln|Zelle fÃ¼r Zeilennummer
+    PREFIX-td-cn|Zelle fÃ¼r Kolumnennummer
     PREFIX-td-edge|Eckzelle Kolumnennummer/Zeilennummer
-    PREFIX-td-line|Zelle für Zeileninhalt
+    PREFIX-td-line|Zelle fÃ¼r Zeileninhalt
     PREFIX-doc|Kennzeichnung Doku (bei Perl POD)
     PREFIX-comment|Kennzeichnung Kommentar
 

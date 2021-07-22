@@ -10,7 +10,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen Gnuplot-Prozess.
+Ein Objekt der Klasse reprÃ¤sentiert einen Gnuplot-Prozess.
 Ein Gnuplot-Prozess erzeugt Plots.
 
 =head1 METHODS
@@ -35,10 +35,10 @@ Ein Gnuplot-Prozess erzeugt Plots.
 =head4 Description
 
 Rendere den Plot und speichere ihn auf auf der angebenen Bilddatei
-oder liefere die Bilddaten zurück. Werden die Bilddaten zurückgeliefert,
-wird die Bilddatei automatisch gelöscht.
+oder liefere die Bilddaten zurÃ¼ck. Werden die Bilddaten zurÃ¼ckgeliefert,
+wird die Bilddatei automatisch gelÃ¶scht.
 
-=head3 print() - Übertrage Daten an den Gnuplot-Prozess
+=head3 print() - Ãœbertrage Daten an den Gnuplot-Prozess
 
 =head4 Synopsis
 

@@ -18,7 +18,7 @@ CSS Klasse.
 
 =item disabled => $bool (Default: 0)
 
-Keine Eingabe möglich.
+Keine Eingabe mÃ¶glich.
 
 =item hidden => $bool (Default: 0)
 
@@ -59,7 +59,7 @@ Wenn wahr, liefere C<undef> als Widget-Code.
 =item value => $value (Default: undef)
 
 Aktueller Wert. Stimmt dieser mit dem Wert des Attributs option
-überein, wird die Checkbox aktiviert.
+Ã¼berein, wird die Checkbox aktiviert.
 
 =back
 

@@ -6,7 +6,7 @@ Quiq::Reference - Operationen auf Referenzen
 
 =head1 DESCRIPTION
 
-Die Klasse stellt Methoden auf Referenzen zur Verfügung, insbesondere,
+Die Klasse stellt Methoden auf Referenzen zur VerfÃ¼gung, insbesondere,
 um den Grundtyp einer Referenz zu ermitteln.
 
 =head1 METHODS
@@ -77,10 +77,10 @@ isBlessed()
 =head4 Caveats
 
 Wenn die Regex-Referenz umgeblesst wurde, muss sie auf
-eine Subklasse von Regex geblesst worden sein, sonst schlägt
+eine Subklasse von Regex geblesst worden sein, sonst schlÃ¤gt
 der Test fehl. Aktuell gibt es nicht den Grundtyp REGEX, der
-von reftype() geliefert würde, sondern eine Regex-Referenz gehört
-standardmäßig zu der Klasse Regex.
+von reftype() geliefert wÃ¼rde, sondern eine Regex-Referenz gehÃ¶rt
+standardmÃ¤ÃŸig zu der Klasse Regex.
 
 =head1 VERSION
 

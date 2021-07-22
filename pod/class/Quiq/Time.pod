@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Time - Klasse zur Repräsentation von Datum und Uhrzeit
+Quiq::Time - Klasse zur ReprÃ¤sentation von Datum und Uhrzeit
 
 =head1 BASE CLASS
 
@@ -10,10 +10,10 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse Quiq::Time repräsentiert eine Zeitangabe,
+Ein Objekt der Klasse Quiq::Time reprÃ¤sentiert eine Zeitangabe,
 bestehend aus den Komponenten Jahr (Y), Monat (M), Tag (D),
 Stunde (h), Minute (m) und Sekunde (s). Die Klasse stellt Methoden
-zur Manipulation der Zeitangabe zur Verfügung.
+zur Manipulation der Zeitangabe zur VerfÃ¼gung.
 
 Die Zeitangabe ist keiner bestimmten Zeitzone zugeordnet, alle Tage
 haben 24 Stunden (keine Sommerzeit- und Winterzeit-Umschaltung) und
@@ -46,7 +46,7 @@ alle Tage haben genau 86400 Sekunden (keine Schaltsekunden).
 =head4 Description
 
 Instantiiere Zeitobjekt, setze die Zeitkomponenten auf die
-angegebenen Werte und liefere das Objekt zurück.
+angegebenen Werte und liefere das Objekt zurÃ¼ck.
 
 Aufrufargumente siehe $ti->set().
 
@@ -58,7 +58,7 @@ Aufrufargumente siehe $ti->set().
 
 =head4 Description
 
-Kopiere Zeitobjekt und liefere die Kopie zurück.
+Kopiere Zeitobjekt und liefere die Kopie zurÃ¼ck.
 
 =head3 asArray() - Liefere Zeit als Array
 
@@ -91,8 +91,8 @@ Kopiere Zeitobjekt und liefere die Kopie zurück.
 
 =head4 Description
 
-Setze die Zeit gemäß der angegebenen Zeitkomponenten und liefere
-das Zeitobjekt zurück.
+Setze die Zeit gemÃ¤ÃŸ der angegebenen Zeitkomponenten und liefere
+das Zeitobjekt zurÃ¼ck.
 
 Alle nicht angegebenen Komponenten werden auf ihren kleinsten Wert
 initialisiert (1 bei bei Monat und Tag, 0 bei Stunde, Minute,
@@ -113,10 +113,10 @@ zwischen den einzelnen Zahlen erlaubt.
 =head4 Description
 
 Setze die Zeit auf die angegebenen Stunden, Minuten, Sekunden
-und liefere das Zeitobjekt zurück. Wird für eine Zeitkomponente CL<lt>undef>
+und liefere das Zeitobjekt zurÃ¼ck. Wird fÃ¼r eine Zeitkomponente CL<lt>undef>
 angegeben, wird diese nicht gesetzt.
 
-=head3 truncate() - Kürze Zeitkomponenten
+=head3 truncate() - KÃ¼rze Zeitkomponenten
 
 =head4 Synopsis
 
@@ -124,9 +124,9 @@ angegeben, wird diese nicht gesetzt.
 
 =head4 Description
 
-Kürze Zeit auf Jahr (Y), Monat (M), Tag (D), Stunde (h) oder Minute (m),
+KÃ¼rze Zeit auf Jahr (Y), Monat (M), Tag (D), Stunde (h) oder Minute (m),
 d.h. setze alle kleineren Zeitkomponenten auf ihren kleinsten Wert
-und liefere das Zeitobjekt zurück.
+und liefere das Zeitobjekt zurÃ¼ck.
 
 =head4 Example
 
@@ -159,7 +159,7 @@ Liefere die Nummer des Monats. Wertebereich: 1-12.
 
   $day = $ti->day;
 
-=head3 dayAbbr() - Abgekürzter Wochentagsname
+=head3 dayAbbr() - AbgekÃ¼rzter Wochentagsname
 
 =head4 Synopsis
 
@@ -167,7 +167,7 @@ Liefere die Nummer des Monats. Wertebereich: 1-12.
 
 =head4 Description
 
-Liefere abgekürzten Wochentagsnamen (Mo, Di, Mi, Do, Fr, Sa, So).
+Liefere abgekÃ¼rzten Wochentagsnamen (Mo, Di, Mi, Do, Fr, Sa, So).
 
 =head3 dayName() - Wochentagsname
 
@@ -208,8 +208,8 @@ Liefere Wochentagsnummer im Bereich 1-7, 1 = Montag.
 
 =head4 Description
 
-Liefere die Anzahl der Tage des Monats, also 31 für Januar,
-28 oder 29 für Februar usw.
+Liefere die Anzahl der Tage des Monats, also 31 fÃ¼r Januar,
+28 oder 29 fÃ¼r Februar usw.
 
 =head3 dayOfYear() - Tag des Jahres (Nummer)
 
@@ -230,7 +230,7 @@ Liefere die Tagesnummer innerhalb des Jahres.
 =head4 Description
 
 Liefere die Kalenderwoche, bestehend aus Jahr und Wochennummer
-gemäß DIN 1355.
+gemÃ¤ÃŸ DIN 1355.
 
 =head3 epoch() - Epoch-Zeit
 
@@ -242,10 +242,10 @@ gemäß DIN 1355.
 
 =head4 Description
 
-Liefere Epoch-Zeit. Ein Aufruf ohne Argument ist äquivalent zu
+Liefere Epoch-Zeit. Ein Aufruf ohne Argument ist Ã¤quivalent zu
 $ti->epoch('utc').
 
-=head3 isLeapyear() - Prüfe auf Schaltjahr
+=head3 isLeapyear() - PrÃ¼fe auf Schaltjahr
 
 =head4 Synopsis
 
@@ -253,7 +253,7 @@ $ti->epoch('utc').
 
 =head4 Description
 
-Prüfe, ob Jahr ein Schaltjahr ist. Wenn ja, liefere "wahr",
+PrÃ¼fe, ob Jahr ein Schaltjahr ist. Wenn ja, liefere "wahr",
 andernfalls "falsch".
 
 =head2 Ausgabe von Zeit/Datum
@@ -274,7 +274,7 @@ andernfalls "falsch".
 =head4 Description
 
 Liefere Datum im Format DD.MM.YYYY, wobei Tag (DD) und Monat (MM) mit
-führender 0 angegeben werden. Ist $sep angegeben, wird anstelle des
+fÃ¼hrender 0 angegeben werden. Ist $sep angegeben, wird anstelle des
 Punktes (.) die betreffende Zeichenkette als Trenner verwendet.
 
 =head3 ddmmyyyyhhmmss() - Liefere formatiertes Datum+Zeit
@@ -286,7 +286,7 @@ Punktes (.) die betreffende Zeichenkette als Trenner verwendet.
 =head4 Description
 
 Liefere Datum/Zeit im Format "DD.MM.YYYY HH:MI:SS". Der Aufruf ist
-äquvalent zu
+Ã¤quvalent zu
 
   $str = $ti->ddmmyyyy.' '.$ti->hhmmss;
 
@@ -300,7 +300,7 @@ Liefere Datum/Zeit im Format "DD.MM.YYYY HH:MI:SS". Der Aufruf ist
 =head4 Description
 
 Liefere Datum im Format D.M.YYYY, wobei Tag (D) und Monat (M) ohne
-führende 0 angegeben werden. Ist $sep angegeben, wird anstelle des
+fÃ¼hrende 0 angegeben werden. Ist $sep angegeben, wird anstelle des
 Punktes (.) die betreffende Zeichenkette als Trenner verwendet.
 
 =head3 dmyhhmmss() - Liefere formatiertes Datum+Zeit
@@ -312,7 +312,7 @@ Punktes (.) die betreffende Zeichenkette als Trenner verwendet.
 =head4 Description
 
 Liefere Datum/Zeit im Format "D.M.YYYY HH:MI:SS". Der Aufruf ist
-äquvalent zu
+Ã¤quvalent zu
 
   $str = $ti->dmy.' '.$ti->hhmmss;
 
@@ -343,7 +343,7 @@ Trenner.
 =head4 Description
 
 Liefere Zeit im Format HH:MM:SS, wobei alle Angaben zweistellig sind,
-also ggf. eine führende 0 vorangestellt wird. Ist $sep angegeben, wird
+also ggf. eine fÃ¼hrende 0 vorangestellt wird. Ist $sep angegeben, wird
 anstelle des Doppelpunkts (:) die betreffende Zeichenkette als Trenner
 verwendet.
 
@@ -357,7 +357,7 @@ verwendet.
 =head4 Description
 
 Liefere Zeit im Format HH:MM, wobei alle Angaben zweistellig sind,
-also ggf. eine führende 0 vorangestellt wird. Ist $sep angegeben, wird
+also ggf. eine fÃ¼hrende 0 vorangestellt wird. Ist $sep angegeben, wird
 anstelle des Doppelpunkts (:) die betreffende Zeichenkette als Trenner
 verwendet.
 
@@ -371,7 +371,7 @@ verwendet.
 =head4 Description
 
 Liefere Datum im Format YY-MM-DD, wobei das Jahr zweistellig angegeben
-ist und Tag (DD) und Monat (MM) mit führender 0 angegeben werden. Ist
+ist und Tag (DD) und Monat (MM) mit fÃ¼hrender 0 angegeben werden. Ist
 $sep angegeben, wird anstelle des Bindestrichs (-) die betreffende
 Zeichenkette als Trenner verwendet.
 
@@ -385,7 +385,7 @@ Zeichenkette als Trenner verwendet.
 =head4 Description
 
 Liefere Datum im Format YYYY-MM-DD, wobei Tag (DD) und Monat (MM) mit
-führender 0 angegeben werden. Ist $sep angegeben, wird anstelle des
+fÃ¼hrender 0 angegeben werden. Ist $sep angegeben, wird anstelle des
 Bindestrichs (-) die betreffende Zeichenkette als Trenner verwendet.
 
 =head3 yyyymmddhhmmss() - Liefere formatiertes Datum+Zeit
@@ -403,7 +403,7 @@ iso()
 
 Liefere Datum/Zeit im Format "YYYY-MM-DDXHH:MI:SS", wobei X
 das Trennzeichen zwischen Datum und Uhrzeit ist. Der Aufruf ist
-äquvalent zu
+Ã¤quvalent zu
 
   $str = $ti->yyyymmdd.$sep.$ti->hhmmss;
 
@@ -420,7 +420,7 @@ Ist $sep nicht angegeben, wird ein Leerzeichen als Trenner genommen.
 
 Liefere Datum/Zeit im Format "YYYY-MM-DDXHH:MI", wobei X
 das Trennzeichen zwischen Datum und Uhrzeit ist. Der Aufruf ist
-äquvalent zu
+Ã¤quvalent zu
 
   $str = $ti->yyyymmdd.$sep.$ti->hhmm;
 
@@ -435,7 +435,7 @@ Ist $sep nicht angegeben, wird ein Leerzeichen als Trenner genommen.
 =head4 Description
 
 Liefere Datum/Zeit im Format "YYYY-MM-DD+HH:MI:SS". Der Aufruf ist
-äquvalent zu
+Ã¤quvalent zu
 
   $str = $ti->yyyymmddhhmmss('+');
 
@@ -449,9 +449,9 @@ Liefere Datum/Zeit im Format "YYYY-MM-DD+HH:MI:SS". Der Aufruf ist
 
 =head4 Description
 
-Addiere die angegebenen Zeitkomponenten ($nI, $unitI) für Jahr (Y),
+Addiere die angegebenen Zeitkomponenten ($nI, $unitI) fÃ¼r Jahr (Y),
 Monat (M) oder Tag (D) zur Zeit hinzu und liefere das modifizierte
-Zeitobjekt zurück. Die $nI sind ganze Zahlen, können also auch negativ
+Zeitobjekt zurÃ¼ck. Die $nI sind ganze Zahlen, kÃ¶nnen also auch negativ
 sein.
 
 =head4 Example
@@ -471,7 +471,7 @@ sein.
 
 Addiere $n Jahre zum Zeitobjekt hinzu ($n ist eine ganze Zahl, kann
 also auch negativ sein) und liefere das modifizierte Zeitobjekt
-zurück.
+zurÃ¼ck.
 
 =head4 Example
 
@@ -507,7 +507,7 @@ Jahre abziehen
 
 Addiere $n Monate zum Zeitobjekt hinzu ($n ist eine ganze Zahl, kann
 also auch negativ sein) und liefere das modifizierte Zeitobjekt
-zurück.
+zurÃ¼ck.
 
 =head3 addDays() - Addiere n Tage
 
@@ -519,7 +519,7 @@ zurück.
 
 Addiere $n Tage zum Zeitobjekt hinzu ($n ist eine ganze Zahl, kann
 also auch negativ sein) und liefere das modifizierte Zeitobjekt
-zurück.
+zurÃ¼ck.
 
 =head3 addHours() - Addiere n Stunden
 
@@ -531,7 +531,7 @@ zurück.
 
 Addiere $n Stunden zum Zeitobjekt hinzu ($n ist eine ganze Zahl, kann
 also auch negativ sein) und liefere das modifizierte Zeitobjekt
-zurück.
+zurÃ¼ck.
 
 =head3 addMinutes() - Addiere n Minuten
 
@@ -543,7 +543,7 @@ zurück.
 
 Addiere $n Minuten zum Zeitobjekt hinzu ($n ist eine ganze Zahl, kann
 also auch negativ sein) und liefere das modifizierte Zeitobjekt
-zurück.
+zurÃ¼ck.
 
 =head3 addSeconds() - Addiere n Sekunden
 
@@ -555,11 +555,11 @@ zurück.
 
 Addiere $n Sekunden zum Zeitobjekt hinzu ($n ist eine ganze Zahl, kann
 also auch negativ sein) und liefere das modifizierte Zeitobjekt
-zurück.
+zurÃ¼ck.
 
 =head2 Vergleich von Zeiten
 
-=head3 equal() - Prüfe auf Gleichheit
+=head3 equal() - PrÃ¼fe auf Gleichheit
 
 =head4 Synopsis
 
@@ -570,7 +570,7 @@ zurück.
 Liefere "wahr", wenn der Zeitpunkt $ti1 gleich dem Zeitpunkt $ti2
 ist, andernfalls "falsch".
 
-=head3 less() - Prüfe auf kleiner
+=head3 less() - PrÃ¼fe auf kleiner
 
 =head4 Synopsis
 
@@ -581,7 +581,7 @@ ist, andernfalls "falsch".
 Liefere "wahr", wenn der Zeitpunkt $ti1 vor dem Zeitpunkt $ti2
 liegt, andernfalls "falsch".
 
-=head3 lessOrEqual() - Prüfe auf kleinergleich
+=head3 lessOrEqual() - PrÃ¼fe auf kleinergleich
 
 =head4 Synopsis
 
@@ -603,7 +603,7 @@ $ti2 ist, andernfalls "falsch".
 =head4 Description
 
 Bilde die Differenz zweier Zeit-Objekte $ti2-$ti1 und liefere ein
-Zeitdauer-Objekt $dur zurück.
+Zeitdauer-Objekt $dur zurÃ¼ck.
 
 Dauer in Sekunden:
 
@@ -615,7 +615,7 @@ Dauer als Zeichenkette (I<D>dI<H>hI<M>mI<S.X>s):
 
 =head2 Konvertierung (Klassenmethoden)
 
-=head3 monthAbbrToNum() - Liefere Monatsnummer zu Monats-Abkürzung
+=head3 monthAbbrToNum() - Liefere Monatsnummer zu Monats-AbkÃ¼rzung
 
 =head4 Synopsis
 
@@ -624,8 +624,8 @@ Dauer als Zeichenkette (I<D>dI<H>hI<M>mI<S.X>s):
 
 =head4 Description
 
-Liefere Monatsnummer (1, ..., 12) zur Monatsabkürzung der
-Sprache $lang. Default für $lang ist 'en'.
+Liefere Monatsnummer (1, ..., 12) zur MonatsabkÃ¼rzung der
+Sprache $lang. Default fÃ¼r $lang ist 'en'.
 
 =head1 VERSION
 

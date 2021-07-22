@@ -12,7 +12,7 @@ L<Quiq::Html::Tag|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/
 
 Die Klasse erweitert ihre Basisklasse Quiq::Html::Tag um die
 Generierung von einfachen HTML-Konstrukten, die einerseits
-über Einzeltags hinausgehen, andererseits aber nicht die Implementierung
+Ã¼ber Einzeltags hinausgehen, andererseits aber nicht die Implementierung
 einer eigenen Klasse rechtfertigen.
 
 =head1 METHODS

@@ -16,7 +16,7 @@ wird durch zwei Klassen definiert:
 B<< Quiq::Database::Api::*::Connection >>
 
   $db = $class->new($udlObj);  # Datenbankverbindung aufbauen
-  $cur = $db->sql($stmt);      # SQL-Statement ausführen
+  $cur = $db->sql($stmt);      # SQL-Statement ausfÃ¼hren
   $db->destroy;                # Datenbankverbindung abbauen
 
 B<< Quiq::Database::Api::*::Cursor >>
@@ -29,9 +29,9 @@ B<< Quiq::Database::Api::*::Cursor >>
   $titlesA = $cur->titles;     # Kolumnentitel
   
   $cur2 = $cur->bind(@vals);   # Platzhalter einsetzen
-  $row = $cur->fetch;          # nächsten Datensatz lesen
+  $row = $cur->fetch;          # nÃ¤chsten Datensatz lesen
   
-  $cur->destroy;               # Cursor schließen
+  $cur->destroy;               # Cursor schlieÃŸen
 
 Die bislang einzige Lowlevel-Datenbank-Schnittstelle ist DBI, die
 die beiden Klassen umfasst:
@@ -48,7 +48,7 @@ Quiq::Database::Api::Dbi::Cursor
 
 =back
 
-Potentielle andere Lowlevel-Datenbank-Schnittstellen müssen
+Potentielle andere Lowlevel-Datenbank-Schnittstellen mÃ¼ssen
 die gleichen Methoden implementieren.
 
 =head1 METHODS
@@ -65,7 +65,7 @@ die gleichen Methoden implementieren.
 
 Instantiiere eine Lowlevel-Datenbankverbindung auf Basis von
 UDL-Objekt $udlObj und liefere eine Referenz auf die
-Datenbankverbindung zurück.
+Datenbankverbindung zurÃ¼ck.
 
 =head4 Example
 

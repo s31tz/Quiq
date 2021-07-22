@@ -63,7 +63,7 @@ einer Fortsetzung von EXPR)
 
 =back
 
-Leerzeilen und Kommentarzeilen werden überlesen. Ein Kommentar am Ende
+Leerzeilen und Kommentarzeilen werden Ã¼berlesen. Ein Kommentar am Ende
 einer Zeile wird entfernt.
 
 =head3 Clip-Definition
@@ -77,7 +77,7 @@ C<PROPERTY=VALUE ...>  ist optional.
 
 =head3 Clip-Properties
 
-Folgende Clip-Properties können vereinbart werden:
+Folgende Clip-Properties kÃ¶nnen vereinbart werden:
 
 =over 4
 
@@ -116,30 +116,30 @@ Die Bildfolge wird umgedreht.
 
 Eine Range-Definition besteht aus einem Namen/Bezeichner KEY und
 einem Bildfolgen-Ausdruck EXPR. Diese sind durch Whitspace getrennt.
-Der Ausdruck EXPR darf sich über mehrere Zeilen erstrecken,
+Der Ausdruck EXPR darf sich Ã¼ber mehrere Zeilen erstrecken,
 wenn die Folgezeilen mit Whitespace eingeleitet werden.
 
 =head3 Bildfolgen-Ausdruck
 
-Ein Bildfolgen-Ausdruck EXPR besteht aus 0 oder mehr Teilausdrücken, die
-mit Whitespace voneinender getrennt sind. Teilausdrücke sind:
+Ein Bildfolgen-Ausdruck EXPR besteht aus 0 oder mehr TeilausdrÃ¼cken, die
+mit Whitespace voneinender getrennt sind. TeilausdrÃ¼cke sind:
 
   N  .................. Einzelbild N
   N-M ................. Bildnummern-Bereich N bis M
   KEY ................. die Bilder des Clip oder Range KEY
-  all ................. sämtliche Bilder des Zeitraffer-Verzeichnisses
+  all ................. sÃ¤mtliche Bilder des Zeitraffer-Verzeichnisses
   used ................ die Bilder aller Ranges
-  unused .............. die Bilder, die zu keinem Range gehören
+  unused .............. die Bilder, die zu keinem Range gehÃ¶ren
   junk ................ Bilder von unused, die per {} ausgesondert sind
   duplicate(N,EXPR) ... jedes Bild in EXPR wird N-mal dupliziert
-  randomize(N,EXPR) ... zufällige Auswahl von N Bildern aus Vorrat EXPR
+  randomize(N,EXPR) ... zufÃ¤llige Auswahl von N Bildern aus Vorrat EXPR
   repeat(N,EXPR) ...... Bildfolge EXPR wird N-mal wiederholt
   reverse(EXPR) ....... Bildfolge EXPR wird umgedreht
   {EXPR} .............. die Bilder aus EXPR werden als Junk betrachtet
-  [EXPR] .............. Teilsausdruck EXPR wird nicht berücksichtigt
+  [EXPR] .............. Teilsausdruck EXPR wird nicht berÃ¼cksichtigt
 
 Betrachten wir C<all>, C<used>, C<unused>, C<junk> als Mengen,
-also Bildvorräte ohne Berücksichtigung der Reihenfolge, gilt:
+also BildvorrÃ¤te ohne BerÃ¼cksichtigung der Reihenfolge, gilt:
 
 =over 2
 
@@ -192,7 +192,7 @@ Referenz auf das Range-Definitions-Objekt oder C<undef>
 
 Instantiiere ein Range-Definitions-Objekt aus den range.def-Dateien in
 der Verzeichnisstruktur $dir und liefere eine Referenz auf dieses
-Objekt zurück. Existiert keine range.def Datei, wird I<kein> Objekt
+Objekt zurÃ¼ck. Existiert keine range.def Datei, wird I<kein> Objekt
 instantiiert und C<undef> geliefert.
 
 =head2 Objektmethoden

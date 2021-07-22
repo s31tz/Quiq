@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::LaTeX::Code - Generator für LaTeX Code
+Quiq::LaTeX::Code - Generator fÃ¼r LaTeX Code
 
 =head1 BASE CLASS
 
@@ -10,9 +10,9 @@ L<Quiq::TeX::Code|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/TeX/C
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen LaTeX
+Ein Objekt der Klasse reprÃ¤sentiert einen LaTeX
 Code-Generator. Mit den Methoden der Klasse kann aus einem
-Perl-Programm heraus LaTeX-Code erzeugt werden. Die Klasse stützt
+Perl-Programm heraus LaTeX-Code erzeugt werden. Die Klasse stÃ¼tzt
 sich ab auf ihre Basisklasse Quiq::TeX::Code. Weitere Methoden
 siehe dort.
 
@@ -29,11 +29,11 @@ siehe dort.
 =head4 Description
 
 Instantiiere einen LaTeX Code-Generator und liefere eine Referenz
-auf dieses Objekt zurück.
+auf dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
-=head3 protect() - Schütze LaTeX Metazeichen
+=head3 protect() - SchÃ¼tze LaTeX Metazeichen
 
 =head4 Synopsis
 
@@ -41,21 +41,21 @@ auf dieses Objekt zurück.
 
 =head4 Description
 
-Schütze LaTeX-Metazeichen in $text und liefere den resultierenden
-Code zurück.
+SchÃ¼tze LaTeX-Metazeichen in $text und liefere den resultierenden
+Code zurÃ¼ck.
 
-Liste/Erläuterung der LaTeX-Metazeichen:
+Liste/ErlÃ¤uterung der LaTeX-Metazeichen:
 L<https://www.namsu.de/Extra/strukturen/Sonderzeichen.html>
 
 =head4 Examples
 
 B<Dollarzeichen>
 
-  $l->protect('Der Text $text wird geschützt.');
+  $l->protect('Der Text $text wird geschÃ¼tzt.');
 
 produziert
 
-  Der Text \$text wird geschützt.
+  Der Text \$text wird geschÃ¼tzt.
 
 =head3 env() - Erzeuge LaTeX-Umgebung
 
@@ -71,7 +71,7 @@ Siehe Methode $t->macro(). Weitere Optionen:
 
 =item -indent => $n (Default: 2)
 
-Rücke den Inhalt der Umgebung für eine bessere
+RÃ¼cke den Inhalt der Umgebung fÃ¼r eine bessere
 Quelltext-Lesbarkeit um $n Leerzeichen ein. Achtung: In einer
 Verbatim-Umgebung hat dies Auswirkungen auf die Darstellung und
 sollte in dem Fall mit C<< -indent => 0 >> abgeschaltet werden.
@@ -81,7 +81,7 @@ sollte in dem Fall mit C<< -indent => 0 >> abgeschaltet werden.
 =head4 Description
 
 Erzeuge eine LaTeX-Umgebung und liefere den resultierenden Code
-zurück. Body $body und @args können in beliebiger Reihenfolge
+zurÃ¼ck. Body $body und @args kÃ¶nnen in beliebiger Reihenfolge
 auftreten.
 
 =head4 Examples
@@ -108,7 +108,7 @@ produziert
 
 =item $sectionName
 
-Name des LaTeX-Abschnitts. Mögliche Werte: 'part', 'chapter', 'section',
+Name des LaTeX-Abschnitts. MÃ¶gliche Werte: 'part', 'chapter', 'section',
 'subsection', 'susubsection', 'paragraph', 'subparagraph'.
 
 =back
@@ -123,14 +123,14 @@ Kennzeichne Abschnitt mit Label $label.
 
 =item -notToc => $bool (Default: 0)
 
-Nimm die Überschrift nicht ins Inhaltsverzeichnis auf.
+Nimm die Ãœberschrift nicht ins Inhaltsverzeichnis auf.
 
 =back
 
 =head4 Description
 
 Erzeuge ein LaTeX Section und liefere den resultierenden Code
-zurück.
+zurÃ¼ck.
 
 =head4 Examples
 

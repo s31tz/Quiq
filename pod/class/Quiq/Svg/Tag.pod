@@ -56,10 +56,10 @@ erzeugt werden.
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse erzeugt SVG Markup-Code beliebiger Komplexität.
+Ein Objekt der Klasse erzeugt SVG Markup-Code beliebiger KomplexitÃ¤t.
 Dies geschieht durch systematische Anwendung der Methode $p->tag(),
 die in der Basisklasse Quiq::Tag definiert ist und hier in
-Quiq::Svg::Tag zur Erzeugung von SVG Markup überschrieben wurde.
+Quiq::Svg::Tag zur Erzeugung von SVG Markup Ã¼berschrieben wurde.
 
 =head1 SEE ALSO
 
@@ -88,7 +88,7 @@ Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz
-auf dieses Objekt zurück.
+auf dieses Objekt zurÃ¼ck.
 
 =head2 Generierung
 
@@ -104,7 +104,7 @@ SVG-Vorspann (String)
 
 =head4 Description
 
-Liefere die SVG-Präambel bestehend aus der "XML Processing Instruction"
+Liefere die SVG-PrÃ¤ambel bestehend aus der "XML Processing Instruction"
 und der "DOCTYPE Declaration":
 
   <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -132,8 +132,8 @@ SVG-Code (String)
 
 =head4 Description
 
-Erzeuge einen SVG-Tag und liefere diesen zurück. Die Methode
-ruft die gleichnamige Basisklassenmethode auf und übergibt
+Erzeuge einen SVG-Tag und liefere diesen zurÃ¼ck. Die Methode
+ruft die gleichnamige Basisklassenmethode auf und Ã¼bergibt
 die SVG-spezifischen Element-Definitionen per Option C<-elements>.
 Diese definieren die Default-Formatierung und die Default-Attribute
 einzelner SVG-Elemente. Details zur Methode siehe Quiq::Tag->tag().

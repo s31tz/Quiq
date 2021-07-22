@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::TempDir - Tempor‰res Verzeichnis
+Quiq::TempDir - Tempor√§res Verzeichnis
 
 =head1 BASE CLASS
 
@@ -10,9 +10,9 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Der Konstruktor der Klasse erzeugt ein tempor‰res Verzeichnis.
+Der Konstruktor der Klasse erzeugt ein tempor√§res Verzeichnis.
 Geht die letzte Objekt-Referenz aus dem Scope, wird das Verzeichnis
-automatisch gelˆscht. Das Verzeichnis-Objekt stringifiziert sich
+automatisch gel√∂scht. Das Verzeichnis-Objekt stringifiziert sich
 im String-Kontext automatisch zum Verzeichnis-Pfad.
 
 =head1 METHODS
@@ -43,7 +43,7 @@ Tempverzeichnis-Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
-dieses Objekt zur¸ck.
+dieses Objekt zur√ºck.
 
 =head1 VERSION
 

@@ -10,7 +10,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Diese Klasse ist eine objektorientierte Überdeckung des Moduls DB_File,
+Diese Klasse ist eine objektorientierte Ãœberdeckung des Moduls DB_File,
 das eine Schnittstelle zu Berkeley DB 1.x darstellt.
 
 =head1 METHODS
@@ -33,7 +33,7 @@ Datei, in dem der Hash gespeichert wird.
 
 =item $mode
 
-Modus, in dem die Datei geöffnet wird:
+Modus, in dem die Datei geÃ¶ffnet wird:
 
   Mode  Bedeutung
   ----  --------------------------------------------------------------
@@ -49,8 +49,8 @@ Referenz auf das Hash-Objekt.
 
 =head4 Description
 
-Öffne einen Hash mit Datei $file als persistentem Speicher
-im Modus $mode und liefere eine Referenz auf das Objekt zurück.
+Ã–ffne einen Hash mit Datei $file als persistentem Speicher
+im Modus $mode und liefere eine Referenz auf das Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -60,7 +60,7 @@ im Modus $mode und liefere eine Referenz auf das Objekt zurück.
 
   $h->sync;
 
-=head3 close() - Schließe Persistenten Hash
+=head3 close() - SchlieÃŸe Persistenten Hash
 
 =head4 Synopsis
 
@@ -68,7 +68,7 @@ im Modus $mode und liefere eine Referenz auf das Objekt zurück.
 
 =head4 Description
 
-Schreibe den Persistenten Hash auf Platte und zerstöre das Objekt.
+Schreibe den Persistenten Hash auf Platte und zerstÃ¶re das Objekt.
 Das gleiche geschieht, wenn die letzte Referenz auf das Objekt aus
 dem Scope geht.
 

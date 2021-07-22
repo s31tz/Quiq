@@ -38,21 +38,21 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 Ein Objekt der Klasse verwaltet einen Cache. Der Cache ist ein Verzeichnis
 (C<$cacheDir>) im Dateisystem. Eine Cachedatei speichert eine beliebige
 Datenstruktur. Diese wird von C<Storable> geschrieben und gelesen.
-Die Datenstruktur darf ein Objekt (also geblesst) oder zirkulär sein.
-Die Cachdatei ist $duration Sekunden gültig. Danach ist sie
-ungültig und wird neu berechnet.
+Die Datenstruktur darf ein Objekt (also geblesst) oder zirkulÃ¤r sein.
+Die Cachdatei ist $duration Sekunden gÃ¼ltig. Danach ist sie
+ungÃ¼ltig und wird neu berechnet.
 
 Die Aufrufe L<read|"read() - Lies Daten aus Cachdatei">() und L<write|"write() - Schreibe Daten auf Cachdatei">() haben keine Wirkung, wenn
-C<$condition> wahr ist. Damit kann das Caching für bestimmte
-Fälle abgschaltet werden.
+C<$condition> wahr ist. Damit kann das Caching fÃ¼r bestimmte
+FÃ¤lle abgschaltet werden.
 
 Das Array @key besteht aus ein oder mehr einzelnen Werten, die zusammen
-den Schlüssel für die Cachdatei bilden. Der interne Schüssel ist der
-MD5-Hash über diesen Werten. Dieser bildet den Namen der Cachedatei.
+den SchlÃ¼ssel fÃ¼r die Cachdatei bilden. Der interne SchÃ¼ssel ist der
+MD5-Hash Ã¼ber diesen Werten. Dieser bildet den Namen der Cachedatei.
 
 =head1 EXAMPLE
 
-Cachen einer HTML-Seite, die von einem einzigen Parameter $day abhängt:
+Cachen einer HTML-Seite, die von einem einzigen Parameter $day abhÃ¤ngt:
 
   my $day = $self->param('day') // $today;
   
@@ -89,7 +89,7 @@ Verzeichnis, in dem die Cachdatei gespeichert wird.
 =item $duration
 
 Zeitdauer in Sekunden, die die Cachdatei ab ihrer Erzeugung
-gültig ist.
+gÃ¼ltig ist.
 
 =item @key
 
@@ -119,7 +119,7 @@ Cache-Objekt
 =head4 Description
 
 Instantiiere ein Cache-Objekt und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -150,7 +150,7 @@ die Cachdatei nicht existiert
 
 =item *
 
-die Cachdatei exisiert, aber älter ist als die Gültigkeitsdauer
+die Cachdatei exisiert, aber Ã¤lter ist als die GÃ¼ltigkeitsdauer
 
 =back
 

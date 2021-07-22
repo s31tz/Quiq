@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Mechanize - Überlagerung von WWW::Mechanize
+Quiq::Mechanize - Ãœberlagerung von WWW::Mechanize
 
 =head1 BASE CLASSES
 
@@ -45,7 +45,7 @@ Object
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz
-auf dieses Objekt zurück.
+auf dieses Objekt zurÃ¼ck.
 
 =head1 VERSION
 

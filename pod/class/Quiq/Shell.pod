@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Shell - Ausführung von Shell-Kommandos
+Quiq::Shell - AusfÃ¼hrung von Shell-Kommandos
 
 =head1 BASE CLASS
 
@@ -33,7 +33,7 @@ z.B. 'bold red'.
 
 =item dryRun => $bool (Default: 0)
 
-Führe Kommandos nicht aus, sondern logge sie nur (impliziert log=>1).
+FÃ¼hre Kommandos nicht aus, sondern logge sie nur (impliziert log=>1).
 
 =item log => $bool (Default: 0)
 
@@ -46,7 +46,7 @@ Datei-Deskriptor, auf den die Logmeldungen geschrieben werden.
 =item logRewrite => $sub (Default: undef)
 
 Callback-Methode, die die Kommandozeile vor dem Logging umschreibt.
-Dies ist nützlich, falls die Kommandozeile ein Passwort enthält,
+Dies ist nÃ¼tzlich, falls die Kommandozeile ein Passwort enthÃ¤lt,
 das im Log ausgeixt werden soll. Die Methode wird auf dem
 Shell-Objekt gerufen:
 
@@ -62,11 +62,11 @@ Zeichenkette, die jeder Meldung im Log vorangestellt wird.
 
 =item quiet => $bool
 
-Unterdrücke stdout und stderr.
+UnterdrÃ¼cke stdout und stderr.
 
 =item time => $bool (Default: 0)
 
-Gib nach jedem Kommando die Zeit aus, die es benötigt hat.
+Gib nach jedem Kommando die Zeit aus, die es benÃ¶tigt hat.
 
 =item timePrefix => $str (Default: '')
 
@@ -75,14 +75,14 @@ Zeichenkette, die jeder Zeitausgabe vorangestellt wird.
 =item timeSummary => $bool (Default: 0)
 
 Gib zum Schluss bei der Destrukturierung des Objekts
-die Gesamtausführungszeit aus.
+die GesamtausfÃ¼hrungszeit aus.
 
 =back
 
 =head4 Description
 
 Instantiiere ein Shell-Objekt, und liefere eine Referenz auf dieses
-Objekt zurück.
+Objekt zurÃ¼ck.
 
 =head3 DESTROY() - Destruktor
 
@@ -93,12 +93,12 @@ Objekt zurück.
 =head4 Description
 
 Wenn timeSummary gesetzt ist, wird im Zuge der Destruktuierung
-die Gesamtausführungszeit für alle Kommandos, die über das
-Shell-Objekt ausgeführt wurden, ausgegeben.
+die GesamtausfÃ¼hrungszeit fÃ¼r alle Kommandos, die Ã¼ber das
+Shell-Objekt ausgefÃ¼hrt wurden, ausgegeben.
 
-=head2 Kommando ausführen
+=head2 Kommando ausfÃ¼hren
 
-=head3 exec() - Führe Kommando aus
+=head3 exec() - FÃ¼hre Kommando aus
 
 =head4 Synopsis
 
@@ -110,18 +110,18 @@ Shell-Objekt ausgeführt wurden, ausgegeben.
 
 =item -capture => $channels (Default: keiner)
 
-Liefere die die Programmausgabe auf dem Kanal bzw. den Kanälen
-$channels zurück. Mögliche Werte für $channels:
+Liefere die die Programmausgabe auf dem Kanal bzw. den KanÃ¤len
+$channels zurÃ¼ck. MÃ¶gliche Werte fÃ¼r $channels:
 
 =over 4
 
 =item 'stdout'
 
-Liefere Ausgabe auf stdout, unterdrücke stderr.
+Liefere Ausgabe auf stdout, unterdrÃ¼cke stderr.
 
 =item 'stderr'
 
-Liefere Ausgabe auf stderr, unterdrücke stdout.
+Liefere Ausgabe auf stderr, unterdrÃ¼cke stdout.
 
 =item 'stdout+stderr'
 
@@ -133,46 +133,46 @@ Liefere Ausgabe auf stdout und stderr getrennt.
 
 =back
 
-Für Beispiele siehe Abschnitt ""exec/Examples"".
+FÃ¼r Beispiele siehe Abschnitt ""exec/Examples"".
 
 =item -outputTo => $name
 
 Schreibe jegliche Ausgabe von $cmd auf stdout und stderr nach
 $name-NNNN.log. NNNN ist eine laufende Nummer, die mit jedem
-Programmaufruf um 1 erhöht wird. Beispiel:
+Programmaufruf um 1 erhÃ¶ht wird. Beispiel:
 
   perl -MQuiq::Shell -E 'Quiq::Shell->exec("echo hallo",-outputTo=>"echo")'
 
 =item -quiet => $bool (Default: 0)
 
-Unterdrücke Programmausgabe auf stdout und stderr.
+UnterdrÃ¼cke Programmausgabe auf stdout und stderr.
 
 =item -sloppy => $bool (Default: 0)
 
-Wirf keine Exception, wenn das Programm fehlschlägt, sondern
+Wirf keine Exception, wenn das Programm fehlschlÃ¤gt, sondern
 liefere dessen Exitcode. Ist gleichzeitig die Option -capture angegeben,
-hat diese hinsichtlich des Rückgabewerts Priorität.
+hat diese hinsichtlich des RÃ¼ckgabewerts PrioritÃ¤t.
 
 =back
 
 =head4 Returns
 
-Der Rückgabewert richtet sich nach den Optionen @opt. Ist -capture
+Der RÃ¼ckgabewert richtet sich nach den Optionen @opt. Ist -capture
 definiert, wird die angegebene Programmausgabe geliefert. Ist
 -sloppy wahr, wird der Exitcode geliefert. Die Option -capture hat
-Priorität gegenüber der Option -sloppy.  Sind weder -capture noch
+PrioritÃ¤t gegenÃ¼ber der Option -sloppy.  Sind weder -capture noch
 -sloppy angegeben, liefert die Methode keinen Wert.
 
 =head4 Description
 
-Führe Kommando $cmd aus. Im Falle eines Fehlers löse eine Exception aus.
+FÃ¼hre Kommando $cmd aus. Im Falle eines Fehlers lÃ¶se eine Exception aus.
 
 Beginnt das Kommando $cmd mit einem Bindestrich, wird
 implizit die Option -sloppy gesetzt.
 
 =head4 Examples
 
-Unterdrücke Ausgabe auf stdout und stderr:
+UnterdrÃ¼cke Ausgabe auf stdout und stderr:
 
   $this->exec($cmd,-quiet=>1);
 
@@ -206,14 +206,14 @@ Keine Exception, liefere Exitcode:
 
 =head4 Returns
 
-Die Methode liefert keinen Wert zurück.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head4 Description
 
-Wechsle in Arbeitsverzeichnis $dir. Anmerkung: Diese Änderung gilt
-auch für den aufrufenden Prozess, nicht nur für das Shell-Objekt.
+Wechsle in Arbeitsverzeichnis $dir. Anmerkung: Diese Ã„nderung gilt
+auch fÃ¼r den aufrufenden Prozess, nicht nur fÃ¼r das Shell-Objekt.
 
-=head3 back() - Wechsele ins vorige Arbeitsverzeichnis zurück
+=head3 back() - Wechsele ins vorige Arbeitsverzeichnis zurÃ¼ck
 
 =head4 Synopsis
 
@@ -232,11 +232,11 @@ Verzeichnispfad (String)
 =head4 Description
 
 Liefere das oberste Element des Verzeichnis-Stack ohne den Stack
-zu verändern.
+zu verÃ¤ndern.
 
 =head2 Fehlerbehandlung
 
-=head3 checkError() - Löse Exception bei Kommandofehler aus
+=head3 checkError() - LÃ¶se Exception bei Kommandofehler aus
 
 =head4 Synopsis
 
@@ -248,17 +248,17 @@ nichts
 
 =head4 Description
 
-Prüfe den Status einer vorhergehenden Programmausführung und löse
+PrÃ¼fe den Status einer vorhergehenden ProgrammausfÃ¼hrung und lÃ¶se
 eine Execption aus, wenn der Status ungleich 0 ist.
 
 =head4 Examples
 
-Prüfe den Ausführungsstatus von system():
+PrÃ¼fe den AusfÃ¼hrungsstatus von system():
 
   system($cmd);
   Quiq::Shell->checkError($?,$!,$cmd);
 
-Prüfe den Ausführungsstatus des Backtick-Operators:
+PrÃ¼fe den AusfÃ¼hrungsstatus des Backtick-Operators:
 
   $str = `$cmd`;
   Quiq::Shell->checkError($?,$!,$cmd);

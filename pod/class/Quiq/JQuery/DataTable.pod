@@ -25,7 +25,7 @@ Quelltext siehe Abschnitt L<Beispiel Synopsis|"Beispiel Synopsis">.
 Hompage des DataTables-Plugin:
 L<https://datatables.net/>
 
-Die Klasse liefert den HTML- und JavaScript-Code für ein
+Die Klasse liefert den HTML- und JavaScript-Code fÃ¼r ein
 DataTable-Widget.
 
 =head1 ATTRIBUTES
@@ -35,9 +35,9 @@ DataTable-Widget.
 =item arguments => $json (Default: undef)
 
 JSON-Code der das DataTable-Objekt in JavaScript instantiiert. Die
-äußeren geschweiften Klammern werden hierbei weggelassen. Die
+Ã¤uÃŸeren geschweiften Klammern werden hierbei weggelassen. Die
 Kolumnendefinitionen (DataTables-Attribut columns:) wird intern
-generiert und zu diesem Code hinzugefügt.
+generiert und zu diesem Code hinzugefÃ¼gt.
 
 =item class => $class (Default: "compact stripe hover cell-border nowrap \
 
@@ -51,7 +51,7 @@ Kolumnen-Spezifikation ist ein Hash mit den Komponenten:
 
   {
       name => $name,        # interner Name, insbes. f. Wert-Lookup
-      title => $title,      # Kolumnenüberschrift
+      title => $title,      # KolumnenÃ¼berschrift
       type => $type,        # DataTables-Kolumnentyp (s. Link unten)
       align => $align,      # 'left'|'center'|'right' (Default: 'left')
       orderable => $bool,   # 0|1 (Default: 1)
@@ -60,9 +60,9 @@ Kolumnen-Spezifikation ist ein Hash mit den Komponenten:
       width => $width,      # s. DtaTables Doku
   }
 
-Nicht benötigte Komponenten können weggelassen werden.
+Nicht benÃ¶tigte Komponenten kÃ¶nnen weggelassen werden.
 
-Mögliche Werte für $type: 'date', 'num', 'num-fmt', 'html-num',
+MÃ¶gliche Werte fÃ¼r $type: 'date', 'num', 'num-fmt', 'html-num',
 'html-num-fmt', 'html', 'string'. Siehe
 L<https://datatables.net/reference/option/columns.type>
 
@@ -76,7 +76,7 @@ DOM-Id der DataTable (des Table-Elements).
 
 =item instantiate => $bool (Default: 0)
 
-Füge die Instantiierung des DataTable-Objektes (JavaScript) zum
+FÃ¼ge die Instantiierung des DataTable-Objektes (JavaScript) zum
 HTML-Code der Methode html() hinzu.
 
 =item rowsAreArrays => $bool (Default: 0)
@@ -105,14 +105,14 @@ Wenn nicht gesetzt, wird (per Default) als rowCallback verwendet:
 
 =item rowCallback => $sub (Default: s. Attribut rowsAreArrays)
 
-Referenz auf eine Subroutine, die für jedes Row-Objekt die
-darzustellende Zeileninformation (für tr- und td-Tag) liefert
-(siehe Quiq::Html::Table::List). Der Default hängt vom
+Referenz auf eine Subroutine, die fÃ¼r jedes Row-Objekt die
+darzustellende Zeileninformation (fÃ¼r tr- und td-Tag) liefert
+(siehe Quiq::Html::Table::List). Der Default hÃ¤ngt vom
 Wert des Attributs rowsAreArrays ab. Siehe dort.
 
 =item rows => \@rows (Default: [])
 
-Liste der Row-Objekte. Für jedes Element wird die Callback-Methode
+Liste der Row-Objekte. FÃ¼r jedes Element wird die Callback-Methode
 (Attribut rowCallback) aufgerufen.
 
 =back
@@ -224,7 +224,7 @@ erzeugt den HTML-Code (lange Zeilen umbrochen)
 
 =head2 Mit Instantiierungs-Argumenten (HTML-Seite)
 
-Beispiel für die Angabe von Instantiierungs-Argumenten. Dies
+Beispiel fÃ¼r die Angabe von Instantiierungs-Argumenten. Dies
 kann bei Aufruf der Methode
 L<instantiate() - Instantiiere Widget in JavaScript|"instantiate() - Instantiiere Widget in JavaScript">
 
@@ -441,7 +441,7 @@ Liefere den CDN URL des DataTables Plugin.
 =head4 Description
 
 Instantiiere eine DataTable in Perl und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 Code-Generierung
 
@@ -455,7 +455,7 @@ dieses Objekt zurück.
 =head4 Description
 
 Generiere den HTML-Code des DataTable-Objekts und liefere
-diesen zurück. Als Klassenmethode gerufen, wird das Objekt intern
+diesen zurÃ¼ck. Als Klassenmethode gerufen, wird das Objekt intern
 mit den Attributen @keyVal instantiiert.
 
 =head3 instantiate() - Instantiiere Widget in JavaScript

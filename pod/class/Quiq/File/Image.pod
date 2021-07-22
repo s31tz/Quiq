@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::File::Image - Informationen über Bild-Datei
+Quiq::File::Image - Informationen Ã¼ber Bild-Datei
 
 =head1 BASE CLASS
 
@@ -21,7 +21,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 =head4 Description
 
 Instantiiere ein Bild-Datei-Objekt und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 Eigenschaften
 
@@ -66,7 +66,7 @@ Liefere den Dateinamen ohne Verzeichnis und Extension, z.B. '000456'.
 
 Liefere die Extentsion der Datei, z.B. 'png'.
 
-=head3 mtime() - Letzte Änderung
+=head3 mtime() - Letzte Ã„nderung
 
 =head4 Synopsis
 
@@ -75,7 +75,7 @@ Liefere die Extentsion der Datei, z.B. 'png'.
 =head4 Description
 
 Liefere den Zeitpunkt (Unix Epoch), an dem die Bilddatei
-das letzte Mal geändert wurde.
+das letzte Mal geÃ¤ndert wurde.
 
 =head3 type() - Bild-Typ
 
@@ -97,7 +97,7 @@ Liefere den Datei-Typ des Bildes, z.B. 'jpg'.
 
 Liefere die Breite des Bildes in Pixeln, z.B. 1920.
 
-=head3 height() - Höhe
+=head3 height() - HÃ¶he
 
 =head4 Synopsis
 
@@ -105,9 +105,9 @@ Liefere die Breite des Bildes in Pixeln, z.B. 1920.
 
 =head4 Description
 
-Liefere die Höhe des Bildes in Pixeln, z.B. 1080.
+Liefere die HÃ¶he des Bildes in Pixeln, z.B. 1080.
 
-=head3 size() - Breite und Höhe
+=head3 size() - Breite und HÃ¶he
 
 =head4 Synopsis
 
@@ -116,8 +116,8 @@ Liefere die Höhe des Bildes in Pixeln, z.B. 1080.
 
 =head4 Description
 
-Liefere die Breite und Höhe des Bildes in Pixeln. Im Skalarkontext
-werden die Breite und Höhe in einem String zusammengefasst geliefert:
+Liefere die Breite und HÃ¶he des Bildes in Pixeln. Im Skalarkontext
+werden die Breite und HÃ¶he in einem String zusammengefasst geliefert:
 
   'WIDTHxHEIGHT'
 
@@ -135,7 +135,7 @@ Skalar-Kontext:
   =>
   '1920x1080'
 
-=head3 scaleFactor() - Skalierungsfaktor für andere Breite, Höhe
+=head3 scaleFactor() - Skalierungsfaktor fÃ¼r andere Breite, HÃ¶he
 
 =head4 Synopsis
 
@@ -144,20 +144,20 @@ Skalar-Kontext:
 =head4 Description
 
 Liefere den Skalierungsfaktor, wenn das Bild auf die Breite $width
-und die Höhe $height skaliert werden soll. Werden nicht-proportionale
-Werte für $width und $height angegeben, dass also für die Breite
-und die Höhe unterschiedliche Skalierungsfakoren berechnet werden,
+und die HÃ¶he $height skaliert werden soll. Werden nicht-proportionale
+Werte fÃ¼r $width und $height angegeben, dass also fÃ¼r die Breite
+und die HÃ¶he unterschiedliche Skalierungsfakoren berechnet werden,
 liefere von beiden den kleineren Wert.
 
 =head4 Example
 
-Das Bild hat die Größe 249 x 249 und soll skaliert werden auf
-die Größe 83 x 83:
+Das Bild hat die GrÃ¶ÃŸe 249 x 249 und soll skaliert werden auf
+die GrÃ¶ÃŸe 83 x 83:
 
   $scale = $img->scaleFactor(83,83);
   # 0.333333333333333
 
-=head3 aspectRatio() - Seitenverhältnis
+=head3 aspectRatio() - SeitenverhÃ¤ltnis
 
 =head4 Synopsis
 
@@ -165,7 +165,7 @@ die Größe 83 x 83:
 
 =head4 Description
 
-Liefere das Seitenverhältnis des Bildes, z.B. '16:9'.
+Liefere das SeitenverhÃ¤ltnis des Bildes, z.B. '16:9'.
 
 =head2 Properties
 
@@ -179,11 +179,11 @@ Liefere das Seitenverhältnis des Bildes, z.B. '16:9'.
 =head4 Description
 
 Liefere eine Referenz auf den Property-Hash des Bildes. Der
-Property-Hash speichert zusätzliche Eigenschaften des
+Property-Hash speichert zusÃ¤tzliche Eigenschaften des
 Bild-Datei-Objektes, die z.B. im Zuge einer Bild-Bearbeitung
 verwendet werden.
 
-Der Property-Hash ist ein Quiq::Hash-Objekt, dessen Schlüssel
+Der Property-Hash ist ein Quiq::Hash-Objekt, dessen SchlÃ¼ssel
 nicht gelockt sind. Nach der Objekt-Instantiierung ist der
 Property-Hash leer.
 

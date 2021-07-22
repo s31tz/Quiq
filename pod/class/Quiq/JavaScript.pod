@@ -40,22 +40,22 @@ JavaScript-Code (String)
 =head4 Description
 
 Setze die Platzhalter/Wert-Paare @keyVal in den JavaScript-Code $text
-ein und liefere den resultierenden JavaScript-Code zurück. Als
+ein und liefere den resultierenden JavaScript-Code zurÃ¼ck. Als
 Zeilenfortsetzungszeichen kann eine Tilde (~) verwendet werden
 (Achtung: dann darf $text nicht mit q~...~ gequotet werden).
 
-Die Methode ist vor allem nützlich, wenn der JavaScript-Code
-jQuery-Aufrufe mit Dollar-Zeichen ($) enthält oder die Zeilen
-überlang sind.
+Die Methode ist vor allem nÃ¼tzlich, wenn der JavaScript-Code
+jQuery-Aufrufe mit Dollar-Zeichen ($) enthÃ¤lt oder die Zeilen
+Ã¼berlang sind.
 
 =head4 Example
 
-  $js = Quiq::JavaScript->code(q°
+  $js = Quiq::JavaScript->code(qÂ°
       var __NAME__ = (function() {
           return {
               x: __VALUE__,
           };
-      })();°,
+      })();Â°,
       __NAME__ => 'dgr',
       __VALUE__ => 4711,
   );
@@ -91,7 +91,7 @@ JavaScript-Code einzeilig (String)
 =head4 Description
 
 Wandele mehrzeiligen JavaScript-Code in einzeiligen JavaScript-Code
-und liefere diesen zurück. Die Methode ist nützlich, wenn formatierter,
+und liefere diesen zurÃ¼ck. Die Methode ist nÃ¼tzlich, wenn formatierter,
 mehrzeiliger JavaScript-Code in ein HTML Tag-Attribut (JavaScript-Handler
 wie onclick="..." oder onchange="...") eingesetzt werden soll.
 
@@ -158,10 +158,10 @@ Liste von Script-Spezifikationen.
 
 =head4 Description
 
-Übersetze die Code-Spezifikationen @specs in einen oder mehrere
+Ãœbersetze die Code-Spezifikationen @specs in einen oder mehrere
 Script-Tags.
 
-Mögliche Code-Spezifikationen:
+MÃ¶gliche Code-Spezifikationen:
 
 =over 4
 
@@ -177,7 +177,7 @@ Zeichenkette $string wird in einen Script-Tag eingefasst.
 =item $url (Zeichenkette ohne runde Klammern oder Leerzeichen):
 
 Zeichenkette wird als URL interpretiert und in einen Script-Tag
-mit src-Attribut übersetzt.
+mit src-Attribut Ã¼bersetzt.
 
 =item \@specs (Arrayreferenz):
 
@@ -187,13 +187,13 @@ Wird zu @specs expandiert.
 
 =head4 Examples
 
-Code zum Laden einer JavaScript-Datei über URL:
+Code zum Laden einer JavaScript-Datei Ã¼ber URL:
 
   $html = Quiq::JavaScript->script($h,'https://host.dom/scr.js');
   =>
   <script src="https://host.dom/scr.js" type="text/javascript"></script>
 
-Code aus Datei einfügen:
+Code aus Datei einfÃ¼gen:
 
   $html = Quiq::JavaScript->script($h,'inline:js/script.css');
   =>
@@ -201,7 +201,7 @@ Code aus Datei einfügen:
     ...
   </script>
 
-Code direkt einfügen:
+Code direkt einfÃ¼gen:
 
   $html = Quiq::JavaScript->script($h,q|
       ...
@@ -224,7 +224,7 @@ Mehrere Code-Spezifikationen via Arrayreferenz:
       ['...','...']
   );
 
-Dies ist nützlich, wenn die Spezifikation von einem Parameter
+Dies ist nÃ¼tzlich, wenn die Spezifikation von einem Parameter
 einer umgebenden Methode kommt.
 
 =head1 VERSION

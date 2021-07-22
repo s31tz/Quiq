@@ -31,13 +31,13 @@ Path-Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
-dieses Objekt zurück. Da die Klasse ausschließlich Klassenmethoden
-enthält, hat das Objekt ausschließlich die Funktion, eine abkürzende
-Aufrufschreibweise zu ermöglichen.
+dieses Objekt zurÃ¼ck. Da die Klasse ausschlieÃŸlich Klassenmethoden
+enthÃ¤lt, hat das Objekt ausschlieÃŸlich die Funktion, eine abkÃ¼rzende
+Aufrufschreibweise zu ermÃ¶glichen.
 
 =head2 Datei-Operationen
 
-=head3 append() - Hänge Daten an Datei an
+=head3 append() - HÃ¤nge Daten an Datei an
 
 =head4 Synopsis
 
@@ -63,15 +63,15 @@ Daten, die auf die Datei geschrieben werden.
 
 =item -lock => $bool (Default: 0)
 
-Locke die Datei während des Schreibens exklusiv.
+Locke die Datei wÃ¤hrend des Schreibens exklusiv.
 
 =back
 
 =head4 Description
 
-Hänge Daten $data an Datei $file an.
+HÃ¤nge Daten $data an Datei $file an.
 
-=head3 checkFileSecurity() - Prüfe, ob Datei geschützt ist
+=head3 checkFileSecurity() - PrÃ¼fe, ob Datei geschÃ¼tzt ist
 
 =head4 Synopsis
 
@@ -84,26 +84,26 @@ Hänge Daten $data an Datei $file an.
 
 =item $file
 
-Datei, deren Rechte geprüft werden.
+Datei, deren Rechte geprÃ¼ft werden.
 
 =item $readableByOthers
 
-Wenn wahr, dürfen auch andere die Datei lesen.
+Wenn wahr, dÃ¼rfen auch andere die Datei lesen.
 
 =back
 
 =head4 Description
 
-Prüfe, ob die Datei $file vor unerlaubtem Zugriff geschützt ist.
+PrÃ¼fe, ob die Datei $file vor unerlaubtem Zugriff geschÃ¼tzt ist.
 Wenn nicht, wirf eine Exception.
 
-Per Default darf die Datei nur für ihren Owner lesbar und schreibbar
+Per Default darf die Datei nur fÃ¼r ihren Owner lesbar und schreibbar
 sein, muss also die Zugriffsrechte rw------- besitzen.
 
 Ist $readable wahr, darf die Datei von der Gruppe und anderen
 gelesen werden, darf also die Zugriffsrechte rw-r--r-- besitzen.
 
-=head3 compare() - Prüfe, ob Inhalt differiert
+=head3 compare() - PrÃ¼fe, ob Inhalt differiert
 
 =head4 Synopsis
 
@@ -111,10 +111,10 @@ gelesen werden, darf also die Zugriffsrechte rw-r--r-- besitzen.
 
 =head4 Description
 
-Prüfe, ob der Inhalt der Dateien $file1 und $file2 differiert.
+PrÃ¼fe, ob der Inhalt der Dateien $file1 und $file2 differiert.
 Ist dies der Fall, liefere I<wahr>, andernfalls I<falsch>.
 
-=head3 compareData() - Prüfe, ob Datei-Inhalt von Daten differiert
+=head3 compareData() - PrÃ¼fe, ob Datei-Inhalt von Daten differiert
 
 =head4 Synopsis
 
@@ -126,7 +126,7 @@ different()
 
 =head4 Description
 
-Prüfe, ob der Inhalt der Datei $file von $data differiert. Ist dies
+PrÃ¼fe, ob der Inhalt der Datei $file von $data differiert. Ist dies
 der Fall, liefere I<wahr>, andernfalls I<falsch>. Die Datei $file muss
 nicht existieren.
 
@@ -146,16 +146,16 @@ Erzeuge Zielverzeichnis, falls es nicht existiert.
 
 =item -move => $bool (Default: 0)
 
-Lösche Quelldatei $srcPath nach dem Kopieren.
+LÃ¶sche Quelldatei $srcPath nach dem Kopieren.
 
 =item -overwrite => $bool (Default: 1)
 
-Wenn gesetzt, wird die Zieldatei $destPath überschrieben, falls sie
+Wenn gesetzt, wird die Zieldatei $destPath Ã¼berschrieben, falls sie
 existiert. Andernfalls wird eine Exception geworfen.
 
 =item -preserve => $bool (Default: 0)
 
-Behalte den Zeitpunkt der letzten Änderung bei.
+Behalte den Zeitpunkt der letzten Ã„nderung bei.
 
 =back
 
@@ -179,16 +179,16 @@ Erzeuge Zielverzeichnis, falls es nicht existiert.
 
 =item -move => $bool (Default: 0)
 
-Lösche Quelldatei $srcPath nach dem Kopieren.
+LÃ¶sche Quelldatei $srcPath nach dem Kopieren.
 
 =item -overwrite => $bool (Default: 1)
 
-Wenn gesetzt, wird die Zieldatei $destPath überschrieben, falls sie
+Wenn gesetzt, wird die Zieldatei $destPath Ã¼berschrieben, falls sie
 existiert. Andernfalls wird eine Exception geworfen.
 
 =item -preserve => $bool (Default: 0)
 
-Behalte den Zeitpunkt der letzten Änderung bei.
+Behalte den Zeitpunkt der letzten Ã„nderung bei.
 
 =back
 
@@ -208,15 +208,15 @@ Kopiere Datei $srcPath nach $destPath.
 
 =item -preserve => $bool (Default: 0)
 
-Behalte den Zeitpunkt der letzten Änderung bei (nur bei 'copy'
+Behalte den Zeitpunkt der letzten Ã„nderung bei (nur bei 'copy'
 relevant).
 
 =back
 
 =head4 Description
 
-Mache Datei $srcPath nach Methode $method unter $destPath verfügbar.
-Werte für $method:
+Mache Datei $srcPath nach Methode $method unter $destPath verfÃ¼gbar.
+Werte fÃ¼r $method:
 
   copy
   move -or- rename
@@ -247,15 +247,15 @@ Daten, die bearbeitet werden sollen.
 =head4 Returns
 
 Boolschen Wert, der anzeigt, ob die Datei oder die Daten
-verändert wurden.
+verÃ¤ndert wurden.
 
 =head4 Description
 
-Öffne Datei $file oder Daten $data im Editor, so dass diese vom
-Benutzer bearbeitet werden können. Die Methode prüft nach
-Verlassen des Editors, ob die Datei bzw. Daten geändert
-wurden. Falls ja, wird der Benutzer gefragt, ob er die Änderungen
-beibehalten möchte. Falls ja, liefert die Methode wahr,
+Ã–ffne Datei $file oder Daten $data im Editor, so dass diese vom
+Benutzer bearbeitet werden kÃ¶nnen. Die Methode prÃ¼ft nach
+Verlassen des Editors, ob die Datei bzw. Daten geÃ¤ndert
+wurden. Falls ja, wird der Benutzer gefragt, ob er die Ã„nderungen
+beibehalten mÃ¶chte. Falls ja, liefert die Methode wahr,
 andernfalls falsch.
 
 =head3 encoding() - Liefere das Encoding der Datei
@@ -267,7 +267,7 @@ andernfalls falsch.
 =head4 Description
 
 Analysiere Datei $path hinsichtlich ihres Character-Encodings
-und liefere den Encoding-Bezeichner zurück. Unterschieden werden:
+und liefere den Encoding-Bezeichner zurÃ¼ck. Unterschieden werden:
 
 =over 2
 
@@ -288,8 +288,8 @@ UTF-16/32 mit BOM
 und $altEncoding. Ist $altEncoding nicht angegeben, wird
 'ISO-8859-1' angenommen.
 
-Anmerkung: Die Datei wird zur Zeichensatz-Analyse vollständig eingelesen.
-Bei großen Dateien kann dies ineffizient sein.
+Anmerkung: Die Datei wird zur Zeichensatz-Analyse vollstÃ¤ndig eingelesen.
+Bei groÃŸen Dateien kann dies ineffizient sein.
 
 =head3 link() - Erzeuge (Hard)Link
 
@@ -303,14 +303,14 @@ Bei großen Dateien kann dies ineffizient sein.
 
 =item -force => $bool (Default: 0)
 
-Lösche die Datei $link, falls sie bereits existiert.
+LÃ¶sche die Datei $link, falls sie bereits existiert.
 
 =back
 
 =head4 Description
 
 Erzeuge einen Hardlink $link auf Pfad $path.
-Die Methode liefert keinen Wert zurück.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head3 newlineStr() - Ermittele Zeilentrenner
 
@@ -321,7 +321,7 @@ Die Methode liefert keinen Wert zurück.
 =head4 Description
 
 Ermittele den physischen Zeilentrenner (CR, LF oder CRLF) der Datei
-$file und liefere diesen zurück. Wird kein Zeilentrenner gefunden,
+$file und liefere diesen zurÃ¼ck. Wird kein Zeilentrenner gefunden,
 liefere undef.
 
 =head4 Example
@@ -333,7 +333,7 @@ liefere undef.
       # Zeile verarbeiten
   }
 
-=head3 nextFile() - Generiere nächsten Dateinamen
+=head3 nextFile() - Generiere nÃ¤chsten Dateinamen
 
 =head4 Synopsis
 
@@ -360,14 +360,14 @@ Extension der Datei. Kann leer (Leerstring oder C<undef>) sein.
 
 =head4 Description
 
-Ermittele und liefere den nächsten Namen einer Datei. Der Dateiname
+Ermittele und liefere den nÃ¤chsten Namen einer Datei. Der Dateiname
 hat den Aufbau
 
   NAME-NNNN.EXT
 
 Die laufende Nummer NNNN (deren Breite durch den zweiten Parameter
 festgelegt) wird anhand der vorhandenen Dateien im Dateisystem
-ermittelt und um 1 erhöht.
+ermittelt und um 1 erhÃ¶ht.
 
 =head4 Example
 
@@ -377,13 +377,13 @@ Es liegt noch keine Datei vor:
   =>
   myfile-001.log
 
-Die Datei mit der höchsten Nummer ist myfile-031.log:
+Die Datei mit der hÃ¶chsten Nummer ist myfile-031.log:
 
   $file = Quiq::Path->nextFile('myfile',3,'log');
   =>
   myfile-032.log
 
-=head3 nextNumber() - Generiere nächste Dateinamen-Nummer
+=head3 nextNumber() - Generiere nÃ¤chste Dateinamen-Nummer
 
 =head4 Synopsis
 
@@ -405,17 +405,17 @@ Anzahl der Stellen der Nummer.
 
 =head4 Returns
 
-Nummer mit der angegebenen Anzahl Stellen, ggf. mit führenden 0en
-aufgefüllt.
+Nummer mit der angegebenen Anzahl Stellen, ggf. mit fÃ¼hrenden 0en
+aufgefÃ¼llt.
 
 =head4 Description
 
-Ermittele und liefere die nächste Nummer eines Verzeichnisses mit
+Ermittele und liefere die nÃ¤chste Nummer eines Verzeichnisses mit
 nummerierten Dateien. Die Dateinamen haben einen beliebigen
-Aufbau, müssen aber eine Nummer mit genau $width Stellen
+Aufbau, mÃ¼ssen aber eine Nummer mit genau $width Stellen
 besitzen. Die laufende Nummer NNNN (deren Breite durch den zweiten
 Parameter festgelegt ist) wird anhand der vorhandenen Dateien
-im Verzeichnis $dir ermittelt und um 1 erhöht.
+im Verzeichnis $dir ermittelt und um 1 erhÃ¶ht.
 
 =head4 Example
 
@@ -425,7 +425,7 @@ Es liegt noch keine Datei mit einer dreistelligen Nummer NNN vor:
   =>
   001
 
-Die Datei mit der höchsten dreistelligen Nummer NNN enthält 031:
+Die Datei mit der hÃ¶chsten dreistelligen Nummer NNN enthÃ¤lt 031:
 
   $num = Quiq::Path->nextNumber($dir,3);
   =>
@@ -443,37 +443,37 @@ Die Datei mit der höchsten dreistelligen Nummer NNN enthält 031:
 
 =item -autoDecode => $bool (Default: 0)
 
-Auto-Dekodiere die gelesenen Daten als Text und entscheide selbständig,
+Auto-Dekodiere die gelesenen Daten als Text und entscheide selbstÃ¤ndig,
 ob es sich um UTF-8 oder ISO-8859-1 Encoding handelt.
 
 =item -decode => $encoding (Default: undef)
 
-Decodiere die Datei gemäß dem Encoding $encoding.
+Decodiere die Datei gemÃ¤ÃŸ dem Encoding $encoding.
 
 =item -delete => $bool (Default: 0)
 
-Lösche Datei nach dem Lesen.
+LÃ¶sche Datei nach dem Lesen.
 
 =item -maxLines => $n (Default: 0)
 
-Lies höchstens $n Zeilen. Die Zählung beginnt nach den
+Lies hÃ¶chstens $n Zeilen. Die ZÃ¤hlung beginnt nach den
 Skiplines (s. Option -skipLines). 0 bedeutet, lies alle Zeilen.
 
 =item -skip => $regex (Default: keiner)
 
-Überlies alle Zeilen, die das Muster $regex erfüllen. $regex
+Ãœberlies alle Zeilen, die das Muster $regex erfÃ¼llen. $regex
 wird als Zeichenkette angegeben. Die Option kann beispielsweise dazu
-verwendet werden, um Kommentarzeilen zu überlesen.
+verwendet werden, um Kommentarzeilen zu Ã¼berlesen.
 
 =item -skipLines => $n (Default: 0)
 
-Überlies die ersten $n Zeilen.
+Ãœberlies die ersten $n Zeilen.
 
 =back
 
 =head4 Description
 
-Lies den Inhalt der Datei und liefere diesen zurück.
+Lies den Inhalt der Datei und liefere diesen zurÃ¼ck.
 
 =head3 sha1() - SHA1 Hex Digest
 
@@ -493,9 +493,9 @@ Pfad der Datei.
 
 =head4 Description
 
-Ermittele den SHA1 Hex Digest der Datei $file und liefere diesen zurück.
+Ermittele den SHA1 Hex Digest der Datei $file und liefere diesen zurÃ¼ck.
 
-=head3 truncate() - Kürze Datei
+=head3 truncate() - KÃ¼rze Datei
 
 =head4 Synopsis
 
@@ -513,10 +513,10 @@ Pfad der Datei.
 
 =head4 Description
 
-Kürze Datei $file auf Länge 0, falls sie existiert. Existiert die
+KÃ¼rze Datei $file auf LÃ¤nge 0, falls sie existiert. Existiert die
 Datei nicht, geschieht nichts.
 
-=head3 tempFile() - Erzeuge temporäre Datei
+=head3 tempFile() - Erzeuge temporÃ¤re Datei
 
 =head4 Synopsis
 
@@ -525,7 +525,7 @@ Datei nicht, geschieht nichts.
 
 =head4 Arguments
 
-Daten, die in die temporäre Datei geschrieben werden.
+Daten, die in die temporÃ¤re Datei geschrieben werden.
 
 =head4 Options
 
@@ -543,14 +543,14 @@ Tempdatei-Objekt
 
 =head4 Description
 
-Erzeuge eine temporäre Datei, beschreibe sie mit den Daten $data und
-liefere eine Referenz auf das Objekt zurück.
+Erzeuge eine temporÃ¤re Datei, beschreibe sie mit den Daten $data und
+liefere eine Referenz auf das Objekt zurÃ¼ck.
 
 =head4 See Also
 
 Quiq::TempFile
 
-=head3 unindent() - Entferne Einrückung
+=head3 unindent() - Entferne EinrÃ¼ckung
 
 =head4 Synopsis
 
@@ -568,10 +568,10 @@ Pfad der Datei.
 
 =head4 Description
 
-Lies den Inhalt der Datei $file, entferne dessen Einrückung (per
-Quiq::Unindent->hereDoc) und schreibe den uneingerückten Inhalt auf
-die Datei zurück. Besitzt der Dateiinhalt keine Einrückung, findet keine
-Änderung des Dateiinhalts statt.
+Lies den Inhalt der Datei $file, entferne dessen EinrÃ¼ckung (per
+Quiq::Unindent->hereDoc) und schreibe den uneingerÃ¼ckten Inhalt auf
+die Datei zurÃ¼ck. Besitzt der Dateiinhalt keine EinrÃ¼ckung, findet keine
+Ã„nderung des Dateiinhalts statt.
 
 =head3 write() - Schreibe Datei
 
@@ -587,15 +587,15 @@ die Datei zurück. Besitzt der Dateiinhalt keine Einrückung, findet keine
 
 =item -append => $bool (Default: 0)
 
-Öffne die Datei im Append-Modus, d.h. hänge die Daten an die Datei an.
+Ã–ffne die Datei im Append-Modus, d.h. hÃ¤nge die Daten an die Datei an.
 
 =item -encode => $encoding (Default: keiner)
 
-Encodiere $data gemäß dem Encoding $encoding.
+Encodiere $data gemÃ¤ÃŸ dem Encoding $encoding.
 
 =item -lock => $bool (Default: 0)
 
-Setze während des Schreibens einen Exclusive-Lock auf die Datei.
+Setze wÃ¤hrend des Schreibens einen Exclusive-Lock auf die Datei.
 Dies kann im Falle von -append sinnvoll sein.
 
 =item -mode => $mode (Default: keiner)
@@ -604,12 +604,12 @@ Setze die Permissions der Datei auf $mode. Beispiel: -mode=>0775
 
 =item -recursive => $bool (Default: 1)
 
-Erzeuge übergeordnete Verzeichnisse, wenn nötig.
+Erzeuge Ã¼bergeordnete Verzeichnisse, wenn nÃ¶tig.
 
 =item -unindent => $bool (Default: 0)
 
-Wende Quiq::Unindent->trimNl() auf die Daten $data an. Dies ist für
-inline geschriebenen Text nützlich.
+Wende Quiq::Unindent->trimNl() auf die Daten $data an. Dies ist fÃ¼r
+inline geschriebenen Text nÃ¼tzlich.
 
 =back
 
@@ -630,7 +630,7 @@ inline geschriebenen Text nützlich.
 
 =head2 Verzeichnis-Operationen
 
-=head3 count() - Anzahl der Verzeichniseinträge
+=head3 count() - Anzahl der VerzeichniseintrÃ¤ge
 
 =head4 Synopsis
 
@@ -648,14 +648,14 @@ Pfad des Verzeichnisses.
 
 =head4 Returns
 
-Anzahl Verzeichniseinträge (Integer)
+Anzahl VerzeichniseintrÃ¤ge (Integer)
 
 =head4 Description
 
-Ermittele die Anzahl Einträge des Verzeichnisses $dir und liefere diese
-zurück. Die Einträge C<.> und C<..> werden I<nicht> mitgezählt.
+Ermittele die Anzahl EintrÃ¤ge des Verzeichnisses $dir und liefere diese
+zurÃ¼ck. Die EintrÃ¤ge C<.> und C<..> werden I<nicht> mitgezÃ¤hlt.
 
-=head3 deleteContent() - Lösche Inhalt des Verzeichnis
+=head3 deleteContent() - LÃ¶sche Inhalt des Verzeichnis
 
 =head4 Synopsis
 
@@ -673,9 +673,9 @@ Pfad des Verzeichnisses
 
 =head4 Description
 
-Lösche den Inhalt des Verzeichnisses $dir.
+LÃ¶sche den Inhalt des Verzeichnisses $dir.
 
-=head3 entries() - Liste der Verzeichniseinträge
+=head3 entries() - Liste der VerzeichniseintrÃ¤ge
 
 =head4 Synopsis
 
@@ -697,20 +697,20 @@ Pfad des Verzeichnisses.
 
 =item -encoding => $charset (Default: 'utf-8')
 
-Dekodiere die Verzeichniseinträge gemäß Zeichensatz $charset.
+Dekodiere die VerzeichniseintrÃ¤ge gemÃ¤ÃŸ Zeichensatz $charset.
 
 =back
 
 =head4 Returns
 
-Liste der Verzeichniseinträge (Array of Strings). Im Skalarkontext
+Liste der VerzeichniseintrÃ¤ge (Array of Strings). Im Skalarkontext
 eine Referenz auf die Liste.
 
 =head4 Description
 
-Ermittele die Einträge des Verzeichnisses $dir und liefere diese
-als Liste zurück. Die Liste umfasst alle Verzeichniseinträge
-außer "." und "..".
+Ermittele die EintrÃ¤ge des Verzeichnisses $dir und liefere diese
+als Liste zurÃ¼ck. Die Liste umfasst alle VerzeichniseintrÃ¤ge
+auÃŸer "." und "..".
 
 =head3 find() - Liefere Pfade innerhalb eines Verzeichnisses
 
@@ -724,11 +724,11 @@ außer "." und "..".
 
 =item -decode => $encoding
 
-Dekodiere die Dateinamen gemäß dem angegebenen Encoding.
+Dekodiere die Dateinamen gemÃ¤ÃŸ dem angegebenen Encoding.
 
 =item -exclude => $regex (Default: keiner)
 
-Schließe alle Pfade aus, die Muster $regex erfüllen. Directories
+SchlieÃŸe alle Pfade aus, die Muster $regex erfÃ¼llen. Directories
 werden gepruned, d.h. sie werden nicht durchsucht. Matcht ein Pfad
 die Pattern sowohl von -pattern als auch -exclude, hat der
 exclude-Pattern Vorrang, d.h. die Datei wird ausgeschlossen.
@@ -744,9 +744,9 @@ Anwendungsfall: nur die Blatt-Verzeichnisse eines Verzeichnisbaums.
 
 =item -olderThan => $seconds (Default: 0)
 
-Liefere nur Dateien, die vor mindestens $seconds zuletzt geändert
-wurden. Diese Option ist z.B. nützlich, um veraltete temporäre Dateien
-zu finden, um sie zu löschen.
+Liefere nur Dateien, die vor mindestens $seconds zuletzt geÃ¤ndert
+wurden. Diese Option ist z.B. nÃ¼tzlich, um veraltete temporÃ¤re Dateien
+zu finden, um sie zu lÃ¶schen.
 
 =item -outHandle => $fh (Default: \*STDOUT)
 
@@ -755,14 +755,14 @@ werden.
 
 =item -pattern => $regex (Default: keiner)
 
-Schränke die Treffer auf jene Pfade ein, die Muster $regex
-erfüllen.  Matcht ein Pfad die Pattern sowohl von -pattern als
+SchrÃ¤nke die Treffer auf jene Pfade ein, die Muster $regex
+erfÃ¼llen.  Matcht ein Pfad die Pattern sowohl von -pattern als
 auch -exclude, hat der exclude-Pattern Vorrang, d.h. die Datei
 wird ausgeschlossen.
 
 =item -slash => $bool (Default: 0)
 
-Füge einen Slash (/) am Ende von Directory-Namen hinzu.
+FÃ¼ge einen Slash (/) am Ende von Directory-Namen hinzu.
 
 =item -sloppy => $bool (Default: 0)
 
@@ -775,8 +775,8 @@ Liefere nur den Subpfad, entferne also $path am Anfang.
 
 =item -testSub => sub {} (Default: undef)
 
-Subroutine, die den Pfad als Argument erthält und einen boolschen
-Wert liefert, der angibt, ob der Pfad zur Ergebnismenge gehört
+Subroutine, die den Pfad als Argument erthÃ¤lt und einen boolschen
+Wert liefert, der angibt, ob der Pfad zur Ergebnismenge gehÃ¶rt
 oder nicht.
 
 =item -type => 'd' | 'f' | undef (Default: undef)
@@ -792,9 +792,9 @@ Schreibe Meldungen auf Ausgabe-Handle (s. Option -outHandle).
 
 =head4 Description
 
-Finde alle Dateien und Verzeichnisse unterhalb von und einschließlich
+Finde alle Dateien und Verzeichnisse unterhalb von und einschlieÃŸlich
 Verzeichnis $path und liefere die Liste der gefundenen Pfade
-zurück. Im Skalarkontext liefere eine Referenz auf die Liste.
+zurÃ¼ck. Im Skalarkontext liefere eine Referenz auf die Liste.
 
 Ist $dir Null (Leerstring oder undef), wird das aktuelle Verzeichnis
 ('.') durchsucht.
@@ -819,7 +819,7 @@ Name des Programms.
 =item $sloppy
 
 Wenn wahr, wird keine Exception geworfen, wenn das Programm nicht
-gefunden wird, sondern undef zurück geliefert.
+gefunden wird, sondern undef zurÃ¼ck geliefert.
 
 =back
 
@@ -829,11 +829,11 @@ Programmpfad (String)
 
 =head4 Description
 
-Suche Programm $program über den Suchpfad der Shell und liefere
-den vollständigen Pfad zurück. Wird das Programm nicht gefunden,
+Suche Programm $program Ã¼ber den Suchpfad der Shell und liefere
+den vollstÃ¤ndigen Pfad zurÃ¼ck. Wird das Programm nicht gefunden,
 wird eine Exception geworfen, sofern $sloppy nicht wahr ist.
 
-=head3 maxFilename() - Liefere den lexikalisch größten Dateinamen
+=head3 maxFilename() - Liefere den lexikalisch grÃ¶ÃŸten Dateinamen
 
 =head4 Synopsis
 
@@ -841,9 +841,9 @@ wird eine Exception geworfen, sofern $sloppy nicht wahr ist.
 
 =head4 Description
 
-Liefere den lexikalisch größten Dateinamen aus Verzeichnis $dir.
+Liefere den lexikalisch grÃ¶ÃŸten Dateinamen aus Verzeichnis $dir.
 
-=head3 maxFileNumber() - Liefere den numerisch größten Dateinamen
+=head3 maxFileNumber() - Liefere den numerisch grÃ¶ÃŸten Dateinamen
 
 =head4 Synopsis
 
@@ -862,10 +862,10 @@ beginnt.
 
 =head4 Description
 
-Liefere den numerisch größten Dateinamen aus Verzeichnis $dir.
-Die Methode ist nützlich, wenn die Dateinamen mit einer Zahl
-NNNNNN beginnen und man die Datei mit der größten Zahl ermitteln
-möchte um einer neu erzeugten Datei die nächsthöhere Nummer
+Liefere den numerisch grÃ¶ÃŸten Dateinamen aus Verzeichnis $dir.
+Die Methode ist nÃ¼tzlich, wenn die Dateinamen mit einer Zahl
+NNNNNN beginnen und man die Datei mit der grÃ¶ÃŸten Zahl ermitteln
+mÃ¶chte um einer neu erzeugten Datei die nÃ¤chsthÃ¶here Nummer
 zuzuweisen.
 
 =head3 mkdir() - Erzeuge Verzeichnis
@@ -881,19 +881,19 @@ zuzuweisen.
 =item -createParent => $bool (Default: 0)
 
 Erzeuge nicht den angegebenen Pfad, sondern den Parent-Pfad.
-Dies ist nützlich, wenn der übergebene Pfad ein Dateiname ist,
+Dies ist nÃ¼tzlich, wenn der Ã¼bergebene Pfad ein Dateiname ist,
 dessen Verzeichnis bei Nicht-Existenz erzeugt werden soll.
 Impliziert -recursive=>1, wenn nicht explizit -recursive=>0
 gesetzt ist.
 
 =item -forceMode => $mode (Default: keiner)
 
-Setze Verzeichnisrechte auf $mode ohne Berücksichtigung
+Setze Verzeichnisrechte auf $mode ohne BerÃ¼cksichtigung
 der umask des Prozesses.
 
 =item -mode => $mode (Default: 0775)
 
-Setze Verzeichnisrechte auf $mode mit Berücksichtigung
+Setze Verzeichnisrechte auf $mode mit BerÃ¼cksichtigung
 der umask des Prozesses.
 
 =item -mustNotExist => $bool (Default: 0)
@@ -903,7 +903,7 @@ eine Exception geworfen.
 
 =item -recursive => 0 | 1 (Default: 0)
 
-Erzeuge übergeordnete Verzeichnisse, wenn nötig.
+Erzeuge Ã¼bergeordnete Verzeichnisse, wenn nÃ¶tig.
 
 =back
 
@@ -911,9 +911,9 @@ Erzeuge übergeordnete Verzeichnisse, wenn nötig.
 
 Erzeuge Verzeichnis. Existiert das Verzeichnis bereits, hat
 der Aufruf keinen Effekt. Kann das Verzeichnis nicht angelegt
-werden, wird eine Exception ausgelöst.
+werden, wird eine Exception ausgelÃ¶st.
 
-=head3 mtimeDir() - Jüngste Modifikationszeit
+=head3 mtimeDir() - JÃ¼ngste Modifikationszeit
 
 =head4 Synopsis
 
@@ -935,10 +935,10 @@ Zeit in Unix Epoch (Integer)
 
 =head4 Description
 
-Ermittele über allen Pfaden in und einschließlch $dir den jüngsten
-Modifikationszeitpunkt (mtime) und liefere diesen zurück.
+Ermittele Ã¼ber allen Pfaden in und einschlieÃŸlch $dir den jÃ¼ngsten
+Modifikationszeitpunkt (mtime) und liefere diesen zurÃ¼ck.
 
-=head3 rmdir() - Lösche Verzeichnis
+=head3 rmdir() - LÃ¶sche Verzeichnis
 
 =head4 Synopsis
 
@@ -960,10 +960,10 @@ nichts
 
 =head4 Description
 
-Lösche Verzeichnis $dir, falls dieses leer ist. Kann das
-Verzeichnis nicht gelöscht werden, wird eine Exception ausgelöst.
+LÃ¶sche Verzeichnis $dir, falls dieses leer ist. Kann das
+Verzeichnis nicht gelÃ¶scht werden, wird eine Exception ausgelÃ¶st.
 
-=head3 tempDir() - Erzeuge temporäres Verzeichnis
+=head3 tempDir() - Erzeuge temporÃ¤res Verzeichnis
 
 =head4 Synopsis
 
@@ -985,8 +985,8 @@ Tempdir-Objekt
 
 =head4 Description
 
-Erzeuge ein temporäres Verzeichnis und liefere eine Referenz auf
-das Objekt zurück.
+Erzeuge ein temporÃ¤res Verzeichnis und liefere eine Referenz auf
+das Objekt zurÃ¼ck.
 
 =head4 See Also
 
@@ -1007,8 +1007,8 @@ realPath()
 =head4 Description
 
 Ist $path ein relativer Pfad, expandiere ihn zu einem absolutem Pfad
-und liefere diesen zurück. Ist $path bereits absolut, liefere ihn
-unverändert.
+und liefere diesen zurÃ¼ck. Ist $path bereits absolut, liefere ihn
+unverÃ¤ndert.
 
 =head3 age() - Alter der letzten Modifikation
 
@@ -1033,7 +1033,7 @@ Anzahl Sekunden (Integer)
 =head4 Description
 
 Ermittele das Alter der letzten Modifiktion des Pfad-Objekts in
-Sekunden und liefere diesen Wert zurück. Existiert der Pfad nicht,
+Sekunden und liefere diesen Wert zurÃ¼ck. Existiert der Pfad nicht,
 wird eine Exception geworfen.
 
 =head3 basename() - Grundname eines Pfads
@@ -1069,7 +1069,7 @@ Liefere den Grundnamen des Pfads, d.h. ohne Pfadanfang und Extension.
 =head4 Description
 
 Entferne eine etwaig vorhandene Extension von $path und liefere das
-Resultat zurück.
+Resultat zurÃ¼ck.
 
 =head3 chmod() - Setze Zugriffsrechte
 
@@ -1081,7 +1081,7 @@ Resultat zurück.
 
 Setze Zugriffsrechte $mode auf Pfad $path.
 
-=head3 delete() - Lösche Pfad (rekursiv)
+=head3 delete() - LÃ¶sche Pfad (rekursiv)
 
 =head4 Synopsis
 
@@ -1089,11 +1089,11 @@ Setze Zugriffsrechte $mode auf Pfad $path.
 
 =head4 Description
 
-Lösche den Pfad aus dem Dateisystem, also entweder die Datei oder
-das Verzeichnis einschließlich Inhalt. Es ist kein Fehler, wenn
+LÃ¶sche den Pfad aus dem Dateisystem, also entweder die Datei oder
+das Verzeichnis einschlieÃŸlich Inhalt. Es ist kein Fehler, wenn
 der Pfad im Dateisystem nicht existiert. Existiert der Pfad und
-kann nicht gelöscht werden, wird eine Exception ausgelöst.
-Die Methode liefert keinen Wert zurück.
+kann nicht gelÃ¶scht werden, wird eine Exception ausgelÃ¶st.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head3 dir() - Pfad ohne letzten Bestandteil
 
@@ -1108,10 +1108,10 @@ String
 =head4 Description
 
 Entferne den letzten Pfadbestandteil von $path und liefere
-den Rest zurück. Enthält $path keinen Slash (/), wird ein Leerstring
+den Rest zurÃ¼ck. EnthÃ¤lt $path keinen Slash (/), wird ein Leerstring
 geliefert.
 
-=head3 exists() - Prüfe Existenz
+=head3 exists() - PrÃ¼fe Existenz
 
 =head4 Synopsis
 
@@ -1119,8 +1119,8 @@ geliefert.
 
 =head4 Description
 
-Prüfe, ob Pfad $path existiert und liefere den entsprechenden
-Wahrheitswert zurück. Die Methode expandiert ~ am Pfadanfang.
+PrÃ¼fe, ob Pfad $path existiert und liefere den entsprechenden
+Wahrheitswert zurÃ¼ck. Die Methode expandiert ~ am Pfadanfang.
 
 =head3 expandTilde() - Expandiere Tilde
 
@@ -1135,7 +1135,7 @@ Pfad (String)
 =head4 Description
 
 Ersetze eine Tilde am Pfadanfang durch das Home-Verzeichnis des
-Benutzers und liefere den resultierenden Pfad zurück.
+Benutzers und liefere den resultierenden Pfad zurÃ¼ck.
 
 =head3 extension() - Extension des Pfads
 
@@ -1145,7 +1145,7 @@ Benutzers und liefere den resultierenden Pfad zurück.
 
 =head4 Description
 
-Ermittele die Extension des Pfads $path und liefere diese zurück.
+Ermittele die Extension des Pfads $path und liefere diese zurÃ¼ck.
 Besitzt der Pfad keine Extension, liefere einen Leerstring ('').
 
 =head3 filename() - Letzte Pfadkomponente
@@ -1158,7 +1158,7 @@ Besitzt der Pfad keine Extension, liefere einen Leerstring ('').
 
 Liefere die letzte Komponente des Pfads.
 
-=head3 glob() - Liefere Pfade, die Shell-Pattern erfüllen
+=head3 glob() - Liefere Pfade, die Shell-Pattern erfÃ¼llen
 
 =head4 Synopsis
 
@@ -1167,12 +1167,12 @@ Liefere die letzte Komponente des Pfads.
 
 =head4 Description
 
-Liefere die Pfad-Objekte, die Shell-Pattern $pat erfüllen.
+Liefere die Pfad-Objekte, die Shell-Pattern $pat erfÃ¼llen.
 Im Skalarkontext liefere den ersten Pfad, der dann
-der einzig erfüllbare Pfad sein muss, sonst wird eine Exception
+der einzig erfÃ¼llbare Pfad sein muss, sonst wird eine Exception
 geworfen.
 
-=head3 isEmpty() - Prüfe, ob Datei oder Verzeichnis leer ist
+=head3 isEmpty() - PrÃ¼fe, ob Datei oder Verzeichnis leer ist
 
 =head4 Synopsis
 
@@ -1201,7 +1201,7 @@ Permissions oktal anzeigen
 
 =item *
 
-Prüfen, ob eine Datei für andere lesbar oder schreibbar ist
+PrÃ¼fen, ob eine Datei fÃ¼r andere lesbar oder schreibbar ist
 
   if ($mode & 00066) {
       die "ERROR: File ist readable or writable for others\n";
@@ -1260,15 +1260,15 @@ Schrittweite in Sekunden.
 
 =head4 Description
 
-Prüfe, ob Pfad $path1 ein jüngeres Modifikationsdatum besitzt als
+PrÃ¼fe, ob Pfad $path1 ein jÃ¼ngeres Modifikationsdatum besitzt als
 $path2. Ist dies der Fall, liefere 1, andernfalls 0. Liefere
 ebenfalls 1, wenn Datei $path2 nicht existiert. Pfad
 $path1 muss existieren.
 
 Pfad $path2 kann eine Zeichenkette oder ein Pfad-Objekt sein.
 
-Dieser Test ist nützlich, wenn $path2 aus $path1 erzeugt wird
-und geprüft werden soll, ob eine Neuerzeugung notwendig ist.
+Dieser Test ist nÃ¼tzlich, wenn $path2 aus $path1 erzeugt wird
+und geprÃ¼ft werden soll, ob eine Neuerzeugung notwendig ist.
 
 =head3 newExtension() - Setze eine neue Extension
 
@@ -1278,9 +1278,9 @@ und geprüft werden soll, ob eine Neuerzeugung notwendig ist.
 
 =head4 Description
 
-Entferne die bestehende Extension von Pfad $path und füge $ext als
+Entferne die bestehende Extension von Pfad $path und fÃ¼ge $ext als
 neue Extension hinzu. Besitzt $path keine Extension, wird
-$ext hinzugefügt. Etension $ext kann mit oder ohne Punkt am Anfang
+$ext hinzugefÃ¼gt. Etension $ext kann mit oder ohne Punkt am Anfang
 angegeben werden.
 
 =head3 readlink() - Liefere Ziel des Symlink
@@ -1306,7 +1306,7 @@ Liefere den Pfad, auf den der Symlink $symlinkPath zeigt.
 =head4 Description
 
 Entferne die Extension von Pfad $path und liefere den
-resultierenden Pfad zurück. Besitzt $path keine Extension, sind
+resultierenden Pfad zurÃ¼ck. Besitzt $path keine Extension, sind
 $path und $newPath identisch.
 
 =head3 rename() - Benenne Pfad um
@@ -1321,7 +1321,7 @@ $path und $newPath identisch.
 
 =item -overwrite => $bool (Default: 1)
 
-Wenn gesetzt, wird die Datei $newPath überschrieben, falls sie
+Wenn gesetzt, wird die Datei $newPath Ã¼berschrieben, falls sie
 existiert. Wenn nicht gesetzt, wird eine Exception geworfen,
 falls sie existiert.
 
@@ -1335,7 +1335,7 @@ und entferne leere Verzeichnisse des Quellpfads.
 =head4 Description
 
 Benenne Pfad $oldPath in $newPath um. Die Methode liefert keinen
-Wert zurück.
+Wert zurÃ¼ck.
 
 =head4 Example
 
@@ -1347,7 +1347,7 @@ Ausgangslage: Unterhalb von /tmp existieren weder a noch x.
   Quiq::Path->write($srcPath,'',-recursive=>1);
   Quiq::Path->rename($srcPath,$destPath,-recursive=>1);
 
-Nach Ausführung existiert der der Pfad /tmp/x/b/c/d/f, aber der Pfad
+Nach AusfÃ¼hrung existiert der der Pfad /tmp/x/b/c/d/f, aber der Pfad
 /tmp/a nicht mehr.
 
 =head3 numberBasePaths() - Nummeriere die (kurzen) Basisnamen der Pfade
@@ -1453,7 +1453,7 @@ Verwende $n als Startwert.
 
 =head4 Description
 
-Nummeriere die Pfade @paths, gemäß ihrer gegebenen Reihenfolge.
+Nummeriere die Pfade @paths, gemÃ¤ÃŸ ihrer gegebenen Reihenfolge.
 Der Basisname der jeweiligen Datei/des Directory aus @paths wird
 hierbei durch eine Nummer der Breite $width ersetzt. Die Extension
 (sofern vorhanden) bleibt erhalten. Die Nummerierung erfolgt mit
@@ -1465,7 +1465,7 @@ Der Aufruf
 
   $ perl -MQuiq::Path -E '$p = Quiq::Path->new; $p->numberPaths([$p->glob("*")],5,10)'
 
-benennt alle Dateien, gleichgültig wie sie heißen, im aktuellen
+benennt alle Dateien, gleichgÃ¼ltig wie sie heiÃŸen, im aktuellen
 Verzeichnis um in
 
   00010.EXT
@@ -1474,7 +1474,7 @@ Verzeichnis um in
   ...
 
 wobei EXT die Extension ist, die die Datei vorher hatte, d.h. diese
-bleibt als einziges vom ursprünglichen Dateinamen erhalten.
+bleibt als einziges vom ursprÃ¼nglichen Dateinamen erhalten.
 
 =head3 split() - Zerlege Pfad in seine Komponenten
 
@@ -1486,9 +1486,9 @@ bleibt als einziges vom ursprünglichen Dateinamen erhalten.
 
 Zerlege Pfad in die vier Komponenten Verzeichnisname, Dateiname,
 Basisname (= Dateiname ohne Extension) und Extension und liefere diese
-zurück.
+zurÃ¼ck.
 
-Für eine Komponente, die nicht existiert, wird ein Leerstring
+FÃ¼r eine Komponente, die nicht existiert, wird ein Leerstring
 geliefert.
 
 =head3 stat() - Statusinformation eines Pfads
@@ -1514,9 +1514,9 @@ Statusinformation (List)
 =head4 Description
 
 Ermittele die Statusinformation eines Pfads und liefere diese
-Information als 13-elementige Liste zurück.
+Information als 13-elementige Liste zurÃ¼ck.
 
-Der Aufruf ist äquivalent zu
+Der Aufruf ist Ã¤quivalent zu
 
   stat $path
 
@@ -1552,8 +1552,8 @@ perldoc -f stat
 
 =head4 Description
 
-Erzeuge Symlink $symlink für Pfad $path.
-Die Methode liefert keinen Wert zurück.
+Erzeuge Symlink $symlink fÃ¼r Pfad $path.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head3 symlinkRelative() - Erzeuge Symlink mit relativem Zielpfad
 
@@ -1571,23 +1571,23 @@ Erzeuge nicht-existente Verzeichnisse des Zielpfads.
 
 =item -dryRun => $bool (Default: 0)
 
-Führe das Kommando nicht aus. Speziell Verbindung mit
+FÃ¼hre das Kommando nicht aus. Speziell Verbindung mit
 -verbose=>1 sinnvoll, um Code zu testen.
 
 =item -verbose => $bool (Default: 0)
 
-Gib Informationen über die erzeugten Symlinks auf STDOUT aus.
+Gib Informationen Ã¼ber die erzeugten Symlinks auf STDOUT aus.
 
 =back
 
 =head4 Description
 
 Erzeuge einen Symlink $symlink, der auf den Pfad $path verweist.
-Die Methode liefert keinen Wert zurück.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
-Die Methode zeichnet sich gegenüber der Methode symlink() dadurch
+Die Methode zeichnet sich gegenÃ¼ber der Methode symlink() dadurch
 aus, dass sie, wenn $path ein relativer Pfad ist, diesen so korrigiert,
-dass er von $symlink aus korrekt ist. Denn der Pfad $path múss als
+dass er von $symlink aus korrekt ist. Denn der Pfad $path mÃºss als
 relativer Pfad als Fortsetzung von $symlink gesehen werden.
 
 =head4 Example
@@ -1637,7 +1637,7 @@ auf den aktuellen Zeitpunkt.
 
 =head4 Description
 
-Ermittele die UID des Owners der Datei und liefere diese zurück.
+Ermittele die UID des Owners der Datei und liefere diese zurÃ¼ck.
 
 =head1 VERSION
 

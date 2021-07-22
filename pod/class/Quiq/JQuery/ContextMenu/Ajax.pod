@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::JQuery::ContextMenu::Ajax - Erzeuge Code für ein jQuery Kontext-Menü
+Quiq::JQuery::ContextMenu::Ajax - Erzeuge Code fÃ¼r ein jQuery Kontext-MenÃ¼
 
 =head1 BASE CLASS
 
@@ -10,9 +10,9 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Die Klasse erzeugt Code für ein Kontext-Menü, welches durch das
+Die Klasse erzeugt Code fÃ¼r ein Kontext-MenÃ¼, welches durch das
 jQuery-Plugin L<jQuery contextmenu|https://swisnl.github.io/jQuery-contextMenu/docs.html> realisiert wird. Der Inhalt
-des Menüs wird durch einen AJAX-Aufruf beschafft.
+des MenÃ¼s wird durch einen AJAX-Aufruf beschafft.
 
 Der Perl-Code
 
@@ -82,7 +82,7 @@ den Aufbau
       ...
   ]
 
-Der serverseitige Perl-Code, der eine Menü-Definition liefert (Beispiel):
+Der serverseitige Perl-Code, der eine MenÃ¼-Definition liefert (Beispiel):
 
   return [
       sql => {
@@ -121,8 +121,8 @@ L<Allgmeine Doku|https://swisnl.github.io/jQuery-contextMenu/docs.html>
 
 =item className => $name
 
-Name der CSS-Klasse des Menüs. Kann explizit angegeben werden, wenn das
-Menü customized werden soll. Beispiel ($name ist 'contextMenu'):
+Name der CSS-Klasse des MenÃ¼s. Kann explizit angegeben werden, wenn das
+MenÃ¼ customized werden soll. Beispiel ($name ist 'contextMenu'):
 
   .contextMenu {
       width: 85px !important;
@@ -132,11 +132,11 @@ Menü customized werden soll. Beispiel ($name ist 'contextMenu'):
 =item selector => $selector
 
 Der jQuery-Selektor, der die Elemente identifiziert, auf die das
-Kontext-Menü gelegt wird. Siehe Plugin-Doku: L<selector|https://swisnl.github.io/jQuery-contextMenu/docs.html#trigger>.
+Kontext-MenÃ¼ gelegt wird. Siehe Plugin-Doku: L<selector|https://swisnl.github.io/jQuery-contextMenu/docs.html#trigger>.
 
 =item trigger => $event
 
-Das Ereignis, durch das das Kontext-Menü angesprochen wird.
+Das Ereignis, durch das das Kontext-MenÃ¼ angesprochen wird.
 Siehe Plugin-Doku: L<tigger>.
 
 =back
@@ -144,7 +144,7 @@ Siehe Plugin-Doku: L<tigger>.
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf dieses
-Objekt zurück.
+Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -157,8 +157,8 @@ Objekt zurück.
 
 =head4 Description
 
-Generiere den JavaScript-Code eines Kontext-Menüs und liefere
-diesen zurück.
+Generiere den JavaScript-Code eines Kontext-MenÃ¼s und liefere
+diesen zurÃ¼ck.
 
 =head1 VERSION
 

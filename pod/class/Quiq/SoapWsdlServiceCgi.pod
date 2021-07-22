@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::SoapWsdlServiceCgi - Basisklasse für SOAP Web Services via CGI
+Quiq::SoapWsdlServiceCgi - Basisklasse fÃ¼r SOAP Web Services via CGI
 
 =head1 BASE CLASSES
 
@@ -20,13 +20,13 @@ SOAP::Server::Parameters
 
 =head1 DESCRIPTION
 
-Die Klasse stellt die Grundfunktionalität eines SOAP Web Service
-mit WSDL zur Verfügung. Ein konkreter Service wird realisiert,
+Die Klasse stellt die GrundfunktionalitÃ¤t eines SOAP Web Service
+mit WSDL zur VerfÃ¼gung. Ein konkreter Service wird realisiert,
 indem eine Klasse mit der Implementierung konkreter
 Service-Methoden von dieser Basisklasse abgeleitet wird.
 
 Der Web Service wird angesprochen (SOAP-Call oder Abruf der
-WSDL-Spezifikation), wenn die Klassenmethode $class->run() über
+WSDL-Spezifikation), wenn die Klassenmethode $class->run() Ã¼ber
 die abgeleitete Klasse aus einem CGI-Programm heraus aufgerufen
 wird.
 
@@ -45,7 +45,7 @@ Abgeleitete Klasse mit den Methoden des Web Service implementieren
   
   =begin WSDL
   
-  <Pod::WSDL-Spezifikation für Methode myWebServiceMethod1()>
+  <Pod::WSDL-Spezifikation fÃ¼r Methode myWebServiceMethod1()>
   
   =end WSDL
   
@@ -64,21 +64,21 @@ Abgeleitete Klasse mit den Methoden des Web Service implementieren
   # eof
 
 Die Signatur der Methoden (Parameter und Returnwerte) muss in
-einem POD-Abschnitt (C<=begin WSDL ... =end WSDL>) gemäß den
+einem POD-Abschnitt (C<=begin WSDL ... =end WSDL>) gemÃ¤ÃŸ den
 Konventionen von Pod::WSDL vorgenommen werden (Beschreibung
 siehe dort).
 
 Die Klasse Quiq::SoapWsdlServiceCgi ist von SOAP::Server::Parameters abgeleitet.
 Daher wird der Parameterliste der Methoden der deserialisierte
-Client-Request in Form eines SOAP::SOM-Objekts hinzugefügt. In den
-Methoden kann also auf sämtliche Request-Information zugegriffen
-werden, z.B. Header-Information, die für eine Authentisierung
-benötigt wird.
+Client-Request in Form eines SOAP::SOM-Objekts hinzugefÃ¼gt. In den
+Methoden kann also auf sÃ¤mtliche Request-Information zugegriffen
+werden, z.B. Header-Information, die fÃ¼r eine Authentisierung
+benÃ¶tigt wird.
 
 =item 2.
 
 CGI-Programm my-webservice implementieren, das den Web Service
-ausführt:
+ausfÃ¼hrt:
 
   #!/usr/bin/env perl
   
@@ -89,24 +89,24 @@ ausführt:
   # eof
 
 Der Webservice kann unter einem beliebigen URI installiert
-werden. Wird der URI vom Client mit angehägtem "?wsdl"
+werden. Wird der URI vom Client mit angehÃ¤gtem "?wsdl"
 aufgerufen, liefert der Web Service seine
 WSDL-Spezifikation. Alle anderen Aufrufe behandelt der Service
 als SOAP-Request.
 
 =back
 
-=head2 Web Service unter mod_perl ausführen
+=head2 Web Service unter mod_perl ausfÃ¼hren
 
 Der Web Service (my-webservice, MyWebServiceClass.pm) kann ohne
-Änderung auch unter mod_perl ausgeführt werden. Dadurch wird der
+Ã„nderung auch unter mod_perl ausgefÃ¼hrt werden. Dadurch wird der
 serverseitige Overhead je Methodenaufruf deutlich reduziert. Bei
-einem Test über das Internet
+einem Test Ã¼ber das Internet
 
   Client <--Internet--> Server
 
 ergab sich eine Beschleunigung um Faktor 3 (0.06s statt 0.2s
-Sekunden für einen Methodenaufruf ohne Parameter, ohne Code und
+Sekunden fÃ¼r einen Methodenaufruf ohne Parameter, ohne Code und
 ohne Returnwert).
 
 Getestetes Setup (Apache2, ModPerl2) auf Ebene eines VirtualHost:
@@ -149,7 +149,7 @@ Kommandozeile getestet werden:
   $ SCRIPT_URI=http://x QUERY_STRING=wsdl perl -MMyWebServiceClass
       -e 'MyWebServiceClass->run'
 
-Der gleiche Test über das CGI-Programm, das die WebService-Klasse ruft:
+Der gleiche Test Ã¼ber das CGI-Programm, das die WebService-Klasse ruft:
 
   $ SCRIPT_URI=http://x QUERY_STRING=wsdl perl ./mywebservice.cgi
 
@@ -157,7 +157,7 @@ Der gleiche Test über das CGI-Programm, das die WebService-Klasse ruft:
 
 =head2 Klassenmethoden
 
-=head3 run() - Führe Aufruf aus
+=head3 run() - FÃ¼hre Aufruf aus
 
 =head4 Synopsis
 
@@ -165,11 +165,11 @@ Der gleiche Test über das CGI-Programm, das die WebService-Klasse ruft:
 
 =head4 Description
 
-Führe einen Aufruf über Klasse $class aus und liefere
+FÃ¼hre einen Aufruf Ã¼ber Klasse $class aus und liefere
 die Antwort an den Client. Der Aufruf ist entweder eine Abfrage der
 WSDL-Spezifikation des Service (URI?wsdl) oder ein SOAP-Aufruf.
 
-Die Methode liefert keinen Wert zurück.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head1 VERSION
 

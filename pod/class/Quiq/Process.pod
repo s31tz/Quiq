@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Process - Informationen über den laufenden Prozess
+Quiq::Process - Informationen Ã¼ber den laufenden Prozess
 
 =head1 BASE CLASS
 
@@ -74,9 +74,9 @@ Setze EUID:
 =head4 Description
 
 Liefere das Home-Verzeichnis des Benutzers, der den Prozess
-ausführt.
+ausfÃ¼hrt.
 
-=head3 mtime() - Zeitpunkt der letzten Änderung am Programm
+=head3 mtime() - Zeitpunkt der letzten Ã„nderung am Programm
 
 =head4 Synopsis
 
@@ -88,12 +88,12 @@ Unix Epoch (Integer)
 
 =head4 Description
 
-Liefere den Zeitpunkt der letzten Änderung an den Dateien
+Liefere den Zeitpunkt der letzten Ã„nderung an den Dateien
 des (Perl-)Prozesses in Unix Epoch.
 
-Diese Information ist nützlich, wenn das Programm z.B. Dateien
-generiert und selbst entscheiden möchte, ob eine Neugenerierung
-aufgrund einer Änderung am Programm nötig ist.
+Diese Information ist nÃ¼tzlich, wenn das Programm z.B. Dateien
+generiert und selbst entscheiden mÃ¶chte, ob eine Neugenerierung
+aufgrund einer Ã„nderung am Programm nÃ¶tig ist.
 
 =head3 uid() - UID des Prozesses oder eines (beliebigen) Benutzers
 
@@ -107,7 +107,7 @@ aufgrund einer Änderung am Programm nötig ist.
 Liefere die reale User-Id des Prozesses. Ist Parameter $user
 angegeben, liefere die User-Id des betreffenden Benutzers.
 
-=head3 user() - Name des ausführenden Benutzers
+=head3 user() - Name des ausfÃ¼hrenden Benutzers
 
 =head4 Synopsis
 
@@ -116,7 +116,7 @@ angegeben, liefere die User-Id des betreffenden Benutzers.
 =head4 Description
 
 Liefere den Namen des Benutzers, unter dessen Rechten der
-Prozess ausgeführt wird.
+Prozess ausgefÃ¼hrt wird.
 
 =head1 VERSION
 

@@ -87,9 +87,9 @@ SQLite Datenbank-Datei.
 =item $exportDir
 
 Verzeichnis, in das die Tabellendaten und Datenbank-Datei gesichert
-werden. Schlägt die Neuerzeugung fehl, müssen die Tabellendaten
+werden. SchlÃ¤gt die Neuerzeugung fehl, mÃ¼ssen die Tabellendaten
 eventuell bearbeitet und die Neuerzeugung wiederholt werden.
-Die ursprüngliche Datenbank kann bei Bedarf wieder hergestellt
+Die ursprÃ¼ngliche Datenbank kann bei Bedarf wieder hergestellt
 werden, da sie zuvor ebenfalls in das Exportverzeichnis gesichert
 wurde (s.u.).
 
@@ -97,7 +97,7 @@ wurde (s.u.).
 
 Refenz auf die Subroutine, die das Schema auf einer I<leeren>
 Datenbank erzeugt. Als einzigen Parameter wird $dbFile
-an die Subroutine übergeben.
+an die Subroutine Ã¼bergeben.
 
   $class->recreateDatabase('~/var/myapp/myapp.db','/tmp/myapp',sub {
       my $dbFile = shift;
@@ -144,12 +144,12 @@ die unter 2. exportierten Daten importieren
 
 =item 6.
 
-Exportverzeichnis löschen (falls in den Schritten 4. bis 6.
+Exportverzeichnis lÃ¶schen (falls in den Schritten 4. bis 6.
 kein Fehler aufgetreten ist)
 
 =back
 
-Die Schritte 1. und 2. finden nur nach Rückfrage statt, wenn
+Die Schritte 1. und 2. finden nur nach RÃ¼ckfrage statt, wenn
 das Exportverzeichnis bereits existiert. Das Exportverzeichnis existiert
 typischerweise nur, wenn ein vorheriger Neuerzeugungsversuch
 fehlgeschlagen ist.

@@ -10,9 +10,9 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse ist Träger von Information über eine
+Ein Objekt der Klasse ist TrÃ¤ger von Information Ã¼ber eine
 Menge von skalaren Werten (Integer, Float, String). Die Information
-ist nützlich, wenn die Menge der Werte tabellarisch dargestellt werden
+ist nÃ¼tzlich, wenn die Menge der Werte tabellarisch dargestellt werden
 soll.
 
 =head1 ATTRIBUTES
@@ -29,9 +29,9 @@ Breite des breitesten Werts der Wertemenge.
 
 =item floatPrefix
 
-Maximale Anzahl an Zeichen einer Fließkommazahl vor und einschließlich
+Maximale Anzahl an Zeichen einer FlieÃŸkommazahl vor und einschlieÃŸlich
 dem Punkt. Dieses Attribut wird nur intern gebraucht, um die maximale
-Breite einer Fließkommazahl zu bestimmen.
+Breite einer FlieÃŸkommazahl zu bestimmen.
 
 =item scale
 
@@ -45,7 +45,7 @@ Ausrichtung der Werte der Wertemenge: l (left), r (right).
 =item multiLine
 
 Boolscher Wert, der angibt, ob die Wertemenge wenigstens einen
-mehrzeiligen Wert enthält.
+mehrzeiligen Wert enthÃ¤lt.
 
 =back
 
@@ -112,7 +112,7 @@ Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
-dieses Objekt zurück. Ist als Parameter eine Referenz auf ein Array
+dieses Objekt zurÃ¼ck. Ist als Parameter eine Referenz auf ein Array
 angegeben, werden dessen Werte analysiert.
 
 =head2 Akzessoren
@@ -142,7 +142,7 @@ Eine Wertemenge vom Typ d oder f hat die Ausrichtung r.
 =item *
 
 Eine Wertemenge vom Typ s hat per Default die Ausrichtung l,
-die aber auf r geändert werden werden kann.
+die aber auf r geÃ¤ndert werden werden kann.
 
 =back
 
@@ -158,8 +158,8 @@ Boolean
 
 =head4 Description
 
-Liefere wahr (1), wenn die Wertemenge mehrzeilige Werte enthält,
-andernfalls falsch (0). Kann nur für eine Wertemenge vom Typ s
+Liefere wahr (1), wenn die Wertemenge mehrzeilige Werte enthÃ¤lt,
+andernfalls falsch (0). Kann nur fÃ¼r eine Wertemenge vom Typ s
 wahr sein.
 
 =head3 scale() - Maximale Anzahl Nachkommastellen
@@ -196,23 +196,23 @@ Liefere den Typ der Kolumne.
 
 =item *
 
-Eine Wertmenge hat den Typ d, wenn sie ausschließlich aus
+Eine Wertmenge hat den Typ d, wenn sie ausschlieÃŸlich aus
 Integern (und Leerstrings) besteht.
 
 =item *
 
-Eine Wertmenge hat den Typ f, wenn sie ausschließlich aus numerischen
+Eine Wertmenge hat den Typ f, wenn sie ausschlieÃŸlich aus numerischen
 Werten (und Leerstrings) besteht und wenigstens ein numerischer
-Wert einen Dezimalpunkt enthält, also Nachkommastellen besitzt.
+Wert einen Dezimalpunkt enthÃ¤lt, also Nachkommastellen besitzt.
 
 =item *
 
 Eine Wertmenge hat den Typ s, wenn sie leer ist, nur aus Leerstrings
-besteht oder wenigsténs einen nichtnumerischen Wert enthält.
+besteht oder wenigstÃ©ns einen nichtnumerischen Wert enthÃ¤lt.
 
 =back
 
-=head3 width() - Länge des längsten Werts
+=head3 width() - LÃ¤nge des lÃ¤ngsten Werts
 
 =head4 Synopsis
 
@@ -224,31 +224,31 @@ Integer
 
 =head4 Description
 
-Liefere die Länge des längsten Werts.
+Liefere die LÃ¤nge des lÃ¤ngsten Werts.
 
 =over 2
 
 =item *
 
-Die Breite einer Wertemenge des Typs d ist die Länge des
-längsten Werts.
+Die Breite einer Wertemenge des Typs d ist die LÃ¤nge des
+lÃ¤ngsten Werts.
 
 =item *
 
-Die Breite einer Wertemenge des Typs s ist die Länge der
-längsten Zeile eines Werts.
+Die Breite einer Wertemenge des Typs s ist die LÃ¤nge der
+lÃ¤ngsten Zeile eines Werts.
 
 =item *
 
 Die Breite einer Wertemenge des Typs f ist die
 Summe aus der maximalen Anzahl an Nachkommastellen plus der
-maximalen Anzahl an Zeichen vor und einschließlich des Kommas.
+maximalen Anzahl an Zeichen vor und einschlieÃŸlich des Kommas.
 
 =back
 
 =head2 Objektmethoden
 
-=head3 analyze() - Füge Wert zur Analysemenge hinzu
+=head3 analyze() - FÃ¼ge Wert zur Analysemenge hinzu
 
 =head4 Synopsis
 
@@ -268,7 +268,7 @@ Skalarer Wert (Integer, Float, String)
 
 Analysiere Wert $value hinsichtlich seiner Eigenschaften und passe
 die Eigenschaften der Menge entsprechend an. Ein leerer Wert (undef oder
-Leerstring) ändert die Eigenschaften nicht.
+Leerstring) Ã¤ndert die Eigenschaften nicht.
 
 =head3 format() - Formatiere Wert
 
@@ -283,7 +283,7 @@ Leerstring) ändert die Eigenschaften nicht.
 =item $format
 
 Formatierung, die auf den Wert angewendet wird.
-Mögliche Werte: 'text', 'html'.
+MÃ¶gliche Werte: 'text', 'html'.
 
 =item $val
 
@@ -293,7 +293,7 @@ Skalarer Wert (Integer, Float, String) aus der Wertemenge.
 
 =head4 Description
 
-Formatiere Wert $val gemäß Format $format und liefere das Resultat zurück.
+Formatiere Wert $val gemÃ¤ÃŸ Format $format und liefere das Resultat zurÃ¼ck.
 
 =head3 set() - Setze Eigenschaften explizit
 

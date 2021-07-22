@@ -28,18 +28,18 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 =item -ignoreError => $bool (Default: 0)
 
 Ignoriere Exitcode von Kommando $cmd. D.h. es wird keine Exception
-geworfen, wenn das Kommando fehlschl‰gt.
+geworfen, wenn das Kommando fehlschl√§gt.
 
 =back
 
 =head4 Description
 
-Rufe Kommando $cmd als Filter auf. Das Kommando erh‰lt die Daten
+Rufe Kommando $cmd als Filter auf. Das Kommando erh√§lt die Daten
 $in auf stdin und liefert die Daten $out und $err auf stdout
 bzw. stderr. In Skalarkontext wird nur die Ausgabe auf stdout
 geliefert.
 
-Achtung: Der Aufruf kann zu einem SIGPIPE f¸hren, wenn per
+Achtung: Der Aufruf kann zu einem SIGPIPE f√ºhren, wenn per
 Parameter $in Daten an $cmd gesendet werden und das Kommando
 terminiert, bevor es alle Daten gelesen hat. Insbesondere sollten
 keine Daten an ein Kommando gesendet werden, das nicht von stdin

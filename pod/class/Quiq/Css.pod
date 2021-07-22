@@ -35,7 +35,7 @@ Format des generierten CSS-Code.
 
 =item $format (Default: 'normal')
 
-Format des generierten CSS-Code. Zulässige Werte:
+Format des generierten CSS-Code. ZulÃ¤ssige Werte:
 
 =over 4
 
@@ -69,7 +69,7 @@ Referenz auf CSS-Generator-Objekt.
 =head4 Description
 
 Instantiiere ein CSS-Generator-Objekt und liefere eine Referenz
-auf dieses Objekt zurück.
+auf dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -84,19 +84,19 @@ auf dieses Objekt zurück.
 
 Generiere aus den Property/Wert-Paaren @properties eine
 Zeichenkette aus CSS Properties. Ist die Liste der
-Property/Wert-Paare leer oder haben alle Schlüssel keinen Wert
+Property/Wert-Paare leer oder haben alle SchlÃ¼ssel keinen Wert
 (C<undef> oder Leerstring) liefere C<undef> (keinen Leerstring,
 damit von der Methode tag() kein style-Attribut mit Leerstring
 erzeugt wird!).
 
-Diese Methode ist nützlich, wenn der Wert eines HTML
+Diese Methode ist nÃ¼tzlich, wenn der Wert eines HTML
 style-Attributs erzeugt werden soll. Wenn als Wert des Attributs
 C<style> eines Quiq::Html::Tag eine Array-Referenz angegeben
 wird, wird diese Methode gerufen.
 
 =head4 Example
 
-Erzeuge Properties für HTML style-Attribut:
+Erzeuge Properties fÃ¼r HTML style-Attribut:
 
   $properties = Quiq::Css->properties(
       fontStyle => 'italic',
@@ -119,8 +119,8 @@ liefert
 
 Generiere eine CSS Style Rule, bestehend aus Selector $selector
 und den Property/Value-Paaren @properties und liefere diese als
-Zeichenkette zurück. Ist die Liste der Properties leer oder haben
-alle Schlüssel keinen Wert (C<undef> oder Leerstring) liefere
+Zeichenkette zurÃ¼ck. Ist die Liste der Properties leer oder haben
+alle SchlÃ¼ssel keinen Wert (C<undef> oder Leerstring) liefere
 einen Leerstring ('').
 
 =head4 Example
@@ -167,7 +167,7 @@ CSS-Regeln (String)
 
 =head4 Description
 
-Wie $css->rule(), nur für mehrere CSS-Regeln auf einmal.
+Wie $css->rule(), nur fÃ¼r mehrere CSS-Regeln auf einmal.
 
 =head3 restrictedRules() - Generiere lokale CSS Style Rules
 
@@ -208,7 +208,7 @@ CSS-Regeln (String)
 
 =head4 Description
 
-Wie $css->rules(), nur mit zusätzlicher Einschränkung auf einen
+Wie $css->rules(), nur mit zusÃ¤tzlicher EinschrÃ¤nkung auf einen
 lokalen Selektor.
 
 =head3 rulesFromObject() - Generiere CSS Style Rules aus Objekt-Attributen
@@ -244,16 +244,16 @@ CSS-Regeln (String)
 
 Die Methode erzeugt CSS-Regeln auf Basis von Objekt-Attributen.
 Jedes Attribut entspricht einem CSS-Selektor und definiert dessen
-Properties. Es können Default-Properties hinterlegt werden, die
-der Aufrufer ergänzen ('+' als erstes Element der Property-Liste)
-oder ersetzen oder löschen kann (siehe Example).
+Properties. Es kÃ¶nnen Default-Properties hinterlegt werden, die
+der Aufrufer ergÃ¤nzen ('+' als erstes Element der Property-Liste)
+oder ersetzen oder lÃ¶schen kann (siehe Example).
 
 =head4 Example
 
 B<< Beispiel aus Quiq::Html::Verbatim >>
 
 Im Konstruktor werden die Objekt-Attribute vereinbart. Diese
-können bei der Instantiierung des Objektes gesetzt werden.
+kÃ¶nnen bei der Instantiierung des Objektes gesetzt werden.
 
   my $self = $class->SUPER::new(
       cssTableProperties => undef,
@@ -263,7 +263,7 @@ können bei der Instantiierung des Objektes gesetzt werden.
       ...
   );
 
-In der Methode, die die CSS-Regeln erzeugt, werden die zugehörigen
+In der Methode, die die CSS-Regeln erzeugt, werden die zugehÃ¶rigen
 Selektoren und Default-Properties vereinbart.
 
   $rules .= $css->rulesFromObject($self,
@@ -273,15 +273,15 @@ Selektoren und Default-Properties vereinbart.
       cssTextProperties => [".xxx-text"],
   );
 
-Beim Konstruktor-Aufruf können die Default-Properties ergänzt ('+'
+Beim Konstruktor-Aufruf kÃ¶nnen die Default-Properties ergÃ¤nzt ('+'
 als erstes Element in der Property-Liste) oder ersetzt (keine
-Angabe) oder gelöscht werden (leere Liste).
+Angabe) oder gelÃ¶scht werden (leere Liste).
 
   my $obj = Quiq::Hash->new(
       cssTableProperties => [backgroundColor=>'#f0f0f0'],  # ersetzen
       cssLnProperties => ['>',color=>'black'],             # ersetzen
-      cssMarginProperties => ['+',backgroundColor=>'red'], # ergänzen
-      cssTextProperties => [],                             # löschen
+      cssMarginProperties => ['+',backgroundColor=>'red'], # ergÃ¤nzen
+      cssTextProperties => [],                             # lÃ¶schen
   );
 
 Resultierende CSS-Regeln:
@@ -326,20 +326,20 @@ Liste von Style-Spezifikationen.
 
 =head4 Description
 
-Übersetze die Style-Spezifikationen @specs in eine Folge von
+Ãœbersetze die Style-Spezifikationen @specs in eine Folge von
 <link>- und/oder <style>-Tags.
 
-Mögliche Style-Spezifikationen:
+MÃ¶gliche Style-Spezifikationen:
 
 =over 4
 
 =item "inline:$file":
 
-Datei $file wird geladen und ihr Inhalt wird hinzugefügt.
+Datei $file wird geladen und ihr Inhalt wird hinzugefÃ¼gt.
 
 =item $string (Zeichenkette mit enthaltenen '{')
 
-Zeichenkette $string wird hinzugefügt.
+Zeichenkette $string wird hinzugefÃ¼gt.
 
 =item $url (Zeichenkette ohne '{'):
 
@@ -347,7 +347,7 @@ Zeichenkette wird als URL interpretiert und ein <link>-Tag
 
   <link rel="stylesheet" type="text/css" href="$url" />
 
-hinzugefügt.
+hinzugefÃ¼gt.
 
 =item \@specs (Arrayreferenz):
 
@@ -363,7 +363,7 @@ B<Code zum Laden eines externen Stylesheet:>
   =>
   <link rel="stylesheet" type="text/css" href="/css/stylesheet.css" />
 
-B<Stylesheet aus Datei einfügen:>
+B<Stylesheet aus Datei einfÃ¼gen:>
 
   $style = Quiq::Css->style('inline:/css/stylesheet.css');
   =>
@@ -385,7 +385,7 @@ B<Mehrere Stylesheet-Spezifikationen via Arrayreferenz:>
       ['/css/stylesheet1.css','/css/stylesheet2.css']
   );
 
-Dies ist nützlich, wenn die Spezifikation von einem Parameter
+Dies ist nÃ¼tzlich, wenn die Spezifikation von einem Parameter
 einer umgebenden Methode kommt.
 
 =head1 VERSION

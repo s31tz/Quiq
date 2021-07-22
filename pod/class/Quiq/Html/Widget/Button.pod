@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Html::Widget::Button - Schaltfläche
+Quiq::Html::Widget::Button - SchaltflÃ¤che
 
 =head1 BASE CLASS
 
@@ -22,7 +22,7 @@ Button-Label (allgemeiner HTML-Content).
 
 =item disabled => $bool (Default: 0)
 
-Keine Eingabe möglich.
+Keine Eingabe mÃ¶glich.
 
 =item hidden => $bool (Default: 0)
 

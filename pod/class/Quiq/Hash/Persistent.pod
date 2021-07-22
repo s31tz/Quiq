@@ -73,8 +73,8 @@ Cachedatei, in der die Hash.Datenstruktur persistent gespeichert wird.
 
 =item $timeout (Integer oder undef)
 
-Dauer in Sekunden, die die Cachdatei gültig ist. Falls C<undef>,
-ist die Cachdatei unbegrenzt lange gültig.
+Dauer in Sekunden, die die Cachdatei gÃ¼ltig ist. Falls C<undef>,
+ist die Cachdatei unbegrenzt lange gÃ¼ltig.
 
 =item $sub
 
@@ -89,9 +89,9 @@ Referenz auf Hash-Objekt.
 =head4 Description
 
 Instantiiere einen Hash aus Datei $file und liefere eine Referenz
-auf dieses Objekt zurück. Existiert Datei $file nicht oder liegt
-ihr letzter Änderungszeitpunkt mehr als abs($timeout) Sekunden
-zurück, rufe $sub auf, um den Hash zu erzeugen und speichere ihn
+auf dieses Objekt zurÃ¼ck. Existiert Datei $file nicht oder liegt
+ihr letzter Ã„nderungszeitpunkt mehr als abs($timeout) Sekunden
+zurÃ¼ck, rufe $sub auf, um den Hash zu erzeugen und speichere ihn
 persistent in Datei $file. Der Hash wird um die Komponenten
 
 =over 2
@@ -136,7 +136,7 @@ Anzahl Sekunden (Integer oder undef)
 
 =head4 Description
 
-Liefere das für die Cachedatei definierte Timeout.
+Liefere das fÃ¼r die Cachedatei definierte Timeout.
 
 =head1 VERSION
 

@@ -18,7 +18,7 @@ Eine Stoppuhr:
   ...
   printf "%.2f\n",$stw->elapsed;
 
-Zwei Stoppuhren für Gesamtzeit und Zwischenzeiten:
+Zwei Stoppuhren fÃ¼r Gesamtzeit und Zwischenzeiten:
 
   use Quiq::Stopwatch;
   
@@ -32,16 +32,16 @@ Zwei Stoppuhren für Gesamtzeit und Zwischenzeiten:
 
 =head1 DESCRIPTION
 
-Die  Klasse implementiert einen einfachen hochauflösenden Zeitmesser.
+Die  Klasse implementiert einen einfachen hochauflÃ¶senden Zeitmesser.
 Mit Aufruf des Konstruktors wird die Zeitmessung gestartet. Mit der
 Methode elapsed() kann die seitdem vergangene Zeit abgefragt werden.
 Mit der Methode start() wird der Zeitmesser neu gestartet und
-die seit dem letzten Start vergangene Zeit zurückgeliefert.
-Mittels letzterer Methode ist es möglich, einzelne Codeabschnitte
-zu messen, ohne einen neuen Zeitmesser instantiieren zu müssen.
+die seit dem letzten Start vergangene Zeit zurÃ¼ckgeliefert.
+Mittels letzterer Methode ist es mÃ¶glich, einzelne Codeabschnitte
+zu messen, ohne einen neuen Zeitmesser instantiieren zu mÃ¼ssen.
 Die Zeit wird in Sekunden gemessen. Die Genauigkeit (d.h. die maximale
-Anzahl der Nachkommastellen) ist systemabhängig.
-Es können $n Zeitmessungen gleichzeitig geführt werden.
+Anzahl der Nachkommastellen) ist systemabhÃ¤ngig.
+Es kÃ¶nnen $n Zeitmessungen gleichzeitig gefÃ¼hrt werden.
 
 =head1 SEE ALSO
 
@@ -154,7 +154,7 @@ Sekunden (Float)
 =head4 Description
 
 Starte Timer $i (setze ihn auf den aktuellen Zeitpunkt) und liefere
-die seit dem letzten Start vergangene Zeit zurück.
+die seit dem letzten Start vergangene Zeit zurÃ¼ck.
 
 =head1 VERSION
 

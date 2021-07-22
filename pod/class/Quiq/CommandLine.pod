@@ -35,9 +35,9 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 =head1 DESCRIPTION
 
 Die Klasse stellt Methoden zur Konstruktion einer Unix-Kommandozeile
-zur Verfügung. Die Klasse ist hilfreich, wenn einzelne Bestandteile
+zur VerfÃ¼gung. Die Klasse ist hilfreich, wenn einzelne Bestandteile
 der Kommandozeile dynamisch sind, also von Bedingungen und
-variablen Werten abhängen.
+variablen Werten abhÃ¤ngen.
 
 =head1 METHODS
 
@@ -67,18 +67,18 @@ Kommandozeilen-Objekt
 =head4 Description
 
 Instantiiere ein Kommandozeilen-Objekt und liefere eine Referenz
-auf dieses Objekt zurück. Mit $str kann der Anfang der Kommandozeile
+auf dieses Objekt zurÃ¼ck. Mit $str kann der Anfang der Kommandozeile
 festgelegt werden.
 
 =head4 Example
 
-Erzeuge eine Kommandozeile für das Kommando C<enscript>:
+Erzeuge eine Kommandozeile fÃ¼r das Kommando C<enscript>:
 
   $c = Quiq::CommandLine->new('enscript');
 
-=head2 Kommandozeilenbestandteile hinzufügen
+=head2 Kommandozeilenbestandteile hinzufÃ¼gen
 
-=head3 addArgument() - Ergänze Argumente
+=head3 addArgument() - ErgÃ¤nze Argumente
 
 =head4 Synopsis
 
@@ -100,21 +100,21 @@ nichts
 
 =head4 Description
 
-Ergänze die Kommandozeile um 0, 1 oder mehr Argumente. Leerzeichen
-werden vor jedem Argument hinzugefügt. Enthält ein Argument
+ErgÃ¤nze die Kommandozeile um 0, 1 oder mehr Argumente. Leerzeichen
+werden vor jedem Argument hinzugefÃ¼gt. EnthÃ¤lt ein Argument
 Leerzeichen oder Shell-Metazeichen, wird es Quotes eingefasst.
 Ist ein Argument leer (undef oder ''), wird ein Leerstring zur
-Kommandozeile hinzugefügt.
+Kommandozeile hinzugefÃ¼gt.
 
 =head4 Example
 
   $c->addArgument("/tmp/preview-$$.pdf",'',"Dies ist ein Test");
 
-ergänzt die Kommandozeile um die drei Argumente
+ergÃ¤nzt die Kommandozeile um die drei Argumente
 
   ... /tmp/preview-4711.pdf '' 'Dies ist ein Test'
 
-=head3 addBoolOption() - Ergänze boolsche Optionen
+=head3 addBoolOption() - ErgÃ¤nze boolsche Optionen
 
 =head4 Synopsis
 
@@ -127,7 +127,7 @@ ergänzt die Kommandozeile um die drei Argumente
 =item @boolOptions
 
 Liste von boolschen Optionen, bestehend jeweils aus der Option und
-zugehörigem Prädikat.
+zugehÃ¶rigem PrÃ¤dikat.
 
 =back
 
@@ -137,10 +137,10 @@ nichts
 
 =head4 Description
 
-Ergänze die Kommandozeile um 0, 1 oder mehr boolsche Optionen.
+ErgÃ¤nze die Kommandozeile um 0, 1 oder mehr boolsche Optionen.
 Eine boolsche Option ist eine Option, die keinen Wert hat,
-sondern vorhanden ist oder nicht, was durch das zugeörige
-Prädikat bestimmt wird (siehe Beispiel).
+sondern vorhanden ist oder nicht, was durch das zugeÃ¶rige
+PrÃ¤dikat bestimmt wird (siehe Beispiel).
 
 =head4 Example
 
@@ -150,12 +150,12 @@ Prädikat bestimmt wird (siehe Beispiel).
       '--truncate-lines' => 1,
   );
 
-ergänzt die Kommandozeile um die Optionen C<--no-header> und
+ergÃ¤nzt die Kommandozeile um die Optionen C<--no-header> und
 C<--truncate-lines>, aber nicht um die Option C<--landscape>
 
   ... --no-header --truncate-lines
 
-=head3 addOption() - Ergänze Option und ihre Werte
+=head3 addOption() - ErgÃ¤nze Option und ihre Werte
 
 =head4 Synopsis
 
@@ -168,7 +168,7 @@ C<--truncate-lines>, aber nicht um die Option C<--landscape>
 =item @optVal
 
 Liste von Optionen, bestehend jeweils aus der Option und
-zugehörigem Wert.
+zugehÃ¶rigem Wert.
 
 =back
 
@@ -178,11 +178,11 @@ nichts
 
 =head4 Description
 
-Ergänze die Kommandozeile um 0, 1 oder mehr Optionen mit
-zugehörigem Wert. Option und Wert werden durch ein Leerzeichen
+ErgÃ¤nze die Kommandozeile um 0, 1 oder mehr Optionen mit
+zugehÃ¶rigem Wert. Option und Wert werden durch ein Leerzeichen
 getrennt.
 
-=head3 addEqOption() - Ergänze Option und ihre Werte
+=head3 addEqOption() - ErgÃ¤nze Option und ihre Werte
 
 =head4 Synopsis
 
@@ -199,7 +199,7 @@ addLongOption()
 =item @optVal
 
 Liste von Optionen, bestehend jeweils aus der Option und
-zugehörigem Wert.
+zugehÃ¶rigem Wert.
 
 =back
 
@@ -209,8 +209,8 @@ nichts
 
 =head4 Description
 
-Ergänze die Kommandozeile um 0, 1 oder mehr Optionen mit
-zugehörigem Wert. Option und Wert werden durch ein
+ErgÃ¤nze die Kommandozeile um 0, 1 oder mehr Optionen mit
+zugehÃ¶rigem Wert. Option und Wert werden durch ein
 Gleichheitszeichen (=) getrennt.
 
 =head4 Example
@@ -221,11 +221,11 @@ Gleichheitszeichen (=) getrennt.
       '--margins' => '0:0:0:0',
   );
 
-ergänzt die Kommandozeile um die Optionen
+ergÃ¤nzt die Kommandozeile um die Optionen
 
   ... --columns=2 --font=Courier10 --margins=0:0:0:0
 
-=head3 addString() - Ergänze Zeichenketten
+=head3 addString() - ErgÃ¤nze Zeichenketten
 
 =head4 Synopsis
 
@@ -247,15 +247,15 @@ nichts
 
 =head4 Description
 
-Ergänze die Kommandozeile um 0, 1 oder mehr Zeichenketten.
-Diese werden, mit Whitespace getrennt, unverändert zur
-Kommandozeile hinzugefügt.
+ErgÃ¤nze die Kommandozeile um 0, 1 oder mehr Zeichenketten.
+Diese werden, mit Whitespace getrennt, unverÃ¤ndert zur
+Kommandozeile hinzugefÃ¼gt.
 
 =head4 Example
 
   $c->addString('2>/dev/null','|','ps2pdf','-','-');
 
-ergänzt die Kommandozeile um
+ergÃ¤nzt die Kommandozeile um
 
   ... 2>/dev/null | ps2pdf - -
 
@@ -274,7 +274,7 @@ Kommandozeile (String)
 =head4 Description
 
 Liefere die Kommandozeile als Zeichenkette, wie sie z.B. von der
-Shell ausgeführt werden kann.
+Shell ausgefÃ¼hrt werden kann.
 
 =head2 Hilfsmethoden
 
@@ -296,13 +296,13 @@ Zeichenkette.
 
 =head4 Returns
 
-Shellverträglichen Wert (String)
+ShellvertrÃ¤glichen Wert (String)
 
 =head4 Description
 
 Analysiere Zeichenkette $str1 auf Whitespace und Shell-Metazeichen
 hin und liefere einen Wert, der gefahrlos als Optionswert oder
-Programmargument zur Kommandozeile hinzugefügt werden kann.
+Programmargument zur Kommandozeile hinzugefÃ¼gt werden kann.
 
 =head4 Examples
 

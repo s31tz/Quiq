@@ -15,7 +15,7 @@ L<Quiq::Html::Widget|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Ht
 =item accept => $mimeType (Default: undef)
 
 MIME-Type (oder mit Komma getrennte Liste von MIME-Types) der
-Dateien für den Datei-Upload.
+Dateien fÃ¼r den Datei-Upload.
 
 =item class => $class (Default: undef)
 
@@ -35,7 +35,7 @@ Id des Feldes.
 
 =item maxLength => $n (Default: Wert von "size")
 
-Maximale Länge des Eingabewerts in Zeichen. Ein Wert von "0" beutet
+Maximale LÃ¤nge des Eingabewerts in Zeichen. Ein Wert von "0" beutet
 keine Eingabebegrenzung.
 
 =item size => $n (Default: undef)

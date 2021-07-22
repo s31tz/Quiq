@@ -23,11 +23,11 @@ Quiq::ApplicationPaths - Ermittele Pfade einer Unix-Applikation
 
 =head1 DESCRIPTION
 
-Die Klasse ermöglicht einer Perl-Applikation unter Unix ohne
+Die Klasse ermÃ¶glicht einer Perl-Applikation unter Unix ohne
 hartkodierte absolute Pfade auszukommen. Alle Pfade, unter denen
 sich die verschiedenen Teile der Applikation (opt-, etc-,
 var-Bereich) im Dateisystem befinden, werden von der Klasse aus
-dem Pfad des ausgeführten Programms hergeleitet.
+dem Pfad des ausgefÃ¼hrten Programms hergeleitet.
 
 Das Layout entspricht der opt-Installationsstruktur eines
 Unix-Systems:
@@ -48,8 +48,8 @@ Unix-Systems:
 
 =back
 
-Die Pfade müssen nicht im Root-Verzeichnis beginnen, ihnen kann
-auch ein Präfix-Pfad <prefix> vorangestellt sein. Z.B. kann sich die
+Die Pfade mÃ¼ssen nicht im Root-Verzeichnis beginnen, ihnen kann
+auch ein PrÃ¤fix-Pfad <prefix> vorangestellt sein. Z.B. kann sich die
 Struktur im Home-Verzeichnis des Benutzers befinden
 (siehe Abschnitt L<EXAMPLES|"EXAMPLES">).
 
@@ -95,7 +95,7 @@ Applikations-Homedir (<prefix>/opt/<application>) angesiedelt ist.
 
 =head4 Description
 
-Instantiiere ein Objekt der Klasse und liefere dieses zurück.
+Instantiiere ein Objekt der Klasse und liefere dieses zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -109,7 +109,7 @@ Instantiiere ein Objekt der Klasse und liefere dieses zurück.
 
 Liefere den Namen <name> der Applikation.
 
-=head3 prefix() - Pfad-Präfix der Installation
+=head3 prefix() - Pfad-PrÃ¤fix der Installation
 
 =head4 Synopsis
 
@@ -118,11 +118,11 @@ Liefere den Namen <name> der Applikation.
 
 =head4 Description
 
-Liefere den Pfad-Präfix <prefix> der Applikations-Installation,
+Liefere den Pfad-PrÃ¤fix <prefix> der Applikations-Installation,
 also den Pfad oberhalb des opt-Verzeichnisses. Ist die Applikation
 in /opt (opt im Wurzelverzeichnis) installiert, wird ein
 Leerstring geliefert. Ist Zeichenkette $subPath angegeben,
-wird diese mit '/' getrennt angefügt.
+wird diese mit '/' getrennt angefÃ¼gt.
 
 =head3 homeDir() - Home-Verzeichnis der Applikation
 
@@ -135,7 +135,7 @@ wird diese mit '/' getrennt angefügt.
 
 Liefere das Verzeichnis, in dem der Programmcode und die
 statischen Daten der Applikation abgelegt sind. Ist Zeichenkette
-$subPath angegeben, wird diese mit '/' getrennt angefügt.
+$subPath angegeben, wird diese mit '/' getrennt angefÃ¼gt.
 
 =head3 etcDir() - Konfigurations-Verzeichnis der Applikation
 
@@ -148,7 +148,7 @@ $subPath angegeben, wird diese mit '/' getrennt angefügt.
 
 Liefere das Verzeichnis, in dem die Konfigurationsdateien der
 Applikation abgelegt sind. Ist Zeichenkette $subPath angegeben,
-wird diese mit '/' getrennt angefügt.
+wird diese mit '/' getrennt angefÃ¼gt.
 
 =head3 varDir() - Bewegungsdaten-Verzeichnis der Applikation
 
@@ -160,15 +160,15 @@ wird diese mit '/' getrennt angefügt.
 =head4 Description
 
 Liefere das Verzeichnis, in dem die Applikation Bewegungsdaten speichert.
-Ist Zeichenkette $subPath angegeben, wird diese mit '/' getrennt angefügt.
+Ist Zeichenkette $subPath angegeben, wird diese mit '/' getrennt angefÃ¼gt.
 
 =head1 DETAILS
 
-=head2 Mögliche Erweiterungen
+=head2 MÃ¶gliche Erweiterungen
 
 =head3 Andere Layouts
 
-Andere Layouts sind möglich und könnten von der Klasse ebenfalls
+Andere Layouts sind mÃ¶glich und kÃ¶nnten von der Klasse ebenfalls
 behandelt werden. Bei Bedarf kann der Konstruktor um eine Option
 C<< -layout=>$layout >> erweitert und das betreffende Layout innerhalb
 des Konstruktors behandelt werden. Beispiele:
@@ -194,7 +194,7 @@ Kein opt-Unterverzeichnis in etc und var:
 
 =head3 Optionaler Trenner bei etcDir() und varDir()
 
-Die Methoden etcDir() und varDir() könnten um eine Variante mit
+Die Methoden etcDir() und varDir() kÃ¶nnten um eine Variante mit
 zwei Parametern erweitert werden, die die Vorgabe des
 Trennzeichens erlaubt:
 

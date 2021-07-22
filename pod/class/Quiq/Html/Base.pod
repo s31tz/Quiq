@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Html::Base - Basisklasse für HTML-Komponenten
+Quiq::Html::Base - Basisklasse fÃ¼r HTML-Komponenten
 
 =head1 BASE CLASS
 
@@ -10,7 +10,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Die Klasse ist die Basisklasse für alle HTML-Konstrukte, die aus
+Die Klasse ist die Basisklasse fÃ¼r alle HTML-Konstrukte, die aus
 mehr als einem HTML-Tag aufgebaut sind und/oder eine komplexe
 Logik besitzen, die durch eine Klasse gekapselt werden soll.
 
@@ -28,7 +28,7 @@ DOM-Id der Komponente.
 
 =item cssPrefix => $str (Default: '')
 
-Präfix für CSS-Klassennamen. Dieser Präfix wird den
+PrÃ¤fix fÃ¼r CSS-Klassennamen. Dieser PrÃ¤fix wird den
 CSS-Klassennamen vorangestellt. (MEMO: dieses Konzept ist zweifelhaft
 und sollte abgeschafft werden)
 
@@ -47,7 +47,7 @@ und sollte abgeschafft werden)
 =head4 Description
 
 Instantiiere eine Html-Komponente mit allen Attributen (auch
-der Subklasse) und liefere eine Referenz auf das Objekt zurück.
+der Subklasse) und liefere eine Referenz auf das Objekt zurÃ¼ck.
 
 =head1 VERSION
 

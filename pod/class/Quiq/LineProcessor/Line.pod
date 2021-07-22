@@ -10,7 +10,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine Zeile, bestehend aus
+Ein Objekt der Klasse reprÃ¤sentiert eine Zeile, bestehend aus
 dem Zeileninhalt (Text) und einer Zeilennummer.
 
 =head1 METHODS
@@ -26,7 +26,7 @@ dem Zeileninhalt (Text) und einer Zeilennummer.
 =head4 Description
 
 Instantiiere Zeilenobjekt und liefere eine Referenz auf dieses
-Objekt zurück.
+Objekt zurÃ¼ck.
 
 =head2 Akzessoren
 
@@ -53,7 +53,7 @@ bestehen, zu Leerzeilen.
 
 =head4 Description
 
-Liefere den Zeilentext mit einem angehängten Newline.
+Liefere den Zeilentext mit einem angehÃ¤ngten Newline.
 
 =head3 number() - Liefere/Setze Zeilennummer
 
@@ -91,7 +91,7 @@ Liefere/Setze eine Referenz auf die Input-Bezeichung.
 
 Liefere "wahr", wenn Zeile eine Leerzeile ist, andernfalls "falsch".
 
-=head3 indentation() - Liefere Einrücktiefe der Zeile
+=head3 indentation() - Liefere EinrÃ¼cktiefe der Zeile
 
 =head4 Synopsis
 
@@ -99,10 +99,10 @@ Liefere "wahr", wenn Zeile eine Leerzeile ist, andernfalls "falsch".
 
 =head4 Description
 
-Liefere die Tiefe der Einrückung. Die Einrücktiefe ist die Anzahl
+Liefere die Tiefe der EinrÃ¼ckung. Die EinrÃ¼cktiefe ist die Anzahl
 an Whitespacezeichen am Anfang der Zeile.
 
-=head3 length() - Liefere Zeilenlänge
+=head3 length() - Liefere ZeilenlÃ¤nge
 
 =head4 Synopsis
 
@@ -110,11 +110,11 @@ an Whitespacezeichen am Anfang der Zeile.
 
 =head4 Description
 
-Liefere die Länge der Zeile.
+Liefere die LÃ¤nge der Zeile.
 
 =head2 Operationen
 
-=head3 append() - Füge Text zu Zeile hinzu
+=head3 append() - FÃ¼ge Text zu Zeile hinzu
 
 =head4 Synopsis
 
@@ -122,7 +122,7 @@ Liefere die Länge der Zeile.
 
 =head4 Description
 
-Füge $text zu Zeile $ln hinzu. Die Methode liefert keinen Wert zurück.
+FÃ¼ge $text zu Zeile $ln hinzu. Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head3 trim() - Entferne Whitespace am Anfang und Ende
 
@@ -133,9 +133,9 @@ Füge $text zu Zeile $ln hinzu. Die Methode liefert keinen Wert zurück.
 =head4 Description
 
 Entferne Whitespace am Anfang und am Ende der Zeile. Die Methode
-liefert keinen Wert zurück.
+liefert keinen Wert zurÃ¼ck.
 
-=head3 unindent() - Entferne Einrückung
+=head3 unindent() - Entferne EinrÃ¼ckung
 
 =head4 Synopsis
 
@@ -144,11 +144,11 @@ liefert keinen Wert zurück.
 =head4 Description
 
 Entferne die ersten $n Zeichen von der Zeile. Die Methode liefert
-keinen Wert zurück.
+keinen Wert zurÃ¼ck.
 
-=head2 Externe Repräsentation
+=head2 Externe ReprÃ¤sentation
 
-=head3 dump() - Liefere externe Repräsentation
+=head3 dump() - Liefere externe ReprÃ¤sentation
 
 =head4 Synopsis
 
@@ -157,8 +157,8 @@ keinen Wert zurück.
 
 =head4 Description
 
-Erzeuge eine externe Zeilenrepräsentation in Format $format
-und liefere diese zurück.
+Erzeuge eine externe ZeilenreprÃ¤sentation in Format $format
+und liefere diese zurÃ¼ck.
 
 B<Formate>
 

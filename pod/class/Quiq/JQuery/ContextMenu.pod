@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::JQuery::ContextMenu - Erzeuge Code für ein jQuery Kontext-Menü
+Quiq::JQuery::ContextMenu - Erzeuge Code fÃ¼r ein jQuery Kontext-MenÃ¼
 
 =head1 BASE CLASS
 
@@ -10,7 +10,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Die Klasse erzeugt Code für ein Kontext-Menü, welches durch das
+Die Klasse erzeugt Code fÃ¼r ein Kontext-MenÃ¼, welches durch das
 jQuery-Plugin L<jQuery contextmenu|https://swisnl.github.io/jQuery-contextMenu/docs.html> realisiert wird.
 
 =head1 SEE ALSO
@@ -39,7 +39,7 @@ L<Allgmeine Doku|https://swisnl.github.io/jQuery-contextMenu/docs.html>
 
 =item callback => $jsFunction
 
-Funktion, die bei Aufruf eines Menüpunkts gerufen wird. Beispiel:
+Funktion, die bei Aufruf eines MenÃ¼punkts gerufen wird. Beispiel:
 
   callback: function(key,opt) {
       document.location = key;
@@ -47,8 +47,8 @@ Funktion, die bei Aufruf eines Menüpunkts gerufen wird. Beispiel:
 
 =item className => $name
 
-Name der CSS-Klasse des Menüs. Kann explizit angegeben werden, wenn das
-Menü customized werden soll. Beispiel ($name ist 'contextMenu'):
+Name der CSS-Klasse des MenÃ¼s. Kann explizit angegeben werden, wenn das
+MenÃ¼ customized werden soll. Beispiel ($name ist 'contextMenu'):
 
   .contextMenu {
       width: 85px !important;
@@ -57,7 +57,7 @@ Menü customized werden soll. Beispiel ($name ist 'contextMenu'):
 
 =item items => \@items (Default: [])
 
-Array mit den Definitionen der Menüeinträge.
+Array mit den Definitionen der MenÃ¼eintrÃ¤ge.
 
 Das JavaScript-Array C<data>, das vom Server geliefert wird, hat
 den Aufbau
@@ -73,11 +73,11 @@ den Aufbau
 =item selector => $selector
 
 Der jQuery-Selektor, der die Elemente identifiziert, auf die das
-Kontext-Menü gelegt wird. Siehe Plugin-Doku: L<selector|https://swisnl.github.io/jQuery-contextMenu/docs.html#trigger>.
+Kontext-MenÃ¼ gelegt wird. Siehe Plugin-Doku: L<selector|https://swisnl.github.io/jQuery-contextMenu/docs.html#trigger>.
 
 =item trigger => $event
 
-Das Ereignis, durch das das Kontext-Menü angesprochen wird.
+Das Ereignis, durch das das Kontext-MenÃ¼ angesprochen wird.
 Siehe Plugin-Doku: L<tigger>.
 
 =back
@@ -85,7 +85,7 @@ Siehe Plugin-Doku: L<tigger>.
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf dieses
-Objekt zurück.
+Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -98,8 +98,8 @@ Objekt zurück.
 
 =head4 Description
 
-Generiere den JavaScript-Code eines Kontext-Menüs und liefere
-diesen zurück.
+Generiere den JavaScript-Code eines Kontext-MenÃ¼s und liefere
+diesen zurÃ¼ck.
 
 =head1 VERSION
 

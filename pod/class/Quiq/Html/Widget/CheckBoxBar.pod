@@ -18,7 +18,7 @@ CSS Klasse des Konstruktes.
 
 =item disabled => $bool (Default: 0)
 
-Das gesamte Konstrukt ist disabled. Keine Auswahl möglich.
+Das gesamte Konstrukt ist disabled. Keine Auswahl mÃ¶glich.
 
 =item hidden => $bool (Default: 0)
 
@@ -34,7 +34,7 @@ Liste der Label rechts neben den CheckBoxes.
 
 =item name => $name (Default: undef)
 
-Name, unter dem die ausgewählten CheckBoxes kommuniziert werden.
+Name, unter dem die ausgewÃ¤hlten CheckBoxes kommuniziert werden.
 
 =item onClick => \@onClick (Default: [])
 
@@ -42,7 +42,7 @@ Liste der OnClick-Handler.
 
 =item options => \@options (Default: []) 
 
-Liste der CheckBox-Werte. Die Werte der ausgewählten CheckBoxes
+Liste der CheckBox-Werte. Die Werte der ausgewÃ¤hlten CheckBoxes
 werden gesendet.
 
 =item orientation => 'h'|'v' (Default: 'h')
@@ -85,7 +85,7 @@ aktiviert.
 =head4 Description
 
 Instantiiere ein CheckBoxBar-Objekt und liefere eine Referenz
-auf dieses Objekt zurück.
+auf dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -99,7 +99,7 @@ auf dieses Objekt zurück.
 =head4 Description
 
 Generiere den HTML-Code des CheckBoxBar-Objekts und liefere
-diesen zurück. Als Klassenmethode gerufen, wird das Objekt intern
+diesen zurÃ¼ck. Als Klassenmethode gerufen, wird das Objekt intern
 erzeugt und mit den Attributen @keyVal instantiiert.
 
 =head1 VERSION

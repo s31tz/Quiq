@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Duration - Rechnen und Konvertieren von Zeiträumen
+Quiq::Duration - Rechnen und Konvertieren von ZeitrÃ¤umen
 
 =head1 BASE CLASS
 
@@ -10,10 +10,10 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine Zeitdauer, die intern als
+Ein Objekt der Klasse reprÃ¤sentiert eine Zeitdauer, die intern als
 numerischer Wert (Sekunden mit Nachkommastellen) gespeichert wird.
 
-Als externe Repäsentation wird die Darstellung
+Als externe RepÃ¤sentation wird die Darstellung
 
   DdHhMmS.Xs
 
@@ -31,7 +31,7 @@ Es gelten folgende Eingenschaften:
 
 =item *
 
-führende Anteile bis auf Ss fehlen, wenn sie 0 sind
+fÃ¼hrende Anteile bis auf Ss fehlen, wenn sie 0 sind
 
 =item *
 
@@ -52,7 +52,7 @@ der Sekundenanteil kann Nachkommastellen haben
 =back
 
 Bei der Instantiierung kann die Zeitdauer auch in Doppelpunkt-Notation
-übergeben werden:
+Ã¼bergeben werden:
 
   D:H:M:S.X
 
@@ -70,7 +70,7 @@ Bei der Instantiierung kann die Zeitdauer auch in Doppelpunkt-Notation
 =head4 Description
 
 Instantiiere ein Zeitdauer-Objekt und liefere einen Referenz auf
-dieses Objekt zurück. Die Zeitdauer kann als numerischer Wert $sec
+dieses Objekt zurÃ¼ck. Die Zeitdauer kann als numerischer Wert $sec
 oder als Zeichenkette $str angegeben werden. Die Zeichenkette
 kann auch in Doppelpunkt-Notation (D:H:M:S.X) angegeben sein.
 
@@ -98,7 +98,7 @@ mit Nachkommastellen.
 
 Liefere die Zeitdauer als Zeichenkette in der Form DdHhMmS.Xs.
 
-=head3 asShortString() - Dauer als kürzestmögliche Zeichenkette
+=head3 asShortString() - Dauer als kÃ¼rzestmÃ¶gliche Zeichenkette
 
 =head4 Synopsis
 
@@ -110,7 +110,7 @@ Liefere die Zeitdauer als Zeichenkette in der Form DdHhMmS.Xs.
 
 =item -maxUnit => 'd'|'h'|'m'|'s' (Default: 'd')
 
-Größte dargestellte Einheit.
+GrÃ¶ÃŸte dargestellte Einheit.
 
 =item -minUnit => 'd'|'h'|'m'|'s' (Default: 's')
 
@@ -145,7 +145,7 @@ weggelassen werden, sowohl am Anfang als auch am Ende.
 Liefere die Dauer als Array mit den Komponenten
 ($days,$hours,$minutes,$seconds).
 
-=head3 asFFmpegString() - Dauer als Parameter für ffmpeg-Option -t
+=head3 asFFmpegString() - Dauer als Parameter fÃ¼r ffmpeg-Option -t
 
 =head4 Synopsis
 

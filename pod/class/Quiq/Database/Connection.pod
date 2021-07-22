@@ -10,14 +10,14 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine Verbindung zu einer
+Ein Objekt der Klasse reprÃ¤sentiert eine Verbindung zu einer
 Relationalen Datenbank.
 
 =head1 METHODS
 
 =head2 Konstruktor/Destruktor
 
-=head3 new() - Öffne Datenbankverbindung
+=head3 new() - Ã–ffne Datenbankverbindung
 
 =head4 Synopsis
 
@@ -68,14 +68,14 @@ Definiere das clientseitige Character Encoding als UTF-8.
 =head4 Description
 
 Instantiiere eine Datenbankverbindung und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 Ist $udl nicht angegeben, wird der Wert der Environment-Variable
 $UDL verwendet.
 
 Wird die Methode als Objektmethode einer bestehenden Datenbankverbindung
 gerufen, wird eine weitere Verbindung zur selben Datenbank aufgebaut.
-Dies ist nützlich, wenn eine parallele Transaktion benötigt wird.
+Dies ist nÃ¼tzlich, wenn eine parallele Transaktion benÃ¶tigt wird.
 
 =head3 newFromSbit() - Instantiiere Quiq::Database::Connection-Datenbankobjekt aus Sbit-Datenbankobjekt
 
@@ -83,7 +83,7 @@ Dies ist nützlich, wenn eine parallele Transaktion benötigt wird.
 
   $db = $class->newFromSbit($db,@opt);
 
-=head3 disconnect() - Schließe Datenbankverbindung
+=head3 disconnect() - SchlieÃŸe Datenbankverbindung
 
 =head4 Synopsis
 
@@ -96,13 +96,13 @@ destroy()
 
 =head4 Description
 
-Schließe Datenbankverbindung. Ist $commit "wahr", committe die Daten
-vor dem Schließen der Verbindung. Die Methode liefert keinen Wert zurück.
+SchlieÃŸe Datenbankverbindung. Ist $commit "wahr", committe die Daten
+vor dem SchlieÃŸen der Verbindung. Die Methode liefert keinen Wert zurÃ¼ck.
 
-Die Objektreferenz $db ist  nach Aufruf der Methode ungültig und kann
+Die Objektreferenz $db ist  nach Aufruf der Methode ungÃ¼ltig und kann
 nicht mehr verwendet werden.
 
-=head3 dbExists() - Prüfe, ob Datenbankverbindung aufgebaut werden kann
+=head3 dbExists() - PrÃ¼fe, ob Datenbankverbindung aufgebaut werden kann
 
 =head4 Synopsis
 
@@ -110,12 +110,12 @@ nicht mehr verwendet werden.
 
 =head4 Description
 
-Prüfe, ob Verbindung zur Datenbank $udl möglich ist.
+PrÃ¼fe, ob Verbindung zur Datenbank $udl mÃ¶glich ist.
 Liefere "wahr", wenn dies der Fall ist, andernfalls "falsch".
 
 =head2 Akzessoren
 
-=head3 maxBlobSize() - Liefere/Setze max. Größe von BLOB/TEXT (Oracle)
+=head3 maxBlobSize() - Liefere/Setze max. GrÃ¶ÃŸe von BLOB/TEXT (Oracle)
 
 =head4 Synopsis
 
@@ -124,13 +124,13 @@ Liefere "wahr", wenn dies der Fall ist, andernfalls "falsch".
 
 =head4 Description
 
-Liefere/Setze die maximale Größe eines BLOB/TEXT-Werts auf $n Bytes.
+Liefere/Setze die maximale GrÃ¶ÃŸe eines BLOB/TEXT-Werts auf $n Bytes.
 Defaulteinstellung ist 1024*1024 Bytes (1MB).
 
-Dieser Wert ist nur für Oracle relevant und wird bei der Selektion
-von BLOB/TEXT-Kolumnen benötigt. Ist der Wert einer BLOB/TEXT-Kolumne
-größer als die angegebene Anzahl an Bytes wird eine Exception
-ausgelöst.
+Dieser Wert ist nur fÃ¼r Oracle relevant und wird bei der Selektion
+von BLOB/TEXT-Kolumnen benÃ¶tigt. Ist der Wert einer BLOB/TEXT-Kolumne
+grÃ¶ÃŸer als die angegebene Anzahl an Bytes wird eine Exception
+ausgelÃ¶st.
 
 Bei anderen DBMSen als Oracle hat das Setzen keinen Effekt und der
 Returnwert der Methode ist immer 0.
@@ -199,7 +199,7 @@ lassen sich SQL-Statements generieren, z.B.
 =head4 Description
 
 Liefere das Udl-Objekt der Datenbankverbindung. Das Udl-Objekt
-hält Information über die Datenbankverbindung, z.B.
+hÃ¤lt Information Ã¼ber die Datenbankverbindung, z.B.
 
   $user = $db->udl->user;
 
@@ -220,7 +220,7 @@ hält Information über die Datenbankverbindung, z.B.
 =head2 DBMS-Tests
 
 Die folgenden Methoden testen auf das DBMS. Sie werden angewendet, wenn
-DBMS-spezifische Unterscheidungen vorgenommen werden müssen.
+DBMS-spezifische Unterscheidungen vorgenommen werden mÃ¼ssen.
 
 =head3 dbms() - Liefere den Namen des DBMS
 
@@ -228,13 +228,13 @@ DBMS-spezifische Unterscheidungen vorgenommen werden müssen.
 
   $dbms = $db->dbms;
 
-=head3 dbmsTestVector() - Vektor für DBMS-Tests
+=head3 dbmsTestVector() - Vektor fÃ¼r DBMS-Tests
 
 =head4 Synopsis
 
   ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) = $db->dbmsTestVector;
 
-=head3 isOracle() - Prüfe auf Oracle-DBMS
+=head3 isOracle() - PrÃ¼fe auf Oracle-DBMS
 
 =head4 Synopsis
 
@@ -245,7 +245,7 @@ DBMS-spezifische Unterscheidungen vorgenommen werden müssen.
 Liefere "wahr", wenn die Datenbank eine Oracle-Datenbank ist,
 sonst "falsch".
 
-=head3 isPostgreSQL() - Prüfe auf PostgreSQL-DBMS
+=head3 isPostgreSQL() - PrÃ¼fe auf PostgreSQL-DBMS
 
 =head4 Synopsis
 
@@ -256,7 +256,7 @@ sonst "falsch".
 Liefere "wahr", wenn die Datenbank eine PostgreSQL-Datenbank ist,
 sonst "falsch".
 
-=head3 isSQLite() - Prüfe auf SQLite-DBMS
+=head3 isSQLite() - PrÃ¼fe auf SQLite-DBMS
 
 =head4 Synopsis
 
@@ -267,7 +267,7 @@ sonst "falsch".
 Liefere "wahr", wenn die Datenbank eine SQLite-Datenbank ist,
 sonst "falsch".
 
-=head3 isMySQL() - Prüfe auf MySQL-DBMS
+=head3 isMySQL() - PrÃ¼fe auf MySQL-DBMS
 
 =head4 Synopsis
 
@@ -278,7 +278,7 @@ sonst "falsch".
 Liefere "wahr", wenn die Datenbank eine MySQL-Datenbank ist,
 sonst "falsch".
 
-=head3 isAccess() - Prüfe auf Access-DBMS
+=head3 isAccess() - PrÃ¼fe auf Access-DBMS
 
 =head4 Synopsis
 
@@ -289,7 +289,7 @@ sonst "falsch".
 Liefere "wahr", wenn die Datenbank eine Access-Datenbank ist,
 sonst "falsch".
 
-=head3 isMSSQL() - Prüfe auf MSSQL-DBMS
+=head3 isMSSQL() - PrÃ¼fe auf MSSQL-DBMS
 
 =head4 Synopsis
 
@@ -323,7 +323,7 @@ Liefere den Namen der Default-Rowklasse:
   Quiq::Database::Row::Object  ($raw ist "falsch")
   Quiq::Database::Row::Array   ($raw ist "wahr")
 
-Auf die Default-Rowklasse werden Datensätze instantiiert, für die
+Auf die Default-Rowklasse werden DatensÃ¤tze instantiiert, fÃ¼r die
 bei einer Datenbank-Selektion oder einer Instantiierung einer
 Table-Klasse keine Row-Klasse explizit angegeben wurde.
 
@@ -332,7 +332,7 @@ Table-Klasse keine Row-Klasse explizit angegeben wurde.
 Alle Statements einer Session oder ein gewisser Abschnitt kann
 gelogged werden.
 
-Für die gesamte Session:
+FÃ¼r die gesamte Session:
 
   $db = Quiq::Database::Connection->new($udl,-log=>1);
 
@@ -358,13 +358,13 @@ Scheiben von Fortschrittsmeldungen ins Log:
   }
   $db->endProgressLog;
 
-=head3 isLog() - Prüfe, ob Logging eingeschaltet ist
+=head3 isLog() - PrÃ¼fe, ob Logging eingeschaltet ist
 
 =head4 Synopsis
 
   $bool = $db->isLog;
 
-=head3 openLog() - Öffne SQL-Log
+=head3 openLog() - Ã–ffne SQL-Log
 
 =head4 Synopsis
 
@@ -378,9 +378,9 @@ Scheiben von Fortschrittsmeldungen ins Log:
 
 =head4 Description
 
-Schreibe Argumente @str ins geöffnete SQL-Log.
-Ist das SQL-Log nicht geöffnet, wird nichts geschrieben.
-Die Methode liefert keinen Wert zurück.
+Schreibe Argumente @str ins geÃ¶ffnete SQL-Log.
+Ist das SQL-Log nicht geÃ¶ffnet, wird nichts geschrieben.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head3 msgToLog() - Schreibe Meldung ins SQL-Log
 
@@ -395,7 +395,7 @@ printLog()
 =head4 Description
 
 Schreibe Meldung $msg ins SQL-Log.
-Die Methode liefert keinen Wert zurück.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 Der Logfileeintrag hat folgenden Aufbau:
 
@@ -419,7 +419,7 @@ Zeile vorangestellt.
 =head4 Description
 
 Schreibe SQL Statement $stmt ins SQL-Log.
-Die Methode liefert keinen Wert zurück.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 Der Logfileeintrag hat folgenden Aufbau:
 
@@ -434,7 +434,7 @@ Mit Defaultwerten:
 Ist die Meldung mehrzeilig, wird der LogMsgPrefix jeder
 Zeile vorangestellt.
 
-=head3 timeToLog() - Schreibe Ausführungszeit ins SQL-Log
+=head3 timeToLog() - Schreibe AusfÃ¼hrungszeit ins SQL-Log
 
 =head4 Synopsis
 
@@ -442,14 +442,14 @@ Zeile vorangestellt.
 
 =head4 Description
 
-Schreibe Ausführungszeit $time ins SQL-Log.
-Die Methode liefert keinen Wert zurück.
+Schreibe AusfÃ¼hrungszeit $time ins SQL-Log.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 Der Logfileeintrag hat per Default folgenden Aufbau:
 
   /* <time> */
 
-=head3 closeLog() - Schließe SQL-Log
+=head3 closeLog() - SchlieÃŸe SQL-Log
 
 =head4 Synopsis
 
@@ -470,7 +470,7 @@ Der Logfileeintrag hat per Default folgenden Aufbau:
 =head4 Description
 
 Schreibe Fortschrittsmeldung $msg ins SQL-Log.
-Die Methode liefert keinen Wert zurück.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 Der Logfileeintrag hat folgenden Aufbau:
 
@@ -521,7 +521,7 @@ Importiere die Daten aus Datei $file in Tabelle $table.
 
 =head2 SQL Execution
 
-=head3 sql() - Führe SQL-Statement aus
+=head3 sql() - FÃ¼hre SQL-Statement aus
 
 =head4 Synopsis
 
@@ -533,14 +533,14 @@ Importiere die Daten aus Datei $file in Tabelle $table.
 
 =item cache => $n (Default: undef)
 
-Cache die Datensätze, die das Statement $stmt liefert, für $n Sekunden.
-D.h. hole die Datensätze innerhalb dieser Zeitspanne nicht erneut
+Cache die DatensÃ¤tze, die das Statement $stmt liefert, fÃ¼r $n Sekunden.
+D.h. hole die DatensÃ¤tze innerhalb dieser Zeitspanne nicht erneut
 von der Datenbank, sondern lies sie aus dem Cache. Ist $n 0,
-werden die Datensätze unbegrenzt lange gecacht.
+werden die DatensÃ¤tze unbegrenzt lange gecacht.
 
 =item -chunkSize => $n (Default: 500)
 
-Fetche Datensätze in Chunks von $n Sätzen. Diese Option hat aktuell
+Fetche DatensÃ¤tze in Chunks von $n SÃ¤tzen. Diese Option hat aktuell
 nur bei PostgreSQL und -fetchMode 1 oder 2 eine Bedeutung.
 
 =item -fetchMode => 0 | 1 | 2 (Default: 1)
@@ -553,29 +553,29 @@ auch Abschnitt "SELECT mit PostgreSQL".
 =item Z<>0
 
 Normaler DBI::Pg-Fetchmodus, d.h. die gesamte Ergebnismenge wird
-zum Client transferiert, bevor dieser den ersten Datensatz erhält.
-Dieser Modus ist für große Datenmengen schlecht geeignet.
+zum Client transferiert, bevor dieser den ersten Datensatz erhÃ¤lt.
+Dieser Modus ist fÃ¼r groÃŸe Datenmengen schlecht geeignet.
 
 =item Z<>1
 
-Die Datensätze werden in Chunks von -chunkSize Sätzen gefetcht.
+Die DatensÃ¤tze werden in Chunks von -chunkSize SÃ¤tzen gefetcht.
 Dies ist der Default-Modus.
 
 =item Z<>2
 
-Wie 1, wobei zusätzlich eine eigene Connection für die Selektion
-geöffnet wird. Dies ist notwendig, wenn während der
-Datensatz-Verarbeitung COMMITs oder ROLLBACKs ausgeführt werden sollen.
+Wie 1, wobei zusÃ¤tzlich eine eigene Connection fÃ¼r die Selektion
+geÃ¶ffnet wird. Dies ist notwendig, wenn wÃ¤hrend der
+Datensatz-Verarbeitung COMMITs oder ROLLBACKs ausgefÃ¼hrt werden sollen.
 Eine Cursor-basierte Selektion wird bei PostgreSQL ohne eigene
-Connection wird mit dem ersten COMMIT oder ROLLBACK ungültig.
+Connection wird mit dem ersten COMMIT oder ROLLBACK ungÃ¼ltig.
 
 =back
 
 =item -forceExec => $bool (Default: 0)
 
-Forciere die Ausführung des Statement. Dies kann bei Oracle PL/SQL
+Forciere die AusfÃ¼hrung des Statement. Dies kann bei Oracle PL/SQL
 Code notwendig sein, wenn Konstrukte enthalten sind,
-die von DBI/DBD irrtümlich als Bind-Variablen interpretiert werden.
+die von DBI/DBD irrtÃ¼mlich als Bind-Variablen interpretiert werden.
 Z.B. bei folgender Trigger-Definition das ":new":
 
   CREATE OR REPLACE TRIGGER x_before_insert
@@ -586,29 +586,29 @@ Z.B. bei folgender Trigger-Definition das ":new":
       :new.create_date := sysdate;
   END;
 
-Ohne -forceExec=>1 würde das Statement lediglich präpariert,
-nicht ausgeführt.
+Ohne -forceExec=>1 wÃ¼rde das Statement lediglich prÃ¤pariert,
+nicht ausgefÃ¼hrt.
 
 =item -log => 0|1 (Default: -log der Connection)
 
-Schreibe SQL-Statement und Ausführungszeit nach STDOUT.
+Schreibe SQL-Statement und AusfÃ¼hrungszeit nach STDOUT.
 
 =item -raw => $bool (Default: 0)
 
-Fetche die Datensätze als einfache Arrays statt als komplexe
+Fetche die DatensÃ¤tze als einfache Arrays statt als komplexe
 Row-Objekte. Als Default-Rowklasse verwende Quiq::Database::Row::Array
-statt Quiq::Database::Row::Object (der Parameter -rowClass überschreibt
+statt Quiq::Database::Row::Object (der Parameter -rowClass Ã¼berschreibt
 diesen Default).
 
 =item -rowClass => $rowClass (Default: 'Quiq::Database::Row::Object')
 
-Name der Datensatzklasse, auf die die Datensätze der Ergebnismenge
+Name der Datensatzklasse, auf die die DatensÃ¤tze der Ergebnismenge
 geblesst werden.
 
 =item -tableClass => $tableClass (Default: siehe Text)
 
 Name der Tabellenklasse, die die Ergebnismenge speichert.
-Bei Raw-Datensätzen ist Quiq::Database::ResultSet::Array der Default,
+Bei Raw-DatensÃ¤tzen ist Quiq::Database::ResultSet::Array der Default,
 ansonsten Quiq::Database::ResultSet::Object.
 
 =back
@@ -619,18 +619,18 @@ Referenz auf Cursor-Objekt (Quiq::Database::Cursor)
 
 =head4 Description
 
-Führe SQL-Statement $stmt über Datenbankverbindung $db aus,
+FÃ¼hre SQL-Statement $stmt Ã¼ber Datenbankverbindung $db aus,
 instantiiere ein Resultat-Objekt (Cursor), und liefere eine Referenz
-auf dieses Objekt zurück.
+auf dieses Objekt zurÃ¼ck.
 
 =head4 Details
 
 B<SELECT mit PostgreSQL>
 
 Bei PostgreSQL (DBD::Pg) holt ein SELECT erst die gesamte Ergebnismenge
-zum Client. Das ist für große Ergebnismengen fatal.
+zum Client. Das ist fÃ¼r groÃŸe Ergebnismengen fatal.
 
-Um die Datensätze in Chunks zu holen, muss ein CURSOR verwendet
+Um die DatensÃ¤tze in Chunks zu holen, muss ein CURSOR verwendet
 werden:
 
   DECLARE <cursor> CURSOR FOR <stmt>;
@@ -642,7 +642,7 @@ Hierbei ist:
 
   <cursor> der Name des Cursors
   <stmt> das SELECT-Statement
-  <n> die Anzahl der zu fetchenden Datensätze
+  <n> die Anzahl der zu fetchenden DatensÃ¤tze
 
 Die Methode $db->sql() implementiert im Falle von PostgreSQL
 SELECTs durch obige Anweisungsfolge, wenn die Option -fetchMode
@@ -651,9 +651,9 @@ gesetzt ist.
   -fetchMode=>0|1|2 (Default: 0)
       0=Defaultverhalten, 1=dekl. Cursor, 2=dekl. Cursor + extra Session
   -chunkSize=>$n (Default: 500)
-      Fetche Datensätze in Chunks von $n Stück
+      Fetche DatensÃ¤tze in Chunks von $n StÃ¼ck
 
-=head3 sqlAtomic() - Führe SQL-Statement atomar aus
+=head3 sqlAtomic() - FÃ¼hre SQL-Statement atomar aus
 
 =head4 Synopsis
 
@@ -661,21 +661,21 @@ gesetzt ist.
 
 =head4 Description
 
-Führe DDL-Statement $stmt aus, instantiiere ein Resultat-Objekt (Cursor),
-und liefere eine Referenz auf dieses Objekt zurück.
+FÃ¼hre DDL-Statement $stmt aus, instantiiere ein Resultat-Objekt (Cursor),
+und liefere eine Referenz auf dieses Objekt zurÃ¼ck.
 
-Das Statement wird atomar ausgeführt, d.h. ist das Statement
-erfolgreich, wird anschließend ein COMMIT ausgeführt, schlägt das
-Statement fehl, wird ein ROLLBACK ausgeführt.
+Das Statement wird atomar ausgefÃ¼hrt, d.h. ist das Statement
+erfolgreich, wird anschlieÃŸend ein COMMIT ausgefÃ¼hrt, schlÃ¤gt das
+Statement fehl, wird ein ROLLBACK ausgefÃ¼hrt.
 
 Dieses Verhalten ist insbesondere im Falle von PostgreSQL wichtig,
 da bei PostgreSQL praktisch alles einer Transaktionskontrolle unterliegt.
-Z.B. können erzeugte Objekte nicht zugriffen werden, solange
+Z.B. kÃ¶nnen erzeugte Objekte nicht zugriffen werden, solange
 ihre Erzeugung nicht abgeschlossen ist, d.h. der Zugriff auf die erzeugten
 Objekte wird blockiert. Oder das Setzen von Session-Einstellungen
-verfällt mit einem ROLLBACK. usw.
+verfÃ¤llt mit einem ROLLBACK. usw.
 
-=head3 execute() - Führe SQL-Statement atomar aus und liefere Ergebnis
+=head3 execute() - FÃ¼hre SQL-Statement atomar aus und liefere Ergebnis
 
 =head4 Synopsis
 
@@ -693,28 +693,28 @@ Alle Optionen der Methode $db->sql() plus
 
 =item -color => $bool (Default: 1)
 
-Zeige das Resultat der Statement-Ausführung farbig an.
+Zeige das Resultat der Statement-AusfÃ¼hrung farbig an.
 
 =item -limit => $n (Default: 10)
 
-Begrenze die Anzahl der gefetchten Datensätze auf $n.
+Begrenze die Anzahl der gefetchten DatensÃ¤tze auf $n.
 
 =back
 
 =head4 Returns
 
-Ausführungsergebnis (String)
+AusfÃ¼hrungsergebnis (String)
 
 =head4 Description
 
-Führe DDL-Statement $stmt aus und liefere das Ergebnis der Ausführung
-in Form eines Textes zurück. Im Falle einer Selektion werden die
-selektierten Datensätze in einer ASCII-Tabelle dargestellt. Die maximale
-Anzahl der selektierten Datensätze ist per Default auf 10 begrenzt
+FÃ¼hre DDL-Statement $stmt aus und liefere das Ergebnis der AusfÃ¼hrung
+in Form eines Textes zurÃ¼ck. Im Falle einer Selektion werden die
+selektierten DatensÃ¤tze in einer ASCII-Tabelle dargestellt. Die maximale
+Anzahl der selektierten DatensÃ¤tze ist per Default auf 10 begrenzt
 (siehe Option -limit).
 
-Die Methode ist nützlich für die Programmierung von einfachen
-Terminal-Clients für Ad-Hoc-Abfragen.
+Die Methode ist nÃ¼tzlich fÃ¼r die Programmierung von einfachen
+Terminal-Clients fÃ¼r Ad-Hoc-Abfragen.
 
 =head2 Sessions
 
@@ -727,11 +727,11 @@ Terminal-Clients für Ad-Hoc-Abfragen.
 =head4 Description
 
 Setze das Default-Schema der Session und liefere das Resultat
-der Ausführung zurück.
+der AusfÃ¼hrung zurÃ¼ck.
 
 Das Datenbank-Objekt merkt sich das Default-Schema. Von mehreren
 Aufrufen hintereinander mit dem selben Schema, wird nur der
-erste Aufruf gegenüber dem DBMS ausgeführt, die anderen sind
+erste Aufruf gegenÃ¼ber dem DBMS ausgefÃ¼hrt, die anderen sind
 Null-Operationen.
 
 =head3 setEncoding() - Definiere Client-Encoding
@@ -761,19 +761,19 @@ Null-Operationen.
 =head4 Description
 
 Setze den Schema-Suchpfad und liefere einen Cursor mit dem Ergebnis
-der Statementausführung zurück.
+der StatementausfÃ¼hrung zurÃ¼ck.
 
 B<PostgreSQL / Greenplum>
 
 Der Schema-Suchpfad wird von PostgreSQL genutzt, um Datenbank-Objekte
-zu finden, die nicht mit einem Schema-Präfix qualifiziert sind.
+zu finden, die nicht mit einem Schema-PrÃ¤fix qualifiziert sind.
 Das erste Schema der Liste ist gleichzeitig das Default-Schema, in
-dem Datenbank-Objekte erzeugt werden (unabhängig davon, ob sie
+dem Datenbank-Objekte erzeugt werden (unabhÃ¤ngig davon, ob sie
 sich in einem anderen Schema des Suchpfads befinden).
 
 =head2 Transactions
 
-=head3 runCount() - Anzahl ausgeführter Statements
+=head3 runCount() - Anzahl ausgefÃ¼hrter Statements
 
 =head4 Synopsis
 
@@ -781,9 +781,9 @@ sich in einem anderen Schema des Suchpfads befinden).
 
 =head4 Description
 
-Liefere die Anzahl der in der aktuellen Transaktion ausgeführten
+Liefere die Anzahl der in der aktuellen Transaktion ausgefÃ¼hrten
 Statements. Diese Information kann z.B. genutzt werden, um zu
-entscheiden, ob ein COMMIT oder ROLLBACK ausgeführt werden müsste.
+entscheiden, ob ein COMMIT oder ROLLBACK ausgefÃ¼hrt werden mÃ¼sste.
 
 =head3 begin() - Beginne Transaktion
 
@@ -793,9 +793,9 @@ entscheiden, ob ein COMMIT oder ROLLBACK ausgeführt werden müsste.
 
 =head4 Description
 
-Beginne Transaktion und liefere das Resultat der Ausführung zurück.
+Beginne Transaktion und liefere das Resultat der AusfÃ¼hrung zurÃ¼ck.
 
-=head3 commit() - Bestätige Datenänderungen
+=head3 commit() - BestÃ¤tige DatenÃ¤nderungen
 
 =head4 Synopsis
 
@@ -804,15 +804,15 @@ Beginne Transaktion und liefere das Resultat der Ausführung zurück.
 
 =head4 Description
 
-Bestätige alle auf der Datenbank durchgeführten Änderungen
-und liefere das Resultat der Ausführung zurück.
+BestÃ¤tige alle auf der Datenbank durchgefÃ¼hrten Ã„nderungen
+und liefere das Resultat der AusfÃ¼hrung zurÃ¼ck.
 
 Wird die Methode mit Argument aufgerufen, entscheidet dessen
-Wahrheitswert, ob ein COMMIT oder ein ROLLBACK ausgeführt wird. Im
-Falle von "wahr" wird ein COMMIT ausgeführt, im Falle von "falsch"
+Wahrheitswert, ob ein COMMIT oder ein ROLLBACK ausgefÃ¼hrt wird. Im
+Falle von "wahr" wird ein COMMIT ausgefÃ¼hrt, im Falle von "falsch"
 ein ROLLBACK.
 
-=head3 rollback() - Verwirf Datenänderungen
+=head3 rollback() - Verwirf DatenÃ¤nderungen
 
 =head4 Synopsis
 
@@ -820,7 +820,7 @@ ein ROLLBACK.
 
 =head4 Description
 
-Verwirf alle auf der Datenbank durchgeführten Datenänderungen.
+Verwirf alle auf der Datenbank durchgefÃ¼hrten DatenÃ¤nderungen.
 
 =head3 save() - Aktualisiere Datensatz auf Datenbank
 
@@ -830,33 +830,33 @@ Verwirf alle auf der Datenbank durchgeführten Datenänderungen.
 
 =head4 Description
 
-Aktualisiert den Datensatz $row gemäß seines Status auf der Datenbank
-$db und liefere das Resultat der Statement-Ausführung zurück.
+Aktualisiert den Datensatz $row gemÃ¤ÃŸ seines Status auf der Datenbank
+$db und liefere das Resultat der Statement-AusfÃ¼hrung zurÃ¼ck.
 
-Welche Datenbankoperation konkret ausgeführt wird, ergibt sich aus
+Welche Datenbankoperation konkret ausgefÃ¼hrt wird, ergibt sich aus
 dem Status des Datensatzes.
 
 B<Statuswerte>
 
 =over 4
 
-=item '0' (unverändert)
+=item '0' (unverÃ¤ndert)
 
-Es wird keine Datenbankoperation ausgeführt.
+Es wird keine Datenbankoperation ausgefÃ¼hrt.
 
 =item 'U' (modifiziert)
 
-Es wird eine Update-Operation auf der Datenbank ausgeführt, d.h. es
+Es wird eine Update-Operation auf der Datenbank ausgefÃ¼hrt, d.h. es
 wird die Methode $row->update() gerufen.
 
 =item 'I' (neu)
 
-Es wird eine Insert-Operation auf der Datenbank ausgeführt, d.h. es
+Es wird eine Insert-Operation auf der Datenbank ausgefÃ¼hrt, d.h. es
 wird die Methode $row->insert() gerufen.
 
-=item 'D' (zu löschen)
+=item 'D' (zu lÃ¶schen)
 
-Es wird eine Delete-Operation auf der Datenbank ausgeführt, d.h. es
+Es wird eine Delete-Operation auf der Datenbank ausgefÃ¼hrt, d.h. es
 wird die Methode $row->delete() gerufen.
 
 =back
@@ -872,13 +872,13 @@ wird die Methode $row->delete() gerufen.
 =head4 Description
 
 Ermittele die Liste der Kolumentitel zum Statement @select
-und liefere diese zurück. In skalaren Kontext liefere
+und liefere diese zurÃ¼ck. In skalaren Kontext liefere
 eine Referenz auf die Liste.
 
 Anmerkung: Die Titelliste wird gecacht. Je Statement wird die Datenbank nur
 einmal befragt. Alle weiteren Aufrufe werden aus dem Cache befriedigt.
 
-=head3 primaryKey() - Liefere Primärschlüssel-Kolumne
+=head3 primaryKey() - Liefere PrimÃ¤rschlÃ¼ssel-Kolumne
 
 =head4 Synopsis
 
@@ -886,15 +886,15 @@ einmal befragt. Alle weiteren Aufrufe werden aus dem Cache befriedigt.
 
 =head4 Description
 
-Liefere die Primärschlüsselkolumne der Tabelle $table.
+Liefere die PrimÃ¤rschlÃ¼sselkolumne der Tabelle $table.
 
-Die Primärschlüsselkolumne ist per Definition die erste Kolumne der
-Tabelle. Datenmodelle mit zusammengesetzten Primärschlüsseln werden
-nicht unterstützt.
+Die PrimÃ¤rschlÃ¼sselkolumne ist per Definition die erste Kolumne der
+Tabelle. Datenmodelle mit zusammengesetzten PrimÃ¤rschlÃ¼sseln werden
+nicht unterstÃ¼tzt.
 
 =head2 Select Operations
 
-=head3 select() - Liefere Liste von Datensätzen
+=head3 select() - Liefere Liste von DatensÃ¤tzen
 
 =head4 Synopsis
 
@@ -930,7 +930,7 @@ Siehe Quiq::Database::Connection/sql().
 
 =item -sql => $bool (Default: 0)
 
-Führe das Statement nicht aus, sondern liefere das SQL-Statemement zurück.
+FÃ¼hre das Statement nicht aus, sondern liefere das SQL-Statemement zurÃ¼ck.
 
 =item -tableClass => $tableClass
 
@@ -938,7 +938,7 @@ Siehe Quiq::Database::Connection/sql().
 
 =back
 
-=head3 selectWith() - Liefere Liste von Datensätzen
+=head3 selectWith() - Liefere Liste von DatensÃ¤tzen
 
 =head4 Synopsis
 
@@ -954,32 +954,32 @@ SELECT-Statement, das in eine WITH Klausel eingebettet wird.
 
 =item @select
 
-Siehe L<select|"select() - Liefere Liste von Datensätzen">()
+Siehe L<select|"select() - Liefere Liste von DatensÃ¤tzen">()
 
 =item @opt
 
-Siehe L<select|"select() - Liefere Liste von Datensätzen">()
+Siehe L<select|"select() - Liefere Liste von DatensÃ¤tzen">()
 
 =back
 
 =head4 Options
 
-Siehe L<select|"select() - Liefere Liste von Datensätzen">()
+Siehe L<select|"select() - Liefere Liste von DatensÃ¤tzen">()
 
 =head4 Returns
 
-Siehe L<select|"select() - Liefere Liste von Datensätzen">()
+Siehe L<select|"select() - Liefere Liste von DatensÃ¤tzen">()
 
 =head4 Description
 
-Bette SELECT-Statement $stmt in eine WITH-Klausel ein und führe
-die Selektion über dieser WITH-Klausel aus. Die WITH-Klausel
-hat den Vorteil, dass die Bedingungen der WHERE-Klausel über
-den Kolumnennamen der SELECT-Liste formuliert werden können.
+Bette SELECT-Statement $stmt in eine WITH-Klausel ein und fÃ¼hre
+die Selektion Ã¼ber dieser WITH-Klausel aus. Die WITH-Klausel
+hat den Vorteil, dass die Bedingungen der WHERE-Klausel Ã¼ber
+den Kolumnennamen der SELECT-Liste formuliert werden kÃ¶nnen.
 
 =head4 Rationale
 
-Eine Selektion über dem Statement
+Eine Selektion Ã¼ber dem Statement
 
   SELECT
       fun.oid AS fun_oid
@@ -998,13 +998,13 @@ Eine Selektion über dem Statement
       JOIN pg_user usr
           ON fun.proowner = usr.usesysid
 
-liefert zwar Datensätze mit den eigens vergebenen Kolumnennamen fun_oid,
-fun_owner usw. Diese Namen können jedoch I<nicht> bei der Formulierung
-der WHERE-Klausel verwendet werden. Stattdessen müssen die Namen der
+liefert zwar DatensÃ¤tze mit den eigens vergebenen Kolumnennamen fun_oid,
+fun_owner usw. Diese Namen kÃ¶nnen jedoch I<nicht> bei der Formulierung
+der WHERE-Klausel verwendet werden. Stattdessen mÃ¼ssen die Namen der
 zugrundeliegenden Tabellen verwendet werden. Diese Assymetrie, die eine
-wirkliche Kapselung verhindert, lässt sich vermeiden, wenn das Statement
-in eine WITH-Klausel eingebettet und über I<dieser> die Selektion
-formuliert wird. In dem Fall können (und müssen) die Namen des
+wirkliche Kapselung verhindert, lÃ¤sst sich vermeiden, wenn das Statement
+in eine WITH-Klausel eingebettet und Ã¼ber I<dieser> die Selektion
+formuliert wird. In dem Fall kÃ¶nnen (und mÃ¼ssen) die Namen des
 eingebetteten SELECT verwendet werden. Hier eine Suche via fun_name
 ($stmt ist obiges Statement):
 
@@ -1046,7 +1046,7 @@ liefert
   ORDER BY
       fun_schema
 
-=head3 selectFrom() - Liefere Liste von Datensätzen
+=head3 selectFrom() - Liefere Liste von DatensÃ¤tzen
 
 =head4 Synopsis
 
@@ -1062,28 +1062,28 @@ SELECT-Statement, das in eine WITH Klausel eingebettet wird.
 
 =item @select
 
-Siehe L<select|"select() - Liefere Liste von Datensätzen">()
+Siehe L<select|"select() - Liefere Liste von DatensÃ¤tzen">()
 
 =item @opt
 
-Siehe L<select|"select() - Liefere Liste von Datensätzen">()
+Siehe L<select|"select() - Liefere Liste von DatensÃ¤tzen">()
 
 =back
 
 =head4 Options
 
-Siehe L<select|"select() - Liefere Liste von Datensätzen">()
+Siehe L<select|"select() - Liefere Liste von DatensÃ¤tzen">()
 
 =head4 Returns
 
-Siehe L<select|"select() - Liefere Liste von Datensätzen">()
+Siehe L<select|"select() - Liefere Liste von DatensÃ¤tzen">()
 
 =head4 Description
 
-Bette SELECT-Statement $stmt inline in eine FROM-Klausel ein und führe
+Bette SELECT-Statement $stmt inline in eine FROM-Klausel ein und fÃ¼hre
 die Selektion aus. Die Inline-Einbettung hat den Vorteil, dass die
-Bedingungen der WHERE-Klausel über den Kolumnennamen der SELECT-Liste
-formuliert werden können:
+Bedingungen der WHERE-Klausel Ã¼ber den Kolumnennamen der SELECT-Liste
+formuliert werden kÃ¶nnen:
 
   ...
   FROM (
@@ -1092,7 +1092,7 @@ formuliert werden können:
 
 =head4 Rationale
 
-Analog zu L<selectWith|"selectWith() - Liefere Liste von Datensätzen">().
+Analog zu L<selectWith|"selectWith() - Liefere Liste von DatensÃ¤tzen">().
 
 =head3 lookup() - Liefere Datensatz
 
@@ -1111,7 +1111,7 @@ nicht gefunden wird.
 
 =item -raw => $bool (Default: 0)
 
-Liefere Datensatz in Array-Repräsentation
+Liefere Datensatz in Array-ReprÃ¤sentation
 
 =item -rowClass => $class (Default: 'Quiq::Database::Row::Object')
 
@@ -1136,7 +1136,7 @@ Es muss mindestens ein Datensatz getroffen werden.
 
 =item Z<>3
 
-Es dürfen beliebig viele Datensätze getroffen werden.
+Es dÃ¼rfen beliebig viele DatensÃ¤tze getroffen werden.
 
 =back
 
@@ -1157,7 +1157,7 @@ erste geliefert.
 Lade Datensatz mit WHERE-Bedingung @keyVal. Ist @keyVal leer oder
 einer der Werte leer, liefere einen Null-Datensatz.
 
-Diese Methode ist nützlich, um ein Formular mit einem neuen
+Diese Methode ist nÃ¼tzlich, um ein Formular mit einem neuen
 oder existierenden Datensatz zu versorgen.
 
 =head3 nullRow() - Liefere Null-Datensatz
@@ -1172,7 +1172,7 @@ oder existierenden Datensatz zu versorgen.
 
 =item -raw => $bool (Default: 0)
 
-Liefere Datensatz in Array-Repräsentation
+Liefere Datensatz in Array-ReprÃ¤sentation
 
 =item -rowClass => $class (Default: 'Quiq::Database::Row::Object')
 
@@ -1222,7 +1222,7 @@ Liefere Hashreferenz.
 =head4 Description
 
 Selektiere Kolumnenwerte und liefere sie als Liste oder Hash
-zurück. Im Skalarkontext liefere eine Referenz auf die Liste bzw.
+zurÃ¼ck. Im Skalarkontext liefere eine Referenz auf die Liste bzw.
 den Hash.
 
 =over 2
@@ -1242,13 +1242,13 @@ enthalten, wird C<DISTINCT> selektiert.
 
 =item *
 
-Sollen C<NULL>-Werte nicht berücksichtigt werden, wird der
-WHERE-Klausel eine entsprechende C<IS NOT NULL>-Bedingung hinzugefügt.
+Sollen C<NULL>-Werte nicht berÃ¼cksichtigt werden, wird der
+WHERE-Klausel eine entsprechende C<IS NOT NULL>-Bedingung hinzugefÃ¼gt.
 
 =item *
 
 Sollen die Werte sortiert geliefert werden, wird dem Statement
-eine C<ORDER BY> Klausel hinzugefügt.
+eine C<ORDER BY> Klausel hinzugefÃ¼gt.
 
 =item *
 
@@ -1292,7 +1292,7 @@ Dasselbe, nur dass eine Referenz (Hash-Objekt) geliefert wird:
       -hash => 1,
   );
 
-Lookup-Hash für Nachname:
+Lookup-Hash fÃ¼r Nachname:
 
   $hash = $db->values(
       -select => 'per_nachname',1,
@@ -1345,7 +1345,7 @@ wenn die Ergebnismenge leer ist, sondern $val.
 =head4 Description
 
 Lies den ersten Datensatz der Ergebnismenge und liefere den Wert der
-ersten Kolumne zurück.
+ersten Kolumne zurÃ¼ck.
 
 B<Anmerkungen>
 
@@ -1354,14 +1354,14 @@ B<Anmerkungen>
 =item *
 
 Die Select-Liste des Statements sollte sinnvollerweise aus
-einer Kolumne bestehen. Mehr als eine Kolumne ist zulässig,
+einer Kolumne bestehen. Mehr als eine Kolumne ist zulÃ¤ssig,
 allerdings ist dies eine Verschwendung von Platz und Zeit, denn
 auch wenn mehrere Kolumnen angegeben sind, wird nur der Wert der
 ersten geliefert.
 
 =item *
 
-Ist die Ergebnismenge leer, wird eine Exception ausgelöst.
+Ist die Ergebnismenge leer, wird eine Exception ausgelÃ¶st.
 
 =item *
 
@@ -1372,7 +1372,7 @@ Es wird allerdings nur der erste Datensatz geliefert.
 
 =head2 Insert Operations
 
-=head3 insert() - Füge Datensatz zu Tabelle hinzu
+=head3 insert() - FÃ¼ge Datensatz zu Tabelle hinzu
 
 =head4 Synopsis
 
@@ -1392,10 +1392,10 @@ Ignoriere Doubletten-Fehler.
 
 =head4 Description
 
-Füge Datensatz zu Tabelle $table hinzu und liefere das Resultat
-der Ausführung zurück.
+FÃ¼ge Datensatz zu Tabelle $table hinzu und liefere das Resultat
+der AusfÃ¼hrung zurÃ¼ck.
 
-=head3 insertRows() - Füge mehrere Datensätze zu Tabelle hinzu
+=head3 insertRows() - FÃ¼ge mehrere DatensÃ¤tze zu Tabelle hinzu
 
 =head4 Synopsis
 
@@ -1413,9 +1413,9 @@ der Ausführung zurück.
 
 =head4 Description
 
-Füge mehrere Datensätze zu Tabelle $table hinzu. Die Datensätze
+FÃ¼ge mehrere DatensÃ¤tze zu Tabelle $table hinzu. Die DatensÃ¤tze
 haben die Kolumnen @keys und die Werte @vals. Die Methode liefert
-das Resultat der Ausführung (Cursor) zurück
+das Resultat der AusfÃ¼hrung (Cursor) zurÃ¼ck
 
 =head4 Example
 
@@ -1423,7 +1423,7 @@ das Resultat der Ausführung (Cursor) zurück
 
 =item *
 
-Datensätze als Arrays
+DatensÃ¤tze als Arrays
 
   $db->insertRows('person',
       [qw/per_id per_vorname per_nachname per_geburtstag/],
@@ -1434,7 +1434,7 @@ Datensätze als Arrays
 
 =item *
 
-Datensätze als Abfolge von Werten
+DatensÃ¤tze als Abfolge von Werten
 
   $db->insertRows('person',
       [qw/per_id per_vorname per_nachname per_geburtstag/],
@@ -1445,7 +1445,7 @@ Datensätze als Abfolge von Werten
 
 =back
 
-=head3 insertMulti() - Füge mehrere Datensätze zu Tabelle hinzu
+=head3 insertMulti() - FÃ¼ge mehrere DatensÃ¤tze zu Tabelle hinzu
 
 =head4 Synopsis
 
@@ -1458,11 +1458,11 @@ Datensätze als Abfolge von Werten
 
 =head4 Description
 
-Füge mehrere Datensätze zu Tabelle $table hinzu. Die Datensätze
+FÃ¼ge mehrere DatensÃ¤tze zu Tabelle $table hinzu. Die DatensÃ¤tze
 haben die Kolumnen @keys und die Werte @valsI. Die Methode liefert
-das Resultat der Ausführung (Cursor) zurück.
-Im Unterschied zur Methode $db->L<insertRows|"insertRows() - Füge mehrere Datensätze zu Tabelle hinzu">() führt diese
-Methode ein einziges INSERT-Statement mit allen Daten aus, à la
+das Resultat der AusfÃ¼hrung (Cursor) zurÃ¼ck.
+Im Unterschied zur Methode $db->L<insertRows|"insertRows() - FÃ¼ge mehrere DatensÃ¤tze zu Tabelle hinzu">() fÃ¼hrt diese
+Methode ein einziges INSERT-Statement mit allen Daten aus, Ã  la
 
   INSERT INTO person
       (per_id, per_vorname, per_nachname, per_geburtstag)
@@ -1482,7 +1482,7 @@ Methode ein einziges INSERT-Statement mit allen Daten aus, à la
       ]
   );
 
-=head3 insertResultSet() - Füge Datensätze eines Resultset zu Tabelle hinzu
+=head3 insertResultSet() - FÃ¼ge DatensÃ¤tze eines Resultset zu Tabelle hinzu
 
 =head4 Synopsis
 
@@ -1490,7 +1490,7 @@ Methode ein einziges INSERT-Statement mit allen Daten aus, à la
 
 =head2 Update Operation
 
-=head3 update() - Aktualisiere Datensätze
+=head3 update() - Aktualisiere DatensÃ¤tze
 
 =head4 Synopsis
 
@@ -1501,17 +1501,17 @@ Methode ein einziges INSERT-Statement mit allen Daten aus, à la
 =head4 Description
 
 [1] Aktualisiere Datensatz $row und liefere das Resultat
-der Ausführung zurück. Als Where-Bedingung wird der Name/Wert
+der AusfÃ¼hrung zurÃ¼ck. Als Where-Bedingung wird der Name/Wert
 der ersten Kolumne von Tabelle $table genommen.
 
 [2] Wie [1], nur dass die Where-Bedingung explizit angegeben ist.
 
 [2] Aktualisiere 0, einen oder mehrere Datensatze in Tabelle $table
-und liefere das Resultat der Ausführung zurück.
+und liefere das Resultat der AusfÃ¼hrung zurÃ¼ck.
 
 =head2 Delete Operation
 
-=head3 delete() - Lösche Datensatz bzw. Datensätze aus Tabelle
+=head3 delete() - LÃ¶sche Datensatz bzw. DatensÃ¤tze aus Tabelle
 
 =head4 Synopsis
 
@@ -1520,12 +1520,12 @@ und liefere das Resultat der Ausführung zurück.
 
 =head4 Description
 
-Lösche Datensatz bzw. Datensätze aus Tabelle $table und liefere
-das Resultat der Ausführung zurück.
+LÃ¶sche Datensatz bzw. DatensÃ¤tze aus Tabelle $table und liefere
+das Resultat der AusfÃ¼hrung zurÃ¼ck.
 
 =head2 Schemas
 
-=head3 schemaExists() - Prüfe, ob Schema existiert
+=head3 schemaExists() - PrÃ¼fe, ob Schema existiert
 
 =head4 Synopsis
 
@@ -1552,7 +1552,7 @@ Cache die Liste.
 
 =item -hash => $bool (Default: 0)
 
-Liefere einen Hash mit den Schemanamen als Schlüssel und 1 als Wert.
+Liefere einen Hash mit den Schemanamen als SchlÃ¼ssel und 1 als Wert.
 
 =back
 
@@ -1574,7 +1574,7 @@ Hash der Schemanamen oder eine Referenz auf den Hash. Der Hashwert ist 1.
 =head4 Description
 
 Ermittele die Schemata der Datenbank und liefere die Liste
-oder den Hash der Namen zurück.
+oder den Hash der Namen zurÃ¼ck.
 
 =head2 Tables
 
@@ -1606,7 +1606,7 @@ Erzeuge Tabelle nicht, falls sie bereits existiert.
 
 Erzeuge Tabelle $table auf der Datenbank.
 
-=head3 dropTable() - Lösche Tabelle
+=head3 dropTable() - LÃ¶sche Tabelle
 
 =head4 Synopsis
 
@@ -1614,19 +1614,19 @@ Erzeuge Tabelle $table auf der Datenbank.
 
 =head4 Description
 
-Lösche die Tabelle $table (name mit oder ohne
+LÃ¶sche die Tabelle $table (name mit oder ohne
 Schemaanteil) von der Datenbank $db und liefere das Resultat-Objekt
-der Statementausführung zurück.
+der StatementausfÃ¼hrung zurÃ¼ck.
 
-Es wird vorab geprüft, ob die Tabelle existiert. Ist dies nicht
-der Fall, wird keine Löschung versucht und ein Null-Cursor
-zurückgeliefert.
+Es wird vorab geprÃ¼ft, ob die Tabelle existiert. Ist dies nicht
+der Fall, wird keine LÃ¶schung versucht und ein Null-Cursor
+zurÃ¼ckgeliefert.
 
-Wird die Tabelle erfolgreich gedroppt, führt die Methode ein COMMIT
-durch. Schlägt dies fehl, führt sie ein ROLLBACK durch.
-Dies ist für PostgreSQL und SQLite notwendig.
+Wird die Tabelle erfolgreich gedroppt, fÃ¼hrt die Methode ein COMMIT
+durch. SchlÃ¤gt dies fehl, fÃ¼hrt sie ein ROLLBACK durch.
+Dies ist fÃ¼r PostgreSQL und SQLite notwendig.
 
-=head3 tableExists() - Prüfe, ob Tabelle existiert
+=head3 tableExists() - PrÃ¼fe, ob Tabelle existiert
 
 =head4 Synopsis
 
@@ -1634,7 +1634,7 @@ Dies ist für PostgreSQL und SQLite notwendig.
 
 =head4 Description
 
-Prüfe, ob Tabelle $table existiert. Wenn ja, liefere "wahr",
+PrÃ¼fe, ob Tabelle $table existiert. Wenn ja, liefere "wahr",
 sonst "falsch".
 
 =head3 analyzeTable() - Analysiere Tabelle
@@ -1645,9 +1645,9 @@ sonst "falsch".
 
 =head4 Description
 
-Analysiere Tabelle $table und liefere einen Cursor zurück.
+Analysiere Tabelle $table und liefere einen Cursor zurÃ¼ck.
 
-=head3 addForeignKeyConstraint() - Füge FOREIGN KEY Constraint zu Tabelle hinzu
+=head3 addForeignKeyConstraint() - FÃ¼ge FOREIGN KEY Constraint zu Tabelle hinzu
 
 =head4 Synopsis
 
@@ -1658,7 +1658,7 @@ Analysiere Tabelle $table und liefere einen Cursor zurück.
 
 Siehe Quiq::Sql::addForeignKeyConstraint()
 
-=head3 countRows() - Zähle die Anzahl der Datensätze in der Tabelle
+=head3 countRows() - ZÃ¤hle die Anzahl der DatensÃ¤tze in der Tabelle
 
 =head4 Synopsis
 
@@ -1676,11 +1676,11 @@ Siehe Quiq::Sql::addForeignKeyConstraint()
 
 =item $table1
 
-Tabellenname, mit oder ohne Schema-Präfix.
+Tabellenname, mit oder ohne Schema-PrÃ¤fix.
 
 =item $table2
 
-Tabellenname, mit oder ohne Schema-Präfix.
+Tabellenname, mit oder ohne Schema-PrÃ¤fix.
 
 =back
 
@@ -1697,15 +1697,15 @@ Kolumnen, die verglichen werden.
 
 =item -ignoreColumns => \@titles | $titles
 
-Kolumnen, die ignoriert werden. Diese Option ist nützlich, wenn
+Kolumnen, die ignoriert werden. Diese Option ist nÃ¼tzlich, wenn
 alle Kolumnen verglichen werden sollen, bis auf die mit dieser
 Option genannten.
 
 =item -limit => $n (Default: 10)
 
-Begrenze die Größe der beiden Differenzmengen (s.u.) auf jeweils N Zeilen.
-D.h. es werden maximal 2 * N Zeilen geliefert. Darüber hinausgehende
-Differenzen werden nicht berücksichtigt. Limit 0 bedeutet, es
+Begrenze die GrÃ¶ÃŸe der beiden Differenzmengen (s.u.) auf jeweils N Zeilen.
+D.h. es werden maximal 2 * N Zeilen geliefert. DarÃ¼ber hinausgehende
+Differenzen werden nicht berÃ¼cksichtigt. Limit 0 bedeutet, es
 gibt keine Begrenzung.
 
 =item -sortColumns => \@titles | $titles (Default: I<Kolumnen>)
@@ -1718,7 +1718,7 @@ Kolumnen, nach denen die Gesamt-Differenzliste sortiert wird.
 
 Die Methode untersucht zwei strukturell identische Tabellen hinsichtlich
 etwaig vorhandener Daten-Differenzen. Sie tut dies mittels SQL und kann
-dadurch auch große Datenmengen bewältigen. Der Vergleich geschieht durch
+dadurch auch groÃŸe Datenmengen bewÃ¤ltigen. Der Vergleich geschieht durch
 Bildung zweier Differenzmengen:
 
   -- Alle Zeilen in Tabelle 1, die nicht in Tabelle 2 vorkommen
@@ -1754,14 +1754,14 @@ und
 Sind beide Differenzmengen leer, sind die Tabellen identisch.
 
 Die beiden Differenzmengen werden in einer Ergebnismenge zusammengefasst
-und als ResultSet-Objekt zurückgeliefert. Die Herkunft einer Row wird
+und als ResultSet-Objekt zurÃ¼ckgeliefert. Die Herkunft einer Row wird
 durch das Zeilenattribut sourceTable angezeigt. Tabelle 1 wird mit 'A'
 bezeichnet, Tabelle 2 mit 'B'.
 
 =head4 Example
 
 Vergleich der Tabelle q68t999 in den Schemata xv882js und xv882js_test_01
-über das Programm quiq-db-table-diff, das ein Frontend zur Methode
+Ã¼ber das Programm quiq-db-table-diff, das ein Frontend zur Methode
 tableDiff() darstellt:
 
   $ quiq-db-table-diff dbi#postgresql:dsstest%xv882js:*@tdca.ruv.de:5432 xv882js.q68t999 xv882js_test_01.q68t999
@@ -1794,7 +1794,7 @@ tableDiff() darstellt:
 
 =item $table
 
-Tabellenname, mit oder ohne Schema-Präfix.
+Tabellenname, mit oder ohne Schema-PrÃ¤fix.
 
 =back
 
@@ -1811,7 +1811,7 @@ Kolumnen, die auf Dubletten hin untersucht werden.
 
 =item -ignoreColumns => \@titles | $titles
 
-Kolumnen, die ignoriert werden. Diese Option ist nützlich, wenn
+Kolumnen, die ignoriert werden. Diese Option ist nÃ¼tzlich, wenn
 alle Kolumnen betrachtet werden sollen, bis auf die mit dieser
 Option genannten.
 
@@ -1832,7 +1832,7 @@ Ergebnismengen-Objekt (Quiq::ResultSet::Object)
 =head4 Description
 
 Suche Dubletten in der Tabelle $table und liefere ein Ergebnisobjekt
-mit den Treffern zurück.
+mit den Treffern zurÃ¼ck.
 
 =head4 Example
 
@@ -1843,7 +1843,7 @@ mit den Treffern zurück.
 
 =head2 Columns
 
-=head3 columnExists() - Prüfe, ob Kolumne existiert
+=head3 columnExists() - PrÃ¼fe, ob Kolumne existiert
 
 =head4 Synopsis
 
@@ -1851,9 +1851,9 @@ mit den Treffern zurück.
 
 =head4 Description
 
-Prüfe, ob Kolumne existiert. Wenn ja, liefere "wahr", sonst "falsch".
+PrÃ¼fe, ob Kolumne existiert. Wenn ja, liefere "wahr", sonst "falsch".
 
-=head3 addColumn() - Füge Kolumne zu Tabelle hinzu
+=head3 addColumn() - FÃ¼ge Kolumne zu Tabelle hinzu
 
 =head4 Synopsis
 
@@ -1887,7 +1887,7 @@ liefere undef.
 =head4 Description
 
 Entferne Kolumne $column aus Tabelle $table und liefere das
-Resultat der Statement-Ausführung zurück.
+Resultat der Statement-AusfÃ¼hrung zurÃ¼ck.
 
 Es ist kein Fehler, wenn die Kolumne nicht existiert. In dem Fall
 wird undef geliefert.
@@ -1901,7 +1901,7 @@ wird undef geliefert.
 =head4 Description
 
 Modifiziere Kolumne $column in Tabelle $table und liefere das
-Resultat der Statement-Ausführung zurück.
+Resultat der Statement-AusfÃ¼hrung zurÃ¼ck.
 
 =head3 renameColumn() - Benenne Kolumne um
 
@@ -1912,7 +1912,7 @@ Resultat der Statement-Ausführung zurück.
 =head4 Description
 
 Benenne Tabelle $table die Kolumne $oldName in $newName um und
-liefere das Resultat der Statement-Ausführung zurück.
+liefere das Resultat der Statement-AusfÃ¼hrung zurÃ¼ck.
 
 =head3 distinctValues() - Liefere die Anzahl der unterschiedlichen Werte
 
@@ -1926,7 +1926,7 @@ liefere das Resultat der Statement-Ausführung zurück.
 
   $val = $db->minValue($table,$column);
 
-=head3 maxValue() - Liefere den größten Kolumnenwert
+=head3 maxValue() - Liefere den grÃ¶ÃŸten Kolumnenwert
 
 =head4 Synopsis
 
@@ -1940,13 +1940,13 @@ liefere das Resultat der Statement-Ausführung zurück.
 
 =head4 Description
 
-Die Methode liefert Information über den Inhalt einer Tabellenkolumne.
-Sie ist für das Reverse Engineering einer unbekannte Datenbanktabelle
-nützlich.
+Die Methode liefert Information Ã¼ber den Inhalt einer Tabellenkolumne.
+Sie ist fÃ¼r das Reverse Engineering einer unbekannte Datenbanktabelle
+nÃ¼tzlich.
 
 =head2 Indexes
 
-=head3 indexExists() - Prüfe, ob Index existiert
+=head3 indexExists() - PrÃ¼fe, ob Index existiert
 
 =head4 Synopsis
 
@@ -1954,7 +1954,7 @@ nützlich.
 
 =head4 Description
 
-Prüfe, ob Index existiert. Wenn ja, liefere "wahr", sonst "falsch".
+PrÃ¼fe, ob Index existiert. Wenn ja, liefere "wahr", sonst "falsch".
 
 =head3 createIndex() - Erzeuge Index
 
@@ -1981,13 +1981,13 @@ Name des Tablespace, in dem der Index erzeugt wird
 
 =item -unique => $bool (Default: 0)
 
-Statement für Unique Index.
+Statement fÃ¼r Unique Index.
 
 =back
 
 =head4 Description
 
-Erzeuge Index für Tabelle $table und Kolumnen @colNames auf der Datenbank.
+Erzeuge Index fÃ¼r Tabelle $table und Kolumnen @colNames auf der Datenbank.
 
 =head3 createUniqueIndex() - Erzeuge Unique Index
 
@@ -2001,7 +2001,7 @@ Siehe $db->createIndex()
 
 =head4 Description
 
-Erzeuge Unique Index für Tabelle $table und Kolumnen @colNames
+Erzeuge Unique Index fÃ¼r Tabelle $table und Kolumnen @colNames
 auf der Datenbank.
 
 =head3 dropIndex() - Droppe Index
@@ -2035,7 +2035,7 @@ Die Sequenz beginnt mit Startwert $n.
 =head4 Description
 
 Erzeuge Sequenz $name auf Datenbank $db. Die Methode liefert
-keinen Wert zurück.
+keinen Wert zurÃ¼ck.
 
 Unter Oracle und PostgreSQL, die das Konzept der Sequenz haben,
 wird eine normale Sequenz auf der Datenbank erzeugt.
@@ -2052,8 +2052,8 @@ Sequenz erzeugt.
 
 =head4 Description
 
-Droppe Sequenz $name und liefere das Resultat der Statementausführung
-zurück.
+Droppe Sequenz $name und liefere das Resultat der StatementausfÃ¼hrung
+zurÃ¼ck.
 
 =head3 setSequence() - Setze Sequenz auf neuen Startwert
 
@@ -2064,9 +2064,9 @@ zurück.
 =head4 Description
 
 Setze Sequenz $sequence auf Wert $n. Die Methode liefert keinen
-Wert zurück.
+Wert zurÃ¼ck.
 
-=head3 nextValue() - Liefere nächsten Sequenzwert
+=head3 nextValue() - Liefere nÃ¤chsten Sequenzwert
 
 =head4 Synopsis
 
@@ -2074,17 +2074,17 @@ Wert zurück.
 
 =head4 Description
 
-Ermittele den nächsten Sequenzwert der Sequenz $sequence
-und liefere diesen zurück.
+Ermittele den nÃ¤chsten Sequenzwert der Sequenz $sequence
+und liefere diesen zurÃ¼ck.
 
 Unter Oracle und PostgreSQL wird die betreffende Sequenz befragt.
 
 Unter MySQL und SQLite wird ein leerer Datensatz in die
-Sequenz-Tabelle eingefügt und dessen automatisch generierter
-Primärschlüsselwert ermittelt. Um die Sequenz-Tabelle nicht beliebig
+Sequenz-Tabelle eingefÃ¼gt und dessen automatisch generierter
+PrimÃ¤rschlÃ¼sselwert ermittelt. Um die Sequenz-Tabelle nicht beliebig
 anwachsen zu lassen, wird die Tabelle alle 100 Werte (d.h. wenn
-$n % 100 == 0) bereinigt: alle Datensätze mit einem kleineren Wert als $n
-werden gelöscht.
+$n % 100 == 0) bereinigt: alle DatensÃ¤tze mit einem kleineren Wert als $n
+werden gelÃ¶scht.
 
 =head2 Views
 
@@ -2104,7 +2104,7 @@ Erzeuge View neu, falls sie bereits existiert.
 
 =back
 
-=head3 dropView() - Lösche View
+=head3 dropView() - LÃ¶sche View
 
 =head4 Synopsis
 
@@ -2112,18 +2112,18 @@ Erzeuge View neu, falls sie bereits existiert.
 
 =head4 Description
 
-Lösche die View $viewName von der Datenbank $db und liefere das
-Resultat-Objekt der Statementausführung zurück.
+LÃ¶sche die View $viewName von der Datenbank $db und liefere das
+Resultat-Objekt der StatementausfÃ¼hrung zurÃ¼ck.
 
-Es wird vorab geprüft, ob die View existiert. Ist dies nicht
-der Fall, wird nicht zu löschen versucht und ein Null-Cursor
-zurückgeliefert.
+Es wird vorab geprÃ¼ft, ob die View existiert. Ist dies nicht
+der Fall, wird nicht zu lÃ¶schen versucht und ein Null-Cursor
+zurÃ¼ckgeliefert.
 
-Wird die View erfolgreich gedroppt, führt die Methode ein COMMIT
-durch. Schlägt dies fehl, führt sie ein ROLLBACK durch.
-Dies ist für PostgreSQL und SQLite notwendig.
+Wird die View erfolgreich gedroppt, fÃ¼hrt die Methode ein COMMIT
+durch. SchlÃ¤gt dies fehl, fÃ¼hrt sie ein ROLLBACK durch.
+Dies ist fÃ¼r PostgreSQL und SQLite notwendig.
 
-=head3 viewExists() - Prüfe, ob View existiert
+=head3 viewExists() - PrÃ¼fe, ob View existiert
 
 =head4 Synopsis
 
@@ -2131,7 +2131,7 @@ Dies ist für PostgreSQL und SQLite notwendig.
 
 =head4 Description
 
-Prüfe, ob View existiert. Wenn ja, liefere "wahr", sonst "falsch".
+PrÃ¼fe, ob View existiert. Wenn ja, liefere "wahr", sonst "falsch".
 
 =head2 Trigger
 
@@ -2162,14 +2162,14 @@ Cursor
 
 =head4 Description
 
-Erzeuge einen Trigger mit Name $name für Tabelle $table und Zeitpunkt
+Erzeuge einen Trigger mit Name $name fÃ¼r Tabelle $table und Zeitpunkt
 $when (BEFORE oder AFTER), der bei Ereignis $event (INSERT, UPDATE
 oder DELETE) auf Ebene $level (ROW oder STATEMENT) feuert und die
-Rumpf/Anweisungsfolge $body ausführt.
+Rumpf/Anweisungsfolge $body ausfÃ¼hrt.
 
 Es kann ein einzelner Rumpf angegeben werden, wenn die Applikation
-auf einem bestimmten RDBMS läuft. Oder es können, um portabel
-programmieren zu können, unterschiedliche Prozedur-Rümpfe für
+auf einem bestimmten RDBMS lÃ¤uft. Oder es kÃ¶nnen, um portabel
+programmieren zu kÃ¶nnen, unterschiedliche Prozedur-RÃ¼mpfe fÃ¼r
 verschiedene RDBMSe definiert werden:
 
   ...
@@ -2181,12 +2181,12 @@ verschiedene RDBMSe definiert werden:
   ",
   ...
 
-Die Methode wählt dann die zur Datenbank $db passende
+Die Methode wÃ¤hlt dann die zur Datenbank $db passende
 Rumpf-Definition aus.
 
 =head4 Example
 
-Erzeuge unterschiedlichen Triggercode für Oracle und PostgreSQL:
+Erzeuge unterschiedlichen Triggercode fÃ¼r Oracle und PostgreSQL:
 
   $db->createTrigger('mytab','mytrig','before','insert|update','row',
       Oracle => "
@@ -2202,7 +2202,7 @@ Erzeuge unterschiedlichen Triggercode für Oracle und PostgreSQL:
       ",
   );
 
-Für Oracle wird ein Trigger mit Rumpf erzeugt:
+FÃ¼r Oracle wird ein Trigger mit Rumpf erzeugt:
 
   CREATE TRIGGER mytrig
   BEFORE INSERT OR UPDATE ON mytab
@@ -2211,8 +2211,8 @@ Für Oracle wird ein Trigger mit Rumpf erzeugt:
       :new.c := 'a';
   END;
 
-Für PostgreSQL wird zunächst eine Funktion C<set_c_proc> (Triggername
-plus "_proc") erzeugt, welche die Triggerfunktionalität implementiert:
+FÃ¼r PostgreSQL wird zunÃ¤chst eine Funktion C<set_c_proc> (Triggername
+plus "_proc") erzeugt, welche die TriggerfunktionalitÃ¤t implementiert:
 
   CREATE FUNCTION mytrig_proc()
   RETURNS trigger
@@ -2236,7 +2236,7 @@ Dann wird der Trigger definiert, der diese Funktion aufruft:
 
   $cur = $db->dropTrigger($name);
 
-=head3 triggerExists() - Prüfe, ob Trigger existiert
+=head3 triggerExists() - PrÃ¼fe, ob Trigger existiert
 
 =head4 Synopsis
 
@@ -2274,16 +2274,16 @@ Wie $db->select()
 
 =item $masterId
 
-Primärschlüssel-Wert des Master-Datensatzes.
+PrimÃ¤rschlÃ¼ssel-Wert des Master-Datensatzes.
 
 =item @values1
 
 Liste der dem Master-Datensatz zugeordneten B-Werte I<vor>
-der Änderung.
+der Ã„nderung.
 
 =item @values2
 
-Dito. nach der Änderung.
+Dito. nach der Ã„nderung.
 
 =item a => $a,
 
@@ -2295,7 +2295,7 @@ Name der Slave-Tabelle.
 
 =item b_pk => $b_pk,
 
-Name der Primärschlüsselkolumne der Slave-Tabelle.
+Name der PrimÃ¤rschlÃ¼sselkolumne der Slave-Tabelle.
 
 =item b_col => $b_col,
 
@@ -2307,12 +2307,12 @@ Name der Relations-Tabelle.
 
 =item a_b_fk_a => $a_b_fk_a,
 
-Name der Fremdschlüsselkolumne in der Relationstabelle
+Name der FremdschlÃ¼sselkolumne in der Relationstabelle
 auf die Master-Tabelle.
 
 =item a_b_fk_b => $a_b_fk_b,
 
-Name der Fremdschlüsselkolumne in der Relationstabelle
+Name der FremdschlÃ¼sselkolumne in der Relationstabelle
 auf die Slave-Tabelle.
 
 =back
@@ -2324,12 +2324,12 @@ Folgendes Datenmodell:
   A <-- A_B --> B
 
 Beispiel: A = Tabelle mit Texten, B = Tabelle mit Schlagworten,
-A_B = Relationstabelle für die Zuordnung von Schlagworten zu Texten.
+A_B = Relationstabelle fÃ¼r die Zuordnung von Schlagworten zu Texten.
 
-Die Methode sorgt dafür, daß für einen Datensatz in A mit der Id
-$masterId eine Änderung der Schlagwortliste von @values1 nach @values2
-die Relationsdatensätze in A_B gemäß dieser Änderung aktualisiert werden.
-Neue Schlagworte in @values2 werden zu B hinzugefügt, Schlagworte,
+Die Methode sorgt dafÃ¼r, daÃŸ fÃ¼r einen Datensatz in A mit der Id
+$masterId eine Ã„nderung der Schlagwortliste von @values1 nach @values2
+die RelationsdatensÃ¤tze in A_B gemÃ¤ÃŸ dieser Ã„nderung aktualisiert werden.
+Neue Schlagworte in @values2 werden zu B hinzugefÃ¼gt, Schlagworte,
 die wegfallen und nicht von anderen Texten referenziert werden,
 werden entfernt.
 
@@ -2341,17 +2341,17 @@ Siehe KnowledgeBase::System->edit()
 
 =head2 Zeitmessung
 
-Im Zuge der Ausführung eines SQL-Statement werden drei Zeiten ermittelt:
+Im Zuge der AusfÃ¼hrung eines SQL-Statement werden drei Zeiten ermittelt:
 
 =over 4
 
 =item 1.
 
-Der Startzeitpunkt der Ausführung (Aufruf von sql)
+Der Startzeitpunkt der AusfÃ¼hrung (Aufruf von sql)
 
 =item 2.
 
-Die Dauer der Statementausführung
+Die Dauer der StatementausfÃ¼hrung
 
 =item 3.
 
@@ -2359,7 +2359,7 @@ Die Zeit, die seit Start des Statements vergangen ist
 
 =back
 
-Diese Zeiten können vom Cursor abgefragt werden mittels:
+Diese Zeiten kÃ¶nnen vom Cursor abgefragt werden mittels:
 
   $cur->startTime;
   $cur->execTime;
@@ -2372,12 +2372,12 @@ User kann mittels
 
   $db2 = $db->new;
 
-aufgebaut werden. Dies kann nützlich sein, um einen nebenläufigen
-Transkationsrahmen zu eröffnen.
+aufgebaut werden. Dies kann nÃ¼tzlich sein, um einen nebenlÃ¤ufigen
+Transkationsrahmen zu erÃ¶ffnen.
 
 =head2 Null-Cursor
 
-Wird ein Cursor benötigt, ohne dass ein Statement ausgeführt
+Wird ein Cursor benÃ¶tigt, ohne dass ein Statement ausgefÃ¼hrt
 werden soll, kann ein Null-Cursor erzeugt werden:
 
   $cur = $db->sql;
@@ -2388,8 +2388,8 @@ Die Methode sql() liefert das SQL-Objekt der Datenbankverbindung.
 Dies ist ein Objekt der Klasse Quiq::Sql, das beim
 Verbindungsaufbau passend zum DBMS instantiiert wurde.
 
-Alle SQL-Generierungsmethoden der Klasse Quiq::Sql können
-über diese Methode aufgerufen werden, zum Beispiel:
+Alle SQL-Generierungsmethoden der Klasse Quiq::Sql kÃ¶nnen
+Ã¼ber diese Methode aufgerufen werden, zum Beispiel:
 
   $stmt = $db->stmt->createTable('person',
       ['per_id',type=>'INTEGER',primaryKey=>1],
@@ -2397,10 +2397,10 @@ Alle SQL-Generierungsmethoden der Klasse Quiq::Sql können
       ['per_nachname',type=>'STRING(20)'],
   );
 
-=head2 Statement-Generierung plus -Ausführung
+=head2 Statement-Generierung plus -AusfÃ¼hrung
 
-Die meisten Statements der Klasse Quiq::Sql können auch
-direkt ausgeführt werden, ohne dass das Statement zuvor
+Die meisten Statements der Klasse Quiq::Sql kÃ¶nnen auch
+direkt ausgefÃ¼hrt werden, ohne dass das Statement zuvor
 generiert werden muss, zum Beispiel:
 
   $db->createTable('person',
@@ -2409,9 +2409,9 @@ generiert werden muss, zum Beispiel:
       ['per_nachname',type=>'STRING(20)'],
   );
 
-Die direkte Ausführung ist einer getrennten Generierung
-und Ausführung vorzuziehen, da die Quiq::Database::Connection-Methoden bei der
-Ausführung teilweise DBMS-abhängige Sonderbehandlungen vornehmen.
+Die direkte AusfÃ¼hrung ist einer getrennten Generierung
+und AusfÃ¼hrung vorzuziehen, da die Quiq::Database::Connection-Methoden bei der
+AusfÃ¼hrung teilweise DBMS-abhÃ¤ngige Sonderbehandlungen vornehmen.
 
 =head2 Erweiterte Statement-Generierung
 
@@ -2429,8 +2429,8 @@ eine anwendungspezifische Klasse vereinbart werden:
 
 =head2 Prepare/Bind
 
-DML-Statements (SELECT, INSERT, UPDATE, DELETE) können mit Platzhaltern
-versehen werden. Das Statement wird dann nicht ausgeführt, sondern
+DML-Statements (SELECT, INSERT, UPDATE, DELETE) kÃ¶nnen mit Platzhaltern
+versehen werden. Das Statement wird dann nicht ausgefÃ¼hrt, sondern
 ein Bind-Cursor geliefert.
 
 =head3 Beispiel mit INSERT
@@ -2460,7 +2460,7 @@ ein Bind-Cursor geliefert.
   }
   $cur->close;
 
-=head2 Lookup von Datensätzen
+=head2 Lookup von DatensÃ¤tzen
 
 =head3 Selektion eines eindeutigen Objekts
 
@@ -2491,7 +2491,7 @@ nicht gefunden wird, wird -new=>1 angegeben:
   $row = $db->lookup('person',-new=>1,-where,per_id=>4711);
 
 Der Aufruf liefert also immer einen Datensatz. Mit der Methode
-rowStatus() kann geprüft werden, ob der Datensatz selektiert oder
+rowStatus() kann geprÃ¼ft werden, ob der Datensatz selektiert oder
 neu erzeugt wurde:
 
   if ($row->rowStatus eq 'I') {
@@ -2507,7 +2507,7 @@ neu erzeugt wurde:
       $db->insert('person',$row);
   }
 
-=head2 Einfügen von Datensätzen
+=head2 EinfÃ¼gen von DatensÃ¤tzen
 
 =head3 Ad hoc
 
@@ -2519,8 +2519,8 @@ neu erzeugt wurde:
   );
   my $per = $db->lookup('person',-where,per_id=>$per_id);
 
-Der Datensatz wird durch Aufzählung der Kolumnen/Wert-Paare zur
-Tabelle hinzugefügt. Um das Objekt im Programm zu haben, muss
+Der Datensatz wird durch AufzÃ¤hlung der Kolumnen/Wert-Paare zur
+Tabelle hinzugefÃ¼gt. Um das Objekt im Programm zu haben, muss
 der Datensatz selektiert werden.
 
 =head3 Mittels anonymem Row-Objekt
@@ -2548,14 +2548,14 @@ Per UDL kann ein Default-Schema definiert werden:
 
   dbi#DBMS:DB%USER:PASSW;schema=SCHEMA
 
-Namen von Datenbank-Objekten, die ohne Schema-Präfix angegeben
+Namen von Datenbank-Objekten, die ohne Schema-PrÃ¤fix angegeben
 werden, werden auf dieses Schema bezogen. Auf diese Weise
-ist es leicht möglich, eine Anwendung auf verschiedenen Schemata
+ist es leicht mÃ¶glich, eine Anwendung auf verschiedenen Schemata
 der gleichen Datenbank laufen zu lassen. Dies ist vor allem
-bei Oracle nützlich, dessen Instanzen einen großen Overhead haben.
+bei Oracle nÃ¼tzlich, dessen Instanzen einen groÃŸen Overhead haben.
 
 Bei SQLite ist die Semantik eine leicht andere: Hier ist es nicht
-das Default-Schema, sondern es darf der Schema-Präfix
+das Default-Schema, sondern es darf der Schema-PrÃ¤fix
 SCHEMA verwendet werden.
 
 =head2 BLOB Datentyp
@@ -2564,7 +2564,7 @@ SCHEMA verwendet werden.
 
 =item *
 
-Die maximale Größe eines BLOB/TEXT-Werts muss im Falle von Oracle
+Die maximale GrÃ¶ÃŸe eines BLOB/TEXT-Werts muss im Falle von Oracle
 eingestellt werden. Dies geschieht durch Aufruf von maxBlobSize():
 
   $db->maxBlobSize(500*1024); # 0,5 MB
@@ -2592,11 +2592,11 @@ Der Defaultwert ist 1024*1024 Bytes (1MB).
   );
   
   # BLOB-Kolumne bekannt machen, damit die Schnittstelle
-  # die notwendigen Sonderbehandlungen für diesen Datentyp
-  # durchführen kann. Dies ist im Falle von Oracle und PostgreSQL
-  # nötig, da diese die Daten speziell kodieren. Bei SQLite und MySQL
+  # die notwendigen Sonderbehandlungen fÃ¼r diesen Datentyp
+  # durchfÃ¼hren kann. Dies ist im Falle von Oracle und PostgreSQL
+  # nÃ¶tig, da diese die Daten speziell kodieren. Bei SQLite und MySQL
   # ist das nicht erforderlich. Der Aufruf von bindTypes() sollte aus
-  # Portabilitätsgründen aber immer gemacht werden.
+  # PortabilitÃ¤tsgrÃ¼nden aber immer gemacht werden.
   
   $cur->bindTypes(undef,undef,undef,'BLOB');
   
@@ -2622,7 +2622,7 @@ UTF-8 Encoding verwendet:
 
   $db = Quiq::Database::Connection->new($udl,-utf8=>1);
 
-Die Option sorgt dafür, dass Zeichenketten-Daten (STRING, TEXT)
+Die Option sorgt dafÃ¼r, dass Zeichenketten-Daten (STRING, TEXT)
 als UTF-8 Zeichenketten auf der Datenbank gespeichert werden und
 umgekehrt als UTF-8 Zeichenketten geliefert werden.
 
@@ -2641,13 +2641,13 @@ Beispiel: Eine DBI MySQL-Handle $dbh wird als Lowlevel-Handle verwendet,
 
 Unter Unix/Linux ist ein lesender Zugriff auf MS Access
 Datenbanken mittels des freien Open Source Package B<mtools>
-möglich. Es enthält neben verschiedenen Programme auch einen
+mÃ¶glich. Es enthÃ¤lt neben verschiedenen Programme auch einen
 ODBC-Treiber, der genutzt werden kann, um von Perl aus auf eine
 Access-Datenbank zuzugreifen.
 
 =head3 Installation (Redhat)
 
-=head4 ODBC-Treiber für MS-Access
+=head4 ODBC-Treiber fÃ¼r MS-Access
 
 mtools: L<http://mdbtools.sourceforge.net/>
 
@@ -2659,7 +2659,7 @@ unixODBC: L<http://http://www.unixodbc.org/>
 
   # yum install unixODBC
 
-=head4 Perl DBI-Treiber für ODBC
+=head4 Perl DBI-Treiber fÃ¼r ODBC
 
 DBD::ODBC: L<https://metacpan.org/pod/DBD::ODBC>
 

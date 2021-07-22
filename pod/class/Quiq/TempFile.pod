@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::TempFile - Temporäre Datei
+Quiq::TempFile - TemporÃ¤re Datei
 
 =head1 BASE CLASS
 
@@ -10,9 +10,9 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Der Konstruktor der Klasse erzeugt eine temporäre Datei.
+Der Konstruktor der Klasse erzeugt eine temporÃ¤re Datei.
 Geht die letzte Objekt-Referenz aus dem Scope, wird die Datei
-automatisch gelöscht. Das Datei-Objekt stringifiziert sich
+automatisch gelÃ¶scht. Das Datei-Objekt stringifiziert sich
 im String-Kontext automatisch zum Datei-Pfad.
 
 =head1 METHODS
@@ -32,7 +32,7 @@ im String-Kontext automatisch zum Datei-Pfad.
 
 =item $data
 
-Daten, die in die temporäre Datei geschrieben werden.
+Daten, die in die temporÃ¤re Datei geschrieben werden.
 
 =back
 
@@ -42,11 +42,11 @@ Daten, die in die temporäre Datei geschrieben werden.
 
 =item -dir => $dir (Default: '/tmp')
 
-Verzeichnis, in dem die temporäre Datei erzeugt wird.
+Verzeichnis, in dem die temporÃ¤re Datei erzeugt wird.
 
 =item -pathOnly => $bool
 
-Erzeuge nur den Pfad, lösche die Datei sofort.
+Erzeuge nur den Pfad, lÃ¶sche die Datei sofort.
 
 =item -suffix => $suffix
 
@@ -58,7 +58,7 @@ Dateinamen-Template, z.B. 'tmpfileXXXXX'.
 
 =item -unlink => $bool (Default: 1)
 
-Lösche die Datei, wenn das Objekt aus dem Scope geht.
+LÃ¶sche die Datei, wenn das Objekt aus dem Scope geht.
 
 =back
 
@@ -69,7 +69,7 @@ Tempdatei-Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head1 VERSION
 

@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Section::Parser - Parser für Abschnitte
+Quiq::Section::Parser - Parser fÃ¼r Abschnitte
 
 =head1 BASE CLASS
 
@@ -10,7 +10,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen Parser für "Abschnitte".
+Ein Objekt der Klasse reprÃ¤sentiert einen Parser fÃ¼r "Abschnitte".
 
 =head2 Syntax
 
@@ -32,17 +32,17 @@ Abschnittsbezeichner.
 
 =item KEY
 
-Schlüssel. Ein Abschnitt kann beliebig viele
-Schlüssel/Wert-Paare definieren.
+SchlÃ¼ssel. Ein Abschnitt kann beliebig viele
+SchlÃ¼ssel/Wert-Paare definieren.
 
 =item VALUE
 
-Wert. Ist mit einer bestimmten Tiefe an Whitespace eingerückt.
+Wert. Ist mit einer bestimmten Tiefe an Whitespace eingerÃ¼ckt.
 Kann mehrzeilig sein.
 
 =item CONTENT
 
-Inhalt. Ist typischerweise mehrzeilig. Es kann höchstens
+Inhalt. Ist typischerweise mehrzeilig. Es kann hÃ¶chstens
 einen Inhalt je Abschnitt geben.
 
 =back
@@ -53,21 +53,21 @@ einen Inhalt je Abschnitt geben.
 
 =item encoding => $charset (Default: undef)
 
-Dekodiere Input gemäß Zeichensatz.
+Dekodiere Input gemÃ¤ÃŸ Zeichensatz.
 
 =item sectionRegex => $regex (Default: qr/^# (<\w+>|\[\w+\]|\(\w+\)|\{\w+\})/)
 
-Muster für die erste Zeile eines Abschnitts.
+Muster fÃ¼r die erste Zeile eines Abschnitts.
 
 =item defaultSection => $section (Default: undef)
 
-Default für die erste Zeile eines Abschnitts. Diese Option kann
+Default fÃ¼r die erste Zeile eines Abschnitts. Diese Option kann
 gesetzt werden, wenn eine Datei aus nur einem Abschnitt besteht
 und daher keine einleitende Zeile notwendig ist.
 
 =item keyRegex => $regex (Dafault: qr/^(\w+):$/)
 
-Muster für eine Schlüssel-Zeile.
+Muster fÃ¼r eine SchlÃ¼ssel-Zeile.
 
 =item sourceNotNeeded => $bool (Default: 0)
 
@@ -76,7 +76,7 @@ Dies spart Speicherplatz, wenn der Quelltext nicht gebraucht wird.
 
 =item startLine => $line (Default: "--BEGIN--\n")
 
-Startzeile für den Inhalt.
+Startzeile fÃ¼r den Inhalt.
 
 =item parsedSections
 
@@ -113,7 +113,7 @@ Referenz auf Parser-Objekt
 =head4 Description
 
 Instantiiere ein Parser-Objekt mit den Parser-Attributen I<@keyVal>.
-In abgeleiteten Klassen kann der Konstruktor überschrieben und
+In abgeleiteten Klassen kann der Konstruktor Ã¼berschrieben und
 eine andere Attribut-Initialisierung vorgenommen werden.
 
 =head2 Parsing
@@ -143,9 +143,9 @@ Lies die Eingabe vom String ("In-Memory-File") $text.
 
 Anonyme Callback-Funktion, die nach jedem geparsten Abschnitt
 aufgerufen wird. Die Funktion bekommt die geparste Information in
-Form einzelner Parameter übergeben, instantiiert ein Objekt und
-liefert dieses zurück. Alle Objekte werden von der Methode
-parse() gesammelt und am Ende zurückgeliefert. Die Klasse des
+Form einzelner Parameter Ã¼bergeben, instantiiert ein Objekt und
+liefert dieses zurÃ¼ck. Alle Objekte werden von der Methode
+parse() gesammelt und am Ende zurÃ¼ckgeliefert. Die Klasse des
 Objektes ist nicht festgelegt. Wird kein Objekt geliefert, wird
 der Return-Wert von parse() ignoriert.
 
@@ -166,7 +166,7 @@ die Liste (Skalar-Kontext).
 
 =head4 Description
 
-Parse die Eingabe und liefere die Liste der Abschnittsobjekte zurück.
+Parse die Eingabe und liefere die Liste der Abschnittsobjekte zurÃ¼ck.
 Die Eingabe besteht aus einer Folge von 0 bis n
 L<Syntax|"Syntax">. Die Methode kann wiederholt mit
 verschiedenen Eingaben aufgerufen werden.
@@ -185,15 +185,15 @@ verschiedenen Eingaben aufgerufen werden.
 
 =item $identifier
 
-Abschnitts-Bezeichner einschließlich Klammern.
+Abschnitts-Bezeichner einschlieÃŸlich Klammern.
 
 =item $keyValH
 
-Referenz auf Schlüssel/Wert-Hash.
+Referenz auf SchlÃ¼ssel/Wert-Hash.
 
 =item $keyA
 
-Referenz auf Schlüssel-Array.
+Referenz auf SchlÃ¼ssel-Array.
 
 =item $content
 
@@ -205,7 +205,7 @@ Der Quelltext des Abschnitts.
 
 =item $file
 
-Der Name der Datei, die den Abschnitt enthält. Im Falle einer
+Der Name der Datei, die den Abschnitt enthÃ¤lt. Im Falle einer
 In-Memory-Datei "C<(source)>".
 
 =item $lineNumber
@@ -220,16 +220,16 @@ Nichts oder Abschnitts-Objekt
 
 =head4 Description
 
-Die Methode wird vom Parser für jeden vollständig geparsten Abschnitt
+Die Methode wird vom Parser fÃ¼r jeden vollstÃ¤ndig geparsten Abschnitt
 gerufen.
 
 =head4 Details
 
 Die Methode instantiiert per Default ein Objekt der Klasse
 C<< Quiq::Section::Object >> und liefert eine Referenz auf dieses Objekt
-zurück. Das Objekt wird zur Liste der Abschnittsobjekte hinzugefügt.
+zurÃ¼ck. Das Objekt wird zur Liste der Abschnittsobjekte hinzugefÃ¼gt.
 Die Liste der Abschnittsobjekte wird von der Methode L<parse|"parse() - Parse Abschnitte">()
-zurückgeliefert. In abgeleiteten Klassen kann die Methode überschrieben
+zurÃ¼ckgeliefert. In abgeleiteten Klassen kann die Methode Ã¼berschrieben
 und ein anderes Verhalten implementiert werden.
 
 =head3 error() - Behandele Fehler
@@ -252,18 +252,18 @@ Der Quelltext des Abschnitts bis zur Exception.
 
 =item $file
 
-Der Name der Datei, die den Abschnitt enthält. "C<(source)>" im Falle
+Der Name der Datei, die den Abschnitt enthÃ¤lt. "C<(source)>" im Falle
 einer In-Memory-Datei.
 
 =item $lineNumber
 
-Die Zeilennummer, bei der die Exception ausgelöst wurde.
+Die Zeilennummer, bei der die Exception ausgelÃ¶st wurde.
 
 =back
 
 =head4 Returns
 
-Die Methode kehrt nicht zurück
+Die Methode kehrt nicht zurÃ¼ck
 
 =head4 Description
 
@@ -271,9 +271,9 @@ Die Methode wird vom Parser im Fehlerfall gerufen.
 
 =head4 Details
 
-Die Methode empfängt die betreffende Exception und erzeugt eine neue
+Die Methode empfÃ¤ngt die betreffende Exception und erzeugt eine neue
 Exception, die um Angaben zur Fehlerstelle angereichert ist.
-In abgeleiteten Klassen kann die Methode überschrieben und ein
+In abgeleiteten Klassen kann die Methode Ã¼berschrieben und ein
 anderes Verhalten implementiert werden.
 
 =head1 DETAILS
@@ -283,21 +283,21 @@ anderes Verhalten implementiert werden.
 Anstelle der eckigen Klammern C<[]> kann der Abschnittsbezeichner
 I<IDENTIFIER> per Default auch in spitze C<< <> >>, runde C<()> oder
 geschweifte Klammern {} eingefasst sein. Das Muster kann durch
-Überschreiben des Parser-Attributs C<< sectionRegex=> >>I<$regex>
-geändert werden.
+Ãœberschreiben des Parser-Attributs C<< sectionRegex=> >>I<$regex>
+geÃ¤ndert werden.
 
-=head2 Einrücktiefe VALUE
+=head2 EinrÃ¼cktiefe VALUE
 
-Die Einrücktiefe der I<VALUE>-Zeilen ermittelt der Parser anhand
-der ersten Zeile des ersten Schlüssel/Wert-Paars der Datei. Alle
-weiteren Werte in der Datei müssen in der gleichen Tiefe
-eingerückt sein.
+Die EinrÃ¼cktiefe der I<VALUE>-Zeilen ermittelt der Parser anhand
+der ersten Zeile des ersten SchlÃ¼ssel/Wert-Paars der Datei. Alle
+weiteren Werte in der Datei mÃ¼ssen in der gleichen Tiefe
+eingerÃ¼ckt sein.
 
 =head2 KEY-Zeile auskommentieren
 
-I<KEY>-Zeilen können auskommentiert werden, indem zwei
+I<KEY>-Zeilen kÃ¶nnen auskommentiert werden, indem zwei
 Ausrufungszeichen I<!!> gefolgt von mindestens einem Leerzeichen
-an den Anfang der Zeile gesetzt werden. Einschränkung: Die erste
+an den Anfang der Zeile gesetzt werden. EinschrÃ¤nkung: Die erste
 I<KEY>-Zeile kann nicht auskommentiert werden, da sie den
 betreffenden I<KEY/VALUE>-Abschnitt einleitet.  Beispiel
 (dargestellt mit Pipe- statt Ausrufungszeichen):
@@ -306,7 +306,7 @@ betreffenden I<KEY/VALUE>-Abschnitt einleitet.  Beispiel
       width
   
   || BriefDescription:
-  ||     Liefere die Breite und Höhe des Bildes
+  ||     Liefere die Breite und HÃ¶he des Bildes
 
 Ergebnis:
 
@@ -315,11 +315,11 @@ Ergebnis:
 
 =head2 VALUE auskommentieren
 
-I<VALUE>-Zeilen können ganz oder teilweise auskommentiert werden.
+I<VALUE>-Zeilen kÃ¶nnen ganz oder teilweise auskommentiert werden.
 Eine ganze I<VALUE>-Zeile wird wie eine I<KEY>-Zeile auskommentiert (s.o.).
 Ein Teil wird auskommentiert, indem mindestens ein Leerzeichen
 gefolgt von zwei Ausrufungszeichen gefolgt von einem Leerzeichen in eine
-I<VALUE>-Zeile eingefügt wird. Ab dem ersten Leerzeichen werden bis
+I<VALUE>-Zeile eingefÃ¼gt wird. Ab dem ersten Leerzeichen werden bis
 zum Ende der Zeile alle Zeichen ignoriert. Beispiel (mit Pipe-
 statt Ausrufungszeichen):
 
@@ -340,23 +340,23 @@ signifikant, muss der Anfang von I<CONTENT> mit einer
 Start-Zeichenkette gekennzeichnet werden. Die Start-Zeichenkette
 ist C<--BEGIN--> oder C<# ---> mit drei oder mehr Bindestrichen
 bis zum Ende der Zeile. Folgt auf eine C<# --->-Zeile eine Leerzeile,
-wird diese übergangen, also nicht zum Inhalt hinzugezählt. Dies ist
+wird diese Ã¼bergangen, also nicht zum Inhalt hinzugezÃ¤hlt. Dies ist
 bei C<--BEGIN--> nicht der Fall.
 
 =head2 Stop-Zeichenkette CONTENT
 
-Enthält I<CONTENT> eine Zeile, die wie der Anfang eines Abschnitts
+EnthÃ¤lt I<CONTENT> eine Zeile, die wie der Anfang eines Abschnitts
 aussieht (welcher I<CONTENT> per Default beendet) oder sind Leerzeilen
 am Ende von I<CONTENT> signifikant, muss dessen Ende mit einer
 Stop-Zeichenkette gekennzeichnet werden. Sie Stop-Zeichenkette
-wird durch Schlüssel/Wert-Paar C<Stop:> definiert:
+wird durch SchlÃ¼ssel/Wert-Paar C<Stop:> definiert:
 
   Stop:
       --END--
 
-C<Stop:> ist eine Parser-Direktive, die nur für den Abschnitt gilt, in
+C<Stop:> ist eine Parser-Direktive, die nur fÃ¼r den Abschnitt gilt, in
 dem sie definiert ist. Die Stop-Zeichenkette beendet I<CONTENT> und
-zählt nicht zum I<CONTENT> hinzu.
+zÃ¤hlt nicht zum I<CONTENT> hinzu.
 
 =head2 Datei mit einem einzelnen Abschnitt
 

@@ -10,9 +10,9 @@ L<Quiq::ContentProcessor::BaseType|https://github.com/s31tz/Quiq/tree/master/pod
 
 =head1 DESCRIPTION
 
-Diese Klasse ist die Basisklasse von Typen, die keine Entitäten,
-sondern Bestandteile von Entitäten sind. In Jaz werden
-die Abschnitts-Objekte Group und Method durch SubTypes repräsentiert.
+Diese Klasse ist die Basisklasse von Typen, die keine EntitÃ¤ten,
+sondern Bestandteile von EntitÃ¤ten sind. In Jaz werden
+die Abschnitts-Objekte Group und Method durch SubTypes reprÃ¤sentiert.
 
 =head1 METHODS
 
@@ -34,7 +34,7 @@ Referenz auf Abschnitts-Objekt.
 
 =item $parent
 
-Referenz auf übergeordnetes (Sub)Typ-Objekt.
+Referenz auf Ã¼bergeordnetes (Sub)Typ-Objekt.
 
 =back
 
@@ -48,7 +48,7 @@ Erweitere Abschnitts-Objekt $sec und blesse es zu einem Subtyp-Objekt.
 
 =head2 Objektmethoden
 
-=head3 name() - Name der Sub-Entität
+=head3 name() - Name der Sub-EntitÃ¤t
 
 =head4 Synopsis
 
@@ -56,14 +56,14 @@ Erweitere Abschnitts-Objekt $sec und blesse es zu einem Subtyp-Objekt.
 
 =head4 Description
 
-Liefere den Namen der Sub-Entität. Dies ist der Wert
+Liefere den Namen der Sub-EntitÃ¤t. Dies ist der Wert
 des Attributs C<Name:>, bereinigt um Besonderheiten:
 
 =over 2
 
 =item *
 
-ein Sigil am Namensanfang (z.B. C<°°>) wird entfernt
+ein Sigil am Namensanfang (z.B. C<Â°Â°>) wird entfernt
 
 =back
 

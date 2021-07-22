@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::ContentProcessor::Type - Entität, Basisklasse aller Plugin-Klassen
+Quiq::ContentProcessor::Type - EntitÃ¤t, Basisklasse aller Plugin-Klassen
 
 =head1 BASE CLASS
 
@@ -10,7 +10,7 @@ L<Quiq::ContentProcessor::BaseType|https://github.com/s31tz/Quiq/tree/master/pod
 
 =head1 DESCRIPTION
 
-Diese Klasse ist die Basisklasse für alle Plugin-Klassen, die
+Diese Klasse ist die Basisklasse fÃ¼r alle Plugin-Klassen, die
 im ContentProcessor mit registerType() definiert werden.
 
 =head2 Definition von Subklassen
@@ -29,20 +29,20 @@ die von der dieser Klasse abgeleitet ist:
       /],
   );
 
-Ob der Abschnitt eines Typs einen Inhalt zulässt und welches die
-zulässigen Attribute sind, wird mit den Klassen-Attributen
+Ob der Abschnitt eines Typs einen Inhalt zulÃ¤sst und welches die
+zulÃ¤ssigen Attribute sind, wird mit den Klassen-Attributen
 C<ContentAllowed> und C<Attributes> festgelegt. Obige
 Basisklassen-Definition vereinbart, dass I<per Default> kein
 Content erlaubt ist und dass das Attribut C<Name> bei
 I<allen> (Haupt-)Typen vorkommt.
 
-Die abgeleiteten Klassen ergänzen die Attribut-Liste und
-überschreiben u.U. das C<ContentAllowed>-Attribut.
+Die abgeleiteten Klassen ergÃ¤nzen die Attribut-Liste und
+Ã¼berschreiben u.U. das C<ContentAllowed>-Attribut.
 
-Die Methode L<create|"create() - Erzeuge Entität">()  erzeugt aus einem Abschnitts-Objekt eine
-Instanz des betreffenden Typs, eine sog. Entität, und setzt die
-für den ContentProcessor essentiellen Attribute (siehe Code der
-Methode). Die Methode wird in der Typ-Klasse überschrieben und von
+Die Methode L<create|"create() - Erzeuge EntitÃ¤t">()  erzeugt aus einem Abschnitts-Objekt eine
+Instanz des betreffenden Typs, eine sog. EntitÃ¤t, und setzt die
+fÃ¼r den ContentProcessor essentiellen Attribute (siehe Code der
+Methode). Die Methode wird in der Typ-Klasse Ã¼berschrieben und von
 dort aus gerufen:
 
   package Jaz::Type::Program::Shell;
@@ -58,21 +58,21 @@ dort aus gerufen:
       my ($class,$sec,$cop,$plg) = @_;
   
       return $class->SUPER::create($sec,$cop,$plg,
-          <Eigenschaften der Entität>
+          <Eigenschaften der EntitÃ¤t>
       );
   }
 
 =head2 Standard-Attribute
 
 Die Basisklassenmethode erweitert das Objekt um grundlegende
-Informationen und Verküpfungen:
+Informationen und VerkÃ¼pfungen:
 
 =over 4
 
 =item processor
 
-Referenz auf die Processor-Instanz. Diese gibt der Entität u.a.
-Zugriff auf alle anderen Entitäten.
+Referenz auf die Processor-Instanz. Diese gibt der EntitÃ¤t u.a.
+Zugriff auf alle anderen EntitÃ¤ten.
 
 =item plugin
 
@@ -81,57 +81,57 @@ entityId() herangezogen um die Entity-Id zu generieren.
 
 =item fileSource
 
-Der gesamte Quelltext der Entität, wenn es sich um eine
-Datei-Entität [] handelt. Bei Sub-Entitäten () ein Leerstring.
+Der gesamte Quelltext der EntitÃ¤t, wenn es sich um eine
+Datei-EntitÃ¤t [] handelt. Bei Sub-EntitÃ¤ten () ein Leerstring.
 
 =item testable
 
-Attribut, das anzeigt, ob die Entität Programmcode repräsentiert
-und im Änderungsfall getestet werden kann.
+Attribut, das anzeigt, ob die EntitÃ¤t Programmcode reprÃ¤sentiert
+und im Ã„nderungsfall getestet werden kann.
 
 =back
 
 =head2 Methoden
 
 Ferner implementiert die Basisklasse folgende Methoden, die
-überschrieben werden können:
+Ã¼berschrieben werden kÃ¶nnen:
 
 =over 4
 
 =item entityId()
 
-Liefert den eindeutigen Entitätsbezeichner. Die Basisklassenmethode
+Liefert den eindeutigen EntitÃ¤tsbezeichner. Die Basisklassenmethode
 setzt diesen aus dem Typ-Bezeichner und den Werten der
-@keyVal-Liste des Plugins zusammen. Kann überschrieben werden,
-wenn der Entitätsbezeichner anders gebildet werden soll.
+@keyVal-Liste des Plugins zusammen. Kann Ã¼berschrieben werden,
+wenn der EntitÃ¤tsbezeichner anders gebildet werden soll.
 
 =item name()
 
-Liefert den Namen der Entität. Die Basisklassenmethode erzeugt
-diesen durch geringfügige Änderungen aus dem Wert des
-Abschnitts-Attributs C<Name:>. Kann überschrieben werden,
+Liefert den Namen der EntitÃ¤t. Die Basisklassenmethode erzeugt
+diesen durch geringfÃ¼gige Ã„nderungen aus dem Wert des
+Abschnitts-Attributs C<Name:>. Kann Ã¼berschrieben werden,
 wenn der Name anders hergeleitet werden soll.
 
 =back
 
-Oder überschrieben werden müssen:
+Oder Ã¼berschrieben werden mÃ¼ssen:
 
 =over 4
 
 =item files()
 
-Liefert die Liste aller Ausgabe-Datei-Objekte der Entität. Die
+Liefert die Liste aller Ausgabe-Datei-Objekte der EntitÃ¤t. Die
 Basisklassenmethode liefert eine leere Liste. Die Methode wird
-überschrieben.
+Ã¼berschrieben.
 
 =item pureCode()
 
-Liefert bei einer testbaren Entität (s. Attribut C<testable>)
+Liefert bei einer testbaren EntitÃ¤t (s. Attribut C<testable>)
 den Quelltext ohne Inline-Doku und Kommentare. Besteht der
 Quelltext aus mehreren Dateien (z.B. im Falle von C++),
 werden diese konkateniert geliefert, denn der Code muss nicht
-kompilierbar/ausführbar sein. Die Basisklassenmethode liefert
-C<undef>. Die Methode wird überschrieben.
+kompilierbar/ausfÃ¼hrbar sein. Die Basisklassenmethode liefert
+C<undef>. Die Methode wird Ã¼berschrieben.
 
 =back
 
@@ -139,7 +139,7 @@ C<undef>. Die Methode wird überschrieben.
 
 =head2 Erzeugung
 
-=head3 create() - Erzeuge Entität
+=head3 create() - Erzeuge EntitÃ¤t
 
 =head4 Synopsis
 
@@ -163,21 +163,21 @@ Referenz auf Plugin-Definition.
 
 =item @keyVal
 
-Attribute, die der Entität hinzugefügt werden.
+Attribute, die der EntitÃ¤t hinzugefÃ¼gt werden.
 
 =back
 
 =head4 Returns
 
-Zur Entität geblesstes Abschnitts-Objekt.
+Zur EntitÃ¤t geblesstes Abschnitts-Objekt.
 
 =head4 Description
 
-Erweitere Abschnitts-Objekt $sec und blesse es zu einer Entität.
+Erweitere Abschnitts-Objekt $sec und blesse es zu einer EntitÃ¤t.
 
-=head2 Entität
+=head2 EntitÃ¤t
 
-=head3 entityId() - Eindeutiger Entitätsbezeichner
+=head3 entityId() - Eindeutiger EntitÃ¤tsbezeichner
 
 =head4 Synopsis
 
@@ -185,9 +185,9 @@ Erweitere Abschnitts-Objekt $sec und blesse es zu einer Entität.
 
 =head4 Description
 
-Liefere einen eindeutigen Bezeichner für die Entität.
+Liefere einen eindeutigen Bezeichner fÃ¼r die EntitÃ¤t.
 
-=head3 entityType() - Entitäts-Typ
+=head3 entityType() - EntitÃ¤ts-Typ
 
 =head4 Synopsis
 
@@ -195,14 +195,14 @@ Liefere einen eindeutigen Bezeichner für die Entität.
 
 =head4 Returns
 
-Entitäts-Typ (String)
+EntitÃ¤ts-Typ (String)
 
 =head4 Description
 
-Liefere den Typ der Entität, wie er bei der bei der Registrierung
-der Entitäts-Klasse angegeben wurde.
+Liefere den Typ der EntitÃ¤t, wie er bei der bei der Registrierung
+der EntitÃ¤ts-Klasse angegeben wurde.
 
-=head3 name() - Name der Entität
+=head3 name() - Name der EntitÃ¤t
 
 =head4 Synopsis
 
@@ -210,7 +210,7 @@ der Entitäts-Klasse angegeben wurde.
 
 =head4 Description
 
-Liefere den Namen der Entität. Dies ist der Wert
+Liefere den Namen der EntitÃ¤t. Dies ist der Wert
 des Attributs C<Name:>, bereinigt um Besonderheiten:
 
 =over 2
@@ -226,7 +226,7 @@ werden durch einen Slash (C</>) ersetzt
 
 =back
 
-=head3 entityFile() - Name/Pfad der Entitätsdatei
+=head3 entityFile() - Name/Pfad der EntitÃ¤tsdatei
 
 =head4 Synopsis
 
@@ -250,7 +250,7 @@ Dateiname
 
 =head4 Description
 
-Liefere den Dateinamen der Entität. Dieser besteht aus der
+Liefere den Dateinamen der EntitÃ¤t. Dieser besteht aus der
 Entity-Id und der Entity-Extension. Wenn angegeben, wird diesem
 Dateinamen der Pfad $dir vorangestellt.
 
@@ -268,9 +268,9 @@ Quelltext (String)
 
 =head4 Description
 
-Liefere den gesamten Quelltext der Entität, wie er in der
-Enttitätsdatei steht, einschließlich des Quelltexts der
-Sub-Entitäten.
+Liefere den gesamten Quelltext der EntitÃ¤t, wie er in der
+EnttitÃ¤tsdatei steht, einschlieÃŸlich des Quelltexts der
+Sub-EntitÃ¤ten.
 
 =head3 fileSourceRef() - Referenz auf gesamten Quelltext
 
@@ -287,7 +287,7 @@ Referenz auf Quelltext
 Wie $ent->L<fileSource|"fileSource">(), nur dass eine Referenz auf den
 Quelltext geliefert wird.
 
-=head3 appendFileSource() - Ergänze Quelltext um Abschnitts-Quelltext
+=head3 appendFileSource() - ErgÃ¤nze Quelltext um Abschnitts-Quelltext
 
 =head4 Synopsis
 
@@ -299,7 +299,7 @@ nichts
 
 =head4 Description
 
-Ergänze Attribut fileSource um den Quelltext des Abschnitts $sec.
+ErgÃ¤nze Attribut fileSource um den Quelltext des Abschnitts $sec.
 
 =head2 Test
 
@@ -330,42 +330,42 @@ Test-Status, der gesetzt wird.
 
 =head4 Returns
 
-Test-Status der Entität
+Test-Status der EntitÃ¤t
 
 =head4 Description
 
-Liefere/Setze den Test-Status der Entität $ent. Der
-Test-Status ist persistent und bleibt daher über
+Liefere/Setze den Test-Status der EntitÃ¤t $ent. Der
+Test-Status ist persistent und bleibt daher Ã¼ber
 Programmaufrufe hinweg erhalten.
 
-Eine Entität besitzt einen von drei Test-Status:
+Eine EntitÃ¤t besitzt einen von drei Test-Status:
 
 =over 4
 
 =item Z<>0
 
-Nichts zu tun. Die Entität braucht nicht getestet werden.
+Nichts zu tun. Die EntitÃ¤t braucht nicht getestet werden.
 
 =item Z<>1
 
-Der Code der Entität hat sich geändert. Die Entität und alle
-abhängigen Entitäten müssen getestet werden.
+Der Code der EntitÃ¤t hat sich geÃ¤ndert. Die EntitÃ¤t und alle
+abhÃ¤ngigen EntitÃ¤ten mÃ¼ssen getestet werden.
 
 =item Z<>2
 
-Nur die Entität selbst muss getestet werden. Die Entität
-selbst wurde nicht geändert, hängt aber von einer Entität ab,
-die geändert wurde, oder ihre Testdateien oder Testdaten
-wurden geändert, was keinen Test der abhängigen Entitäten
+Nur die EntitÃ¤t selbst muss getestet werden. Die EntitÃ¤t
+selbst wurde nicht geÃ¤ndert, hÃ¤ngt aber von einer EntitÃ¤t ab,
+die geÃ¤ndert wurde, oder ihre Testdateien oder Testdaten
+wurden geÃ¤ndert, was keinen Test der abhÃ¤ngigen EntitÃ¤ten
 erfordert.
 
 =back
 
 Ohne Parameter aufgerufen, liefert die Methode den aktuellen
-Test-Status der Entität. Mit Parameter gerufen, setzt die Methode
+Test-Status der EntitÃ¤t. Mit Parameter gerufen, setzt die Methode
 den Test-Status, wobei dieser persistent gespeichert wird.
 
-=head3 needsUpdate() - Liefere/Setze persistenten Änderungs-Status
+=head3 needsUpdate() - Liefere/Setze persistenten Ã„nderungs-Status
 
 =head4 Synopsis
 
@@ -378,38 +378,38 @@ den Test-Status, wobei dieser persistent gespeichert wird.
 
 =item $state
 
-Änderungs-Status, der gesetzt wird.
+Ã„nderungs-Status, der gesetzt wird.
 
 =back
 
 =head4 Returns
 
-Änderungs-Status der Entität
+Ã„nderungs-Status der EntitÃ¤t
 
 =head4 Description
 
-Liefere/Setze den Änderungs-Status der Entität $ent. Der
-Änderungs-Status ist persistent und bleibt daher über
+Liefere/Setze den Ã„nderungs-Status der EntitÃ¤t $ent. Der
+Ã„nderungs-Status ist persistent und bleibt daher Ã¼ber
 Programmaufrufe hinweg erhalten.
 
-Eine Entität besitzt einen von zwei Änderungs-Status:
+Eine EntitÃ¤t besitzt einen von zwei Ã„nderungs-Status:
 
 =over 4
 
 =item Z<>0
 
-Nichts zu tun. Die Entität wurde nicht geändert.
+Nichts zu tun. Die EntitÃ¤t wurde nicht geÃ¤ndert.
 
 =item Z<>1
 
-Die Entitäts wurde geändert. Die Ausgabe-Dateien der
-Entität müssen neu generiert werden.
+Die EntitÃ¤ts wurde geÃ¤ndert. Die Ausgabe-Dateien der
+EntitÃ¤t mÃ¼ssen neu generiert werden.
 
 =back
 
 Ohne Parameter aufgerufen, liefert die Methode den aktuellen
-Änderungs-Status der Entität. Mit Parameter gerufen, setzt die
-Methode den Änderungs-Status, wobei dieser persistent gespeichert
+Ã„nderungs-Status der EntitÃ¤t. Mit Parameter gerufen, setzt die
+Methode den Ã„nderungs-Status, wobei dieser persistent gespeichert
 wird.
 
 =head1 VERSION

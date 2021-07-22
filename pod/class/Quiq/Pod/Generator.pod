@@ -12,10 +12,10 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 Dokumentation der POD-Syntax: L<http://perldoc.perl.org/perlpod.html>
 
-Ein Objekt der Klasse repräsentiert einen POD-Generator. Mit den
-Methoden der Klasse können aus einem Perl-Programm heraus
+Ein Objekt der Klasse reprÃ¤sentiert einen POD-Generator. Mit den
+Methoden der Klasse kÃ¶nnen aus einem Perl-Programm heraus
 POD-Dokumente erzeugt werden, wobei man sich um die Syntaxregeln
-und die Details der Formatierung nicht zu kümmern braucht.
+und die Details der Formatierung nicht zu kÃ¼mmern braucht.
 
 =head1 ATTRIBUTES
 
@@ -23,7 +23,7 @@ und die Details der Formatierung nicht zu kümmern braucht.
 
 =item indentation => $n (Default: 4)
 
-Einrücktiefe bei Code-Abschnitten und Listen.
+EinrÃ¼cktiefe bei Code-Abschnitten und Listen.
 
 =back
 
@@ -40,11 +40,11 @@ Einrücktiefe bei Code-Abschnitten und Listen.
 =head4 Description
 
 Instantiiere einen POD-Generator und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head4 Example
 
-Generiere POD mit Einrückung 2:
+Generiere POD mit EinrÃ¼ckung 2:
 
   $pg = Quiq::Pod::Generator->new(
       indentation => 2,
@@ -52,8 +52,8 @@ Generiere POD mit Einrückung 2:
 
 =head2 Abschnitts-Kommandos
 
-Alle Abschnitts-Methoden ergänzen den generierten POD-Code um eine
-Leerzeile am Ende, so dass das nächste Konstrukt direkt angefügt
+Alle Abschnitts-Methoden ergÃ¤nzen den generierten POD-Code um eine
+Leerzeile am Ende, so dass das nÃ¤chste Konstrukt direkt angefÃ¼gt
 werden kann. Diese Leezeile ist in den Beispielen nicht
 wiedergegeben.
 
@@ -66,7 +66,7 @@ wiedergegeben.
 =head4 Description
 
 Erzeuge eine Deklaration des Encodings $encoding und liefere
-den resultierenden POD-Code zurück.
+den resultierenden POD-Code zurÃ¼ck.
 
 =head4 Example
 
@@ -86,10 +86,10 @@ erzeugt
 =head4 Description
 
 Erzeuge einen Abschnitt der Tiefe $level mit dem Titel $title und
-dem Abschnitts-Körper $body und liefere den resultierenden
-POD-Code zurück. Ist $body nicht angegeben oder ein Leerstring,
+dem Abschnitts-KÃ¶rper $body und liefere den resultierenden
+POD-Code zurÃ¼ck. Ist $body nicht angegeben oder ein Leerstring,
 wird nur der Titel erzeugt. Andernfalls wird $body per trim()
-von einer Einrückung befreit.
+von einer EinrÃ¼ckung befreit.
 
 =head4 Examples
 
@@ -120,7 +120,7 @@ erzeugt
 
 =item *
 
-eine Einrückung wird automatisch entfernt
+eine EinrÃ¼ckung wird automatisch entfernt
 
   $pg->section(1,'DESCRIPTION',q~
       Dies ist
@@ -145,7 +145,7 @@ erzeugt
 =head4 Description
 
 Erzeuge einen Code-Abschnitt mit Text $text und liefere den
-resultierenden POD-Code zurück.
+resultierenden POD-Code zurÃ¼ck.
 
 =head4 Example
 
@@ -160,7 +160,7 @@ erzeugt
       }
 
 Der Code ist um $n Leerzeichen (den Wert des Objekt-Attributs
-"indentation") eingerückt.
+"indentation") eingerÃ¼ckt.
 
 =head3 bulletList() - Punkte-Liste
 
@@ -171,7 +171,7 @@ Der Code ist um $n Leerzeichen (den Wert des Objekt-Attributs
 =head4 Description
 
 Erzeuge eine Punkte-Liste mit den Elementen @items und liefere
-den resultierenden POD-Code zurück.
+den resultierenden POD-Code zurÃ¼ck.
 
 =head4 Example
 
@@ -191,7 +191,7 @@ erzeugt
   
   =back
 
-=head3 orderedList() - Aufzählungs-Liste
+=head3 orderedList() - AufzÃ¤hlungs-Liste
 
 =head4 Synopsis
 
@@ -199,8 +199,8 @@ erzeugt
 
 =head4 Description
 
-Erzeuge eine Aufzählungs-Liste mit den Elementen @items und liefere
-den resultierenden POD-Code zurück.
+Erzeuge eine AufzÃ¤hlungs-Liste mit den Elementen @items und liefere
+den resultierenden POD-Code zurÃ¼ck.
 
 =head4 Example
 
@@ -229,7 +229,7 @@ erzeugt
 =head4 Description
 
 Erzeuge eine Definitions-Liste mit den Elementen @items und liefere
-den resultierenden POD-Code zurück.
+den resultierenden POD-Code zurÃ¼ck.
 
 =head4 Example
 
@@ -263,8 +263,8 @@ erzeugen
 
 =head4 Description
 
-Definiere Code $code für Formatierer des Formats $format und
-liefere das Resultat zurück. Ist $code einzeilig, wird eine
+Definiere Code $code fÃ¼r Formatierer des Formats $format und
+liefere das Resultat zurÃ¼ck. Ist $code einzeilig, wird eine
 for-Instruktion erzeugt, ansonsten eine begin/end-Instruktion.
 
 =head4 Examples
@@ -306,7 +306,7 @@ erzeugt
 
 =head4 Description
 
-Beginne einen POD-Block. Diese Instruktion ist nur nötig, wenn der
+Beginne einen POD-Block. Diese Instruktion ist nur nÃ¶tig, wenn der
 Block mit einem einfachen Text beginnt, denn I<jede> andere
 POD-Instruktion beginnt ebenfalls einen POD-Block.
 
@@ -326,7 +326,7 @@ erzeugt
 
 =head4 Description
 
-Beende einen POD-Block. Diese Instruktion ist nicht nötig, wenn
+Beende einen POD-Block. Diese Instruktion ist nicht nÃ¶tig, wenn
 danach kein Perl-Code folgt.
 
 =head4 Example
@@ -348,9 +348,9 @@ erzeugt
 =head4 Description
 
 Erzeuge Inline-Segment vom Typ $type (B, I, C usw.)
-und liefere den resultierenden POD-Code dieses zurück.
+und liefere den resultierenden POD-Code dieses zurÃ¼ck.
 
-Die Methode sorgt dafür, dass das Segment korrekt generiert wird,
+Die Methode sorgt dafÃ¼r, dass das Segment korrekt generiert wird,
 wenn in $text die Zeichen '<' oder '>' vorkommen.
 
 =head4 Examples

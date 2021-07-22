@@ -28,9 +28,9 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Die Klasse ist eine Überdeckung der Klasse GD::Image. Sie
-überschreibt existierende Methoden und ergänzt die Klasse um
-weitere Methoden.  Die Klasse kann überall verwendet werden, wo
+Die Klasse ist eine Ãœberdeckung der Klasse GD::Image. Sie
+Ã¼berschreibt existierende Methoden und ergÃ¤nzt die Klasse um
+weitere Methoden.  Die Klasse kann Ã¼berall verwendet werden, wo
 GD::Image verwendet wird.  Alle Methoden von GD::Image sind auch
 auf Quiq::Gd::Image-Objekte anwendbar.
 
@@ -48,25 +48,25 @@ Bei GD sind Bilder per Default pallette-basiert mit maximal
 
 =item *
 
-Die Klasse verfügt mit der Methode string() über eine einheitliche
+Die Klasse verfÃ¼gt mit der Methode string() Ã¼ber eine einheitliche
 Schnittstelle zum Zeichnen von GD- und TrueType-Fonts, horizontal
 und vertikal. Bei GD werden GD- und TrueType-Fonts uneinheitlich
 behandelt.
 
 =item *
 
-Die Methoden der Klasse lösen im Fehlerfall eine Exception aus.
+Die Methoden der Klasse lÃ¶sen im Fehlerfall eine Exception aus.
 
 =back
 
 =head2 Unterschiede zwischen Palette-basierten und TrueColor-Bildern
 
 Bei TrueColor liefert die GD-Methode colorAllocate() - mehrfach
-für denselben Farbwert aufgerufen - immer den gleichen
+fÃ¼r denselben Farbwert aufgerufen - immer den gleichen
 Farbindex. Bei einem Palette-Bild wird immer ein neuer Farbindex
 geliefert, auch wenn der Farbwert gleich ist. Daher muss aus
-portablitätsgründen die GD-Methode colorResolve() genutzt werden.
-Diese Portabilität wird von der Methode L<color|"color() - Alloziere Farbe">() sichergestellt.
+portablitÃ¤tsgrÃ¼nden die GD-Methode colorResolve() genutzt werden.
+Diese PortabilitÃ¤t wird von der Methode L<color|"color() - Alloziere Farbe">() sichergestellt.
 
 =head2 Portierung einer existierenden Anwendung
 
@@ -135,9 +135,9 @@ Bildobjekt
 
 =head4 Description
 
-Instantiiere ein Bildobjekt der Breite $width und der Höhe $height mit
+Instantiiere ein Bildobjekt der Breite $width und der HÃ¶he $height mit
 einer maximalen Anzahl von $maxColors Farben und liefere eine
-Referenz auf dieses Objekt zurück. Schlägt der Aufruf fehl, löse
+Referenz auf dieses Objekt zurÃ¼ck. SchlÃ¤gt der Aufruf fehl, lÃ¶se
 eine Exception aus.
 
 Ist $maxColors nicht angegeben oder $maxColors > 256, wird ein
@@ -198,7 +198,7 @@ Bildobjekt
 
 =head4 Description
 
-Erzeuge ein Bild, das den Text $text enthält.
+Erzeuge ein Bild, das den Text $text enthÃ¤lt.
 
 =head2 Objektmethoden
 
@@ -239,7 +239,7 @@ Farbe
 =head4 Description
 
 Alloziere Farbe in der Farbtabelle des Bildes und liefere den Index des
-Eintrags zurück. Existiert die Farbe bereits, liefere den existierenden
+Eintrags zurÃ¼ck. Existiert die Farbe bereits, liefere den existierenden
 Index.
 
 =head4 See Also
@@ -258,12 +258,12 @@ Farbe
 
 =head4 Description
 
-Alloziere Farbe @color, fülle das gesamte Bild mit der Farbe
-und liefere den Farbindex zurück.
+Alloziere Farbe @color, fÃ¼lle das gesamte Bild mit der Farbe
+und liefere den Farbindex zurÃ¼ck.
 
-Zu den möglichen Angaben für @color siehe Methode $img->L<color|"color() - Alloziere Farbe">().
+Zu den mÃ¶glichen Angaben fÃ¼r @color siehe Methode $img->L<color|"color() - Alloziere Farbe">().
 
-Der Hintergrund eines TrueColor-Bildes ist anfänglich schwarz.
+Der Hintergrund eines TrueColor-Bildes ist anfÃ¤nglich schwarz.
 Anders als bei einem Palette-basierten Bild wird I<nicht> die erste
 allozierte Farbe automatisch die Hintergrundfarbe. Daher sollte die
 erste Farbe mit dieser Methode alloziert werden, damit
@@ -283,7 +283,7 @@ Nichts
 
 Zeichne einen inneren Rahmen in Farbe $color um das Bild.
 "Innerer Rahmen" bedeutet, dass der Rahmen Teil des Bildes ist
-und nicht außen um das Bild herumgelegt ist.
+und nicht auÃŸen um das Bild herumgelegt ist.
 
 =head3 drawCross() - Zeichne ein Kreuz
 
@@ -317,7 +317,7 @@ Zeichne Zeichenkette $string an Position ($x,$y). Die Zeichenkette
 kann mehrzeilig sein.
 
 Der Font ist ein C<< Quiq::Gd::Font >>-Objekt. Diese Klasse
-vereinheitlicht GD- und TrueType-Fonts. GD-Fonts können nicht
+vereinheitlicht GD- und TrueType-Fonts. GD-Fonts kÃ¶nnen nicht
 in beliebigem Winkel, sondern nur horizontal und vertikal geschrieben
 werden, daher erlaubt die Methode nur diese beiden Ausrichtungen.
 
@@ -347,7 +347,7 @@ Nichts
 
 =head4 Description
 
-Die Methode ist die font-portable Überdeckung für die gleichnmige
+Die Methode ist die font-portable Ãœberdeckung fÃ¼r die gleichnmige
 Methode in der GD-Bibliothek.
 
 =head3 stringCentered() - Zeichne Zeichenkette horizontal oder vertikal zentriert
@@ -369,12 +369,12 @@ Array von Farben
 =head4 Description
 
 Alloziere eine Palette von $n Regenbogenfarben (Blau nach Rot) und
-liefere die Liste der Farbtabellen-Indizes zurück.
+liefere die Liste der Farbtabellen-Indizes zurÃ¼ck.
 
-Werte für $n: 4, 8, 16, 32, 64, 128, 256, 512, 1024.
+Werte fÃ¼r $n: 4, 8, 16, 32, 64, 128, 256, 512, 1024.
 
-Die Regenbogenfarben können verwendet werden, um die Werte
-eines Wertebereichs in einen Farbverlauf zu übersetzen.
+Die Regenbogenfarben kÃ¶nnen verwendet werden, um die Werte
+eines Wertebereichs in einen Farbverlauf zu Ã¼bersetzen.
 
   Farbe     % Wertebereich  R   G   B
   --------- -------------- --- --- ---

@@ -10,7 +10,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse Quiq::Test::Class::Method repräsentiert eine
+Ein Objekt der Klasse Quiq::Test::Class::Method reprÃ¤sentiert eine
 Testmethode. Das Objekt kapselt Paketnamen, Methodennamen,
 Codereferenz, Anzahl der Tests, den Type der Testmethode
 und den Gruppen-Regex, sofern vorhanden.
@@ -27,10 +27,10 @@ und den Gruppen-Regex, sofern vorhanden.
 
 =head4 Description
 
-Instantiiere Testmethodenobjekt für Klasse $pkg, Methode $ref
+Instantiiere Testmethodenobjekt fÃ¼r Klasse $pkg, Methode $ref
 (Codereferenz), Methodentyp $type (Init, Foreach, Startup, Setup, Test,
 Teardown, Shutdown), Anzahl Tests $n und Gruppenregex $group.
-Liefere eine Referenz auf dieses Objekt zurück.
+Liefere eine Referenz auf dieses Objekt zurÃ¼ck.
 
 =head2 Methoden
 

@@ -12,7 +12,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head2 Klassenmethoden
 
-=head3 get() - Führe GET-Request aus
+=head3 get() - FÃ¼hre GET-Request aus
 
 =head4 Synopsis
 
@@ -28,12 +28,12 @@ Gib Request auf STDOUT aus.
 
 =item -header => $bool (Default: 0)
 
-Ergänze die Antwort um die vom Server gesetzten Response-Header.
+ErgÃ¤nze die Antwort um die vom Server gesetzten Response-Header.
 Per Default wird nur der Rumpf der HTTP-Antwort geliefert.
 
 =item -redirect => $bool (Default: 1)
 
-Führe Redirection automatisch aus.
+FÃ¼hre Redirection automatisch aus.
 
 =item -sloppy => $bool (Default: 0)
 
@@ -47,8 +47,8 @@ Timeout.
 
 =head4 Description
 
-Führe HTTP-Request für URL $url aus und liefere die vom
-Server gelieferte Antwort zurück.
+FÃ¼hre HTTP-Request fÃ¼r URL $url aus und liefere die vom
+Server gelieferte Antwort zurÃ¼ck.
 
 =head1 VERSION
 

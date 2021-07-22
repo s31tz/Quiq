@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::ContentProcessor - Prozessor für Abschnitts-Dateien
+Quiq::ContentProcessor - Prozessor fÃ¼r Abschnitts-Dateien
 
 =head1 BASE CLASS
 
@@ -24,37 +24,37 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen Prozessor für
-Entitäts-Dateien. Die Dateien bestehen aus einer Folge von
+Ein Objekt der Klasse reprÃ¤sentiert einen Prozessor fÃ¼r
+EntitÃ¤ts-Dateien. Die Dateien bestehen aus einer Folge von
 Abschnitten, die von einem Abschnitts-Parser (s. Klasse
 Quiq::Section::Parser) geparsed und zu Abschnitts-Objekten
 instantiiert werden.
 
 Der Prozessor delegiert die Verarbeitung der Abschnitts-Objekte an
-die per registerType() registierten Entitäts-Klassen
+die per registerType() registierten EntitÃ¤ts-Klassen
 (Plugin-Schnittstelle). Diese bauen aus den Abschnitts-Objekten
-Entitäts-Strukturen auf, aus denen die Ausgabedateien generiert
-werden. Die Entitäts-Klassen sind nicht Teil des ContentProzessors.
+EntitÃ¤ts-Strukturen auf, aus denen die Ausgabedateien generiert
+werden. Die EntitÃ¤ts-Klassen sind nicht Teil des ContentProzessors.
 
-Bei Anwendung der Operation L<commit|"commit() - Übertrage Änderungen in den Storage">() wird der Quelltext jeder
-Entität gegen den Stand im Storage verglichen. Im Falle einer
-Änderung wird die Entität als geändert gekennzeichnet, d.h. ihre
-Ausgabedateien müssen neu generiert werden.
+Bei Anwendung der Operation L<commit|"commit() - Ãœbertrage Ã„nderungen in den Storage">() wird der Quelltext jeder
+EntitÃ¤t gegen den Stand im Storage verglichen. Im Falle einer
+Ã„nderung wird die EntitÃ¤t als geÃ¤ndert gekennzeichnet, d.h. ihre
+Ausgabedateien mÃ¼ssen neu generiert werden.
 
-Das Resultat der Ausführung ist eine Menge von Entitäts-Objekten
-plus ihrem Änderungs-Status. Die Menge der Entitäts-Objekte kann
+Das Resultat der AusfÃ¼hrung ist eine Menge von EntitÃ¤ts-Objekten
+plus ihrem Ã„nderungs-Status. Die Menge der EntitÃ¤ts-Objekte kann
 mit der Methode L<entities|"entities() - Liste der geladenen Entities">() abgefragt werden.
 
 =head2 Universelles Plugin
 
 Ein I<Universelles Plugin> kann definiert werden, indem bei
-L<registerType|"registerType() - Registriere Entitäts-Typ">() nur $pluginClass und $extension als Argumente
+L<registerType|"registerType() - Registriere EntitÃ¤ts-Typ">() nur $pluginClass und $extension als Argumente
 angegeben werden. An diese Plugin-Klasse werden alle
-(Haupt-)Abschnitts-Objekte delegiert, für die kein Plugin
-definiert ist. Logischerweise kann es höchstens ein Universelles
-Plugin geben. Für ein Universelles Plugin findet keine
+(Haupt-)Abschnitts-Objekte delegiert, fÃ¼r die kein Plugin
+definiert ist. Logischerweise kann es hÃ¶chstens ein Universelles
+Plugin geben. FÃ¼r ein Universelles Plugin findet keine
 Attribut-Validierung in der Basisklassenmethode create() statt.
-Das Konzept ist in erster Linie für allgemeine Programme
+Das Konzept ist in erster Linie fÃ¼r allgemeine Programme
 wie z.B. Testprogramme gedacht.
 
 =head2 Ausgaben
@@ -63,7 +63,7 @@ Der Umfang an Ausgaben wird mit der Konstruktor-Option
 -verbosity=>$level eingestellt. Default ist 1.
 
 Die Methode msg() schreibt eine Ausgabe nach STDERR. Der erste
-Parameter gibt den Verbosity-Level an. Ist dieser größer als der
+Parameter gibt den Verbosity-Level an. Ist dieser grÃ¶ÃŸer als der
 eingestellte Verbosity-Level, unterbleibt die Ausgabe.
 
   $cop->msg(2,$text);
@@ -73,26 +73,26 @@ Ist kein Level angegeben, erfolgt die Ausgabe I<immer>:
   $cop->msg($text);
 
 Der Meldungstext $text kann printf-Formatelemente enthalten, diese
-werden wie bei printf durch die zusätzlich angegebenen Argumente
+werden wie bei printf durch die zusÃ¤tzlich angegebenen Argumente
 ersetzt:
 
   $cop->msg($text,@args);
 
 =head1 EXAMPLES
 
-Füge alle Entitäts-Definitionen im Storage zu einem einzigen
-Datenstrom zusammen und schreibe diesen nach STDOUT (z.B. für
+FÃ¼ge alle EntitÃ¤ts-Definitionen im Storage zu einem einzigen
+Datenstrom zusammen und schreibe diesen nach STDOUT (z.B. fÃ¼r
 Refactoring):
 
   $cop->load->fetch('-');
 
-Übertrage alle Entitäts-Definitionen im Storage in Verzeichnis $dir
+Ãœbertrage alle EntitÃ¤ts-Definitionen im Storage in Verzeichnis $dir
 (das Verzeichnis hat die gleiche Struktur wie das Verzeichnis def
 im Storage):
 
   $cop->load->fetch->($dir);
 
-Liste alle Entitäten vom Typ $type auf:
+Liste alle EntitÃ¤ten vom Typ $type auf:
 
   $cop->load;
   for my $ent ($cop->entities($type)) {
@@ -136,7 +136,7 @@ ContentProcessor-Objekt
 =head4 Description
 
 Instantiiere ein ContentProcessor-Objekt und liefere eine Referenz
-auf dieses Objekt zurück.
+auf dieses Objekt zurÃ¼ck.
 
 =head2 Storage
 
@@ -163,12 +163,12 @@ Pfad
 
 =head4 Description
 
-Liefere den Pfad des Storage, ggf. ergänzt um den Sub-Pfad
+Liefere den Pfad des Storage, ggf. ergÃ¤nzt um den Sub-Pfad
 $subPath.
 
 =head2 Plugins
 
-=head3 registerType() - Registriere Entitäts-Typ
+=head3 registerType() - Registriere EntitÃ¤ts-Typ
 
 =head4 Synopsis
 
@@ -185,11 +185,11 @@ Name der Plugin-Klasse, z.B. 'Program::Shell'.
 
 =item $extension
 
-Datei-Erweiterung für Dateien dieses Typs, ohne Punkt, z.B. 'prg'.
+Datei-Erweiterung fÃ¼r Dateien dieses Typs, ohne Punkt, z.B. 'prg'.
 
 =item $entityType
 
-Entitätstyp-Bezeichner, z.B. 'Program' oder 'Class/Perl'.
+EntitÃ¤tstyp-Bezeichner, z.B. 'Program' oder 'Class/Perl'.
 
 =item $sectionType
 
@@ -197,7 +197,7 @@ Abschnitts-Bezeichner ohne Klammerung, z.B. 'Program'.
 
 =item @keyVal
 
-Abschnitts-Attribute, die über den Abschnitts-Bezeichner hinaus
+Abschnitts-Attribute, die Ã¼ber den Abschnitts-Bezeichner hinaus
 den Dateityp kennzeichnen, z.B. Language=>'Perl'.
 
 =back
@@ -208,20 +208,20 @@ nichts
 
 =head4 Description
 
-Registriere Plugin-Klasse $pluginClass für Abschnitts-Objekte
+Registriere Plugin-Klasse $pluginClass fÃ¼r Abschnitts-Objekte
 des Typs $sectionType und den Eigenschaften @keyVal.
 
 Entsprechende Dateien werden an der Extension $extension erkannt.
-Als Typ-Bezeichner für Entitäten dieses Typs vereinbaren wir
+Als Typ-Bezeichner fÃ¼r EntitÃ¤ten dieses Typs vereinbaren wir
 $entityType.
 
 Die Plugin-Klasse wird automatisch geladen, falls sie noch nicht
-vorhanden ist (sie kann für Tests also auch "inline", d.h. im
+vorhanden ist (sie kann fÃ¼r Tests also auch "inline", d.h. im
 Quelltext des rufenden Code, definiert werden).
 
 Die Plugin-Definition wird intern auf einem Hash-Objekt
 gespeichert, das vom ContentProcessor mit den instantiierten
-Entitäten verbunden wird.
+EntitÃ¤ten verbunden wird.
 
 Es kann auch ein I<Universelles Plugin> definiert werden (siehe
 Abschnitt L<Universelles Plugin|"Universelles Plugin">).
@@ -277,14 +277,14 @@ kein Plugin zu dem Abschnitts-Objekt, liefere C<undef>.
 
 =head4 Returns
 
-ContentProcessor-Objekt (für Method-Chaining)
+ContentProcessor-Objekt (fÃ¼r Method-Chaining)
 
 =head4 Description
 
 Erzeuge den Storage, falls er nicht existiert. Existiert er bereits,
 hat der Aufruf keinen Effekt.
 
-=head3 commit() - Übertrage Änderungen in den Storage
+=head3 commit() - Ãœbertrage Ã„nderungen in den Storage
 
 =head4 Synopsis
 
@@ -296,22 +296,22 @@ hat der Aufruf keinen Effekt.
 
 =item -incomplete => $bool (Default: 0)
 
-Lade fehlende Entitäten aus dem Storage nach anstatt sie zum
-Löschen anzubieten.
+Lade fehlende EntitÃ¤ten aus dem Storage nach anstatt sie zum
+LÃ¶schen anzubieten.
 
 =back
 
 =head4 Returns
 
-ContentProcessor-Objekt (für Method-Chaining)
+ContentProcessor-Objekt (fÃ¼r Method-Chaining)
 
 =head4 Description
 
-Vergleiche den Quelltext jeder Entität gegen den Quelltext im
-Storage und übertrage etwaige Änderungen dorthin. Geänderte
-Entitäten werden in der Datenbank als geändert gekennzeichnet.
+Vergleiche den Quelltext jeder EntitÃ¤t gegen den Quelltext im
+Storage und Ã¼bertrage etwaige Ã„nderungen dorthin. GeÃ¤nderte
+EntitÃ¤ten werden in der Datenbank als geÃ¤ndert gekennzeichnet.
 
-=head3 load() - Lade Entitäts-Definitionen
+=head3 load() - Lade EntitÃ¤ts-Definitionen
 
 =head4 Synopsis
 
@@ -330,19 +330,19 @@ Liste der Verzeichnisse und Dateien. Pfad '-' bedeutet STDIN.
 
 =head4 Returns
 
-ContentProcessor-Objekt (für Method-Chaining)
+ContentProcessor-Objekt (fÃ¼r Method-Chaining)
 
 =head4 Description
 
-Lade die Entitäts-Dateien der Pfade @paths. Ist @path leer, also
-kein Path angegeben, werden die Entitäts-Dateien aus dem Storage
+Lade die EntitÃ¤ts-Dateien der Pfade @paths. Ist @path leer, also
+kein Path angegeben, werden die EntitÃ¤ts-Dateien aus dem Storage
 geladen.
 
 Die Methode kann beliebig oft aufgerufen werden, aber nur der
-erste Aufruf lädt die Dateien. Alle weiteren Aufrufe sind
+erste Aufruf lÃ¤dt die Dateien. Alle weiteren Aufrufe sind
 Null-Operationen.
 
-=head3 fetchToDir() - Hole Entitäts-Definitionen aus dem Storage
+=head3 fetchToDir() - Hole EntitÃ¤ts-Definitionen aus dem Storage
 
 =head4 Synopsis
 
@@ -354,12 +354,12 @@ Null-Operationen.
 
 =item $dir
 
-Verzeichnis, in welches die Entitäts-Definitionen geschrieben
+Verzeichnis, in welches die EntitÃ¤ts-Definitionen geschrieben
 werden.
 
 =item $layout
 
-Bezeichnung für das Verzeichnis-Layout. Dieser Parameter wird von
+Bezeichnung fÃ¼r das Verzeichnis-Layout. Dieser Parameter wird von
 filesToFetch() der Basisklasse nicht genutzt und ist daher hier
 nicht dokumentiert. Siehe Dokumentation bei den Subklassen.
 
@@ -371,34 +371,34 @@ nicht dokumentiert. Siehe Dokumentation bei den Subklassen.
 
 =item -overwrite => $bool (Default: 0)
 
-Stelle keine Rückfrage, wenn Verzeichnis $dir bereits existiert.
+Stelle keine RÃ¼ckfrage, wenn Verzeichnis $dir bereits existiert.
 
 =back
 
 =head4 Returns
 
-ContentProcessor-Objekt (für Method-Chaining)
+ContentProcessor-Objekt (fÃ¼r Method-Chaining)
 
 =head4 Description
 
-Übertrage alle Entitäts-Definitionen in Verzeichnis $dir (oder
-nach STDOUT, s.u.) gemäß Layout $layout. Per Differenzbildung wird
+Ãœbertrage alle EntitÃ¤ts-Definitionen in Verzeichnis $dir (oder
+nach STDOUT, s.u.) gemÃ¤ÃŸ Layout $layout. Per Differenzbildung wird
 dabei ein konsistenter Stand hergestellt. Existiert Verzeichnis
-$dir nicht, wird es angelegt. Andernfalls wird eine Rückfrage
-gestellt, ob das Verzeichnis überschrieben werden soll (siehe
+$dir nicht, wird es angelegt. Andernfalls wird eine RÃ¼ckfrage
+gestellt, ob das Verzeichnis Ã¼berschrieben werden soll (siehe
 auch Option --overwrite).
 
 Wird als Verzeichnis ein Bindestrich (-) angegeben, werden die
-Entitäts-Definitionen nach STDOUT geschrieben.
+EntitÃ¤ts-Definitionen nach STDOUT geschrieben.
 
 Die Methode bezieht die zu schreibenden Dateien von der Methode
-L<filesToFetch|"filesToFetch() - Liste der Dateien für fetch">(), an die der Parameter $layout weiter gereicht
-wird. Die Methode kann in abgeleiteten Klassen überschrieben
+L<filesToFetch|"filesToFetch() - Liste der Dateien fÃ¼r fetch">(), an die der Parameter $layout weiter gereicht
+wird. Die Methode kann in abgeleiteten Klassen Ã¼berschrieben
 werden, um andere Strukturen zu generieren.
 
 =head2 Hilfsmethoden
 
-=head3 filesToFetch() - Liste der Dateien für fetch
+=head3 filesToFetch() - Liste der Dateien fÃ¼r fetch
 
 =head4 Synopsis
 
@@ -411,7 +411,7 @@ werden, um andere Strukturen zu generieren.
 
 =item $layout
 
-Bezeichner für eine bestimmte Abfolge und/oder Inhalt der Dateien.
+Bezeichner fÃ¼r eine bestimmte Abfolge und/oder Inhalt der Dateien.
 
 =back
 
@@ -421,13 +421,13 @@ Array mit zweielementigen Arrays
 
 =head4 Description
 
-Liefere die Liste der Dateien, die von den Methode L<fetchToDir|"fetchToDir() - Hole Entitäts-Definitionen aus dem Storage">()
+Liefere die Liste der Dateien, die von den Methode L<fetchToDir|"fetchToDir() - Hole EntitÃ¤ts-Definitionen aus dem Storage">()
 und [ANCHOR NOT FOUND]() geschrieben werden. Jede Datei wird durch ein
-zweielementiges Array repräsentiert, bestehend aus einem Datei-Pfad
+zweielementiges Array reprÃ¤sentiert, bestehend aus einem Datei-Pfad
 sowie dem Datei-Inhalt. Der Datei-Inhalt kann als String oder
 String-Referenz angegeben sein.
 
-Diese (Basisklassen-)Methode liefert für jede Entität die
+Diese (Basisklassen-)Methode liefert fÃ¼r jede EntitÃ¤t die
 Datei-Definiton
 
   [$ent->entityFile, $ent->sourceRef]
@@ -435,10 +435,10 @@ Datei-Definiton
 Damit erzeugt die Methode fetch() die gleiche Struktur wie
 der ContentProcessor im Storage-Verzeichnis def.
 
-Die Methode kann in abgeleiteten Klassen überschrieben werden, um
-die Verzeichnisstruktur zu ändern und/oder den Inhalt der Dateien
+Die Methode kann in abgeleiteten Klassen Ã¼berschrieben werden, um
+die Verzeichnisstruktur zu Ã¤ndern und/oder den Inhalt der Dateien
 anders zusammenzustellen (z.B. mehrere Entity-Definitionen in
-einer Datei zusammenzufassen). In abgeleiteten Klassen können
+einer Datei zusammenzufassen). In abgeleiteten Klassen kÃ¶nnen
 verschiedene Layouts durch das Argument $layout
 unterschieden werden.
 
@@ -456,11 +456,11 @@ Kompilierter Regex
 
 =head4 Description
 
-Liefere den regulären Ausdruck, der die Dateinamen matcht, die vom
+Liefere den regulÃ¤ren Ausdruck, der die Dateinamen matcht, die vom
 ContentProcessor verarbeitet werden. Der Regex wird genutzt, wenn
 ein I<Verzeichnis> nach Eingabe-Dateien durchsucht wird.
 
-=head3 findFiles() - Finde Entitäts-Dateien in Verzeichnis
+=head3 findFiles() - Finde EntitÃ¤ts-Dateien in Verzeichnis
 
 =head4 Synopsis
 
@@ -495,10 +495,10 @@ auf die Liste.
 
 =head4 Description
 
-Durchsuche Verzeichnis $dir nach Entitäts-Dateien unter Verwendung
+Durchsuche Verzeichnis $dir nach EntitÃ¤ts-Dateien unter Verwendung
 des Regex, der von L<extensionRegex|"extensionRegex() - Regex zum Auffinden von Eingabe-Dateien">() geliefert wird.
 
-=head3 parseFiles() - Parse Dateien zu Entitäten
+=head3 parseFiles() - Parse Dateien zu EntitÃ¤ten
 
 =head4 Synopsis
 
@@ -516,7 +516,7 @@ Liste der Dateien. '-' bedeutet STDIN.
 
 =head4 Returns
 
-Liste der Entitäten. Im Skalarkontext eine Referenz auf die Liste.
+Liste der EntitÃ¤ten. Im Skalarkontext eine Referenz auf die Liste.
 
 =head3 processSubSection() - Verarbeite Sub-Abschnitt (abstrakt)
 
@@ -530,17 +530,17 @@ Liste der Entitäten. Im Skalarkontext eine Referenz auf die Liste.
 
 =item $fileEnt
 
-Entität, die Träger des gesamten Quelltextes ist. Diese ist im
+EntitÃ¤t, die TrÃ¤ger des gesamten Quelltextes ist. Diese ist im
 Quelltext mit [] gekennzeichnet.
 
 =item $ent
 
-Die aktuelle Entität. Kann identisch zu $fileEnt oder eine
-Sub-Entität (z.B. (File) oder (ProgramClass)) sein.
+Die aktuelle EntitÃ¤t. Kann identisch zu $fileEnt oder eine
+Sub-EntitÃ¤t (z.B. (File) oder (ProgramClass)) sein.
 
 =item $mainSec
 
-Die Entität oder Sub-Entität, der die mit <> gekennzeichneten
+Die EntitÃ¤t oder Sub-EntitÃ¤t, der die mit <> gekennzeichneten
 Abschnitte zugeordnet werden.
 
 =item $sec
@@ -553,7 +553,7 @@ Der aktuelle Abschnitt.
 
 nichts
 
-=head2 Entitäten
+=head2 EntitÃ¤ten
 
 =head3 entities() - Liste der geladenen Entities
 
@@ -574,7 +574,7 @@ Abschnitts-Typ.
 
 =head4 Returns
 
-Liste von Entitäten. Im Skalarkontext eine Referenz auf die Liste.
+Liste von EntitÃ¤ten. Im Skalarkontext eine Referenz auf die Liste.
 
 =head4 Description
 
@@ -584,7 +584,7 @@ eines Typs werden die Entities nach Name sortiert geliefert.
 
 =head2 Persistente Information
 
-=head3 needsTestDb() - Persistenter Hash für Test-Status
+=head3 needsTestDb() - Persistenter Hash fÃ¼r Test-Status
 
 =head4 Synopsis
 
@@ -597,9 +597,9 @@ Hash-Referenz (persistenter Hash)
 =head4 Description
 
 Liefere eine Referenz auf den persistenten Hash, der den Status
-von Entitäten speichert.
+von EntitÃ¤ten speichert.
 
-=head3 needsUpdateDb() - Persistenter Hash für Entitäts-Status
+=head3 needsUpdateDb() - Persistenter Hash fÃ¼r EntitÃ¤ts-Status
 
 =head4 Synopsis
 
@@ -612,7 +612,7 @@ Hash-Referenz (persistenter Hash)
 =head4 Description
 
 Liefere eine Referenz auf den persistenten Hash, der den Status
-von Entitäten speichert.
+von EntitÃ¤ten speichert.
 
 =head2 Ausgabe von Information
 
@@ -652,7 +652,7 @@ Text, der ausgegeben werden soll.
 
 =item @args
 
-Argumente, die für printf-Platzhalter in $text eingesetzt werden.
+Argumente, die fÃ¼r printf-Platzhalter in $text eingesetzt werden.
 
 =back
 
@@ -667,7 +667,7 @@ dem beim Konstruktor vorgebenen Verbosity-Level ist. Der Text kann
 printf-Platzhalter enthalten, die durch die Argumente @args
 ersetzt werden.
 
-Zusätzlich wird der Platzhalter %T durch die aktuelle Ausführungsdauer
+ZusÃ¤tzlich wird der Platzhalter %T durch die aktuelle AusfÃ¼hrungsdauer
 in Sekunden ersetzt.
 
 =head1 VERSION

@@ -13,12 +13,12 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 ImageMagick Online-Dokumentation:
 L<http://www.imagemagick.org/Usage/>
 
-Ein Objekt der Klasse repräsentiert eine
-ImageMagick-Kommandozeile.  Die Klasse verfügt einerseits über
+Ein Objekt der Klasse reprÃ¤sentiert eine
+ImageMagick-Kommandozeile.  Die Klasse verfÃ¼gt einerseits Ã¼ber
 I<elementare> (Objekt-)Methoden, um eine solche Kommandozeile
 sukzessive aus ihren elementaren Bestandteilen konstruieren zu
-können und I<höhere> (Klassen-)Methoden, die eine bestimmte
-Funktion durch das Hinzufügen einer Reihe von Optionen
+kÃ¶nnen und I<hÃ¶here> (Klassen-)Methoden, die eine bestimmte
+Funktion durch das HinzufÃ¼gen einer Reihe von Optionen
 realisieren.
 
 =head1 METHODS
@@ -34,11 +34,11 @@ realisieren.
 =head4 Description
 
 Instantiiere ein ImageMagick-Kommandozeilen-Objekt und liefere
-eine Referenz auf dieses Objekt zurück.
+eine Referenz auf dieses Objekt zurÃ¼ck.
 
 =head2 Kommando konstruieren
 
-=head3 addElement() - Füge ein Kommandozeilen-Element hinzu
+=head3 addElement() - FÃ¼ge ein Kommandozeilen-Element hinzu
 
 =head4 Synopsis
 
@@ -46,13 +46,13 @@ eine Referenz auf dieses Objekt zurück.
 
 =head4 Description
 
-Ergänze die Kommandozeile um Kommandozeilen-Element $str.
+ErgÃ¤nze die Kommandozeile um Kommandozeilen-Element $str.
 Ein Kommandozeilen-Element ist ein durch Whiltespace getrennter
 elementarer Teil der Kommandozeile, wie z.B. das Kommando, eine Option,
 ein Optionsargument, ein Dateiname usw.
 
-Enthält $str Whitespace oder andere, spezielle Zeichen, wird
-$str in einfache Anführungsstriche eingefasst.
+EnthÃ¤lt $str Whitespace oder andere, spezielle Zeichen, wird
+$str in einfache AnfÃ¼hrungsstriche eingefasst.
 
 =head4 Examples
 
@@ -68,7 +68,7 @@ Mit Whitespace:
   =>
   'Sonne am Abend.jpg'
 
-=head3 addCommand() - Füge Kommando hinzu
+=head3 addCommand() - FÃ¼ge Kommando hinzu
 
 =head4 Synopsis
 
@@ -76,8 +76,8 @@ Mit Whitespace:
 
 =head4 Description
 
-Ergänze die Kommandozeile am Anfang um das Kommando $command.
-Die Methode liefert keinen Wert zurück.
+ErgÃ¤nze die Kommandozeile am Anfang um das Kommando $command.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head4 Examples
 
@@ -87,7 +87,7 @@ Kommando convert:
   =>
   convert
 
-=head3 addOption() - Füge Option hinzu
+=head3 addOption() - FÃ¼ge Option hinzu
 
 =head4 Synopsis
 
@@ -96,8 +96,8 @@ Kommando convert:
 
 =head4 Description
 
-Ergänze die Kommandozeile um die Option $opt und (optional) den
-Wert $val. Die Methode liefert keinen Wert zurück.
+ErgÃ¤nze die Kommandozeile um die Option $opt und (optional) den
+Wert $val. Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head4 Examples
 
@@ -125,9 +125,9 @@ Option mit Wert:
 
 Liefere das Kommando als Zeichenkette.
 
-=head2 Kommando-Ausführung
+=head2 Kommando-AusfÃ¼hrung
 
-=head3 execute() - Führe ImageMagick-Kommandozeile aus
+=head3 execute() - FÃ¼hre ImageMagick-Kommandozeile aus
 
 =head4 Synopsis
 
@@ -135,12 +135,12 @@ Liefere das Kommando als Zeichenkette.
 
 =head4 Description
 
-Führe ImageMagick-Kommando $cmd aus. Im Fehlerfall wird eine
+FÃ¼hre ImageMagick-Kommando $cmd aus. Im Fehlerfall wird eine
 Exception geworfen.
 
-=head2 Klassenmethoden (vollständige Kommandozeilen)
+=head2 Klassenmethoden (vollstÃ¤ndige Kommandozeilen)
 
-=head3 resizeFill() - Generiere Kommando für Operation resizeFill
+=head3 resizeFill() - Generiere Kommando fÃ¼r Operation resizeFill
 
 =head4 Synopsis
 
@@ -160,30 +160,30 @@ Bilddatei-Pfad des Output-Bildes. Das Verzeichnis wird erzeugt
 
 =item $size
 
-Größe des generierten Output-Bildes.
+GrÃ¶ÃŸe des generierten Output-Bildes.
 
 =item $background
 
 Farbe des Hintergrunds, wenn das Bild den Bereich $size nicht
-vollständig ausfüllt.
+vollstÃ¤ndig ausfÃ¼llt.
 
 =back
 
 =head4 Description
 
-Generiere ein convert-Kommando, dass das Input-Bild auf Größe
+Generiere ein convert-Kommando, dass das Input-Bild auf GrÃ¶ÃŸe
 $size bringt.
 
 =over 2
 
 =item *
 
-Ist das Bild in mindestens einer Dimension größer als $size,
+Ist das Bild in mindestens einer Dimension grÃ¶ÃŸer als $size,
 wird es verkleinert.
 
 =item *
 
-Andernfalls wird das Bild in seiner Größe nicht verändert.
+Andernfalls wird das Bild in seiner GrÃ¶ÃŸe nicht verÃ¤ndert.
 
 =item *
 
@@ -192,7 +192,7 @@ $background dargestellt.
 
 =back
 
-=head3 resizeStretch() - Generiere Kommando für Operation resizeStretch
+=head3 resizeStretch() - Generiere Kommando fÃ¼r Operation resizeStretch
 
 =head4 Synopsis
 
@@ -212,13 +212,13 @@ Bilddatei-Pfad des Output-Bildes. Das Verzeichnis wird erzeugt
 
 =item $size
 
-Größe des generierten Output-Bildes.
+GrÃ¶ÃŸe des generierten Output-Bildes.
 
 =back
 
 =head4 Description
 
-Generiere ein convert-Kommando, dass das Input-Bild auf Größe
+Generiere ein convert-Kommando, dass das Input-Bild auf GrÃ¶ÃŸe
 $size bringt.
 
 =over 2
@@ -229,7 +229,7 @@ Weicht das Seitenverhltmis ab, wird das Bild verzerrt.
 
 =back
 
-=head3 negate() - Generiere Kommando für Operation negate
+=head3 negate() - Generiere Kommando fÃ¼r Operation negate
 
 =head4 Synopsis
 
@@ -253,7 +253,7 @@ Bilddatei-Pfad des Output-Bildes. Das Verzeichnis wird erzeugt
 
 Generiere ein convert-Kommando, dass das Input-Bild negiert.
 
-=head3 morph() - Generiere Kommando für Operation morph
+=head3 morph() - Generiere Kommando fÃ¼r Operation morph
 
 =head4 Synopsis
 
@@ -273,7 +273,7 @@ Pfad oder Bilddatei-Objekt des zweiten Bildes.
 
 =item $outPattern
 
-Pfad-Muster für die erzeugte Bildfolge. Z.B. "$dir/%02d"
+Pfad-Muster fÃ¼r die erzeugte Bildfolge. Z.B. "$dir/%02d"
 
 =item $n
 
@@ -283,7 +283,7 @@ Anzahl der erzeugten Zwischenbilder.
 
 =head4 Description
 
-Generiere ein convert-Kommando, das $n Zwischenbilder für die
+Generiere ein convert-Kommando, das $n Zwischenbilder fÃ¼r die
 Bilder $input1 und $input2 erzeugt. Unter dem Pfad-Muster
 $outPattern werden $n+2 Bilder gespeichert: Die $n gemorphten
 Bilder plus die beiden Ausgangsbilder.
@@ -293,12 +293,12 @@ eine Methode path() besitzen, die den Pfad zur Bilddatei liefert,
 wie die Objekte der Klasse Quiq::File::Image.
 
 Beim convert-Kommando kann man bei der Morph-Operation zwar auch mehrere
-Bilddateien angeben, aber dann wird extrem viel Speicher benötigt.
+Bilddateien angeben, aber dann wird extrem viel Speicher benÃ¶tigt.
 Besser ist es, die Bilder paarweise zu morphen und das letzte Bild
 
 =head4 Example
 
-Erzeuge einen convert-Aufruf für 5 Zwischenbilder (hier an der
+Erzeuge einen convert-Aufruf fÃ¼r 5 Zwischenbilder (hier an der
 Kommandozeile):
 
   $ perl -MQuiq::ImageMagick -E 'say Quiq::ImageMagick->morph("1.jpg","2.jpg","tmp/%02d.jpg",5)->command'
@@ -307,7 +307,7 @@ Erzeugtes Kommando:
 
   convert 1.jpg 2.jpg -morph 5 tmp/%02d.jpg
 
-Wird das Kommando ausgeführt, entstehen in Unterverzeichnis tmp
+Wird das Kommando ausgefÃ¼hrt, entstehen in Unterverzeichnis tmp
 (das vorab existieren muss) sechs Bilder:
 
   00.jpg entspricht 1.jpg (die Bilder sind nicht identisch!)

@@ -13,14 +13,14 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 FFmpg Online-Dokumentation:
 L<https://www.ffmpeg.org/ffmpeg-all.html>
 
-Ein Objekt der Klasse repräsentiert eine ffmpeg-Kommandozeile.
-Die Klasse verfügt einerseits über I<elementare> (Objekt-)Methoden,
+Ein Objekt der Klasse reprÃ¤sentiert eine ffmpeg-Kommandozeile.
+Die Klasse verfÃ¼gt einerseits Ã¼ber I<elementare> (Objekt-)Methoden,
 um eine solche Kommandozeile sukzessive aus Eingabe- und
 Ausgabe-Dateien, Optionen, Filtern usw. zu konstruieren und
-andererseits I<höhere> (Klassen-)Methoden, die eine vollständige
-Kommandozeile zur Erfüllung eines bestimmten Zwecks unter
-Rückgriff auf die elementaren Methoden erstellen. Die höheren
-Methoden Methoden befinden sich im Abschnitt L<Klassenmethoden (vollständige Kommandozeilen)|"Klassenmethoden (vollständige Kommandozeilen)">.
+andererseits I<hÃ¶here> (Klassen-)Methoden, die eine vollstÃ¤ndige
+Kommandozeile zur ErfÃ¼llung eines bestimmten Zwecks unter
+RÃ¼ckgriff auf die elementaren Methoden erstellen. Die hÃ¶heren
+Methoden Methoden befinden sich im Abschnitt L<Klassenmethoden (vollstÃ¤ndige Kommandozeilen)|"Klassenmethoden (vollstÃ¤ndige Kommandozeilen)">.
 
 =head1 METHODS
 
@@ -36,7 +36,7 @@ Methoden Methoden befinden sich im Abschnitt L<Klassenmethoden (vollständige Kom
 =head4 Description
 
 Instantiiere ein FFmpeg-Kommando-Objekt und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurÃ¼ck.
 
 =head2 Objektmethoden
 
@@ -59,7 +59,7 @@ Liefere das Kommando als Zeichenkette.
 =head4 Description
 
 Instantiiere Eingabe-Datei $i als Quiq::File-Objekt und liefere
-dieses zurück. Das Objekt wird gecached.
+dieses zurÃ¼ck. Das Objekt wird gecached.
 
 =head3 suffix() - Suffix Ausgabe-Datei
 
@@ -69,16 +69,16 @@ dieses zurück. Das Objekt wird gecached.
 
 =head4 Description
 
-Liefere den Suffix für eine Ausgabedatei. Der Suffix ist eine
+Liefere den Suffix fÃ¼r eine Ausgabedatei. Der Suffix ist eine
 Zeichenkette der Form
 
   NAME-WIDTH-HEIGHT-START-STOP
 
-wobei Komponenten fehlen können, die nicht definiert sind.
+wobei Komponenten fehlen kÃ¶nnen, die nicht definiert sind.
 
 =head2 Kommandozeile konstruieren
 
-=head3 addOption() - Füge Option hinzu
+=head3 addOption() - FÃ¼ge Option hinzu
 
 =head4 Synopsis
 
@@ -87,8 +87,8 @@ wobei Komponenten fehlen können, die nicht definiert sind.
 
 =head4 Description
 
-Ergänze die Kommandozeile um die Option $opt und (optional) den
-Wert $val. Die Methode liefert keinen Wert zurück.
+ErgÃ¤nze die Kommandozeile um die Option $opt und (optional) den
+Wert $val. Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head4 Examples
 
@@ -104,7 +104,7 @@ Option mit Wert:
   =>
   -i 'video/GOPR1409.mp4'
 
-=head3 addInput() - Füge Input-Option hinzu
+=head3 addInput() - FÃ¼ge Input-Option hinzu
 
 =head4 Synopsis
 
@@ -112,8 +112,8 @@ Option mit Wert:
 
 =head4 Description
 
-Ergänze das Kommando um Input $input, sofern $input einen Wert hat.
-Die Methode liefert keinen Wert zurück.
+ErgÃ¤nze das Kommando um Input $input, sofern $input einen Wert hat.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head4 Examples
 
@@ -134,7 +134,7 @@ Undefiniert:
   $cmd->addInput(undef);
   =>
 
-=head3 addFilter() - Füge Filter-Option hinzu
+=head3 addFilter() - FÃ¼ge Filter-Option hinzu
 
 =head4 Synopsis
 
@@ -142,7 +142,7 @@ Undefiniert:
 
 =head4 Description
 
-Ergänze das Kommando um Filter-Option $opt mit den Filtern @filter
+ErgÃ¤nze das Kommando um Filter-Option $opt mit den Filtern @filter
 und dem Trenner $sep (Komma oder Semikolon).
 
 =head4 Examples
@@ -153,7 +153,7 @@ Video Filter-Chain:
   =>
   -vf 'crop=1440:1080,scale=720*a:720'
 
-=head3 addStartStop() - Füge Optionen für Zeitbereich hinzu
+=head3 addStartStop() - FÃ¼ge Optionen fÃ¼r Zeitbereich hinzu
 
 =head4 Synopsis
 
@@ -161,7 +161,7 @@ Video Filter-Chain:
 
 =head4 Description
 
-Ergänze das Kommando um Optionen, die den Zeitbereich auf
+ErgÃ¤nze das Kommando um Optionen, die den Zeitbereich auf
 den Bereich $start und $stop eingrenzen.
 
 =head4 Examples
@@ -184,7 +184,7 @@ Start- und Ende-Zeitpunkt:
   =>
   -ss 5.5 -t 20.5
 
-=head3 addBitrate() - Füge Bitrate-Option hinzu
+=head3 addBitrate() - FÃ¼ge Bitrate-Option hinzu
 
 =head4 Synopsis
 
@@ -192,9 +192,9 @@ Start- und Ende-Zeitpunkt:
 
 =head4 Description
 
-Ergänze das Kommando um eine allgemeine Bitrate-Option mit
+ErgÃ¤nze das Kommando um eine allgemeine Bitrate-Option mit
 Suffix 'k' (= kb/s). Ist die Bitrate 0, '' oder undef, wird
-die Option nicht hinzugefügt.
+die Option nicht hinzugefÃ¼gt.
 
 =head4 Examples
 
@@ -204,7 +204,7 @@ Bitrate von 10000k:
   =>
   -b 10000k
 
-=head3 addOutput() - Füge Output-Argument hinzu
+=head3 addOutput() - FÃ¼ge Output-Argument hinzu
 
 =head4 Synopsis
 
@@ -212,8 +212,8 @@ Bitrate von 10000k:
 
 =head4 Description
 
-Ergänze das Kommando um Output $output.
-Die Methode liefert keinen Wert zurück.
+ErgÃ¤nze das Kommando um Output $output.
+Die Methode liefert keinen Wert zurÃ¼ck.
 
 =head4 Examples
 
@@ -229,7 +229,7 @@ Muster:
   =>
   'img/%06d.jpg'
 
-=head3 addString() - Füge Zeichenkette am Ende hinzu
+=head3 addString() - FÃ¼ge Zeichenkette am Ende hinzu
 
 =head4 Synopsis
 
@@ -237,7 +237,7 @@ Muster:
 
 =head4 Description
 
-Füge Zeichenkette $str am Ende der Kommandozeile hinzu, mit einem
+FÃ¼ge Zeichenkette $str am Ende der Kommandozeile hinzu, mit einem
 Leerzeichen als Trenner.
 
 =head4 Example
@@ -248,7 +248,7 @@ Kommando nach Objekt-Instantiierung:
   =>
   ffprobe
 
-=head3 prependString() - Füge Zeichenkette am Anfang hinzu
+=head3 prependString() - FÃ¼ge Zeichenkette am Anfang hinzu
 
 =head4 Synopsis
 
@@ -256,8 +256,8 @@ Kommando nach Objekt-Instantiierung:
 
 =head4 Description
 
-Füge Zeichenkette $str am Beginn der Kommandozeile hinzu.
-Ein Leerzeichen wird automatisch hinzugefügt.
+FÃ¼ge Zeichenkette $str am Beginn der Kommandozeile hinzu.
+Ein Leerzeichen wird automatisch hinzugefÃ¼gt.
 
 =head4 Example
 
@@ -278,18 +278,18 @@ Kommando voranstellen:
 
 =head4 Description
 
-Erzeuge eine Crop-Filter-Spezifikation für die angegebenen
-Argumente und liefere diese zurück.
+Erzeuge eine Crop-Filter-Spezifikation fÃ¼r die angegebenen
+Argumente und liefere diese zurÃ¼ck.
 
 =head4 Examples
 
-Nur Breite und Höhe:
+Nur Breite und HÃ¶he:
 
   $cmd->cropFilter(1280,720);
   =>
   'crop=1280:720'
 
-Breite, Höhe, X-Offset, Y-Offset:
+Breite, HÃ¶he, X-Offset, Y-Offset:
 
   $cmd->cropFilter(1280,720,240,0);
   =>
@@ -304,20 +304,20 @@ Breite, Höhe, X-Offset, Y-Offset:
 
 =head4 Description
 
-Erzeuge eine Crop-Filter-Spezifikation für die angegebenen
-Argumente und liefere diese zurück.
+Erzeuge eine Crop-Filter-Spezifikation fÃ¼r die angegebenen
+Argumente und liefere diese zurÃ¼ck.
 
 Sind die Argumente undefiniert, wird eine leere Liste geliefert.
 
 =head4 Examples
 
-Breite und Höhe als getrennte Argumente:
+Breite und HÃ¶he als getrennte Argumente:
 
   $cmd->scaleFilter(1280,720);
   =>
   'scale=1280:720'
 
-Breite und Höhe in einem Argument:
+Breite und HÃ¶he in einem Argument:
 
   $cmd->scaleFilter('1280:720');
   =>
@@ -337,7 +337,7 @@ Undefiniertes Argument:
 
 =head4 Description
 
-Erzeuge eine Fps-Filter-Spezifikation und liefere diese zurück.
+Erzeuge eine Fps-Filter-Spezifikation und liefere diese zurÃ¼ck.
 Ist das Argument undef, liefere eine leere Liste.
 
 =head4 Examples
@@ -362,7 +362,7 @@ Undefiniertes Argument:
 
 =head4 Description
 
-Erzeuge eine Framestep-Filter-Spezifikation und liefere diese zurück.
+Erzeuge eine Framestep-Filter-Spezifikation und liefere diese zurÃ¼ck.
 Ist das Argument undef, liefere eine leere Liste.
 
 =head4 Examples
@@ -390,10 +390,10 @@ Undefiniertes Argument:
 
 =head4 Description
 
-Setze oder liefere die Bezeichnung für die Ausgabe-Datei.
-Die Angabe wird für den Suffix der Ausgabe-Datei genutzt.
+Setze oder liefere die Bezeichnung fÃ¼r die Ausgabe-Datei.
+Die Angabe wird fÃ¼r den Suffix der Ausgabe-Datei genutzt.
 
-=head3 outSize() - Setze/Liefere Breite und Höhe Video-Ausgabe
+=head3 outSize() - Setze/Liefere Breite und HÃ¶he Video-Ausgabe
 
 =head4 Synopsis
 
@@ -402,8 +402,8 @@ Die Angabe wird für den Suffix der Ausgabe-Datei genutzt.
 
 =head4 Description
 
-Setze oder liefere die Höhe und Breite der Video-Ausgabe.
-Die Angabe wird für den Suffix der Video-Ausgabe-Datei genutzt.
+Setze oder liefere die HÃ¶he und Breite der Video-Ausgabe.
+Die Angabe wird fÃ¼r den Suffix der Video-Ausgabe-Datei genutzt.
 
 =head3 outStart() - Setze/Liefere Start-Zeitpunkt
 
@@ -415,7 +415,7 @@ Die Angabe wird für den Suffix der Video-Ausgabe-Datei genutzt.
 =head4 Description
 
 Setze oder liefere den Start-Zeitpunkt der Ausgabe.
-Die Angabe wird für den Suffix der Ausgabe-Datei genutzt.
+Die Angabe wird fÃ¼r den Suffix der Ausgabe-Datei genutzt.
 
 =head3 outStop() - Setze/Liefere Stop-Zeitpunkt
 
@@ -427,11 +427,11 @@ Die Angabe wird für den Suffix der Ausgabe-Datei genutzt.
 =head4 Description
 
 Setze oder liefere den Stop-Zeitpunkt der Ausgabe.
-Die Angabe wird für den Suffix der Ausgabe-Datei genutzt.
+Die Angabe wird fÃ¼r den Suffix der Ausgabe-Datei genutzt.
 
-=head2 Klassenmethoden (vollständige Kommandozeilen)
+=head2 Klassenmethoden (vollstÃ¤ndige Kommandozeilen)
 
-=head3 imagesToVideo() - Füge Bild-Sequenz zu einem Video zusammen
+=head3 imagesToVideo() - FÃ¼ge Bild-Sequenz zu einem Video zusammen
 
 =head4 Synopsis
 
@@ -443,8 +443,8 @@ Die Angabe wird für den Suffix der Ausgabe-Datei genutzt.
 
 =item $pattern
 
-Pfad-Muster der Bilder. Enthält das Pfad-Muster einen Stern (*),
-wird C<-pattern_type glob> gewählt.
+Pfad-Muster der Bilder. EnthÃ¤lt das Pfad-Muster einen Stern (*),
+wird C<-pattern_type glob> gewÃ¤hlt.
 
 Beispiele:
 
@@ -485,15 +485,15 @@ offen, bis es per Hand geschlossen wird.
 
 =item -preset => $preset (Default: undef)
 
-Satz an vorgewählten Optionen, für Encoding-Zeit
-vs. Kompressionsrate. Mögliche Werte: ultrafast, superfast,
+Satz an vorgewÃ¤hlten Optionen, fÃ¼r Encoding-Zeit
+vs. Kompressionsrate. MÃ¶gliche Werte: ultrafast, superfast,
 veryfast, faster, fast, medium, slow, slower, veryslow. Siehe
 L<https://trac.ffmpeg.org/wiki/Encode/H.264>.
 
 =item -size => "$width:$height" (Default: undef)
 
-Breite und Höhe des generierten Video. Ohne Angabe nimmt
-ffmpeg die Größe der Bilder.
+Breite und HÃ¶he des generierten Video. Ohne Angabe nimmt
+ffmpeg die GrÃ¶ÃŸe der Bilder.
 
 =item -videoBitrate => $bitrate (Default: 60_000)
 
@@ -511,8 +511,8 @@ Framerate des Video.
 
 =head4 Description
 
-Generiere ein ffmpeg-Kommando zum Zusammenfügen der Bilder
-$pattern zu Video $output und liefere dieses Kommando zurück.
+Generiere ein ffmpeg-Kommando zum ZusammenfÃ¼gen der Bilder
+$pattern zu Video $output und liefere dieses Kommando zurÃ¼ck.
 
 =head3 videoToImages() - Extrahiere Bild-Sequenz (Frames) aus Video
 
@@ -526,8 +526,8 @@ $pattern zu Video $output und liefere dieses Kommando zurück.
 
 =item -aspectRatio => '16:9'|'4:3' (Default: undef)
 
-Gewünschtes Seitenverhältnis der Bilder. Hat das Video ein
-abweichendes Seitenverhältnis, wird ein entsprechender Crop-Filter
+GewÃ¼nschtes SeitenverhÃ¤ltnis der Bilder. Hat das Video ein
+abweichendes SeitenverhÃ¤ltnis, wird ein entsprechender Crop-Filter
 aufgesetzt.
 
 =item -framestep => $n (Default: 1)
@@ -537,15 +537,15 @@ Extrahiere jeden $n-ten Frame.
 =item -pixelFormat=FMT (Default: 'yuvj422p')
 
 Pixel-Format des erzeugten Bildes. Laut Aussage im Netz ist yuvj422p
-das Standard-Pixel-Format für jpeg-Dateien. Wird das Pixel-Format
-hier nicht geändert, erzeugt ffmpeg die Bilder in Pixelformat
-yuvj420p, was Probleme beim Zusammenfügen mit Bildern einer
+das Standard-Pixel-Format fÃ¼r jpeg-Dateien. Wird das Pixel-Format
+hier nicht geÃ¤ndert, erzeugt ffmpeg die Bilder in Pixelformat
+yuvj420p, was Probleme beim ZusammenfÃ¼gen mit Bildern einer
 Kamera zu einem Film macht.
 
 =item -quality => $n (Default: 2)
 
-Qualität der generierten jpg-Bilddateien. Wertebereich: 2-31, mit
-2 als bester und 31 als schlechtester Qualität.
+QualitÃ¤t der generierten jpg-Bilddateien. Wertebereich: 2-31, mit
+2 als bester und 31 als schlechtester QualitÃ¤t.
 
 =item -start => $s (Default: 0)
 
@@ -564,7 +564,7 @@ des Video, an dem das Extrahieren der Frames endet.
 Generiere ein ffmpeg-Kommando, das die Frames aus dem Video $input
 extrahiert und im Verzeichnis $dir speichert. Die Bilder haben
 das Format 'jpg'. Der Name der Dateien ist NNNNNN.jpg, von 1 an
-lückenlos aufsteigend.
+lÃ¼ckenlos aufsteigend.
 
 =head4 Examples
 
@@ -577,7 +577,7 @@ Ohne Optionen:
       -qscale:v 2
       'img/%06d.jpg'
 
-Video-Seitenverhältnis 16:9 zu Bild-Seitenverhältnis 4:3 wandeln:
+Video-SeitenverhÃ¤ltnis 16:9 zu Bild-SeitenverhÃ¤ltnis 4:3 wandeln:
 
   $ffm->videoToImages('video.mp4','img',
       -aspectRatio => '4:3',
@@ -631,7 +631,7 @@ Ausgabe-Datei.
 
 =item -name => $str (Default: undef)
 
-Füge dem Dateinamen die Bezeichnung $str hinzu.
+FÃ¼ge dem Dateinamen die Bezeichnung $str hinzu.
 
 =item -play => 0|1|2 (Default: 0)
 
@@ -655,7 +655,7 @@ akzeptiert.
 Extrahiere von Position $start bis Position $stop einen Teil
 aus der Audio- oder Video-Datei $input und schreibe ihn auf Datei $output.
 
-Die Extraktion erfolgt ohne Transcoding, also ohne Qualitätsverlust.
+Die Extraktion erfolgt ohne Transcoding, also ohne QualitÃ¤tsverlust.
 
 =head3 extract169To43() - Extrahiere/Croppe 16:9-Video zu 4:3-Video
 
@@ -687,7 +687,7 @@ Die Bitrate des generierten Video in kb/s.
 
 =item -name => $str (Default: undef)
 
-Füge dem Dateinamen die Bezeichnung $str hinzu.
+FÃ¼ge dem Dateinamen die Bezeichnung $str hinzu.
 
 =item -play => 0|1|2 (Default: 0)
 
@@ -737,13 +737,13 @@ Index des Video-Stream.
 
 =head4 Description
 
-Erzeuge eine ffprobe-Kommandozeile, die Information über den
+Erzeuge eine ffprobe-Kommandozeile, die Information Ã¼ber den
 Video-Stream $streamIndex in Datei $input liefert. Ist kein
 Stream-Index angegeben, wird der erste Stream (Index 0) genommen.
 
-=head2 Kommando-Ausführung
+=head2 Kommando-AusfÃ¼hrung
 
-=head3 execute() - Führe FFmpeg-Kommandozeile aus
+=head3 execute() - FÃ¼hre FFmpeg-Kommandozeile aus
 
 =head4 Synopsis
 
@@ -751,7 +751,7 @@ Stream-Index angegeben, wird der erste Stream (Index 0) genommen.
 
 =head4 Description
 
-Führe FFmpeg-Kommando $cmd aus. Als Ausgabe erscheint lediglich
+FÃ¼hre FFmpeg-Kommando $cmd aus. Als Ausgabe erscheint lediglich
 die Fortschrittsanzeige.
 
 =head1 VERSION

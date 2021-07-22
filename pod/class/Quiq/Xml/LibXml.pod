@@ -10,8 +10,8 @@ XML::LibXML
 
 =head1 DESCRIPTION
 
-Dieses Modul lädt XML::LibXML und erweitert dessen Klassen
-um zusätzliche Funktionalität.
+Dieses Modul lÃ¤dt XML::LibXML und erweitert dessen Klassen
+um zusÃ¤tzliche FunktionalitÃ¤t.
 
 =head1 METHODS
 
@@ -46,7 +46,7 @@ Unterschied zur Methode $doc->toString()
 
 =item *
 
-werden zunächst alle leeren Textknoten aus dem Dokument entfernt
+werden zunÃ¤chst alle leeren Textknoten aus dem Dokument entfernt
 (da bei "mixed content" die Methode toString() keine
 Formatierung vornimmt)
 
@@ -74,7 +74,7 @@ nichts
 
 Entferne den Knoten aus dem Dokument.
 
-Dies ist ein Alias für die Methode $nod->unbindNode(), deren Name
+Dies ist ein Alias fÃ¼r die Methode $nod->unbindNode(), deren Name
 ein wenig inkonsequent ist in Bezug auf $nod->removeChild(),
 $nod->removeChildNodes().
 

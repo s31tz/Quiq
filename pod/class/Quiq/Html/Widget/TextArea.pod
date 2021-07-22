@@ -42,7 +42,7 @@ JavaScript-Handler.
 
 =item rows => $n (Default: undef)
 
-Sichtbare Hˆhe des Texteingabefeldes in Zeilen.
+Sichtbare H√∂he des Texteingabefeldes in Zeilen.
 
 =item style => $style (Default: undef)
 
@@ -54,7 +54,7 @@ Wenn wahr, liefere C<undef> als Widget-Code.
 
 =item value => $str (Default: undef)
 
-Anf‰nglicher Wert des Felds.
+Anf√§nglicher Wert des Felds.
 
 =back
 
