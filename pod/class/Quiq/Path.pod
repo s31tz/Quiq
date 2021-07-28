@@ -119,6 +119,7 @@ Ist dies der Fall, liefere I<wahr>, andernfalls I<falsch>.
 =head4 Synopsis
 
   $bool = $class->compareData($file,$data);
+  $bool = $class->compareData($file,$data,$encoding);
 
 =head4 Alias
 

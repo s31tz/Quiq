@@ -227,6 +227,7 @@ sub compare {
 =head4 Synopsis
 
   $bool = $class->compareData($file,$data);
+  $bool = $class->compareData($file,$data,$encoding);
 
 =head4 Alias
 
@@ -243,15 +244,15 @@ nicht existieren.
 # -----------------------------------------------------------------------------
 
 sub compareData {
-    my $class = shift;
-    my $file = shift;
-    # @_: $data
+    my ($class,$file,$data,$encoding) = @_;
 
-    if (!-e $file || -s $file != length $_[0]) {
+    require bytes;
+    if (!-e $file || -s $file != bytes::length($data)) {
         return 1;
     }
 
-    return $class->read($file) eq $_[0]? 0: 1;
+    my $fileData = $class->read($file,-decode=>$encoding);
+    return $fileData eq $data? 0: 1;
 }
 
 {
@@ -527,6 +528,7 @@ sub edit {
     my ($file,$dataR) = ref $_[0]? (undef,shift): (shift,undef);
     # @_: $file -or- \$data
 
+    my $encoding = 'utf-8';
     my $changed = 0;
     my $tmpFile = Quiq::TempFile->new;
 
@@ -536,7 +538,7 @@ sub edit {
     }
     else { # $dataR
         # Schreibe Daten auf temporäre Datei
-        $this->write($tmpFile,$$dataR,-encode=>'utf-8');
+        $this->write($tmpFile,$$dataR,-encode=>$encoding);
     }
 
     # Öffne Tempdatei im Editor
@@ -551,7 +553,7 @@ sub edit {
         }
     }
     else {
-        if ($this->compareData($tmpFile,$$dataR)) {
+        if ($this->compareData($tmpFile,$$dataR,$encoding)) {
             $ask = 1;
         }
     }
