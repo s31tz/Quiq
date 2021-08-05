@@ -789,7 +789,7 @@ Das Benchmark-Programm (bench-hash):
 
 =head1 VERSION
 
-1.193
+1.194
 
 =head1 SOURCE
 
