@@ -293,6 +293,10 @@ L<Quiq::Gd::Image|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gd/Im
 
 =item *
 
+L<Quiq::Gimp|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gimp.pod> - GIMP Operationen
+
+=item *
+
 L<Quiq::Gnuplot::Arrow|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Gnuplot/Arrow.pod> - Gnuplot-Arrow
 
 =item *
