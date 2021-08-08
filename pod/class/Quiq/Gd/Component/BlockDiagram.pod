@@ -112,7 +112,7 @@ Zeichne die Grafik in Bild $img an Position ($x,$y).
 
 =head1 VERSION
 
-1.194
+1.195
 
 =head1 SOURCE
 
