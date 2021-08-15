@@ -15,19 +15,29 @@ sub test_loadClass : Init(1) {
 
 # -----------------------------------------------------------------------------
 
-sub test_dump : Test(3) {
+sub test_dump : Test(4) {
     my $self = shift;
 
-    eval {Quiq::Dumper->dump('')};
-    $self->like($@,qr/Argument must be a reference/);
+    my $str = Quiq::Dumper->dump(undef);
+    $self->is($str,'undef');
 
-    my $ref;
+    $str = Quiq::Dumper->dump('abc');
+    $self->is($str,'"abc"');
 
-    my $str = Quiq::Dumper->dump(\undef);
+    $str = Quiq::Dumper->dump(\undef);
     $self->is($str,'\undef');
 
     $str = Quiq::Dumper->dump(\'abc');
     $self->is($str,'\"abc"');
+
+    $str = Quiq::Dumper->dump({a=>1,b=>2,c=>3});
+    warn $str;
+
+    $str = Quiq::Dumper->dump([1,2,3]);
+    warn $str;
+
+    $str = Quiq::Dumper->dump(qr/^(abc|def)/);
+    warn $str;
 }
 
 # -----------------------------------------------------------------------------

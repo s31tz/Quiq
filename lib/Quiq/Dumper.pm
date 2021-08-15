@@ -27,13 +27,13 @@ L<Quiq::Object>
 
 =head4 Synopsis
 
-  $str = $this->dump($ref);
+  $str = $this->dump($scalar);
 
 =head4 Arguments
 
 =over 4
 
-=item $ref
+=item $scalar
 
 Referenz auf eine Datenstruktur.
 
@@ -52,36 +52,87 @@ als Zeichenkette, so dass sie zu Debugzwecken ausgegeben werden kann.
 
 # -----------------------------------------------------------------------------
 
+my $maxDepth = 2;
+
 sub dump {
-    my ($this,$ref) = splice @_,0,2;
+    my ($this,$arg) = splice @_,0,2;
+    my $depth = shift // 0;
     my $seenH = shift // {};
 
-    my $str = '';
-    if (!ref $ref) {
-        $this->throw(
-            'DUMPER-00001: Argument must be a reference',
-            Argument => $ref,
-        );
+    $depth++;
+
+    # Einfacher Skalar
+
+    if (!ref $arg) {
+        if (!defined $arg) {
+            return 'undef';
+        }
+        $arg =~ s/\n/\\n/g;
+        $arg =~ s/\r/\\r/g;
+        return qq|"$arg"|;
     }
 
-    my $refType = Scalar::Util::reftype($ref);
+    # Referenz
+
+    if ($seenH->{$arg}) {
+        return "SEEN $arg";
+    }
+    $seenH->{$arg}++;
+
+    my $ref = ref $arg;
+    my $refType = Scalar::Util::reftype($arg);
+
     if ($refType eq 'SCALAR') {
-        if (!defined $$ref) {
-            $str = 'undef';
-        }
-        else {
-            $str = qq|"$$ref"|;
-        }
-        $str = '\\'.$str;
+        return '\\'.$this->dump($$arg,$depth,$seenH);
     }
-    else {
-        $this->throw(
-            'DUMPER-00002: Unknown reference type',
-            ReferenceType => "$refType - $ref",
-        );
+    elsif ($refType eq 'ARRAY') {
+        my $str = '';
+        if ($depth <= $maxDepth) {
+            for (my $i = 0; $i < @$arg; $i++) {
+                if ($str) {
+                    $str .= ",\n";
+                }
+                $str .= $this->dump($arg->[$i],$depth,$seenH);
+            }
+            if ($str) {
+                $str =~ s/^/  /mg;
+                $str = "\n$str\n";
+            }
+        }
+        $str = "[$str]";
+        if ($refType ne $ref) {
+            $str = "$ref $str";
+        }
+        return $str;
+    }
+    elsif ($refType eq 'HASH') {
+        my $str = '';
+        if ($depth <= $maxDepth) {
+            for my $key (sort keys %$arg) {
+                if ($str) {
+                    $str .= ",\n";
+                }
+                $str .= "$key => ".$this->dump($arg->{$key},$depth,$seenH);
+            }
+            if ($str) {
+                $str =~ s/^/  /mg;
+                $str = "\n$str\n";
+            }
+        }
+        $str = "{$str}";
+        if ($refType ne $ref) {
+            $str = "$ref $str";
+        }
+        return $str;
+    }
+    elsif ($refType eq 'REGEXP') {
+        return "/$arg/";
     }
 
-    return $str;
+    $this->throw(
+        'DUMPER-00002: Unknown reference type',
+        ReferenceType => "$refType - $arg",
+    );
 }
 
 # -----------------------------------------------------------------------------

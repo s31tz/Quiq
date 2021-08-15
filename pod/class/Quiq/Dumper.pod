@@ -14,13 +14,13 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head4 Synopsis
 
-  $str = $this->dump($ref);
+  $str = $this->dump($scalar);
 
 =head4 Arguments
 
 =over 4
 
-=item $ref
+=item $scalar
 
 Referenz auf eine Datenstruktur.
 
