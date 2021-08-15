@@ -213,6 +213,10 @@ L<Quiq::DirHandle|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/DirHa
 
 =item *
 
+L<Quiq::Dumper|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Dumper.pod> - Ausgabe Datenstruktur
+
+=item *
+
 L<Quiq::Duration|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Duration.pod> - Rechnen und Konvertieren von Zeiträumen
 
 =item *
