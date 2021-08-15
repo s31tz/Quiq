@@ -7,6 +7,7 @@ use warnings;
 
 our $VERSION = '1.195';
 
+use Quiq::AnsiColor;
 use Scalar::Util ();
 
 # -----------------------------------------------------------------------------
@@ -53,6 +54,7 @@ als Zeichenkette, so dass sie zu Debugzwecken ausgegeben werden kann.
 # -----------------------------------------------------------------------------
 
 my $maxDepth = 2;
+my $a = Quiq::AnsiColor->new(1);
 
 sub dump {
     my ($this,$arg) = splice @_,0,2;
@@ -101,7 +103,7 @@ sub dump {
         }
         $str = "[$str]";
         if ($refType ne $ref) {
-            $str = "$ref $str";
+            $str = $a->str('bold dark blue',$ref).' '.$str;
         }
         return $str;
     }
@@ -112,7 +114,7 @@ sub dump {
                 if ($str) {
                     $str .= ",\n";
                 }
-                $str .= "$key => ".$this->dump($arg->{$key},$depth,$seenH);
+                $str .= "'$key' => ".$this->dump($arg->{$key},$depth,$seenH);
             }
             if ($str) {
                 $str =~ s/^/  /mg;
@@ -121,7 +123,7 @@ sub dump {
         }
         $str = "{$str}";
         if ($refType ne $ref) {
-            $str = "$ref $str";
+            $str = $a->str('bold dark blue',$ref).' '.$str;
         }
         return $str;
     }
