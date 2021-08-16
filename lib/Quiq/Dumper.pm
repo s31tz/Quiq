@@ -53,7 +53,7 @@ als Zeichenkette, so dass sie zu Debugzwecken ausgegeben werden kann.
 
 # -----------------------------------------------------------------------------
 
-my $maxDepth = 1;
+my $maxDepth = undef;
 my $a = Quiq::AnsiColor->new(1);
 
 sub dump {
@@ -89,7 +89,7 @@ sub dump {
     }
     elsif ($refType eq 'ARRAY') {
         my $str = '';
-        if ($depth <= $maxDepth) {
+        if (!defined($maxDepth) || $depth <= $maxDepth) {
             for (my $i = 0; $i < @$arg; $i++) {
                 if ($str) {
                     $str .= ",\n";
@@ -112,7 +112,7 @@ sub dump {
     }
     elsif ($refType eq 'HASH') {
         my $str = '';
-        if ($depth <= $maxDepth) {
+        if (!defined($maxDepth) || $depth <= $maxDepth) {
             for my $key (sort keys %$arg) {
                 if ($str) {
                     $str .= ",\n";
