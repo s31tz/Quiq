@@ -53,7 +53,7 @@ als Zeichenkette, so dass sie zu Debugzwecken ausgegeben werden kann.
 
 # -----------------------------------------------------------------------------
 
-my $maxDepth = 2;
+my $maxDepth = 1;
 my $a = Quiq::AnsiColor->new(1);
 
 sub dump {
@@ -63,7 +63,7 @@ sub dump {
 
     $depth++;
 
-    # Einfacher Skalar
+    # Skalar
 
     if (!ref $arg) {
         if (!defined $arg) {
@@ -101,6 +101,9 @@ sub dump {
                 $str = "\n$str\n";
             }
         }
+        else {
+            $str = @$arg;
+        }
         $str = "[$str]";
         if ($refType ne $ref) {
             $str = $a->str('bold dark blue',$ref).' '.$str;
@@ -120,6 +123,9 @@ sub dump {
                 $str =~ s/^/  /mg;
                 $str = "\n$str\n";
             }
+        }
+        else {
+            $str = keys %$arg;
         }
         $str = "{$str}";
         if ($refType ne $ref) {
