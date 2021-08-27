@@ -853,6 +853,10 @@ L<Quiq::Timeseries::Synchronizer|https://github.com/s31tz/Quiq/tree/master/pod/c
 
 =item *
 
+L<Quiq::Trash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Trash.pod> - Operationen auf dem Trash von XFCE
+
+=item *
+
 L<Quiq::TreeFormatter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/TreeFormatter.pod> - Erzeugung von Baumdarstellungen
 
 =item *
