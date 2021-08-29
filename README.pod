@@ -221,6 +221,10 @@ L<Quiq::Duration|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Durati
 
 =item *
 
+L<Quiq::Eog|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Eog.pod> - Operationen mit eog
+
+=item *
+
 L<Quiq::Epoch|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Epoch.pod> - Ein Zeitpunkt
 
 =item *

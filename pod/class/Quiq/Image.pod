@@ -102,33 +102,6 @@ Bild-Extension (.jpg, .png, .gif) besitzen. Bei Dateien ohne
 Extension wird mittels Quiq::Image->type() geprüft, ob es sich
 um eine Bild-Datei handelt.
 
-=head3 pickImagesWithEog() - Wähle Bilddateien mit eog aus
-
-=head4 Synopsis
-
-  @files|$fileA = $class->pickImagesWithEog(@filesAndDirs);
-
-=head4 Arguments
-
-=over 4
-
-=item @filesAndDirs
-
-Liste von Bilddateien und Verzeichnissen mit Bilddateien. Eog ermittelt
-die Bilddateien in Verzeichnissen eigenständig, aber nicht rekursiv.
-
-=back
-
-=head4 Description
-
-Zeige die Bilddateien mit C<eog> an. Bilder, die in C<eog> mit C<DEL>
-gelöscht werden, landen im Trash. Nach Verlassen von C<eog> kehrt die
-Methode zurück und liefert die Liste aller Dateien im Trash. Diese
-können dann nach Wunsch verarbeitet werden.
-
-Ist der Trash bei Aufruf der Methode nicht leer, wird gefragt, ob
-die Dateien im Trash gelöscht werden sollen.
-
 =head3 standardName() - Standard-Name eines Bildes
 
 =head4 Synopsis
