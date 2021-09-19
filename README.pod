@@ -721,6 +721,10 @@ L<Quiq::Section::Parser|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq
 
 =item *
 
+L<Quiq::Sendmail|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sendmail.pod> - Versende Mail mit sendmail
+
+=item *
+
 L<Quiq::Shell|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Shell.pod> - Ausführung von Shell-Kommandos
 
 =item *
