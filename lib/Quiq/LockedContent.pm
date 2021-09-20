@@ -7,6 +7,7 @@ use warnings;
 
 our $VERSION = '1.195';
 
+use Quiq::Path;
 use Quiq::FileHandle;
 
 # -----------------------------------------------------------------------------
@@ -54,7 +55,8 @@ Objekt
 # -----------------------------------------------------------------------------
 
 sub new {
-    my ($class,$file) = @_;
+    my $class = shift;
+    my $file = Quiq::Path->expandTilde(shift);
 
     my $fh = Quiq::FileHandle->open('+>>',$file,-lock=>'EX');
     $fh->autoFlush;
@@ -151,7 +153,7 @@ sub write {
     # @_: $data
 
     my $fh = $self->[1];
-    $fh->seek(0);
+    $fh->truncate;
     $fh->print($_[0]);
 
     return;
