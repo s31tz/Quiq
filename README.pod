@@ -573,6 +573,10 @@ L<Quiq::List|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/List.pod> 
 
 =item *
 
+L<Quiq::LockedContent|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/LockedContent.pod> - Persistenter Dateininhalt mit Lock
+
+=item *
+
 L<Quiq::LockedCounter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/LockedCounter.pod> - Persistenter Zähler mit Lock
 
 =item *
