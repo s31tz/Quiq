@@ -633,6 +633,10 @@ L<Quiq::Perl|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Perl.pod> 
 
 =item *
 
+L<Quiq::PerlModule|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PerlModule.pod> - Perl-Modul
+
+=item *
+
 L<Quiq::PlotlyJs|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs.pod> - Basisfunktionalität/Notizen zu Plotly.js
 
 =item *

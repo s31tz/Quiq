@@ -1,0 +1,167 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::PerlModule - Perl-Modul
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert ein Perl-Modul im Dateisystem.
+Hinsichtlich seiner Installation.
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+  $mod = $class->new($name);
+
+=head4 Description
+
+Instantiiere Objekt für Perl-Modul $name und liefere eine Referenz
+auf dieses Objekt zurück.
+
+=head2 Accessors
+
+=head3 name() - Liefere Name des Moduls
+
+=head4 Synopsis
+
+  $name = $mod->name;
+
+=head4 Example
+
+  A::B::C
+
+=head2 Methods
+
+=head3 isCore() - Teste, ob Core-Modul
+
+=head4 Synopsis
+
+  $bool = $mod->isCore;
+
+=head4 Description
+
+Liefere "wahr", wenn das Modul ein Core-Modul ist, andernfalls falsch.
+
+Ein Perl-Modul ist ein Core-Modul, wenn es bei den Perl-Quellen
+dabei ist, also mit dem Perl-Interpreter zusammen installiert wird.
+
+=head3 isPragma() - Teste, ob Pragma
+
+=head4 Synopsis
+
+  $bool = $mod->isPragma;
+
+=head4 Description
+
+Liefere "wahr", wenn das Modul ein Pragma ist, andernfalls falsch.
+
+Ein Perl-Modul ist ein Pragma, wenn sein Name keine
+Großbuchstaben enthält.
+
+=head3 find() - Suche Modul im Dateisystem
+
+=head4 Synopsis
+
+  $path = $mod->find;
+
+=head4 Description
+
+Liefere den Pfad, unter dem das Modul geladen würde (mit use
+oder require).
+
+=head4 Example
+
+  use A::B::C;
+  print Quiq::PerlModule->new('A::B::C')->find;
+  # '/usr/lib/perl5/site_perl/5.10.0/A/B/C.pm'
+
+=head3 loadPath() - Liefere den Lade-Pfad
+
+=head4 Synopsis
+
+  $path = $mod->loadPath;
+
+=head4 Description
+
+Liefere den Pfad, unter dem das Modul geladen wurde (mit use
+oder require).
+
+Diese Methode ist nützlich, wenn einem nicht klar ist, aus
+welchem Pfad heraus Perl ein Modul geladen hat, z.B. weil möglicherweise
+mehrere Versionen des Moduls unter verschiedenen Pfaden installiert
+sind.
+
+Ohne Quiq::PerlModule kann dieselbe Information auf folgendem Weg herausgefunden
+werden -  A::B::C sei das Modul:
+
+  $INC{'A/B/C.pm'}
+
+Existiert der Eintrag nicht, wurde das Modul nicht geladen.
+
+=head4 Example
+
+  use A::B::C;
+  print Quiq::PerlModule->new('A::B::C')->loadPath;
+  # '/usr/lib/perl5/site_perl/5.10.0/A/B/C.pm'
+
+=head3 nameToPath() - Liefere Modulpfad zum Modulnamen
+
+=head4 Synopsis
+
+  $path = $class->nameToPath($name); # Klassenmethode
+  $path = $mod->nameToPath; # Objektmethode
+
+=head4 Description
+
+Wandele Modulname (wie er bei use angegeben wird) in Modulpfad
+(wie er in %INC als Schlüssel vorkommt) um und liefere diesen zurück.
+
+=head4 Example
+
+  'A::B::C' => 'A/B/C.pm'
+
+=head3 pathToName() - Liefere Modulname zum Modulpfad
+
+=head4 Synopsis
+
+  $name = $class->pathToName($path);
+
+=head4 Description
+
+Wandele Modulpfad (wie er in %INC als Schlüssel vorkommt) in Modulnamen
+(wie er bei use angegeben wird) um und liefere diesen zurück.
+
+=head4 Example
+
+  'A/B/C.pm' ==> 'A::B::C'
+
+=head1 VERSION
+
+1.195
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/PerlModule.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2021 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
