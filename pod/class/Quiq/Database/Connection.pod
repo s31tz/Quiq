@@ -232,7 +232,7 @@ DBMS-spezifische Unterscheidungen vorgenommen werden müssen.
 
 =head4 Synopsis
 
-  ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) = $db->dbmsTestVector;
+  ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql,$jdbc) = $db->dbmsTestVector;
 
 =head3 isOracle() - Prüfe auf Oracle-DBMS
 
@@ -298,6 +298,17 @@ sonst "falsch".
 =head4 Description
 
 Liefere "wahr", wenn die Datenbank eine MSSQL-Datenbank ist,
+sonst "falsch".
+
+=head3 isJDBC() - Prüfe auf JDBC-DBMS
+
+=head4 Synopsis
+
+  $bool = $db->isJDBC;
+
+=head4 Description
+
+Liefere "wahr", wenn die Datenbank eine JDBC-Datenbank ist,
 sonst "falsch".
 
 =head2 Handle

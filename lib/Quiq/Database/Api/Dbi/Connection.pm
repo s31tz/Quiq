@@ -172,6 +172,9 @@ sub new {
         elsif ($dbms eq 'access') {
             $msg = sprintf('ACCESS-%05d: %s',$err,$errstr);
         }
+        elsif ($dbms eq 'jdbc') {
+            $msg = sprintf('JDBC-%05d: %s',$err,$errstr);
+        }
 
         if ($stmt) {
             substr($stmt,$pos,0) = '<*>' if $pos;
@@ -197,6 +200,10 @@ sub new {
         $strict = 0;
     }
     else {
+# $dsn =~ s/%3B/;/g;
+# $dsn =~ s/%3D/=/g;
+warn "$dsn  $user  $passw\n";
+
         $dbh = DBI->connect($dsn,$user,$passw,{
             HandleError => $errSub,
             RaiseError => 1,
@@ -253,6 +260,8 @@ sub new {
             }
             $dbh->{LongTruncOk} = 0; # RuV Auftrags-DB
             $dbh->{LongReadLen} = 3*1024*1024; # 3MB / 32768; # RuV Auftrags-DB
+        }
+        elsif ($dbms eq 'jdbc') {
         }
         else {
             $class->throw('Not implemented');

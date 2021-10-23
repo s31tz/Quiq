@@ -445,6 +445,8 @@ my %Commands = (
     ],
     MSSQL => [
     ],
+    JDBC => [
+    ],
 );
 
 sub commands {
@@ -566,6 +568,15 @@ my %DataType = (
         BLOB => 'LONGBINARY',
     },
     MSSQL => {
+        # FIXME: Ungeprüft
+        STRING => 'TEXT',
+        TEXT => 'MEMO',
+        INTEGER => 'LONG',
+        REAL => 'DOUBLE',
+        DATETIME => 'DATETIME',
+        BLOB => 'LONGBINARY',
+    },
+    JDBC => {
         # FIXME: Ungeprüft
         STRING => 'TEXT',
         TEXT => 'MEMO',
@@ -926,7 +937,7 @@ sub setDateFormat {
     my $self = shift;
     my $format = shift || 'iso';
 
-    my ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) =
+    my ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql,$jdbc) =
         $self->dbmsTestVector;
 
     # Statement generieren
@@ -945,7 +956,7 @@ sub setDateFormat {
             return ('SET datestyle TO iso, ymd');
         }
     }
-    elsif ($sqlite || $mysql || $access || $mssql) {
+    elsif ($sqlite || $mysql || $access || $mssql || $jdbc) {
         return; # FIXME: bislang nicht untersucht
     }
 
@@ -993,7 +1004,7 @@ sub setNumberFormat {
     my $self = shift;
     my $format = shift || '.,';
 
-    my ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) =
+    my ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql,$jdbc) =
         $self->dbmsTestVector;
 
     # Statement generieren
@@ -1002,7 +1013,7 @@ sub setNumberFormat {
     if ($oracle) {
         return ("ALTER SESSION SET NLS_NUMERIC_CHARACTERS = '$format'");
     }
-    elsif ($postgresql || $sqlite || $mysql || $access || $mssql) {
+    elsif ($postgresql || $sqlite || $mysql || $access || $mssql || $jdbc) {
         return; # FIXME: bislang nicht untersucht
     }
 
@@ -3859,7 +3870,7 @@ sub select {
         -placeholders => \@placeholders,
     );
 
-    my ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) =
+    my ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql,$jdbc) =
         $self->dbmsTestVector;
 
     if (defined $offset && $oracle) {

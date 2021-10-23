@@ -539,7 +539,7 @@ sub dbms {
 
 =head4 Synopsis
 
-  ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) = $db->dbmsTestVector;
+  ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql,$jdbc) = $db->dbmsTestVector;
 
 =cut
 
@@ -673,6 +673,27 @@ sonst "falsch".
 
 sub isMSSQL {
     return shift->{'sqlObj'}->isMSSQL;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 isJDBC() - Prüfe auf JDBC-DBMS
+
+=head4 Synopsis
+
+  $bool = $db->isJDBC;
+
+=head4 Description
+
+Liefere "wahr", wenn die Datenbank eine JDBC-Datenbank ist,
+sonst "falsch".
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub isJDBC {
+    return shift->{'sqlObj'}->isJDBC;
 }
 
 # -----------------------------------------------------------------------------

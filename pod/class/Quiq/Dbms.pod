@@ -20,7 +20,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
   
   # Boolsche Variable für Tests
   
-  ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) =
+  ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql,$jdbc) =
       $d->dbmsTestVector;
   
   # Test-Methoden
@@ -31,6 +31,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
   $bool = $d->isMySQL;
   $bool = $d->isAccess;
   $bool = $d->isMSSQL;
+  $bool = $d->isJDBC;
 
 =head1 DESCRIPTION
 
@@ -108,6 +109,7 @@ Liefere folgende Liste von DBMS-Namen (in dieser Reihenfolge):
   MySQL
   Access
   MSSQL
+  JDBC
 
 =head2 Objektmethoden
 
@@ -115,7 +117,7 @@ Liefere folgende Liste von DBMS-Namen (in dieser Reihenfolge):
 
 =head4 Synopsis
 
-  ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) = $d->dbmsTestVector;
+  ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql,$jdbc) = $d->dbmsTestVector;
 
 =head4 Description
 
@@ -198,6 +200,17 @@ sonst falsch.
 =head4 Description
 
 Prüfe, ob das Datenbanksystem MSSQL ist. Wenn ja, liefere wahr,
+sonst falsch.
+
+=head3 isJDBC() - Teste auf JDBC
+
+=head4 Synopsis
+
+  $bool = $d->isJDBC;
+
+=head4 Description
+
+Prüfe, ob das Datenbanksystem JDBC ist. Wenn ja, liefere wahr,
 sonst falsch.
 
 =head1 VERSION

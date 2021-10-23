@@ -31,7 +31,7 @@ L<Quiq::Hash>
   
   # Boolsche Variable für Tests
   
-  ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) =
+  ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql,$jdbc) =
       $d->dbmsTestVector;
   
   # Test-Methoden
@@ -42,6 +42,7 @@ L<Quiq::Hash>
   $bool = $d->isMySQL;
   $bool = $d->isAccess;
   $bool = $d->isMSSQL;
+  $bool = $d->isJDBC;
 
 =head1 DESCRIPTION
 
@@ -148,12 +149,13 @@ Liefere folgende Liste von DBMS-Namen (in dieser Reihenfolge):
   MySQL
   Access
   MSSQL
+  JDBC
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-my @DbmsNames = qw/Oracle PostgreSQL SQLite MySQL Access MSSQL/;
+my @DbmsNames = qw/Oracle PostgreSQL SQLite MySQL Access MSSQL JDBC/;
 
 sub dbmsNames {
     return wantarray? @DbmsNames: \@DbmsNames;
@@ -167,7 +169,7 @@ sub dbmsNames {
 
 =head4 Synopsis
 
-  ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql) = $d->dbmsTestVector;
+  ($oracle,$postgresql,$sqlite,$mysql,$access,$mssql,$jdbc) = $d->dbmsTestVector;
 
 =head4 Description
 
@@ -319,6 +321,27 @@ sonst falsch.
 
 sub isMSSQL {
     return shift->{'dbms'} eq 'MSSQL'? 1: 0;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 isJDBC() - Teste auf JDBC
+
+=head4 Synopsis
+
+  $bool = $d->isJDBC;
+
+=head4 Description
+
+Prüfe, ob das Datenbanksystem JDBC ist. Wenn ja, liefere wahr,
+sonst falsch.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub isJDBC {
+    return shift->{'dbms'} eq 'JDBC'? 1: 0;
 }
 
 # -----------------------------------------------------------------------------

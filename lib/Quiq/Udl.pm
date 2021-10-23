@@ -599,7 +599,7 @@ sub dsn {
 
     if ($api ne 'dbi') {
         $self->throw(
-            'UDL-00001: DSN nur für DBI API definiert',
+            'UDL-00001: DSN defined for DBI API only',
             API => $api,
         );
     }
@@ -644,9 +644,15 @@ sub dsn {
     elsif ($dbms eq 'mssql') {
         $dsn = "DBI:ODBC:$db";
     }
+    elsif ($dbms eq 'jdbc') {
+        $dsn = "DBI:JDBC:hostname=$host;port=$port";
+        for my $key (keys %$options) {
+            $dsn .= ";$key=$options->{$key}";
+        }
+    }
     else {
         $self->throw(
-            'UDL-00002: Nicht-unterstütztes DBMS',
+            'UDL-00002: DBMS not supported',
             Dbms => $dbms,
         );
     }
@@ -746,7 +752,7 @@ sub udl {
         # Rückwärtskompatibilität
 
         if (!grep { $dbms eq $_ } qw/oracle postgresql sqlite mysql
-                access mssql/) {
+                access mssql jdbc/) {
             ($dbms,$db,$user,$password) = ($user,$password,$dbms,$db);
         }
 
