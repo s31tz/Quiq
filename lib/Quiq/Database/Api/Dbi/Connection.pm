@@ -200,10 +200,6 @@ sub new {
         $strict = 0;
     }
     else {
-# $dsn =~ s/%3B/;/g;
-# $dsn =~ s/%3D/=/g;
-warn "$dsn  $user  $passw\n";
-
         $dbh = DBI->connect($dsn,$user,$passw,{
             HandleError => $errSub,
             RaiseError => 1,
