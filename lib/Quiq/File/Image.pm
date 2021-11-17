@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::File::Image - Informationen über Bild-Datei
+
+=head1 BASE CLASS
+
+L<Quiq::Hash>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::File::Image;
 use base qw/Quiq::Hash/;
 
@@ -14,16 +30,6 @@ use Quiq::Array;
 use Image::Size ();
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::File::Image - Informationen über Bild-Datei
-
-=head1 BASE CLASS
-
-L<Quiq::Hash>
 
 =head1 METHODS
 

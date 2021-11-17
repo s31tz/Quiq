@@ -1,17 +1,3 @@
-package Quiq::Array;
-use base qw/Quiq::Object/;
-
-use v5.10;
-use strict;
-use warnings;
-use utf8;
-
-our $VERSION = '1.196';
-
-use Encode ();
-use Quiq::Reference;
-use Quiq::Math;
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -38,6 +24,26 @@ Aufruf als Objektmethode:
 Aufruf als Klassenmethode:
 
   $class->$meth(\@arr, ...);
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Array;
+use base qw/Quiq::Object/;
+
+use v5.10;
+use strict;
+use warnings;
+use utf8;
+
+our $VERSION = '1.196';
+
+use Encode ();
+use Quiq::Reference;
+use Quiq::Math;
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

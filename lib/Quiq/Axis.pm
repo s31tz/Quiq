@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Axis - Definition einer Plot-Achse (abstrakte Basisklasse)
+
+=head1 BASE CLASS
+
+L<Quiq::Hash>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Axis;
 use base qw/Quiq::Hash/;
 
@@ -10,16 +26,6 @@ our $VERSION = '1.196';
 use Quiq::AxisTick;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Axis - Definition einer Plot-Achse (abstrakte Basisklasse)
-
-=head1 BASE CLASS
-
-L<Quiq::Hash>
 
 =head1 METHODS
 

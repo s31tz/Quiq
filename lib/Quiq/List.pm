@@ -1,12 +1,3 @@
-package Quiq::List;
-use base qw/Quiq::Hash/;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -108,6 +99,21 @@ oder als Closure
       }
       $str .= $s;
   });
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::List;
+use base qw/Quiq::Hash/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

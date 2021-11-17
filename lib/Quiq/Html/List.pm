@@ -1,12 +1,3 @@
-package Quiq::Html::List;
-use base qw/Quiq::Html::Base/;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -109,6 +100,21 @@ liefert
     <li>Pflaume</li>
     <li>Zitrone</li>
   </ol>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Html::List;
+use base qw/Quiq::Html::Base/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

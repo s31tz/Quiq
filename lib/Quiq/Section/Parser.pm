@@ -1,18 +1,3 @@
-package Quiq::Section::Parser;
-use base qw/Quiq::Hash/;
-
-use v5.10;
-use strict;
-use warnings;
-use utf8;
-
-our $VERSION = '1.196';
-
-no bytes;
-use Quiq::Section::Object;
-use Quiq::FileHandle;
-use Quiq::Hash;
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -112,6 +97,27 @@ Anzahl der geparsten Zeichen. Das Attribut kann nur abgefragt werden.
 Anzahl der geparsten Bytes. Das Attribut kann nur abgefragt werden.
 
 =back
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Section::Parser;
+use base qw/Quiq::Hash/;
+
+use v5.10;
+use strict;
+use warnings;
+use utf8;
+
+our $VERSION = '1.196';
+
+no bytes;
+use Quiq::Section::Object;
+use Quiq::FileHandle;
+use Quiq::Hash;
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

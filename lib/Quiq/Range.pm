@@ -1,12 +1,3 @@
-package Quiq::Range;
-use base qw/Quiq::Hash/;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -59,6 +50,21 @@ Die Spezifikation, die dem Konstruktur übergeben wurde.
 Die Übersetzung der Spezifikation in ein Array von Integern.
 
 =back
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Range;
+use base qw/Quiq::Hash/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

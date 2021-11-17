@@ -1,22 +1,3 @@
-package Quiq::TimeLapse::Sequence;
-use base qw/Quiq::Hash/;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
-use Quiq::Duration;
-use Quiq::Path;
-use Quiq::Progress;
-use Quiq::ImageMagick;
-use File::Temp ();
-use Quiq::Option;
-use Quiq::FFmpeg;
-use Image::Size ();
-use Digest::SHA ();
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -39,6 +20,31 @@ L<Quiq::Hash>
   
   # Exportiere Bilddateien in Verzeichnis
   $tsq->export($dir);
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::TimeLapse::Sequence;
+use base qw/Quiq::Hash/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
+
+use Quiq::Duration;
+use Quiq::Path;
+use Quiq::Progress;
+use Quiq::ImageMagick;
+use File::Temp ();
+use Quiq::Option;
+use Quiq::FFmpeg;
+use Image::Size ();
+use Digest::SHA ();
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

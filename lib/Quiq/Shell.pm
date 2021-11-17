@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Shell - Ausführung von Shell-Kommandos
+
+=head1 BASE CLASS
+
+L<Quiq::Hash>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Shell;
 BEGIN {
     $INC{'Quiq/Shell.pm'} ||= __FILE__;
@@ -21,16 +37,6 @@ use Quiq::Process;
 use Cwd ();
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Shell - Ausführung von Shell-Kommandos
-
-=head1 BASE CLASS
-
-L<Quiq::Hash>
 
 =head1 METHODS
 

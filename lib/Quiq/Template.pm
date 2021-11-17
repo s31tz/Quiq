@@ -1,19 +1,3 @@
-package Quiq::Template;
-use base qw/Quiq::Hash/;
-
-use v5.10;
-use strict;
-use warnings;
-use utf8;
-
-our $VERSION = '1.196';
-
-use Quiq::Path;
-use Quiq::Option;
-use Quiq::Unindent;
-use Scalar::Util ();
-use Quiq::Reference;
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -59,6 +43,28 @@ Resultat C<$str>:
   <body>
     Hello World!
   </body>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Template;
+use base qw/Quiq::Hash/;
+
+use v5.10;
+use strict;
+use warnings;
+use utf8;
+
+our $VERSION = '1.196';
+
+use Quiq::Path;
+use Quiq::Option;
+use Quiq::Unindent;
+use Scalar::Util ();
+use Quiq::Reference;
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

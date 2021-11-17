@@ -1,15 +1,3 @@
-package Quiq::Sql::Script::Reader;
-use base qw/Quiq::Hash/;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
-use Quiq::Sql::Analyzer;
-use Quiq::FileHandle;
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -49,6 +37,24 @@ zum Zeilenende.
 =head1 CAVEATS
 
 Mehrere SQL-Statements I<auf einer Zeile> beherrscht die Klasse nicht.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Sql::Script::Reader;
+use base qw/Quiq::Hash/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
+
+use Quiq::Sql::Analyzer;
+use Quiq::FileHandle;
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

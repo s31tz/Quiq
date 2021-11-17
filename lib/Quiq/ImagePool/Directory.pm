@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::ImagePool::Directory - Unterverzeichnis eines Image-Pool
+
+=head1 BASE CLASS
+
+L<Quiq::Hash>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::ImagePool::Directory;
 use base qw/Quiq::Hash/;
 
@@ -12,16 +28,6 @@ use Quiq::Option;
 use Quiq::ImagePool::Sequence;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::ImagePool::Directory - Unterverzeichnis eines Image-Pool
-
-=head1 BASE CLASS
-
-L<Quiq::Hash>
 
 =head1 METHODS
 

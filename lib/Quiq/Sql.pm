@@ -1,21 +1,3 @@
-package Quiq::Sql;
-use base qw/Quiq::Dbms/;
-
-use v5.10;
-use strict;
-use warnings;
-use utf8;
-
-our $VERSION = '1.196';
-
-use Quiq::Hash;
-use Quiq::Option;
-use Quiq::String;
-use Quiq::Template;
-use Scalar::Util ();
-use Quiq::Unindent;
-use Quiq::Reference;
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -73,6 +55,30 @@ Folgende DBMSe werden von der Klasse unterstützt:
   PostgreSQL
   SQLite
   MySQL
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Sql;
+use base qw/Quiq::Dbms/;
+
+use v5.10;
+use strict;
+use warnings;
+use utf8;
+
+our $VERSION = '1.196';
+
+use Quiq::Hash;
+use Quiq::Option;
+use Quiq::String;
+use Quiq::Template;
+use Scalar::Util ();
+use Quiq::Unindent;
+use Quiq::Reference;
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

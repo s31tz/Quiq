@@ -1,16 +1,3 @@
-package Quiq::Gd::Component::ScatterGraph;
-use base qw/Quiq::Gd::Component::Graph/;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
-use Quiq::Option;
-use Quiq::Array;
-use POSIX ();
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -115,6 +102,25 @@ Code:
 Grafik:
 
     [Nur im Browser sichtbar]
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Gd::Component::ScatterGraph;
+use base qw/Quiq::Gd::Component::Graph/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
+
+use Quiq::Option;
+use Quiq::Array;
+use POSIX ();
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

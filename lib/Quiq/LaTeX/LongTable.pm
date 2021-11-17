@@ -1,13 +1,3 @@
-package Quiq::LaTeX::LongTable;
-use base qw/Quiq::Hash/;
-
-use v5.10;
-use strict;
-use warnings;
-use utf8;
-
-our $VERSION = '1.196';
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -78,6 +68,22 @@ was im LaTeX-Dokument in etwa so aussieht
   +--------------------------+
   
       Tabelle 1: Ein Test
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::LaTeX::LongTable;
+use base qw/Quiq::Hash/;
+
+use v5.10;
+use strict;
+use warnings;
+use utf8;
+
+our $VERSION = '1.196';
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

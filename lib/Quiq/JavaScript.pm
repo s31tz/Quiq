@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::JavaScript - Generierung von JavaScript-Code
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::JavaScript;
 use base qw/Quiq::Object/;
 
@@ -12,16 +28,6 @@ use Quiq::Path;
 use Scalar::Util ();
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::JavaScript - Generierung von JavaScript-Code
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
 
 =head1 METHODS
 

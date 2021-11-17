@@ -1,18 +1,3 @@
-package Quiq::Udl;
-use base qw/Quiq::Hash/;
-
-use v5.10;
-use strict;
-use warnings;
-use utf8;
-
-our $VERSION = '1.196';
-
-use Quiq::Hash;
-use Quiq::Database::Config;
-use Quiq::Option;
-use Quiq::Path;
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -109,6 +94,27 @@ Der Port, über welchen die Netzverbindung aufgebaut wird.
 Referenz auf Hash mit optionalen Angaben.
 
 =back
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Udl;
+use base qw/Quiq::Hash/;
+
+use v5.10;
+use strict;
+use warnings;
+use utf8;
+
+our $VERSION = '1.196';
+
+use Quiq::Hash;
+use Quiq::Database::Config;
+use Quiq::Option;
+use Quiq::Path;
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

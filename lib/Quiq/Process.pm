@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Process - Informationen über den laufenden Prozess
+
+=head1 BASE CLASS
+
+L<Quiq::System>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Process;
 use base qw/Quiq::System/;
 
@@ -11,16 +27,6 @@ use Cwd ();
 use Quiq::System;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Process - Informationen über den laufenden Prozess
-
-=head1 BASE CLASS
-
-L<Quiq::System>
 
 =head1 METHODS
 

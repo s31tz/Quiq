@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Gimp - GIMP Operationen
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Gimp;
 use base qw/Quiq::Object/;
 
@@ -11,16 +27,6 @@ use Quiq::Path;
 use Quiq::Shell;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Gimp - GIMP Operationen
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
 
 =head1 METHODS
 

@@ -1,3 +1,24 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Database::ResultSet - Liste von Datensätzen (abstrakt)
+
+=head1 BASE CLASS
+
+L<Quiq::Hash>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert eine Liste von gleichartigen
+Datensätzen.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Database::ResultSet;
 use base qw/Quiq::Hash/;
 
@@ -18,21 +39,6 @@ use Quiq::AnsiColor;
 use Quiq::Duration;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Database::ResultSet - Liste von Datensätzen (abstrakt)
-
-=head1 BASE CLASS
-
-L<Quiq::Hash>
-
-=head1 DESCRIPTION
-
-Ein Objekt der Klasse repräsentiert eine Liste von gleichartigen
-Datensätzen.
 
 =head1 METHODS
 

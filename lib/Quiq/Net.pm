@@ -1,3 +1,15 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Net - Allgemeine Netzwerkfunktionalität
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Net;
 
 use v5.10;
@@ -9,12 +21,6 @@ our $VERSION = '1.196';
 use IO::Socket::INET ();
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Net - Allgemeine Netzwerkfunktionalität
 
 =head1 METHODS
 

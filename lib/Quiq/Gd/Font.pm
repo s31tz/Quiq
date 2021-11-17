@@ -1,16 +1,3 @@
-package Quiq::Gd::Font;
-use base qw/Quiq::Hash/;
-
-use v5.10;
-use strict;
-use warnings;
-use utf8;
-
-our $VERSION = '1.196';
-
-use GD ();
-use Quiq::Math;
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -56,6 +43,21 @@ TrueType-Font instantiieren
 =back
 
 =cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Gd::Font;
+use base qw/Quiq::Hash/;
+
+use v5.10;
+use strict;
+use warnings;
+use utf8;
+
+our $VERSION = '1.196';
+
+use GD ();
+use Quiq::Math;
 
 # -----------------------------------------------------------------------------
 

@@ -1,3 +1,24 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Database::Connection - Verbindung zu einer Relationalen Datenbank
+
+=head1 BASE CLASS
+
+L<Quiq::Hash>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert eine Verbindung zu einer
+Relationalen Datenbank.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Database::Connection;
 use base qw/Quiq::Hash/;
 
@@ -28,21 +49,6 @@ use Quiq::Database::ResultSet;
 use Quiq::Parameters;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Database::Connection - Verbindung zu einer Relationalen Datenbank
-
-=head1 BASE CLASS
-
-L<Quiq::Hash>
-
-=head1 DESCRIPTION
-
-Ein Objekt der Klasse repräsentiert eine Verbindung zu einer
-Relationalen Datenbank.
 
 =head1 METHODS
 

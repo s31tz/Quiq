@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Url - URL Klasse
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Url;
 use base qw/Quiq::Object/;
 
@@ -12,16 +28,6 @@ use Quiq::Array;
 use Quiq::Option;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Url - URL Klasse
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
 
 =head1 METHODS
 

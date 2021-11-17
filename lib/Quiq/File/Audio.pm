@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::File::Audio - Informationen über Audio-Datei
+
+=head1 BASE CLASS
+
+L<Quiq::Hash>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::File::Audio;
 use base qw/Quiq::Hash/;
 
@@ -11,16 +27,6 @@ use Quiq::Shell;
 use Quiq::Path;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::File::Audio - Informationen über Audio-Datei
-
-=head1 BASE CLASS
-
-L<Quiq::Hash>
 
 =head1 METHODS
 

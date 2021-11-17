@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Html::Util - Hilfsmethoden für die HTML-Generierung
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Html::Util;
 use base qw/Quiq::Object/;
 
@@ -10,16 +26,6 @@ our $VERSION = '1.196';
 use Time::HiRes ();
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Html::Util - Hilfsmethoden für die HTML-Generierung
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
 
 =head1 METHODS
 

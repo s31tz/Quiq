@@ -1,19 +1,3 @@
-package Quiq::Parallel;
-use base qw/Quiq::Object/;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
-use Quiq::Path;
-use Quiq::System;
-use Quiq::Progress;
-use Quiq::Hash;
-use Quiq::FileHandle;
-use Scalar::Util ();
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -61,6 +45,28 @@ Beispiel mit einer unbekannt großen Datenbank-Selektion:
           return;
       },
   );
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Parallel;
+use base qw/Quiq::Object/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
+
+use Quiq::Path;
+use Quiq::System;
+use Quiq::Progress;
+use Quiq::Hash;
+use Quiq::FileHandle;
+use Scalar::Util ();
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

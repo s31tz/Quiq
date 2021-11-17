@@ -1,12 +1,3 @@
-package Quiq::Database::Row::Array;
-use base qw/Quiq::Database::Row/;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -28,6 +19,17 @@ Das Objekt ist eine Liste von Attributwerten, es besitzt
 keine weitere Information über Titel, Datensatz-Status usw.
 
 =cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Database::Row::Array;
+use base qw/Quiq::Database::Row/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
 
 # -----------------------------------------------------------------------------
 

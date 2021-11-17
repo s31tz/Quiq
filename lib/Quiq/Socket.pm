@@ -1,15 +1,3 @@
-package Quiq::Socket;
-use base qw/IO::Socket::INET Quiq::Object/;
-
-use v5.10;
-use strict;
-use warnings;
-use utf8;
-
-our $VERSION = '1.196';
-
-use Quiq::Option;
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -49,6 +37,24 @@ Sende GET-Request an Google und gib die Antwort aus:
   while (<$sock>) {
       print;
   }
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Socket;
+use base qw/IO::Socket::INET Quiq::Object/;
+
+use v5.10;
+use strict;
+use warnings;
+use utf8;
+
+our $VERSION = '1.196';
+
+use Quiq::Option;
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::System - Information über das System und seine Umgebung
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::System;
 use base qw/Quiq::Object/;
 
@@ -15,16 +31,6 @@ use 5.010;
 use Quiq::Option;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::System - Information über das System und seine Umgebung
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
 
 =head1 METHODS
 
