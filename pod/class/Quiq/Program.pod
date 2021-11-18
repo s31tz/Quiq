@@ -22,15 +22,43 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 Programm:
 
-  Command failed: Blob/sdoc_reference/sdoc-highlight perl pod
+  #!/usr/bin/env perl
+  
+  use Quiq::Program;
+  exit Quiq::Program->run('MyProg')->exitCode;
+  
+  # eof
 
 Programm-Klasse:
 
-  Command failed: Blob/sdoc_reference/sdoc-highlight perl pod
+  package MyProg;
+  use base 'Quiq::Program';
+  
+  sub main {
+      my $self = shift;
+      ...
+      return;
+  }
+  
+  # eof
 
 Optionen und Argumente:
 
-  Command failed: Blob/sdoc_reference/sdoc-highlight perl pod
+  my ($error,$opt,$argA) = $self->options(
+      ...
+      -help => 0,
+  );
+  if ($error) {
+      $self->help(10,"ERROR: $error");
+  }
+  elsif ($opt->help) {
+      $self->help;
+  }
+  elsif (@$argA != 1) {
+      $self->help(11,'ERROR: Falsche Anzahl Argumente');
+  }
+  my $myArg = shift @$argA;
+  ...
 
 =head1 METHODS
 
