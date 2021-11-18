@@ -63,12 +63,8 @@ Aufrufreihenfolge wieder. Jede Zeile beschreibt einen Subroutine-Aufruf:
   +-- Package, zu dem die Subroutine gehört
 
 Die in eckigen Klammern genannte Quelltextposition kann bei
-Aufruf von vi(1) oder less(1) benutzt werden, um unmittelbar auf die
-entsprechende Zeile zu positionieren:
-
-  $ vi +17 ./test.pl
-
-bzw.
+Aufruf von vi(1), emacs(1) oder less(1) benutzt werden,
+um unmittelbar auf die entsprechende Zeile zu positionieren:
 
   $ less +17 ./test.pl
 
