@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Trash - Operationen auf dem Trash von XFCE
+
+=head1 BASE CLASS
+
+L<Quiq::Hash>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Trash;
 use base qw/Quiq::Hash/;
 
@@ -11,16 +27,6 @@ use Quiq::Path;
 use Quiq::Terminal;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Trash - Operationen auf dem Trash von XFCE
-
-=head1 BASE CLASS
-
-L<Quiq::Hash>
 
 =head1 METHODS
 

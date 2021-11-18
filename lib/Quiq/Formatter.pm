@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Formatter - Formatierung von Werten
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Formatter;
 use base qw/Quiq::Object/;
 
@@ -10,16 +26,6 @@ our $VERSION = '1.196';
 use Quiq::Epoch;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Formatter - Formatierung von Werten
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
 
 =head1 METHODS
 

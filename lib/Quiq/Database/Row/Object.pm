@@ -1,19 +1,3 @@
-package Quiq::Database::Row::Object;
-use base qw/Quiq::Database::Row/;
-
-use v5.10;
-use strict;
-use warnings;
-use utf8;
-
-our $VERSION = '1.196';
-
-use Quiq::Hash;
-use Quiq::Option;
-use Scalar::Util ();
-use Quiq::Database::ResultSet;
-use Quiq::AnsiColor;
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -31,6 +15,24 @@ L<Quiq::Database::Row>
 Ein Objekt der Klasse repräsentiert einen Datensatz.
 
 =cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Database::Row::Object;
+use base qw/Quiq::Database::Row/;
+
+use v5.10;
+use strict;
+use warnings;
+use utf8;
+
+our $VERSION = '1.196';
+
+use Quiq::Hash;
+use Quiq::Option;
+use Scalar::Util ();
+use Quiq::Database::ResultSet;
+use Quiq::AnsiColor;
 
 # -----------------------------------------------------------------------------
 

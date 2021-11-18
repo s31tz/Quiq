@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Diff - Zeige Differenzen zwischen Zeichenketten
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Diff;
 use base qw/Quiq::Object/;
 
@@ -11,16 +27,6 @@ use Quiq::Path;
 use Quiq::Shell;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Diff - Zeige Differenzen zwischen Zeichenketten
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
 
 =head1 METHODS
 

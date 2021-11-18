@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Terminal - Ein- und Ausgabe aufs Terminal
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Terminal;
 use base qw/Quiq::Object/;
 
@@ -13,16 +29,6 @@ use Time::HiRes ();
 use Term::ANSIColor ();
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Terminal - Ein- und Ausgabe aufs Terminal
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
 
 =head1 METHODS
 

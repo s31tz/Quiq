@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::ImagePool - Speicher für Bild-Dateien
+
+=head1 BASE CLASS
+
+L<Quiq::Hash>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::ImagePool;
 use base qw/Quiq::Hash/;
 
@@ -13,16 +29,6 @@ use Quiq::Option;
 use Quiq::FileHandle;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::ImagePool - Speicher für Bild-Dateien
-
-=head1 BASE CLASS
-
-L<Quiq::Hash>
 
 =head1 METHODS
 

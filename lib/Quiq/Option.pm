@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Option - Verarbeitung von Programm- und Methoden-Optionen
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Option;
 use base qw/Quiq::Object/;
 
@@ -12,16 +28,6 @@ use Quiq::Hash;
 use Scalar::Util ();
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Option - Verarbeitung von Programm- und Methoden-Optionen
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
 
 =head1 METHODS
 

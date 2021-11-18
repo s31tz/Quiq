@@ -1,3 +1,17 @@
+# -----------------------------------------------------------------------------
+
+=head1 NAME
+
+Quiq::Debug - Hilfe beim Debuggen von Programmen
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Debug;
 use base qw/Quiq::Object/;
 
@@ -11,14 +25,6 @@ use Data::Printer color=>{string=>'black'};
 use Data::Printer ();
 
 # -----------------------------------------------------------------------------
-
-=head1 NAME
-
-Quiq::Debug - Hilfe beim Debuggen von Programmen
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
 
 =head1 METHODS
 

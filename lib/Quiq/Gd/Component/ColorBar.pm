@@ -1,12 +1,3 @@
-package Quiq::Gd::Component::ColorBar;
-use base qw/Quiq::Gd::Component/;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -71,6 +62,21 @@ Code:
 Grafik:
 
     [Nur im Browser sichtbar]
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Gd::Component::ColorBar;
+use base qw/Quiq::Gd::Component/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

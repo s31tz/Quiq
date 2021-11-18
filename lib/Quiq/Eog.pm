@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Eog - Operationen mit eog
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Eog;
 use base qw/Quiq::Object/;
 
@@ -13,16 +29,6 @@ use Quiq::Path;
 use Quiq::Eog;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Eog - Operationen mit eog
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
 
 =head1 METHODS
 

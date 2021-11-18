@@ -1,12 +1,3 @@
-package Quiq::If;
-use base qw/Quiq::Object/;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -18,6 +9,21 @@ Quiq::If - Liefere Werte unter einer Bedingung
 =head1 BASE CLASS
 
 L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::If;
+use base qw/Quiq::Object/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

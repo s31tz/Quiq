@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Digest - Erzeuge Digest
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Digest;
 use base qw/Quiq::Object/;
 
@@ -10,16 +26,6 @@ our $VERSION = '1.196';
 use Digest::MD5 ();
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Digest - Erzeuge Digest
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
 
 =head1 METHODS
 

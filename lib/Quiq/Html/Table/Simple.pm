@@ -1,12 +1,3 @@
-package Quiq::Html::Table::Simple;
-use base qw/Quiq::Hash/;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -153,6 +144,21 @@ HTML:
     <td>Text2_en</td>
   </tr>
   </table>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Html::Table::Simple;
+use base qw/Quiq::Hash/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

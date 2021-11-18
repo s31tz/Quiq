@@ -1,21 +1,3 @@
-package Quiq::Html::Tag;
-use base qw/Quiq::Hash/;
-
-use v5.10;
-use strict;
-use warnings;
-use utf8;
-
-our $VERSION = '1.196';
-
-use Quiq::Css;
-use Quiq::Template;
-use Quiq::String;
-use Scalar::Util ();
-use Quiq::Image;
-use Quiq::Path;
-use MIME::Base64 ();
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -490,6 +472,26 @@ wird nur bei klassischem HTML - nicht bei XHTML - beachtet.
 =back
 
 =cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Html::Tag;
+use base qw/Quiq::Hash/;
+
+use v5.10;
+use strict;
+use warnings;
+use utf8;
+
+our $VERSION = '1.196';
+
+use Quiq::Css;
+use Quiq::Template;
+use Quiq::String;
+use Scalar::Util ();
+use Quiq::Image;
+use Quiq::Path;
+use MIME::Base64 ();
 
 # -----------------------------------------------------------------------------
 

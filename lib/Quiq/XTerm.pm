@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::XTerm - XTerminal Fenster
+
+=head1 BASE CLASS
+
+L<Quiq::Hash>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::XTerm;
 use base qw/Quiq::Hash/;
 
@@ -10,16 +26,6 @@ our $VERSION = '1.196';
 use Quiq::Shell;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::XTerm - XTerminal Fenster
-
-=head1 BASE CLASS
-
-L<Quiq::Hash>
 
 =head1 METHODS
 

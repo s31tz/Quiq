@@ -1,16 +1,3 @@
-package Quiq::LineProcessor;
-use base qw/Quiq::Hash/;
-
-use v5.10;
-use strict;
-use warnings;
-use utf8;
-
-our $VERSION = '1.196';
-
-use Quiq::Option;
-use Quiq::FileHandle;
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -51,6 +38,25 @@ produziert (z.B.)
       20
   Stacktrace:
       ...
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::LineProcessor;
+use base qw/Quiq::Hash/;
+
+use v5.10;
+use strict;
+use warnings;
+use utf8;
+
+our $VERSION = '1.196';
+
+use Quiq::Option;
+use Quiq::FileHandle;
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

@@ -1,12 +1,3 @@
-package Quiq::Dbms;
-use base qw/Quiq::Hash/;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -65,6 +56,21 @@ Name des DBMS.
 Versionsnummer des DBMS.
 
 =back
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Dbms;
+use base qw/Quiq::Hash/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

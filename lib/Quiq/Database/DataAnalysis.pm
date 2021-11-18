@@ -1,3 +1,26 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Database::DataAnalysis - Führe Datenanalyse durch
+
+=head1 BASE CLASS
+
+L<Quiq::Hash>
+
+=head1 DESCRIPTION
+
+Führe eine Analyse auf den Daten einer Relation (Tabelle oder View) oder
+eines SQL-Statements durch, das Daten liefert (üblicherweise ein
+SELECT-Statement). Das Analyseergebnis kann mit den Methoden der Klasse
+ausgegeben werden.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Database::DataAnalysis;
 use base qw/Quiq::Hash/;
 
@@ -17,23 +40,6 @@ use Quiq::Database::Row::Array;
 use Quiq::Database::ResultSet::Array;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Database::DataAnalysis - Führe Datenanalyse durch
-
-=head1 BASE CLASS
-
-L<Quiq::Hash>
-
-=head1 DESCRIPTION
-
-Führe eine Analyse auf den Daten einer Relation (Tabelle oder View) oder
-eines SQL-Statements durch, das Daten liefert (üblicherweise ein
-SELECT-Statement). Das Analyseergebnis kann mit den Methoden der Klasse
-ausgegeben werden.
 
 =head1 METHODS
 

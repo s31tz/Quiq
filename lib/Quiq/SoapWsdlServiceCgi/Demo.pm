@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::SoapWsdlServiceCgi::Demo - Demo für SOAP Web Service
+
+=head1 BASE CLASS
+
+L<Quiq::SoapWsdlServiceCgi>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::SoapWsdlServiceCgi::Demo;
 use base qw/Quiq::SoapWsdlServiceCgi/;
 
@@ -10,16 +26,6 @@ our $VERSION = '1.196';
 use POSIX ();
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::SoapWsdlServiceCgi::Demo - Demo für SOAP Web Service
-
-=head1 BASE CLASS
-
-L<Quiq::SoapWsdlServiceCgi>
 
 =head1 METHODS
 

@@ -1,11 +1,3 @@
-package Quiq::Stacktrace;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -83,6 +75,20 @@ Konstruktors L<new|"new() - Konstruktor">() oder der Methode L<asString|"asStrin
 als Klassenmethode gerufen wird. Sollen Stacktrace-Frames am
 Ende weggelassen werden, kann dies durch Angabe des Parameters
 $i erreicht werden.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Stacktrace;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

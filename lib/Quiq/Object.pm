@@ -1,3 +1,21 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Object - Basisklasse für alle Klassen der Klassenbibliothek
+
+=head1 SYNOPSIS
+
+  package MyClass;
+  use base qw/Quiq::Object/;
+  ...
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Object;
 
 use v5.10;
@@ -12,18 +30,6 @@ use Quiq::Parameters;
 use Quiq::Stacktrace;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Object - Basisklasse für alle Klassen der Klassenbibliothek
-
-=head1 SYNOPSIS
-
-  package MyClass;
-  use base qw/Quiq::Object/;
-  ...
 
 =head1 METHODS
 

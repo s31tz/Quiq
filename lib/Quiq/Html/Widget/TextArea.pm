@@ -1,14 +1,3 @@
-package Quiq::Html::Widget::TextArea;
-use base qw/Quiq::Html::Widget/;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
-use Quiq::Html::Tag;
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -70,6 +59,23 @@ Wenn wahr, liefere C<undef> als Widget-Code.
 Anfänglicher Wert des Felds.
 
 =back
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Html::Widget::TextArea;
+use base qw/Quiq::Html::Widget/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
+
+use Quiq::Html::Tag;
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

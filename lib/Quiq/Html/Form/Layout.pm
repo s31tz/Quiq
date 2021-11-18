@@ -1,15 +1,3 @@
-package Quiq::Html::Form::Layout;
-use base qw/Quiq::Hash/;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
-use Quiq::Html::Widget::Hidden;
-use Quiq::Template;
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -141,6 +129,24 @@ erzeugt
 Das tabellarische Layout wird hier von einer anderen Klasse
 (Quiq::Html::Table::Simple) geliefert, die die Tabelle
 erzeugt.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Html::Form::Layout;
+use base qw/Quiq::Hash/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
+
+use Quiq::Html::Widget::Hidden;
+use Quiq::Template;
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::SQLite - Operationen auf einer SQLite-Datenbank
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::SQLite;
 use base qw/Quiq::Object/;
 
@@ -12,16 +28,6 @@ use Quiq::Path;
 use Quiq::Terminal;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::SQLite - Operationen auf einer SQLite-Datenbank
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
 
 =head1 METHODS
 

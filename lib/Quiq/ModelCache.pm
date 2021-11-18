@@ -1,12 +1,3 @@
-package Quiq::ModelCache;
-use base qw/Quiq::Hash/;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -107,6 +98,21 @@ Programm:
   __END__
   Frank Seitz
     0176/78243503
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::ModelCache;
+use base qw/Quiq::Hash/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

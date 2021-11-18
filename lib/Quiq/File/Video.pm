@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::File::Video - Informationen über Video-Datei
+
+=head1 BASE CLASS
+
+L<Quiq::Hash>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::File::Video;
 use base qw/Quiq::Hash/;
 
@@ -12,16 +28,6 @@ use Quiq::Ipc;
 use Quiq::Formatter;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::File::Video - Informationen über Video-Datei
-
-=head1 BASE CLASS
-
-L<Quiq::Hash>
 
 =head1 METHODS
 

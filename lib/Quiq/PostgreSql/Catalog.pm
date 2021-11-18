@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::PostgreSql::Catalog - PostgreSQL Catalog-Operationen
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::PostgreSql::Catalog;
 use base qw/Quiq::Object/;
 
@@ -10,16 +26,6 @@ our $VERSION = '1.196';
 use Quiq::Unindent;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::PostgreSql::Catalog - PostgreSQL Catalog-Operationen
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
 
 =head1 METHODS
 

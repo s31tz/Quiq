@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Converter - Konvertierung von Werten
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Converter;
 use base qw/Quiq::Object/;
 
@@ -12,16 +28,6 @@ use POSIX ();
 use Time::Local ();
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Converter - Konvertierung von Werten
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
 
 =head1 METHODS
 

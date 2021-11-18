@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::String - Operationen auf Zeichenketten
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::String;
 use base qw/Quiq::Object/;
 
@@ -14,16 +30,6 @@ use Quiq::Option;
 use Quiq::Array;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::String - Operationen auf Zeichenketten
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
 
 =head1 METHODS
 

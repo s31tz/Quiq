@@ -1,3 +1,25 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Perl - Erweiterte und abgesicherte Perl-Operationen
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=head1 DESCRIPTION
+
+Die Klasse implementiert grundlegende Perl-Operationen, die
+Erweiterungen darstellen und/oder durch Exception-Behandlung
+abgesichert sind.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Perl;
 use base qw/Quiq::Object/;
 
@@ -17,22 +39,6 @@ use Quiq::FileHandle;
 use Encode ();
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Perl - Erweiterte und abgesicherte Perl-Operationen
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
-
-=head1 DESCRIPTION
-
-Die Klasse implementiert grundlegende Perl-Operationen, die
-Erweiterungen darstellen und/oder durch Exception-Behandlung
-abgesichert sind.
 
 =head1 METHODS
 

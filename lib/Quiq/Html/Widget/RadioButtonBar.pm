@@ -1,14 +1,3 @@
-package Quiq::Html::Widget::RadioButtonBar;
-use base qw/Quiq::Html::Widget/;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
-use Quiq::Html::Widget::RadioButton;
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -85,6 +74,23 @@ eines der Radio Buttons überein, wird dieser Radio-Button
 aktiviert.
 
 =back
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::Html::Widget::RadioButtonBar;
+use base qw/Quiq::Html::Widget/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
+
+use Quiq::Html::Widget::RadioButton;
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

@@ -1,14 +1,3 @@
-package Quiq::TimeLapse::Filename;
-use base qw/Quiq::Hash/;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
-use Quiq::Option;
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -76,6 +65,23 @@ Text-Zusatz
 Extension
 
 =back
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::TimeLapse::Filename;
+use base qw/Quiq::Hash/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
+
+use Quiq::Option;
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

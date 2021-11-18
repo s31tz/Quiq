@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Ipc - Interprozesskommunikation
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Ipc;
 use base qw/Quiq::Object/;
 
@@ -12,16 +28,6 @@ use Quiq::Shell;
 use IPC::Open3 ();
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Ipc - Interprozesskommunikation
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
 
 =head1 METHODS
 

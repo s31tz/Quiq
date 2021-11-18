@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Image - Operationen im Zusammenhang mit Bildern/Bilddateien
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Image;
 use base qw/Quiq::Object/;
 
@@ -13,16 +29,6 @@ use Quiq::Shell;
 use Quiq::FileHandle;
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Image - Operationen im Zusammenhang mit Bildern/Bilddateien
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
 
 =head1 METHODS
 

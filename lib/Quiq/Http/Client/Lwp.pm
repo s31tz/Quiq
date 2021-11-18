@@ -1,3 +1,19 @@
+# -----------------------------------------------------------------------------
+
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Http::Client::Lwp - HTTP Operationen
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
+
+=cut
+
+# -----------------------------------------------------------------------------
+
 package Quiq::Http::Client::Lwp;
 use base qw/Quiq::Object/;
 
@@ -12,16 +28,6 @@ use LWP::UserAgent ();
 use HTTP::Request ();
 
 # -----------------------------------------------------------------------------
-
-=encoding utf8
-
-=head1 NAME
-
-Quiq::Http::Client::Lwp - HTTP Operationen
-
-=head1 BASE CLASS
-
-L<Quiq::Object>
 
 =head1 METHODS
 

@@ -1,16 +1,3 @@
-package Quiq::SoapWsdlServiceCgi;
-use base qw/Quiq::Object/;
-push our @ISA,qw/SOAP::Server::Parameters/;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
-use Pod::WSDL ();
-use SOAP::Transport::HTTP ();
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -167,6 +154,25 @@ Kommandozeile getestet werden:
 Der gleiche Test über das CGI-Programm, das die WebService-Klasse ruft:
 
   $ SCRIPT_URI=http://x QUERY_STRING=wsdl perl ./mywebservice.cgi
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::SoapWsdlServiceCgi;
+use base qw/Quiq::Object/;
+push our @ISA,qw/SOAP::Server::Parameters/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
+
+use Pod::WSDL ();
+use SOAP::Transport::HTTP ();
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 

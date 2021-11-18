@@ -1,16 +1,3 @@
-package Quiq::ExampleCode;
-use base qw/Quiq::Hash/;
-
-use v5.10;
-use strict;
-use warnings;
-
-our $VERSION = '1.196';
-
-use Quiq::Option;
-use Quiq::String;
-use Quiq::Hash;
-
 # -----------------------------------------------------------------------------
 
 =encoding utf8
@@ -108,6 +95,25 @@ oder (in anderer Reihenfolge):
           );
       |,
   );
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+package Quiq::ExampleCode;
+use base qw/Quiq::Hash/;
+
+use v5.10;
+use strict;
+use warnings;
+
+our $VERSION = '1.196';
+
+use Quiq::Option;
+use Quiq::String;
+use Quiq::Hash;
+
+# -----------------------------------------------------------------------------
 
 =head1 METHODS
 
