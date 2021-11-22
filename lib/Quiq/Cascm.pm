@@ -519,7 +519,7 @@ sub edit {
         $editCmd .= " -f split-window-vertically $show -f other-window";
     }
     my $sh = Quiq::Shell->new(
-        log=>1,
+        log =>1 ,
         cmdPrefix => '> ',
         cmdAnsiColor => 'bold',
     );

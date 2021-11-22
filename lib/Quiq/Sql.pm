@@ -2274,14 +2274,17 @@ sub addForeignKeyConstraint {
 
         if ($onDelete) {
             $stmt .= "\n    ON DELETE ";
-            if ($onDelete eq 'cascade') {
+            if ($onDelete =~ /^CASCADE$/) {
                 $stmt .= 'CASCADE';
             }
-            elsif ($onDelete eq 'null') {
+            elsif ($onDelete =~ /NULL/i) {
                 $stmt .= 'SET NULL';
             }
             else {
-                $self->throw;
+                $self->throw(
+                    'SQL-00001: Unexpected ON DELETE action',
+                    Action => $onDelete,
+                );
             }
         }
 
