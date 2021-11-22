@@ -1057,6 +1057,7 @@ sub restore {
         return $colSep if $_[0] eq '!';
         return "\n" if $_[0] eq 'n';
         return "\r" if $_[0] eq 'r';
+        return "\x" if $_[0] eq 'x';
 
         $class->throw(
             'ARR-00001: Inkorrekte Array-Repräsentation',
