@@ -178,7 +178,7 @@ sub html {
         );
     }
     if ($html) {
-        $html = "[ $html ]";
+        $html = "[ $html ]\n";
     }
 
     return $html;
