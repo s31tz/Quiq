@@ -684,9 +684,9 @@ Hash. Im Skalarkontext wird eine Referenz auf den Hash geliefert.
 
 =head4 Description
 
-  Erzeuge aus Array @$arr bzw. @arr einen Hash mit den Werten des Array
-  als Schlüssel und dem Wert $val als deren Werte und liefere diesen zurück.
-  Ist $val nicht angegeben, werden alle Werte des Hash auf 1 gesetzt.
+Erzeuge aus Array @$arr bzw. @arr einen Hash mit den Werten des Array
+als Schlüssel und dem Wert $val als deren Werte und liefere diesen zurück.
+Ist $val nicht angegeben, werden alle Werte des Hash auf 1 gesetzt.
 
 =cut
 

@@ -62,6 +62,7 @@ C<Alternative Formulierung> angegeben.
   $h = $class->new(\@keys,\@vals[,$val]); # [3]
   $h = $class->new(\@keys[,$val]);        # [4]
   $h = $class->new(\%hash);               # [5]
+  $h = $class->new(\%hash,@keyVal);       # [6]
 
 =head4 Description
 
@@ -92,6 +93,15 @@ werden alle Werte auf C<undef> gesetzt.
 =item [5]
 
 Blesse den Hash %hash auf Klasse $class.
+
+=item [6]
+
+Instantiiere den Hash aus den Schlüssel/Wert-Paaren @keyVal
+und weise dem (restricted) Hash alle Komponenten aus %hash
+zu. Dieser Aufruf ist nützlich, um einen anonymen Hash
+zu einem Hash-Objekt mit vorgegebenen Attributen zu machen.
+(Wenn der anonyme Hash ein nicht-vorgesehenes Attribut
+enthält, wird eine Exception geworfen.)
 
 =back
 
