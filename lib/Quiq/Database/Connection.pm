@@ -96,7 +96,7 @@ Name der Sql-Klasse zur Statementgenerierung.
 
 Aktiviere oder deaktiviere automatische Fehlerbehandlung.
 
-=item -utf8 => $bool (Default: 0)
+=item -utf8 => $bool (Default: 1)
 
 Definiere das clientseitige Character Encoding als UTF-8.
 
@@ -130,7 +130,7 @@ sub new {
     my $logfile = '-';
     my $sqlClass = undef;
     my $strict = undef;
-    my $utf8 = undef;
+    my $utf8 = 1;
 
     Quiq::Option->extract(\@_,
         -autoCommit => \$autoCommit,

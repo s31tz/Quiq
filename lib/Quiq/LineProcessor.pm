@@ -55,6 +55,7 @@ our $VERSION = '1.196';
 
 use Quiq::Option;
 use Quiq::FileHandle;
+use Encode ();
 
 # -----------------------------------------------------------------------------
 
@@ -161,6 +162,9 @@ sub new {
         @lines = @$input;
     }
     else { # Zeilen aus Datei oder String lesen
+        if (ref($input) && $encoding) {
+            $$input = Encode::encode($encoding,$$input);
+        }
         my $fh = Quiq::FileHandle->new('<',$input);
         if ($encoding) {
             $fh->binmode(":encoding($encoding)");

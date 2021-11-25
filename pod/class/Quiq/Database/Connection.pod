@@ -59,7 +59,7 @@ Name der Sql-Klasse zur Statementgenerierung.
 
 Aktiviere oder deaktiviere automatische Fehlerbehandlung.
 
-=item -utf8 => $bool (Default: 0)
+=item -utf8 => $bool (Default: 1)
 
 Definiere das clientseitige Character Encoding als UTF-8.
 
