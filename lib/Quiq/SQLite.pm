@@ -134,6 +134,7 @@ sub importData {
 
     my $udl = "dbi#sqlite:$dbFile";
     my $db = Quiq::Database::Connection->new($udl,-utf8=>1);
+    $db->sql('PRAGMA foreign_keys = OFF');
 
     for my $file (Quiq::Path->glob("$importDir/*.dat")) {
         my ($table) = $file =~ m|/([^/]+).dat$|;
@@ -248,11 +249,12 @@ sub recreateDatabase {
     my $export = 1;
     if ($p->exists($exportDir)) {
         my $answ = Quiq::Terminal->askUser(
-            "ExportDir $exportDir already exists. Export again?",
+            "ExportDir $exportDir already exists. Reimport".
+                ' previously exported data?',
             -values => 'y/n',
-            -default => 'n',
+            -default => 'y',
         );
-        if ($answ ne 'y') {
+        if ($answ eq 'y') {
             $export = 0;
         }
     }
