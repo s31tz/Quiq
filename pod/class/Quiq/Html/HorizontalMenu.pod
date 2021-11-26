@@ -21,6 +21,14 @@ zur Auswahl von Links.
 
 Der Name oder das Label des ausgewählten Menüelements.
 
+=item class => $class
+
+CSS-Klasse.
+
+=item id => $id
+
+CSS-Id des Menüs.
+
 =item items => \@items
 
 Die Elemente des Menüs. Struktur eines Menüelements:
@@ -30,6 +38,10 @@ Die Elemente des Menüs. Struktur eines Menüelements:
       label => $label,
       url => $url,
   }
+
+=item style => $style
+
+CSS-Style.
 
 =back
 

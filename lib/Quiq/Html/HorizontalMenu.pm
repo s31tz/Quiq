@@ -23,6 +23,14 @@ zur Auswahl von Links.
 
 Der Name oder das Label des ausgewählten Menüelements.
 
+=item class => $class
+
+CSS-Klasse.
+
+=item id => $id
+
+CSS-Id des Menüs.
+
 =item items => \@items
 
 Die Elemente des Menüs. Struktur eines Menüelements:
@@ -32,6 +40,10 @@ Die Elemente des Menüs. Struktur eines Menüelements:
       label => $label,
       url => $url,
   }
+
+=item style => $style
+
+CSS-Style.
 
 =back
 
@@ -98,7 +110,10 @@ sub new {
 
     my $self = $class->SUPER::new(
         active => undef,
+        class => undef,
+        id => undef,
         items => [],
+        style => undef,
     );
     $self->set(@_);
 
@@ -162,7 +177,8 @@ sub html {
 
     my $self = ref $this? $this: $this->new(@_);
 
-    my ($active,$itemA) = $self->get(qw/active items/);
+    my ($active,$cssClass,$id,$itemA,$style) =
+        $self->get(qw/active class id items style/);
     $active //= '';
 
     my $html = '';
@@ -178,7 +194,12 @@ sub html {
         );
     }
     if ($html) {
-        $html = "[ $html ]\n";
+        $html = $h->tag('div',
+            class => $cssClass,
+            id => $id,
+            style => $style,
+            "[ $html ]"
+        );
     }
 
     return $html;

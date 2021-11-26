@@ -16,6 +16,10 @@ L<Quiq::Html::Widget|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Ht
 
 CSS Klasse des Konstruktes.
 
+=item default => $default (Default: keiner)
+
+Wert, der angenommen wird, wenn value ein Leerstring oder C<undef> ist.
+
 =item disabled => $bool (Default: 0)
 
 Das gesamte Konstrukt ist disabled. Keine Auswahl möglich.
