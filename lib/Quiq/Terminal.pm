@@ -199,8 +199,14 @@ sub askUser {
         for my $val (split m|[/,]|,$values) {
             my $text = $val;
             if ($val =~ /\((.+)\)/) {
+                # (y)es,(a)bort
                 $val = $1;
                 $text = sprintf '%s(%s%s%s)%s',$`,$color,$val,$reset,$';
+            }
+            elsif ($val =~ /^(.*?)=(.*)/) {
+                # y=yes,a=abort
+                $val = $1;
+                $text = sprintf '%s%s%s=%s',$color,$val,$reset,$2;
             }
             push @values,$val;
 

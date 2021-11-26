@@ -295,7 +295,7 @@ sub recreateDatabase {
         $sub->($dbFile);
         my $answ = Quiq::Terminal->askUser(
             "Ready to import data from $exportDir?",
-            -values => 'y=yes, a=abort',
+            -values => '(y)es,(a)bort',
             -default => 'y',
             -automatic => !$interactive,
         );
