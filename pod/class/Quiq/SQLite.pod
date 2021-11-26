@@ -74,7 +74,7 @@ Verzeichnis $importDir.
 
 =head4 Synopsis
 
-  $class->recreateDatabase($dbFile,$exportDir,$sub);
+  $class->recreateDatabase($dbFile,$exportDir,@opt,$sub);
 
 =head4 Arguments
 
@@ -112,6 +112,16 @@ an die Subroutine übergeben.
   
       return;
   });
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -interactive => $bool (Default: 1)
+
+Stelle Rückfragen an den Benutzer.
 
 =back
 
