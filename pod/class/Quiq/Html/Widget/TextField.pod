@@ -45,6 +45,10 @@ Name des Textfelds.
 
 JavaScript-Handler.
 
+=item password => $bool (Default: 0)
+
+Wenn gesetzt, wird der Eingawert verschleiert.
+
 =item readonly => $bool (Default: 0)
 
 Zeige das Feld und seinen Wert unveränderbar an.

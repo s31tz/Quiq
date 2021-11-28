@@ -47,6 +47,10 @@ Name des Textfelds.
 
 JavaScript-Handler.
 
+=item password => $bool (Default: 0)
+
+Wenn gesetzt, wird der Eingawert verschleiert.
+
 =item readonly => $bool (Default: 0)
 
 Zeige das Feld und seinen Wert unveränderbar an.
@@ -112,6 +116,7 @@ sub new {
         maxLength => undef,
         name => undef,
         onKeyUp => undef,
+        password => 0,
         readonly => 0,
         size => undef,
         style => undef,
@@ -150,9 +155,10 @@ sub html {
 
     # Attribute
 
-    my ($class,$disabled,$id,$maxLength,$name,$onKeyUp,$readonly,$size,$style,
-        $title,$undefIf,$value) = $self->get(qw/class disabled id maxLength
-        name onKeyUp readonly size style title undefIf value/);
+    my ($class,$disabled,$id,$maxLength,$name,$onKeyUp,$password,
+        $readonly,$size,$style, $title,$undefIf,$value) =
+        $self->get(qw/class disabled id maxLength name onKeyUp password
+        readonly size style title undefIf value/);
 
     if (!defined $maxLength) {
         $maxLength = $size;
@@ -175,7 +181,7 @@ sub html {
     }
 
     return $h->tag('input',
-        type => 'text',
+        type => $password? 'password': 'text',
         id => $id,
         class => $class,
         style => $style,
