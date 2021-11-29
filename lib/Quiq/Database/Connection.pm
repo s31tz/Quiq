@@ -2551,7 +2551,10 @@ sub loadRow {
             }
         }
         if ($lookup) {
-            return $self->lookup($table,-where,@_);
+            my $row = $self->lookup($table,-sloppy=>1,-where,@_);
+            if ($row) {
+                return $row;
+            }
         }
     }
 
