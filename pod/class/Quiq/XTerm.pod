@@ -86,7 +86,7 @@ Kommandozeile des Programms, das gestartet werden soll.
 
 =head1 VERSION
 
-1.196
+1.197
 
 =head1 SOURCE
 

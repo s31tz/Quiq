@@ -15,7 +15,7 @@ sub test_loadClass : Init(1) {
 
 # -----------------------------------------------------------------------------
 
-sub test_new : Test(7) {
+sub test_new : Test(8) {
     my $self = shift;
 
     my $sql = Quiq::Dbms->new('Oracle');
@@ -59,7 +59,7 @@ sub test_dbmsNames : Test(2) {
 
 # -----------------------------------------------------------------------------
 
-sub test_dbmsTestVector : Test(6) {
+sub test_dbmsTestVector : Test(7) {
     my $self = shift;
 
     my @vec = Quiq::Dbms->new('Oracle')->dbmsTestVector;
