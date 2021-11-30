@@ -643,6 +643,12 @@ sub dsn {
     elsif ($dbms eq 'sqlite') {
         $db = Quiq::Path->expandTilde($db);
         $dsn = "DBI:SQLite:dbname=$db";
+        if ($host) {
+            # Wenn Host (und Port) angegeben sind, bauen wir
+            # eine Verbindung über den DBIProxy auf (der remote
+            # laufen muss)
+            $dsn = "DBI:Proxy:hostname=$host;port=$port;dsn=$dsn";
+        }
     }
     elsif ($dbms eq 'access') {
         $dsn = "DBI:ODBC:$db";

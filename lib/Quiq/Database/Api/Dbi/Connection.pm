@@ -505,7 +505,12 @@ sub sql {
                 $id = $dbh->{'mysql_insertid'};
             }
             elsif ($dbms eq 'sqlite') {
-                $id = $dbh->func('last_insert_rowid');
+                # Sind wir über die DBD::Proxy Schnittstelle verbunden,
+                # ist die Methode zur Ermittelung der rowid nicht definiert
+                if ($dbh->can('sqlite_last_insert_rowid')) {
+                    # $id = $dbh->func('last_insert_rowid');
+                    $id = $dbh->sqlite_last_insert_rowid;
+                }
             }
 
             # Hits. -1, wenn unbekannt oder nicht verfügbar. Wir mappen auf 0.
