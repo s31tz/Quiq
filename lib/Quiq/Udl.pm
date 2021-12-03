@@ -107,7 +107,7 @@ use strict;
 use warnings;
 use utf8;
 
-our $VERSION = '1.196';
+our $VERSION = '1.197';
 
 use Quiq::Hash;
 use Quiq::Database::Config;
@@ -643,6 +643,12 @@ sub dsn {
     elsif ($dbms eq 'sqlite') {
         $db = Quiq::Path->expandTilde($db);
         $dsn = "DBI:SQLite:dbname=$db";
+        if ($host) {
+            # Wenn Host (und Port) angegeben sind, bauen wir
+            # eine Verbindung über den DBIProxy auf (der remote
+            # laufen muss)
+            $dsn = "DBI:Proxy:hostname=$host;port=$port;dsn=$dsn";
+        }
     }
     elsif ($dbms eq 'access') {
         $dsn = "DBI:ODBC:$db";
@@ -784,7 +790,7 @@ sub udl {
 
 =head1 VERSION
 
-1.196
+1.197
 
 =head1 AUTHOR
 

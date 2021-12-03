@@ -132,7 +132,7 @@ Konfigurationsattribut nicht, liefere undef.
 
 =head1 VERSION
 
-1.196
+1.197
 
 =head1 SOURCE
 
