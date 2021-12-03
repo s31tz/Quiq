@@ -46,6 +46,14 @@ JavaScript-Handler.
 
 Sichtbare Höhe des Texteingabefeldes in Zeilen.
 
+=item autoRows => [$minHeight,$maxHeight]
+
+Alternative Angabe zu rows: Bereich, in dem die sichtbare Höhe des
+Texteingabefeldes eingestellt wird, in Abhängigkeit von dessen Inhalt.
+Hat der Inhalt weniger als $minHeight Zeilen, wird die Höhe auf $minHeight
+eingestellt. Hat der Inhalt mehr als $maxHeight Zeilen, wird die Höhe auf
+$maxHeight eingestellt. Ist $maxHeight C<undef>, ist die Höhe unbegrenzt.
+
 =item style => $style (Default: undef)
 
 CSS Definition (inline).
@@ -98,6 +106,7 @@ sub new {
     # Defaultwerte
 
     my $self = $class->SUPER::new(
+        autoRows => undef,
         class => undef,
         cols => undef,
         disabled => 0,
@@ -139,9 +148,9 @@ sub html {
 
     # Attribute
 
-    my ($class,$cols,$disabled,$id,$name,$onKeyUp,$rows,$style,$undefIf,
-        $value) = $self->get(qw/class cols disabled id name onKeyUp rows
-        style undefIf value/);
+    my ($autoRows,$class,$cols,$disabled,$id,$name,$onKeyUp,$rows,$style,
+        $undefIf,$value) = $self->get(qw/autoRows class cols disabled id name
+        onKeyUp rows style undefIf value/);
 
     # Generierung
 
@@ -149,6 +158,22 @@ sub html {
 
     if ($undefIf) {
         return undef;
+    }
+
+    # Stelle die Höhe des Feldes anhand seines Inhalts ein
+
+    if ($autoRows) {
+        my ($minRows,$maxRows) = @$autoRows;
+        my $n = defined $value? $value =~ tr/\n//: 0;
+        if ($n < $minRows) {
+            $rows = $minRows;
+        }
+        elsif (!defined $maxRows) {
+            $rows = $n;
+        }
+        elsif ($n > $maxRows) {
+            $rows = $maxRows;
+        }
     }
 
     return $h->tag('textarea',
