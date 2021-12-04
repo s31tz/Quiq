@@ -126,10 +126,12 @@ sub send {
 
     my $contentType = 'text/plain';
     my $encoding = 'utf-8';
+    my $replyTo = undef;
 
     my $optA = $this->parameters(\@_,
         -contentType => \$contentType,
         -encoding => \$encoding,
+        -replyTo => \$replyTo,
     );
     
     # Operation ausführen
@@ -141,6 +143,9 @@ sub send {
 
     my $fh = Quiq::FileHandle->new('|-','/usr/sbin/sendmail -t');
     $fh->print("To: $to\n");
+    if ($replyTo) {
+        $fh->print("Reply-To: $replyTo\n");
+    }
     $fh->print("Subject: $subject\n");
     if ($contentType) {
         if ($encoding) {
