@@ -40,9 +40,11 @@ Name, unter dem die Checkbox kommuniziert wird.
 
 OnClick-Handler.
 
-=item option => $value (Default: undef)
+=item option => $value -or- [$checkedValue,$uncheckedValue] (Default: undef)
 
-Wert, der gesendet wird, wenn die CheckBox aktiviert ist.
+Wert, der gesendet wird, wenn die CheckBox aktiviert ist. Ist der Wert
+eine Arrayreferenz, wird der erste Wert des Arrays gesendet, wenn
+die Checkbox aktiviert ist, andernfalls der zweite Wert.
 
 =item style => $style (Default: undef)
 
