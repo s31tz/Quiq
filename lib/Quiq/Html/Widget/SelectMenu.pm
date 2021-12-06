@@ -148,6 +148,19 @@ sub new {
     # Werte Konstruktoraufruf
     $self->set(@_);
 
+
+    my $optionPairs = $self->{'optionPairs'};
+    if (@$optionPairs) {
+        my (@options,@texts);
+        for (my $i = 0; $i < @$optionPairs; $i += 2) {
+            push @options,$optionPairs->[$i];
+            push @texts,$optionPairs->[$i+1];
+        }
+        $self->{'options'} = \@options;
+        $self->{'texts'} = \@texts;
+    }
+
+
     # Existenz des Werts prüfen. Wenn nicht existent,
     # setzen wir den ersten Wert.
 
@@ -211,24 +224,10 @@ sub html {
         );
     }
     else {
-        my (@options,@texts);
-        if (@$optionPairs) {
-            for (my $i = 0; $i < @$optionPairs; $i += 2) {
-                push @options,$optionPairs->[$i];
-                push @texts,$optionPairs->[$i+1];
-            }
-        }
-        else {
-            for (my $i = 0; $i < @$options; $i++) {
-                push @options,$options->[$i];
-                push @texts,$texts->[$i] // $options->[$i];
-            }
-        }
-
         my $str;
-        for (my $i = 0; $i < @options; $i++) {
-            my $option = $options[$i];
-            my $text = $texts[$i];
+        for (my $i = 0; $i < @$options; $i++) {
+            my $option = $options->[$i];
+            my $text = $texts->[$i];
             my $style = $styles->[$i];
 
             $str .= $h->tag('option',
