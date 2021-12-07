@@ -168,11 +168,11 @@ sub html {
         if ($n < $minRows) {
             $rows = $minRows;
         }
-        elsif (!defined $maxRows) {
-            $rows = $n;
-        }
-        elsif ($n > $maxRows) {
+        elsif (defined($maxRows) && $n > $maxRows) {
             $rows = $maxRows;
+        }
+        else {
+            $rows = $n;
         }
     }
 
