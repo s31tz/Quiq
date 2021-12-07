@@ -117,6 +117,33 @@ liefere den resultierenden Sdoc-Code zurück.
 Erzeuge einen Format-Abschnitt für die angegebenen Format/Code-Paare und
 liefere den resultierenden Sdoc-Code zurück.
 
+=head3 link() - Link
+
+=head4 Synopsis
+
+  $str = $gen->link($name,
+      url => $url,
+      ...
+  );
+
+=head4 Description
+
+Erzeuge ein Link-Segment. Intern wird die Link-Defínition gespeichert,
+die später mit allen anderen Link-Definitionen per $gen->linkDefs()
+abgerufen werden kann.
+
+=head3 linkDefs() - Link-Definitionen
+
+=head4 Synopsis
+
+  $str = $gen->linkDefs;
+
+=head4 Description
+
+Generiere Link-Definitionen zu den Link-Segmenten des Dokuments
+und liefere diese zurück. Die Methode wird typischerweise am Ende
+des Dokuments gerufen.
+
 =head3 paragraph() - Paragraph
 
 =head4 Synopsis

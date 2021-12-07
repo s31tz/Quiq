@@ -34,6 +34,15 @@ Widget ist (aktuell) unsichtbar.
 
 Sichtbare Breite des Texteingabefeldes in Zeichen.
 
+=item autoCols => [$minWidth,$maxWidth]
+
+Alternative Angabe zu cols: Bereich, in dem die sichtbare Breite des
+Texteingabefeldes eingestellt wird, in Abhängigkeit von dessen Inhalt.
+Hat der Inhalt weniger als $minWidth Kolumnen, wird die Breite auf
+$minWidth eingestellt. Hat der Inhalt mehr als $maxWidth Kolumnen, wird
+die Breite auf $maxWidth eingestellt. Ist $maxWidth C<undef>, ist die
+Breite nicht begrenzt.
+
 =item name => $name (Default: undef)
 
 Name des Feldes.
@@ -52,7 +61,8 @@ Alternative Angabe zu rows: Bereich, in dem die sichtbare Höhe des
 Texteingabefeldes eingestellt wird, in Abhängigkeit von dessen Inhalt.
 Hat der Inhalt weniger als $minHeight Zeilen, wird die Höhe auf $minHeight
 eingestellt. Hat der Inhalt mehr als $maxHeight Zeilen, wird die Höhe auf
-$maxHeight eingestellt. Ist $maxHeight C<undef>, ist die Höhe unbegrenzt.
+$maxHeight eingestellt. Ist $maxHeight C<undef>, ist die Höhe nicht
+begrenzt.
 
 =item style => $style (Default: undef)
 
@@ -106,6 +116,7 @@ sub new {
     # Defaultwerte
 
     my $self = $class->SUPER::new(
+        autoCols => undef,
         autoRows => undef,
         class => undef,
         cols => undef,
@@ -148,9 +159,9 @@ sub html {
 
     # Attribute
 
-    my ($autoRows,$class,$cols,$disabled,$id,$name,$onKeyUp,$rows,$style,
-        $undefIf,$value) = $self->get(qw/autoRows class cols disabled id name
-        onKeyUp rows style undefIf value/);
+    my ($autoCols,$autoRows,$class,$cols,$disabled,$id,$name,$onKeyUp,$rows,
+        $style,$undefIf,$value) = $self->get(qw/autoCols autoRows class cols
+        disabled id name onKeyUp rows style undefIf value/);
 
     # Generierung
 
@@ -160,7 +171,29 @@ sub html {
         return undef;
     }
 
-    # Stelle die Höhe des Feldes anhand seines Inhalts ein
+    # Stelle die Breite bzw. Höhe des Feldes anhand seines Inhalts ein
+
+    if ($autoCols) {
+        my ($minCols,$maxCols) = @$autoCols;
+        my $n = 0;
+        if (defined $value) {
+            for (split /\n/,$value) {
+                my $l = length;
+                if ($l > $n) {
+                    $n = $l;
+                }
+            }
+        }
+        if ($n < $minCols) {
+            $cols = $minCols;
+        }
+        elsif (defined($maxCols) && $n > $maxCols) {
+            $cols = $maxCols;
+        }
+        else {
+            $cols = $n;
+        }
+    }
 
     if ($autoRows) {
         my ($minRows,$maxRows) = @$autoRows;
