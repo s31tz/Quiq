@@ -237,6 +237,10 @@ L<Quiq::Excel::Writer|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/E
 
 =item *
 
+L<Quiq::ExportFile|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ExportFile.pod> - Manipuliere Exportdatei
+
+=item *
+
 L<Quiq::FFmpeg|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/FFmpeg.pod> - Konstruiere eine FFmpeg-Kommandozeile
 
 =item *
