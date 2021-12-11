@@ -10,6 +10,31 @@ Quiq::ExportFile - Manipuliere Exportdatei
 
 L<Quiq::Hash>
 
+=head1 DESCRIPTION
+
+Die Klasse definiert Operationen auf Exportdateien der Art:
+
+  per_id|per_vorname|per_nachname
+  1|Rudi|Ratlos
+  2|Elli|Pirelli
+  3|Susi|Sorglos
+  4|Kai|Nelust
+  5|Lieschen|Müller
+  6|Mark|Kiese
+  7|Andreas|Kreuz
+  8|Annie|Malisch
+  9|Kurt|Schluss
+  10|Franz|Brötchen
+  11|Klara|Fall
+  12|Carmen|Bär
+  13|Nico|Laus
+  14|Vitali|Sierend
+  15|Hella|Wahnsinn
+  16|Knut|Schmund
+  17|Ernst|Fall
+  18|Rainer|Zufall
+  19|Erika|Mustermann
+
 =cut
 
 # -----------------------------------------------------------------------------
@@ -96,6 +121,11 @@ Setze den Wert der Kolumne auf $value.
 =head4 Description
 
 Füge Kolumne $column mit Wert $value zur Exportdatei hinzu.
+
+=head4 Example
+
+  $ perl -MQuiq::ExportFile -E \
+      'Quiq::ExportFile->new("person.dat")->addColumn("per_geburtstag")'
 
 =cut
 
@@ -185,6 +215,11 @@ Name der Kolumne, die entfernt werden soll.
 =head4 Description
 
 Entferne Kolumne $column aus der Exportdatei.
+
+=head4 Example
+
+  $ perl -MQuiq::ExportFile -E \
+      'Quiq::ExportFile->new("person.dat")->dropColumn("per_geburtstag")'
 
 =cut
 
