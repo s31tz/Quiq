@@ -239,11 +239,11 @@ diesen zurück. Die Klasse muss bereits geladen worden sein.
   ==>
   <PFAD>Quiq/Object.pm
 
-=head3 functionName() - Liefere Namen der ausgeführten Methode
+=head3 methodName() - Liefere Namen der ausgeführten Methode
 
 =head4 Synopsis
 
-  $name = $this->functionName;
+  $name = $this->methodName;
 
 =head4 Returns
 

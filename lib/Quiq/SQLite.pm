@@ -251,8 +251,6 @@ sub recreateDatabase {
     my $class = shift;
     # @_: $dbFile,$exportDir,@opt,$sub
 
-$class->throw('Stacktrace');
-
     # Optionen und Argumente
 
     my $interactive = 1;

@@ -177,11 +177,11 @@ sub test_classFile : Test(1) {
 
 # -----------------------------------------------------------------------------
 
-sub test_functionName : Test(1) {
+sub test_methodName : Test(1) {
     my $self = shift;
 
-    my $name = Quiq::Object->functionName;
-    $self->is($name,'test_functionName');
+    my $name = Quiq::Object->methodName;
+    $self->is($name,'test_methodName');
 
     return;
 }
