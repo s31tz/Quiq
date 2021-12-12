@@ -37,6 +37,7 @@ Die Elemente des Menüs. Struktur eines Menüelements:
 
   {
       name => $name,
+      class => undef,
       label => $label,
       url => $url,
   }
@@ -121,6 +122,7 @@ sub new {
     for (@{$self->items}) {
         push @items,Quiq::Hash->new($_,
             name => undef,
+            class => undef,
             label => undef,
             url => undef,
         );
@@ -189,6 +191,7 @@ sub html {
 
         $html .= $h->tag('a',
             -ignoreTagIf => ($itm->name // $itm->label) eq $active,
+            class => $itm->class,
             href => $itm->url,
             $itm->label
         );

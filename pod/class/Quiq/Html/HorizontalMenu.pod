@@ -35,6 +35,7 @@ Die Elemente des Menüs. Struktur eines Menüelements:
 
   {
       name => $name,
+      class => undef,
       label => $label,
       url => $url,
   }

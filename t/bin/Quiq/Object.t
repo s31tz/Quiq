@@ -177,6 +177,17 @@ sub test_classFile : Test(1) {
 
 # -----------------------------------------------------------------------------
 
+sub test_functionName : Test(1) {
+    my $self = shift;
+
+    my $name = Quiq::Object->functionName;
+    $self->is($name,'test_functionName');
+
+    return;
+}
+
+# -----------------------------------------------------------------------------
+
 sub test_this_scalar : Test(2) {
     my $self = shift;
 
