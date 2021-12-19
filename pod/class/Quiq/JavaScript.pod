@@ -12,11 +12,30 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head2 Klassenmethoden
 
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+  $p = $class->new;
+
+=head4 Returns
+
+JavaScript-Objekt
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
+dieses Objekt zurück. Da die Klasse ausschließlich Klassenmethoden
+enthält, hat das Objekt ausschließlich die Funktion, eine abkürzende
+Aufrufschreibweise zu ermöglichen.
+
 =head3 code() - Erstelle JavaScript-Code in Perl
 
 =head4 Synopsis
 
-  $js = $class->code(@keyVal,$text);
+  $js = $this->code(@keyVal,$text);
 
 =head4 Arguments
 
@@ -50,7 +69,7 @@ jQuery-Aufrufe mit Dollar-Zeichen ($) enthält oder die Zeilen
 
 =head4 Example
 
-  $js = Quiq::JavaScript->code(q°
+  $js = $this->code(q°
       var __NAME__ = (function() {
           return {
               x: __VALUE__,
@@ -72,7 +91,7 @@ liefert
 
 =head4 Synopsis
 
-  $line = $class->line($code);
+  $line = $this->line($code);
 
 =head4 Arguments
 
