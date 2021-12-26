@@ -100,7 +100,7 @@ sub test_linkDefs : Test(1) {
     my $str = $gen->link('fseitz.de',
         url => 'http://fseitz.de',
     );
-    $self->is($str,'L{fseitz.de}';
+    $self->is($str,'L{fseitz.de}');
 
     # $self->is($str,Quiq::Unindent->string(q~
     #     %Format:
