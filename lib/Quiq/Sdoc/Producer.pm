@@ -93,7 +93,21 @@ sub new {
 
 =head4 Synopsis
 
-  $str = $gen->code($text);
+  $str = $gen->code($text,@keyVal);
+
+=head4 Arguments
+
+=over 4
+
+=item $text
+
+Text des Code-Abschnitts.
+
+=item @keyVal
+
+Eigenschaften des Code-Abschnitts.
+
+=back
 
 =head4 Description
 
