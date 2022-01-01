@@ -393,6 +393,10 @@ L<Quiq::Html::Pygments|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/
 
 =item *
 
+L<Quiq::Html::Resources|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Resources.pod> - CSS- und JavaScript-Resourcen einer Webapplikation
+
+=item *
+
 L<Quiq::Html::Table::Base|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Table/Base.pod> - Basisklasse für tabellengenerierende Klassen
 
 =item *
