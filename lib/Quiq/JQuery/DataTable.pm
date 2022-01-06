@@ -238,7 +238,7 @@ L<instantiate() - Instantiiere Widget in JavaScript|"instantiate() - Instantiier
 
 oder durch Zuweisung an das Attribut instantiate erfolgen
 
-  instantiate => q~
+  arguments => q~
       fixedHeader: true,
       stateSave: true,
       dom: 't',
@@ -670,7 +670,17 @@ sub instantiate {
     $arguments .= "columns: [\n$columns\n],\n";
     $arguments =~ s/^/    /mg;
 
-    return sprintf qq|jQuery('#%s').DataTable({\n%s\n});|,$id,$arguments;
+    my $js = sprintf
+        qq|var dt = \$('#%s').DataTable({\n%s\n});|,$id,$arguments;
+    $js .= "\n".Quiq::Unindent->string(sprintf q~
+        $('#%s').show();
+        new $.fn.dataTable.FixedHeader(dt,{
+            header: true,
+            footer: true,
+        });
+    ~,$id);
+
+    return $js;
 }
 
 # -----------------------------------------------------------------------------

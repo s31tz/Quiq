@@ -236,7 +236,7 @@ L<instantiate() - Instantiiere Widget in JavaScript|"instantiate() - Instantiier
 
 oder durch Zuweisung an das Attribut instantiate erfolgen
 
-  instantiate => q~
+  arguments => q~
       fixedHeader: true,
       stateSave: true,
       dom: 't',
