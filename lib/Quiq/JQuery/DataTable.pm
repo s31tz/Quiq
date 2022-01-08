@@ -81,6 +81,24 @@ DOM-Id der DataTable (des Table-Elements).
 Füge die Instantiierung des DataTable-Objektes (JavaScript) zum
 HTML-Code der Methode html() hinzu.
 
+=item properties => \@arr (Default: [])
+
+Liste von Eigenschaften des JavaScript DataTables-Objekts.
+Die Eigenschaften werden mit Quiq::Json in ein JSON-Objekt
+gewandelt, welches an den DataTable-Konstruktor übergeben wird.
+
+Beispiel:
+
+  properties => [
+      dom => 't',
+      order => [[3,'desc']],
+      orderClasses => \'false',
+      paging => \'false',
+      language => {
+          emptyTable => 'Keine Daten vorhanden',
+      },
+  ]
+
 =item rowsAreArrays => $bool (Default: 0)
 
 Die Row-Objekte sind einfache Arrays. Als rowCallback wird
@@ -409,6 +427,7 @@ our $VERSION = '1.197';
 
 use Quiq::Html::Table::List;
 use Quiq::Unindent;
+use Quiq::Json;
 use Quiq::Hash;
 
 # -----------------------------------------------------------------------------
@@ -497,12 +516,13 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-        arguments => undef,
+        # arguments => undef,
         class => 'compact stripe hover cell-border nowrap order-column',
         columns => [],
         footer => 0,
         id => undef,
         instantiate => 0,
+        properties => [],
         rowsAreArrays => 0,
         rowCallback => undef,
         rows => [],
@@ -539,9 +559,9 @@ sub html {
 
     my $self = ref $this? $this: $this->new(@_);
 
-    my ($arguments,$class,$footer,$id,$instantiate,$rowsAreArrays,$rowCallback,
-        $rowA) = $self->get(qw/arguments class footer id instantiate
-        rowsAreArrays rowCallback rows/);
+    my ($class,$footer,$id,$instantiate,$propertyA,$rowsAreArrays,
+        $rowCallback,$rowA) = $self->get(qw/class footer id instantiate
+        properties rowsAreArrays rowCallback rows/);
 
     # Liste der Kolumnendefinitionen als Hash-Objekte
     my @columns = $self->getColumns;
@@ -629,49 +649,79 @@ instantiiert. Aufbau:
 sub instantiate {
     my ($self,$json) = @_;
 
-    my ($id,$arguments) = $self->get(qw/id arguments/);
+    my ($id,$propertyA) = $self->get(qw/id properties/);
 
-    $arguments = Quiq::Unindent->string($arguments);
-    $arguments .= Quiq::Unindent->string($json);
+    # $arguments = Quiq::Unindent->string($arguments);
+    # $arguments .= Quiq::Unindent->string($json);
+    # 
+    # my $columns;
+    # for my $col ($self->getColumns) {
+    #     my $keyVals;
+    #     if (my $type = $col->type) {
+    #         $keyVals .= "type: '$type',\n"; 
+    #     }
+    #     if (my $align = $col->align || 'left') {
+    #         $keyVals .= "className: 'dt-$align',\n"; 
+    #     }
+    #     if (my $searchable = $col->searchable) {
+    #         $keyVals .= "searchable: '$searchable',\n"; 
+    #     }
+    #     my $orderable = $col->orderable;
+    #     if (defined $orderable) {
+    #         $keyVals .= sprintf "orderable: %s,\n",
+    #             $orderable? 'true': 'false'; 
+    #     }
+    #     if (my $visible = $col->visible) {
+    #         $keyVals .= "visible: '$visible',\n"; 
+    #     }
+    #     if (my $width = $col->width) {
+    #         $keyVals .= "width: '$width',\n"; 
+    #     }
+    #     if ($keyVals) {
+    #         $keyVals =~ s/^/    /mg;
+    #         $columns .= sprintf "{ // %s\n%s},",$col->title,$keyVals;
+    #     }
+    #     else {
+    #         $columns .= sprintf "{ // %s\n},",$col->title;
+    #     }
+    # }
+    # $columns =~ s/^/    /mg;
+    # 
+    # $arguments .= "columns: [\n$columns\n],\n";
+    # $arguments =~ s/^/    /mg;
 
-    my $columns;
+    my $j = Quiq::Json->new;
+
+    my @arr = @$propertyA;
+
+    my @columns;
     for my $col ($self->getColumns) {
-        my $keyVals;
+        my %col;
         if (my $type = $col->type) {
-            $keyVals .= "type: '$type',\n"; 
+             $col{'type'} = $type; 
         }
         if (my $align = $col->align || 'left') {
-            $keyVals .= "className: 'dt-$align',\n"; 
+             $col{'className'} = "dt-$align"; 
         }
         if (my $searchable = $col->searchable) {
-            $keyVals .= "searchable: '$searchable',\n"; 
+            $col{'searchable'} = $searchable; 
         }
         my $orderable = $col->orderable;
         if (defined $orderable) {
-            $keyVals .= sprintf "orderable: %s,\n",
-                $orderable? 'true': 'false'; 
+            $col{'orderable'} = $orderable? \'true': \'false'; 
         }
         if (my $visible = $col->visible) {
-            $keyVals .= "visible: '$visible',\n"; 
+            $col{'visible'} = $visible; 
         }
         if (my $width = $col->width) {
-            $keyVals .= "width: '$width',\n"; 
+            $col{'width'} = $width; 
         }
-        if ($keyVals) {
-            $keyVals =~ s/^/    /mg;
-            $columns .= sprintf "{ // %s\n%s},",$col->title,$keyVals;
-        }
-        else {
-            $columns .= sprintf "{ // %s\n},",$col->title;
-        }
+        push @columns,\%col;
     }
-    $columns =~ s/^/    /mg;
-
-    $arguments .= "columns: [\n$columns\n],\n";
-    $arguments =~ s/^/    /mg;
+    push @arr,columns=>\@columns;
 
     my $js = sprintf
-        qq|var dt = \$('#%s').DataTable({\n%s\n});|,$id,$arguments;
+        qq|var dt = \$('#%s').DataTable(%s);|,$id,scalar $j->object(@arr);
     $js .= "\n".Quiq::Unindent->string(sprintf q~
         $('#%s').show();
         new $.fn.dataTable.FixedHeader(dt,{

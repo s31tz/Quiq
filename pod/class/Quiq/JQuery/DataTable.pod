@@ -79,6 +79,24 @@ DOM-Id der DataTable (des Table-Elements).
 Füge die Instantiierung des DataTable-Objektes (JavaScript) zum
 HTML-Code der Methode html() hinzu.
 
+=item properties => \@arr (Default: [])
+
+Liste von Eigenschaften des JavaScript DataTables-Objekts.
+Die Eigenschaften werden mit Quiq::Json in ein JSON-Objekt
+gewandelt, welches an den DataTable-Konstruktor übergeben wird.
+
+Beispiel:
+
+  properties => [
+      dom => 't',
+      order => [[3,'desc']],
+      orderClasses => \'false',
+      paging => \'false',
+      language => {
+          emptyTable => 'Keine Daten vorhanden',
+      },
+  ]
+
 =item rowsAreArrays => $bool (Default: 0)
 
 Die Row-Objekte sind einfache Arrays. Als rowCallback wird
