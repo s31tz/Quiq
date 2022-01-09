@@ -30,21 +30,55 @@ DataTable-Widget.
 
 =head1 ATTRIBUTES
 
+Attribute, die bei der Instantiierung des JavaScript DataTable-Objekts
+gesetzt werden, sind B<fett> hervorgehoben:
+
 =over 4
 
-=item arguments => $json (Default: undef)
+=item B<< dom => $dom >> (Default: 't')
 
-JSON-Code der das DataTable-Objekt in JavaScript instantiiert. Die
-äußeren geschweiften Klammern werden hierbei weggelassen. Die
-Kolumnendefinitionen (DataTables-Attribut columns:) wird intern
-generiert und zu diesem Code hinzugefügt.
+Definiert die Bedienelemente der Tabelle. Siehe:
+L<https://datatables.net/reference/option/dom>
 
-=item class => $class (Default: "compact stripe hover cell-border nowrap \
+=item B<< emptyTableMsg => $str >> (Default: 'No data')
 
-order-column")
-CSS-Klasse der DataTable (des Table-Elements).
+Text, der angezeigt wird, wenn die Tabelle keine Daten enthält.
+Siehe (auch für weitere sprachabhängige Texte):
+L<https://datatables.net/reference/option/language>
 
-=item columns => \@columns (Default: [])
+=item B<< info => $bool >> (Default: 0)
+
+Zeige Information über den Tabelleninhalt an. Siehe:
+L<https://datatables.net/reference/option/info>
+
+=item B<< order => \@arrOfArr >> (Default: [])
+
+Initiale Sortierung der Tabelle. Siehe:
+L<https://datatables.net/reference/option/order>
+
+=item B<< orderClasses => $bool >> (Default: 1)
+
+Hebe die Sortierkolumnen hervor. Siehe:
+L<https://datatables.net/reference/option/orderClasses>
+
+=item B<< paging => $bool >> (Default: 0)
+
+Schalte Paginierung ein. Siehe:
+L<https://datatables.net/reference/option/paging>
+
+=item B<< searchLabel => $str >> (Default: 'Search:')
+
+Text, der vor dem Suchfeld angezeigt wird (falls vorhanden)
+Siehe (auch für weitere sprachabhängige Texte):
+L<https://datatables.net/reference/option/language>
+
+=item B<< zeroRecordsMsg => $str >> (Default: 'No matching records found')
+
+Text, der angezeigt wird, wenn die Suche keine Daten geliefert hat.
+Siehe (auch für weitere sprachabhängige Texte):
+L<https://datatables.net/reference/option/language>
+
+=item B<< columns => \@columns >> (Default: [])
 
 Referenz auf eine Liste mit Kolumnen-Spezifikationen. Eine einzelne
 Kolumnen-Spezifikation ist ein Hash mit den Komponenten:
@@ -66,6 +100,11 @@ Mögliche Werte für $type: 'date', 'num', 'num-fmt', 'html-num',
 'html-num-fmt', 'html', 'string'. Siehe
 L<https://datatables.net/reference/option/columns.type>
 
+=item class => $class (Default: "compact stripe hover cell-border nowrap \
+
+order-column")
+CSS-Klasse der DataTable (des Table-Elements).
+
 =item footer => $bool (Default: 0)
 
 Setze die Titel auch als Footer.
@@ -78,24 +117,6 @@ DOM-Id der DataTable (des Table-Elements).
 
 Füge die Instantiierung des DataTable-Objektes (JavaScript) zum
 HTML-Code der Methode html() hinzu.
-
-=item properties => \@arr (Default: [])
-
-Liste von Eigenschaften des JavaScript DataTables-Objekts.
-Die Eigenschaften werden mit Quiq::Json in ein JSON-Objekt
-gewandelt, welches an den DataTable-Konstruktor übergeben wird.
-
-Beispiel:
-
-  properties => [
-      dom => 't',
-      order => [[3,'desc']],
-      orderClasses => \'false',
-      paging => \'false',
-      language => {
-          emptyTable => 'Keine Daten vorhanden',
-      },
-  ]
 
 =item rowsAreArrays => $bool (Default: 0)
 

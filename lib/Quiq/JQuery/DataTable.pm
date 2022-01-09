@@ -32,21 +32,55 @@ DataTable-Widget.
 
 =head1 ATTRIBUTES
 
+Attribute, die bei der Instantiierung des JavaScript DataTable-Objekts
+gesetzt werden, sind B<fett> hervorgehoben:
+
 =over 4
 
-=item arguments => $json (Default: undef)
+=item B<< dom => $dom >> (Default: 't')
 
-JSON-Code der das DataTable-Objekt in JavaScript instantiiert. Die
-äußeren geschweiften Klammern werden hierbei weggelassen. Die
-Kolumnendefinitionen (DataTables-Attribut columns:) wird intern
-generiert und zu diesem Code hinzugefügt.
+Definiert die Bedienelemente der Tabelle. Siehe:
+L<https://datatables.net/reference/option/dom>
 
-=item class => $class (Default: "compact stripe hover cell-border nowrap \
+=item B<< emptyTableMsg => $str >> (Default: 'No data')
 
-order-column")
-CSS-Klasse der DataTable (des Table-Elements).
+Text, der angezeigt wird, wenn die Tabelle keine Daten enthält.
+Siehe (auch für weitere sprachabhängige Texte):
+L<https://datatables.net/reference/option/language>
 
-=item columns => \@columns (Default: [])
+=item B<< info => $bool >> (Default: 0)
+
+Zeige Information über den Tabelleninhalt an. Siehe:
+L<https://datatables.net/reference/option/info>
+
+=item B<< order => \@arrOfArr >> (Default: [])
+
+Initiale Sortierung der Tabelle. Siehe:
+L<https://datatables.net/reference/option/order>
+
+=item B<< orderClasses => $bool >> (Default: 1)
+
+Hebe die Sortierkolumnen hervor. Siehe:
+L<https://datatables.net/reference/option/orderClasses>
+
+=item B<< paging => $bool >> (Default: 0)
+
+Schalte Paginierung ein. Siehe:
+L<https://datatables.net/reference/option/paging>
+
+=item B<< searchLabel => $str >> (Default: 'Search:')
+
+Text, der vor dem Suchfeld angezeigt wird (falls vorhanden)
+Siehe (auch für weitere sprachabhängige Texte):
+L<https://datatables.net/reference/option/language>
+
+=item B<< zeroRecordsMsg => $str >> (Default: 'No matching records found')
+
+Text, der angezeigt wird, wenn die Suche keine Daten geliefert hat.
+Siehe (auch für weitere sprachabhängige Texte):
+L<https://datatables.net/reference/option/language>
+
+=item B<< columns => \@columns >> (Default: [])
 
 Referenz auf eine Liste mit Kolumnen-Spezifikationen. Eine einzelne
 Kolumnen-Spezifikation ist ein Hash mit den Komponenten:
@@ -68,6 +102,11 @@ Mögliche Werte für $type: 'date', 'num', 'num-fmt', 'html-num',
 'html-num-fmt', 'html', 'string'. Siehe
 L<https://datatables.net/reference/option/columns.type>
 
+=item class => $class (Default: "compact stripe hover cell-border nowrap \
+
+order-column")
+CSS-Klasse der DataTable (des Table-Elements).
+
 =item footer => $bool (Default: 0)
 
 Setze die Titel auch als Footer.
@@ -80,24 +119,6 @@ DOM-Id der DataTable (des Table-Elements).
 
 Füge die Instantiierung des DataTable-Objektes (JavaScript) zum
 HTML-Code der Methode html() hinzu.
-
-=item properties => \@arr (Default: [])
-
-Liste von Eigenschaften des JavaScript DataTables-Objekts.
-Die Eigenschaften werden mit Quiq::Json in ein JSON-Objekt
-gewandelt, welches an den DataTable-Konstruktor übergeben wird.
-
-Beispiel:
-
-  properties => [
-      dom => 't',
-      order => [[3,'desc']],
-      orderClasses => \'false',
-      paging => \'false',
-      language => {
-          emptyTable => 'Keine Daten vorhanden',
-      },
-  ]
 
 =item rowsAreArrays => $bool (Default: 0)
 
@@ -516,13 +537,21 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-        # arguments => undef,
+        # DataTable-Attribute
+        dom => 't',
+        emptyTableMsg => undef,
+        info => 0,
+        order => [],
+        orderClasses => 0,
+        paging => 0,
+        searchLabel => undef,
+        zeroRecordsMsg => undef,
+        # HTML-Attribute
         class => 'compact stripe hover cell-border nowrap order-column',
         columns => [],
         footer => 0,
         id => undef,
         instantiate => 0,
-        properties => [],
         rowsAreArrays => 0,
         rowCallback => undef,
         rows => [],
@@ -559,9 +588,9 @@ sub html {
 
     my $self = ref $this? $this: $this->new(@_);
 
-    my ($class,$footer,$id,$instantiate,$propertyA,$rowsAreArrays,
+    my ($class,$footer,$id,$instantiate,$rowsAreArrays,
         $rowCallback,$rowA) = $self->get(qw/class footer id instantiate
-        properties rowsAreArrays rowCallback rows/);
+        rowsAreArrays rowCallback rows/);
 
     # Liste der Kolumnendefinitionen als Hash-Objekte
     my @columns = $self->getColumns;
@@ -648,11 +677,32 @@ instantiiert. Aufbau:
 sub instantiate {
     my ($self,$json) = @_;
 
-    my ($id,$propertyA) = $self->get(qw/id properties/);
+    my ($id,$dom,$emptyTableMsg,$info,$orderA,$orderClasses,$paging,
+        $searchLabel,$zeroRecordsMsg) =
+        $self->get(qw/id dom emptyTableMsg info order orderClasses paging
+        searchLabel zeroRecordsMsg/);
 
     my $j = Quiq::Json->new;
 
-    my @arr = @$propertyA;
+    my @language;
+    if ($emptyTableMsg) {
+        push @language,emptyTable=>$emptyTableMsg;
+    }
+    if ($searchLabel) {
+        push @language,search=>$searchLabel;
+    }
+    if ($zeroRecordsMsg) {
+        push @language,zeroRecords=>$zeroRecordsMsg;
+    }
+
+    my @prop = (
+        dom => $dom,
+        info => $info? \'true': \'false',
+        order => $orderA,
+        orderClasses => $orderClasses? \'true': \'false',
+        paging => $paging? \'true': \'false',
+        !@language? (): (language=>{@language}),
+    );
 
     my @columns;
     for my $col ($self->getColumns) {
@@ -678,10 +728,10 @@ sub instantiate {
         }
         push @columns,\%col;
     }
-    push @arr,columns=>\@columns;
+    push @prop,columns=>\@columns;
 
     my $js = sprintf
-        qq|var dt = \$('#%s').DataTable(%s);|,$id,scalar $j->object(@arr);
+        qq|var dt = \$('#%s').DataTable(%s);|,$id,scalar $j->object(@prop);
     $js .= "\n".Quiq::Unindent->string(sprintf q~
         $('#%s').show();
         new $.fn.dataTable.FixedHeader(dt,{
