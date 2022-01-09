@@ -481,7 +481,6 @@ mit den Attributen @keyVal instantiiert.
 =head4 Synopsis
 
   $javaScript = $e->instantiate;
-  $javaScript = $e->instantiate($json);
 
 =head4 Description
 

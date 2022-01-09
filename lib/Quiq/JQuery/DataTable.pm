@@ -426,8 +426,8 @@ use warnings;
 our $VERSION = '1.197';
 
 use Quiq::Html::Table::List;
-use Quiq::Unindent;
 use Quiq::Json;
+use Quiq::Unindent;
 use Quiq::Hash;
 
 # -----------------------------------------------------------------------------
@@ -628,7 +628,6 @@ sub html {
 =head4 Synopsis
 
   $javaScript = $e->instantiate;
-  $javaScript = $e->instantiate($json);
 
 =head4 Description
 
@@ -650,45 +649,6 @@ sub instantiate {
     my ($self,$json) = @_;
 
     my ($id,$propertyA) = $self->get(qw/id properties/);
-
-    # $arguments = Quiq::Unindent->string($arguments);
-    # $arguments .= Quiq::Unindent->string($json);
-    # 
-    # my $columns;
-    # for my $col ($self->getColumns) {
-    #     my $keyVals;
-    #     if (my $type = $col->type) {
-    #         $keyVals .= "type: '$type',\n"; 
-    #     }
-    #     if (my $align = $col->align || 'left') {
-    #         $keyVals .= "className: 'dt-$align',\n"; 
-    #     }
-    #     if (my $searchable = $col->searchable) {
-    #         $keyVals .= "searchable: '$searchable',\n"; 
-    #     }
-    #     my $orderable = $col->orderable;
-    #     if (defined $orderable) {
-    #         $keyVals .= sprintf "orderable: %s,\n",
-    #             $orderable? 'true': 'false'; 
-    #     }
-    #     if (my $visible = $col->visible) {
-    #         $keyVals .= "visible: '$visible',\n"; 
-    #     }
-    #     if (my $width = $col->width) {
-    #         $keyVals .= "width: '$width',\n"; 
-    #     }
-    #     if ($keyVals) {
-    #         $keyVals =~ s/^/    /mg;
-    #         $columns .= sprintf "{ // %s\n%s},",$col->title,$keyVals;
-    #     }
-    #     else {
-    #         $columns .= sprintf "{ // %s\n},",$col->title;
-    #     }
-    # }
-    # $columns =~ s/^/    /mg;
-    # 
-    # $arguments .= "columns: [\n$columns\n],\n";
-    # $arguments =~ s/^/    /mg;
 
     my $j = Quiq::Json->new;
 
