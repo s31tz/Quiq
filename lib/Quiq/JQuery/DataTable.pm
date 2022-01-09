@@ -24,11 +24,9 @@ Quelltext siehe Abschnitt L<Beispiel Synopsis|"Beispiel Synopsis">.
 
 =head1 DESCRIPTION
 
-Hompage des DataTables-Plugin:
-L<https://datatables.net/>
-
 Die Klasse liefert den HTML- und JavaScript-Code für ein
-DataTable-Widget.
+DataTable-Widget. Hompage des DataTables-Plugin:
+L<https://datatables.net/>
 
 =head1 ATTRIBUTES
 
@@ -52,6 +50,11 @@ L<https://datatables.net/reference/option/language>
 
 Zeige Information über den Tabelleninhalt an. Siehe:
 L<https://datatables.net/reference/option/info>
+
+=item $jsCode => $javaScript
+
+JavaScript-Code der nach der Instantiierung des DataTable-Objektes
+hinzugefügt wird.
 
 =item B<< order => \@arrOfArr >> (Default: [])
 
@@ -114,11 +117,6 @@ Setze die Titel auch als Footer.
 =item id => $id (Default: undef)
 
 DOM-Id der DataTable (des Table-Elements).
-
-=item instantiate => $bool (Default: 0)
-
-Füge die Instantiierung des DataTable-Objektes (JavaScript) zum
-HTML-Code der Methode html() hinzu.
 
 =item rowsAreArrays => $bool (Default: 0)
 
@@ -205,7 +203,6 @@ Das Programm
           },
       ],
       rows => scalar $tab->rows,
-      instantiate => 1,
   );
 
 erzeugt den HTML-Code (lange Zeilen umbrochen)
@@ -447,9 +444,9 @@ use warnings;
 our $VERSION = '1.197';
 
 use Quiq::Html::Table::List;
+use Quiq::Hash;
 use Quiq::Json;
 use Quiq::Unindent;
-use Quiq::Hash;
 
 # -----------------------------------------------------------------------------
 
@@ -541,6 +538,7 @@ sub new {
         dom => 't',
         emptyTableMsg => undef,
         info => 0,
+        jsCode => undef,
         order => [],
         orderClasses => 0,
         paging => 0,
@@ -551,7 +549,6 @@ sub new {
         columns => [],
         footer => 0,
         id => undef,
-        instantiate => 0,
         rowsAreArrays => 0,
         rowCallback => undef,
         rows => [],
@@ -588,8 +585,8 @@ sub html {
 
     my $self = ref $this? $this: $this->new(@_);
 
-    my ($class,$footer,$id,$instantiate,$rowsAreArrays,
-        $rowCallback,$rowA) = $self->get(qw/class footer id instantiate
+    my ($class,$footer,$id,$rowsAreArrays,
+        $rowCallback,$rowA) = $self->get(qw/class footer id
         rowsAreArrays rowCallback rows/);
 
     # Liste der Kolumnendefinitionen als Hash-Objekte
@@ -641,13 +638,60 @@ sub html {
         footer => $footer,
     );
 
-    if ($instantiate) {
-        $html .= $h->tag('script',
-            $self->instantiate,
-        );
-    }
+    # Instantiiere DataTable-Objekt
+
+    $html .= $h->tag('script',
+        $self->instantiate,
+    );
 
     return $html;
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Hilfsmethoden
+
+=head3 getColumns() - Liste der Kolumnendefinitionen
+
+=head4 Synopsis
+
+  @columns | $columns = $e->getColumns;
+
+=head4 Description
+
+Liefere die Liste der Kolumnendefinitionen. Die Kolumnen werden
+beim Setzen des Objektattributs columns als einfache Hashes
+angegeben. Diese Methode liefert die Kolumnen-Definitionen als
+Hash-Objekte (vom Typ Quiq::Hash).
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub getColumns {
+    my $self = shift;
+
+    my ($columnA) = $self->get(qw/columns/);
+
+    # Column-Hashes in Objekte wandeln. Die Attributnamen werden
+    # dabei auf Korrektheit geprüft.
+
+    my @columns;
+    for my $h (@$columnA) {
+        push @columns,Quiq::Hash->new([qw/
+            name
+            title
+            type
+            align
+            orderable
+            render
+            searchable
+            visible
+            width
+        /])->join($h);
+    }
+
+    return wantarray? @columns: \@columns;
 }
 
 # -----------------------------------------------------------------------------
@@ -677,10 +721,10 @@ instantiiert. Aufbau:
 sub instantiate {
     my ($self,$json) = @_;
 
-    my ($id,$dom,$emptyTableMsg,$info,$orderA,$orderClasses,$paging,
-        $searchLabel,$zeroRecordsMsg) =
-        $self->get(qw/id dom emptyTableMsg info order orderClasses paging
-        searchLabel zeroRecordsMsg/);
+    my ($id,$dom,$emptyTableMsg,$info,$jsCode,$orderA,$orderClasses,
+        $paging,$searchLabel,$zeroRecordsMsg) =
+        $self->get(qw/id dom emptyTableMsg info jsCode order orderClasses
+        paging searchLabel zeroRecordsMsg/);
 
     my $j = Quiq::Json->new;
 
@@ -726,12 +770,20 @@ sub instantiate {
         if (my $width = $col->width) {
             $col{'width'} = $width; 
         }
+        if (my $render = $col->render) {
+            $col{'render'} = \$render; 
+        }
         push @columns,\%col;
     }
     push @prop,columns=>\@columns;
 
-    my $js = sprintf
-        qq|var dt = \$('#%s').DataTable(%s);|,$id,scalar $j->object(@prop);
+    my $js = sprintf qq|var dt = \$('#%s').DataTable(%s);|,
+        $id,scalar $j->object(@prop);
+
+    if ($jsCode) {
+        $js .= "\n".Quiq::Unindent->string($jsCode);
+    }
+
     $js .= "\n".Quiq::Unindent->string(sprintf q~
         $('#%s').show();
         new $.fn.dataTable.FixedHeader(dt,{
@@ -741,52 +793,6 @@ sub instantiate {
     ~,$id);
 
     return $js;
-}
-
-# -----------------------------------------------------------------------------
-
-=head2 Hilfsmethoden
-
-=head3 getColumns() - Liste der Kolumnendefinitionen
-
-=head4 Synopsis
-
-  @columns | $columns = $e->getColumns;
-
-=head4 Description
-
-Liefere die Liste der Kolumnendefinitionen. Die Kolumnen werden
-beim Setzen des Objektattributs columns als einfache Hashes
-angegeben. Diese Methode liefert die Kolumnen-Definitionen als
-Hash-Objekte (vom Typ Quiq::Hash).
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub getColumns {
-    my $self = shift;
-
-    my ($columnA) = $self->get(qw/columns/);
-
-    # Column-Hashes in Objekte wandeln. Die Attributnamen werden
-    # dabei auf Korrektheit geprüft.
-
-    my @columns;
-    for my $h (@$columnA) {
-        push @columns,Quiq::Hash->new([qw/
-            name
-            title
-            type
-            align
-            orderable
-            searchable
-            visible
-            width
-        /])->join($h);
-    }
-
-    return wantarray? @columns: \@columns;
 }
 
 # -----------------------------------------------------------------------------

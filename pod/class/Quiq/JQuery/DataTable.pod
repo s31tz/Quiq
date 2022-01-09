@@ -22,11 +22,9 @@ Quelltext siehe Abschnitt L<Beispiel Synopsis|"Beispiel Synopsis">.
 
 =head1 DESCRIPTION
 
-Hompage des DataTables-Plugin:
-L<https://datatables.net/>
-
 Die Klasse liefert den HTML- und JavaScript-Code für ein
-DataTable-Widget.
+DataTable-Widget. Hompage des DataTables-Plugin:
+L<https://datatables.net/>
 
 =head1 ATTRIBUTES
 
@@ -50,6 +48,11 @@ L<https://datatables.net/reference/option/language>
 
 Zeige Information über den Tabelleninhalt an. Siehe:
 L<https://datatables.net/reference/option/info>
+
+=item $jsCode => $javaScript
+
+JavaScript-Code der nach der Instantiierung des DataTable-Objektes
+hinzugefügt wird.
 
 =item B<< order => \@arrOfArr >> (Default: [])
 
@@ -112,11 +115,6 @@ Setze die Titel auch als Footer.
 =item id => $id (Default: undef)
 
 DOM-Id der DataTable (des Table-Elements).
-
-=item instantiate => $bool (Default: 0)
-
-Füge die Instantiierung des DataTable-Objektes (JavaScript) zum
-HTML-Code der Methode html() hinzu.
 
 =item rowsAreArrays => $bool (Default: 0)
 
@@ -203,7 +201,6 @@ Das Programm
           },
       ],
       rows => scalar $tab->rows,
-      instantiate => 1,
   );
 
 erzeugt den HTML-Code (lange Zeilen umbrochen)
@@ -497,6 +494,21 @@ Generiere den HTML-Code des DataTable-Objekts und liefere
 diesen zurück. Als Klassenmethode gerufen, wird das Objekt intern
 mit den Attributen @keyVal instantiiert.
 
+=head2 Hilfsmethoden
+
+=head3 getColumns() - Liste der Kolumnendefinitionen
+
+=head4 Synopsis
+
+  @columns | $columns = $e->getColumns;
+
+=head4 Description
+
+Liefere die Liste der Kolumnendefinitionen. Die Kolumnen werden
+beim Setzen des Objektattributs columns als einfache Hashes
+angegeben. Diese Methode liefert die Kolumnen-Definitionen als
+Hash-Objekte (vom Typ Quiq::Hash).
+
 =head3 instantiate() - Instantiiere Widget in JavaScript
 
 =head4 Synopsis
@@ -514,21 +526,6 @@ instantiiert. Aufbau:
           <Kolumnen-Definitionen>
       ]
   });
-
-=head2 Hilfsmethoden
-
-=head3 getColumns() - Liste der Kolumnendefinitionen
-
-=head4 Synopsis
-
-  @columns | $columns = $e->getColumns;
-
-=head4 Description
-
-Liefere die Liste der Kolumnendefinitionen. Die Kolumnen werden
-beim Setzen des Objektattributs columns als einfache Hashes
-angegeben. Diese Methode liefert die Kolumnen-Definitionen als
-Hash-Objekte (vom Typ Quiq::Hash).
 
 =head1 VERSION
 
