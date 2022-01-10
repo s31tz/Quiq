@@ -540,7 +540,7 @@ sub new {
         info => 0,
         jsCode => undef,
         order => [],
-        orderClasses => 0,
+        orderClasses => 1,
         paging => 0,
         searchLabel => undef,
         zeroRecordsMsg => undef,
