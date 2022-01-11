@@ -488,6 +488,7 @@ our $VERSION = '1.197';
 use Quiq::Css;
 use Quiq::Template;
 use Quiq::String;
+use Quiq::JavaScript;
 use Scalar::Util ();
 use Quiq::Image;
 use Quiq::Path;
@@ -1544,11 +1545,15 @@ sub tag {
     elsif ($fmt eq 'v' && $content !~ /\n/ || $fmt eq 'i') {
         # nichts tun
     }
-    elsif ($fmt eq 'v' || $fmt eq 'm' || $fmt eq 'c') {
+    elsif ($fmt eq 'v' || $fmt eq 'm' || $fmt eq 'c' || $fmt eq 'C') {
         Quiq::String->removeIndentation(\$content);
         if ($contentInd) {
             # Bringe Einrückung des Content auf Tiefe $contendInd
             Quiq::String->reduceIndentation($contentInd,\$content);
+        }
+        if ($fmt eq 'C') {
+            # JavaScript-Code einzeilig machen
+            $content = Quiq::JavaScript->line($content);
         }
         if (($fmt eq 'c' || $fmt eq 'C') && $content =~ tr/&<>//) {
             # Script-Code in CDATA einfassen, wenn &, < oder > enthalten

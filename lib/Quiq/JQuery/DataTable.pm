@@ -641,6 +641,7 @@ sub html {
     # Instantiiere DataTable-Objekt
 
     $html .= $h->tag('script',
+        -fmt => 'C',
         $self->instantiate,
     );
 
