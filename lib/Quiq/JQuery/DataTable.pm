@@ -98,6 +98,11 @@ L<https://datatables.net/reference/option/columns.type>
 order-column")
 CSS-Klasse der DataTable (des Table-Elements).
 
+=item fixedHeader => $bool (Default: 0)
+
+Aktiviere FixedHeader. In dem Fall müssen zusätzlich die entsprechenden
+CSS- und JS-Resourcen geladen werden.
+
 =item footer => $bool (Default: 0)
 
 Setze die Titel auch als Footer.
@@ -143,6 +148,136 @@ Liste der Row-Objekte. Für jedes Element wird die Callback-Methode
 (Attribut rowCallback) aufgerufen.
 
 =back
+
+=head1 EXAMPLES
+
+Default-Aussehen einer DataTable:
+
+=begin html
+
+<p class="sdoc-fig-p">
+  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/img/quiq-jquery-datatable-example01.png" width="757" height="170" alt="" />
+</p>
+
+=end html
+
+Das Programm
+
+  my $h = Quiq::Html::Producer->new;
+  
+  my $tab = Quiq::Database::Row::Object->makeTable(
+      [qw/per_id per_vorname per_nachname per_geburtsdatum/],
+      qw/1 Rudi Ratlos 1971-04-23/,
+      qw/2 Harry Hirsch 1948-07-22/,
+      qw/3 Susi Sorglos 1992-10-23/,
+      qw/4 Axel Nässe 1985-04-05/,
+  );
+  
+  my $html = Quiq::Html::Page->html($h,
+      load => [
+          'https://code.jquery.com/jquery-latest.min.js',
+          'https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css',
+          'https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js',
+      ],
+      styleSheet => q~
+          body {
+              font-family: sans-serif;
+              font-size: 12pt;
+              max-width: 500px;
+          }
+      ~,
+      body => Quiq::JQuery::DataTable->html($h,
+          id => 'personTable',
+          order => [[2,'asc']],
+          columns => [
+              {
+                  name => 'per_id',
+                  title => 'Id',
+                  align => 'right',
+              },{
+                  name => 'per_vorname',
+                  title => 'Vorname',
+              },{
+                  name => 'per_nachname',
+                  title => 'Nachname',
+              },{
+                  name => 'per_geburtsdatum',
+                  title => 'Geburtstag',
+                  align => 'center',
+              },
+          ],
+          rows => scalar $tab->rows,
+      ),
+  );
+
+erzeugt den HTML-Code (lange Zeilen umbrochen)
+
+  <!DOCTYPE html>
+  
+  <html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js"> </script>
+    <style type="text/css">
+      body {
+        font-family: sans-serif;
+        font-size: 12pt;
+        max-width: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <table class="compact stripe hover cell-border nowrap order-column" id="personTable" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Vorname</th>
+        <th>Nachname</th>
+        <th>Geburtstag</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Rudi</td>
+        <td>Ratlos</td>
+        <td>1971-04-23</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Harry</td>
+        <td>Hirsch</td>
+        <td>1948-07-22</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Susi</td>
+        <td>Sorglos</td>
+        <td>1992-10-23</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Axel</td>
+        <td>Nässe</td>
+        <td>1985-04-05</td>
+      </tr>
+    </tbody>
+    </table>
+    <script type="text/javascript">
+      var dt = $('#personTable').DataTable({
+        dom: 't',
+        info: false,
+        order: [[2,'asc']],
+        orderClasses: true,
+        paging: false,
+        columns: [{className:'dt-right'},{className:'dt-left'},{className:'dt-left'},{className:'dt-center'}],
+      });
+      $('#personTable').show();
+    </script>
+  </body>
+  </html>
 
 =cut
 
@@ -201,6 +336,7 @@ sub new {
         # HTML-Attribute
         class => 'compact stripe hover cell-border nowrap order-column',
         columns => [],
+        fixedHeader => 0,
         footer => 0,
         id => undef,
         rowsAreArrays => 0,
@@ -375,9 +511,9 @@ instantiiert. Aufbau:
 sub instantiate {
     my ($self,$json) = @_;
 
-    my ($id,$dom,$emptyTableMsg,$footer,$info,$jsCode,$orderA,
+    my ($id,$dom,$emptyTableMsg,$fixedHeader,$footer,$info,$jsCode,$orderA,
         $orderClasses,$paging,$searchLabel,$zeroRecordsMsg) =
-        $self->get(qw/id dom emptyTableMsg footer info jsCode order
+        $self->get(qw/id dom emptyTableMsg fixedHeader footer info jsCode order
         orderClasses paging searchLabel zeroRecordsMsg/);
 
     my $j = Quiq::Json->new;
@@ -440,13 +576,14 @@ sub instantiate {
 
     $js .= "\n".sprintf q|$('#%s').show();|,$id;
 
-    $js .= "\n".sprintf q|new $.fn.dataTable.FixedHeader(dt,%s);|,
-        scalar $j->object(
-            header => \'true',
-            !$footer? (): (footer => \'true'),
-        )
-    ;
-
+    if ($fixedHeader) {    
+        $js .= "\n".sprintf q|new $.fn.dataTable.FixedHeader(dt,%s);|,
+            scalar $j->object(
+                header => \'true',
+                !$footer? (): (footer => \'true'),
+            )
+        ;
+    }
     return $js;
 }
 
