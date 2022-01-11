@@ -10,18 +10,6 @@ Quiq::JQuery::DataTable - Erzeuge eine HTML/JavaScript DataTables-Tabelle
 
 L<Quiq::Hash>
 
-=head1 SYNOPSIS
-
-=begin html
-
-<p class="sdoc-fig-p">
-  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/img/quiq-jquery-datatable-example01.png" width="757" height="170" alt="" />
-</p>
-
-=end html
-
-Quelltext siehe Abschnitt L<Beispiel Synopsis|"Beispiel Synopsis">.
-
 =head1 DESCRIPTION
 
 Die Klasse liefert den HTML- und JavaScript-Code für ein
@@ -156,280 +144,6 @@ Liste der Row-Objekte. Für jedes Element wird die Callback-Methode
 
 =back
 
-=head1 EXAMPLES
-
-=head2 Beispiel Synopsis
-
-Default-Aussehen einer DataTable:
-
-=begin html
-
-<p class="sdoc-fig-p">
-  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/img/quiq-jquery-datatable-example01.png" width="757" height="170" alt="" />
-</p>
-
-=end html
-
-Das Programm
-
-  my $tab = Quiq::Database::Row::Object->makeTable(
-      [qw/per_id per_vorname per_nachname per_geburtsdatum/],
-      qw/1 Rudi Ratlos 1971-04-23/,
-      qw/2 Erika Mustermann 1955-03-16/,
-      qw/3 Harry Hirsch 1948-07-22/,
-      qw/4 Susi Sorglos 1992-10-23/,
-  );
-  
-  my $h = Quiq::Html::Tag->new('html-5');
-  
-  my $html = Quiq::JQuery::DataTable->html($h,
-      id => 'personTable',
-      class => 'compact stripe hover cell-border',
-      columns => [
-          {
-              name => 'per_id',
-              title => 'Id',
-              align => 'right',
-          },{
-              name => 'per_vorname',
-              title => 'Vorname',
-          },{
-              name => 'per_nachname',
-              title => 'Nachname',
-          },{
-              name => 'per_geburtsdatum',
-              title => 'Geburtstag',
-              align => 'center',
-          },
-      ],
-      rows => scalar $tab->rows,
-  );
-
-erzeugt den HTML-Code (lange Zeilen umbrochen)
-
-  <table id="personTable" class="compact stripe hover cell-border"
-    cellspacing="0">
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Vorname</th>
-      <th>Nachname</th>
-      <th>Geburtstag</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>Rudi</td>
-      <td>Ratlos</td>
-      <td>1971-04-23</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Erika</td>
-      <td>Mustermann</td>
-      <td>1955-03-16</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>Harry</td>
-      <td>Hirsch</td>
-      <td>1948-07-22</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>Susi</td>
-      <td>Sorglos</td>
-      <td>1992-10-23</td>
-    </tr>
-  </tbody>
-  </table>
-  <script type="text/javascript">
-    jQuery('#personTable').DataTable({
-      columns: [
-        {
-          className: 'dt-right',
-        },{
-          className: 'dt-left',
-        },{
-          className: 'dt-left',
-        },{
-          className: 'dt-center',
-        },
-      ],
-    });
-  </script>
-
-=head2 Mit Instantiierungs-Argumenten (HTML-Seite)
-
-Beispiel für die Angabe von Instantiierungs-Argumenten. Dies
-kann bei Aufruf der Methode
-L<instantiate() - Instantiiere Widget in JavaScript|"instantiate() - Instantiiere Widget in JavaScript">
-
-  $dt->instantiate(q~
-      fixedHeader: true,
-      stateSave: true,
-      dom: 't',
-  ~),
-
-oder durch Zuweisung an das Attribut instantiate erfolgen
-
-  arguments => q~
-      fixedHeader: true,
-      stateSave: true,
-      dom: 't',
-  ~
-
-Die Angabe C<dom: 't'> bewirkt hier, dass das DataTables-Plugin
-keine Bedienelemente erzeugt:
-
-=begin html
-
-<p class="sdoc-fig-p">
-  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/img/quiq-jquery-datatable-example02.png" width="757" height="117" alt="" />
-</p>
-
-=end html
-
-Das Programm
-
-  my $tab = Quiq::Database::Row::Object->makeTable(
-      [qw/per_id per_vorname per_nachname per_geburtsdatum/],
-      qw/1 Rudi Ratlos 1971-04-23/,
-      qw/2 Erika Mustermann 1955-03-16/,
-      qw/3 Harry Hirsch 1948-07-22/,
-      qw/4 Susi Sorglos 1992-10-23/,
-  );
-  
-  my $h = Quiq::Html::Tag->new('html-5');
-  
-  my $dt = Quiq::JQuery::DataTable->new(
-      id => 'personTable',
-      class => 'compact stripe hover cell-border',
-      columns => [
-          {
-              name => 'per_id',
-              title => 'Id',
-              align => 'right',
-          },{
-              name => 'per_vorname',
-              title => 'Vorname',
-          },{
-              name => 'per_nachname',
-              title => 'Nachname',
-          },{
-              name => 'per_geburtsdatum',
-              title => 'Geburtstag',
-              align => 'center',
-          },
-      ],
-      rows => scalar $tab->rows,
-  );
-  
-  my $html = Quiq::Html::Page->html($h,
-      styleSheet => Quiq::JQuery::DataTable->stylesheetUrl,
-      styleSheet => q|
-          body {
-              font-family: sans-serif;
-              font-size: 12px;
-              color: black;
-              background-color: white;
-          }
-      |,
-      body => $dt->html($h),
-      javaScript => [
-          'https://code.jquery.com/jquery-1.10.2.js',
-          Quiq::JQuery::DataTable->pluginUrl,
-          $dt->instantiate(q~
-              fixedHeader: true,
-              stateSave: true,
-              dom: 't',
-          ~),
-      ],
-  );
-
-erzeugt den HTML-Code (lange Zeilen umbrochen)
-
-  <!DOCTYPE html>
-  
-  <html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" type="text/css"
-      href="https://cdn.datatables.net/t/dt/dt-1.10.11/datatables.min.css">
-    <style type="text/css">
-      body {
-        font-family: sans-serif;
-        font-size: 12px;
-        color: black;
-        background-color: white;
-      }
-    </style>
-  </head>
-  <body>
-    <table id="personTable" class="compact stripe hover cell-border"
-      cellspacing="0">
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Vorname</th>
-        <th>Nachname</th>
-        <th>Geburtstag</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>Rudi</td>
-        <td>Ratlos</td>
-        <td>1971-04-23</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Erika</td>
-        <td>Mustermann</td>
-        <td>1955-03-16</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>Harry</td>
-        <td>Hirsch</td>
-        <td>1948-07-22</td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>Susi</td>
-        <td>Sorglos</td>
-        <td>1992-10-23</td>
-      </tr>
-    </tbody>
-    </table>
-    <script type="text/javascript"
-      src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script type="text/javascript"
-      src="https://cdn.datatables.net/t/dt/dt-1.10.11/datatables.min.js">
-    </script>
-    <script type="text/javascript">
-      jQuery('#personTable').DataTable({
-        fixedHeader: true,
-        stateSave: true,
-        dom: 't',
-        columns: [
-          {
-            className: 'dt-right',
-          },{
-            className: 'dt-left',
-          },{
-            className: 'dt-left',
-          },{
-            className: 'dt-center',
-          },
-        ],
-      });
-    </script>
-  </body>
-  </html>
-
 =cut
 
 # -----------------------------------------------------------------------------
@@ -451,66 +165,6 @@ use Quiq::Unindent;
 # -----------------------------------------------------------------------------
 
 =head1 METHODS
-
-=head2 Plugin-Code (Klassenmethoden)
-
-=head3 stylesheetUrl() - URL der DataTables CSS-Definitionen
-
-=head4 Synopsis
-
-  $url = $class->stylesheetUrl;
-  $url = $class->stylesheetUrl($config);
-
-=head4 Description
-
-Liefere den CDN URL der DataTables CSS-Definitionen.
-
-=head4 Example
-
-  Quiq::JQuery::DataTable->stylesheetUrl;
-  =>
-  'https://cdn.datatables.net/t/dt/dt-1.10.11/datatables.min.css'
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub stylesheetUrl {
-    my $class = shift;
-    my $config = shift || 'dt-1.10.11';
-    return "https://cdn.datatables.net/t/dt/$config/datatables.min.css";
-}
-
-# -----------------------------------------------------------------------------
-
-=head3 pluginUrl() - URL des Plugin
-
-=head4 Synopsis
-
-  $url = $class->pluginUrl;
-  $url = $class->pluginUrl($config);
-
-=head4 Description
-
-Liefere den CDN URL des DataTables Plugin.
-
-=head4 Example
-
-  Quiq::JQuery::DataTable->pluginUrl;
-  =>
-  'https://cdn.datatables.net/t/dt/dt-1.10.11/datatables.min.js'
-
-=cut
-
-# -----------------------------------------------------------------------------
-
-sub pluginUrl {
-    my $class = shift;
-    my $config = shift || 'dt-1.10.11';
-    return "https://cdn.datatables.net/t/dt/$config/datatables.min.js";
-}
-
-# -----------------------------------------------------------------------------
 
 =head2 Konstruktor
 
@@ -641,7 +295,6 @@ sub html {
     # Instantiiere DataTable-Objekt
 
     $html .= $h->tag('script',
-        -fmt => 'C',
         $self->instantiate,
     );
 
@@ -722,10 +375,10 @@ instantiiert. Aufbau:
 sub instantiate {
     my ($self,$json) = @_;
 
-    my ($id,$dom,$emptyTableMsg,$info,$jsCode,$orderA,$orderClasses,
-        $paging,$searchLabel,$zeroRecordsMsg) =
-        $self->get(qw/id dom emptyTableMsg info jsCode order orderClasses
-        paging searchLabel zeroRecordsMsg/);
+    my ($id,$dom,$emptyTableMsg,$footer,$info,$jsCode,$orderA,
+        $orderClasses,$paging,$searchLabel,$zeroRecordsMsg) =
+        $self->get(qw/id dom emptyTableMsg footer info jsCode order
+        orderClasses paging searchLabel zeroRecordsMsg/);
 
     my $j = Quiq::Json->new;
 
@@ -778,20 +431,21 @@ sub instantiate {
     }
     push @prop,columns=>\@columns;
 
-    my $js = sprintf qq|var dt = \$('#%s').DataTable(%s);|,
+    my $js = sprintf q|var dt = $('#%s').DataTable(%s);|,
         $id,scalar $j->object(@prop);
 
     if ($jsCode) {
         $js .= "\n".Quiq::Unindent->string($jsCode);
     }
 
-    $js .= "\n".Quiq::Unindent->string(sprintf q~
-        $('#%s').show();
-        new $.fn.dataTable.FixedHeader(dt,{
-            header: true,
-            footer: true,
-        });
-    ~,$id);
+    $js .= "\n".sprintf q|$('#%s').show();|,$id;
+
+    $js .= "\n".sprintf q|new $.fn.dataTable.FixedHeader(dt,%s);|,
+        scalar $j->object(
+            header => \'true',
+            !$footer? (): (footer => \'true'),
+        )
+    ;
 
     return $js;
 }

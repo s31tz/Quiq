@@ -65,25 +65,21 @@ dieses Objekt zurück.
 
 =head4 Synopsis
 
-  @arr | $arr = $res->resources($key,$type);
+  @arr | $arr = $res->resources(@keys);
 
 =head4 Arguments
 
 =over 4
 
-=item $key
+=item @keys
 
-Schlüssel, z.B. 'jquery', 'datatables'.
-
-=item $type
-
-Typ der Ressource. Mögliche Werte: 'css', 'js'.
+Liste von Schlüsseln, z.B. 'jquery', 'datatables'.
 
 =back
 
 =head4 Description
 
-Liefere die Liste der Ressourcen zum Schlüssel $key des Typs $type.
+Liefere die Liste der Ressourcen zu den Schlüsseln @keys.
 
 =head1 VERSION
 

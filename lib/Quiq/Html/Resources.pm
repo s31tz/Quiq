@@ -59,8 +59,6 @@ use warnings;
 
 our $VERSION = '1.197';
 
-use Quiq::Assert;
-
 # -----------------------------------------------------------------------------
 
 =head1 METHODS
@@ -96,42 +94,46 @@ sub new {
 
 =head4 Synopsis
 
-  @arr | $arr = $res->resources($key,$type);
+  @arr | $arr = $res->resources(@keys);
 
 =head4 Arguments
 
 =over 4
 
-=item $key
+=item @keys
 
-Schlüssel, z.B. 'jquery', 'datatables'.
-
-=item $type
-
-Typ der Ressource. Mögliche Werte: 'css', 'js'.
+Liste von Schlüsseln, z.B. 'jquery', 'datatables'.
 
 =back
 
 =head4 Description
 
-Liefere die Liste der Ressourcen zum Schlüssel $key des Typs $type.
+Liefere die Liste der Ressourcen zu den Schlüsseln @keys.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
 sub resources {
-    my ($self,$key,$type) = @_;
+    my $self = shift;
+    # @_: @keys
 
-    my $h = $self->try($key) // $self->throw(
-        'RESOURCES-00001: Key does not exist',
-        Key => $key,
-    );
+    my @arr;
+    for my $key (@_) {
+        if (!exists $self->{$key}) {
+            $self->throw(
+                'RESOURCE-00001: Resource not defined',
+                Resource => $key,
+            );
+        }
+        for my $type ('css','js') {
+            if (my $arr = $self->{$key}->{$type}) {
+                push @arr,@$arr;
+            }
+        }
+    }
 
-    Quiq::Assert->isEnumValue($type,['css','js'],-name=>'type');
-    my $arr = $h->{$type};
-
-    return wantarray? @$arr: $arr;
+    return wantarray? @arr: \@arr;
 }
 
 # -----------------------------------------------------------------------------

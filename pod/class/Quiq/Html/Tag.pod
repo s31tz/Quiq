@@ -471,7 +471,7 @@ wird nur bei klassischem HTML - nicht bei XHTML - beachtet.
 
 =head1 METHODS
 
-=head2 Konstruktor
+=head2 Klassenmethoden
 
 =head3 new() - Konstruktor
 
@@ -484,6 +484,32 @@ wird nur bei klassischem HTML - nicht bei XHTML - beachtet.
 
 Instantiiere ein Objekt zur Generierung von HTML-Code und liefere eine
 Referenz auf dieses Objekt zurück.
+
+=head3 setDefault:() - Setze Objekt-Defaults
+
+=head4 Synopsis
+
+  $class->setDefault:(@keyVal);
+
+=head4 Arguments
+
+=over 4
+
+=item @keyVal
+
+Liste der Schlüssel/Wert-Paare, die gesetzt werden sollen.
+
+=back
+
+=head4 Example
+
+Definiere, dass applikationsweit jeglicher CSS- und JavaScript-Code
+in HTML einzeilig dargestellt wird:
+
+  Quiq::Html::Tag->setDefault:(
+      oneLineCss => 1,
+      oneLineJs => 1,
+  );
 
 =head2 Objektmethoden
 

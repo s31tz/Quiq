@@ -15,7 +15,7 @@ sub test_loadClass : Init(1) {
 
 # -----------------------------------------------------------------------------
 
-sub test_unitTest: Test(5) {
+sub test_unitTest: Test(2) {
     my $self = shift;
 
     my $res = Quiq::Html::Resources->new(
@@ -37,21 +37,8 @@ sub test_unitTest: Test(5) {
     );
     $self->is(ref($res),'Quiq::Html::Resources');
 
-    my @arr = $res->resources('datatables','css');
-    $self->isDeeply(\@arr,[
-        'https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css',
-    ]);
-
-    @arr = $res->resources('datatables','js');
-    $self->isDeeply(\@arr,[
-        'https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js',
-    ]);
-
-    eval {$res->resources('unknown','css')};
-    $self->like($@,qr/Key does not exist/);
-
-    eval {$res->resources('datatables','unknown')};
-    $self->like($@,qr/Unexpected value/);
+    my @arr = $res->resources('jquery','datatables');
+    $self->is(scalar(@arr),3);
 
     return;
 }
