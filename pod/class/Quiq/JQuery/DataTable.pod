@@ -98,7 +98,7 @@ CSS-Klasse der DataTable (des Table-Elements).
 
 =item fixedHeader => $bool (Default: 0)
 
-Aktiviere FixedHeader. In dem Fall müssen zusätzlich die entsprechenden
+Aktiviere FixedHeader. In dem Fall müssen zusätzlich die FixedHrader
 CSS- und JS-Resourcen geladen werden.
 
 =item footer => $bool (Default: 0)
@@ -147,14 +147,14 @@ Liste der Row-Objekte. Für jedes Element wird die Callback-Methode
 
 =back
 
-=head1 EXAMPLES
+=head1 EXAMPLE
 
 Default-Aussehen einer DataTable:
 
 =begin html
 
 <p class="sdoc-fig-p">
-  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/img/quiq-jquery-datatable-example01.png" width="757" height="170" alt="" />
+  <img class="sdoc-fig-img" src="https://raw.github.com/s31tz/Quiq/master/img/quiq-jquery-datatable-example01.png" alt="" />
 </p>
 
 =end html
