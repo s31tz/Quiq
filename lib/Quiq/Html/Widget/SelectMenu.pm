@@ -227,7 +227,7 @@ sub html {
         my $str;
         for (my $i = 0; $i < @$options; $i++) {
             my $option = $options->[$i];
-            my $text = $texts->[$i];
+            my $text = $texts->[$i] // $options->[$i];
             my $style = $styles->[$i];
 
             $str .= $h->tag('option',
@@ -272,7 +272,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2021 Frank Seitz
+Copyright (C) 2022 Frank Seitz
 
 =head1 LICENSE
 
