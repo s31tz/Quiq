@@ -93,6 +93,12 @@ Mögliche Werte für $type: 'date', 'num', 'num-fmt', 'html-num',
 'html-num-fmt', 'html', 'string'. Siehe
 L<https://datatables.net/reference/option/columns.type>
 
+=item allowHtml => $bool|\@titles (Default: 0)
+
+Erlaube HTML insgesamt oder auf den Kolumnen in @titles,
+d.h. ersetze die Werte der Kolumnen &, <, > I<nicht> automatisch
+durch HTML-Entities.
+
 =item class => $class (Default: "compact stripe hover cell-border nowrap \
 
 order-column")
@@ -334,6 +340,7 @@ sub new {
         searchLabel => undef,
         zeroRecordsMsg => undef,
         # HTML-Attribute
+        allowHtml => 0,
         class => 'compact stripe hover cell-border nowrap order-column',
         columns => [],
         fixedHeader => 0,
@@ -375,8 +382,8 @@ sub html {
 
     my $self = ref $this? $this: $this->new(@_);
 
-    my ($class,$footer,$id,$rowsAreArrays,
-        $rowCallback,$rowA) = $self->get(qw/class footer id
+    my ($allowHtml,$class,$footer,$id,$rowsAreArrays,
+        $rowCallback,$rowA) = $self->get(qw/allowHtml class footer id
         rowsAreArrays rowCallback rows/);
 
     # Liste der Kolumnendefinitionen als Hash-Objekte
@@ -415,8 +422,24 @@ sub html {
         push @titles,$col->title;
     }
 
+    if (ref $allowHtml) {
+        my %column = map {$_->name => $_} @columns;
+        my @arr;
+        for my $name (@$allowHtml) {
+            my $col = $column{$name};
+            if (!$col) {
+                $self->throw(
+                     'DATATABLE-00001: Column does not exist',
+                     Column => $name,
+                );
+            }
+            push @arr,$col->title;
+        }
+        $allowHtml = \@arr;
+    }
+
     my $html = Quiq::Html::Table::List->html($h,
-        allowHtml => 1,
+        allowHtml => $allowHtml,
         border => 0,
         class => $class,
         empty => undef,

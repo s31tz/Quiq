@@ -91,6 +91,12 @@ Mögliche Werte für $type: 'date', 'num', 'num-fmt', 'html-num',
 'html-num-fmt', 'html', 'string'. Siehe
 L<https://datatables.net/reference/option/columns.type>
 
+=item allowHtml => $bool|\@titles (Default: 0)
+
+Erlaube HTML insgesamt oder auf den Kolumnen in @titles,
+d.h. ersetze die Werte der Kolumnen &, <, > I<nicht> automatisch
+durch HTML-Entities.
+
 =item class => $class (Default: "compact stripe hover cell-border nowrap \
 
 order-column")
