@@ -348,7 +348,7 @@ instantiiert. Aufbau:
 
 =head1 VERSION
 
-1.197
+1.198
 
 =head1 SOURCE
 

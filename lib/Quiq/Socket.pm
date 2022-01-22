@@ -50,7 +50,7 @@ use strict;
 use warnings;
 use utf8;
 
-our $VERSION = '1.197';
+our $VERSION = '1.198';
 
 use Quiq::Option;
 
@@ -164,7 +164,7 @@ sub close {
 
 =head1 VERSION
 
-1.197
+1.198
 
 =head1 AUTHOR
 

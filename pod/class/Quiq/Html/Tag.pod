@@ -485,11 +485,11 @@ wird nur bei klassischem HTML - nicht bei XHTML - beachtet.
 Instantiiere ein Objekt zur Generierung von HTML-Code und liefere eine
 Referenz auf dieses Objekt zurück.
 
-=head3 setDefault:() - Setze Objekt-Defaults
+=head3 setDefault() - Setze Objekt-Defaults
 
 =head4 Synopsis
 
-  $class->setDefault:(@keyVal);
+  $class->setDefault(@keyVal);
 
 =head4 Arguments
 
@@ -506,7 +506,7 @@ Liste der Schlüssel/Wert-Paare, die gesetzt werden sollen.
 Definiere, dass applikationsweit jeglicher CSS- und JavaScript-Code
 in HTML einzeilig dargestellt wird:
 
-  Quiq::Html::Tag->setDefault:(
+  Quiq::Html::Tag->setDefault(
       oneLineCss => 1,
       oneLineJs => 1,
   );
@@ -1059,7 +1059,7 @@ Die Methode liefert keinen Wert zurück.
 
 =head1 VERSION
 
-1.197
+1.198
 
 =head1 SOURCE
 

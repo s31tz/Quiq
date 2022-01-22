@@ -77,7 +77,7 @@ use v5.10;
 use strict;
 use warnings;
 
-our $VERSION = '1.197';
+our $VERSION = '1.198';
 
 use Quiq::Option;
 
@@ -320,7 +320,7 @@ sub asString {
 
 =head1 VERSION
 
-1.197
+1.198
 
 =head1 AUTHOR
 
