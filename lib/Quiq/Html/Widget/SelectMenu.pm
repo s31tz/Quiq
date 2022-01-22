@@ -26,6 +26,11 @@ CSS Klasse.
 
 CSS Definition (inline).
 
+=item addNull => $bool (Default: 0)
+
+Wenn gesetzt, füge Auswahl für Nullwert ('') am Anfang der Liste hinzu.
+Es erscheint der Text '---'.
+
 =item disabled => $bool (Default: 0)
 
 Widget kann nicht editiert werden.
@@ -127,6 +132,7 @@ sub new {
     # Defaultwerte
 
     my $self = $class->SUPER::new(
+        addNull => 0,
         class => undef,
         disabled => 0,
         hidden => 0,
@@ -148,7 +154,6 @@ sub new {
     # Werte Konstruktoraufruf
     $self->set(@_);
 
-
     my $optionPairs = $self->{'optionPairs'};
     if (@$optionPairs) {
         my (@options,@texts);
@@ -159,7 +164,16 @@ sub new {
         $self->{'options'} = \@options;
         $self->{'texts'} = \@texts;
     }
+    elsif (@{$self->{'options'}} && !@{$self->{'texts'}}) {
+        # Sind keine Texte gesetzt, setzen wir sie identisch zu den Optionen
+        $self->{'texts'} = [@{$self->{'options'}}];
+    }
 
+    if ($self->{'addNull'}) {
+        # Wir fügen eine Nullauswahl hinzu
+        $self->{'options'} = ['',@{$self->{'options'}}];
+        $self->{'texts'} = ['---',@{$self->{'texts'}}];
+    }
 
     # Existenz des Werts prüfen. Wenn nicht existent,
     # setzen wir den ersten Wert.
@@ -198,10 +212,12 @@ sub html {
 
     # Attribute
 
-    my ($class,$disabled,$id,$javaScript,$name,$onChange,$optionPairs,
-        $options,$readonly,$style,$styles,$texts,$title,$undefIf,$value) =
-        $self->get(qw/class disabled id javaScript name onChange optionPairs
-        options readonly style styles texts title undefIf value/);
+    my ($addNull,$class,$disabled,$id,$javaScript,$name,$onChange,
+        $optionPairs,$options,$readonly,$style,$styles,$texts,$title,
+        $undefIf,$value) =
+        $self->get(qw/addNull class disabled id javaScript name onChange
+        optionPairs options readonly style styles texts title
+        undefIf value/);
 
     # Generierung
 
@@ -227,7 +243,7 @@ sub html {
         my $str;
         for (my $i = 0; $i < @$options; $i++) {
             my $option = $options->[$i];
-            my $text = $texts->[$i] // $options->[$i];
+            my $text = $texts->[$i];
             my $style = $styles->[$i];
 
             $str .= $h->tag('option',

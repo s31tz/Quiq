@@ -24,6 +24,11 @@ CSS Klasse.
 
 CSS Definition (inline).
 
+=item addNull => $bool (Default: 0)
+
+Wenn gesetzt, füge Auswahl für Nullwert ('') am Anfang der Liste hinzu.
+Es erscheint der Text '---'.
+
 =item disabled => $bool (Default: 0)
 
 Widget kann nicht editiert werden.
