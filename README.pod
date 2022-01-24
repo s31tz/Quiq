@@ -901,6 +901,10 @@ L<Quiq::Url|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Url.pod> - 
 
 =item *
 
+L<Quiq::Web::Navigation|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Web/Navigation.pod> - Navigation zwischen Webseiten
+
+=item *
+
 L<Quiq::XTerm|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/XTerm.pod> - XTerminal Fenster
 
 =item *
