@@ -491,6 +491,48 @@ sub split {
 
 # -----------------------------------------------------------------------------
 
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+  $a = $class->new;
+
+=head4 Arguments
+
+=over 4
+
+=item $bool (Default: 1)
+
+Wenn wahr, findet eine Auszeichnung mit ANSI Colorcodes statt, wenn
+falsch, nicht. Ist das Argument nicht angegeben, ist dies
+gleichbedeutend mit wahr.
+
+=back
+
+=head4 Returns
+
+AnsiColor-Objekt
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere dieses zurück. Durch
+den Parameter $bool wird entschieden, ob die Methode
+L<str|"$str">() ihren Rückgabewert mit
+oder ohne ANSI Colorcodes liefert.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub new {
+    my $class = shift;
+    my $bool = @_? shift: 1;
+
+    return bless \$bool,$class;
+}
+
+# -----------------------------------------------------------------------------
+
 =head1 VERSION
 
 1.198

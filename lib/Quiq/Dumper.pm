@@ -142,6 +142,14 @@ sub dump {
     elsif ($refType eq 'REGEXP') {
         return "/$arg/";
     }
+    elsif ($refType eq 'CODE') {
+        # FIXME: nicht richtig ausgearbeitet
+        return "CODE: $arg";
+    }
+    elsif ($refType eq 'GLOB') {
+        # FIXME: nicht richtig ausgearbeitet
+        return "GLOB: $arg";
+    }
 
     $this->throw(
         'DUMPER-00002: Unknown reference type',
