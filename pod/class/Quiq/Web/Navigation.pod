@@ -18,10 +18,11 @@ Rückkehrseite.
 
 =head2 Navigationsdatenbank
 
-Die Navigationssdatenbanken werden in einem ausgezeichneten
-Verzeichnis DIR gespeichert. In jedem Unterverzeichnis SID befindet
-sich die Navigationsdatenbank zu einer Sitzung. DIR und SID
-werden beim Konstruktoraufruf angegeben.
+Die Navigationssdatenbanken aller Sitzungen werden in einem
+ausgezeichneten Verzeichnis DIR gespeichert. In jedem
+Unterverzeichnis SID befindet sich die Navigationsdatenbank zu
+einer Sitzung. DIR und SID werden beim Konstruktoraufruf
+angegeben.
 
   DIR/SID/            Verzeichnis zu einer Sitzung
   DIR/SID/rid         aktuelle Request-Id der Sitzung
@@ -55,23 +56,70 @@ Aufrufreihenfolge her. Schlüssel der Datei ist der URL des Aufrufs.
   
   referer : Referer-URL des Aufrufs
   -------
-  rid     : Request-Id des jüngsten Aufrufs mit dem
-            betreffenden URL
+  rid     : Request-Id des jüngsten Aufrufs des betreffenden URL
 
 =item call.db
 
 Hash-Datei, in der die Aufrufe protokolliert werden. Schlüssel
 ist die Request-Id des Aufrufs.
 
-  rid | rrid \0 brid \0 args \0 post
+  rid | url \0 rrid \0 brid
   
   rid     : Request-Id des aktuellen Aufrufs
   -------
-  args    : CGI-Parameter des Aufrufs in Querystring-Kodierung
-  post    : CGI-Parameter, die die Seite gepostet hat (wird von
-            der Folgeseite gesetzt)
+  url     : URL des Aufrufs mit Querystring-Kodierung
   rrid    : Request-Id der rufenden Seite
   brid    : Request-Id der Rückkehrseite
+
+Die Request-Id der Rückkehrseite wird automatisch von Request
+zu Request weiter gereicht.
+
+=back
+
+=head2 Direktiven
+
+Die Klasse reserviert folgende Parameternamen, die vom Konstruktor
+als Direktiven zur Verwaltung der Sitzungsdaten interpretiert
+werden. Diese werden bei einem Seitenübergang dem URL der
+Zielseite optional hinzugefügt.
+
+=over 4
+
+=item navBack=rid
+
+Teilt dem Navigation-Konstruktor der Folgeseite die
+Vorgängerseite mit. Diese Angabe ist normalerweise nicht
+nötig, da die Vorgängerseite automatisch durch Auswertung
+Referer-Headers ermittelt wird. Es gibt aber exotische
+Situtionen, in denen dies nicht oder nicht portabel
+funktioniert. Dies ist evtl. beim Übergang von einer Seite zu
+einem Popup-Menü und beim Übergang vom Popup-Menü zur
+Folgeseite der Fall.
+
+=item navPrev=rid
+
+Teilt dem Navigation-Konstruktor der Folgeseite mit, dass die
+Seite mit der Request-Id rid als Rückkehrseite gespeichert
+werden soll. Die Request-Id der Rückkehrseite wird von der
+Klasse automatisch von Aufruf zu Aufruf weitergereicht, bis
+sie durch eine neue Setzung überschrieben wird. Anstelle
+einer numerischen Request-Id können folgende symbolischen
+Werte angegeben werden:
+
+=over 4
+
+=item -1
+
+Als Rückkehrseite wird die Vorgängerseite, also die
+rufende Seite, eingetragen. Diese Direktive wird
+angegeben, wenn die aktuelle Seite für die Folgeseite(n)
+die Rückkehrseite darstellt.
+
+=item x
+
+Der Eintrag für die Rückkehrseite wird gelöscht.
+
+=back
 
 =back
 
@@ -108,6 +156,23 @@ Objekt mit Informationen zum aktuellen Aufruf. Im Falle von Mojolicious
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
 dieses Objekt zurück.
+
+=head2 Attribute
+
+=head3 backUrl() - URL der Rückkehrseite
+
+=head4 Synopsis
+
+  $url = $nav->backUrl;
+
+=head4 Returns
+
+(String) URL
+
+=head4 Description
+
+Liefere den URL der Rückkehrseite als Zeichenkette. Gibt es keine
+Rückkehrseite, liefere einen Leerstring.
 
 =head1 VERSION
 

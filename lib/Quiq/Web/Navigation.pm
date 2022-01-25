@@ -20,10 +20,11 @@ Rückkehrseite.
 
 =head2 Navigationsdatenbank
 
-Die Navigationssdatenbanken werden in einem ausgezeichneten
-Verzeichnis DIR gespeichert. In jedem Unterverzeichnis SID befindet
-sich die Navigationsdatenbank zu einer Sitzung. DIR und SID
-werden beim Konstruktoraufruf angegeben.
+Die Navigationssdatenbanken aller Sitzungen werden in einem
+ausgezeichneten Verzeichnis DIR gespeichert. In jedem
+Unterverzeichnis SID befindet sich die Navigationsdatenbank zu
+einer Sitzung. DIR und SID werden beim Konstruktoraufruf
+angegeben.
 
   DIR/SID/            Verzeichnis zu einer Sitzung
   DIR/SID/rid         aktuelle Request-Id der Sitzung
@@ -57,23 +58,70 @@ Aufrufreihenfolge her. Schlüssel der Datei ist der URL des Aufrufs.
   
   referer : Referer-URL des Aufrufs
   -------
-  rid     : Request-Id des jüngsten Aufrufs mit dem
-            betreffenden URL
+  rid     : Request-Id des jüngsten Aufrufs des betreffenden URL
 
 =item call.db
 
 Hash-Datei, in der die Aufrufe protokolliert werden. Schlüssel
 ist die Request-Id des Aufrufs.
 
-  rid | rrid \0 brid \0 args \0 post
+  rid | url \0 rrid \0 brid
   
   rid     : Request-Id des aktuellen Aufrufs
   -------
-  args    : CGI-Parameter des Aufrufs in Querystring-Kodierung
-  post    : CGI-Parameter, die die Seite gepostet hat (wird von
-            der Folgeseite gesetzt)
+  url     : URL des Aufrufs mit Querystring-Kodierung
   rrid    : Request-Id der rufenden Seite
   brid    : Request-Id der Rückkehrseite
+
+Die Request-Id der Rückkehrseite wird automatisch von Request
+zu Request weiter gereicht.
+
+=back
+
+=head2 Direktiven
+
+Die Klasse reserviert folgende Parameternamen, die vom Konstruktor
+als Direktiven zur Verwaltung der Sitzungsdaten interpretiert
+werden. Diese werden bei einem Seitenübergang dem URL der
+Zielseite optional hinzugefügt.
+
+=over 4
+
+=item navBack=rid
+
+Teilt dem Navigation-Konstruktor der Folgeseite die
+Vorgängerseite mit. Diese Angabe ist normalerweise nicht
+nötig, da die Vorgängerseite automatisch durch Auswertung
+Referer-Headers ermittelt wird. Es gibt aber exotische
+Situtionen, in denen dies nicht oder nicht portabel
+funktioniert. Dies ist evtl. beim Übergang von einer Seite zu
+einem Popup-Menü und beim Übergang vom Popup-Menü zur
+Folgeseite der Fall.
+
+=item navPrev=rid
+
+Teilt dem Navigation-Konstruktor der Folgeseite mit, dass die
+Seite mit der Request-Id rid als Rückkehrseite gespeichert
+werden soll. Die Request-Id der Rückkehrseite wird von der
+Klasse automatisch von Aufruf zu Aufruf weitergereicht, bis
+sie durch eine neue Setzung überschrieben wird. Anstelle
+einer numerischen Request-Id können folgende symbolischen
+Werte angegeben werden:
+
+=over 4
+
+=item -1
+
+Als Rückkehrseite wird die Vorgängerseite, also die
+rufende Seite, eingetragen. Diese Direktive wird
+angegeben, wenn die aktuelle Seite für die Folgeseite(n)
+die Rückkehrseite darstellt.
+
+=item x
+
+Der Eintrag für die Rückkehrseite wird gelöscht.
+
+=back
 
 =back
 
@@ -151,7 +199,13 @@ sub new {
     my $referer = $obj->req->headers->referer;
     my $browser = $obj->req->headers->user_agent;
     my $remoteAddr = $obj->tx->original_remote_address;
-    my $rrid = $obj->param('rrid');
+    # my $post = $obj->req->body_params->to_string;
+    my $rrid = $obj->param('navPrev') // '';
+    my $brid = $obj->param('navBack') // '';
+
+    my $self = $class->SUPER::new(
+        backUrl => '',
+    );
 
     # Allgemeines Navigations-Verzeichnis erzeugen
     $p->mkdir($dir);
@@ -164,7 +218,9 @@ sub new {
             -append => 1,
             -lock => 1,
         );
-        return;
+
+        # Wir liefern ein "leeres" Navigationsobjekt
+        return $self;
     }
 
     # Navigationsdatenbank für Session aufbauen
@@ -178,7 +234,9 @@ sub new {
     my $refererDb = "$sidDir/referer.db";
     my $callDb = "$sidDir/call.db";
 
-    # Wir ermitteln die Request-Id der aktuellen Seite
+    # Wir ermitteln die Request-Id der aktuellen Seite. Der Counter
+    # ist gleichzeitig ein Lock, der bis zum Ende des Konstruktors
+    # aufrechterhalten wird.
 
     my $cnt = Quiq::LockedCounter->new($ridFile)->increment;
     my $rid = $cnt->count;
@@ -192,28 +250,57 @@ sub new {
     # Wir speichern die Request-Id des aktuellen Seitenaufrufs
     $refererH->{$absUrl} = $rid;
 
-    $refererH->sync;
     $refererH->close;
 
     # Wir schreiben einen neuen Eintrag in die Call-DB, wobei wir
     # die Request-Id der Rückkehr-Seite übernehmen
     
-    my $brid = '';
     my $callH = Quiq::Hash::Db->new($callDb,'rw');
-    if ($rrid) {
-        my $data = $callH->{$rrid} // $class->throw;
-        # $args,$post,$rrid,$brid
-        (undef,undef,undef,$brid) = split /\0/,$data,4;
+    if ($brid) {
+        if ($brid == -1) {
+            $brid = $rrid;
+        }
+        elsif ($brid eq 'x') {
+            $brid = '';
+        }
     }
-    $callH->{$rid} = "$url\0\0$rrid\0$brid";
+    elsif ($rrid) {
+        my $data = $callH->{$rrid} // $class->throw;
+        # $url,$rrid,$brid
+        (undef,undef,$brid) = split /\0/,$data,4;
+    }
+    $callH->{$rid} = "$url\0$rrid\0$brid";
 
-    $callH->sync;
+    if ($brid) {
+        my $data = $callH->{$rrid} // $class->throw;
+        # $url,$rrid,$brid
+        ($url,undef,undef) = split /\0/,$data,4;
+        $self->set(backUrl=>$url);
+    }
+
     $callH->close;
 
-    return;
+    return $self;
 }
 
 # -----------------------------------------------------------------------------
+
+=head2 Attribute
+
+=head3 backUrl() - URL der Rückkehrseite
+
+=head4 Synopsis
+
+  $url = $nav->backUrl;
+
+=head4 Returns
+
+(String) URL
+
+=head4 Description
+
+Liefere den URL der Rückkehrseite als Zeichenkette. Gibt es keine
+Rückkehrseite, liefere einen Leerstring.
 
 =head1 VERSION
 
