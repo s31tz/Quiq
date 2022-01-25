@@ -27,7 +27,7 @@ einer Sitzung. DIR und SID werden beim Konstruktoraufruf
 angegeben.
 
   DIR/SID/            Verzeichnis zu einer Sitzung
-  DIR/SID/rid         aktuelle Request-Id der Sitzung
+  DIR/SID/rid         aktuelle Request-Id
   DIR/SID/referer.db  Request-Ids zu URLs der Sitzung
   DIR/SID/call.db     Seitenaufrufe der Sitzung
   DIR/nosession.log   Log der sitzungslosen Zugriffe
@@ -69,7 +69,7 @@ ist die Request-Id des Aufrufs.
   
   rid     : Request-Id des aktuellen Aufrufs
   -------
-  url     : URL des Aufrufs mit Querystring-Kodierung
+  url     : URL des Aufrufs in Querystring-Kodierung
   rrid    : Request-Id der rufenden Seite
   brid    : Request-Id der Rückkehrseite
 
@@ -87,7 +87,7 @@ Zielseite optional hinzugefügt.
 
 =over 4
 
-=item navBack=rid
+=item navPrev=rid
 
 Teilt dem Navigation-Konstruktor der Folgeseite die
 Vorgängerseite mit. Diese Angabe ist normalerweise nicht
@@ -98,7 +98,7 @@ funktioniert. Dies ist evtl. beim Übergang von einer Seite zu
 einem Popup-Menü und beim Übergang vom Popup-Menü zur
 Folgeseite der Fall.
 
-=item navPrev=rid
+=item navBack=rid
 
 Teilt dem Navigation-Konstruktor der Folgeseite mit, dass die
 Seite mit der Request-Id rid als Rückkehrseite gespeichert
@@ -113,9 +113,9 @@ Werte angegeben werden:
 =item -1
 
 Als Rückkehrseite wird die Vorgängerseite, also die
-rufende Seite, eingetragen. Diese Direktive wird
-angegeben, wenn die aktuelle Seite für die Folgeseite(n)
-die Rückkehrseite darstellt.
+rufende Seite, eingetragen. Diese Direktive wird in den
+abgehenden Links der Seite angegeben, wenn die aktuelle
+Seite für die Folgeseite(n) die Rückkehrseite darstellt.
 
 =item x
 
