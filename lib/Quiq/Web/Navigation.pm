@@ -190,10 +190,9 @@ sub new {
     my $p = Quiq::Path->new;
 
     # Request-Information, die wir im Zuge der folgenden
-    # Verarbeitung benötigen. FIXME: In einem speziellen Request-Objekt
-    # Kapseln
+    # Verarbeitung benötigen. Hier für Mojolicious.
+    # FIXME: In einem speziellen Request-Objekt kapseln
 
-    my $time = POSIX::strftime '%Y-%m-%d %H:%M:%S',localtime;
     my $absUrl = $obj->req->url->to_abs;
     my $url = $obj->req->url;
     my $referer = $obj->req->headers->referer;
@@ -202,6 +201,8 @@ sub new {
     # my $post = $obj->req->body_params->to_string;
     my $rrid = $obj->param('navPrev') // '';
     my $brid = $obj->param('navBack') // '';
+
+    # Navigationsobjekt mit der Rückkehrseite, falls existent
 
     my $self = $class->SUPER::new(
         backUrl => '',
@@ -214,6 +215,7 @@ sub new {
     # Bei diesen Aufrufen ohne $sid ist keine Navigation möglich.
 
     if (!$sid) {
+        my $time = POSIX::strftime '%Y-%m-%d %H:%M:%S',localtime;
         $p->write("$dir/no-session.log","$time|$remoteAddr|$browser|$absUrl\n",
             -append => 1,
             -lock => 1,
