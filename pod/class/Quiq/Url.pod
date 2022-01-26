@@ -10,14 +10,29 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 METHODS
 
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+  $u = $class->new;
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
+dieses Objekt zurück. Da die Klasse ausschließlich Klassenmethoden
+enthält, hat das Objekt ausschließlich die Funktion, eine abkürzende
+Aufrufschreibweise zu ermöglichen.
+
 =head2 Klassenmethoden
 
 =head3 encode() - Kodiere Zeichenkette
 
 =head4 Synopsis
 
-  $encStr = $class->encode($str);
-  $encStr = $class->encode($str,$encoding);
+  $encStr = $this->encode($str);
+  $encStr = $this->encode($str,$encoding);
 
 =head4 Arguments
 
@@ -58,8 +73,8 @@ Bytes im Encoding des Zeichens entspricht.
 
 =head4 Synopsis
 
-  $str = $class->decode($encStr);
-  $str = $class->decode($encStr,$encoding);
+  $str = $this->decode($encStr);
+  $str = $this->decode($encStr,$encoding);
 
 =head4 Arguments
 
@@ -89,8 +104,12 @@ zurück.
 
 =head4 Synopsis
 
-  $queryStr = $class->queryEncode(@opt,@keyVal);
-  $queryStr = $class->queryEncode($initialChar,@opt,@keyVal);
+  $queryStr = $this->queryEncode(@opt,@keyVal);
+  $queryStr = $this->queryEncode($initialChar,@opt,@keyVal);
+
+=head4 Alias
+
+qE()
 
 =head4 Arguments
 
@@ -185,8 +204,8 @@ wird zu
 
 =head4 Synopsis
 
-  @arr | $arr = $class->queryDecode($queryStr);
-  @arr | $arr = $class->queryDecode($queryStr,$encoding);
+  @arr | $arr = $this->queryDecode($queryStr);
+  @arr | $arr = $this->queryDecode($queryStr,$encoding);
 
 =head4 Arguments
 
@@ -220,7 +239,7 @@ Die Schlüssel/Wert-Paare können per & oder ; getrennt sein.
 =head4 Synopsis
 
   ($schema,$user,$passw,$host,$port,$path,$query,$fragment,@opt) =
-      $class->split($url);
+      $this->split($url);
 
 =head4 Options
 
@@ -277,35 +296,6 @@ Die Funktion akzeptiert auch unvollständige HTTP URLs:
 Der Querystring ist alles nach '?' und ggf. bis '#', falls angegeben.
 Der konkrete Aufbau des Querystring, wie Trennzeichen usw., spielt
 keine Rolle.
-
-=head3 new() - Instantiiere Objekt
-
-=head4 Synopsis
-
-  $a = $class->new;
-
-=head4 Arguments
-
-=over 4
-
-=item $bool (Default: 1)
-
-Wenn wahr, findet eine Auszeichnung mit ANSI Colorcodes statt, wenn
-falsch, nicht. Ist das Argument nicht angegeben, ist dies
-gleichbedeutend mit wahr.
-
-=back
-
-=head4 Returns
-
-AnsiColor-Objekt
-
-=head4 Description
-
-Instantiiere ein Objekt der Klasse und liefere dieses zurück. Durch
-den Parameter $bool wird entschieden, ob die Methode
-L<str|"$str">() ihren Rückgabewert mit
-oder ohne ANSI Colorcodes liefert.
 
 =head1 VERSION
 
