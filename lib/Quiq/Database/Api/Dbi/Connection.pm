@@ -191,7 +191,7 @@ sub new {
         if ($stdErr) {
             my $stdMsg;
             if ($stdErr == 4) {
-                $stdMsg = "DB-00004: Unique Constraint verletzt";
+                $stdMsg = "DB-00004: Constraint verletzt";
             }
             $class->throw($stdMsg,Internal=>$msg,Command=>$stmt);
         }
