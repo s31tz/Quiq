@@ -593,6 +593,10 @@ L<Quiq::LockedCounter|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/L
 
 =item *
 
+L<Quiq::MailTo|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/MailTo.pod> - Erzeuge mailto-URL
+
+=item *
+
 L<Quiq::Math|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Math.pod> - Mathematische Funktionen
 
 =item *

@@ -1,0 +1,89 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::MailTo - Erzeuge mailto-URL
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 METHODS
+
+=head2 Klassenmethoden
+
+=head3 url() - Erzeuge mailto-URL
+
+=head4 Synopsis
+
+  $url = $class->url($to,@keyVal);
+
+=head4 Arguments
+
+=over 4
+
+=item $to
+
+Liste der direkten Empfänger.
+
+=item @keyVal
+
+Optionale URL-Eigenschaften:
+
+=over 4
+
+=item cc => $cc
+
+Liste der Empfänger, die die Mail in Kopie erhalten.
+
+=item bcc => $bcc
+
+Liste der Empfänger, die die Mail als verdeckte Kopie erhalten.
+
+=item subject => $subject
+
+Betreff.
+
+=item body => $text
+
+Text.
+
+=back
+
+=back
+
+=head4 Returns
+
+(String) URL
+
+=head4 Description
+
+Erzeuge einen mailto-URL über den Schlüssel/Wert-Paaren @keyVal
+und liefere diesen zurück.
+
+=head4 Example
+
+  Quiq::MailTo->url('fs@fseitz.de',subject=>'Ein Test');
+  # =>
+  mailto:fs@fseitz.de?subject=Ein%20Test
+
+=head1 VERSION
+
+1.198
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/MailTo.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2022 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
