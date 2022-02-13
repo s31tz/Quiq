@@ -127,7 +127,7 @@ Wert für einen Set-Cookie Header eingesetzt werden kann.
 
 =head1 VERSION
 
-1.198
+1.200
 
 =head1 SOURCE
 

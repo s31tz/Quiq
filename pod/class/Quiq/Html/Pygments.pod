@@ -219,7 +219,7 @@ Generiere eine Seite mit allen Styles und schreibe sie auf Datei $file:
 
 =head1 VERSION
 
-1.198
+1.200
 
 =head1 SOURCE
 

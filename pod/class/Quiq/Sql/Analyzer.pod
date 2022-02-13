@@ -46,7 +46,7 @@ REPLACE FUNCTION> Statement enthält. Wenn ja, liefere 1, andernfalls 0.
 
 =head1 VERSION
 
-1.198
+1.200
 
 =head1 SOURCE
 

@@ -136,7 +136,7 @@ use v5.10;
 use strict;
 use warnings;
 
-our $VERSION = '1.198';
+our $VERSION = '1.200';
 
 use Quiq::Path;
 use Quiq::LockedCounter;
@@ -306,7 +306,7 @@ Rückkehrseite, liefere einen Leerstring.
 
 =head1 VERSION
 
-1.198
+1.200
 
 =head1 AUTHOR
 
