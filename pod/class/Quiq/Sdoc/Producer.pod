@@ -205,8 +205,8 @@ Erzeuge eine Inhaltsverzeichnis-Definition mit den Eigenschaften
 
 =head4 Synopsis
 
-  $str = $gen->section($level,$title);
-  $str = $gen->section($level,$title,$body);
+  $str = $gen->section($level,$title,@keyVal);
+  $str = $gen->section($level,$title,@keyVal,$body);
 
 =head4 Description
 

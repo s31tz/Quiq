@@ -252,6 +252,30 @@ eine Referenz auf die Liste.
 
 Liefere die Liste der Zeilen der Tabelle.
 
+=head3 row() - Liefere Zeile
+
+=head4 Synopsis
+
+  $row = $tab->row($i);
+
+=head4 Arguments
+
+=over 4
+
+=item $i
+
+Index der Zeile (0 .. $tab->count-1)
+
+=back
+
+=head4 Returns
+
+(Object) Zeile
+
+=head4 Description
+
+Liefere Zeile mit Index $i.
+
 =head3 values() - Werte einer Kolumne
 
 =head4 Synopsis
