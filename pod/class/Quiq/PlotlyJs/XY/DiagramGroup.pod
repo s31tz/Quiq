@@ -244,6 +244,15 @@ Liste der Diagramm-Objekte. Die Diagramm-Objekte sind vom Typ
 B<< Quiq::PlotlyJs::XY::Diagram >> und definieren die Metadaten
 für die einzelnen Diagramme der Diagramm-Gruppe.
 
+=item downloadPng => $bool (Default: 1)
+
+Biete einen Button zum Herunterladen der Diagramm-Grafik an.
+
+=item fillArea => $bool (Default: 1)
+
+Biete eine Checkbox zum An- und Abschalten der Fill Area
+unter der Kurve an.
+
 =item fontSize => $n
 
 Fontgröße der Achsenbeschriftungen. Aus dieser Größe wird die Größe
@@ -259,10 +268,14 @@ Name der Diagramm-Gruppe. Der Name wird als CSS-Id für den
 äußeren div-Container der Diagramm-Gruppe und als Namespace
 für die Funktionen genutzt.
 
+=item scaleY => $bool (Default: 1)
+
+Biete einen Button zur Y-Skalierung der Kurvendaten an.
+
 =item shape => $shape (Default: scatter: 'Spline', scattergl: 'Linear')
 
 Anfangsauswahl des Shape-Menüs auf allen Diagrammen. Der Default
-hängt von Attribut type ab.
+hängt von Attribut type ab. Mögliche Werte: 'Spline', 'Linear', 'Marker'.
 
 =item strict => $bool (Default: 1)
 

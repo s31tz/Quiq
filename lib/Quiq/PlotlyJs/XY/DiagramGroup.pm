@@ -271,6 +271,15 @@ Liste der Diagramm-Objekte. Die Diagramm-Objekte sind vom Typ
 B<< Quiq::PlotlyJs::XY::Diagram >> und definieren die Metadaten
 für die einzelnen Diagramme der Diagramm-Gruppe.
 
+=item downloadPng => $bool (Default: 1)
+
+Biete einen Button zum Herunterladen der Diagramm-Grafik an.
+
+=item fillArea => $bool (Default: 1)
+
+Biete eine Checkbox zum An- und Abschalten der Fill Area
+unter der Kurve an.
+
 =item fontSize => $n
 
 Fontgröße der Achsenbeschriftungen. Aus dieser Größe wird die Größe
@@ -286,10 +295,14 @@ Name der Diagramm-Gruppe. Der Name wird als CSS-Id für den
 äußeren div-Container der Diagramm-Gruppe und als Namespace
 für die Funktionen genutzt.
 
+=item scaleY => $bool (Default: 1)
+
+Biete einen Button zur Y-Skalierung der Kurvendaten an.
+
 =item shape => $shape (Default: scatter: 'Spline', scattergl: 'Linear')
 
 Anfangsauswahl des Shape-Menüs auf allen Diagrammen. Der Default
-hängt von Attribut type ab.
+hängt von Attribut type ab. Mögliche Werte: 'Spline', 'Linear', 'Marker'.
 
 =item strict => $bool (Default: 1)
 
@@ -332,9 +345,12 @@ sub new {
     my $self = $class->SUPER::new(
         debug => 0,
         diagrams => [],
+        downloadPng => 1,
+        fillArea => 1,
         fontSize => 11,
         height => 300,
         name => 'dgr',
+        scaleY => 1,
         shape => undef,
         strict => 1,
         type => 'scatter',
@@ -1019,7 +1035,7 @@ sub htmlDiagram {
                      class => 'rangeslider',
                      option => 1,
                      value => 0,
-                     style => 'vertical-align: middle',
+                     # style => 'vertical-align: middle',
                      title => 'Toggle visibility of range slider',
                      onClick => "$name.toggleRangeSliders('$name',this)",
                 ).
@@ -1068,39 +1084,48 @@ sub htmlDiagram {
                     title => 'Connect data points with straight lines,'.
                         ' splines or show markers',
                 ).
-                ' | FillArea:'.Quiq::Html::Widget::CheckBox->html($h,
-                     id =>  "$name-f$i",
-                     option => 1,
-                     value => 1,
-                     style => 'vertical-align: middle',
-                     title => 'Toggle colored area above or below graph',
-                     onClick => qq~
-                        let fill = this.checked? 'tozeroy': 'none';
-                        Plotly.restyle('$name-d$i',{
-                            'fill': fill,
-                        });
-                     ~,
-                ).
-                ' | '.Quiq::Html::Widget::Button->html($h,
-                    id => "$name-y$i",
-                    content => 'Scale Y Axis',
-                    onClick => sprintf("%s.rescaleY('%s',%s,%s)",
-                        $name,"$name-d$i",$par->yMin,$par->yMax),
-                    title => 'Rescale Y axis according to visible data or'.
-                        ' original state',
-                ).
-                ' | '.Quiq::Html::Widget::Button->html($h,
-                    content => 'Download as PNG',
-                    onClick => qq~
-                        let plot = \$('#$name-d$i');
-                        Plotly.downloadImage(plot[0],{
-                            format: 'png',
-                            width: plot.width(),
-                            height: plot.height(),
-                            filename: '$parameterName',
-                        });
-                    ~,
-                    title => 'Download plot graphic as PNG',
+                (
+                    !$self->fillArea? '':
+                        ' | FillArea:'.Quiq::Html::Widget::CheckBox->html(
+                             $h,
+                             id =>  "$name-f$i",
+                             option => 1,
+                             value => 1,
+                             style => 'vertical-align: middle',
+                             title => 'Toggle colored area above or below'.
+                                 ' graph',
+                             onClick => qq~
+                                let fill = this.checked? 'tozeroy': 'none';
+                                Plotly.restyle('$name-d$i',{
+                                    'fill': fill,
+                                });
+                             ~,
+                        )
+                ).(
+                    !$self->scaleY? '':
+                        ' | '.Quiq::Html::Widget::Button->html($h,
+                            id => "$name-y$i",
+                            content => 'Scale Y Axis',
+                            onClick => sprintf("%s.rescaleY('%s',%s,%s)",
+                                $name,"$name-d$i",$par->yMin,$par->yMax),
+                            title => 'Rescale Y axis according to visible'.
+                                ' data or original state',
+                        )
+                ).(
+                    !$self->downloadPng? '':
+                        ' | '.Quiq::Html::Widget::Button->html($h,
+                            content => 'Download as PNG',
+                            onClick => qq~
+                                let plot = \$('#$name-d$i');
+                                Plotly.downloadImage(plot[0],{
+                                    format: 'png',
+                                    width: plot.width(),
+                                    height: plot.height(),
+                                    filename: '$parameterName',
+                                });
+                            ~,
+                            title => 'Download plot graphic as PNG',
+                        )
                 ).
                 $h->tag('div',
                    id =>  "$name-c$i",
