@@ -542,9 +542,9 @@ sub html {
                 for (let i = 0; i < x.length; i++) {
                     if (x[i] >= xMin && x[i] <= xMax) {
                         if (yMin === undefined || y[i] < yMin)
-                            yMin = y[i]
+                            yMin = y[i];
                         if (yMax === undefined || y[i] > yMax)
-                            yMax = y[i]
+                            yMax = y[i];
                     }
                 }
                 // console.log(xMin+' '+xMax+' '+yMin+' '+yMax);
