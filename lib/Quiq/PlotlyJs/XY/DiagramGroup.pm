@@ -356,6 +356,10 @@ sub new {
         type => 'scatter',
         width => undef,
         xAxisType => 'date',
+        xAxisHoverFormat => '%Y-%m-%d %H:%M:%S', # Format der
+            # Spike-Beschriftung für die X-Koordinate. Siehe:
+            # https://github.com/d3/d3-3.x-api-reference/blob/master/\
+            # Time-Formatting.md#format
         xTitle => undef,
     );
     $self->set(@_);
@@ -405,9 +409,9 @@ sub html {
     # Objektattribute
 
     my ($debug,$diagramA,$fontSize,$height,$name,$shape,$strict,$type,
-        $width,$xAxisType,$xTitle) =
+        $width,$xAxisType,$xAxisHoverFormat,$xTitle) =
         $self->get(qw/debug diagrams fontSize height name shape strict type
-        width xAxisType xTitle/);
+        width xAxisType xAxisHoverFormat xTitle/);
 
     # Default des Attributs shape hängt von type ab
 
@@ -486,12 +490,8 @@ sub html {
     my $plotBackground = '#ffffff'; # Hintergrund Plotbereich
     my $rangeSliderBorderColor = '#e0e0e0';
 
-    my ($xAxisHoverFormat,$xAxisTickFormat);
+    my $xAxisTickFormat;
     if ($xAxisType eq 'date') {
-        $xAxisHoverFormat = '%Y-%m-%d %H:%M:%S'; # Format der
-            # Spike-Beschriftung für die X-Koordinate. Siehe:
-            # https://github.com/d3/d3-3.x-api-reference/blob/master/\
-            # Time-Formatting.md#format
         $xAxisTickFormat = '%Y-%m-%d %H:%M'; # Format der
             # Zeitachsen-Beschriftung
     }
@@ -667,7 +667,7 @@ sub html {
                 let dId = name+'-d'+i;
                 Plotly.deleteTraces(dId,0);
                 Plotly.addTraces(dId,trace);
-                $('#'+name+'-c'+i).html(x.length.toString()+' values');
+                $('#'+name+'-c'+i).html(x.length.toString()+' points');
 
                 return;
             };
@@ -1007,7 +1007,7 @@ sub htmlDiagram {
     # HTML erzeugen
 
     my $parameterName = $par->title;
-    my $zName = $par->zName;
+    my $zName = $par->zName // '';
     my $color = $par->color;
 
     return
@@ -1200,14 +1200,14 @@ sub jsDiagram {
     if ($url) {
         return sprintf("$name.generatePlot('%s',%s,'%s','%s',%s,'%s','%s'".
                 ",'%s',%s,%s,%s,'%s','%s');\n",
-            $name,$i,$par->title,$par->yTitle,$j->encode($par->yTitleColor),
+            $name,$i,$par->title,$par->yTitle//'',$j->encode($par->yTitleColor),
             $par->color,$xMin,$xMax,$yMin,$yMax,$showRangeSlider,$shape,$url);
     }
     else {
         # mit x,y,z
         return sprintf("$name.generatePlot('%s',%s,'%s','%s',%s,'%s','%s'".
                 ",'%s',%s,%s,%s,'%s','',%s,%s,%s);\n",
-            $name,$i,$par->title,$par->yTitle,$j->encode($par->yTitleColor),
+            $name,$i,$par->title,$par->yTitle//'',$j->encode($par->yTitleColor),
             $par->color,$xMin,$xMax,$yMin,$yMax,$showRangeSlider,$shape,
             scalar($j->encode($par->x)),scalar($j->encode($par->y)),
             scalar($j->encode($par->z)));

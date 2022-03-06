@@ -40,6 +40,9 @@ Zeitpunkt ist hochauflösend, umfasst also auch Sekundenbruchteile.
   $t = $class->new;
   $t = $class->new($epoch);
   $t = $class->new($iso);
+  $t = $class->new('start-of-month');
+  $t = $class->new('start-of-previous-month');
+  $t = $class->new('start-of-next-month');
 
 =head4 Description
 
@@ -106,6 +109,20 @@ Integer
 =head4 Description
 
 Liefere (vierstellige) Jahreszahl.
+
+=head3 month() - Monatsnummer
+
+=head4 Synopsis
+
+  $month = $t->month;
+
+=head4 Returns
+
+Integer
+
+=head4 Description
+
+Liefere die ein- oder zweistellige Monatsnummer (1 .. 12).
 
 =head2 Zeit-Arithmetik
 
