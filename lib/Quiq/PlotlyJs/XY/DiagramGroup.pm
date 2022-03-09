@@ -757,15 +757,18 @@ sub html {
 
                 // Wir redirecten Hover-Events an die anderen Diagramme
 
-                d.on('plotly_hover',function (ed) {
-                    $('#'+name+' .diagram').each(function(j) {
-                        if (j+1 != i) {
-                            console.log(ed);
-                            // console.log('redirect hover to'+(j+1)+' '+ed.type);
-                            // this.dispatchEvent(new MouseEvent(ed.type,ed));
-                        }
-                    });
-                });
+if (i == 1) {
+    d.addEventListener('mousemove',function (ed) {
+        $('#'+name+' .diagram').each(function(j) {
+            if (j+1 != i) {
+                // console.log('redirect '+name+' '+ed.type+' to '+(j+1));
+                console.log(ed);
+
+                this.dispatchEvent(new MouseEvent(ed.type,ed));
+            }
+        });
+    });
+}
             };
 
             let getZArray = function (i) {
