@@ -592,7 +592,7 @@ sub html {
                             // Skalierung Y-Achse leiten wir nicht weiter
                             return;
                         }
-                        console.log(ed+JSON.stringify(ed,null,4));
+                        // console.log(ed+JSON.stringify(ed,null,4));
                         $('#'+groupId+' '+'.diagram').each(function(j) {
                             if (j+1 != i && ed['height'] === undefined) {
                                 Plotly.relayout(this,ed);
@@ -752,6 +752,18 @@ sub html {
                         let yMin = $(this).data('yMinOrig');
                         let yMax = $(this).data('yMaxOrig');
                         Plotly.relayout(this,{'yaxis.range': [yMin,yMax]});
+                    });
+                });
+
+                // Wir redirecten Hover-Events an die anderen Diagramme
+
+                d.on('plotly_hover',function (ed) {
+                    $('#'+name+' .diagram').each(function(j) {
+                        if (j+1 != i) {
+                            console.log(ed);
+                            // console.log('redirect hover to'+(j+1)+' '+ed.type);
+                            // this.dispatchEvent(new MouseEvent(ed.type,ed));
+                        }
                     });
                 });
             };
@@ -1200,14 +1212,16 @@ sub jsDiagram {
     if ($url) {
         return sprintf("$name.generatePlot('%s',%s,'%s','%s',%s,'%s','%s'".
                 ",'%s',%s,%s,%s,'%s','%s');\n",
-            $name,$i,$par->title,$par->yTitle//'',$j->encode($par->yTitleColor),
+            $name,$i,$par->title,$par->yTitle//'',
+            $j->encode($par->yTitleColor),
             $par->color,$xMin,$xMax,$yMin,$yMax,$showRangeSlider,$shape,$url);
     }
     else {
         # mit x,y,z
         return sprintf("$name.generatePlot('%s',%s,'%s','%s',%s,'%s','%s'".
                 ",'%s',%s,%s,%s,'%s','',%s,%s,%s);\n",
-            $name,$i,$par->title,$par->yTitle//'',$j->encode($par->yTitleColor),
+            $name,$i,$par->title,$par->yTitle//'',
+            $j->encode($par->yTitleColor),
             $par->color,$xMin,$xMax,$yMin,$yMax,$showRangeSlider,$shape,
             scalar($j->encode($par->x)),scalar($j->encode($par->y)),
             scalar($j->encode($par->z)));
