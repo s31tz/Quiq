@@ -757,14 +757,13 @@ sub html {
 
                 // Wir redirecten Hover-Events an die anderen Diagramme
 
-if (i == 1) {
+if (i) {
     d.addEventListener('mousemove',function (ed) {
         $('#'+name+' .diagram').each(function(j) {
             if (j+1 != i) {
                 // console.log('redirect '+name+' '+ed.type+' to '+(j+1));
                 console.log(ed);
-
-                this.dispatchEvent(new MouseEvent(ed.type,ed));
+                // this.dispatchEvent(new MouseEvent(ed.type,ed));
             }
         });
     });
