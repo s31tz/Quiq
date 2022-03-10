@@ -954,25 +954,6 @@ sub html {
                 for my $par (@$diagramA) {
                     $tmp .= $self->jsDiagram($j,++$i,$par);
                 }
-$tmp .= Quiq::JavaScript->code(q~
-    let dCanvas1 = $('#dgr-d1 rect.nsewdrag')[0];
-    console.log(dCanvas1);
-
-    let dCanvas2 = $('#dgr-d2 rect.nsewdrag')[0];
-    console.log(dCanvas2);
-
-    dCanvas1.addEventListener('mousemove',function (ed) {
-        console.log(ed);
-
-        let ed2 = new MouseEvent(ed.type,ed);
-        // ed2.target = dCanvas2;
-        ed2.clientY += 320;
-
-        console.log(ed2);
-
-        dCanvas2.dispatchEvent(ed2);
-    });
-~);
                 Quiq::JQuery::Function->ready($tmp);
             },
         ),
