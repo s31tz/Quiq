@@ -954,6 +954,22 @@ sub html {
                 for my $par (@$diagramA) {
                     $tmp .= $self->jsDiagram($j,++$i,$par);
                 }
+
+# $tmp .= Quiq::JavaScript->code(q~
+#     $('#dgr-d1 rect.nsewdrag').bind('mousemove',function(e){   
+#         console.log(e);
+#     });
+# 
+#     let e = $.Event('mousemove');
+# 
+#     // coordinates
+#     e.pageX = 250;
+#     e.pageY = 250; 
+# 
+#     // trigger event
+#     $('#dgr-d1 rect.nsewdrag').trigger(e);
+# ~);
+
                 Quiq::JQuery::Function->ready($tmp);
             },
         ),
