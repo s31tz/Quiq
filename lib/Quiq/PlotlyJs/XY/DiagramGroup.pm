@@ -675,7 +675,7 @@ sub html {
             // Lade Daten asynchron per Ajax und füge sie zum Diagramm hinzu
             let loadDataSetTrace = function (name,i,trace,layout,shape,url) {
                 // Daten per Ajax besorgen
-                console.log(url);
+                // console.log(url);
                 $.ajax({
                     type: 'GET',
                     url: url,
@@ -1086,7 +1086,7 @@ sub htmlDiagram {
                         }
                         else if (shape == '$zName') {
                             let z = $name.getZArray($i);
-                            console.log(z);
+                            // console.log(z);
                             Plotly.restyle('$name-d$i',{
                                 mode: 'markers',
                                 marker: {

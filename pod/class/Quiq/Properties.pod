@@ -217,6 +217,7 @@ besteht oder wenigsténs einen nichtnumerischen Wert enthält.
 =head4 Synopsis
 
   $width = $prp->width;
+  $width = $prp->width($width);
 
 =head4 Returns
 
@@ -224,7 +225,7 @@ Integer
 
 =head4 Description
 
-Liefere die Länge des längsten Werts.
+Liefere oder setzte die Länge des längsten Werts.
 
 =over 2
 

@@ -128,7 +128,18 @@ Objekt zurück.
 
 =head4 Synopsis
 
-  @columns | $columnA = $tab->columns;
+  @columns | $columnA = $tab->columns(@opt);
+
+=head4 Options
+
+=over 4
+
+=item -sloppy => $bool (Default: 0)
+
+Wirf keine Exception, wenn keine Kolumnennamen definiert sind, sondern
+liefere eine leere Liste.
+
+=back
 
 =head4 Returns
 
@@ -195,9 +206,25 @@ liefere diese unverändert zurück.
 
 =over 4
 
+=item $pos
+
+(Integer) Kolumnenposition
+
 =item $column
 
-Kolumnenname (String).
+(String) Kolumnenname (nur, wenn Kolumennamen definiert sind)
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -withTitles => $bool (Default: 0)
+
+Beziehe die Länge der Kolumnennamen mit ein. D.h, wenn ein Kolumnenname
+länger ist als der längste Wert, setzte die maximale Länge
+(Property width) auf die Länge des Kolumnennamens.
 
 =back
 
@@ -329,6 +356,38 @@ Liefere die Anzahl der Kolumnen der Tabelle.
 
 =head2 Formatierung
 
+=head3 asAsciiTable() - Tabelle als Ascii-Table
+
+=head4 Synopsis
+
+  $text = $tab->asAsciiTable;
+
+=head4 Returns
+
+Ascii-Table (String)
+
+=head4 Description
+
+Liefere die Tabelle in der Repräsentation der Klasse Quiq::AsciiTable.
+
+=head4 Example
+
+  $tab = Quiq::Table->new(['Integer','String','Float'],[
+      [1,  'A',  76.253],
+      [12, 'AB', 1.7   ],
+      [123,'ABC',9999  ],
+  ]);
+  
+  $str = $tab->asAsciiTable;
+  ==>
+  %Table:
+  Integer String    Float
+  ------- ------ --------
+        1 A        76.253
+       12 AB        1.700
+      123 ABC    9999.000
+  .
+
 =head3 asText() - Tabelle als Text
 
 =head4 Synopsis
@@ -341,7 +400,7 @@ Liefere die Anzahl der Kolumnen der Tabelle.
 
 =item -colorize => $sub
 
-Callback-Funktion, die für jede Zelle gerufen wird und eine Termnal-Farbe
+Callback-Funktion, die für jede Zelle gerufen wird und eine Terminal-Farbe
 für die jeweilige Zelle liefert. Die Funktion hat die Struktur:
 
   sub {
@@ -358,6 +417,20 @@ erwartet. Anwendungsbeispiel siehe quiq-ls.
 =head4 Returns
 
 Text-Tabelle (String)
+
+=head4 Example
+
+  $tab = Quiq::Table->new(3,[
+      [1,  'A',  76.253],
+      [12, 'AB', 1.7   ],
+      [123,'ABC',9999  ],
+  ]);
+  
+  $str = $tab->asText;
+  ==>
+  |   1 | A   |   76.253 |
+  |  12 | AB  |    1.700 |
+  | 123 | ABC | 9999.000 |
 
 =head1 VERSION
 
