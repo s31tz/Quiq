@@ -148,7 +148,7 @@ Alle Komponenten, bis auf die Sekunden, sind identisch:
 
 =head1 VERSION
 
-1.200
+1.201
 
 =head1 SOURCE
 

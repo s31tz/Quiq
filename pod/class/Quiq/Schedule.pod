@@ -179,7 +179,7 @@ Liefere die Anzahl der Kolumnen der Matrix.
 
 =head1 VERSION
 
-1.200
+1.201
 
 =head1 SOURCE
 

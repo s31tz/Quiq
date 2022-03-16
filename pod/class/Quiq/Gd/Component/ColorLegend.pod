@@ -171,7 +171,7 @@ Liefere die Höhe der Legende. Die Höhe wird aus den Komponenten berechnet.
 
 =head1 VERSION
 
-1.200
+1.201
 
 =head1 SOURCE
 
