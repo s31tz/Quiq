@@ -79,7 +79,7 @@ sub new {
             my $msg = join '',@_;                
             $class->throw(
                 'MECHANIZE-00001: Fatal error',
-                Error => join('',@_),
+                Error => $msg,
             );
         },
         @_,
