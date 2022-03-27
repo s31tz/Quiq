@@ -131,6 +131,35 @@ Prüfe, ob der Inhalt der Datei $file von $data differiert. Ist dies
 der Fall, liefere I<wahr>, andernfalls I<falsch>. Die Datei $file muss
 nicht existieren.
 
+=head3 convertEncoding() - Wandele Character Encoding
+
+=head4 Synopsis
+
+  $this->convertEncoding($from,$to,$file);
+
+=head4 Arguments
+
+=over 4
+
+=item $from
+
+Aktuelles Encoding der Datei
+
+=item $to
+
+Zukünftiges Encoding der Datei
+
+=item $file
+
+Datei, deren Encoding gewandelt wird
+
+=back
+
+=head4 Description
+
+Wandele das Encoding der Datei $file von Encoding $from in Encoding $to.
+Die Wandelung findet "in place" statt.
+
 =head3 copy() - Kopiere Datei
 
 =head4 Synopsis

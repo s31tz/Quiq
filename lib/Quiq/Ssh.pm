@@ -196,15 +196,15 @@ liefere den Exitcode als dritten Returnwert zurück.
 
 =item $stdout
 
-Ausgabe des Kommandos auf stdout (String).
+(String) Ausgabe des Kommandos auf stdout. Wenn keine Ausgabe, Leerstring.
 
 =item $stderr
 
-Ausgabe des Kommandos auf stderr (String).
+(String) Ausgabe des Kommandos auf stderr. Wenn keine Ausgabe, Leerstring.
 
 =item $exit
 
-Exitcode des Kommandos (Integer). Wird gesetzt, wenn -sloppy=>1 ist,
+(Integer) Exitcode des Kommandos. Wird gesetzt, wenn C<< -sloppy=>1 >> ist,
 sonst konstant 0.
 
 =back
@@ -239,6 +239,8 @@ sub exec {
 
     $cmd = Encode::encode('utf-8',$cmd);
     my ($stdout,$stderr,$exit) = $self->obj->cmd($cmd);
+    $stdout //= '';
+    $stderr //= '';
     $exit //= 0;
     if (!$sloppy) {
         # $exit ist als Exitcode kodiert
