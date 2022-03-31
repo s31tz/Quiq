@@ -205,10 +205,7 @@ sub new {
     # Navigationsobjekt mit der Rückkehrseite, falls existent
 
     my $self = $class->SUPER::new(
-        callDb => undef,
-        rid => undef,
-        rrid => undef,
-        brid => undef,
+        backUrl => undef,
     );
 
     # Allgemeines Navigations-Verzeichnis erzeugen
@@ -278,14 +275,17 @@ sub new {
         (undef,undef,$brid) = split /\0/,$data,3;
     }
     $callH->{$rid} = "$url\0$rrid\0$brid";
-    $callH->close;
 
-    $self->set(
-        callDb => $callDb,
-        rid => $rid,
-        rrid => $rrid,
-        brid => $brid,
-    );
+    # Rückkehr-URL ermitteln
+
+    if ($brid) {
+        my $data = $callH->{$brid} // $self->throw;
+        # $url,$rrid,$brid
+        ($url,undef,undef) = split /\0/,$data,3;
+        $self->set(backUrl=>$url);
+    }
+
+    $callH->close;
 
     return $self;
 }
@@ -299,6 +299,17 @@ sub new {
 =head4 Synopsis
 
   $url = $nav->backUrl;
+  $url = $nav->backUrl($defaultUrl);
+
+=head4 Arguments
+
+=over 4
+
+=item (String) $defaultUrl
+
+URL, der geliefert wird, wenn kein Rückkehr-URL definiert ist.
+
+=back
 
 =head4 Returns
 
@@ -306,8 +317,8 @@ sub new {
 
 =head4 Description
 
-Liefere den URL der Rückkehrseite als Zeichenkette. Gibt es keine
-Rückkehrseite, liefere einen Leerstring.
+Liefere den URL der Rückkehrseite als Zeichenkette. Ist keine
+Rückkehrseite definiert, liefere undef.
 
 =cut
 
@@ -315,22 +326,8 @@ Rückkehrseite, liefere einen Leerstring.
 
 sub backUrl {
     my $self = shift;
-
-    my $url = '';
-
-    # FIXME: Cashen
-
-    if (my $brid = $self->brid) {
-        my $callH = Quiq::Hash::Db->new($self->callDb,'r');
-        my $data = $callH->{$brid} // $self->throw;
-        # $url,$rrid,$brid
-        ($url,undef,undef) = split /\0/,$data,3;
-        $callH->close;
-    }
-
-warn "backUrl=$url\n";
-
-    return $url;
+    my $defaultUrl = shift;
+    return $self->{'backUrl'} // $defaultUrl;
 }
 
 # -----------------------------------------------------------------------------

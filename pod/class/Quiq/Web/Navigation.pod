@@ -164,6 +164,17 @@ dieses Objekt zurück.
 =head4 Synopsis
 
   $url = $nav->backUrl;
+  $url = $nav->backUrl($defaultUrl);
+
+=head4 Arguments
+
+=over 4
+
+=item (String) $defaultUrl
+
+URL, der geliefert wird, wenn kein Rückkehr-URL definiert ist.
+
+=back
 
 =head4 Returns
 
@@ -171,8 +182,8 @@ dieses Objekt zurück.
 
 =head4 Description
 
-Liefere den URL der Rückkehrseite als Zeichenkette. Gibt es keine
-Rückkehrseite, liefere einen Leerstring.
+Liefere den URL der Rückkehrseite als Zeichenkette. Ist keine
+Rückkehrseite definiert, liefere undef.
 
 =head1 VERSION
 
