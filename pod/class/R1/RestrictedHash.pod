@@ -1,0 +1,61 @@
+=encoding utf8
+
+=head1 NAME
+
+R1::RestrictedHash - Hash-Klasse ohne änderbare Schüssel
+
+=head1 BASE CLASS
+
+L<R1::Hash1|https://github.com/s31tz/Quiq/tree/master/pod/class/R1/Hash1.pod>
+
+=head1 DESCRIPTION
+
+Identisch zu R1::Hash1, nur dass am Ende des Konstruktors
+alle Hash-Keys gelockt werden.
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new()
+
+=head4 Description
+
+Siehe Basisklasse R1::Hash1.
+
+=head2 Objektmethoden
+
+=head3 copy()
+
+=head4 Description
+
+MEMO: Diese Methode macht Probleme im Zusammenhang mit CoTeDo! Dateien
+werden alternierend gelöscht und generiert. Grund unklar.
+
+Siehe Basisklasse R1::Hash1.
+
+=head3 add() -  Füge neue Schlüssel/Wert-Paare hinzu
+
+=head4 Synopsis
+
+  $hash->add(@keyVal);
+
+=head3 exists()
+
+=head4 Description
+
+Siehe Basisklasse R1::Hash1.
+
+=head3 rebless()
+
+=head4 Description
+
+Siehe Basisklasse Quiq::Object.
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/R1/RestrictedHash.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>

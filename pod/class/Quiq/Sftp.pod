@@ -1,0 +1,144 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Sftp - SFTP Client-Schnittstelle
+
+=head1 BASE CLASS
+
+L<R1::RestrictedHash|https://github.com/s31tz/Quiq/tree/master/pod/class/R1/RestrictedHash.pod>
+
+=head1 SYNOPSIS
+
+  use Quiq::Sftp;
+  
+  # Weitere Methoden siehe Abschnitt "METHODS"
+  
+  my $sftp = Quiq::Sftp->new('user:passw@host:port/pub');
+  $sftp->put('myfile');
+  $sftp->rename('myfile','yourfile');
+  $sftp->get('yourfile');
+  $sftp->delete('yourfile');
+  $sftp->quit;
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Baue SFTP-Verbindung auf
+
+=head4 Synopsis
+
+  $sftp = $class->new($url);
+
+=head4 Description
+
+Baue eine SFTP-Verbindung zu URL $url auf und liefere eine Referenz
+auf das instantiierte Objekt zurück.
+
+Der URL hat den Aufbau:
+
+  [ftp://][user[:passw]@]host[:port][[#/]path]
+
+Steht vor path ein /, ist der Pfad absolut, steht vor path ein #,
+ist er relativ zum Login-Directory.
+
+=head2 Objektmethoden
+
+=head3 delete() - Lösche Datei auf dem Server
+
+=head4 Synopsis
+
+  $sftp->delete($path);
+
+=head4 Description
+
+Lösche Datei $path auf dem Server. Die Methode liefert keinen Wert
+zurück.
+
+=head3 get() - Hole Datei vom Server
+
+=head4 Synopsis
+
+  $local = $sftp->get($remote);
+  $local = $sftp->get($remote,$local);
+
+=head4 Description
+
+Kopiere die Datei $remote vom Server auf den lokalen Rechner und lege
+sie dort unter dem Pfad/Namen $local ab. Die Methode liefert den
+lokalen Namen der Datei zurück.
+
+=head3 ls() - Liste der Dateien auf dem Server
+
+=head4 Synopsis
+
+  @arr|$arr = $sftp->ls;
+  @arr|$arr = $sftp->ls($path);
+
+=head4 Description
+
+Liefere die Liste der Dateien für unter Remote-Pfad $path.
+Wildcards sind nicht erlaubt. Im Skalarkontext liefere eine
+Referenz auf die Liste.
+
+=head3 put() - Kopiere Datei auf Server
+
+=head4 Synopsis
+
+  $remote = $sftp->put($local);
+  $remote = $sftp->put($local,$remote);
+
+=head4 Description
+
+Kopiere die Datei $local auf den Server und lege sie dort unter dem
+Pfad/Namen $remote ab. Die Methode liefert den Namen der Datei auf dem
+Server zurück.
+
+=head3 rename() - Benenne Datei auf dem Server um
+
+=head4 Synopsis
+
+  $sftp->rename($oldName,$newName);
+
+=head4 Description
+
+Benenne eine Datei auf dem Server von $oldName in $newName um.
+Die Methode liefert keinen Wert zurück.
+
+=head3 mtime() - Liefere mtime von Datei
+
+=head4 Synopsis
+
+  $mtime = $sftp->mtime($path);
+
+=head3 quit() - Schließe SFTP-Verbindung
+
+=head4 Synopsis
+
+  $sftp->quit;
+
+=head4 Description
+
+Die Methode liefert keinen Wert zurück.
+
+=head1 VERSION
+
+1.202
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Sftp.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2022 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
