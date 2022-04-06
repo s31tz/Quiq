@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package R1::Hash1::Test;
+package Quiq::Smb::Test;
 use base qw/Quiq::Test::Class/;
 
 use v5.10;
@@ -10,12 +10,12 @@ use warnings;
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
-    shift->useOk('R1::Hash1');
+    shift->useOk('Quiq::Smb');
 }
 
 # -----------------------------------------------------------------------------
 
 package main;
-R1::Hash1::Test->runTests;
+Quiq::Smb::Test->runTests;
 
 # eof

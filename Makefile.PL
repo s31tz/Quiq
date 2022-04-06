@@ -24,6 +24,7 @@ WriteMakefile(
         Mojolicious::Plugin => 0,
         Net::SSH::Perl => 0,
         Pod::WSDL => 0,
+        Filesys::SmbClient => 0,
         SOAP::Transport::HTTP => 0,
         Time::Zone => 0,
         WWW::Mechanize => 0,

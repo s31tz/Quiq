@@ -749,11 +749,11 @@ L<Quiq::Sendmail|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sendma
 
 =item *
 
-L<Quiq::Sftp|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sftp.pod> - SFTP Client-Schnittstelle
+L<Quiq::Shell|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Shell.pod> - Ausführung von Shell-Kommandos
 
 =item *
 
-L<Quiq::Shell|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Shell.pod> - Ausführung von Shell-Kommandos
+L<Quiq::Smb|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Smb.pod> - SMB Client
 
 =item *
 
@@ -918,18 +918,6 @@ L<Quiq::XTerm|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/XTerm.pod
 =item *
 
 L<Quiq::Xml::LibXml|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Xml/LibXml.pod> - Funktionale Erweiterungen von XML::LibXML
-
-=item *
-
-L<R1::Hash1|https://github.com/s31tz/Quiq/tree/master/pod/class/R1/Hash1.pod> - Hash-Klasse
-
-=item *
-
-L<R1::Misc|https://github.com/s31tz/Quiq/tree/master/pod/class/R1/Misc.pod> - Klassenbibliothek
-
-=item *
-
-L<R1::RestrictedHash|https://github.com/s31tz/Quiq/tree/master/pod/class/R1/RestrictedHash.pod> - Hash-Klasse ohne änderbare Schüssel
 
 =back
 
