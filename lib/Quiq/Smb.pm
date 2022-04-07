@@ -96,10 +96,8 @@ sub new {
     my $class = shift;
     # @_: %args 
 
-    my $smb = Filesys::SmbClient->new(@_);
-
     return $class->SUPER::new(
-        smb => $smb,
+        smb => Filesys::SmbClient->new(@_),
     );
 }
 
