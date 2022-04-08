@@ -156,6 +156,30 @@ Schreibe Datei $file mit Inhalt $data.
 
   $smb->put('smb://ZBM-MOM-T/XRECHNUNG$/S-001191090X_Original.pdf',$data);
 
+=head3 rename() - Benenne Datei um
+
+=head4 Synopsis
+
+  $smb->rename($oldname,$newname);
+
+=head4 Arguments
+
+=over 4
+
+=item $oldname
+
+(String) Alter Dateiname.
+
+=item $newname
+
+(String) Neuer Dateiname.
+
+=back
+
+=head4 Description
+
+Benenne Datei $oldname in $newname um.
+
 =head1 VERSION
 
 1.202

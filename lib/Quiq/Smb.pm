@@ -286,6 +286,53 @@ sub put {
 
 # -----------------------------------------------------------------------------
 
+=head3 rename() - Benenne Datei um
+
+=head4 Synopsis
+
+  $smb->rename($oldname,$newname);
+
+=head4 Arguments
+
+=over 4
+
+=item $oldname
+
+(String) Alter Dateiname.
+
+=item $newname
+
+(String) Neuer Dateiname.
+
+=back
+
+=head4 Description
+
+Benenne Datei $oldname in $newname um.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub rename {
+    my ($self,$oldname,$newname) = @_;
+
+    my $smb = $self->{'smb'};
+
+    my $ret = $smb->rename($oldname,$newname);
+    if (!$ret) {
+        $self->throw(
+            'SMB-00003: Rename failed',
+            Path=>qq|"$oldname" => "$newname"|,
+            Error=>$!,
+        );
+    }
+    
+    return;
+}
+
+# -----------------------------------------------------------------------------
+
 =head1 VERSION
 
 1.202

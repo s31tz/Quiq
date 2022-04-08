@@ -67,15 +67,23 @@ Inhalt der E-Mail.
 
 =over 4
 
+=item -contentType => $contentType (Default: 'text/plain')
+
+Content-Type von $subject und $body. Wenn leer, wird
+kein Content-Type-Header gesetzt.
+
 =item -encoding => $charset (Default: 'utf-8')
 
 Encoding von $subject und $body. Wenn leer, wird vor dem Senden
 encode() nicht auf $subject und $body angewendet.
 
-=item -contentType => $contentType (Default: 'text/plain')
+=item -from => $address
 
-Content-Type von $subject und $body. Wenn leer, wird
-kein Content-Type-Header gesetzt.
+Absender, z.B. 'Frank Seitz <fs@fseitz.de>'.
+
+=item -replyTo => $address
+
+Reply-To Adresse.
 
 =back
 
