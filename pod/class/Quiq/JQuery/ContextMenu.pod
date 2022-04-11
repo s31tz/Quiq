@@ -37,6 +37,11 @@ L<Allgmeine Doku|https://swisnl.github.io/jQuery-contextMenu/docs.html>
 
 =over 4
 
+=item autoHide => $bool (Default: 1)
+
+Schließe das Menü, wenn der Mauszeiger das Triggerelement
+oder das Menü verlässt. Im Original ist der Default entgegengesetzt.
+
 =item callback => $jsFunction
 
 Funktion, die bei Aufruf eines Menüpunkts gerufen wird. Beispiel:

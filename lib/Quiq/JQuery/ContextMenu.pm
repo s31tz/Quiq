@@ -56,6 +56,11 @@ use Quiq::Assert;
 
 =over 4
 
+=item autoHide => $bool (Default: 1)
+
+Schließe das Menü, wenn der Mauszeiger das Triggerelement
+oder das Menü verlässt. Im Original ist der Default entgegengesetzt.
+
 =item callback => $jsFunction
 
 Funktion, die bei Aufruf eines Menüpunkts gerufen wird. Beispiel:
@@ -115,6 +120,7 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
+        autoHide => 1,
         callback => undef,
         className => undef,
         items => [],
@@ -155,8 +161,8 @@ sub js {
 
     # Objektattribute
 
-    my ($callback,$className,$itemA,$selector,$trigger) =
-        $self->get(qw/callback className items selector trigger/);
+    my ($autoHide,$callback,$className,$itemA,$selector,$trigger) =
+        $self->get(qw/autoHide callback className items selector trigger/);
 
     # Prüfe Attributwerte
 
@@ -170,6 +176,7 @@ sub js {
         className => $className,
         selector => $selector,
         trigger => $trigger,
+        autoHide => $autoHide? \'true': \'false',
         callback => $j->code($callback),
         items => $j->object(@$itemA),
     ).');';
