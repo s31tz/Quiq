@@ -56,10 +56,10 @@ use Quiq::Assert;
 
 =over 4
 
-=item autoHide => $bool (Default: 1)
+=item autoHide => $bool (Default: 0)
 
 Schließe das Menü, wenn der Mauszeiger das Triggerelement
-oder das Menü verlässt. Im Original ist der Default entgegengesetzt.
+oder das Menü verlässt.
 
 =item callback => $jsFunction
 
@@ -120,7 +120,7 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-        autoHide => 1,
+        autoHide => 0,
         callback => undef,
         className => undef,
         items => [],
