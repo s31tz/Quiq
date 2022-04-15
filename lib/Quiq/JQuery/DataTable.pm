@@ -578,7 +578,7 @@ sub instantiate {
             $col{'orderable'} = $orderable? \'true': \'false'; 
         }
         if (my $visible = $col->visible) {
-            $col{'visible'} = $visible; 
+            $col{'visible'} = $visible? \'true': \'false'; 
         }
         if (my $width = $col->width) {
             $col{'width'} = $width; 
