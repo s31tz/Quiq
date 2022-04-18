@@ -153,6 +153,10 @@ L<Quiq::Database::DataAnalysis|https://github.com/s31tz/Quiq/tree/master/pod/cla
 
 =item *
 
+L<Quiq::Database::Patch|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/Patch.pod> - Definiere Datenbankpatches und wende sie an (Basisklasse)
+
+=item *
+
 L<Quiq::Database::ResultSet|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/ResultSet.pod> - Liste von Datensätzen (abstrakt)
 
 =item *

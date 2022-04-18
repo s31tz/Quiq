@@ -44,6 +44,7 @@ use warnings;
 our $VERSION = '1.202';
 
 use Net::SFTP::Foreign ();
+use File::Temp ();
 
 # -----------------------------------------------------------------------------
 
@@ -370,6 +371,67 @@ sub put {
     if ($@) {
         $@ =~ s/ at .*//;
         $self->throw("put - $@");
+    }
+
+    return;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 putData() - Übertrage Daten auf Server
+
+=head4 Synopsis
+
+  $sftp->putData($data,$remote,%opts);
+
+=head4 Arguments
+
+=over 4
+
+=item $data
+
+(String) Daten, die übertragen werden sollen
+
+=item $remote
+
+(String) Pfad der entfernten Datei.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item %opts
+
+Siehe L<Net::SFTP::Foreign|https://metacpan.org/pod/Net::SFTP::Foreign#$sftp->put($local,-$remote,-%opts)>.
+
+=back
+
+=head4 Description
+
+Übertrage Daten $data auf den Server und speichere sie unter dem
+Pfad $remote.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub putData {
+    my ($self,$data,$remote) = splice @_,0,3;
+    # @_: %opts
+
+    my $sftp = $self->{'sftp'};
+    eval {
+        my $fh = File::Temp->new;
+        my $tmpFile = $fh->filename;
+        syswrite($fh,$data) // die "syswrite failed\n";
+        $sftp->put($tmpFile,$remote,@_);
+        close $fh; # temporäre Datei wird gelöscht
+    };
+    if ($@) {
+        $@ =~ s/ at .*//;
+        $self->throw("putData - $@");
     }
 
     return;
