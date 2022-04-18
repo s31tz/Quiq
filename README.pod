@@ -153,7 +153,7 @@ L<Quiq::Database::DataAnalysis|https://github.com/s31tz/Quiq/tree/master/pod/cla
 
 =item *
 
-L<Quiq::Database::Patch|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/Patch.pod> - Definiere Datenbankpatches und wende sie an (Basisklasse)
+L<Quiq::Database::Patch|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/Patch.pod> - Definiere Patches für eine Datenbank und wende sie an (Basisklasse)
 
 =item *
 
