@@ -45,21 +45,22 @@ Ein oder mehrere Patches auf eine Datenbank anwenden:
 =head1 DESCRIPTION
 
 Wir entwickeln eine Datenbank, indem wir fortgesetzt Patches auf
-sie anwenden. Die Patches können Schema- oder Datenänderungen betreffen.
-Die Patches werden fortschreitend alle zusammen in einer einzigen Klasse
-definiert. Die Patchklasse ist von der Klasse Quiq::Database::Patch abgeleitet.
-Jeder Patch wird durch eine Methode mit dem Namen C<patch>I<N> realisiert.
-Hierbei ist I<N> der Patchlevel. Wir heben die Datenbank auf
-Patchlevel $n, indem wir die Methode C<< $pat->apply($n) >> aufrufen.
-Alle Patches vom aktuellen Patchlevel+1 bis $n werden dabei
-nacheinander auf die Datenbank angewandt. Ist der aktuelle Patchlevel
-gleich oder größer dem angeforderten Patchlevel $n, wird kein Patch
-angewandt. Auf einen früheren Patchlevel als den aktuellen Patchlevel
-kann nicht zurückgegangen werden. Soll ein Patch zurückgenommen werden,
-ist ein weiterer Patch zu schreiben, der diesen rückgängig macht.
-Jeder Patch wird einzeln committet. Der aktuelle Patchlevel ist in der
-Tabelle C<PATCHLEVEL> festgehalten. Diese wird beim ersten Aufruf der
-Methode C<< $class->new($db) >> automatisch angelegt.
+sie anwenden. Die Patches können Schema- oder Datenänderungen
+betreffen.  Die Patches werden fortschreitend in einer einzigen
+Klasse definiert. Die Patchklasse ist von der Klasse Quiq::Database::Patch
+abgeleitet. Jeder Patch wird durch eine Methode mit dem Namen
+C<patch>I<N> realisiert.  Hierbei ist I<N> der Patchlevel. Wir
+heben die Datenbank auf Patchlevel $n, indem wir die Methode
+C<< $pat->apply($n) >> aufrufen.  Alle Patches vom aktuellen
+Patchlevel+1 bis $n werden dabei nacheinander auf die Datenbank
+angewandt. Ist der aktuelle Patchlevel gleich oder größer dem
+angeforderten Patchlevel $n, wird kein Patch angewandt. Auf einen
+früheren Patchlevel als den aktuellen Patchlevel kann nicht
+zurückgegangen werden. Soll ein Patch zurückgenommen werden, ist
+ein weiterer Patch zu schreiben, der diesen rückgängig macht.
+Jeder Patch wird einzeln committet. Der aktuelle Patchlevel ist in
+der Tabelle C<PATCHLEVEL> festgehalten. Diese wird beim ersten
+Aufruf der Methode C<< $class->new($db) >> automatisch angelegt.
 
 =cut
 
@@ -132,7 +133,7 @@ sub new {
 
 =head2 Klassenmethoden
 
-=head3 maxLevel() - Liefere den höchsten definierten Patchlevel
+=head3 maxLevel() - Liefere den höchsten möglichen Patchlevel
 
 =head4 Synopsis
 
@@ -144,7 +145,7 @@ sub new {
 
 =head4 Description
 
-Ermittele den höchsten definierten Patchlevel und liefere diesen zurück.
+Ermittele den höchsten möglichen Patchlevel und liefere diesen zurück.
 
 =cut
 
