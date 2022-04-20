@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Smb - SMB Client
+Quiq::Smb::Client - SMB Client
 
 =head1 BASE CLASS
 
@@ -186,7 +186,7 @@ Benenne Datei $oldname in $newname um.
 
 =head1 SOURCE
 
-L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Smb.pm>
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Smb/Client.pm>
 
 =head1 AUTHOR
 

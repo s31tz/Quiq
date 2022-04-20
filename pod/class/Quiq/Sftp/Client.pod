@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Sftp - SFTP Client
+Quiq::Sftp::Client - SFTP Client
 
 =head1 BASE CLASS
 
@@ -260,7 +260,7 @@ Pfad $remote.
 
 =head1 SOURCE
 
-L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Sftp.pm>
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Sftp/Client.pm>
 
 =head1 AUTHOR
 

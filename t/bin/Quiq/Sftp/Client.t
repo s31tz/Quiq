@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Quiq::Sftp::Test;
+package Quiq::Sftp::Client::Test;
 use base qw/Quiq::Test::Class/;
 
 use v5.10;
@@ -10,12 +10,12 @@ use warnings;
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
-    shift->useOk('Quiq::Sftp');
+    shift->useOk('Quiq::Sftp::Client');
 }
 
 # -----------------------------------------------------------------------------
 
 package main;
-Quiq::Sftp::Test->runTests;
+Quiq::Sftp::Client::Test->runTests;
 
 # eof

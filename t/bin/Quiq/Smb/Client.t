@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Quiq::Smb::Test;
+package Quiq::Smb::Client::Test;
 use base qw/Quiq::Test::Class/;
 
 use v5.10;
@@ -10,12 +10,12 @@ use warnings;
 # -----------------------------------------------------------------------------
 
 sub test_loadClass : Init(1) {
-    shift->useOk('Quiq::Smb');
+    shift->useOk('Quiq::Smb::Client');
 }
 
 # -----------------------------------------------------------------------------
 
 package main;
-Quiq::Smb::Test->runTests;
+Quiq::Smb::Client::Test->runTests;
 
 # eof

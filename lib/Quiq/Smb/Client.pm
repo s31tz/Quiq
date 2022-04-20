@@ -4,7 +4,7 @@
 
 =head1 NAME
 
-Quiq::Smb - SMB Client
+Quiq::Smb::Client - SMB Client
 
 =head1 BASE CLASS
 
@@ -36,7 +36,7 @@ eine Exception wirft
 
 # -----------------------------------------------------------------------------
 
-package Quiq::Smb;
+package Quiq::Smb::Client;
 use base qw/Quiq::Hash/;
 
 use v5.10;

@@ -4,7 +4,7 @@
 
 =head1 NAME
 
-Quiq::Sftp - SFTP Client
+Quiq::Sftp::Client - SFTP Client
 
 =head1 BASE CLASS
 
@@ -34,7 +34,7 @@ um dies ggf. zu verbessern)
 
 # -----------------------------------------------------------------------------
 
-package Quiq::Sftp;
+package Quiq::Sftp::Client;
 use base qw/Quiq::Hash/;
 
 use v5.10;

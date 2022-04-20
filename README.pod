@@ -753,7 +753,7 @@ L<Quiq::Sendmail|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sendma
 
 =item *
 
-L<Quiq::Sftp|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sftp.pod> - SFTP Client
+L<Quiq::Sftp::Client|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sftp/Client.pod> - SFTP Client
 
 =item *
 
@@ -761,7 +761,7 @@ L<Quiq::Shell|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Shell.pod
 
 =item *
 
-L<Quiq::Smb|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Smb.pod> - SMB Client
+L<Quiq::Smb::Client|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Smb/Client.pod> - SMB Client
 
 =item *
 
