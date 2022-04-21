@@ -234,35 +234,6 @@ Verzeichnispfad (String)
 Liefere das oberste Element des Verzeichnis-Stack ohne den Stack
 zu verändern.
 
-=head2 Fehlerbehandlung
-
-=head3 checkError() - Löse Exception bei Kommandofehler aus
-
-=head4 Synopsis
-
-  $this->checkError($code,$errMsg,@cmd);
-
-=head4 Returns
-
-nichts
-
-=head4 Description
-
-Prüfe den Status einer vorhergehenden Programmausführung und löse
-eine Execption aus, wenn der Status ungleich 0 ist.
-
-=head4 Examples
-
-Prüfe den Ausführungsstatus von system():
-
-  system($cmd);
-  Quiq::Shell->checkError($?,$!,$cmd);
-
-Prüfe den Ausführungsstatus des Backtick-Operators:
-
-  $str = `$cmd`;
-  Quiq::Shell->checkError($?,$!,$cmd);
-
 =head2 Private Methoden
 
 =head3 _logCmd() - Logge Kommandozeile

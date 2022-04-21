@@ -47,6 +47,7 @@ use Fcntl qw/:DEFAULT/;
 use Quiq::Perl;
 use Quiq::DirHandle;
 use File::Find ();
+use Quiq::Exit;
 use Quiq::TempDir;
 use Cwd ();
 use Quiq::Time;
@@ -1865,7 +1866,8 @@ sub findProgram {
     my $path = qx/$cmd/;
     chomp $path;
     if (!$sloppy) {
-        Quiq::Shell->checkError($?,$!,$cmd);
+        # Quiq::Shell->checkError($?,$!,$cmd);
+        Quiq::Exit->check($?,$cmd);
     }
 
     return $path eq ''? undef: $path;

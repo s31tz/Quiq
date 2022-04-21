@@ -226,23 +226,23 @@ sub ls {
 
 # -----------------------------------------------------------------------------
 
-=head3 put() - Schreibe Datei
+=head3 putData() - Schreibe Datei
 
 =head4 Synopsis
 
-  $smb->put($file,$data);
+  $smb->putData($data,$file);
 
 =head4 Arguments
 
 =over 4
 
-=item $file
-
-(String) Dateiname.
-
 =item $data
 
 (String) Dateiinhalt.
+
+=item $file
+
+(String) Dateiname.
 
 =back
 
@@ -252,14 +252,14 @@ Schreibe Datei $file mit Inhalt $data.
 
 =head4 Example
 
-  $smb->put('smb://ZBM-MOM-T/XRECHNUNG$/S-001191090X_Original.pdf',$data);
+  $smb->put($data,'smb://ZBM-MOM-T/XRECHNUNG$/S-001191090X_Original.pdf');
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub put {
-    my ($self,$file,$data) = @_;
+sub putData {
+    my ($self,$data,$file) = @_;
 
     my $smb = $self->{'smb'};
 

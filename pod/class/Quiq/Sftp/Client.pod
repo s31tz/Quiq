@@ -147,6 +147,36 @@ Siehe L<Net::SFTP::Foreign|https://metacpan.org/pod/Net::SFTP::Foreign#$sftp->ge
 Hole Datei $remote vom Server und speichere sie unter dem
 Pfad $local.
 
+=head3 getData() - Hole Daten von Server
+
+=head4 Synopsis
+
+  $data = $sftp->getData($remote,%opts);
+
+=head4 Arguments
+
+=over 4
+
+=item $remote
+
+(String) Pfad der entfernten Datei.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item %opts
+
+Siehe L<Net::SFTP::Foreign|https://metacpan.org/pod/Net::SFTP::Foreign#$sftp->put($local,-$remote,-%opts)>.
+
+=back
+
+=head4 Description
+
+Hole die Datei $remote vom Server und liefere dessen Inhalt zurück.
+
 =head3 ls() - Liste von Dateien in Server-Verzeichnis
 
 =head4 Synopsis

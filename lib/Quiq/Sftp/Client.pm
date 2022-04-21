@@ -45,6 +45,7 @@ our $VERSION = '1.202';
 
 use Net::SFTP::Foreign ();
 use File::Temp ();
+use File::Slurp ();
 
 # -----------------------------------------------------------------------------
 
@@ -256,6 +257,63 @@ sub get {
     }
 
     return;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 getData() - Hole Daten von Server
+
+=head4 Synopsis
+
+  $data = $sftp->getData($remote,%opts);
+
+=head4 Arguments
+
+=over 4
+
+=item $remote
+
+(String) Pfad der entfernten Datei.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item %opts
+
+Siehe L<Net::SFTP::Foreign|https://metacpan.org/pod/Net::SFTP::Foreign#$sftp->put($local,-$remote,-%opts)>.
+
+=back
+
+=head4 Description
+
+Hole die Datei $remote vom Server und liefere dessen Inhalt zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub getData {
+    my ($self,$remote) = splice @_,0,2;
+    # @_: %opts
+
+    my $sftp = $self->{'sftp'};
+    my $data = eval {
+        my $fh = File::Temp->new;
+        my $tmpFile = $fh->filename;
+        $sftp->get($remote,$tmpFile,@_);
+        my $data = File::Slurp::read_file($tmpFile);
+        close $fh; # temporäre Datei wird gelöscht
+        return $data;
+    };
+    if ($@) {
+        $@ =~ s/ at .*//;
+        $self->throw("putData - $@");
+    }
+
+    return $data;
 }
 
 # -----------------------------------------------------------------------------

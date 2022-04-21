@@ -25,6 +25,7 @@ our $VERSION = '1.202';
 
 use Quiq::Option;
 use Quiq::Shell;
+use Quiq::Exit;
 use IPC::Open3 ();
 
 # -----------------------------------------------------------------------------
@@ -106,7 +107,8 @@ sub filter {
     if (!$ignoreError) {
         # FIXME: checkError nach Quiq::Ipc verlagern,
         # in checkExit umbenennen
-        Quiq::Shell->checkError($?,$err,$cmd);
+        # Quiq::Shell->checkError($?,$err,$cmd);
+        Quiq::Exit->check($?,"$cmd\n$err");
     }
 
     return wantarray? ($out,$err): $out;

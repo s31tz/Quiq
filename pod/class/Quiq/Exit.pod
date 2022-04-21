@@ -1,0 +1,84 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Exit - Prüfe Exitstatus von Child-Prozess
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 DESCRIPTION
+
+Die Klasse implementiert eine einzelne Methode. Diese prüft den Status
+eines terminierten Child-Prozesses.
+
+=head1 METHODS
+
+=head2 Klassenmethoden
+
+=head3 check() - Prüfe den Status eines terminierten Child-Prozesses
+
+=head4 Synopsis
+
+  $this->check;
+  $this->check($exitCode);
+  $this->check($exitCode,$cmd);
+
+=head4 Arguments
+
+=over 4
+
+=item $exitCode (Default: $?)
+
+(Integer) Der Returnwert von system() oder $? im Falle von qx// (bzw. ``).
+
+=item $cmd (Default: undef)
+
+(String) Ausgeführtes Kommando. Dieses wird im Fehlerfall
+in den Exception-Text eingesetzt.
+
+=back
+
+=head4 Description
+
+Prüfe den Status eines terminierten Child-Prozesses und löse
+eine Execption aus, wenn dieser ungleich 0 ist.
+
+=head4 Examples
+
+Prüfe den Status nach Aufruf von system():
+
+  my $r = system($cmd);
+  Quiq::Exit->check($r,$cmd);
+
+Minimale Variante:
+
+  system($cmd);
+  Quiq::Exit->check;
+
+Prüfe den Status nach Anwendung des Backtick-Operators:
+
+  $str = `$cmd`;
+  Quiq::Exit->check($?,$cmd);
+
+=head1 VERSION
+
+1.202
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Exit.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2022 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

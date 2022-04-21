@@ -241,6 +241,10 @@ L<Quiq::Excel::Writer|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/E
 
 =item *
 
+L<Quiq::Exit|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Exit.pod> - Prüfe Exitstatus von Child-Prozess
+
+=item *
+
 L<Quiq::ExportFile|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ExportFile.pod> - Manipuliere Exportdatei
 
 =item *
