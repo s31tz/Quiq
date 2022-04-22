@@ -11,7 +11,8 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 =head1 DESCRIPTION
 
 Die Klasse implementiert eine einzelne Methode. Diese prüft den Status
-eines terminierten Child-Prozesses.
+eines terminierten Child-Prozesses. Im Fehlerfall löst sie eine
+Exception aus.
 
 =head1 METHODS
 
