@@ -105,11 +105,54 @@ sub new {
 
 =head2 Objektmethoden
 
-=head3 get() - Lies Datei
+=head3 delete() - Lösche Datei von Server
 
 =head4 Synopsis
 
-  $data = $smb->get($file);
+  $smb->delete($file);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+(String) Pfad der Datei.
+
+=back
+
+=head4 Description
+
+Lösche Datei $file von Server.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub delete {
+    my ($self,$file) = @_;
+
+    my $smb = $self->{'smb'};
+
+    my $ret = $smb->unlink($file);
+    if (!$ret) {
+        $self->throw(
+            'SMB-00003: Delete failed',
+            File=>qq|"$file"|,
+            Error=>$!,
+        );
+    }
+    
+    return;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 getData() - Hole Daten von Server
+
+=head4 Synopsis
+
+  $data = $smb->getData($file);
 
 =head4 Arguments
 
@@ -137,7 +180,7 @@ Liefere den Inhalt der Datei $file.
 
 # -----------------------------------------------------------------------------
 
-sub get {
+sub getData {
     my ($self,$file) = @_;
 
     my $smb = $self->{'smb'};
@@ -166,7 +209,7 @@ sub get {
 
 # -----------------------------------------------------------------------------
 
-=head3 ls() - Liste der Dateien in Verzeichnis
+=head3 ls() - Liste von Dateien in Server-Verzeichnis
 
 =head4 Synopsis
 
@@ -226,7 +269,7 @@ sub ls {
 
 # -----------------------------------------------------------------------------
 
-=head3 putData() - Schreibe Datei
+=head3 putData() - Übertrage Daten auf Server
 
 =head4 Synopsis
 
@@ -286,7 +329,7 @@ sub putData {
 
 # -----------------------------------------------------------------------------
 
-=head3 rename() - Benenne Datei um
+=head3 rename() - Benenne Datei auf Server um
 
 =head4 Synopsis
 

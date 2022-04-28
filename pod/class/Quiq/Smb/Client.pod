@@ -71,11 +71,31 @@ dieses Objekt zurück.
 
 =head2 Objektmethoden
 
-=head3 get() - Lies Datei
+=head3 delete() - Lösche Datei von Server
 
 =head4 Synopsis
 
-  $data = $smb->get($file);
+  $smb->delete($file);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+(String) Pfad der Datei.
+
+=back
+
+=head4 Description
+
+Lösche Datei $file von Server.
+
+=head3 getData() - Hole Daten von Server
+
+=head4 Synopsis
+
+  $data = $smb->getData($file);
 
 =head4 Arguments
 
@@ -99,7 +119,7 @@ Liefere den Inhalt der Datei $file.
 
   $data = $smb->get('smb://ZBM-MOM-T/XRECHNUNG$/S-001191090X_Original.pdf');
 
-=head3 ls() - Liste der Dateien in Verzeichnis
+=head3 ls() - Liste von Dateien in Server-Verzeichnis
 
 =head4 Synopsis
 
@@ -128,7 +148,7 @@ Liefere die Liste der Dateien auf dem Server in Verzeichnis $dir.
 
   @names = $smb->ls('smb://ZBM-MOM-T/XRECHNUNG$');
 
-=head3 putData() - Schreibe Datei
+=head3 putData() - Übertrage Daten auf Server
 
 =head4 Synopsis
 
@@ -156,7 +176,7 @@ Schreibe Datei $file mit Inhalt $data.
 
   $smb->put($data,'smb://ZBM-MOM-T/XRECHNUNG$/S-001191090X_Original.pdf');
 
-=head3 rename() - Benenne Datei um
+=head3 rename() - Benenne Datei auf Server um
 
 =head4 Synopsis
 

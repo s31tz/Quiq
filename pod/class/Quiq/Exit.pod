@@ -53,7 +53,7 @@ Prüfe den Status nach Aufruf von system():
   my $r = system($cmd);
   Quiq::Exit->check($r,$cmd);
 
-Minimale Variante:
+Minimale Variante (Prüfung über $?):
 
   system($cmd);
   Quiq::Exit->check;
