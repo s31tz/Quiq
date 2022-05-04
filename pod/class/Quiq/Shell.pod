@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Shell - Ausführung von Shell-Kommandos
+Quiq::Shell - Führe Shell-Kommandos aus
 
 =head1 BASE CLASS
 

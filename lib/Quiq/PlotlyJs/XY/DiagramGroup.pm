@@ -667,7 +667,7 @@ sub html {
                 let dId = name+'-d'+i;
                 Plotly.deleteTraces(dId,0);
                 Plotly.addTraces(dId,trace);
-                $('#'+name+'-c'+i).html(x.length.toString()+' points');
+                $('#'+name+'-c'+i).html(x.length.toString()+' data points');
 
                 return;
             };

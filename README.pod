@@ -761,7 +761,7 @@ L<Quiq::Sftp::Client|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Sf
 
 =item *
 
-L<Quiq::Shell|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Shell.pod> - Ausführung von Shell-Kommandos
+L<Quiq::Shell|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Shell.pod> - Führe Shell-Kommandos aus
 
 =item *
 
