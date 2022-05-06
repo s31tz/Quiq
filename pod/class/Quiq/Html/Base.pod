@@ -51,7 +51,7 @@ der Subklasse) und liefere eine Referenz auf das Objekt zurück.
 
 =head1 VERSION
 
-1.202
+1.203
 
 =head1 SOURCE
 
