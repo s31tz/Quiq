@@ -727,6 +727,29 @@ Anzahl der selektierten Datensätze ist per Default auf 10 begrenzt
 Die Methode ist nützlich für die Programmierung von einfachen
 Terminal-Clients für Ad-Hoc-Abfragen.
 
+=head2 Patches
+
+=head3 applyPatches() - Wende offene Patches auf Datenbank an
+
+=head4 Synopsis
+
+  $n = $db->applyPatches($class);
+
+=head4 Description
+
+Wende alle offenen Patches auf die Datenbank an, wobei die Patches als
+Methoden in der Klasse $class implementiert sind. Die Patch-Methoden
+haben das Namensmuster
+
+  patchNNN
+
+Hierbei ist NNN der Patchlevel (mit führenden Nullen), den die
+jeweilige Methode implementiert. Der aktuelle Patchlevel ist der
+maximale Wert der Kolumne PAT_LEVEL in Tabelle PATCHLEVEL. Es werden
+alle Patch-Methoden angewandt, deren Patchlevel größer ist als der
+aktuelle Patchlevel.  Existiert die Tabelle PATCHLEVEL nicht, wird
+sie angelegt.
+
 =head2 Sessions
 
 =head3 setSchema() - Setze Default-Schema

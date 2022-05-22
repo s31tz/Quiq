@@ -44,6 +44,7 @@ use Quiq::Digest;
 use Quiq::Database::Cursor;
 use Time::HiRes ();
 use Quiq::AnsiColor;
+use Quiq::Perl;
 use Quiq::Unindent;
 use Quiq::Database::ResultSet;
 use Quiq::Parameters;
@@ -1670,6 +1671,67 @@ sub execute {
     }
 
     return $str;
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Patches
+
+=head3 applyPatches() - Wende offene Patches auf Datenbank an
+
+=head4 Synopsis
+
+  $n = $db->applyPatches($class);
+
+=head4 Description
+
+Wende alle offenen Patches auf die Datenbank an, wobei die Patches als
+Methoden in der Klasse $class implementiert sind. Die Patch-Methoden
+haben das Namensmuster
+
+  patchNNN
+
+Hierbei ist NNN der Patchlevel (mit führenden Nullen), den die
+jeweilige Methode implementiert. Der aktuelle Patchlevel ist der
+maximale Wert der Kolumne PAT_LEVEL in Tabelle PATCHLEVEL. Es werden
+alle Patch-Methoden angewandt, deren Patchlevel größer ist als der
+aktuelle Patchlevel.  Existiert die Tabelle PATCHLEVEL nicht, wird
+sie angelegt.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub applyPatches {
+    my ($self,$class) = @_;
+
+    my $n = 0;
+
+    my $exists = $self->tableExists('patchlevel');
+    if (!$exists) {
+        $self->createTable('patchlevel',
+            ['pat_id',type=>'INTEGER',primaryKey=>1,autoIncrement=>1],
+            ['pat_level',type=>'INTEGER',notNull=>1],
+            ['pat_time',type=>'DATETIME',notNull=>1,
+                default=>\"(DATETIME('now','localtime'))"], # FIXME
+        );
+    }
+
+    # Ermittele aktuellen Patchlevel der Datenbank
+
+    my $maxLevel = $self->value(
+        -select => 'IFNULL(MAX(pat_level), 0)',
+        -from => 'patchlevel',
+    );
+
+    # Ermittele Patch-Methoden
+
+    my $refH = Quiq::Perl->stash($class);
+    for my $key (keys %$refH) {
+        say $key;
+    }
+
+    return $n;
 }
 
 # -----------------------------------------------------------------------------
