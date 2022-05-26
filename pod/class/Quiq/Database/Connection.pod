@@ -733,22 +733,96 @@ Terminal-Clients für Ad-Hoc-Abfragen.
 
 =head4 Synopsis
 
-  $n = $db->applyPatches($class);
+  $n = $db->applyPatches($patchClass);
+
+=head4 Arguments
+
+=over 4
+
+=item $patchClass
+
+(String) Klasse, die die Patchmethoden enthält.
+
+=back
+
+=head4 Returns
+
+(Integer) Anzahl der angewandten Patch-Methoden.
 
 =head4 Description
 
-Wende alle offenen Patches auf die Datenbank an, wobei die Patches als
-Methoden in der Klasse $class implementiert sind. Die Patch-Methoden
+Wende alle offenen Patches auf die Datenbank an. Die Patches sind als
+Methoden in der Klasse $patchClass implementiert. Die Patch-Methoden
 haben das Namensmuster
 
   patchNNN
 
-Hierbei ist NNN der Patchlevel (mit führenden Nullen), den die
-jeweilige Methode implementiert. Der aktuelle Patchlevel ist der
-maximale Wert der Kolumne PAT_LEVEL in Tabelle PATCHLEVEL. Es werden
-alle Patch-Methoden angewandt, deren Patchlevel größer ist als der
-aktuelle Patchlevel.  Existiert die Tabelle PATCHLEVEL nicht, wird
-sie angelegt.
+Hierbei ist NNN der Patchlevel, den die Methode implementiert. Der
+aktuelle Patchlevel der Datnbank ist der maximale Wert der Kolumne
+PAT_LEVEL in Tabelle PATCH. Es werden alle Patch-Methoden
+angewandt, deren Patchlevel größer ist als der aktuelle Patchlevel.
+Existiert die Tabelle PATCH nicht, wird sie angelegt.
+
+=head3 maxPatchLevel() - Liefere maximalen Patchlevel der Patch-Klasse
+
+=head4 Synopsis
+
+  $patchLevel = $this->maxPatchLevel($patchClass);
+
+=head4 Arguments
+
+=over 4
+
+=item $patchClass
+
+Name der Klasse, die die Patchmethoden enthält.
+
+=back
+
+=head4 Returns
+
+(Integer) Maximaler Patchlevel.
+
+=head4 Description
+
+Ermittele den maximalen Patchlevel, also die höchste Nummer unter
+allen Patch-Methoden, die in der Klasse $patchClass implementiert sind,
+und liefere diesen zurück.
+
+=head3 patchLevel() - Liefere den aktuellen Patchlevel der Datenbank
+
+=head4 Synopsis
+
+  $patchLevel = $db->patchLevel;
+
+=head4 Returns
+
+(Integer) Patchlevel der Datenbank.
+
+=head4 Description
+
+Ermittele den aktuellen Patchlevel der Datenbank und liefere diesen
+zurück. Existiert die Tabelle PATCH auf der Datenbank nicht oder
+hat sie keinen Eintrag, liefert die Methode 0.
+
+=head3 patchMethods() - Liefere Liste der Patch-Methoden
+
+=head4 Synopsis
+
+  @patchMethods | $patchMehodA = $db->patchMethods($patchClass);
+
+=head4 Returns
+
+(Array of Pairs) Liste der Patch-Methoden der Klasse $patchClass. Im
+Skalarkontext eine Referenz auf die Liste.
+
+=head4 Description
+
+Ermittele die Liste der Patch-Mehoden der Klasse $patchClass und liefere
+diese zurück. Ein Element der Liste ist ein Paar, bestehend aus dem
+Methoden-Namen und einer Glob-Referenz, über die die Patch-Methode
+aufgerufen werden kann. Die Liste ist aufsteigend nach Methodenname
+sortiert.
 
 =head2 Sessions
 
