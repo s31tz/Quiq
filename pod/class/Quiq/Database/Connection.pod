@@ -809,7 +809,17 @@ hat sie keinen Eintrag, liefert die Methode 0.
 
 =head4 Synopsis
 
-  @patchMethods | $patchMehodA = $db->patchMethods($patchClass);
+  @patchMethods | $patchMehodA = $this->patchMethods($patchClass);
+
+=head4 Arguments
+
+=over 4
+
+=item $patchClass
+
+Name der Klasse, die die Patchmethoden enthält.
+
+=back
 
 =head4 Returns
 
@@ -823,6 +833,41 @@ diese zurück. Ein Element der Liste ist ein Paar, bestehend aus dem
 Methoden-Namen und einer Glob-Referenz, über die die Patch-Methode
 aufgerufen werden kann. Die Liste ist aufsteigend nach Methodenname
 sortiert.
+
+=head3 patchReport() - Liefere Bericht über den Stand der Patches
+
+=head4 Synopsis
+
+  $report = $db->patchReport($patchClass);
+
+=head4 Arguments
+
+=over 4
+
+=item $patchClass
+
+Name der Klasse, die die Patchmethoden enthält.
+
+=back
+
+=head4 Returns
+
+(String) Patch-Bericht
+
+=head4 Description
+
+Erzeuge einen Bericht über den Stand der Patches auf der Datenbank
+und liefere diesen zurück. Der Bericht hat den Aufbau:
+
+  NAME001() - DESCRIPTION001 (STATUS001)
+  NAME002() - DESCRIPTION002 (STATUS002)
+  ...
+
+Hierbei ist:
+
+  NAMEXXX        - Name der Patchmethode des Patch XXX
+  DESCRIPTIONXXX - Beschreibung des Patch XXX
+  STATUSXXX      - Status des Patch XXX ('applied' oder 'new')
 
 =head2 Sessions
 

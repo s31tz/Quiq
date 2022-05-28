@@ -1737,11 +1737,11 @@ sub applyPatches {
 
     my $i = 0;
     for ($self->patchMethods($patchClass)) {
-        my ($name,$sub) = @$_;
+        my ($name,$sub,$descr) = @$_;
         my ($n) = map {int} $name =~ /(\d+)/;
         if ($n > $maxLevel) {
             $self->begin;
-            my $descr = $sub->($self,$n);
+            $sub->($self,$n);
             $self->insert('patch',
                 pat_level => $n,
                 pat_description => $descr,
@@ -1843,7 +1843,17 @@ sub patchLevel {
 
 =head4 Synopsis
 
-  @patchMethods | $patchMehodA = $db->patchMethods($patchClass);
+  @patchMethods | $patchMehodA = $this->patchMethods($patchClass);
+
+=head4 Arguments
+
+=over 4
+
+=item $patchClass
+
+Name der Klasse, die die Patchmethoden enthält.
+
+=back
 
 =head4 Returns
 
@@ -1869,11 +1879,69 @@ sub patchMethods {
     my $refH = Quiq::Perl->stash($patchClass);
     for my $name (sort keys %$refH) {
         if ($name =~ /^patch\d+/) {
-            push @arr,[$name,$refH->{$name}];
+            my $descr = Quiq::Perl->getScalarValue($patchClass,$name);
+            push @arr,[$name,$refH->{$name},$descr];
         }
     }
 
     return wantarray? @arr: \@arr;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 patchReport() - Liefere Bericht über den Stand der Patches
+
+=head4 Synopsis
+
+  $report = $db->patchReport($patchClass);
+
+=head4 Arguments
+
+=over 4
+
+=item $patchClass
+
+Name der Klasse, die die Patchmethoden enthält.
+
+=back
+
+=head4 Returns
+
+(String) Patch-Bericht
+
+=head4 Description
+
+Erzeuge einen Bericht über den Stand der Patches auf der Datenbank
+und liefere diesen zurück. Der Bericht hat den Aufbau:
+
+  NAME001() - DESCRIPTION001 (STATUS001)
+  NAME002() - DESCRIPTION002 (STATUS002)
+  ...
+
+Hierbei ist:
+
+  NAMEXXX        - Name der Patchmethode des Patch XXX
+  DESCRIPTIONXXX - Beschreibung des Patch XXX
+  STATUSXXX      - Status des Patch XXX ('applied' oder 'new')
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub patchReport {
+    my ($self,$patchClass) = @_;
+
+    my $l = $self->patchLevel;
+
+    my $str = '';
+    for ($self->patchMethods($patchClass)) {
+        my ($name,$sub,$descr) = @$_;
+        my ($n) = map {int} $name =~ /(\d+)/;
+        $str .= sprintf "%s() - %s %s\n",$name,$descr,
+            $n <= $l? '(applied)': '(new)';
+    }
+
+    return $str;
 }
 
 # -----------------------------------------------------------------------------
