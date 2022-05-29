@@ -1851,7 +1851,7 @@ Programmpfad (String)
 
 Suche Programm $program über den Suchpfad der Shell und liefere
 den vollständigen Pfad zurück. Wird das Programm nicht gefunden,
-wird eine Exception geworfen, sofern $sloppy nicht wahr ist.
+wird eine Exception geworfen.
 
 =cut
 
