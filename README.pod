@@ -553,6 +553,10 @@ L<Quiq::JQuery::Function|https://github.com/s31tz/Quiq/tree/master/pod/class/Qui
 
 =item *
 
+L<Quiq::JQuery::MenuBar|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/JQuery/MenuBar.pod> - Erzeuge den Code einer jQuery Menüleiste
+
+=item *
+
 L<Quiq::JQuery::Tabs|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/JQuery/Tabs.pod> - Erzeuge HTML einer jQuery UI Tabs Reiterleiste
 
 =item *
