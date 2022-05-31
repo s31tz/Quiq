@@ -110,9 +110,36 @@ sub html {
         return '';
     }
 
-    my $html = '';
+    # Menüstruktur rekursiv erzeugen
 
-    return $html;
+    my $sub;
+    $sub = sub {
+        my $itemA = shift;
+        my $i = shift // 1;
+
+        my $html = '';
+        for my $itm (@$itemA) {
+            my $name = $itm->{'name'};
+            my $url = $itm->{'url'};
+            my $icon = $itm->{'icon'};
+            if ($icon) {
+                $name = $h->tag('span',
+                    -ignoreIfNull => 0,
+                    class => "ui-icon $icon"
+                ).$name;
+            }
+            my $tag = $url? $h->tag('a',href=>$url,$name): $name;
+            if (my $itemA = $itm->{'childs'}) {
+                $tag .= "\n".$sub->($itemA,$i+1);
+            }
+            $html .= $h->tag('li',$tag);
+        }
+        $html = $h->tag('ul',$i == 1? (id=>$id): (),$html);
+
+        return $html;
+    };
+
+    return $sub->($itemA);
 }
 
 # -----------------------------------------------------------------------------
