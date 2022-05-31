@@ -28,6 +28,10 @@ C<items> übergeben. Die Methode L<html|"html() - Generiere HTML">() generiert d
 
 (Array of Hashes) Definition der Menüpunkte.
 
+=item style => $style
+
+CSS-Style.
+
 =back
 
 =cut
@@ -71,6 +75,7 @@ sub new {
     my $self = $class->SUPER::new(
         id => 'menubar',
         items => [],
+        style => undef,
     );
     $self->set(@_);
 
@@ -104,11 +109,13 @@ sub html {
 
     my $self = ref $this? $this: $this->new(@_);
 
-    my ($id,$itemA) = $self->get(qw/id items/);
+    my ($id,$itemA,$style) = $self->get(qw/id items style/);
 
     if (!@$itemA) {
         return '';
     }
+
+    $style = $style? "$style; display: none": 'display: none';
 
     # Menüstruktur rekursiv erzeugen
 
@@ -134,12 +141,22 @@ sub html {
             }
             $html .= $h->tag('li',$tag);
         }
-        $html = $h->tag('ul',$i == 1? (id=>$id): (),$html);
+        $html = $h->tag('ul',
+            $i == 1? (id=>$id): (),
+            style => $style,
+            $html
+        );
 
         return $html;
     };
 
-    return $sub->($itemA);
+    my $html = $sub->($itemA);
+    $html .= $h->tag('script',q~
+        var o = $('#menubar');
+        o.menubar();
+        o.show();
+    ~),
+
 }
 
 # -----------------------------------------------------------------------------

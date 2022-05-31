@@ -26,6 +26,10 @@ C<items> übergeben. Die Methode L<html|"html() - Generiere HTML">() generiert d
 
 (Array of Hashes) Definition der Menüpunkte.
 
+=item style => $style
+
+CSS-Style.
+
 =back
 
 =head1 METHODS
