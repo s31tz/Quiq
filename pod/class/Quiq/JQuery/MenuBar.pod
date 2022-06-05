@@ -14,6 +14,44 @@ Die Klasse erzeugt den HTML-Code einer jQuery UI menüleiste.
 Dem Konstruktor werden die Menüpunktdefintionen mit dem Attribut
 C<items> übergeben. Die Methode L<html|"html() - Generiere HTML">() generiert den HTML-Code.
 
+Homepage:
+
+=over 2
+
+=item *
+
+L<https://github.com/uSked/jquery-menubar>
+
+=back
+
+Quelldateien:
+
+=over 2
+
+=item *
+
+L<https://rawgit.com/ainterpreting/jquery-menubar/master/jquery.menubar.css>
+
+=item *
+
+L<https://rawgit.com/ainterpreting/jquery-menubar/master/jquery.menubar.js>
+
+=back
+
+B<Achtung:> Der Code läuft nur mit jQuery UI 1.11.4
+
+=over 2
+
+=item *
+
+L<https://code.jquery.com/ui/1.11.4/themes/black-tie/jquery-ui.css>
+
+=item *
+
+L<https://code.jquery.com/ui/1.11.4/jquery-ui.min.js>
+
+=back
+
 =head1 ATTRIBUTES
 
 =over 4
