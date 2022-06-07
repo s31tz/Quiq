@@ -38,7 +38,7 @@ L<https://rawgit.com/ainterpreting/jquery-menubar/master/jquery.menubar.js>
 
 =back
 
-B<Achtung:> Der Code läuft nur mit jQuery UI 1.11.4
+B<Achtung:> Der Code läuft nur mit jQuery UI 1.11.4!
 
 =over 2
 

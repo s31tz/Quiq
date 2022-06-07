@@ -125,6 +125,10 @@ L<Quiq::Css|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Css.pod> - 
 
 =item *
 
+L<Quiq::Css::Snippets|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Css/Snippets.pod> - CSS-Code für die Seiten einer Web-Applikation
+
+=item *
+
 L<Quiq::Database::Api|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/Api.pod> - Lowlevel Datenbank-Schnittstelle
 
 =item *
