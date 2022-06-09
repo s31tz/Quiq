@@ -638,11 +638,15 @@ sub edit {
 
 # -----------------------------------------------------------------------------
 
-=head3 encoding() - Liefere das Encoding der Datei
+=head3 detectEncoding() - Liefere das Encoding der Datei
 
 =head4 Synopsis
 
-  $encoding = $class->encoding($path,$altEncoding);
+  $encoding = $class->detectEncoding($path,$altEncoding);
+
+=head4 Alias
+
+encoding()
 
 =head4 Description
 
@@ -675,7 +679,7 @@ Bei großen Dateien kann dies ineffizient sein.
 
 # -----------------------------------------------------------------------------
 
-sub encoding {
+sub detectEncoding {
     my $class = shift;
     my $path = shift;
     my $altEncoding = shift // 'ISO-8859-1';
@@ -696,6 +700,11 @@ sub encoding {
         Path => $path,
         Message => $dec,
     );
+}
+
+{
+    no warnings 'once';
+    *encoding = \&detectEncoding;
 }
 
 # -----------------------------------------------------------------------------

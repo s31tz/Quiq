@@ -288,11 +288,15 @@ wurden. Falls ja, wird der Benutzer gefragt, ob er die Änderungen
 beibehalten möchte. Falls ja, liefert die Methode wahr,
 andernfalls falsch.
 
-=head3 encoding() - Liefere das Encoding der Datei
+=head3 detectEncoding() - Liefere das Encoding der Datei
 
 =head4 Synopsis
 
-  $encoding = $class->encoding($path,$altEncoding);
+  $encoding = $class->detectEncoding($path,$altEncoding);
+
+=head4 Alias
+
+encoding()
 
 =head4 Description
 
