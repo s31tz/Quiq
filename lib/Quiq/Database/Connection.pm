@@ -3748,6 +3748,29 @@ sub analyzeTable {
 
 # -----------------------------------------------------------------------------
 
+=head3 addCheckConstraint() - Füge CHECK Constraint zu Tabelle hinzu
+
+=head4 Synopsis
+
+  $cur = $db->addCheckConstraint($tableName,$expr,@opt);
+
+=head4 Description
+
+Siehe Quiq::Sql::addCheckConstraint()
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub addCheckConstraint {
+    my $self = shift;
+    # @_: Argumente
+    my $stmt = $self->stmt->addCheckConstraint(@_);
+    return $self->sql($stmt);
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 addForeignKeyConstraint() - Füge FOREIGN KEY Constraint zu Tabelle hinzu
 
 =head4 Synopsis

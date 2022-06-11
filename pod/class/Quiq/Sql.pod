@@ -694,6 +694,10 @@ Schemaname C<undef> geliefert.
 
 =over 4
 
+=item -check => \@expr
+
+Liste von CHECK-Contraints (Bedingungen).
+
 =item -reference => [[\@cols => $refTable,@opt], ...]
 
 Liste von Fremdschlüssel-Verweisen.
@@ -774,6 +778,12 @@ in den DBMS-Typ umgewandelt.
 =head4 Synopsis
 
   $stmt = $sql->dropTable($table);
+
+=head3 renameTable() - Benenne Tabelle um
+
+=head4 Synopsis
+
+  $stmt = $sql->renameTable($oldName,$newName);
 
 =head3 analyzeTable() - Generiere ANALYZE TABLE Statement
 
@@ -1149,6 +1159,12 @@ B<Oracle Syntax>
       EXCEPTIONS INTO <EXCEPTION_TABLE_NAME>
 
 B<PostgreSQL Syntax>
+
+  ALTER TABLE <TABLE_NAME> ADD
+      CONSTRAINT <CONSTRAINT_NAME>
+      CHECK (<CHECK_CLAUSE>)
+
+B<SQLite Syntax>
 
   ALTER TABLE <TABLE_NAME> ADD
       CONSTRAINT <CONSTRAINT_NAME>

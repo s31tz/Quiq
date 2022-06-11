@@ -1800,6 +1800,16 @@ sonst "falsch".
 
 Analysiere Tabelle $table und liefere einen Cursor zurück.
 
+=head3 addCheckConstraint() - Füge CHECK Constraint zu Tabelle hinzu
+
+=head4 Synopsis
+
+  $cur = $db->addCheckConstraint($tableName,$expr,@opt);
+
+=head4 Description
+
+Siehe Quiq::Sql::addCheckConstraint()
+
 =head3 addForeignKeyConstraint() - Füge FOREIGN KEY Constraint zu Tabelle hinzu
 
 =head4 Synopsis
