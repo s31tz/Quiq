@@ -3726,6 +3726,27 @@ sub tableExists {
 
 # -----------------------------------------------------------------------------
 
+=head3 renameTable() - Benenne Tabelle um
+
+=head4 Synopsis
+
+  $cur = $sql->renameTable($oldName,$newName);
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub renameTable {
+    my ($self,$oldName,$newName) = @_;
+
+    my $stmt = $self->stmt->renameTable($oldName,$newName);
+    my $cur = $self->sqlAtomic($stmt);
+
+    return $cur;
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 analyzeTable() - Analysiere Tabelle
 
 =head4 Synopsis

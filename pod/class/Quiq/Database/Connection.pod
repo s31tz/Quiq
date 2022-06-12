@@ -1790,6 +1790,12 @@ Dies ist für PostgreSQL und SQLite notwendig.
 Prüfe, ob Tabelle $table existiert. Wenn ja, liefere "wahr",
 sonst "falsch".
 
+=head3 renameTable() - Benenne Tabelle um
+
+=head4 Synopsis
+
+  $cur = $sql->renameTable($oldName,$newName);
+
 =head3 analyzeTable() - Analysiere Tabelle
 
 =head4 Synopsis
