@@ -3641,6 +3641,136 @@ sub createTable {
 
 # -----------------------------------------------------------------------------
 
+=head3 recreateTable() - Erzeuge existierende Tabelle neu
+
+=head4 Synopsis
+
+  $cur = $db->recreateTable($table,
+      [$colName,@colOpts],
+      ...
+      @opt,
+  );
+
+=head4 Arguments
+
+=over 4
+
+=item $name
+
+(String) Name der Tabelle, die neu erzeugt wird.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -mapColumns => \%hash
+
+Abbildung zwischen den Kolumnennamen der alten und der neuen Tabelle.
+Der Schlüssel des Hash ist der alte Name, der Wert des Hash
+der neue Name. Es müssen nur die Kolumennamen angegeben werden,
+die nicht übereinstimmen.
+
+=back
+
+=head4 Returns
+
+(Object) Cursor des INSERT-Statements, das die Daten von der alten
+in die neue Tabelle kopiert hat.
+
+=head4 Description
+
+Erzeuge die auf der Datenbank bereits existierende Tabelle $table neu.
+
+Ablauf:
+
+=over 4
+
+=item 1.
+
+Erzeuge die Tabelle $table unter dem Namen <TABLE>_new
+
+=item 2.
+
+Kopiere die Daten aus der originalen in die neue Tabelle (unter
+Berücksichtigung geänderter Kolumnennamen, siehe Option C<-mapColumns>.
+Kolumen, nicht mehr existieren, entfallen.)
+
+=item 3.
+
+Lösche die Orignaltabelle
+
+=item 4.
+
+Benenne die neue Tabelle in die Originaltabelle $table um
+
+=back
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub recreateTable {
+    my $self = shift;
+    my $table = shift;
+    # @_: @cols,@opt
+
+    # Optionen
+
+    my $mapH = undef;
+
+    $self->parameters(1,\@_,
+        -mapColumns => $mapH,
+    );
+
+    # 1. Erzeuge die neue Tabelle
+
+    $self->createTable("${table}_new",@_);
+
+    # 2a. Erstelle Abbildung der Kolumnen
+
+    my @titlesNew = $self->titles($table.'_new');
+
+    my %map; # Kolumnen der neuen Tabelle
+    for (@titlesNew) {
+        $map{$_} = 'NULL';
+    }
+    for my $titleOld ($self->titles($table)) {
+        if (my $titleNew = $mapH->{$titleOld}) {
+            $map{$titleNew} = $titleOld; # Kolumne umbenannt
+        }
+        elsif (exists $map{$titleOld}) {
+            $map{$titleOld} = $titleOld; # Kolumnenname bleibt gleich
+        }
+        else {
+            # kolumne entfällt
+        }
+    }
+
+    my @titlesOld = map {$map{$_}} @titlesNew;
+
+    # 2b. Kopiere die Daten aus der alten in die neue Tabelle
+
+    my $stmt = "INSERT INTO ${table}_new (\n    ".
+        join("\n    , ",@titlesNew)."\n".
+        ")\nSELECT\n    ".
+        join("\n    , ",@titlesOld)."\n".
+        "FROM\n    $table";
+
+    my $cur = $self->sql($stmt);
+
+    # 3. Lösche die alte Tabelle
+    $self->dropTable($table);
+
+    # 4. Benenne die neue Tabelle in die alte um
+    $self->renameTable("${table}_new",$table);
+
+    return $cur;
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 dropTable() - Lösche Tabelle
 
 =head4 Synopsis

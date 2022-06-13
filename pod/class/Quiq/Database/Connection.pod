@@ -1759,6 +1759,72 @@ Erzeuge Tabelle nicht, falls sie bereits existiert.
 
 Erzeuge Tabelle $table auf der Datenbank.
 
+=head3 recreateTable() - Erzeuge existierende Tabelle neu
+
+=head4 Synopsis
+
+  $cur = $db->recreateTable($table,
+      [$colName,@colOpts],
+      ...
+      @opt,
+  );
+
+=head4 Arguments
+
+=over 4
+
+=item $name
+
+(String) Name der Tabelle, die neu erzeugt wird.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -mapColumns => \%hash
+
+Abbildung zwischen den Kolumnennamen der alten und der neuen Tabelle.
+Der Schlüssel des Hash ist der alte Name, der Wert des Hash
+der neue Name. Es müssen nur die Kolumennamen angegeben werden,
+die nicht übereinstimmen.
+
+=back
+
+=head4 Returns
+
+(Object) Cursor des INSERT-Statements, das die Daten von der alten
+in die neue Tabelle kopiert hat.
+
+=head4 Description
+
+Erzeuge die auf der Datenbank bereits existierende Tabelle $table neu.
+
+Ablauf:
+
+=over 4
+
+=item 1.
+
+Erzeuge die Tabelle $table unter dem Namen <TABLE>_new
+
+=item 2.
+
+Kopiere die Daten aus der originalen in die neue Tabelle (unter
+Berücksichtigung geänderter Kolumnennamen, siehe Option C<-mapColumns>.
+Kolumen, nicht mehr existieren, entfallen.)
+
+=item 3.
+
+Lösche die Orignaltabelle
+
+=item 4.
+
+Benenne die neue Tabelle in die Originaltabelle $table um
+
+=back
+
 =head3 dropTable() - Lösche Tabelle
 
 =head4 Synopsis

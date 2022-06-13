@@ -281,10 +281,11 @@ sub queryEncode {
     # @_: '?' oder '&' oder ';'
 
     my $str = '';
+    my $initialChar = '';
     # if (length($_[0]) == 1 && $_[0] =~ /[&;?]/) {
     if (@_%2) {
         # Einleitungszeichen
-        $str = shift;
+        $initialChar = shift;
     }
 
     # Direktiven
@@ -330,7 +331,7 @@ sub queryEncode {
         }
     }
 
-    return $str;
+    return $i? "$initialChar$str": $str;
 }
 
 {
