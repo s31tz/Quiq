@@ -153,7 +153,7 @@ sub html {
         return '';
     }
 
-    $style = $style? "$style; display: none": 'display: none';
+    # $style = $style? "$style; display: none": 'display: none';
 
     # Menüstruktur rekursiv erzeugen
 

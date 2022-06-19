@@ -202,9 +202,10 @@ sub new {
     my $rrid = $obj->param('navPrev') // '';
     my $brid = $obj->param('navBack') // '';
 
-    my ($x0,$y0) = ('','');
+    my ($x,$y) = ('','');
     if (my $navPos = $obj->param('navPos')) {
-        ($x0,$y0) = $navPos =~ /(\d+)\*(\d+)/;
+        ($x,$y) = $navPos =~ /(\d+)\*(\d+)/;
+warn "$x|$y\n";
     }
     
     # Navigationsobjekt mit der Rückkehrseite, falls existent
@@ -262,6 +263,11 @@ sub new {
     # die Request-Id der Rückkehr-Seite ermitteln und speichern
     
     my $callH = Quiq::Hash::Db->new($callDb,'rw');
+    my ($rUrl,$rRrid,$rBrid) = ('','','');
+    if ($rrid) {
+        my $data = $callH->{$rrid} // $class->throw;
+        ($rUrl,$rRrid,$rBrid) = split /\0/,$data;
+    }
     if ($brid) {
         # Request-Id der Rückkehr-Seite ist als Parameter spezifiziert
 
@@ -273,14 +279,14 @@ sub new {
         }
     }
     elsif ($rrid) {
-        # Request-Id der Rückkehr-Seite holen wir aus der Call-Datenbank
-
-        my $data = $callH->{$rrid} // $class->throw;
-        # $url,$rrid,$brid,$x,$y
-        (my $url,my $rrid,$brid,undef,undef) = split /\0/,$data,5;
-        $callH->{$rrid} = "$url\0$rrid\0$brid\0100\0100";    
-warn ">> $x0,$y0 | $data\n";
+        # Request-Id der Rückkehr-Seite übernehmen wir von Vorgängerseite
+        $brid = $rBrid;
     }
+    if ($rrid && $x ne '') {
+        # Wir fügen die Scrollposition zur Vorgängerseite hinzu
+        $callH->{$rrid} = "$rUrl\0$rRrid\0$rBrid\0$x\0$y";
+    }
+
     $url =~ s/[?&]nav.*?(?=&|$)//g;
     $callH->{$rid} = "$url\0$rrid\0$brid\0\0";
 
@@ -290,10 +296,11 @@ warn ">> $x0,$y0 | $data\n";
         my $data = $callH->{$brid} // $self->throw;
         # $url,$rrid,$brid,$x,$y
         my ($url,undef,undef,$x,$y) = split /\0/,$data,5;
-        if ($x || $y) {
+        if ($x ne '') {
             $url .= index($url,'?') >= 0? '&': '?';
             $url .= "navScroll=$x*$y";
         }
+warn "backUrl: $url\n";
         $self->set(backUrl=>$url);
     }
 
