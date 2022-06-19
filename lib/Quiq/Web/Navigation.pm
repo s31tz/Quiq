@@ -201,9 +201,11 @@ sub new {
     # my $post = $obj->req->body_params->to_string;
     my $rrid = $obj->param('navPrev') // '';
     my $brid = $obj->param('navBack') // '';
-    my ($x0,$y0) = $obj->param('navPos') =~ /(\d+)\*(\d+)/;
-    $x0 //= '';
-    $y0 //= '';
+
+    my ($x0,$y0) = ('','');
+    if (my $navPos = $obj->param('navPos')) {
+        ($x0,$y0) = $navPos =~ /(\d+)\*(\d+)/;
+    }
     
     # Navigationsobjekt mit der Rückkehrseite, falls existent
 
@@ -276,10 +278,10 @@ sub new {
         my $data = $callH->{$rrid} // $class->throw;
         # $url,$rrid,$brid,$x,$y
         (my $url,my $rrid,$brid,undef,undef) = split /\0/,$data,5;
-        $callH->{$rrid} = "$url\0$rrid\0$brid\0$x0\0$y0";    
+        $callH->{$rrid} = "$url\0$rrid\0$brid\0100\0100";    
+warn ">> $x0,$y0 | $data\n";
     }
-    $url =~ s/&?navBack=-?\d+//;
-    $url =~ s/&?navPos=\d+\*\d+//;
+    $url =~ s/[?&]nav.*?(?=&|$)//g;
     $callH->{$rid} = "$url\0$rrid\0$brid\0\0";
 
     # Rückkehr-URL ermitteln
@@ -290,7 +292,7 @@ sub new {
         my ($url,undef,undef,$x,$y) = split /\0/,$data,5;
         if ($x || $y) {
             $url .= index($url,'?') >= 0? '&': '?';
-            $url .= "navSetPos=$x*$y";
+            $url .= "navScroll=$x*$y";
         }
         $self->set(backUrl=>$url);
     }
