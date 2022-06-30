@@ -248,7 +248,7 @@ Schreibe die Kommandozeile $cmd auf die Loghandle.
 
 =head1 VERSION
 
-1.203
+1.204
 
 =head1 SOURCE
 

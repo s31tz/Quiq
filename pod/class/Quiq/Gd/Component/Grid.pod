@@ -143,7 +143,7 @@ siehe L<BASE CLASS|"BASE CLASS">
 
 =head1 VERSION
 
-1.203
+1.204
 
 =head1 SOURCE
 
