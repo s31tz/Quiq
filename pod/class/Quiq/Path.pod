@@ -164,7 +164,7 @@ Die Wandelung findet "in place" statt.
 
 =head4 Synopsis
 
-  $class->copy($srcPath,$destPath,@opt);
+  $this->copy($srcPath,$destPath,@opt);
 
 =head4 Options
 
@@ -191,7 +191,9 @@ Behalte den Zeitpunkt der letzten Änderung bei.
 
 =head4 Description
 
-Kopiere Datei $srcPath nach $destPath.
+Kopiere Datei $srcPath nach $destPath. Ist eine Nulloperation,
+wenn die Ziledatei existiert und identisch zur Quelldatei ist
+(gleicher Inode).
 
 =head3 copyToDir() - Kopiere Datei in Verzeichnis
 
@@ -528,6 +530,78 @@ Pfad der Datei.
 =head4 Description
 
 Ermittele den SHA1 Hex Digest der Datei $file und liefere diesen zurück.
+
+=head3 size() - Größe der Datei in Bytes
+
+=head4 Synopsis
+
+  $size = $this->size($file);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Pfad der Datei.
+
+=back
+
+=head4 Description
+
+Ermittele die Größe der Datei in Bytes und liefere diesen Wert zurück.
+Im Unterschied zu
+
+  -s $file
+
+führt die Methode eine Tilde-Expansion durch.
+
+=head3 tail() - Überwache Datei und gib hinzugefügte Daten kontinuierlich aus
+
+=head4 Synopsis
+
+  $data = $this->tail($file,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+(String) Pfad der Datei.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -offset => $pos (Default: 0)
+
+Beginne die Überwachung bei Datei-Offset $pos.
+
+=item -sleepInterval => $s (Default: 0.1)
+
+Zeitraum, der zwischen den Prüfungen auf Änderung gewartet wird.
+
+=item -timeout => $s (Default: I<überwache unendlich lange>)
+
+Beende die Überwachung der Datei, wenn $s Sekunden (Sekundenbruchteile
+erlaubt, z.B. C<0.5>) lang keine Änderung an der Datei erfolgt ist.
+Der Werte sollte größer sein als das Sleep Interval (s. C{-sleepInterval).
+
+=back
+
+=head4 Returns
+
+(String) Die während der Überwachung hinzugefügte Daten.
+
+=head4 Description
+
+Überwache Datei $file und gib die am Ende hinzugefügten Daten
+kontinuierlich aus. Die Überwachung endet, wenn der Datiinhalt sich
+$s Sekunden lang nicht geändert hat (Option C<--timeout>).
+Liefere die hinzugefügten Daten zurück.
 
 =head3 truncate() - Kürze Datei
 
@@ -1514,6 +1588,36 @@ Verzeichnis um in
 
 wobei EXT die Extension ist, die die Datei vorher hatte, d.h. diese
 bleibt als einziges vom ursprünglichen Dateinamen erhalten.
+
+=head3 sameFile() - Prüfe auf identische Datei
+
+=head4 Synopsis
+
+  $bool = $this->sameFile($path1,$path2);
+
+=head4 Arguments
+
+=over 4
+
+=item $path1
+
+Erster Pfad
+
+=item $path2
+
+Zweiter Pfad
+
+=back
+
+=head4 Returns
+
+(Integer)
+
+=head4 Description
+
+Prüfe, ob die beiden Pfade $path1 und $path2 auf dieselbe
+Datei (deselben Inode) verweisen. Wenn ja, liefere 1, sonst 0.
+Funktioniert auch bei Symlinks.
 
 =head3 split() - Zerlege Pfad in seine Komponenten
 
