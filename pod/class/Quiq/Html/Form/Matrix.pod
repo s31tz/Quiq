@@ -1,0 +1,100 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Html::Form::Matrix - HTML-Formular mit Matrix-Layout
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+Die Klasse erzeugt ein HTML-Formular mit Matrix-Layout,
+d.h. es besteht aus mehreren Zeilen gleichartiger Widgets.
+
+=head1 ATTRIBUTES
+
+=over 4
+
+=item initialize => $sub (Default: sub {})
+
+Subroutine zur Initialisierung der Widgets. Beispiel:
+
+  sub {
+      my ($w,$name,$i) = @_;
+  
+      my $val = $self->param($name."_$i");
+      $w->value($val);
+  }
+
+=item names => \@names (Default: [])
+
+Liste der Widgetnamen. Zum diesen Widgetnamen wird jeweils "_$i"
+mit der Nummer $i der Zeile hinzugefügt, beginnend mit 1 für die
+erste Zeile.
+
+=item rows => $n (Default: 1)
+
+Anzahl der Zeilen.
+
+=item titles => \@titles (Default: [])
+
+Liste der Kolumnentitel.
+
+=item widgets => \@widgets (Default: [])
+
+Widgets einer Matrix-Zeile.
+
+=back
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+  $e = $class->new(@keyVal);
+
+=head4 Description
+
+Instantiiere ein Formular-Objekt mit den Eigenschaften @keyVal und
+liefere eine Referenz auf dieses Objekt zurück.
+
+=head2 Objektmethoden
+
+=head3 html() - Generiere HTML
+
+=head4 Synopsis
+
+  $html = $e->html($h);
+  $html = $class->html($h,@keyVal);
+
+=head4 Description
+
+Generiere den HTML-Code der Formular-Matrix und liefere diesen
+zurück. Als Klassenmethode gerufen, wird das Objekt intern erzeugt
+und mit den Attributen @keyVal instantiiert.
+
+=head1 VERSION
+
+1.204
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Html/Form/Matrix.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2022 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

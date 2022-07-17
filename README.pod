@@ -377,6 +377,10 @@ L<Quiq::Html::Form::Layout|https://github.com/s31tz/Quiq/tree/master/pod/class/Q
 
 =item *
 
+L<Quiq::Html::Form::Matrix|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/Form/Matrix.pod> - HTML-Formular mit Matrix-Layout
+
+=item *
+
 L<Quiq::Html::HorizontalMenu|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Html/HorizontalMenu.pod> - Einfaches horizontales Menü
 
 =item *
