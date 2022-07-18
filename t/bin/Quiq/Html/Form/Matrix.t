@@ -48,7 +48,7 @@ sub test_unitTest_2 : Test(1) {
         initialize => sub {
             my ($w,$name,$i) = @_;
 
-            my $val = $self->param($name."_$i");
+            my $val = "VAL$i";
             $w->value($val);
         },
     );

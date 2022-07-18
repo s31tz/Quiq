@@ -133,21 +133,32 @@ sub html {
     my ($initializeSub,$rows,$titleA,$widgetA) =
         $self->get(qw/initialize rows titles widgets/);
 
+    if (!@$widgetA) {
+        return '';
+    }
+
     my @rows;
+
+    my @row;
+    for my $title (@$titleA) {
+        push @row,[$title];
+    }
+    push @rows,\@row;
+
     for my $i (1 .. $rows) {
-        my @row = ($i);
+        my @row;
         for (@$widgetA) {
             my $w = Quiq::Storable->clone($_);
             my $name = $w->name."_$i";
             $w->name($name);
             $initializeSub->($w,$name,$i);
-            push @row,$w;
-            push @rows,\@rows;
+            push @row,[$w->html($h)];
         }
+        push @rows,\@row;
     }
 
     return Quiq::Html::Table::Simple->html($h,
-        border => 1,
+        border => 0,
         rows => \@rows,
     );
 }
