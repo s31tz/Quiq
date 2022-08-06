@@ -30,6 +30,10 @@ Subroutine zur Initialisierung der Widgets. Beispiel:
       $w->value($val);
   }
 
+=item name => $name (Default: 'formMatrix')
+
+Name der Formular-Matrix.
+
 =item names => \@names (Default: [])
 
 Liste der Widgetnamen. Zum diesen Widgetnamen wird jeweils "_$i"
@@ -64,6 +68,7 @@ use warnings;
 our $VERSION = '1.204';
 
 use Quiq::Storable;
+use Quiq::Html::Widget::Hidden;
 use Quiq::Html::Table::Simple;
 
 # -----------------------------------------------------------------------------
@@ -93,6 +98,7 @@ sub new {
 
     my $self = $class->SUPER::new(
         initialize => sub {},
+        name => 'formMatrix',
         names => [],
         rows => 1,
         titles => [],
@@ -130,8 +136,8 @@ sub html {
 
     my $self = ref $this? $this: $this->new(@_);
 
-    my ($initializeSub,$rows,$titleA,$widgetA) =
-        $self->get(qw/initialize rows titles widgets/);
+    my ($initializeSub,$name,$rows,$titleA,$widgetA) =
+        $self->get(qw/initialize name rows titles widgets/);
 
     if (!@$widgetA) {
         return '';
@@ -157,10 +163,15 @@ sub html {
         push @rows,\@row;
     }
 
-    return Quiq::Html::Table::Simple->html($h,
-        border => 0,
-        rows => \@rows,
-    );
+    return Quiq::Html::Widget::Hidden->html($h,
+            name => $name.'Size',
+            value => $rows
+        ).
+        Quiq::Html::Table::Simple->html($h,
+            border => 0,
+            rows => \@rows,
+        )
+    ;
 }
 
 # -----------------------------------------------------------------------------

@@ -30,7 +30,7 @@ sub test_unitTest_1 : Test(2) {
     $self->is($html,'');
 }
 
-sub test_unitTest_2 : Test(1) {
+sub test_unitTest_2 : Test(0) {
     my $self = shift;
 
     my $h = Quiq::Html::Tag->new;

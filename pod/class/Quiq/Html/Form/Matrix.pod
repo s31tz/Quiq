@@ -28,6 +28,10 @@ Subroutine zur Initialisierung der Widgets. Beispiel:
       $w->value($val);
   }
 
+=item name => $name (Default: 'formMatrix')
+
+Name der Formular-Matrix.
+
 =item names => \@names (Default: [])
 
 Liste der Widgetnamen. Zum diesen Widgetnamen wird jeweils "_$i"
