@@ -210,7 +210,9 @@ sub checkFileSecurity {
 =head4 Description
 
 Prüfe, ob der Inhalt der Dateien $file1 und $file2 differiert.
-Ist dies der Fall, liefere I<wahr>, andernfalls I<falsch>.
+Ist dies der Fall, liefere I<wahr> (1 oder 2), andernfalls I<falsch> (0).
+Differiert $file2, wird 1 geliefert, existiert $file2 nicht,
+wird 2 geliefert.
 
 =cut
 

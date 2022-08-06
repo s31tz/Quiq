@@ -33,6 +33,23 @@ sub test_filter : Test(3) {
 
 # -----------------------------------------------------------------------------
 
+sub test_pipeTo : Test(3) {
+    my $self = shift;
+
+    my ($out,$err) = Quiq::Ipc->pipeTo('/bin/cat','Ein Test');
+    $self->is($out,'Ein Test');
+
+    # Fix: CPAN Testers
+    eval { Quiq::Ipc->pipeTo('false') };
+    $self->like($@,qr/ExitCode:\s+1\s+/);
+
+    # Dieser Test schlägt unter Perl 5.8.8 fehl, da $? (Exitcode) 0 ist
+    eval { Quiq::Ipc->pipeTo('/bin/unknown_command','Ein Test') };
+    $self->like($@,qr/open3:/);
+}
+
+# -----------------------------------------------------------------------------
+
 package main;
 Quiq::Ipc::Test->runTests;
 

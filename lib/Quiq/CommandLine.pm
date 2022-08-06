@@ -531,7 +531,7 @@ Zeichenkette mit Whitespace und/oder Shell-Metazeichen:
 sub value {
     my ($this,$str) = @_;
 
-    if (!defined($str) || $str =~ m|^([\w/:+-.]+)$|) {
+    if (!defined($str) || $str =~ m|^([\w/:+-.~]+)$|) {
         return $str;
     }
     

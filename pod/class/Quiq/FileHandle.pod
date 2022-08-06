@@ -112,15 +112,26 @@ Schreiben nach STDOUT:
   $fh = $class->new('>','');
   $fh = $class->new('>','-');
 
-=head3 destroy() - Schließe Dateihandle
+=head3 close() - Schließe Dateihandle
 
 =head4 Synopsis
 
-  $fh->destroy;
+  $fh->close;
 
 =head4 Alias
 
-close()
+destroy()
+
+=head4 Description
+
+Schließe Dateihandle. Die Methode liefert keinen Wert zurück.
+Nach Aufruf der Methode ist die Objektreferenz ungültig.
+
+=head3 DESTROY() - Schließe Dateihandle
+
+=head4 Synopsis
+
+  $fh->DESTROY;
 
 =head4 Description
 
