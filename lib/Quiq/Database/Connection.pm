@@ -1740,6 +1740,9 @@ sub applyPatches {
         my ($name,$sub,$descr) = @$_;
         my ($n) = map {int} $name =~ /(\d+)/;
         if ($n > $maxLevel) {
+            # für SQLite nötig, damit keine Daten durch Fremdschlüssel-
+            # Verweise verloren gehen
+            $self->sql('PRAGMA foreign_keys = OFF');
             $self->begin;
             $sub->($self,$n);
             $self->insert('patch',
@@ -1747,6 +1750,7 @@ sub applyPatches {
                 pat_description => $descr,
             );
             $self->commit;
+            $self->sql('PRAGMA foreign_keys = ON'); # s.o.
             $i++;
         }
     }
