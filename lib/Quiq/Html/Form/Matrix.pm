@@ -155,8 +155,8 @@ sub html {
         my @row;
         for (@$widgetA) {
             my $w = Quiq::Storable->clone($_);
-            my $name = $w->name."_$i";
-            $w->name($name);
+            my $name = $w->name;
+            $w->name($name."_$i");
             $initializeSub->($w,$name,$i);
             push @row,[$w->html($h)];
         }
