@@ -27,7 +27,7 @@ cd()
 
 Liefere das aktuelle Verzeichnis ("current working directory") des
 Prozesses. Ist ein Argument angegeben, wechsele in das betreffende
-Verzeichnis.
+Verzeichnis. Tilde-Nt
 
 =head4 Examples
 

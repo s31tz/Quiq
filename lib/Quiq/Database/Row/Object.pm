@@ -1379,6 +1379,7 @@ sub save {
             RowStatus => $stat,
         );
     }
+    $self->rowStatus(0); # NEU 2022-08-22
     $cur->{'rowOperation'} = $stat;
 
     return $cur;
