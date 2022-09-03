@@ -136,7 +136,6 @@ Nach Aufruf der Methode ist die Objektreferenz ungültig.
 =head4 Description
 
 Schließe Dateihandle. Die Methode liefert keinen Wert zurück.
-Nach Aufruf der Methode ist die Objektreferenz ungültig.
 
 =head2 Lesen
 

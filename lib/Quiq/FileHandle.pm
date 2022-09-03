@@ -263,7 +263,6 @@ sub close {
 =head4 Description
 
 Schließe Dateihandle. Die Methode liefert keinen Wert zurück.
-Nach Aufruf der Methode ist die Objektreferenz ungültig.
 
 =cut
 
@@ -271,9 +270,11 @@ Nach Aufruf der Methode ist die Objektreferenz ungültig.
 
 sub DESTROY {
     # warn "DESTROY $_[0]\n";
-    CORE::close $_[0] or do {
-        $_[0]->throw('FH-00009: Close of FileHandle failed');
-    };
+    if (Scalar::Util::openhandle($_[0])) {
+        CORE::close $_[0] or do {
+            $_[0]->throw('FH-00009: Close of FileHandle failed');
+        };
+    }
     return;
 }
 
