@@ -568,17 +568,19 @@ sub instantiate {
              $col{'type'} = $type; 
         }
         if (my $align = $col->align || 'left') {
-             $col{'className'} = "dt-$align"; 
+            $col{'className'} = "dt-$align"; 
         }
-        if (my $searchable = $col->searchable) {
+        my $searchable = $col->searchable;
+        if (defined $searchable) {
             $col{'searchable'} = $searchable; 
         }
         my $orderable = $col->orderable;
         if (defined $orderable) {
             $col{'orderable'} = $orderable? \'true': \'false'; 
         }
-        if (my $visible = $col->visible) {
-            $col{'visible'} = $visible? \'true': \'false'; 
+        my $visible = $col->visible;
+        if (defined $visible) {
+            $col{'visible'} = $visible? \'true': \'false';
         }
         if (my $width = $col->width) {
             $col{'width'} = $width; 
