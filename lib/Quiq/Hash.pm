@@ -66,6 +66,7 @@ use utf8;
 our $VERSION = '1.204';
 
 use Scalar::Util ();
+use Quiq::Stacktrace;
 use Hash::Util ();
 
 # -----------------------------------------------------------------------------
@@ -657,6 +658,10 @@ sub AUTOLOAD :lvalue {
     *{$AUTOLOAD} = sub :lvalue {
         my $self = shift;
         # @_: $val
+
+        # if (!exists $self->{$key}) {
+        #     die Quiq::Stacktrace->asString;
+        # }
 
         if (@_) {
             $self->{$key} = shift;
