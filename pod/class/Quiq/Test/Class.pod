@@ -509,7 +509,7 @@ speichert sie zur späteren Analyse in der klassenglobalen Liste
 
 =head1 VERSION
 
-1.204
+1.205
 
 =head1 SOURCE
 
