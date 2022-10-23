@@ -169,7 +169,7 @@ gespeichert, wenn Option -outputDir und/oder -outputFile angegeben sind.
 
 =head1 VERSION
 
-1.205
+1.206
 
 =head1 SOURCE
 

@@ -593,6 +593,10 @@ L<Quiq::LaTeX::LongTable|https://github.com/s31tz/Quiq/tree/master/pod/class/Qui
 
 =item *
 
+L<Quiq::Ldap::Client|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Ldap/Client.pod> - LDAP Client
+
+=item *
+
 L<Quiq::LineProcessor|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/LineProcessor.pod> - Verarbeite Datei als Array von Zeilen
 
 =item *
@@ -951,7 +955,7 @@ L<Quiq::Xml::LibXml|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Xml
 
 =head1 VERSION
 
-1.205
+1.206
 
 =head1 AUTHOR
 

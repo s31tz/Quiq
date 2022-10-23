@@ -1,0 +1,128 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Ldap::Client - LDAP Client
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert einen LDAP-Client.
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+  $ldap = $class->new($host,%options);
+
+=head4 Arguments
+
+=over 4
+
+=item $host
+
+LDAP-Server. Siehe Net::LDAP.
+
+=item %options
+
+Optionen als Schlüssel/Wert-Paare. Siehe Net::LDAP.
+
+=back
+
+=head4 Returns
+
+Object
+
+=head4 Description
+
+Instantiiere eine Objekt der Klasse und liefere eine Referenz auf
+dieses Objekt zurück.
+
+=head4 Example
+
+  $ldap = Quiq::Ldap::Client->new('dc1',debug=>12);
+
+=head2 Objektmethoden
+
+=head3 bind() - Login auf LDAP-Server
+
+=head4 Synopsis
+
+  $ldap->bind;               # anonymous
+  $ldap->bind($dn,%options);
+
+=head4 Arguments
+
+=over 4
+
+=item $dn
+
+DN, mit der gebunden wird.
+
+=item %options
+
+Optionen als Schlüssel/Wert-Paare. Siehe Net::LDAP.
+
+=back
+
+=head4 Description
+
+Logge User auf LDAP-Server ein.
+
+=head3 search() - Durchsuche Server
+
+=head4 Synopsis
+
+  $ldap->search(%options);
+
+=head4 Arguments
+
+=over 4
+
+=item %options
+
+Optionen als Schlüssel/Wert-Paare. Siehe Net::LDAP.
+
+=back
+
+=head4 Description
+
+Durchsuche den LDAP-Server durch Anwendung eines Filters.
+
+=head3 unbind() - Trenne Verbindung
+
+=head4 Synopsis
+
+  $ldap->unbind;
+
+=head4 Description
+
+Trenne die Verbindung zum LDAP-Server.
+
+=head1 VERSION
+
+1.206
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Ldap/Client.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2022 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

@@ -158,7 +158,7 @@ die seit dem letzten Start vergangene Zeit zurück.
 
 =head1 VERSION
 
-1.205
+1.206
 
 =head1 SOURCE
 
