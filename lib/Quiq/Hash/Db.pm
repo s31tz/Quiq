@@ -29,6 +29,7 @@ use utf8;
 
 our $VERSION = '1.206';
 
+use Quiq::Path;
 use Fcntl ();
 use DB_File ();
 
@@ -79,6 +80,8 @@ im Modus $mode und liefere eine Referenz auf das Objekt zurück.
 
 sub new {
     my ($class,$file,$mode) = @_;
+
+    $file = Quiq::Path->expandTilde($file);
 
     my $openMode = 0;
     if ($mode eq 'rw') {
