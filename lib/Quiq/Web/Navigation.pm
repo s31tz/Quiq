@@ -123,6 +123,15 @@ Der Eintrag für die Rückkehrseite wird gelöscht.
 
 =back
 
+=item navMsg=msg
+
+Übermittelt an die Folgeseite (die typischerweise eine
+Rückkehrseite ist) einen Text. Dieser Parameter wird wie alle
+nav*-Parameter automatisch aus dem URL, der in
+Navigationshistorie (call.db) gespeichert wird entfernt, so
+dass dieser bei der erneuten Rückkehr nicht noch einmal
+verwendet wird.
+
 =back
 
 =cut
@@ -142,6 +151,7 @@ use Quiq::Path;
 use Quiq::LockedCounter;
 use Quiq::Hash::Db;
 use POSIX ();
+use Quiq::Url;
 
 # -----------------------------------------------------------------------------
 
@@ -347,6 +357,42 @@ sub backUrl {
     my $self = shift;
     my $defaultUrl = shift;
     return $self->{'backUrl'} // $defaultUrl;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 backUrlObj() - URL-Objekt der Rückkehrseite
+
+=head4 Synopsis
+
+  $urlObj = $nav->backUrlObj;
+  $urlObj = $nav->backUrlObj($defaultUrl);
+
+=head4 Arguments
+
+=over 4
+
+=item (String) $defaultUrl
+
+URL, der genutzt wird, wenn kein Rückkehr-URL definiert ist.
+
+=back
+
+=head4 Returns
+
+(Object) URL-Objekt (siehe Quiq::Url)
+
+=head4 Description
+
+Liefere den URL der Rückkehrseite als Objekt.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub backUrlObj {
+    my $self = shift;
+    return Quiq::Url->new($self->backUrl);
 }
 
 # -----------------------------------------------------------------------------

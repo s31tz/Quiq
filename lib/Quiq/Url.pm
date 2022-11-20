@@ -8,14 +8,14 @@ Quiq::Url - URL Klasse
 
 =head1 BASE CLASS
 
-L<Quiq::Object>
+L<Quiq::Hash>
 
 =cut
 
 # -----------------------------------------------------------------------------
 
 package Quiq::Url;
-use base qw/Quiq::Object/;
+use base qw/Quiq::Hash/;
 
 use v5.10;
 use strict;
@@ -23,6 +23,7 @@ use warnings;
 
 our $VERSION = '1.206';
 
+use Quiq::Hash::Ordered;
 use Encode ();
 use Quiq::Array;
 use Quiq::Option;
@@ -37,14 +38,14 @@ use Quiq::Option;
 
 =head4 Synopsis
 
-  $u = $class->new;
+  $urlObj = $class->new;
+  $urlObj = $class->new($url);
+  $urlObj = $class->new(@keyVal);
 
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
-dieses Objekt zurück. Da die Klasse ausschließlich Klassenmethoden
-enthält, hat das Objekt ausschließlich die Funktion, eine abkürzende
-Aufrufschreibweise zu ermöglichen.
+dieses Objekt zurück.
 
 =cut
 
@@ -52,7 +53,127 @@ Aufrufschreibweise zu ermöglichen.
 
 sub new {
     my $class = shift;
-    return bless \(my $dummy),$class;
+    # @_: $url -or- @keyVal
+
+    my ($schema,$user,$password,$host,$port,$path,$fragment) = ('') x 8;
+    if (@_ == 1) {
+        # $url
+
+        my $url = shift;
+        ($schema,$user,$password,$host,$port,$path,my $query,$fragment) =
+            $class->split($url);
+        @_ = map {$class->decode($_)} $class->queryDecode($query);
+    }
+
+    my $ohash = Quiq::Hash::Ordered->new;
+    while (@_) {
+        my $key = shift;
+        my $val = shift;
+        my $arr = $ohash->get($key);
+        if (!$arr) {
+            $arr = [];
+            $ohash->set($key=>$arr);
+        }
+        push @$arr,$val;
+    }
+
+    return $class->SUPER::new(
+        schema => $schema,
+        user => $user,
+        password => $password,
+        host => $host,
+        port => $port,
+        path => $path,
+        queryH => $ohash,
+        fragment => $fragment,
+    );
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Objektmethoden
+
+=head3 queryString() - Querystring des URL-Objekts
+
+=head4 Synopsis
+
+  $query = $urlObj->queryString;
+
+=head4 Returns
+
+(String) Querystring
+
+=head4 Description
+
+Erzeuge den Querystring des URL-Objekts und liefere diesen zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub queryString {
+    my $self = shift;
+
+    my $queryH = $self->queryH;
+
+    my @keyVal;
+    for my $key ($queryH->keys) {
+        my $arr = $queryH->get($key);
+        for my $val (@$arr) {
+            push @keyVal,$key=>$val;
+        }
+    }
+
+    return $self->queryEncode(@keyVal);
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 url() - URL als Zeichenkette
+
+=head4 Synopsis
+
+  $url = $urlObj->url;
+
+=head4 Returns
+
+(String) URL als Zeichenkette
+
+=head4 Description
+
+Erzeuge eine externe Repräsentation des URL-Objekts und liefere
+diese zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub url {
+    my $self = shift;
+
+    my $schema = $self->schema;
+    my $user = $self->user;
+    my $password = $self->password;
+    my $host = $self->host;
+    my $port = $self->port;
+    my $path = $self->path;
+    my $query = $self->queryString;
+    my $fragment = $self->fragment;
+    
+    my $url = $schema;
+    $url .= '://' if $url;
+    $url .= $user;
+    $url .= ":$password" if $password;
+    if ($user && $host) {
+        $url .= '@';
+    }
+    $url .= $host;
+    $url .= ":$port" if $port;
+    $url .= $path;
+    $url .= "?$query" if $query;
+    $url .= "#$fragment" if $fragment;
+
+    return $url;
 }
 
 # -----------------------------------------------------------------------------

@@ -6,7 +6,7 @@ Quiq::Url - URL Klasse
 
 =head1 BASE CLASS
 
-L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 METHODS
 
@@ -16,14 +16,45 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head4 Synopsis
 
-  $u = $class->new;
+  $urlObj = $class->new;
+  $urlObj = $class->new($url);
+  $urlObj = $class->new(@keyVal);
 
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
-dieses Objekt zurück. Da die Klasse ausschließlich Klassenmethoden
-enthält, hat das Objekt ausschließlich die Funktion, eine abkürzende
-Aufrufschreibweise zu ermöglichen.
+dieses Objekt zurück.
+
+=head2 Objektmethoden
+
+=head3 queryString() - Querystring des URL-Objekts
+
+=head4 Synopsis
+
+  $query = $urlObj->queryString;
+
+=head4 Returns
+
+(String) Querystring
+
+=head4 Description
+
+Erzeuge den Querystring des URL-Objekts und liefere diesen zurück.
+
+=head3 url() - URL als Zeichenkette
+
+=head4 Synopsis
+
+  $url = $urlObj->url;
+
+=head4 Returns
+
+(String) URL als Zeichenkette
+
+=head4 Description
+
+Erzeuge eine externe Repräsentation des URL-Objekts und liefere
+diese zurück.
 
 =head2 Klassenmethoden
 
