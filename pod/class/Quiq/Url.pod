@@ -8,6 +8,13 @@ Quiq::Url - URL Klasse
 
 L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert einen URL. Auf dessen Bestandteilen
+kann mit den Objektmethoden der Klasse operiert werden. Ferner enthält
+die Klasse allgemeine Methoden im Zusammenhang mit URLs, die als
+Klassenmethoden implementiert sind.
+
 =head1 METHODS
 
 =head2 Konstruktor
@@ -27,7 +34,7 @@ dieses Objekt zurück.
 
 =head2 Objektmethoden
 
-=head3 queryString() - Querystring des URL-Objekts
+=head3 queryString() - liefere Querystring des URL-Objekts
 
 =head4 Synopsis
 
@@ -40,6 +47,30 @@ dieses Objekt zurück.
 =head4 Description
 
 Erzeuge den Querystring des URL-Objekts und liefere diesen zurück.
+
+=head3 setQuery() - Setze Querystring-Parameter des URL-Objekts
+
+=head4 Synopsis
+
+  $urlObj->setQuery(@keyVal);
+
+=head4 Arguments
+
+=over 4
+
+=item @keyVal
+
+Liste von Schlüssel-Wert-Paaren
+
+=back
+
+=head4 Description
+
+Setze die angegebenen Querystring-Parameter auf den jeweils angegebenen
+Wert. Existiert ein Parameter bereits, wird sein Wert überschrieben.
+Tritt derselbe Parameter mehrfach auf, werden die einzelnen Werte zu
+einem Array zusammengefasst. Ist der Wert eine Arrayreferenz, werden
+alle Werte des Arrays dem Parameter hinzugefügt.
 
 =head3 url() - URL als Zeichenkette
 

@@ -10,6 +10,13 @@ Quiq::Url - URL Klasse
 
 L<Quiq::Hash>
 
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert einen URL. Auf dessen Bestandteilen
+kann mit den Objektmethoden der Klasse operiert werden. Ferner enthält
+die Klasse allgemeine Methoden im Zusammenhang mit URLs, die als
+Klassenmethoden implementiert sind.
+
 =cut
 
 # -----------------------------------------------------------------------------
@@ -24,6 +31,7 @@ use warnings;
 our $VERSION = '1.206';
 
 use Quiq::Hash::Ordered;
+use Scalar::Util ();
 use Encode ();
 use Quiq::Array;
 use Quiq::Option;
@@ -65,35 +73,26 @@ sub new {
         @_ = map {$class->decode($_)} $class->queryDecode($query);
     }
 
-    my $ohash = Quiq::Hash::Ordered->new;
-    while (@_) {
-        my $key = shift;
-        my $val = shift;
-        my $arr = $ohash->get($key);
-        if (!$arr) {
-            $arr = [];
-            $ohash->set($key=>$arr);
-        }
-        push @$arr,$val;
-    }
-
-    return $class->SUPER::new(
+    my $self = $class->SUPER::new(
         schema => $schema,
         user => $user,
         password => $password,
         host => $host,
         port => $port,
         path => $path,
-        queryH => $ohash,
+        queryH => Quiq::Hash::Ordered->new,
         fragment => $fragment,
     );
+    $self->setQuery(@_);
+
+    return $self;
 }
 
 # -----------------------------------------------------------------------------
 
 =head2 Objektmethoden
 
-=head3 queryString() - Querystring des URL-Objekts
+=head3 queryString() - liefere Querystring des URL-Objekts
 
 =head4 Synopsis
 
@@ -125,6 +124,68 @@ sub queryString {
     }
 
     return $self->queryEncode(@keyVal);
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 setQuery() - Setze Querystring-Parameter des URL-Objekts
+
+=head4 Synopsis
+
+  $urlObj->setQuery(@keyVal);
+
+=head4 Arguments
+
+=over 4
+
+=item @keyVal
+
+Liste von Schlüssel-Wert-Paaren
+
+=back
+
+=head4 Description
+
+Setze die angegebenen Querystring-Parameter auf den jeweils angegebenen
+Wert. Existiert ein Parameter bereits, wird sein Wert überschrieben.
+Tritt derselbe Parameter mehrfach auf, werden die einzelnen Werte zu
+einem Array zusammengefasst. Ist der Wert eine Arrayreferenz, werden
+alle Werte des Arrays dem Parameter hinzugefügt.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub setQuery {
+    my $self = shift;
+    # @_ @keyVal
+
+    my $queryH = $self->queryH;
+
+    my %seen;
+    while (@_) {
+        my $key = shift;
+        my $val = shift;
+
+        if (!defined $val) {
+            # undef -> lösche Parameter
+            delete $seen{$key};
+            $queryH->delete($key);
+            next;
+        }
+        elsif (!$seen{$key}++) {
+            # neuen Parameter hinzufügen
+            $queryH->set($key=>[]);
+        }
+
+        # Wert(e) zur Liste der Parameterwerte hinzufügen
+
+        my $arr = $queryH->get($key);
+        my $type = Scalar::Util::reftype($val) // '';
+        push @$arr,$type eq 'ARRAY'? @$val: $val;
+    }
+
+    return;
 }
 
 # -----------------------------------------------------------------------------

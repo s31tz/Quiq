@@ -16,7 +16,7 @@ sub test_loadClass : Init(1) {
 
 # -----------------------------------------------------------------------------
 
-sub test_new : Test(3) {
+sub test_new : Test(4) {
     my $self = shift;
 
     my $urlObj = Quiq::Url->new;
@@ -27,6 +27,9 @@ sub test_new : Test(3) {
         '?arg1=val1&arg1=val2&arg2=val3#search';
     $urlObj = Quiq::Url->new($url);
     $self->is($urlObj->url,$url);    
+
+    $urlObj = Quiq::Url->new(a=>1,b=>2,a=>3,d=>4);
+    $self->is($urlObj->url,'?a=1&a=3&b=2&d=4');    
 }
 
 # -----------------------------------------------------------------------------
