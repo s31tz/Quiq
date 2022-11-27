@@ -1825,6 +1825,55 @@ Benenne die neue Tabelle in die Originaltabelle $table um
 
 =back
 
+=head3 copyData() - Kopiere Tabellendaten von Quelldatenbank in Zieldatenbank
+
+=head4 Synopsis
+
+  $cur = $destDb->copyData($srcDb,$table,%options);
+
+=head4 Arguments
+
+=over 4
+
+=item $srcDb
+
+Verbindung zur Quelldatenbank
+
+=item $name
+
+(String) Name der Zieltabelle
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -srcTable => $srcTable
+
+Name der Tabelle in der Quelldatenbank.
+
+=item -mapColumns => \%hash
+
+Abbildung zwischen den Kolumnennamen der Quell- und der Zieltabelle.
+Der Schlüssel des Hash ist der Name in der Quelltabelle, der Wert des Hash
+der Name in der Zieltabelle. Es müssen nur die Kolumennamen angegeben
+werden, die nicht übereinstimmen.
+
+=back
+
+=head4 Returns
+
+(Object) Cursor des INSERT-Statements, das die Daten von der alten
+in die neue Tabelle kopiert hat.
+
+=head4 Description
+
+Kopiere die Daten der Tabelle $table aus der Quelldatenbank $srcDb
+in die Zieldatenbank $destDb. Weicht der Tabellenname ab, kann
+diese Abweichung mit der Option -srcTable behandelt werden. Weichen
+Kolumnennamen ab, kann dies mit der Option -mapColumns behandelt werden.
+
 =head3 dropTable() - Lösche Tabelle
 
 =head4 Synopsis
