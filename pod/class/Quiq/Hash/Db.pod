@@ -13,6 +13,12 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 Diese Klasse ist eine objektorientierte Überdeckung des Moduls DB_File,
 das eine Schnittstelle zu Berkeley DB 1.x darstellt.
 
+=head1 EXAMPLE
+
+Alle Hash-Keys ausgeben ($file ist der Name der Hash-Datei):
+
+  $ perl -MQuiq::Hash::Db -E '$h = Quiq::Hash::Db->new($file,"r"); for (keys %$h) { say $_}'
+
 =head1 METHODS
 
 =head2 Konstruktor

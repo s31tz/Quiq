@@ -15,6 +15,12 @@ L<Quiq::Hash>
 Diese Klasse ist eine objektorientierte Überdeckung des Moduls DB_File,
 das eine Schnittstelle zu Berkeley DB 1.x darstellt.
 
+=head1 EXAMPLE
+
+Alle Hash-Keys ausgeben ($file ist der Name der Hash-Datei):
+
+  $ perl -MQuiq::Hash::Db -E '$h = Quiq::Hash::Db->new($file,"r"); for (keys %$h) { say $_}'
+
 =cut
 
 # -----------------------------------------------------------------------------
@@ -132,12 +138,15 @@ sub new {
 sub sync {
     my $self = shift;
 
-    my $x = tied %$self || $self->throw(
+    my $ref = tied %$self || $self->throw(
         'BDB-00002: Kann Tie-Objekt nicht ermitteln',
     );
-    if ($x->sync < 0) {
+    my $r = $ref->sync;
+    if ($r < 0) {
         $self->throw(
             'BDB-00003: Sync ist fehlgeschlagen',
+            TiedObject => "$ref",
+            Errcode => $r,
             Errstr => $!,
         );
     }
