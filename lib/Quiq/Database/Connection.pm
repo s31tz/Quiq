@@ -3780,7 +3780,7 @@ sub recreateTable {
 
 =head4 Synopsis
 
-  $cur = $destDb->copyData($srcDb,$table,%options);
+  $destDb->copyData($srcDb,$table,%options);
 
 =head4 Arguments
 
@@ -3800,9 +3800,14 @@ Verbindung zur Quelldatenbank
 
 =over 4
 
-=item -srcTable => $srcTable
+=item -chunkSize => $n (Default: 100)
 
-Name der Tabelle in der Quelldatenbank.
+Kopiere die Datensätze in Chunks der Größe $n.
+
+=item -srcTable => $srcTable (Default: $table)
+
+Name der Tabelle in der Quelldatenbank, wenn er vom Namen der
+Zieltabelle abweicht.
 
 =item -mapColumns => \%hash
 
@@ -3812,11 +3817,6 @@ der Name in der Zieltabelle. Es müssen nur die Kolumennamen angegeben
 werden, die nicht übereinstimmen.
 
 =back
-
-=head4 Returns
-
-(Object) Cursor des INSERT-Statements, das die Daten von der alten
-in die neue Tabelle kopiert hat.
 
 =head4 Description
 
@@ -3830,58 +3830,74 @@ Kolumnennamen ab, kann dies mit der Option -mapColumns behandelt werden.
 # -----------------------------------------------------------------------------
 
 sub copyData {
-    my ($self,$srcDb,$table) = @_;
+    my ($self,$srcDb,$destTable) = splice @_,0,3;
     # @_: %options
 
     # Optionen
 
+    my $chunkSize = 100;
     my $mapH = undef;
-    my $srcTable = $table;
+    my $srcTable = $destTable;
 
     $self->parameters(0,\@_,
-        -srcTable => $srcTable,
+        -chunkSize => \$chunkSize,
+        -srcTable => \$srcTable,
         -mapColumns => \$mapH,
     );
 
     # Erstelle Abbildung der Kolumnen
 
-    my @titlesNew = $self->titles($table);
+    my @destTitles = $self->titles($destTable);
 
-    my %map; # Kolumnen der neuen Tabelle
-    for (@titlesNew) {
+    my %map; # Abbildung Kolumnen Zieltabelle => Quelltabelle
+    for (@destTitles) {
         $map{$_} = 'NULL';
     }
-    for my $titleOld ($self->titles($table)) {
-        if (my $titleNew = $mapH->{$titleOld}) {
-            $map{$titleNew} = $titleOld; # Kolumne umbenannt
+    for my $srcTitle ($self->titles($srcTable)) {
+        if (my $destTitle = $mapH->{$srcTitle}) {
+            $map{$destTitle} = $srcTitle; # Kolumne wurde umbenannt
         }
-        elsif (exists $map{$titleOld}) {
-            $map{$titleOld} = $titleOld; # Kolumnenname bleibt gleich
+        elsif (exists $map{$srcTitle}) {
+            $map{$srcTitle} = $srcTitle; # Kolumnenname bleibt gleich
         }
         else {
-            # kolumne entfällt
+            # Kolumne entfällt
         }
     }
 
-    my @titlesOld = map {$map{$_}} @titlesNew;
+    my @srcTitles = map {$map{$_}} @destTitles;
 
-    # 2b. Kopiere die Daten aus der alten in die neue Tabelle
+    # Selektiere die Daten aus der Quelltablle
 
-    my $stmt = "INSERT INTO ${table}_new (\n    ".
-        join("\n    , ",@titlesNew)."\n".
-        ")\nSELECT\n    ".
-        join("\n    , ",@titlesOld)."\n".
-        "FROM\n    $table";
+    my $cur = $srcDb->select(
+        -select => @srcTitles,
+        -from => $srcTable,
+        -raw => 1,
+        -cursor => 1,
+    );
 
-    my $cur = $self->sql($stmt);
+    # Kopiere die Daten in Chunks der Größe $chunkSize
 
-    # 3. Lösche die alte Tabelle
-    $self->dropTable($table);
+    while (1) {
+        my $i = 0;
+        my @rows;
+        while (my $row = $cur->fetch) {
+            $i++;
+            push @rows,$row;
+            if ($i == $chunkSize) {
+                last;
+            }
+        }
+        if (@rows) {
+            $self->insertMulti($destTable,\@destTitles,\@rows);
+        }
+        if (@rows < $chunkSize) {
+            last;
+        }
+    }
+    $cur->close;
 
-    # 4. Benenne die neue Tabelle in die alte um
-    $self->renameTable("${table}_new",$table);
-
-    return $cur;
+    return;
 }
 
 # -----------------------------------------------------------------------------

@@ -1829,7 +1829,7 @@ Benenne die neue Tabelle in die Originaltabelle $table um
 
 =head4 Synopsis
 
-  $cur = $destDb->copyData($srcDb,$table,%options);
+  $destDb->copyData($srcDb,$table,%options);
 
 =head4 Arguments
 
@@ -1849,9 +1849,14 @@ Verbindung zur Quelldatenbank
 
 =over 4
 
-=item -srcTable => $srcTable
+=item -chunkSize => $n (Default: 100)
 
-Name der Tabelle in der Quelldatenbank.
+Kopiere die Datensätze in Chunks der Größe $n.
+
+=item -srcTable => $srcTable (Default: $table)
+
+Name der Tabelle in der Quelldatenbank, wenn er vom Namen der
+Zieltabelle abweicht.
 
 =item -mapColumns => \%hash
 
@@ -1861,11 +1866,6 @@ der Name in der Zieltabelle. Es müssen nur die Kolumennamen angegeben
 werden, die nicht übereinstimmen.
 
 =back
-
-=head4 Returns
-
-(Object) Cursor des INSERT-Statements, das die Daten von der alten
-in die neue Tabelle kopiert hat.
 
 =head4 Description
 
