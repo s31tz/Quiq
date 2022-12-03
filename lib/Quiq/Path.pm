@@ -415,8 +415,8 @@ sub copy {
             DestinationPath => $destPath,
         );
     }
-    $fh1->close;
     $fh2->close;
+    $fh1->close;
 
     if ($preserve) {
         $this->mtime($destPath,$this->mtime($srcPath));
