@@ -215,7 +215,7 @@ sub new {
     my ($x,$y) = ('','');
     if (my $navPos = $obj->param('navPos')) {
         ($x,$y) = $navPos =~ /(\d+)\*(\d+)/;
-warn "$x|$y\n";
+# warn "$x|$y\n";
     }
     
     # Navigationsobjekt mit der Rückkehrseite, falls existent
@@ -310,7 +310,7 @@ warn "$x|$y\n";
             $url .= index($url,'?') >= 0? '&': '?';
             $url .= "navScroll=$x*$y";
         }
-warn "backUrl: $url\n";
+# warn "backUrl: $url\n";
         $self->set(backUrl=>$url);
     }
 
