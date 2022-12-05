@@ -7,7 +7,7 @@ Quiq - Class library for rapid development
 =head1 DESCRIPTION
 
 Diese Klassenbibliothek enthält anwendungsunabhängige
-Klassen, die ich in Projekten nutze. Sie
+Klassen, die ich in Projekten nutze. Die Klassen
 sind nach einheitlichen Prinzipien konzipiert. Die Bibliothek
 befindet sich unter kontinuierlicher Weiterentwicklung.
 
