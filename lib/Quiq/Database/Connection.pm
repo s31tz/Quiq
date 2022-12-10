@@ -3845,28 +3845,38 @@ sub copyData {
         -mapColumns => \$mapH,
     );
 
+    # Prüfe, ob die Zieltabelle auf der Quelldatenbank existiert.
+    # Wenn nein, haben wir hier nichts zu tun.
+
+    if (!$srcDb->tableExists($srcTable)) {
+        return;
+    }
+
     # Erstelle Abbildung der Kolumnen
 
     my @destTitles = $self->titles($destTable);
+    my @srcTitles = $srcDb->titles($srcTable);
+    my $srcTitleH = Quiq::Hash->new(\@srcTitles,1)->unlockKeys;
 
     my %map; # Abbildung Kolumnen Zieltabelle => Quelltabelle
-    for (@destTitles) {
-        $map{$_} = 'NULL';
+    for my $destTitle (@destTitles) {
+        if ($srcTitleH->{$destTitle}) {
+            $map{$destTitle} = $destTitle; # Kolumnenname bleibt gleich
+        }
     }
-    for my $srcTitle ($self->titles($srcTable)) {
+    for my $srcTitle (@srcTitles) {
         if (my $destTitle = $mapH->{$srcTitle}) {
             $map{$destTitle} = $srcTitle; # Kolumne wurde umbenannt
         }
-        elsif (exists $map{$srcTitle}) {
-            $map{$srcTitle} = $srcTitle; # Kolumnenname bleibt gleich
-        }
-        else {
-            # Kolumne entfällt
-        }
     }
+    # Alle anderen Kolumnen werden nicht beachtet
 
-    my @srcTitles = map {$map{$_}} @destTitles;
-
+    @destTitles = @srcTitles = ();
+    for my $destTitle (keys %map) {
+        push @destTitles,$destTitle;
+        push @srcTitles,$map{$destTitle};
+    }
+    
     # Selektiere die Daten aus der Quelltablle
 
     my $cur = $srcDb->select(

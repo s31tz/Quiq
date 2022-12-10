@@ -488,6 +488,29 @@ sub copyToDir {
 
   $class->duplicate($method,$srcPath,$destPath,@opt);
 
+=head4 Arguments
+
+=over 4
+
+=item $method
+
+Anzuwendende Pfadoperation:
+
+  copy
+  move -or- rename
+  link
+  symlink
+
+=item $srcPath
+
+(String) Quellpfad
+
+=item $destPath
+
+(String) Zielpfad
+
+=back
+
 =head4 Options
 
 =over 4
@@ -1597,7 +1620,8 @@ zurück. Die Einträge C<.> und C<..> werden I<nicht> mitgezählt.
 # -----------------------------------------------------------------------------
 
 sub count {
-    my ($this,$dir) = @_;
+    my $this = shift;
+    my $dir = $this->expandTilde(shift);
 
     my $n = 0;
     my $dh = Quiq::DirHandle->new($dir);
@@ -3613,6 +3637,70 @@ sub split {
     }
 
     return ($dir,$file,$base,$ext,$shortBase,$longExt);
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 spreadToSubDirs() - Kopiere, bewege, linke oder symlinke Dateien in Subverzeichnisse
+
+=head4 Synopsis
+
+  $this->%METHOD($method,$destDir,$maxPerDir);
+
+=head4 Arguments
+
+=over 4
+
+=item $method
+
+Anzuwendende Pfadoperation (siehe Methode duplicate()):
+
+  copy
+  move -or- rename
+  link
+  symlink
+
+=item $destDir
+
+(String) Verzeichnis, in dem die Subverzeichnisse angelegt werden.
+Das Verzeichnis muss existieren.
+
+=item $maxPerDir
+
+(Integer) Maximale Anzahl Dateien pro Unterverzeichnis.
+
+=back
+
+=head4 Description
+
+Lies Pfade von <STDIN> und verteile die Pfade auf dynamisch erzeugte
+Subverzeichnisse.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub spreadToSubDirs {
+    my $this = shift;
+    my $method = shift;
+    my $destDir = $this->expandTilde(shift);
+    my $maxPerDir = shift;
+
+    my $i = 0;
+    my $dir;
+    while (<STDIN>) {
+        chomp;
+        if ($i%$maxPerDir == 0) {
+            $dir = sprintf '%s/04%d',$destDir,int($i/$maxPerDir)+1;
+            $this->mkdir($dir);
+            say $dir;
+            last;
+            $i++;
+        }
+        $this->duplicate($method,$_,"$dir/$_");
+    }
+
+    return;
 }
 
 # -----------------------------------------------------------------------------

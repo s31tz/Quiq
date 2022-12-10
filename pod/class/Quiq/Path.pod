@@ -236,6 +236,29 @@ Kopiere Datei $srcPath nach $destPath.
 
   $class->duplicate($method,$srcPath,$destPath,@opt);
 
+=head4 Arguments
+
+=over 4
+
+=item $method
+
+Anzuwendende Pfadoperation:
+
+  copy
+  move -or- rename
+  link
+  symlink
+
+=item $srcPath
+
+(String) Quellpfad
+
+=item $destPath
+
+(String) Zielpfad
+
+=back
+
 =head4 Options
 
 =over 4
@@ -1635,6 +1658,41 @@ zurück.
 
 Für eine Komponente, die nicht existiert, wird ein Leerstring
 geliefert.
+
+=head3 spreadToSubDirs() - Kopiere, bewege, linke oder symlinke Dateien in Subverzeichnisse
+
+=head4 Synopsis
+
+  $this->%METHOD($method,$destDir,$maxPerDir);
+
+=head4 Arguments
+
+=over 4
+
+=item $method
+
+Anzuwendende Pfadoperation (siehe Methode duplicate()):
+
+  copy
+  move -or- rename
+  link
+  symlink
+
+=item $destDir
+
+(String) Verzeichnis, in dem die Subverzeichnisse angelegt werden.
+Das Verzeichnis muss existieren.
+
+=item $maxPerDir
+
+(Integer) Maximale Anzahl Dateien pro Unterverzeichnis.
+
+=back
+
+=head4 Description
+
+Lies Pfade von <STDIN> und verteile die Pfade auf dynamisch erzeugte
+Subverzeichnisse.
 
 =head3 stat() - Statusinformation eines Pfads
 
