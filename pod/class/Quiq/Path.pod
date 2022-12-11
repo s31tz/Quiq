@@ -1694,6 +1694,10 @@ Das Verzeichnis muss existieren.
 Lies Pfade von <STDIN> und verteile die Pfade auf dynamisch erzeugte
 Subverzeichnisse.
 
+=head4 Example
+
+  $ find SRCDIR -type f | sort | perl -MQuiq::Path -E 'Quiq::Path->spreadToSubDirs("link",$destDir,100)'
+
 =head3 stat() - Statusinformation eines Pfads
 
 =head4 Synopsis

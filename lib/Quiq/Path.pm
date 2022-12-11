@@ -3676,6 +3676,10 @@ Das Verzeichnis muss existieren.
 Lies Pfade von <STDIN> und verteile die Pfade auf dynamisch erzeugte
 Subverzeichnisse.
 
+=head4 Example
+
+  $ find SRCDIR -type f | sort | perl -MQuiq::Path -E 'Quiq::Path->spreadToSubDirs("link",$destDir,100)'
+
 =cut
 
 # -----------------------------------------------------------------------------
@@ -3691,13 +3695,13 @@ sub spreadToSubDirs {
     while (<STDIN>) {
         chomp;
         if ($i%$maxPerDir == 0) {
-            $dir = sprintf '%s/04%d',$destDir,int($i/$maxPerDir)+1;
+            $dir = sprintf '%s/%04d',$destDir,int($i/$maxPerDir)+1;
             $this->mkdir($dir);
             say $dir;
-            last;
-            $i++;
         }
-        $this->duplicate($method,$_,"$dir/$_");
+        $i++;
+        my $file = $this->filename($_);
+        $this->duplicate($method,$_,"$dir/$file");
     }
 
     return;
