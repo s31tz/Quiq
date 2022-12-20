@@ -17,6 +17,10 @@ d.h. es besteht aus mehreren Zeilen gleichartiger Widgets.
 
 =over 4
 
+=item border => $bool (Default: 0)
+
+Umrande die Felder der zugrundeliegenden Tabelle.
+
 =item initialize => $sub (Default: sub {})
 
 Subroutine zur Initialisierung der Widgets. Beispiel:

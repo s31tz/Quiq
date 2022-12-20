@@ -722,6 +722,24 @@ sub push {
 
 # -----------------------------------------------------------------------------
 
+=head3 unshift() - Füge Datensatz am Anfang hinzu
+
+=head4 Synopsis
+
+  $tab->unshift($row);
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub unshift {
+    my ($self,$row) = @_;
+    CORE::unshift @{$self->{'rows'}},$row;
+    return;
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 defaultRowClass() - Liefere Namen der Default-Rowklasse
 
 =head4 Synopsis
