@@ -335,7 +335,7 @@ B<tree>
 
 =head1 VERSION
 
-1.206
+1.207
 
 =head1 SOURCE
 
@@ -347,7 +347,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2022 Frank Seitz
+Copyright (C) 2023 Frank Seitz
 
 =head1 LICENSE
 
