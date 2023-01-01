@@ -1216,7 +1216,7 @@ Resultat zurück.
 
 =head4 Synopsis
 
-  $class->chmod($path,$mode);
+  $this->chmod($path,$mode);
 
 =head4 Description
 
@@ -1860,7 +1860,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2022 Frank Seitz
+Copyright (C) 2023 Frank Seitz
 
 =head1 LICENSE
 

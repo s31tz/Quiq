@@ -2576,7 +2576,7 @@ sub basePath {
 
 =head4 Synopsis
 
-  $class->chmod($path,$mode);
+  $this->chmod($path,$mode);
 
 =head4 Description
 
@@ -2587,10 +2587,12 @@ Setze Zugriffsrechte $mode auf Pfad $path.
 # -----------------------------------------------------------------------------
 
 sub chmod {
-    my ($class,$path,$mode) = @_;
+    my $this = shift;
+    my $path = $this->expandTilde(shift);
+    my $mode = shift;
 
     CORE::chmod $mode,$path or do {
-        $class->throw(
+        $this->throw(
             'PATH-00003: Setzen von Zugriffsrechten fehlgeschlagen',
             Path => $path,
             Mode => $mode,
@@ -4008,7 +4010,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2022 Frank Seitz
+Copyright (C) 2023 Frank Seitz
 
 =head1 LICENSE
 

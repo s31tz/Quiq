@@ -100,7 +100,7 @@ sub new {
     elsif ($epoch eq 'start-of-previous-month') {
         my (undef,undef,undef,undef,$m,$y) = localtime;
         if ($m == 0) {
-            $m = 12;
+            $m = 11;
             $y--;
         }
         else {
@@ -576,7 +576,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2022 Frank Seitz
+Copyright (C) 2023 Frank Seitz
 
 =head1 LICENSE
 
