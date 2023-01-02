@@ -16,6 +16,9 @@ WriteMakefile(
         Excel::Writer::XLSX => 0,
         Expect => 0,
         File::Rsync => 0.49,
+        File::Slurp => 0,
+        # If building of Filesys::SmbClient fails, try to build it by hand:
+        #     $ perl Makefile.PL CCFLAGS="-DHAVE_CLOSEFN"; make && make install
         Filesys::SmbClient => 0,
         GD => 0,
         HTML::Tree => 0,
@@ -29,7 +32,6 @@ WriteMakefile(
         Net::SSH::Perl => 0,
         Plack => 0,
         Pod::WSDL => 0,
-        Filesys::SmbClient => 0,
         SOAP::Transport::HTTP => 0,
         Stat::lsMode => 0,
         Time::Zone => 0,
