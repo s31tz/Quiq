@@ -219,6 +219,57 @@ URL, der genutzt wird, wenn kein Rückkehr-URL definiert ist.
 
 Liefere den URL der Rückkehrseite als Objekt.
 
+=head3 prevUrl() - URL der Vorgängerseite
+
+=head4 Synopsis
+
+  $url = $nav->prevUrl;
+  $url = $nav->prevUrl($defaultUrl);
+
+=head4 Arguments
+
+=over 4
+
+=item (String) $defaultUrl
+
+URL, der geliefert wird, wenn kein Vorgänger-URL definiert ist.
+
+=back
+
+=head4 Returns
+
+(String) URL
+
+=head4 Description
+
+Liefere den URL der Vorgängerseite als Zeichenkette. Ist keine
+Vorgängerseite definiert, liefere undef.
+
+=head3 prevUrlObj() - URL-Objekt der Vorgängerseite
+
+=head4 Synopsis
+
+  $urlObj = $nav->prevUrlObj;
+  $urlObj = $nav->prevUrlObj($defaultUrl);
+
+=head4 Arguments
+
+=over 4
+
+=item (String) $defaultUrl
+
+URL, der genutzt wird, wenn kein Vorgänger-URL definiert ist.
+
+=back
+
+=head4 Returns
+
+(Object) URL-Objekt (siehe Quiq::Url)
+
+=head4 Description
+
+Liefere den URL der Vorgängerseite als Objekt.
+
 =head1 VERSION
 
 1.207
