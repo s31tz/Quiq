@@ -106,6 +106,7 @@ use warnings;
 
 our $VERSION = '1.207';
 
+use Quiq::Html::Widget::Hidden;
 use Quiq::Html::Widget::TextField;
 use Quiq::JavaScript;
 
@@ -213,11 +214,9 @@ sub html {
     # Attribute
 
     my ($addNull,$class,$disabled,$id,$javaScript,$name,$onChange,
-        $optionPairs,$options,$readonly,$style,$styles,$texts,$title,
-        $undefIf,$value) =
+        $options,$readonly,$style,$styles,$texts,$title,$undefIf,$value) =
         $self->get(qw/addNull class disabled id javaScript name onChange
-        optionPairs options readonly style styles texts title
-        undefIf value/);
+        options readonly style styles texts title undefIf value/);
 
     # Generierung
 
@@ -227,16 +226,35 @@ sub html {
 
     my $html;
     if ($readonly) {
-        $html = Quiq::Html::Widget::TextField->html($h,
-            name => $name,
-            id => $id,
+        # Anzuzeigenden Wert ermitteln
+
+        my ($option,$text) = ($options->[0],$texts->[0]);
+        if (defined $value) {
+            for (my $i = 0; $i < @$options; $i++) {
+                if ($options->[$i] eq $value) {
+                    $option = $options->[$i];
+                    $text = $texts->[$i];
+                    last;
+                }
+            }
+        }
+
+        if (!$disabled) {
+            $html .= Quiq::Html::Widget::Hidden->html($h,
+                name => $name,
+                value => $option,
+            );
+        }
+        $html .= Quiq::Html::Widget::TextField->html($h,
+            # name => $name,
+            # id => $id,
             class => $class,
             style => $style,
             disabled => $disabled,
             readonly => 1,
-            size => length($value),
+            size => length($text),
             title => $title,
-            value => $value,
+            value => $text,
         );
     }
     else {
