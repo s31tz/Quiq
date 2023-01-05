@@ -24,6 +24,7 @@ use warnings;
 our $VERSION = '1.207';
 
 use Quiq::Hash;
+use Encode ();
 use Quiq::Path;
 use Quiq::Image;
 use Quiq::Array;
@@ -53,7 +54,7 @@ dieses Objekt zurück.
 sub new {
     my ($class,$path) = @_;
 
-    if (!-e $path) {
+    if (!-e Encode::encode('utf-8',$path)) {
         $class->throw(
              'IMAGE-00001: File not found',
              Path => $path,
