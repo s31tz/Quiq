@@ -34,6 +34,10 @@ im String-Kontext automatisch zum Verzeichnis-Pfad.
 Entferne das Verzeichnis bei Beendigung des Programms. Wenn 0, bleibt das
 Verzeichnis nach Beendigung des Programms bestehen.
 
+=item -parentDir => $dir
+
+Erzeuge das temporäre Verzeichnis unterhalb von Verzeichnis $dir.
+
 =back
 
 =head4 Returns
