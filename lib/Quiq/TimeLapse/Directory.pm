@@ -159,7 +159,7 @@ sub new {
     # Bilddateien ermitteln
 
     my @images;
-    for my $file (Quiq::Path->find($dir,-type=>'f')) {
+    for my $file (Quiq::Path->find($dir,-type=>'f',-decode=>'utf-8')) {
         if ($file =~ /range.def$/) {
             next;
         }

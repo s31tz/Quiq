@@ -330,7 +330,8 @@ sub standardName {
 
     my $str = sprintf '%06d-%dx%d',$n,$width,$height;
     if (defined($name) && $name ne '') {
-        $name =~ s/\s+/-/g;
+        $name =~ s/\W+/-/g;
+        $name =~ s/^-+|-+$//g;
         $str .= "-$name";
     }
     $str .= ".$extension";
