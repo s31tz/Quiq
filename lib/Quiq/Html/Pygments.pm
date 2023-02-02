@@ -63,6 +63,7 @@ our $VERSION = '1.207';
 
 use Quiq::CommandLine;
 use Quiq::Shell;
+use Encode ();
 use Quiq::Ipc;
 use Quiq::Unindent;
 use Quiq::Css;
@@ -159,6 +160,7 @@ sub css {
     );
 
     my $rules = Quiq::Shell->exec($c->command,-capture=>'stdout');
+    $rules = Encode::decode('utf-8',$rules); # Wir erwarten UTF-8
 
     # Bestimme Hintergrundfarbe, diese muss existieren, da die
     # Forderungrundfarben darauf abgestimmt sind.
@@ -231,6 +233,7 @@ sub html {
         -l => $lang, # = lexer
     );
     my $html = Quiq::Ipc->filter($c->command,$code);
+    $html = Encode::decode('utf-8',$html); # Wir erwarten UTF-8
 
     # Nicht benötigte "Umrahmung" des gehighlighteten Code entfernen
 
