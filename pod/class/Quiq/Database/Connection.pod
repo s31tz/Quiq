@@ -1829,7 +1829,7 @@ Benenne die neue Tabelle in die Originaltabelle $table um
 
 =head4 Synopsis
 
-  $destDb->copyData($srcDb,$table,%options);
+  $n = $destDb->copyData($srcDb,$table,%options);
 
 =head4 Arguments
 
@@ -1866,6 +1866,10 @@ der Name in der Zieltabelle. Es müssen nur die Kolumennamen angegeben
 werden, die nicht übereinstimmen.
 
 =back
+
+=head4 Returns
+
+(Integer) Anzahl der kopierten Datensätze.
 
 =head4 Description
 

@@ -1,0 +1,109 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::UrlObj - URL Klasse
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert einen URL. Auf dessen Bestandteilen
+kann mit den Objektmethoden der Klasse operiert werden. Ferner enthält
+die Klasse allgemeine Methoden im Zusammenhang mit URLs, die als
+Klassenmethoden implementiert sind.
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+  $urlObj = $class->new;
+  $urlObj = $class->new($url);
+  $urlObj = $class->new(@keyVal);
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
+dieses Objekt zurück.
+
+=head2 Objektmethoden
+
+=head3 queryString() - liefere Querystring des URL-Objekts
+
+=head4 Synopsis
+
+  $query = $urlObj->queryString;
+
+=head4 Returns
+
+(String) Querystring
+
+=head4 Description
+
+Erzeuge den Querystring des URL-Objekts und liefere diesen zurück.
+
+=head3 setQuery() - Setze Querystring-Parameter des URL-Objekts
+
+=head4 Synopsis
+
+  $urlObj->setQuery(@keyVal);
+
+=head4 Arguments
+
+=over 4
+
+=item @keyVal
+
+Liste von Schlüssel-Wert-Paaren
+
+=back
+
+=head4 Description
+
+Setze die angegebenen Querystring-Parameter auf den jeweils angegebenen
+Wert. Existiert ein Parameter bereits, wird sein Wert überschrieben.
+Tritt derselbe Parameter mehrfach auf, werden die einzelnen Werte zu
+einem Array zusammengefasst. Ist der Wert eine Arrayreferenz, werden
+alle Werte des Arrays dem Parameter hinzugefügt.
+
+=head3 url() - URL als Zeichenkette
+
+=head4 Synopsis
+
+  $url = $urlObj->url;
+
+=head4 Returns
+
+(String) URL als Zeichenkette
+
+=head4 Description
+
+Erzeuge eine externe Repräsentation des URL-Objekts und liefere
+diese zurück.
+
+=head1 VERSION
+
+1.208
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/UrlObj.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2023 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

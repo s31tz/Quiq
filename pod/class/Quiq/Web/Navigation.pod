@@ -213,7 +213,7 @@ URL, der genutzt wird, wenn kein Rückkehr-URL definiert ist.
 
 =head4 Returns
 
-(Object) URL-Objekt (siehe Quiq::Url)
+(Object) URL-Objekt (siehe Quiq::UrlObj)
 
 =head4 Description
 
@@ -264,7 +264,7 @@ URL, der genutzt wird, wenn kein Vorgänger-URL definiert ist.
 
 =head4 Returns
 
-(Object) URL-Objekt (siehe Quiq::Url)
+(Object) URL-Objekt (siehe Quiq::UrlObj)
 
 =head4 Description
 

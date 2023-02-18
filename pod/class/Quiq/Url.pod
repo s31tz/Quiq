@@ -2,18 +2,16 @@
 
 =head1 NAME
 
-Quiq::Url - URL Klasse
+Quiq::Url - Operationen im Zusammenhang mit URLs
 
 =head1 BASE CLASS
 
-L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert einen URL. Auf dessen Bestandteilen
-kann mit den Objektmethoden der Klasse operiert werden. Ferner enthält
-die Klasse allgemeine Methoden im Zusammenhang mit URLs, die als
-Klassenmethoden implementiert sind.
+Die Klasse definiert Operationen, die im Zusammenhang mit URLs
+nützlich sind.
 
 =head1 METHODS
 
@@ -23,71 +21,45 @@ Klassenmethoden implementiert sind.
 
 =head4 Synopsis
 
-  $urlObj = $class->new;
-  $urlObj = $class->new($url);
-  $urlObj = $class->new(@keyVal);
+  $u = $class->new;
 
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
-dieses Objekt zurück.
+dieses Objekt zurück. Da die Klasse ausschließlich Klassenmethoden
+enthält, hat das Objekt ausschließlich die Funktion, eine abkürzende
+Aufrufschreibweise zu ermöglichen.
 
-=head2 Objektmethoden
+=head2 Klassenmethoden
 
-=head3 queryString() - liefere Querystring des URL-Objekts
-
-=head4 Synopsis
-
-  $query = $urlObj->queryString;
-
-=head4 Returns
-
-(String) Querystring
-
-=head4 Description
-
-Erzeuge den Querystring des URL-Objekts und liefere diesen zurück.
-
-=head3 setQuery() - Setze Querystring-Parameter des URL-Objekts
+=head3 href() - Erzeuge URL
 
 =head4 Synopsis
 
-  $urlObj->setQuery(@keyVal);
+  $url = $this->href($baseUrl,@keyVal);
 
 =head4 Arguments
 
 =over 4
 
+=item $baseUrl
+
+(String) URL bis zum Query-String (ohne Fragezeichen)
+
 =item @keyVal
 
-Liste von Schlüssel-Wert-Paaren
+Liste der Query-String Parameter
 
 =back
 
-=head4 Description
-
-Setze die angegebenen Querystring-Parameter auf den jeweils angegebenen
-Wert. Existiert ein Parameter bereits, wird sein Wert überschrieben.
-Tritt derselbe Parameter mehrfach auf, werden die einzelnen Werte zu
-einem Array zusammengefasst. Ist der Wert eine Arrayreferenz, werden
-alle Werte des Arrays dem Parameter hinzugefügt.
-
-=head3 url() - URL als Zeichenkette
-
-=head4 Synopsis
-
-  $url = $urlObj->url;
-
 =head4 Returns
 
-(String) URL als Zeichenkette
+String
 
 =head4 Description
 
-Erzeuge eine externe Repräsentation des URL-Objekts und liefere
-diese zurück.
-
-=head2 Klassenmethoden
+Erzeuge einen URL der Form C<< $baseUrl?<querystring> >> und liefere diesen
+zurück.
 
 =head3 encode() - Kodiere Zeichenkette
 
