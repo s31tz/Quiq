@@ -1009,6 +1009,45 @@ NNNNNN beginnen und man die Datei mit der größten Zahl ermitteln
 möchte um einer neu erzeugten Datei die nächsthöhere Nummer
 zuzuweisen.
 
+=head3 minFileNumber() - Liefere den numerisch größten Dateinamen
+
+=head4 Synopsis
+
+  $min = $class->minFileNumber($dir,$max,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $dir
+
+Pfad des Verzeichnisses
+
+=item $max
+
+Der Wert, mit dem die Zählung beginnt.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -sloppy => $bool (Default: 0)
+
+Wirf keine Exception, wenn ein Dateiname nicht mit einer Nummer
+beginnt.
+
+=back
+
+=head4 Description
+
+Liefere den numerisch kleinsten Dateinamen aus Verzeichnis $dir.
+Die Methode ist nützlich, wenn die Dateinamen mit einer Zahl
+NNNNNN beginnen und man die Datei mit der kleinsten Zahl ermitteln
+möchte um einer neu erzeugten Datei die nächstniedrigere Nummer
+zuzuweisen.
+
 =head3 mkdir() - Erzeuge Verzeichnis
 
 =head4 Synopsis
