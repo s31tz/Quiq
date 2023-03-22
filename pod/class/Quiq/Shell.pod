@@ -64,6 +64,10 @@ Zeichenkette, die jeder Meldung im Log vorangestellt wird.
 
 Unterdrücke stdout und stderr.
 
+=item sloppy => $bool
+
+Ignoriere den Exitcode.
+
 =item time => $bool (Default: 0)
 
 Gib nach jedem Kommando die Zeit aus, die es benötigt hat.
