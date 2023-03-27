@@ -401,7 +401,7 @@ Genererie den JavaScript-Code für ein Diagramm und liefere diesen zurück.
 
 =head1 VERSION
 
-1.208
+1.209
 
 =head1 SOURCE
 
