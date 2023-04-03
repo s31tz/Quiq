@@ -129,10 +129,6 @@ L<Quiq::Css::Snippets|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/C
 
 =item *
 
-L<Quiq::DataStructure|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/DataStructure.pod> - Operationen auf Datenstrukturen
-
-=item *
-
 L<Quiq::Database::Api|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Database/Api.pod> - Lowlevel Datenbank-Schnittstelle
 
 =item *
