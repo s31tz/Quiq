@@ -1,0 +1,218 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Logger - Schreiben von Logmeldungen
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+  $log = $class->new($level,$file,$toTerm);
+
+=head4 Arguments
+
+=over 4
+
+=item $level
+
+(String) Loglevel: Es werden fünf Loglevel unterschieden: 'DEBUG', 'INFO',
+'WARN', 'ERROR', 'FATAL'.
+
+=item $file
+
+(Pfad) Die Datei, in die die Meldungen gelogged werden.
+
+=item $toTerm
+
+(Bool) Ob die Meldungen außer in die Logdatei auch auf STDOUT ausgegeben
+werden sollen.
+
+=back
+
+=head4 Returns
+
+Logger-Objekt
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere dieses zurück.
+
+=head3 logger() - Liefere Logger-Objekt
+
+=head4 Synopsis
+
+  $log = $class->logger;
+
+=head4 Returns
+
+Logger-Objekt
+
+=head4 Description
+
+Ermittele das Logger-Objekt und liefere dieses zurück. Das Logger-Objekt
+muss zuvor natürlich instantiiert worden sein.
+
+=head2 Logmeldung auf Loglevel schreiben
+
+=head3 debug() - Schreibe DEBUG Logmeldung
+
+=head4 Synopsis
+
+  $log->debug($msg);
+
+=head4 Arguments
+
+=over 4
+
+=item $msg
+
+(String) Logmeldung
+
+=back
+
+=head4 Description
+
+Schreibe die Meldung $msg als DEBUG ins Log und - falls bei der
+Instantiierung angegeben - nach STDOUT (Terminal).
+
+=head3 info() - Schreibe INFO Logmeldung
+
+=head4 Synopsis
+
+  $log->info($msg);
+
+=head4 Arguments
+
+=over 4
+
+=item $msg
+
+(String) Logmeldung
+
+=back
+
+=head4 Description
+
+Schreibe die Meldung $msg als INFO ins Log und - falls bei der
+Instantiierung angegeben - nach STDOUT (Terminal).
+
+=head3 warn() - Schreibe WARN Logmeldung
+
+=head4 Synopsis
+
+  $log->warn($msg);
+
+=head4 Arguments
+
+=over 4
+
+=item $msg
+
+(String) Logmeldung
+
+=back
+
+=head4 Description
+
+Schreibe die Meldung $msg als WARN ins Log und - falls bei der
+Instantiierung angegeben - nach STDOUT (Terminal).
+
+=head3 error() - Schreibe ERROR Logmeldung
+
+=head4 Synopsis
+
+  $log->error($msg);
+
+=head4 Arguments
+
+=over 4
+
+=item $msg
+
+(String) Logmeldung
+
+=back
+
+=head4 Description
+
+Schreibe die Meldung $msg als ERROR ins Log und - falls bei der
+Instantiierung angegeben - nach STDOUT (Terminal).
+
+=head3 fatal() - Schreibe FATAL Logmeldung
+
+=head4 Synopsis
+
+  $log->fatal($msg);
+
+=head4 Arguments
+
+=over 4
+
+=item $msg
+
+(String) Logmeldung
+
+=back
+
+=head4 Description
+
+Schreibe die Meldung $msg als FATAL ins Log und - falls bei der
+Instantiierung angegeben - nach STDOUT (Terminal) B<und terminiere
+die Ausführung des Programms>.
+
+=head2 Grundlegende Methoden
+
+=head3 write() - Schreibe Logmeldung
+
+=head4 Synopsis
+
+  $log->write($level,$msg);
+
+=head4 Arguments
+
+=over 4
+
+=item $level
+
+Level der Logmeldung
+
+=item $msg
+
+(String) Logmeldung
+
+=back
+
+=head4 Description
+
+Schreibe die Meldung $msg ins Log und - falls bei der Instantiierung
+angegeben - nach STDOUT (Terminal).
+
+=head1 VERSION
+
+1.209
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Logger.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2023 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
