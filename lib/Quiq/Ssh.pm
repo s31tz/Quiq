@@ -241,7 +241,7 @@ sub exec {
     # Wenn wir Encoden gibt es bei </dev/null folgende Meldung:
     # "sysread() is deprecated on :utf8 handles. This will be a
     # fatal error in Perl 5.30 at .../Net/SSH/Perl/Channel.pm line 156."
-    # $cmd = Encode::encode('utf-8',$cmd);
+    $cmd = Encode::encode('utf-8',$cmd);
     # $cmd = Encode::decode('utf-8',$cmd);
     my ($stdout,$stderr,$exit) = $self->obj->cmd($cmd);
     $stdout //= '';
