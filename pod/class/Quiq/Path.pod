@@ -1052,7 +1052,7 @@ zuzuweisen.
 
 =head4 Synopsis
 
-  $class->mkdir($dir,@opt);
+  $dir = $class->mkdir($dir,@opt);
 
 =head4 Options
 
@@ -1087,9 +1087,13 @@ Erzeuge übergeordnete Verzeichnisse, wenn nötig.
 
 =back
 
+=head4 Returns
+
+(String) Pfad des erzeugten Verzeichnisses.
+
 =head4 Description
 
-Erzeuge Verzeichnis. Existiert das Verzeichnis bereits, hat
+Erzeuge Verzeichnis $dir. Existiert das Verzeichnis bereits, hat
 der Aufruf keinen Effekt. Kann das Verzeichnis nicht angelegt
 werden, wird eine Exception ausgelöst.
 

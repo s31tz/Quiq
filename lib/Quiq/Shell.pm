@@ -168,7 +168,7 @@ Shell-Objekt ausgeführt wurden, ausgegeben.
 sub DESTROY {
     my $self = shift;
 
-    if ($self->{'timeSummary'}) {
+    if ($self->{'timeSummary'} && $self->{'log'}) {
         (my $prog = $0) =~ s|.*/||;
         my $fd = $self->{'logDest'};
         my $pre = $self->{'msgPrefix'};
