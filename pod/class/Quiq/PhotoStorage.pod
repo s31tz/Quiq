@@ -36,9 +36,9 @@ zurückgewiesen
 
 =head1 METHODS
 
-=head2 Konstruktor
+=head2 Klassenmethoden
 
-=head3 new() - Instantiiere Objekt
+=head3 new() - Konstruktor
 
 =head4 Synopsis
 
@@ -47,6 +47,19 @@ zurückgewiesen
 =head4 Description
 
 Öffne den Fotospeicher in Verzeichnis $dir.
+
+=head2 Objektmethoden
+
+=head3 add() - Füge Fotodatei hinzu
+
+=head4 Synopsis
+
+  $name = $pst->add($file);
+
+=head4 Description
+
+Füge Fotodatei $file zum Speicher hinzu und liefere den Basisnamen
+der Datei zurück.
 
 =head1 VERSION
 
