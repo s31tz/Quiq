@@ -685,6 +685,10 @@ L<Quiq::PerlModule|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Perl
 
 =item *
 
+L<Quiq::PhotoStorage|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PhotoStorage.pod> - Foto-Speicher
+
+=item *
+
 L<Quiq::PlotlyJs|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/PlotlyJs.pod> - Basisfunktionalität/Notizen zu Plotly.js
 
 =item *
