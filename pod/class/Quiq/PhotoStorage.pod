@@ -17,20 +17,25 @@ besitzt folgende Eigenschaften:
 
 =item *
 
-Der Name der Foto-Datei bleibt erhalten
+Der Name der Foto-Datei bleibt als Bestandteil erhalten
+(nach Anwendung von: s/[^-_a-zA-Z0-9]/_/g)
 
 =item *
 
-Jedes Foto bekommt eine eindeutige Zahl zugewiesen
+Jedes Foto erhält eine eindeutige Zahl als Präfix
 
 =item *
 
-Es wird der SHA1-Hash der Datei gebildet
+Es wird der SHA1-Hash der Datei gebildet und gespeichert
 
 =item *
 
 Jede Datei wird nur einmal gespeichert, d.h. Dubletten werden
 zurückgewiesen
+
+=item *
+
+Andere Bildformate als JPEG werden nach JPEG konvertiert
 
 =back
 
@@ -48,9 +53,15 @@ zurückgewiesen
 
 Öffne den Fotospeicher in Verzeichnis $dir.
 
+Das Verzeichnis hat den Aufbau:
+
+  $dir/pic/<NNNNNNN>-<NAME>.jpg  # Verzeichnis mit den Bildern
+       cnt.txt                   # Stand der Nummer NNNNNNN
+       sha1.hash                 # die SHA1-Hashes der Bilddateien
+
 =head2 Objektmethoden
 
-=head3 add() - Füge Fotodatei hinzu
+=head3 add() - Füge Fotodatei zum Speicher hinzu
 
 =head4 Synopsis
 
@@ -58,8 +69,8 @@ zurückgewiesen
 
 =head4 Description
 
-Füge Fotodatei $file zum Speicher hinzu und liefere den Basisnamen
-der Datei zurück.
+Füge Fotodatei $file zum Speicher hinzu und liefere den Pfad der Datei
+zurück.
 
 =head1 VERSION
 

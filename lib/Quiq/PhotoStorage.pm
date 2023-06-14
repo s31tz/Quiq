@@ -19,20 +19,25 @@ besitzt folgende Eigenschaften:
 
 =item *
 
-Der Name der Foto-Datei bleibt erhalten
+Der Name der Foto-Datei bleibt als Bestandteil erhalten
+(nach Anwendung von: s/[^-_a-zA-Z0-9]/_/g)
 
 =item *
 
-Jedes Foto bekommt eine eindeutige Zahl zugewiesen
+Jedes Foto erhält eine eindeutige Zahl als Präfix
 
 =item *
 
-Es wird der SHA1-Hash der Datei gebildet
+Es wird der SHA1-Hash der Datei gebildet und gespeichert
 
 =item *
 
 Jede Datei wird nur einmal gespeichert, d.h. Dubletten werden
 zurückgewiesen
+
+=item *
+
+Andere Bildformate als JPEG werden nach JPEG konvertiert
 
 =back
 
@@ -70,6 +75,12 @@ use Quiq::Shell;
 
 Öffne den Fotospeicher in Verzeichnis $dir.
 
+Das Verzeichnis hat den Aufbau:
+
+  $dir/pic/<NNNNNNN>-<NAME>.jpg  # Verzeichnis mit den Bildern
+       cnt.txt                   # Stand der Nummer NNNNNNN
+       sha1.hash                 # die SHA1-Hashes der Bilddateien
+
 =cut
 
 # -----------------------------------------------------------------------------
@@ -86,8 +97,6 @@ sub new {
         );
     }
 
-    # $dir muss existieren
-
     $p->mkdir("$dir/pic");
     my $cnt = Quiq::LockedCounter->new("$dir/cnt.txt");
     my $h = Quiq::Hash::Db->new("$dir/sha1.hash",'rw');
@@ -103,7 +112,7 @@ sub new {
 
 =head2 Objektmethoden
 
-=head3 add() - Füge Fotodatei hinzu
+=head3 add() - Füge Fotodatei zum Speicher hinzu
 
 =head4 Synopsis
 
@@ -111,8 +120,8 @@ sub new {
 
 =head4 Description
 
-Füge Fotodatei $file zum Speicher hinzu und liefere den Basisnamen
-der Datei zurück.
+Füge Fotodatei $file zum Speicher hinzu und liefere den Pfad der Datei
+zurück.
 
 =cut
 
@@ -159,7 +168,7 @@ sub add {
     say $destFile;
     $h->{$sha1}++;
 
-    return;
+    return $destFile;
 }
 
 # -----------------------------------------------------------------------------
