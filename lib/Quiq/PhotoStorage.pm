@@ -79,7 +79,15 @@ sub new {
 
     my $p = Quiq::Path->new;
 
+    if (!$p->exists($dir)) {
+        $class->throw(
+            'PHOTOSTORAGE-00099: Directory does not exist',
+            Dir => $dir,
+        );
+    }
+
     # $dir muss existieren
+
     $p->mkdir("$dir/pic");
     my $cnt = Quiq::LockedCounter->new("$dir/cnt.txt");
     my $h = Quiq::Hash::Db->new("$dir/sha1.hash",'rw');
