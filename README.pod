@@ -533,6 +533,10 @@ L<Quiq::ImagePool::Sequence|https://github.com/s31tz/Quiq/tree/master/pod/class/
 
 =item *
 
+L<Quiq::Imap::Client|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Imap/Client.pod> - IMAP Client
+
+=item *
+
 L<Quiq::Ipc|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Ipc.pod> - Interprozesskommunikation
 
 =item *
