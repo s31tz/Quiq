@@ -144,9 +144,18 @@ sub transferImages {
 
     my $p = Quiq::Path->new;
 
+    if (!-e $srcDir) {
+        $class->throw(
+            'EOG-00099: Source directory does not exist',
+            Dir => $srcDir,
+        );
+    }
+
     if (!-e $destDir) {
-        say "Creating directory: $destDir";
-        $p->mkdir($destDir);
+        $class->throw(
+            'EOG-00099: Destination directory does not exist',
+            Dir => $destDir,
+        );
     }
 
     # Optionen
