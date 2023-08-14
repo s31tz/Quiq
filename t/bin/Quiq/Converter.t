@@ -85,6 +85,18 @@ sub test_germanToProgramNumber : Test(2) {
 
 # -----------------------------------------------------------------------------
 
+sub test_germanMoneyAmount : Test(2) {
+    my $self = shift;
+
+    my $x = Quiq::Converter->germanMoneyAmount('12,343');
+    $self->is($x,'12.34');
+
+    $x = Quiq::Converter->germanMoneyAmount('12.345,6755');
+    $self->is($x,'12345.68');
+}
+
+# -----------------------------------------------------------------------------
+
 sub test_ptToPx : Test(1) {
     my $self = shift;
 

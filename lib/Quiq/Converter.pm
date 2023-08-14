@@ -349,6 +349,29 @@ sub germanToProgramNumber {
 
 # -----------------------------------------------------------------------------
 
+=head3 germanMoneyAmount() - Wandele deutschen Geldbetrag in Zahl
+
+=head4 Synopsis
+
+  $x = $this->germanMoneyAmount($germanMoneyAmount);
+
+=head4 Description
+
+Wandele deutschen Geldbetrag mit Punkt (.) als Stellen-Trenner und
+Komma (,) als Dezimaltrennzeichen in eine Zahl mit zwei Nachkommastellen
+der Programmiersprache und liefere das Resultat zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub germanMoneyAmount {
+    my ($this,$x) = @_;
+    return sprintf '%.2f',$this->germanToProgramNumber($x);
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 intToWord() - Wandele positive ganze Zahl in Wort über Alphabet
 
 =head4 Synopsis
