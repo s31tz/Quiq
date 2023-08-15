@@ -73,13 +73,13 @@ sub test_umlautToAscii : Test(4) {
 
 # -----------------------------------------------------------------------------
 
-sub test_germanToProgramNumber : Test(2) {
+sub test_germanNumber : Test(2) {
     my $self = shift;
 
-    my $x = Quiq::Converter->germanToProgramNumber('12,34');
+    my $x = Quiq::Converter->germanNumber('12,34');
     $self->is($x,'12.34');
 
-    $x = Quiq::Converter->germanToProgramNumber('12.345,67');
+    $x = Quiq::Converter->germanNumber('12.345,67');
     $self->is($x,'12345.67');
 }
 

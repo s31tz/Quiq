@@ -152,11 +152,15 @@ Die Methode setzt voraus, dass der String korrekt dekodiert wurde.
 
 =head2 Zahlen
 
-=head3 germanToProgramNumber() - Wandele deutsche Zahldarstellung in Zahl
+=head3 germanNumber() - Wandele deutsche Zahldarstellung in Zahl
 
 =head4 Synopsis
 
-  $x = $this->germanToProgramNumber($germanX);
+  $x = $this->germanNumber($germanX);
+
+=head4 Alias
+
+germanToProgramNumber()
 
 =head4 Description
 

@@ -322,11 +322,15 @@ sub umlautToAscii {
 
 =head2 Zahlen
 
-=head3 germanToProgramNumber() - Wandele deutsche Zahldarstellung in Zahl
+=head3 germanNumber() - Wandele deutsche Zahldarstellung in Zahl
 
 =head4 Synopsis
 
-  $x = $this->germanToProgramNumber($germanX);
+  $x = $this->germanNumber($germanX);
+
+=head4 Alias
+
+germanToProgramNumber()
 
 =head4 Description
 
@@ -338,13 +342,18 @@ und liefere das Resultat zurück.
 
 # -----------------------------------------------------------------------------
 
-sub germanToProgramNumber {
+sub germanNumber {
     my ($this,$x) = @_;
 
     $x =~ s/\.//;
     $x =~ s/,/./;
 
     return $x;
+}
+
+{
+    no warnings 'once';
+    *germanToProgramNumber = \&germanNumber;
 }
 
 # -----------------------------------------------------------------------------
@@ -367,7 +376,7 @@ der Programmiersprache und liefere das Resultat zurück.
 
 sub germanMoneyAmount {
     my ($this,$x) = @_;
-    return sprintf '%.2f',$this->germanToProgramNumber($x);
+    return sprintf '%.2f',$this->germanNumber($x);
 }
 
 # -----------------------------------------------------------------------------
