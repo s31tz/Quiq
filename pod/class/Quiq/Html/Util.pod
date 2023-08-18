@@ -21,7 +21,7 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head1 VERSION
 
-1.211
+1.212
 
 =head1 SOURCE
 

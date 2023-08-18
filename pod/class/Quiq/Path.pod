@@ -1858,7 +1858,7 @@ relativer Pfad als Fortsetzung von $symlink gesehen werden.
 
 =head4 Synopsis
 
-  $mtime = $this->mtime($path);
+  $mtime = $this->touch($path);
 
 =head4 Arguments
 
@@ -1891,7 +1891,7 @@ Ermittele die UID des Owners der Datei und liefere diese zurück.
 
 =head1 VERSION
 
-1.211
+1.212
 
 =head1 SOURCE
 

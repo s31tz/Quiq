@@ -272,7 +272,7 @@ Liefere den URL der Vorgängerseite als Objekt.
 
 =head1 VERSION
 
-1.211
+1.212
 
 =head1 SOURCE
 
