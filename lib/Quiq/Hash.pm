@@ -241,7 +241,7 @@ sub fabricate {
 
 # -----------------------------------------------------------------------------
 
-=head2 Akzessor-Methoden
+=head2 Akzessoren
 
 =head3 get() - Werte abfragen
 
@@ -575,7 +575,7 @@ sub compute {
 
 # -----------------------------------------------------------------------------
 
-=head2 Automatische Akzessor-Methoden
+=head2 Automatische Akzessoren
 
 =head3 AUTOLOAD() - Erzeuge Akzessor-Methode
 

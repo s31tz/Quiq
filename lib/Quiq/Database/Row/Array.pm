@@ -109,12 +109,16 @@ sub asArray {
 
 # -----------------------------------------------------------------------------
 
-=head3 asString() - Liefere Datensatz als Zeichenkette
+=head3 asLine() - Liefere Datensatz als Zeichenkette
 
 =head4 Synopsis
 
-  $str = $row->asString;
-  $str = $row->asString($colSep);
+  $str = $row->asLine;
+  $str = $row->asLine($colSep);
+
+=head4 Alias
+
+asString()
 
 =head4 Description
 
@@ -126,10 +130,15 @@ werden.
 
 # -----------------------------------------------------------------------------
 
-sub asString {
+sub asLine {
     my $self = shift;
     my $colSep = @_? shift: "\t";
     return join $colSep,@$self;
+}
+
+{
+    no warnings 'once';
+    *asString = \&asLine;
 }
 
 # -----------------------------------------------------------------------------

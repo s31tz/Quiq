@@ -2,7 +2,7 @@
 ================
 
 [Quiq::Converter]
-* germonMoneyAmount(): Methode hinzugefügt
+* germanMoneyAmount(): Methode hinzugefügt
 
 [Quiq::Path]
 * Doku-Fehler korrigiert

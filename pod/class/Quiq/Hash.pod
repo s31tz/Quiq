@@ -117,7 +117,7 @@ Wie new(), nur dass der Hash als Instanz der Subklasse $subClass
 erzeugt wird. Die Subklasse wird on-the-fly erzeugt, falls sie noch
 nicht existiert.
 
-=head2 Akzessor-Methoden
+=head2 Akzessoren
 
 =head3 get() - Werte abfragen
 
@@ -289,7 +289,7 @@ Methode L<increment|"increment() - Inkrementiere (Integer-)Wert">() mit apply() 
       return $h->{$key}+1; # nicht $h->{$key}++!
   });
 
-=head2 Automatische Akzessor-Methoden
+=head2 Automatische Akzessoren
 
 =head3 AUTOLOAD() - Erzeuge Akzessor-Methode
 
