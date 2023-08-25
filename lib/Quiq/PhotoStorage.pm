@@ -146,7 +146,7 @@ sub add {
     if ($ext eq 'jpg' || $ext eq 'jpeg') {
         # Bild ist JPEG
     }
-    elsif ($ext eq 'png' || $ext eq 'webp') {
+    elsif ($ext eq 'png' || $ext eq 'webp' || $ext eq 'gif') {
         # Bilddatei nach JPEG wandeln
         
         my $sh = Quiq::Shell->new;
