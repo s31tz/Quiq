@@ -147,7 +147,7 @@ sub c {
     my $nl = 1;
     my $pnl = 0;
 
-    Quiq::Option->extract(\@_,
+    Quiq::Option->extract(-mode=>'sloppy',\@_,
         -nl => \$nl,
         -pnl => \$pnl,
     );
