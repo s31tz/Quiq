@@ -1029,6 +1029,10 @@ verwendet werden, um Kommentarzeilen zu überlesen.
 
 Überlies die ersten $n Zeilen.
 
+=item -sloppy => $bool (Default: 0)
+
+Existiert die Datei nicht, liefere C<undef> und wirf keine Exception.
+
 =back
 
 =head4 Description
@@ -1052,6 +1056,7 @@ sub read {
     my $maxLines = 0;
     my $skip = undef;
     my $skipLines = 0;
+    my $sloppy = 0;
 
     if (@_) {
         Quiq::Option->extract(\@_,
@@ -1061,12 +1066,17 @@ sub read {
             -maxLines => \$maxLines,
             -skip => \$skip,
             -skipLines => \$skipLines,
+            -sloppy => \$sloppy,
         );
     }
 
     # Datei lesen
 
     $file = $class->expandTilde($file);
+    if ($sloppy && !-e $file) {
+        return undef;
+    }
+
     my $fh = Quiq::FileHandle->new('<',$file);
 
     my $data = '';

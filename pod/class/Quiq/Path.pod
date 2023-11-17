@@ -530,6 +530,10 @@ verwendet werden, um Kommentarzeilen zu überlesen.
 
 Überlies die ersten $n Zeilen.
 
+=item -sloppy => $bool (Default: 0)
+
+Existiert die Datei nicht, liefere C<undef> und wirf keine Exception.
+
 =back
 
 =head4 Description
