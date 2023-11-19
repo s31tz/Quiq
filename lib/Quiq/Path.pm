@@ -31,7 +31,7 @@ use strict;
 use warnings;
 use utf8;
 
-our $VERSION = '1.212';
+our $VERSION = '1.213';
 
 use Quiq::Option;
 use Quiq::FileHandle;
@@ -3466,7 +3466,10 @@ sub numberBasePaths {
         for my $ext (@{$basePath{$oldBasePath}}) {
             my $oldPath = $oldBasePath;
             my $newPath = $newBasePath;
-            if ($ext ne '') {
+            if ($ext eq '') {
+                $newPath .= ".tmp";
+            }
+            else {
                 $oldPath .= ".$ext";
                 $newPath .= ".$ext.tmp";
             }
@@ -4101,7 +4104,7 @@ sub uid {
 
 =head1 VERSION
 
-1.212
+1.213
 
 =head1 AUTHOR
 
