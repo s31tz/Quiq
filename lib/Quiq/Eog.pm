@@ -178,7 +178,7 @@ sub transferImages {
     for my $trashFile (@$fileA) {
         my @srcFiles = ($trashFile);
         my $srcBasePath = sprintf '%s/%s',$srcDir,$p->basename($trashFile);
-        push @srcFiles,$p->glob("$srcBasePath.*"); # ggf. .xcf-Datei hinzu
+        push @srcFiles,$p->glob("$srcBasePath*"); # ggf. .xcf-Datei hinzu
 
         if ($nameToNumber) {
             $number += $step;

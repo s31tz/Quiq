@@ -3528,7 +3528,7 @@ Die Schrittweite der Nummerierung.
 Ordne alle Pfade von $from bis $to (lexikalisch sortiert) nach der
 Datei $after ein. Ist $after leer (Leerstring oder undef), werden
 die Pfade an den Anfang gestellt. Alle Angaben I<vor> der
-(Re-)Nummerierung.
+Nummerierung.
 
 =item -start => $n (Default: $step)
 
@@ -3538,7 +3538,7 @@ Verwende $n als Startwert.
 
 =head4 Description
 
-Nummeriere die Pfade @paths, gemäß ihrer gegebenen Reihenfolge.
+Nummeriere die Pfade @paths, gemäß der gegebenen Reihenfolge.
 Der Basisname der jeweiligen Datei/des Directory aus @paths wird
 hierbei durch eine Nummer der Breite $width ersetzt. Die Extension
 (sofern vorhanden) bleibt erhalten. Die Nummerierung erfolgt mit

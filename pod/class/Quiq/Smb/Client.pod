@@ -148,6 +148,34 @@ Liefere die Liste der Dateien auf dem Server in Verzeichnis $dir.
 
   @names = $smb->ls('smb://ZBM-MOM-T/XRECHNUNG$');
 
+=head3 put() - Übertrage Datei auf Server
+
+=head4 Synopsis
+
+  $smb->put($from,$to);
+
+=head4 Arguments
+
+=over 4
+
+=item $from
+
+(String) Pfad der Quelldatei.
+
+=item $to
+
+(String) Pfad der Zieldatei
+
+=back
+
+=head4 Description
+
+Kopiere Datei $from nach $to.
+
+=head4 Example
+
+  $smb->put('test.xls','smb://zeppelin.corp/zbm/Transfer/elbrusfse/test.xls');
+
 =head3 putData() - Übertrage Daten auf Server
 
 =head4 Synopsis
@@ -174,7 +202,7 @@ Schreibe Datei $file mit Inhalt $data.
 
 =head4 Example
 
-  $smb->put($data,'smb://ZBM-MOM-T/XRECHNUNG$/S-001191090X_Original.pdf');
+  $smb->putData($data,'smb://ZBM-MOM-T/XRECHNUNG$/S-001191090X_Original.pdf');
 
 =head3 rename() - Benenne Datei auf Server um
 
