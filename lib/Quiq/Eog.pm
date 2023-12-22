@@ -125,7 +125,7 @@ Zeige die Bilddateien des Quellverzeichnisses $srcDir mit C<eog>
 an. Bilder, die in C<eog> mit C<DEL> gelöscht werden, landen im
 Trash. Nach Verlassen von C<eog> werden die Bilddateien aus dem Trash
 ins Zielverzeichnis bewegt. Existiert das Zielverzeichnis nicht,
-wird es automatisch erzeugt.
+wird es erzeugt.
 
 Die Methode ist so konzipiert, dass auch Dateien mit dem gleichen
 Grundnamen wie die Bilddatei mitkopiert werden (z.B. .xfc-Dateien).
@@ -178,7 +178,7 @@ sub transferImages {
     for my $trashFile (@$fileA) {
         my @srcFiles = ($trashFile);
         my $srcBasePath = sprintf '%s/%s',$srcDir,$p->basename($trashFile);
-        push @srcFiles,$p->glob("$srcBasePath*"); # ggf. .xcf-Datei hinzu
+        push @srcFiles,$p->glob("$srcBasePath.*"); # ggf. .xcf-Datei hinzu
 
         if ($nameToNumber) {
             $number += $step;
