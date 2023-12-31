@@ -39,7 +39,7 @@ Verzeichnis $exportDir.
 
 =head4 Example
 
-  Quiq::SQLite->export('~/var/myapp/myapp.db','/tmp/myapp');
+  Quiq::SQLite->exportData('~/var/myapp/myapp.db','/tmp/myapp');
 
 =head3 importData() - Importiere SQLite Datenbank aus Verzeichnis
 
@@ -68,7 +68,7 @@ Verzeichnis $importDir.
 
 =head4 Example
 
-  Quiq::SQLite->export('~/var/myapp/myapp.db','/tmp/myapp');
+  Quiq::SQLite->importData('~/var/myapp/myapp.db','/tmp/myapp');
 
 =head3 recreateDatabase() - Erzeuge SQLite Datenbank neu
 

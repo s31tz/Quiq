@@ -61,7 +61,7 @@ Verzeichnis $exportDir.
 
 =head4 Example
 
-  Quiq::SQLite->export('~/var/myapp/myapp.db','/tmp/myapp');
+  Quiq::SQLite->exportData('~/var/myapp/myapp.db','/tmp/myapp');
 
 =cut
 
@@ -122,7 +122,7 @@ Verzeichnis $importDir.
 
 =head4 Example
 
-  Quiq::SQLite->export('~/var/myapp/myapp.db','/tmp/myapp');
+  Quiq::SQLite->importData('~/var/myapp/myapp.db','/tmp/myapp');
 
 =cut
 
