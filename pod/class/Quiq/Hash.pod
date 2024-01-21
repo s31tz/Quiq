@@ -672,6 +672,17 @@ Alternative Formulierung:
 
   $y = $h->{$key} += $x;
 
+=head3 keyVal() - Liste von Schlüssel/Wert-Paaren
+
+=head4 Synopsis
+
+  @keyVal | $keyValA = $h->keyVal;
+
+=head4 Description
+
+Liefere die Liste der Schlüssel/Wert-Paare. Im Skalarkontext liefere eine
+Referenz auf die Liste.
+
 =head3 weaken() - Erzeuge schwache Referenz
 
 =head4 Synopsis
@@ -799,7 +810,7 @@ Das Benchmark-Programm (bench-hash):
 
 =head1 VERSION
 
-1.213
+1.214
 
 =head1 SOURCE
 
@@ -811,7 +822,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2023 Frank Seitz
+Copyright (C) 2024 Frank Seitz
 
 =head1 LICENSE
 

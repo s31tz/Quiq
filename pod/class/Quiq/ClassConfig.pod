@@ -248,7 +248,7 @@ Attributes der Klasse Person:
 
 =head1 VERSION
 
-1.213
+1.214
 
 =head1 SOURCE
 
@@ -260,7 +260,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2023 Frank Seitz
+Copyright (C) 2024 Frank Seitz
 
 =head1 LICENSE
 

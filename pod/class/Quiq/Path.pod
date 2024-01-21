@@ -1440,7 +1440,7 @@ Innerhalb eines Verzeichnisses:
 
 Mit Zielverzeichnis ("dest"):
 
-$ perl -MQuiq::Path -E 'Quiq::Path->moveToDateSubDir($_,"dest") for glob("src/*.jpg")'
+  $ perl -MQuiq::Path -E 'Quiq::Path->moveToDateSubDir($_,"dest") for glob("src/*.jpg")'
 
 =head3 mtime() - Setze/Liefere Modifikationszeit
 
@@ -1943,7 +1943,7 @@ Ermittele die UID des Owners der Datei und liefere diese zurück.
 
 =head1 VERSION
 
-1.213
+1.214
 
 =head1 SOURCE
 
