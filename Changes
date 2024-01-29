@@ -1,4 +1,26 @@
-1.213 2023-11.19
+1.214 2024-01-21
+================
+
+[Quiq::Smb::Client]
+* put(): Methode hinzugefügt
+
+[Quiq::Eog]
+* Doku bearbeitet
+
+[Quiq::Hash]
+* keyVal(): Methode hinzugefügt
+
+[Quiq::Path]
+* moveToDateSubDir(): Methode hinzugefügt
+* numberBasePaths(): Behandlung von Verzeichnissen korrigiert
+
+[Quiq::PhotoStorage]
+* Speicherung von Doubletten ergänzt
+
+[Quiq::SQLite]
+* Doku bearbeitet
+
+1.213 2023-11-19
 ================
 
 [Quiq::Array]
