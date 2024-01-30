@@ -1186,7 +1186,7 @@ Quiq::TempDir
 
 =head4 Synopsis
 
-  $absolutePath = $class->absolute($path);
+  $absolutePath = $this->absolute($path);
 
 =head4 Alias
 
