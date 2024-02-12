@@ -144,7 +144,7 @@ Zeichenkette zurück.
 
 In der Zeichenkette werden alle Zeichen außer
 
-  * - . _ 0-9 A-Z a-z
+  * - . _ + 0-9 A-Z a-z
 
 durch eine Folge von
 
@@ -165,7 +165,7 @@ sub encode {
         return '';
     }
     $str = Encode::encode($encoding,$str);
-    $str =~ s|([^-*._0-9A-Za-z])|sprintf('%%%02X',ord $1)|eg;
+    $str =~ s|([^-*._0-9A-Za-z+])|sprintf('%%%02X',ord $1)|eg;
     # $str =~ s|%20|+|g;
 
     return $str;

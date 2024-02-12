@@ -24,7 +24,7 @@ Der Name der Foto-Datei bleibt als Bestandteil erhalten
 
 =item *
 
-Jedes Foto erhält eine eindeutige Zahl als Präfix
+Jedes Foto erhält eine fortlaufende, eindeutige Zahl als Präfix
 
 =item *
 

@@ -94,7 +94,7 @@ Zeichenkette zurück.
 
 In der Zeichenkette werden alle Zeichen außer
 
-  * - . _ 0-9 A-Z a-z
+  * - . _ + 0-9 A-Z a-z
 
 durch eine Folge von
 
