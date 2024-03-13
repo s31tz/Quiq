@@ -148,7 +148,7 @@ sub add {
         # Bilddatei nach JPEG wandeln
         
         my $sh = Quiq::Shell->new;
-        $sh->exec("convert '$file' '$file.jpg'");
+        $sh->exec(qq/convert "$file" "$file.jpg"/);
         $p->delete($file);
         $file = "$file.jpg";
     }
