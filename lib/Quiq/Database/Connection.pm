@@ -3814,6 +3814,12 @@ Verbindung zur Quelldatenbank
 
 Kopiere die Datensätze in Chunks der Größe $n.
 
+=item -ignoreSourceTable => $bool (Default: 0)
+
+Wenn gesetzt, ignoriere den Inhalt der Tabelle auf der Quelldatenbank.
+Diese Option ist nützlich, wenn der Inhalt der Zieltabelle von -initialData
+aufgebaut werden soll
+
 =item -srcTable => $srcTable (Default: $table)
 
 Name der Tabelle in der Quelldatenbank, wenn er vom Namen der
@@ -3828,8 +3834,9 @@ werden, die nicht übereinstimmen.
 
 =item -initialData => \@rows
 
-Ist die Tabelle leer, befülle sie mit den Zeilen @rows. Jede Zeile
-ist ein Array von Werten. Beispiel:
+Existiert die Tabelle auf der Quelldatenbak nicht oder ist sie leer oder ist
+-forceInitialData gesetzt, befülle die Tablle auf der Ziedatenbank mit den
+Zeilen @rows. Jede Zeile ist ein Array von Werten. Beispiel:
 
   -initialData => [
       [qw/1 Emily/],
@@ -3861,12 +3868,14 @@ sub copyData {
     # Optionen
 
     my $chunkSize = 100;
+    my $ignoreSourceTable = 0;
     my $mapH = undef;
     my $srcTable = $destTable;
     my $initialData = undef;
 
     $self->parameters(0,\@_,
         -chunkSize => \$chunkSize,
+        -ignoreSourceTable => \$ignoreSourceTable,
         -srcTable => \$srcTable,
         -mapColumns => \$mapH,
         -initialData => \$initialData,
@@ -3877,7 +3886,7 @@ sub copyData {
 
     my $cnt = 0;
     my @destTitles = $self->titles($destTable);
-    if ($srcDb->tableExists($srcTable)) {
+    if ($srcDb->tableExists($srcTable) && !$ignoreSourceTable) {
         # Erstelle Abbildung der Kolumnen
 
         my @srcTitles = $srcDb->titles($srcTable);
