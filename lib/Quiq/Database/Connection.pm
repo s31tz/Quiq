@@ -3818,7 +3818,19 @@ Kopiere die Datensätze in Chunks der Größe $n.
 
 Wenn gesetzt, ignoriere den Inhalt der Tabelle auf der Quelldatenbank.
 Diese Option ist nützlich, wenn der Inhalt der Zieltabelle von -initialData
-aufgebaut werden soll
+aufgebaut werden soll. Alternativ kann auch insertMulit genutzt werden,
+a la
+
+  $cur = $db->insertMulti('bereich',
+      [$bakDb->titles('bereich')],[
+          [qw(1 Thema tma Themen /themaListe 1 10)],
+          [qw(2 Memo mem Memos /memoListe 2 10)],
+          [qw(3 Notiz ntz Notizen /notizListe 3 10)],
+          [qw(4 Dokument dok Dokumente /dokumentListe 4 10)],
+          [qw(5 Termin trm Termine /terminListe 5 10)],
+      ]
+  );
+  printf "bereich: %s rows inserted\n",$cur->hits;
 
 =item -srcTable => $srcTable (Default: $table)
 
