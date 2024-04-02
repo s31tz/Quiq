@@ -1755,6 +1755,27 @@ oder den Hash der Namen zurück.
 
 =over 4
 
+=item -insert => \@rows
+
+Füge die Zeilen @rows in die Tabelle ein. Beispiel:
+
+  $db->createTable('bereich',
+      ['ber_id',type=>'INTEGER',primaryKey=>1,autoIncrement=>1],
+      ['ber_name',type=>'STRING(50)',notNull=>1],
+      ['ber_kuerzel',type=>'STRING(3)',notNull=>1],
+      ['ber_plural',type=>'STRING(50)',notNull=>1],
+      ['ber_url',type=>'STRING(50)',notNull=>1],
+      ['ber_reihenfolge',type=>'INTEGER(2)',notNull=>1],
+      ['ber_prioritaet',type=>'INTEGER'],
+      -insert => [
+          [qw(1 Thema tma Themen /themaListe 1 10)],
+          [qw(2 Memo mem Memos /memoListe 2 10)],
+          [qw(3 Notiz ntz Notizen /notizListe 3 10)],
+          [qw(4 Dokument dok Dokumente /dokumentListe 4 10)],
+          [qw(5 Termin trm Termine /terminListe 5 10)],
+      ],
+  );
+
 =item -replace => $bool (Default: 0)
 
 Erzeuge Tabelle neu, falls sie bereits existiert.

@@ -3599,6 +3599,27 @@ sub schemas {
 
 =over 4
 
+=item -insert => \@rows
+
+Füge die Zeilen @rows in die Tabelle ein. Beispiel:
+
+  $db->createTable('bereich',
+      ['ber_id',type=>'INTEGER',primaryKey=>1,autoIncrement=>1],
+      ['ber_name',type=>'STRING(50)',notNull=>1],
+      ['ber_kuerzel',type=>'STRING(3)',notNull=>1],
+      ['ber_plural',type=>'STRING(50)',notNull=>1],
+      ['ber_url',type=>'STRING(50)',notNull=>1],
+      ['ber_reihenfolge',type=>'INTEGER(2)',notNull=>1],
+      ['ber_prioritaet',type=>'INTEGER'],
+      -insert => [
+          [qw(1 Thema tma Themen /themaListe 1 10)],
+          [qw(2 Memo mem Memos /memoListe 2 10)],
+          [qw(3 Notiz ntz Notizen /notizListe 3 10)],
+          [qw(4 Dokument dok Dokumente /dokumentListe 4 10)],
+          [qw(5 Termin trm Termine /terminListe 5 10)],
+      ],
+  );
+
 =item -replace => $bool (Default: 0)
 
 Erzeuge Tabelle neu, falls sie bereits existiert.
@@ -3624,10 +3645,12 @@ sub createTable {
 
     # Optionen
 
+    my $rowsA = undef;
     my $replace = 0;
     my $sloppy = 0;
 
     Quiq::Option->extract(-mode=>'sloppy',\@_,
+        -insert => \$rowsA,
         -reCreate => \$replace, # Rückwärtskompatibilität
         -recreate => \$replace, # Rückwärtskompatibilität
         -replace => \$replace,
@@ -3650,6 +3673,12 @@ sub createTable {
 
     my $stmt = $self->stmt->createTable($table,@_);
     my $cur = $self->sqlAtomic($stmt);
+
+    if ($rowsA) {
+        my $titleA = $self->titles($table);
+        my $cur = $self->insertMulti($table,$titleA,$rowsA);
+        printf "%s: %s rows inserted\n",$table,$cur->hits;
+    }
 
     return $cur;
 }
