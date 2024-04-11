@@ -16,6 +16,12 @@ Ein Objekt der Klasse repräsentiert einen Client, der über die
 L<Confluence REST API|https://docs.atlassian.com/confluence/REST/latest/> mit einem
 Confluence-Server kommunizieren kann.
 
+Doku für Python: L<https://atlassian-python-api.readthedocs.io/>.Authentisierung gegen REST API der Cloud-Version s.
+Abschnitt I<To authenticate to the Atlassian Cloud APIs Jira, Confluence,
+ServiceDesk>. Als Passwort muss ein Token angegeben werden, das
+im unter "Konto / Konto verwalten / Sicherheit / API Token"
+angelegt und verwaltet werden kann.
+
 Die Implementierung der Klasse stellt die maßgeblichen Mechnismen
 zur Kommunikation mit dem Server zur Verfügung, realisiert
 z.Zt. jedoch nur einen kleinen Ausschnitt der Funktionalität der
@@ -594,6 +600,8 @@ sub send {
     if (!$res->is_success) {
         $self->throw(
             'CLIENT-00001: HTTP request failed',
+            Request => $self->url($path),
+            Method => $method,
             StatusLine => $res->status_line,
             Response => $res->content,
         );
