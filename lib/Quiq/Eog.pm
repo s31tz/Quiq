@@ -179,6 +179,9 @@ sub transferImages {
         my @srcFiles = ($trashFile);
         my $srcBasePath = sprintf '%s/%s',$srcDir,$p->basename($trashFile);
         push @srcFiles,$p->glob("$srcBasePath.*"); # ggf. .xcf-Datei hinzu
+        if (-d $srcBasePath) {
+            push @srcFiles,$srcBasePath, # füge Verzeichnis hinzu
+        }
 
         if ($nameToNumber) {
             $number += $step;
@@ -188,7 +191,12 @@ sub transferImages {
             my $destFile;
             if ($nameToNumber) {
                 my $ext = $p->extension($srcFile);
-                $destFile = sprintf '%s/%0*d.%s',$destDir,$width,$number,$ext;
+                if ($ext) {
+                    $destFile = sprintf '%s/%0*d.%s',$destDir,$width,$number,$ext;
+                }
+                else {
+                    $destFile = sprintf '%s/%0*d',$destDir,$width,$number; # Verzeichnis
+                }
             }
             else {
                 $destFile = sprintf '%s/%s',$destDir,$p->filename($srcFile);
