@@ -1275,6 +1275,17 @@ Setze Zugriffsrechte $mode auf Pfad $path.
 
   $this->delete($path);
 
+=head4 Options
+
+=over 4
+
+=item -sloppy => $bool (Default: 0)
+
+Wirf keine Exception, wenn das Verzeichnis oder die Datei nicht
+gelöscht werden kann.
+
+=back
+
 =head4 Description
 
 Lösche den Pfad aus dem Dateisystem, also die Datei oder das Verzeichnis
@@ -1943,7 +1954,7 @@ Ermittele die UID des Owners der Datei und liefere diese zurück.
 
 =head1 VERSION
 
-1.215
+1.216
 
 =head1 SOURCE
 
