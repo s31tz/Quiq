@@ -116,7 +116,7 @@ Liefere das nächste SQL-Statement des Skripts. Leere Statements werden
 
 =head1 VERSION
 
-1.216
+1.217
 
 =head1 SOURCE
 

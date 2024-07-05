@@ -34,7 +34,7 @@ Liefere den CDN URL der neusten Version von jQuery.
 
 =head1 VERSION
 
-1.216
+1.217
 
 =head1 SOURCE
 

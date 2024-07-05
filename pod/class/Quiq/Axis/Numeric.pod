@@ -136,7 +136,7 @@ Wert $val verschieden sein, wenn die Darstellung logarithmisch ist.
 
 =head1 VERSION
 
-1.216
+1.217
 
 =head1 SOURCE
 
