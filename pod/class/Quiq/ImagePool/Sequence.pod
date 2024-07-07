@@ -166,7 +166,7 @@ undef oder ein Leerstring (''), werden ebenfalls alle Bilder geliefert.
 
 =head1 VERSION
 
-1.217
+1.218
 
 =head1 SOURCE
 

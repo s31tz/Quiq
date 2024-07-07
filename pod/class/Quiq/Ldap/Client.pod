@@ -177,7 +177,7 @@ Trenne die Verbindung zum LDAP-Server.
 
 =head1 VERSION
 
-1.217
+1.218
 
 =head1 SOURCE
 

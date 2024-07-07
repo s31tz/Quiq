@@ -27,6 +27,7 @@ WriteMakefile(
         JSON => 0,
         LWP::UserAgent => 0,
         Mojolicious::Plugin => 0,
+        Net::IMAP::Simple => 0,
         Net::LDAP => 0,
         Net::SFTP::Foreign => 0,
         Net::SSH::Perl => 0,

@@ -79,7 +79,7 @@ Liefere die Liste aller im Trash enthaltene Dateien.
 
 =head1 VERSION
 
-1.217
+1.218
 
 =head1 SOURCE
 

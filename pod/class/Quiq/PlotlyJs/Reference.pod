@@ -110,7 +110,7 @@ Liefere die plotly.js Dokumentation in HTML.
 
 =head1 VERSION
 
-1.217
+1.218
 
 =head1 SOURCE
 
