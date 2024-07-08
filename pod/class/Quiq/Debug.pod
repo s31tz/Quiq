@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head1 NAME
 
 Quiq::Debug - Hilfe beim Debuggen von Programmen
@@ -60,6 +62,38 @@ Perl Moduldateien. Ein Modulpfad pro Zeile, alphabetisch sortiert.
 Die aktuell geladenen Moduldateien auf STDOUT ausgeben:
 
   print Quiq::Debug->modulePaths;
+  ==>
+  /home/fs/lib/perl5/Quiq/Debug.pm
+  /home/fs/lib/perl5/Quiq/Object.pm
+  /home/fs/lib/perl5/Perl/Quiq/Stacktrace.pm
+  /usr/share/perl/5.20/base.pm
+  /usr/share/perl/5.20/strict.pm
+  /usr/share/perl/5.20/vars.pm
+  /usr/share/perl/5.20/warnings.pm
+  /usr/share/perl/5.20/warnings/register.pm
+
+=head2 Subroutines
+
+=head3 findSubroutine() - Suche Subroutine
+
+=head4 Synopsis
+
+  @arr | $str = $this->findSubroutine($pattern);
+
+=head4 Description
+
+Suche die Subroutines, die den Pattern $pattern erfüllen, in den
+Moduldateien (.pm) entlang der Pfade in @INC. Im Array-Kontext liefere die
+Liste der Modulnamen, im Skalarkontext die Liste als Zeichenkette (ein
+Modulpfad pro Zeile).
+
+=head4 Example
+
+B<ANPASSEN>
+
+Die aktuell geladenen Moduldateien auf STDOUT ausgeben:
+
+  print Quiq::Debug->findSubroutine;
   ==>
   /home/fs/lib/perl5/Quiq/Debug.pm
   /home/fs/lib/perl5/Quiq/Object.pm
