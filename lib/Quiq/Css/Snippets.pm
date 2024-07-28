@@ -43,7 +43,7 @@ werden.
       ~
   );
   
-  my $cssCode = $res->snippets('page','menuber');
+  my $cssCode = $sty->snippets('page','menuber');
   ==>
   body {
       font-family: sans-serif;
