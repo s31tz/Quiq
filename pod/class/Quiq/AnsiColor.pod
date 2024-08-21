@@ -172,7 +172,7 @@ Wie L<str|"str() - Formatiere String mit Colorcodes">(), nur dass der Rückgabew
 
 =head1 VERSION
 
-1.218
+1.219
 
 =head1 SOURCE
 

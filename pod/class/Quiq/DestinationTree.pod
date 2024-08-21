@@ -324,7 +324,7 @@ Liefere die Übersetzung zum deutschen Text $textDe.
 
 =head1 VERSION
 
-1.218
+1.219
 
 =head1 SOURCE
 
