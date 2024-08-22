@@ -154,8 +154,8 @@ sub showByMtime {
     for my $srcFile (@files) {
         my $ext = $p->extension($srcFile);
         my $destFile = sprintf '%s/%06d.%s',$tmpDir,++$i,$ext;
+        # say "$destFile -> $srcFile";
         $p->duplicate('symlink',$srcFile,$destFile);
-        say "$destFile -> $srcFile";
     }
 
     Quiq::Shell->exec("eog $tmpDir");
@@ -283,6 +283,7 @@ sub transferImages {
 
             say "$srcFile => $destFile";
             $p->rename($srcFile,$destFile);
+            $p->touch($destFile);
         }
     }
 
