@@ -26,6 +26,8 @@ our $VERSION = '1.219';
 use Quiq::Trash;
 use Quiq::Shell;
 use Quiq::Path;
+use Quiq::Terminal;
+use Quiq::DirHandle;
 use Quiq::Eog;
 
 # -----------------------------------------------------------------------------
@@ -82,6 +84,83 @@ sub pickImages {
     my $fileA = $t->files;
 
     return wantarray? @$fileA: $fileA;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 showByMtime() - Zeige Bilddateien nach mtime an
+
+=head4 Synopsis
+
+  $class->showByMtime($dir,$tmpDir);
+
+=head4 Arguments
+
+=over 4
+
+=item $dir
+
+Verzeichnis, in dem sich die Bilddateien befinden
+
+=back
+
+=head4 Description
+
+Zeige die Bilddateien mit C<eog> an. Bilder, die in C<eog> mit C<DEL>
+gelöscht werden, landen im Trash. Nach Verlassen von C<eog> kehrt die
+Methode zurück und liefert die Liste aller Dateien im Trash. Diese
+können dann nach Belieben verarbeitet werden.
+
+Ist der Trash bei Aufruf der Methode nicht leer, wird gefragt, ob
+die Dateien im Trash vorab gelöscht werden sollen.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub showByMtime {
+    my ($class,$dir,$tmpDir) = @_;
+
+    my $p = Quiq::Path->new;
+
+    if (!-d $tmpDir) {
+        $class->throw(
+            'PARAM-00099: Directory does not exist',
+            Dir => $tmpDir,
+        );
+    }
+    if (!$p->isEmpty($tmpDir)) {
+        my $answ = Quiq::Terminal->askUser("Delete all files in $tmpDir?",
+            -values => 'y/n',
+            -default => 'y',
+        );
+        if ($answ ne 'y') {
+            return;
+        }
+        $p->deleteContent($tmpDir);
+    }
+
+    my @files;
+    my $dh = Quiq::DirHandle->new($dir);
+    while (my $e = $dh->next) {
+        if ($e =~ /\.jpg$/) {
+            push @files,"$dir/$e";
+        }
+    }
+    $dh->close;
+
+    my $i = 0;
+    @files = sort {$p->mtime($a) <=> $p->mtime($b)} @files;
+    for my $srcFile (@files) {
+        my $ext = $p->extension($srcFile);
+        my $destFile = sprintf '%s/%06d.%s',$tmpDir,++$i,$ext;
+        $p->duplicate('symlink',$srcFile,$destFile);
+        say "$destFile -> $srcFile";
+    }
+
+    Quiq::Shell->exec("eog $tmpDir");
+
+    return;
 }
 
 # -----------------------------------------------------------------------------
