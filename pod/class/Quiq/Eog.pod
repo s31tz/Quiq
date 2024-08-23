@@ -57,17 +57,19 @@ die Dateien im Trash vorab gelöscht werden sollen.
 
 Verzeichnis, in dem sich die Bilddateien befinden
 
+=item $tmpDir
+
+Verzeichnis, in dem die Bilddateien in mtime-Reihenfolge verlinkt sind
+
 =back
 
 =head4 Description
 
-Zeige die Bilddateien mit C<eog> an. Bilder, die in C<eog> mit C<DEL>
-gelöscht werden, landen im Trash. Nach Verlassen von C<eog> kehrt die
-Methode zurück und liefert die Liste aller Dateien im Trash. Diese
-können dann nach Belieben verarbeitet werden.
+Zeige mit C<eog> die Bilddateien in mtime-Reihenfolge aus
+dem Verzeichnis $tmpDir an.
 
-Ist der Trash bei Aufruf der Methode nicht leer, wird gefragt, ob
-die Dateien im Trash vorab gelöscht werden sollen.
+Ist $tmpDir bei Aufruf der Methode nicht leer, wird gefragt, ob
+die Dateien darin vorab gelöscht werden sollen.
 
 =head3 transferImages() - Übertrage ausgewählte Bilder in ein anderes Verzeichnis
 

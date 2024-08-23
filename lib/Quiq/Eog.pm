@@ -28,6 +28,7 @@ use Quiq::Shell;
 use Quiq::Path;
 use Quiq::Terminal;
 use Quiq::DirHandle;
+use Quiq::Array;
 use Quiq::Eog;
 
 # -----------------------------------------------------------------------------
@@ -102,17 +103,19 @@ sub pickImages {
 
 Verzeichnis, in dem sich die Bilddateien befinden
 
+=item $tmpDir
+
+Verzeichnis, in dem die Bilddateien in mtime-Reihenfolge verlinkt sind
+
 =back
 
 =head4 Description
 
-Zeige die Bilddateien mit C<eog> an. Bilder, die in C<eog> mit C<DEL>
-gelöscht werden, landen im Trash. Nach Verlassen von C<eog> kehrt die
-Methode zurück und liefert die Liste aller Dateien im Trash. Diese
-können dann nach Belieben verarbeitet werden.
+Zeige mit C<eog> die Bilddateien in mtime-Reihenfolge aus
+dem Verzeichnis $tmpDir an.
 
-Ist der Trash bei Aufruf der Methode nicht leer, wird gefragt, ob
-die Dateien im Trash vorab gelöscht werden sollen.
+Ist $tmpDir bei Aufruf der Methode nicht leer, wird gefragt, ob
+die Dateien darin vorab gelöscht werden sollen.
 
 =cut
 
@@ -123,6 +126,12 @@ sub showByMtime {
 
     my $p = Quiq::Path->new;
 
+    if (!-d $dir) {
+        $class->throw(
+            'PARAM-00099: Directory does not exist',
+            Dir => $dir,
+        );
+    }
     if (!-d $tmpDir) {
         $class->throw(
             'PARAM-00099: Directory does not exist',
@@ -150,7 +159,9 @@ sub showByMtime {
     $dh->close;
 
     my $i = 0;
-    @files = sort {$p->mtime($a) <=> $p->mtime($b)} @files;
+    # @files = sort {$p->mtime($a) <=> $p->mtime($b)} @files;
+    Quiq::Array->shuffle(\@files);
+
     for my $srcFile (@files) {
         my $ext = $p->extension($srcFile);
         my $destFile = sprintf '%s/%06d.%s',$tmpDir,++$i,$ext;
