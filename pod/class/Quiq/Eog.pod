@@ -43,15 +43,19 @@ können dann nach Belieben verarbeitet werden.
 Ist der Trash bei Aufruf der Methode nicht leer, wird gefragt, ob
 die Dateien im Trash vorab gelöscht werden sollen.
 
-=head3 showByMtime() - Zeige Bilddateien nach mtime an
+=head3 show() - Zeige Bilddateien an
 
 =head4 Synopsis
 
-  $class->showByMtime($dir,$tmpDir);
+  $class->show($op, $dir,$tmpDir);
 
 =head4 Arguments
 
 =over 4
+
+=item $op
+
+Art der Reihenfolge: C<mtime>, C<random>, C<reverse>
 
 =item $dir
 

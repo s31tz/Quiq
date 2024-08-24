@@ -89,15 +89,19 @@ sub pickImages {
 
 # -----------------------------------------------------------------------------
 
-=head3 showByMtime() - Zeige Bilddateien nach mtime an
+=head3 show() - Zeige Bilddateien an
 
 =head4 Synopsis
 
-  $class->showByMtime($dir,$tmpDir);
+  $class->show($op, $dir,$tmpDir);
 
 =head4 Arguments
 
 =over 4
+
+=item $op
+
+Art der Reihenfolge: C<mtime>, C<random>, C<reverse>
 
 =item $dir
 
@@ -121,8 +125,8 @@ die Dateien darin vorab gelöscht werden sollen.
 
 # -----------------------------------------------------------------------------
 
-sub showByMtime {
-    my ($class,$dir,$tmpDir) = @_;
+sub show {
+    my ($class,$op,$dir,$tmpDir) = @_;
 
     my $p = Quiq::Path->new;
 
@@ -159,8 +163,21 @@ sub showByMtime {
     $dh->close;
 
     my $i = 0;
-    # @files = sort {$p->mtime($a) <=> $p->mtime($b)} @files;
-    Quiq::Array->shuffle(\@files);
+    if ($op eq 'mtime') {
+        @files = sort {$p->mtime($a) <=> $p->mtime($b)} @files;
+    }
+    elsif ($op eq 'random') {
+        Quiq::Array->shuffle(\@files);
+    }
+    elsif ($op eq 'reverse') {
+        @files = reverse sort @files
+    }
+    else {
+        $class->throw(
+            'PARAM-00099: Unknown operation',
+            Op => $op,
+        );
+    }
 
     for my $srcFile (@files) {
         my $ext = $p->extension($srcFile);
