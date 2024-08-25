@@ -180,8 +180,8 @@ sub show {
     }
 
     for my $srcFile (@files) {
-        my $ext = $p->extension($srcFile);
-        my $destFile = sprintf '%s/%06d.%s',$tmpDir,++$i,$ext;
+        my $filename = $p->filename($srcFile);
+        my $destFile = sprintf '%s/%06d-%s',$tmpDir,++$i,$filename;
         # say "$destFile -> $srcFile";
         $p->duplicate('symlink',$srcFile,$destFile);
     }
