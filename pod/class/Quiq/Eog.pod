@@ -99,6 +99,11 @@ Zielverzeichnis.
 
 =over 4
 
+=item -addExtension => $ext
+
+Füge am Ende der Verarbeitung die Endung $ext zum Namen des
+Quellverzeichnisses $srcDir I<nach Rückfrage> hinzu.
+
 =item -nameToNumber => [$width,$step]
 
 Wandele den Basisnamen der Bilddatei im Zielverzeichnis in eine Nummer.
@@ -123,6 +128,10 @@ einem Quellverzeichnis, nicht mit mehreren Verzeichnissen/Dateinamen.
 
 Ist der Trash bei Aufruf der Methode nicht leer, wird gefragt, ob
 die Dateien im Trash vorab gelöscht werden sollen.
+
+=head4 Example
+
+  perl -MQuiq::Eog -E 'Quiq::Eog->transferImages("2024-10-16","ok",-addExtension=>"bak")'
 
 =head1 VERSION
 
