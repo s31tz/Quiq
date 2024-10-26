@@ -26,7 +26,7 @@ Liefere XML-Code $xml als formtierte Zeichenkette mit Einrückung.
 
 =head1 VERSION
 
-1.220
+1.221
 
 =head1 SOURCE
 

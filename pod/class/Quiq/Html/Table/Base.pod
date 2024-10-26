@@ -115,7 +115,7 @@ Generiere den HTML-Code der Tablle und liefere diesen zurück.
 
 =head1 VERSION
 
-1.220
+1.221
 
 =head1 SOURCE
 
