@@ -52,7 +52,7 @@ Erzeuge den Querystring des URL-Objekts und liefere diesen zurück.
 
 =head4 Synopsis
 
-  $urlObj->setQuery(@keyVal);
+  $urlObj = $urlObj->setQuery(@keyVal);
 
 =head4 Arguments
 
@@ -63,6 +63,10 @@ Erzeuge den Querystring des URL-Objekts und liefere diesen zurück.
 Liste von Schlüssel-Wert-Paaren
 
 =back
+
+=head4 Returns
+
+(Object) Das URl-Objekt (für Methodenverkettung)
 
 =head4 Description
 

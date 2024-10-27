@@ -406,6 +406,41 @@ sub backUrlObj {
 
 # -----------------------------------------------------------------------------
 
+=head3 backWithParameters() - URL der Rückkehrseite mit zusätzlichen Parametern
+
+=head4 Synopsis
+
+  $ur = $nav->backWithParameters(@keyVal);
+
+=head4 Returns
+
+(String) URL-String
+
+=head4 Description
+
+Liefere den URL der Rückkehrseite mit den zusätzlichen Parametern @keyVal.
+
+=head4 Example
+
+  my $backUrl = $nav->backWithParameters(
+      navMsg => 'FEHLER: Keine Datei hochgeladen',
+  );
+  $self->redirect_to($backUrl);
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub backWithParameters {
+    my $self = shift;
+
+    my $backUrlObj = $self->backUrlObj->setQuery(@_);
+
+    return $backUrlObj->url;
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 prevUrl() - URL der Vorgängerseite
 
 =head4 Synopsis

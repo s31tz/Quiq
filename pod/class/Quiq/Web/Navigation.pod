@@ -219,6 +219,27 @@ URL, der genutzt wird, wenn kein Rückkehr-URL definiert ist.
 
 Liefere den URL der Rückkehrseite als Objekt.
 
+=head3 backWithParameters() - URL der Rückkehrseite mit zusätzlichen Parametern
+
+=head4 Synopsis
+
+  $ur = $nav->backWithParameters(@keyVal);
+
+=head4 Returns
+
+(String) URL-String
+
+=head4 Description
+
+Liefere den URL der Rückkehrseite mit den zusätzlichen Parametern @keyVal.
+
+=head4 Example
+
+  my $backUrl = $nav->backWithParameters(
+      navMsg => 'FEHLER: Keine Datei hochgeladen',
+  );
+  $self->redirect_to($backUrl);
+
 =head3 prevUrl() - URL der Vorgängerseite
 
 =head4 Synopsis
