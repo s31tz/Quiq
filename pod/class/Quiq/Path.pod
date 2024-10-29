@@ -878,6 +878,11 @@ Nimm das Wurzelverzeichnis $path nicht in die Pfadliste mit auf.
 
 Folge Symbolic Links.
 
+=item -followSkip => $val (Default: 2)
+
+Definiert, was geschehen soll, wenn einem Symbolischen Link
+ein zweites Mal gefolgt wird. Siehe Doku.
+
 =item -leavesOnly => $bool (Default: 0)
 
 Liefere nur Pfade, die kein Anfang eines anderen Pfads sind.
