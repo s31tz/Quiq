@@ -223,7 +223,7 @@ Liefere den URL der Rückkehrseite als Objekt.
 
 =head4 Synopsis
 
-  $ur = $nav->backWithParameters(@keyVal);
+  $url = $nav->backWithParameters(@keyVal);
 
 =head4 Returns
 
@@ -290,6 +290,28 @@ URL, der genutzt wird, wenn kein Vorgänger-URL definiert ist.
 =head4 Description
 
 Liefere den URL der Vorgängerseite als Objekt.
+
+=head3 prevWithParameters() - URL der Vorgängerseite mit zusätzlichen Parametern
+
+=head4 Synopsis
+
+  $url = $nav->prevWithParameters(@keyVal);
+
+=head4 Returns
+
+(String) URL-String
+
+=head4 Description
+
+Liefere den URL der Vorgängerseite mit den zusätzlichen
+Parametern @keyVal.
+
+=head4 Example
+
+  my $prevUrl = $nav->prevWithParameters(
+      navMsg => 'FEHLER: Datum ist Pflichtfeld',
+  );
+  $self->redirect_to($prevUrl);
 
 =head1 VERSION
 

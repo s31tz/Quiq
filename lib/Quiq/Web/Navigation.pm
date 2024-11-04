@@ -410,7 +410,7 @@ sub backUrlObj {
 
 =head4 Synopsis
 
-  $ur = $nav->backWithParameters(@keyVal);
+  $url = $nav->backWithParameters(@keyVal);
 
 =head4 Returns
 
@@ -511,6 +511,42 @@ Liefere den URL der Vorgängerseite als Objekt.
 sub prevUrlObj {
     my $self = shift;
     return Quiq::UrlObj->new($self->prevUrl);
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 prevWithParameters() - URL der Vorgängerseite mit zusätzlichen Parametern
+
+=head4 Synopsis
+
+  $url = $nav->prevWithParameters(@keyVal);
+
+=head4 Returns
+
+(String) URL-String
+
+=head4 Description
+
+Liefere den URL der Vorgängerseite mit den zusätzlichen
+Parametern @keyVal.
+
+=head4 Example
+
+  my $prevUrl = $nav->prevWithParameters(
+      navMsg => 'FEHLER: Datum ist Pflichtfeld',
+  );
+  $self->redirect_to($prevUrl);
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub prevWithParameters {
+    my $self = shift;
+
+    my $backUrlObj = $self->backUrlObj->setQuery(@_);
+
+    return $backUrlObj->url;
 }
 
 # -----------------------------------------------------------------------------
