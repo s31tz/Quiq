@@ -30,7 +30,7 @@ L<Quiq::SoapWsdlServiceCgi|https://github.com/s31tz/Quiq/tree/master/pod/class/Q
 
 =head1 VERSION
 
-1.221
+1.222
 
 =head1 SOURCE
 

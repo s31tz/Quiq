@@ -122,7 +122,7 @@ Im Dry-Run-Modus wird am Ende (DRY RUN) angezeigt.
 
 =head1 VERSION
 
-1.221
+1.222
 
 =head1 SOURCE
 

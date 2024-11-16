@@ -106,7 +106,7 @@ Die aktuell geladenen Moduldateien auf STDOUT ausgeben:
 
 =head1 VERSION
 
-1.221
+1.222
 
 =head1 SOURCE
 

@@ -271,7 +271,7 @@ letzten wird, das zweite zum vorletzten usw.
 
 =head1 VERSION
 
-1.221
+1.222
 
 =head1 SOURCE
 

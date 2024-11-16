@@ -230,7 +230,7 @@ Benenne Datei $oldname in $newname um.
 
 =head1 VERSION
 
-1.221
+1.222
 
 =head1 SOURCE
 
