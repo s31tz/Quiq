@@ -1,0 +1,76 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Zugferd - Generiere das XML für eine ZUGFeRD-Rechnung
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 METHODS
+
+=head2 Konstruktor
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+  $zug = $class->new($xsdDir);
+
+=head4 Arguments
+
+=over 4
+
+=item $xsdDir
+
+Verzeichnis mit den ZUGFeRD Schema-Dateien
+
+=back
+
+=head4 Returns
+
+Objekt
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere dieses zurück.
+
+=head2 Objektmethoden
+
+=head3 asHash() - Wandele ZUGFeRD XML in Hash
+
+=head4 Synopsis
+
+  $h = $zug->asHash;
+
+=head4 Returns
+
+Hash
+
+=head4 Description
+
+Wandele das ZUGFeRD XML in einen Hash. Im Zuge dessen wird
+das XML gegen das ZUGFeRD Schema validiert. Dies ist der eigentliche
+Sinn der Methode.
+
+=head1 VERSION
+
+1.222
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Zugferd.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2024 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

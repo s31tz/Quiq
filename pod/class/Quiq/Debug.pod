@@ -42,7 +42,7 @@ np(). Die Optionen @opt werden an diese Funktion weiter geleitet.
 
 =head4 Example
 
-  Quiq::Debug->dump($obj,colored=>1))
+  Quiq::Debug->dump($obj,colored=>1);
 
 =head2 Module
 
@@ -103,6 +103,23 @@ Die aktuell geladenen Moduldateien auf STDOUT ausgeben:
   /usr/share/perl/5.20/vars.pm
   /usr/share/perl/5.20/warnings.pm
   /usr/share/perl/5.20/warnings/register.pm
+
+=head2 Textvergleich
+
+=head3 showDiff() - Zeige Differenz zwischen zwei Dateien
+
+=head4 Synopsis
+
+  $str = $this->showDiff($file1,$file2);
+
+=head4 Description
+
+Zeige die Differenz zwischen zwei Dateien. Die Anzeige wird auf die
+Breite des Terminals eingestellt.
+
+=head4 Example
+
+  perl -MQuiq::Debug -E 'print Quiq::Debug->showDiff($file1,$file2)' | less
 
 =head1 VERSION
 

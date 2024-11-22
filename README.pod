@@ -971,6 +971,10 @@ L<Quiq::Xml|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Xml.pod> - 
 
 L<Quiq::Xml::LibXml|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Xml/LibXml.pod> - Funktionale Erweiterungen von XML::LibXML
 
+=item *
+
+L<Quiq::Zugferd|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd.pod> - Generiere das XML für eine ZUGFeRD-Rechnung
+
 =back
 
 =head1 INSTALLATION
