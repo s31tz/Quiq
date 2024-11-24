@@ -65,18 +65,70 @@ Das Verzeichnis hat den Aufbau:
 
 =head4 Synopsis
 
-  $path = $pst->add($file);
+  $path = $pst->add($file,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Pfad der Fotodatei.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -removeName = $bool (Default: 0)
+
+Entferne den urprünglichen Dateinamen. Wenn nicht gesetzt, wird der
+ursprüngliche Dateiname (in Kleinschreibung und ohne "Sonderzeichen")
+mit "-" getrennt an den Zähler angefügt.
+
+=back
+
+=head4 Returns
+
+(String) Pfad der Datei im Speicher.
 
 =head4 Description
 
 Füge Fotodatei $file zum Speicher hinzu und liefere den Pfad der Datei
-zurück.
+im Speicher zurück.
 
-=head3 addAllByTime() - Füge Fotodateien zum Speicher hinzu
+=head3 addAllByTime() - Füge Fotodateien zum Fotospeicher hinzu
 
 =head4 Synopsis
 
-  @paths = $pst->addAllByTime(@files);
+  @paths = $pst->addAllByTime(@files,@opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Pfad der Fotodatei.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -removeName = $bool (Default: 0)
+
+Entferne den urprünglichen Dateinamen. Wenn nicht gesetzt, wird der
+ursprüngliche Dateiname (in Kleinschreibung und ohne "Sonderzeichen")
+mit "-" getrennt an den Zähler angefügt.
+
+=back
+
+=head4 Returns
+
+(Array of Strings) Liste der Pfade der Dateien im Speicher.
 
 =head4 Description
 
