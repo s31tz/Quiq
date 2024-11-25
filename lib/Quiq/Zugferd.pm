@@ -65,44 +65,44 @@ Instantiiere ein Objekt der Klasse und liefere dieses zurück.
 
 # -----------------------------------------------------------------------------
 
+# __INVOICE_NUMBER__ 008989239
+# __INVOICE_TYPECODE__ 380
+# __INVOICE_ISSUED__ 20240918
+# __INVOICE_TITLE__ Servicerechnung
+
+my $TemplateNote = Quiq::Unindent->string(q~
+<ram:IncludedNote>
+  <ram:Content>__TEXT__</ram:Content>
+</ram:IncludedNote>
+~);
+
 my $Prefix = 'urn:un:unece:uncefact:data:standard';
 my $Template = Quiq::Unindent->string(qq~
 <?xml version='1.0' encoding='UTF-8' ?>
+
 <rsm:CrossIndustryInvoice
     xmlns:rsm="$Prefix:CrossIndustryInvoice:100"
     xmlns:qdt="$Prefix:QualifiedDataType:100"
     xmlns:ram="$Prefix:ReusableAggregateBusinessInformationEntity:100"
     xmlns:udt="$Prefix:UnqualifiedDataType:100">
+
   <rsm:ExchangedDocumentContext>
     <ram:GuidelineSpecifiedDocumentContextParameter>
       <ram:ID>urn:cen.eu:en16931:2017#compliant#urn:factur-x.eu:1p0:basic</ram:ID>
     </ram:GuidelineSpecifiedDocumentContextParameter>
   </rsm:ExchangedDocumentContext>
+
   <rsm:ExchangedDocument>
-    <ram:ID>TX-471102</ram:ID>
-    <ram:TypeCode>380</ram:TypeCode>
+    <ram:ID>__INVOICE_NUMBER__</ram:ID>
+    <ram:TypeCode>__INVOICE_TYPECODE__</ram:TypeCode>
     <ram:IssueDateTime>
-      <udt:DateTimeString format="102">20241115</udt:DateTimeString>
+      <udt:DateTimeString format="102">__INVOICE_ISSUED__</udt:DateTimeString>
     </ram:IssueDateTime>
-    <ram:IncludedNote>
-      <ram:Content>Rechnung gemäß Taxifahrt vom 14.11.2024</ram:Content>
-    </ram:IncludedNote>
-    <ram:IncludedNote>
-      <ram:Content>Taxiunternehmen TX GmbH                                
-Lieferantenstraße 20                                
-10369 Berlin                                
-Deutschland                                
-Geschäftsführer: Hans Mustermann
-Handelsregisternummer: H A 123
-      </ram:Content>
-    </ram:IncludedNote>
-    <ram:IncludedNote>
-      <ram:Content>Unsere GLN: 4000001123452
-Ihre GLN: 4000001987658
-Ihre Kundennummer: GE2020211
-     </ram:Content>
-    </ram:IncludedNote>
+    <!-- 0 .. N -->
+    __INVOICE_NOTE_LIST__
+    <!-- END -->
   </rsm:ExchangedDocument>
+
   <rsm:SupplyChainTradeTransaction>
     <ram:IncludedSupplyChainTradeLineItem>
       <ram:AssociatedDocumentLineDocument>
@@ -253,15 +253,23 @@ sub new {
 
   $h = $zug->asHash;
 
+=head4 Alias
+
+check()
+
 =head4 Returns
 
 Hash
 
 =head4 Description
 
-Wandele das ZUGFeRD XML in einen Hash. Im Zuge dessen wird
-das XML gegen das ZUGFeRD Schema validiert. Dies ist der eigentliche
-Sinn der Methode.
+Wandele das ZUGFeRD XML in einen Hash und liefere eine Referenz auf diesen
+zurück. Im Zuge dessen wird das XML gegen das ZUGFeRD Schema von
+XML::Compile geprüft. Dies ist der eigentliche Sinn der Methode.
+
+=head4 Example
+
+  $ perl -MQuiq::Zugferd -E 'Quiq::Zugferd->new("~/doc/2024-09-19_0054_ZUGFeRD/example_basic")->asHash'
 
 =cut
 
@@ -293,6 +301,45 @@ sub asHash {
 
     # Erzeuge und liefere Hash
     return $rdr->($doc);
+}
+
+{
+    no warnings 'once';
+    *check = \&asHash;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 asString() - Liefere das ZUGFeRD XML als Zeichenkette
+
+=head4 Synopsis
+
+  $xml = $zug->asString;
+
+=head4 Alias
+
+xml()
+
+=head4 Returns
+
+String (XML Text)
+
+=head4 Description
+
+Liefere den XML-Code der ZUGFeRD-Rechnung
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub asString {
+    my $self = shift;
+    return $self->get('tpl')->asString;
+}
+
+{
+    no warnings 'once';
+    *xml = \&asString;
 }
 
 # -----------------------------------------------------------------------------

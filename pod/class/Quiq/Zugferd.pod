@@ -44,15 +44,41 @@ Instantiiere ein Objekt der Klasse und liefere dieses zurück.
 
   $h = $zug->asHash;
 
+=head4 Alias
+
+check()
+
 =head4 Returns
 
 Hash
 
 =head4 Description
 
-Wandele das ZUGFeRD XML in einen Hash. Im Zuge dessen wird
-das XML gegen das ZUGFeRD Schema validiert. Dies ist der eigentliche
-Sinn der Methode.
+Wandele das ZUGFeRD XML in einen Hash und liefere eine Referenz auf diesen
+zurück. Im Zuge dessen wird das XML gegen das ZUGFeRD Schema von
+XML::Compile geprüft. Dies ist der eigentliche Sinn der Methode.
+
+=head4 Example
+
+  $ perl -MQuiq::Zugferd -E 'Quiq::Zugferd->new("~/doc/2024-09-19_0054_ZUGFeRD/example_basic")->asHash'
+
+=head3 asString() - Liefere das ZUGFeRD XML als Zeichenkette
+
+=head4 Synopsis
+
+  $xml = $zug->asString;
+
+=head4 Alias
+
+xml()
+
+=head4 Returns
+
+String (XML Text)
+
+=head4 Description
+
+Liefere den XML-Code der ZUGFeRD-Rechnung
 
 =head1 VERSION
 
