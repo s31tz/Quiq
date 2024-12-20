@@ -38,47 +38,30 @@ Instantiiere ein Objekt der Klasse und liefere dieses zurück.
 
 =head2 Objektmethoden
 
-=head3 asHash() - Wandele ZUGFeRD XML in Hash
+=head3 getTemplate() - Liefere ein ZUGFeRD-Fragment als Template
 
 =head4 Synopsis
 
-  $h = $zug->asHash;
-
-=head4 Alias
-
-check()
+  $tpl = $zug->getTemplate($name);
 
 =head4 Returns
 
-Hash
+Quiq::Template-Objekt
 
 =head4 Description
 
-Wandele das ZUGFeRD XML in einen Hash und liefere eine Referenz auf diesen
-zurück. Im Zuge dessen wird das XML gegen das ZUGFeRD Schema von
-XML::Compile geprüft. Dies ist der eigentliche Sinn der Methode.
+Liefere ein ZUGFeRD-Template mit dem Namen $name.
 
-=head4 Example
-
-  $ perl -MQuiq::Zugferd -E 'Quiq::Zugferd->new("~/doc/2024-09-19_0054_ZUGFeRD/example_basic")->asHash'
-
-=head3 asString() - Liefere das ZUGFeRD XML als Zeichenkette
+=head3 templateNames() - Liefere die Liste aller Template-Namen
 
 =head4 Synopsis
 
-  $xml = $zug->asString;
-
-=head4 Alias
-
-xml()
+  @names | $nameA = $zug->templateNames;
 
 =head4 Returns
 
-String (XML Text)
-
-=head4 Description
-
-Liefere den XML-Code der ZUGFeRD-Rechnung
+(Array of Strings) Im Skalarkontext wird eine Referenz auf die Liste
+geliefert.
 
 =head1 VERSION
 

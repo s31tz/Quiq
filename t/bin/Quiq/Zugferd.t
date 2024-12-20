@@ -15,7 +15,7 @@ sub test_loadClass : Init(1) {
 
 # -----------------------------------------------------------------------------
 
-sub test_unitTest: Test(3) {
+sub test_unitTest: Test(2) {
     my $self = shift;
 
     my $zug = eval {Quiq::Zugferd->new('non_existent')};
@@ -23,9 +23,6 @@ sub test_unitTest: Test(3) {
 
     $zug = Quiq::Zugferd->new('~/doc/2024-09-19_0054_ZUGFeRD/example_basic');
     $self->is(ref($zug),'Quiq::Zugferd');
-
-    my $h = $zug->asHash;
-    $self->is(ref($h),'HASH');
 }
 
 # -----------------------------------------------------------------------------

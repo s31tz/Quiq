@@ -304,6 +304,17 @@ das Resultat zurück.
 
 =back
 
+=head3 removePlaceholders() - Entferne unaufgelöste Platzhalter
+
+=head4 Synopsis
+
+  $tpl->removePlaceholders;
+
+=head4 Description
+
+Entferne alle Attribute und Tags, die unaufgelöste Platzhalter der
+Form "__...__" enthalten.
+
 =head3 removeOptional() - Entferne Optional-Metatags
 
 =head4 Synopsis

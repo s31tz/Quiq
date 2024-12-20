@@ -65,6 +65,10 @@ L<Quiq::ChartJs::TimeSeries|https://github.com/s31tz/Quiq/tree/master/pod/class/
 
 =item *
 
+L<Quiq::Chrome|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Chrome.pod> - Operationen im Zusammenhang mit dem Chrome Browser
+
+=item *
+
 L<Quiq::ClassConfig|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/ClassConfig.pod> - Verwalte Information auf Klassenebene
 
 =item *
