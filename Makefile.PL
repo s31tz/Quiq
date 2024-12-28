@@ -37,6 +37,7 @@ WriteMakefile(
         Stat::lsMode => 0,
         Time::Zone => 0,
         WWW::Mechanize => 0,
+        XML::Compile => 0,
         XML::LibXML => 0,
         XML::Twig => 0,
     },

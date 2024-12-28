@@ -21,7 +21,7 @@ use v5.10;
 use strict;
 use warnings;
 
-our $VERSION = '1.222';
+our $VERSION = '1.223';
 
 use Data::Printer color=>{string=>'black'};
 use Data::Printer ();
@@ -222,7 +222,7 @@ sub showDiff {
 
 =head1 VERSION
 
-1.222
+1.223
 
 =head1 AUTHOR
 

@@ -1,0 +1,138 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Tree - Operatonen auf Baumstrukturen
+
+=head1 BASE CLASS
+
+L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.pod>
+
+=head1 METHODS
+
+=head2 Methoden
+
+=head3 leafPaths() - Liste der Pfade
+
+=head4 Synopsis
+
+  @paths|$pathA = $class->leafPaths($ref);
+
+=head4 Arguments
+
+=over 4
+
+=item $ref
+
+Referenz auf hierarchische Datenstruktur
+
+=back
+
+=head4 Description
+
+Liefere die Liste der Pfade zu den Blattknoten der Datenstruktur $ref.
+Diese Liste kann nützlich sein, um die Zugriffspfade zu den Blättern
+einer hierarchischen Datenstruktur zu ermitteln.
+
+=head3 removeEmptyNodes() - Entferne alle leeren Knoten
+
+=head4 Synopsis
+
+  $class->removeEmptyNodes($ref);
+
+=head4 Arguments
+
+=over 4
+
+=item $ref
+
+Referenz auf hierarchische Datenstruktur
+
+=back
+
+=head4 Description
+
+Durchlaufe die Datenstruktur $ref rekursiv und entferne alle leeren
+Knoten.
+
+Ein Blattknoten ist leer, wenn wenn sein Wert C<undef> ist.
+
+Ein Hashknoten ist leer, wenn der Hash kein Element enthält.
+
+Ein Arrayknoten ist leer, wenn er kein Element enthält.
+
+=head3 setLeafValue() - Setze den Wert von Blattknoten
+
+=head4 Synopsis
+
+  $class->setLeafValue($ref,$sub);
+
+=head4 Arguments
+
+=over 4
+
+=item $ref
+
+Referenz auf hierarchische Datenstruktur
+
+=item $sub
+
+Referenz auf Subroutine, die für jeden Blattknoten gerufen wird.
+
+=back
+
+=head4 Description
+
+Durchlaufe die Datenstruktur $ref rekursiv, rufe auf allen Blattknoten
+die Subroutine $sub mit dem aktuellen Wert des Knotens auf und setze
+auf dem Knoten den gelieferten Wert.
+
+Ein Blattknoten des Baums ist dadurch gekennzeichner, dass er einen
+"einfachen" skalaren Wert besitzt, also auf keine Substruktur verweist
+(Hash- oder Array-Referenz).
+
+=head3 substitutePlaceholders() - Ersetze Platzhalter
+
+=head4 Synopsis
+
+  $class->substitutePlaceholders($ref,@keyVal);
+
+=head4 Arguments
+
+=over 4
+
+=item $ref
+
+Referenz auf hierarchische Datenstruktur
+
+=item @kayVal
+
+Liste der Platzhalter und ihrer Werte
+
+=back
+
+=head4 Description
+
+Durchlaufe die Datenstruktur $ref rekursiv und ersetze auf den Blattknoten
+die Platzhalter durch ihre Werte.
+
+=head1 VERSION
+
+1.223
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Tree.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2024 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

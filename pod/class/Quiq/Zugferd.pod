@@ -2,11 +2,54 @@
 
 =head1 NAME
 
-Quiq::Zugferd - Generiere das XML für eine ZUGFeRD-Rechnung
+Quiq::Zugferd - Generiere/Akzeptiere XML einer ZUGFeRD-Rechnung
 
 =head1 BASE CLASS
 
 L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 ENVIRONMENT
+
+=over 4
+
+=item $ZUGFERD_DIR
+
+(Default-)Verzeichnis mit den ZUGFeRD XSD-Dateien und dem
+ZUGFeRD XML-Template.
+
+=back
+
+=head1 DESCRIPTION
+
+B<WORK IN PROGRESS>
+
+Die Klasse kapselt das ZUGFeRD 2.3(Factur-X Version 1.0.07) XML
+Schema BASIC sowie ein XML-Template zu diesem Schema, das alle
+ELemente und Attribute umfasst. Das Template kann als XML (Text)
+oder als Datenstruktur (Hash) in verschiedenen Varianten
+(leer, mit Beispielwerten, mit Platzhaltern) genutzt werden.
+
+=head1 EXAMPLES
+
+Zeige ZUGFeRD XML und Datenstruktur als Zeichenkette:
+
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->new->doc' # XML, kommentiert
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->new->doc("hash")'
+
+(Tipp: XML-Ausgabe in Datei speichern und mit Emacs oder vi
+mit "Syntax Highlighting" lesen)
+
+Zeige das ZUGFeRD XML:
+
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->new->xml' # ohne Werte
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->new->xml("placeholders")'
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->new->xml("values")'
+
+Zeige das ZUGFeRD XML als Hash:
+
+  $ perl -MQuiq::Zugferd -MQuiq::Dumper -E 'say Quiq::Dumper->dump(Quiq::Zugferd->new->hash)'
+  
+  $ perl -MQuiq::Zugferd -MQuiq::Dumper -E 'say Quiq::Dumper->dump(Quiq::Zugferd->new->hash)'
 
 =head1 METHODS
 
@@ -16,21 +59,26 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head4 Synopsis
 
-  $zug = $class->new($xsdDir);
+  $zug = $class->new(@opt);
 
-=head4 Arguments
+=head4 Options
 
 =over 4
 
-=item $xsdDir
+=item --xsdDir=DIR (Default: $ENV{'ZUGFERD_DIR'} || I<ModuleDir>)
 
 Verzeichnis mit den ZUGFeRD Schema-Dateien
+
+=item --xmlTemplateFile=FILE.xml (Default: "$ENV{'ZUGFERD_DIR'}\
+
+/zugferd_basic.xml")
+ZUGFeRD-Template
 
 =back
 
 =head4 Returns
 
-Objekt
+Object
 
 =head4 Description
 
@@ -38,34 +86,155 @@ Instantiiere ein Objekt der Klasse und liefere dieses zurück.
 
 =head2 Objektmethoden
 
-=head3 getTemplate() - Liefere ein ZUGFeRD-Fragment als Template
+=head3 doc() - Liefere ZUGFeRD Doku
 
 =head4 Synopsis
 
-  $tpl = $zug->getTemplate($name);
+  $str = $zug->doc;
+  $str = $zug->doc($type);
+
+=head4 Arguments
+
+=over 4
+
+=item $type (Default: 'xml')
+
+Art der Dokumentation:
+
+=over 4
+
+=item 'xml'
+
+ZUGFeRD XML mit Beispielwerten und Kommentaren
+
+=item 'hash'
+
+ZUGFeRD Hash mit Beispielwerten
+
+=item 'paths'
+
+Liste der Zugriffspfade im Hash.
+
+=back
+
+=back
 
 =head4 Returns
 
-Quiq::Template-Objekt
+(String) Doku
+
+=head4 Example
+
+ZUGFeRD XML mit Beispielwerten und Kommentaren:
+
+  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc('xml')'
+
+ZUGFeRD Hash mit Beispielwerten:
+
+  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc('hash')'
+
+Zugriffspfade im ZUGFeRD Hash:
+
+  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc('paths')'
+
+=head3 hash() - Liefere ZUGFeRD XML Template als Hash
+
+=head4 Synopsis
+
+  $h = $zug->hash;
+  $h = $zug->hash($variant);
+
+=head4 Arguments
+
+=over 4
+
+=item $variant (Default: 'placeholders')
+
+=over 4
+
+=item 'empty'
+
+Ohne Werte
+
+=item 'placeholders'
+
+Mit Platzhaltern
+
+=item 'values'
+
+Mit Beispielwerten
+
+=back
+
+=back
+
+=head4 Returns
+
+Hash-Referenz
 
 =head4 Description
 
-Liefere ein ZUGFeRD-Template mit dem Namen $name.
+Wandele das ZUGFeRD XML Template in einen Hash und liefere eine Referenz
+auf diesen Hash zurück.
 
-=head3 templateNames() - Liefere die Liste aller Template-Namen
+=head3 hashToXml() - Wandele (ZUGFeRD) Hash nach XML
 
 =head4 Synopsis
 
-  @names | $nameA = $zug->templateNames;
+  $xml = $zug->hashToXml($h);
 
 =head4 Returns
 
-(Array of Strings) Im Skalarkontext wird eine Referenz auf die Liste
-geliefert.
+(String) XML
+
+=head4 Description
+
+Wandele den Hash nach XML und liefere dieses zurück.
+
+=head4 Example
+
+  $ perl -MQuiq::Zugferd -E '$zug = Quiq::Zugferd->new; $h = $zug->asHash; print $zug->hashToXml($h)'
+
+=head3 xml() - Liefere ZUGFeRD XML Template als Zeichenkette
+
+=head4 Synopsis
+
+  $xml = $zug->xml;
+  $xml = $zug->xml($variant);
+
+=head4 Arguments
+
+=over 4
+
+=item $variant (Default: 'empty')
+
+Variante des Hashs:
+
+=over 4
+
+=item 'empty'
+
+Ohne Werte
+
+=item 'placeholders'
+
+Mit Platzhaltern
+
+=item 'values'
+
+Mit Beispielwerten
+
+=back
+
+=back
+
+=head4 Returns
+
+(String) XML
 
 =head1 VERSION
 
-1.222
+1.223
 
 =head1 SOURCE
 
