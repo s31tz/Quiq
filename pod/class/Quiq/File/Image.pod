@@ -107,6 +107,16 @@ Liefere die Breite des Bildes in Pixeln, z.B. 1920.
 
 Liefere die Höhe des Bildes in Pixeln, z.B. 1080.
 
+=head3 created() - Aufnahmezeitpunkt
+
+=head4 Synopsis
+
+  $created = $img->created;
+
+=head4 Description
+
+Liefere den Aufnahmezeitpunkt des Bildes, z.B. '2024-11-11 22:22:06'.
+
 =head3 size() - Breite und Höhe
 
 =head4 Synopsis
@@ -224,7 +234,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2024 Frank Seitz
+Copyright (C) 2025 Frank Seitz
 
 =head1 LICENSE
 
