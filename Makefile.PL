@@ -23,6 +23,7 @@ WriteMakefile(
         GD => 0,
         HTML::Tree => 0,
         HTTP::Request => 0,
+        Image::ExifTool => 0,
         Image::Size => 0,
         JSON => 0,
         LWP::UserAgent => 0,
