@@ -16,14 +16,14 @@ L<Quiq::Hash>
 
 =item $ZUGFERD_DIR
 
-(Default-)Verzeichnis mit den ZUGFeRD XSD-Dateien und dem
-ZUGFeRD XML-Template.
+Verzeichnis mit den ZUGFeRD XSD-Dateien und dem ZUGFeRD XML-Template.
+Der Wert dar Variable ist priorisiert gegenüber dem klasseninternen Pfad.
 
 =back
 
 =head1 DESCRIPTION
 
-B<WORK IN PROGRESS>
+B<Diese Klasse befindet sich in Entwicklung!>
 
 Die Klasse kapselt das ZUGFeRD 2.3(Factur-X Version 1.0.07) XML
 Schema BASIC sowie ein XML-Template zu diesem Schema, das alle
@@ -528,7 +528,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2024 Frank Seitz
+Copyright (C) 2025 Frank Seitz
 
 =head1 LICENSE
 
