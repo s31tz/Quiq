@@ -941,7 +941,7 @@ L<Quiq::Trash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Trash.pod
 
 =item *
 
-L<Quiq::Tree|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Tree.pod> - Operatonen auf Baumstrukturen
+L<Quiq::Tree|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Tree.pod> - Operatonen auf Perl-Baumstrukturen
 
 =item *
 
@@ -982,6 +982,10 @@ L<Quiq::Xml::LibXml|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Xml
 =item *
 
 L<Quiq::Zugferd|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd.pod> - Generiere/Akzeptiere XML einer ZUGFeRD-Rechnung
+
+=item *
+
+L<Quiq::Zugferd::Tree|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Tree.pod> - Operatonen auf ZUGFeRD-Baum
 
 =back
 

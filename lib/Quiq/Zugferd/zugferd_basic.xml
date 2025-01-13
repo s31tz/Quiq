@@ -72,7 +72,7 @@
       <ram:SellerTradeParty> <!-- BG-4, 1..1, SELLER -->
         <ram:ID schemeID="Scheme ID">ID VENDEUR</ram:ID> <!-- BT-29, 0..n, Seller identifier, Identifier -->
         <ram:GlobalID schemeID="GLN">GLOBAL ID VENDEUR</ram:GlobalID> <!-- BT-29-1, 0..1, -->
-        <ram:Name>RAISON SOCIALE VENDEUR</ram:Name> <!-- BT-27, 1..1, Seller name, Text -->
+        <ram:Name>RAISON SOCIALE VENDEUR</ram:Name> <!-- %SELLER_NAME% BT-27, 1..1, Seller name, Text -->
         <ram:SpecifiedLegalOrganization> <!-- BT-30, 0..1, Seller legal registration identifier, Identifier -->
           <ram:ID schemeID="0002">12345678900014</ram:ID> <!-- BT-30, 0..1, Seller legal registration identifier, Identifier -->
           <ram:TradingBusinessName>NOM COMMERCIAL VENDEUR</ram:TradingBusinessName> <!-- BT-28, 0..1, Seller trading name, Text -->

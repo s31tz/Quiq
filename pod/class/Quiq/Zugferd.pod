@@ -26,7 +26,7 @@ B<Diese Klasse befindet sich in Entwicklung!>
 Die Klasse kapselt das ZUGFeRD 2.3(Factur-X Version 1.0.07) XML
 Schema BASIC sowie ein XML-Template zu diesem Schema, das alle
 ELemente und Attribute umfasst. Das Template kann als XML (Text)
-oder als Datenstruktur (Hash) in verschiedenen Varianten
+oder als Datenstruktur (Baum) in verschiedenen Varianten
 (leer, mit Beispielwerten, mit Platzhaltern) genutzt werden.
 
 =head1 EXAMPLES
@@ -34,7 +34,7 @@ oder als Datenstruktur (Hash) in verschiedenen Varianten
 Zeige ZUGFeRD XML und Datenstruktur als Zeichenkette:
 
   $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->new->doc' # XML, kommentiert
-  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->new->doc("hash")'
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->new->doc("tree")'
 
 (Tipp: XML-Ausgabe in Datei speichern und mit Emacs oder vi
 mit "Syntax Highlighting" lesen)
@@ -45,11 +45,9 @@ Zeige das ZUGFeRD XML:
   $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->new->xml("placeholders")'
   $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->new->xml("values")'
 
-Zeige das ZUGFeRD XML als Hash:
+Zeige das ZUGFeRD XML als Baum:
 
-  $ perl -MQuiq::Zugferd -MQuiq::Dumper -E 'say Quiq::Dumper->dump(Quiq::Zugferd->new->hash)'
-  
-  $ perl -MQuiq::Zugferd -MQuiq::Dumper -E 'say Quiq::Dumper->dump(Quiq::Zugferd->new->hash)'
+  $ perl -MQuiq::Zugferd -MQuiq::Dumper -E 'say Quiq::Dumper->dump(Quiq::Zugferd->new->tree)'
 
 =head1 METHODS
 
@@ -65,11 +63,11 @@ Zeige das ZUGFeRD XML als Hash:
 
 =over 4
 
-=item --xsdDir=DIR (Default: $ENV{'ZUGFERD_DIR'} || I<ModuleDir>)
+=item -xsdDir => DIR (Default: $ENV{'ZUGFERD_DIR'} || I<ModuleDir>)
 
 Verzeichnis mit den ZUGFeRD Schema-Dateien
 
-=item --xmlTemplateFile=FILE.xml (Default: "$ENV{'ZUGFERD_DIR'}\
+=item -xmlTemplateFile => FILE.xml (Default: "$ENV{'ZUGFERD_DIR'}\
 
 /zugferd_basic.xml")
 ZUGFeRD-Template
@@ -85,6 +83,22 @@ Object
 Instantiiere ein Objekt der Klasse und liefere dieses zurück.
 
 =head2 Objektmethoden
+
+=head3 parts() - Liefere Abschnitte mit mehreren gleichen Unterabschnitten
+
+=head4 Synopsis
+
+  @parts | $partA = $zug->parts;
+
+=head4 Returns
+
+(Array) Liste von Abschnitten. Im Skalarkontext liefere eine Referenz auf
+die Liste.
+
+=head4 Description
+
+Liefere die Liste der Namen aller Abschnitte, die mehrere gleiche
+Unterabschnitte haben. Die Namen sind Tagnamen ohne Namespace-Präfix.
 
 =head3 doc() - Liefere ZUGFeRD Doku
 
@@ -107,13 +121,13 @@ Art der Dokumentation:
 
 ZUGFeRD XML mit Beispielwerten und Kommentaren
 
-=item 'hash'
+=item 'tree'
 
-ZUGFeRD Hash mit Beispielwerten
+ZUGFeRD Baum mit Beispielwerten
 
 =item 'paths'
 
-Liste der Zugriffspfade im Hash.
+Liste der Zugriffspfade im Baum
 
 =back
 
@@ -127,22 +141,26 @@ Liste der Zugriffspfade im Hash.
 
 ZUGFeRD XML mit Beispielwerten und Kommentaren:
 
-  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc('xml')'
+  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc("xml")'
 
-ZUGFeRD Hash mit Beispielwerten:
+ZUGFeRD Baum mit Beispielwerten:
 
-  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc('hash')'
+  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc("tree")'
 
-Zugriffspfade im ZUGFeRD Hash:
+Zugriffspfade im ZUGFeRD Baum:
 
-  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc('paths')'
+  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc("paths")'
 
-=head3 hash() - Liefere ZUGFeRD XML Template als Hash
+Abschnitte mit mehreren gleichen Unterabschnitten:
+
+  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc("parts")'
+
+=head3 tree() - Liefere ZUGFeRD XML Template als Baum
 
 =head4 Synopsis
 
-  $h = $zug->hash;
-  $h = $zug->hash($variant);
+  $h = $zug->tree;
+  $h = $zug->tree($variant);
 
 =head4 Arguments
 
@@ -170,18 +188,18 @@ Mit Beispielwerten
 
 =head4 Returns
 
-Hash-Referenz
+Baum-Referenz
 
 =head4 Description
 
-Wandele das ZUGFeRD XML Template in einen Hash und liefere eine Referenz
-auf diesen Hash zurück.
+Wandele das ZUGFeRD XML Template in einen Baum und liefere eine Referenz
+auf den Wurzelknoten zurück.
 
-=head3 hashToXml() - Wandele (ZUGFeRD) Hash nach XML
+=head3 treeToXml() - Wandele (ZUGFeRD) Baum nach XML
 
 =head4 Synopsis
 
-  $xml = $zug->hashToXml($h);
+  $xml = $zug->treeToXml($h);
 
 =head4 Returns
 
@@ -189,11 +207,11 @@ auf diesen Hash zurück.
 
 =head4 Description
 
-Wandele den Hash nach XML und liefere dieses zurück.
+Wandele den Baum nach XML und liefere dieses zurück.
 
 =head4 Example
 
-  $ perl -MQuiq::Zugferd -E '$zug = Quiq::Zugferd->new; $h = $zug->asHash; print $zug->hashToXml($h)'
+  $ perl -MQuiq::Zugferd -E '$zug = Quiq::Zugferd->new; $h = $zug->tree; print $zug->treeToXml($h)'
 
 =head3 xml() - Liefere ZUGFeRD XML Template als Zeichenkette
 
@@ -208,7 +226,7 @@ Wandele den Hash nach XML und liefere dieses zurück.
 
 =item $variant (Default: 'empty')
 
-Variante des Hashs:
+Variante des XML:
 
 =over 4
 

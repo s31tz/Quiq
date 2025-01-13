@@ -19,22 +19,25 @@ sub test_loadClass : Init(1) {
 sub test_unitTest: Test(1) {
     my $self = shift;
 
+    if ($0 =~ /\.cotedo/) {
+        $ENV{'ZUGFERD_DIR'} = $ENV{'HOME'}.'/dvl/jaz/Blob/zugferd';
+    }
     my $zug = Quiq::Zugferd->new;
     $self->is(ref($zug),'Quiq::Zugferd');
 
     # FIXME: Tests hinzufügen
 
     my $str = $zug->doc('xml');
-    $str = $zug->doc('hash');
+    $str = $zug->doc('tree');
 
     my $xml = $zug->xml('empty');
     $xml = $zug->xml('placeholders');
     $xml = $zug->xml('values');
 
-    my $h = $zug->hash('empty'); # Kann nicht nach XML gewandelt werden
-    $h = $zug->hash('placeholders'); # Kann nicht nach XML gewandelt werden
-    $h = $zug->hash('values');
-    $xml = $zug->hashToXml($h);
+    my $h = $zug->tree('empty'); # Kann nicht nach XML gewandelt werden
+    $h = $zug->tree('placeholders'); # Kann nicht nach XML gewandelt werden
+    $h = $zug->tree('values');
+    $xml = $zug->treeToXml($h);
 }
 
 # -----------------------------------------------------------------------------
