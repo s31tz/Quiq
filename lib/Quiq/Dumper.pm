@@ -51,6 +51,12 @@ Referenz auf eine Datenstruktur.
 Liefere eine Perl-Datenstruktur beliebiger Tiefe in lesbarer Form
 als Zeichenkette, so dass sie zu Debugzwecken ausgegeben werden kann.
 
+Wenn die Klassenvariable $NoClassNames gesetzt ist, unterbleibt die
+Ausgabe eines evtl. gegebenen Klassennamens vor einer geblessten
+Struktur:
+
+  $Quiq::Dumper::NoClassNames = 1;
+
 =head4 Example
 
   Quiq::Dumper->dump($obj);
@@ -61,6 +67,7 @@ als Zeichenkette, so dass sie zu Debugzwecken ausgegeben werden kann.
 
 my $maxDepth = undef;
 my $a = Quiq::AnsiColor->new(1);
+our $NoClassNames = 0;
 
 sub dump {
     my ($this,$arg) = splice @_,0,2;
@@ -111,7 +118,7 @@ sub dump {
             $str = @$arg;
         }
         $str = "[$str]";
-        if ($refType ne $ref) {
+        if (!$NoClassNames && $refType ne $ref) {
             $str = $a->str('bold dark blue',$ref).' '.$str;
         }
         return $str;
@@ -134,7 +141,7 @@ sub dump {
             $str = keys %$arg;
         }
         $str = "{$str}";
-        if ($refType ne $ref) {
+        if (!$NoClassNames && $refType ne $ref) {
             $str = $a->str('bold dark blue',$ref).' '.$str;
         }
         return $str;
@@ -169,7 +176,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2024 Frank Seitz
+Copyright (C) 2025 Frank Seitz
 
 =head1 LICENSE
 

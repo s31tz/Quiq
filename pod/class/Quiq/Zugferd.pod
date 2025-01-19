@@ -125,9 +125,17 @@ ZUGFeRD XML mit Beispielwerten und Kommentaren
 
 ZUGFeRD Baum mit Beispielwerten
 
+=item 'parts'
+
+Liste der Elemente, mit n-fachen Unterelementen
+
 =item 'paths'
 
 Liste der Zugriffspfade im Baum
+
+=item 'cardinality'
+
+Liste der Elemente und ihrer Kardinalitäten
 
 =back
 
@@ -151,9 +159,13 @@ Zugriffspfade im ZUGFeRD Baum:
 
   $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc("paths")'
 
-Abschnitte mit mehreren gleichen Unterabschnitten:
+Elemente mit n-fachen Unterelementen:
 
   $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc("parts")'
+
+Elemente und ihre Kardinalitäten:
+
+  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc("cardinality")'
 
 =head3 tree() - Liefere ZUGFeRD XML Template als Baum
 

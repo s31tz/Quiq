@@ -71,6 +71,7 @@ use XML::LibXML ();
 use XML::Compile::Util ();
 use Quiq::Dumper;
 use Quiq::Tree;
+use Quiq::AnsiColor;
 use Quiq::Zugferd::Tree;
 use Quiq::Xml;
 use Quiq::FileHandle;
@@ -246,9 +247,17 @@ ZUGFeRD XML mit Beispielwerten und Kommentaren
 
 ZUGFeRD Baum mit Beispielwerten
 
+=item 'parts'
+
+Liste der Elemente, mit n-fachen Unterelementen
+
 =item 'paths'
 
 Liste der Zugriffspfade im Baum
+
+=item 'cardinality'
+
+Liste der Elemente und ihrer Kardinalitäten
 
 =back
 
@@ -272,9 +281,13 @@ Zugriffspfade im ZUGFeRD Baum:
 
   $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc("paths")'
 
-Abschnitte mit mehreren gleichen Unterabschnitten:
+Elemente mit n-fachen Unterelementen:
 
   $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc("parts")'
+
+Elemente und ihre Kardinalitäten:
+
+  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc("cardinality")'
 
 =cut
 
@@ -291,13 +304,30 @@ sub doc {
         my $h = $self->tree('values');
         return Quiq::Dumper->dump($h)."\n";
     }
-    elsif ($type eq 'parts') {
-        return join("\n",$self->parts)."\n";
-    }
     elsif ($type eq 'paths') {
         my $h = $self->tree;
         my @paths = sort Quiq::Tree->leafPaths($h);
         return join("\n",@paths)."\n";
+    }
+    elsif ($type eq 'parts') {
+        return join("\n",$self->parts)."\n";
+    }
+    elsif ($type eq 'cardinality') {
+        my $a = Quiq::AnsiColor->new(1);
+        my $str = '';
+        my $template = $self->get('template');
+        for my $line (split /\n/,$template) {
+            my ($tag) = $line =~ /^(\s+<[\w:]+>)/;
+            my ($comment) = $line =~ /(\s+<!--.*?-->)/;
+            if ($tag) {
+                my ($cardinality) = $line =~ /(.\.\..)/;
+                $cardinality ||= '    ';
+                $str .= sprintf "%s%s%s\n",$cardinality,
+                    $a->str('cyan',$tag),
+                    $a->str('red',$comment);
+            }
+        }
+        return $str;
     }
 
     $self->throw(

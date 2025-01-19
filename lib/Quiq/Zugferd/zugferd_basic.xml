@@ -4,29 +4,29 @@
     xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100"
     xmlns:ram="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100">
 
-  <rsm:ExchangedDocumentContext> <!-- MESSAGE IDENTIFICATION BLOCK -->
+  <rsm:ExchangedDocumentContext> <!-- 1..1 MESSAGE IDENTIFICATION BLOCK -->
     <ram:BusinessProcessSpecifiedDocumentContextParameter> <!-- BT-23, 0..1, Business process type, Text -->
       <ram:ID>ID PROCESSUS</ram:ID> <!-- BT-23, 0..1, Business process type, Text -->
     </ram:BusinessProcessSpecifiedDocumentContextParameter>
     <ram:GuidelineSpecifiedDocumentContextParameter> <!-- BT-24, 1..1, Specification identifier, Identifier -->
-      <ram:ID>urn:cen.eu:en16931:2017#compliant#urn:factur-x.eu:1p0:basic</ram:ID> <!-- konstant, immer gesetzt -->
+      <ram:ID>urn:cen.eu:en16931:2017#compliant#urn:factur-x.eu:1p0:basic</ram:ID> <!-- 1..1 konstant, immer gesetzt -->
     </ram:GuidelineSpecifiedDocumentContextParameter>
   </rsm:ExchangedDocumentContext>
-  <rsm:ExchangedDocument> <!-- DOCUMENT HEADER BLOCK : INVOICE NUMBER, TYPE, ISSUE DATE and NOTE -->
+  <rsm:ExchangedDocument> <!-- 1..1 DOCUMENT HEADER BLOCK : INVOICE NUMBER, TYPE, ISSUE DATE and NOTE -->
     <ram:ID>NUMFACT</ram:ID> <!-- %INVOICE_NUMBER% BT-1, 1..1, Invoice number, Identifier -->
     <ram:TypeCode>380</ram:TypeCode> <!-- %INVOICE_TYPE% BT-3, 1..1, Invoice type code, Code -->
     <ram:IssueDateTime> <!-- BT-2, 1..1, Invoice issue date, Date -->
       <udt:DateTimeString format="102">AAAAMMJJ</udt:DateTimeString> <!-- %INVOICE_DATE% format=%DATE_FORMAT% BT-2, 1..1, Invoice issue date, Date, Date -->
     </ram:IssueDateTime>
     <ram:IncludedNote> <!-- BG-1, 0..n, Invoice note -->
-      <ram:Content>NOTE FREE TEXT</ram:Content> <!-- BT-22, 1..1, Invoice note, Texte -->
-      <ram:SubjectCode>CODE NOTE</ram:SubjectCode> <!-- BT-21, 0..1, Invoice note subject code, Text -->
+      <ram:Content>NOTE FREE TEXT</ram:Content> <!-- %TEXT% BT-22, 1..1, Invoice note, Texte -->
+      <ram:SubjectCode>CODE NOTE</ram:SubjectCode> <!-- %CODE% BT-21, 0..1, Invoice note subject code, Text -->
     </ram:IncludedNote>
   </rsm:ExchangedDocument>
-  <rsm:SupplyChainTradeTransaction> <!-- COMMERCIAL TRANSACTION INFORMATION BLOCK -->
+  <rsm:SupplyChainTradeTransaction> <!-- 1..1 COMMERCIAL TRANSACTION INFORMATION BLOCK -->
     <ram:IncludedSupplyChainTradeLineItem> <!-- BG-25, 1..n, INVOICE LINE -->
       <ram:AssociatedDocumentLineDocument> <!-- BT-126, 1..1, Invoice line identifier, Identifier -->
-        <ram:LineID>1</ram:LineID>
+        <ram:LineID>1</ram:LineID> <!-- BT-126, 1..1, Kennung der Rechnungsposition -->
       </ram:AssociatedDocumentLineDocument>
       <ram:SpecifiedTradeProduct> <!-- BG-31, 1..1, ITEM INFORMATION -->
         <ram:GlobalID schemeID="ID SCHEME">ID ARTICLE</ram:GlobalID> <!-- BT-157, 0..1, Item standard identifier, Identifier -->
@@ -41,7 +41,7 @@
       <ram:SpecifiedLineTradeDelivery> <!-- BT-129, 1..1, Invoiced quantity, Quantity -->
         <ram:BilledQuantity unitCode="C62">5.00</ram:BilledQuantity> <!-- BT-129, 1..1, Invoiced quantity, Quantity -->
       </ram:SpecifiedLineTradeDelivery>
-      <ram:SpecifiedLineTradeSettlement>
+      <ram:SpecifiedLineTradeSettlement> <!-- BG-30-00, 1..1, Gruppierung von Angaben zur Abrechnung auf Positionsebene -->
         <ram:ApplicableTradeTax> <!-- BG-30, 1..1, LINE VAT INFORMATION -->
           <ram:TypeCode>VAT</ram:TypeCode> <!-- BT-151-0, 1..1, VAT type code on line level -->
           <ram:CategoryCode>S</ram:CategoryCode> <!-- BT-151, 1..1, Invoiced item VAT category code, Code -->
@@ -67,7 +67,7 @@
         </ram:SpecifiedTradeSettlementLineMonetarySummation>
       </ram:SpecifiedLineTradeSettlement>
     </ram:IncludedSupplyChainTradeLineItem>
-    <ram:ApplicableHeaderTradeAgreement> <!-- ApplicableHeaderTradeAgreement BLOCK -->
+    <ram:ApplicableHeaderTradeAgreement> <!-- BT-10-00, 1..1, ApplicableHeaderTradeAgreement BLOCK -->
       <ram:BuyerReference>SERVICE EXEC</ram:BuyerReference> <!-- BT-10, 0..1 Buyer reference, Text -->
       <ram:SellerTradeParty> <!-- BG-4, 1..1, SELLER -->
         <ram:ID schemeID="Scheme ID">ID VENDEUR</ram:ID> <!-- BT-29, 0..n, Seller identifier, Identifier -->
@@ -78,12 +78,12 @@
           <ram:TradingBusinessName>NOM COMMERCIAL VENDEUR</ram:TradingBusinessName> <!-- BT-28, 0..1, Seller trading name, Text -->
         </ram:SpecifiedLegalOrganization>
         <ram:PostalTradeAddress> <!-- BG-5, 1..1, SELLER POSTAL ADDRESS -->
-          <ram:PostcodeCode>75007</ram:PostcodeCode> <!-- BT-38, 0..1, Seller post code, Text -->
-          <ram:LineOne>55 AVENUE BOSQUET</ram:LineOne> <!-- BT-35, 0..1, Seller address line 1, Text -->
-          <ram:LineTwo>LIGNE 2</ram:LineTwo> <!-- BT-36, 0..1, Seller address line 2, Text -->
-          <ram:LineThree>LIGNE 3</ram:LineThree> <!-- BT-162, 0..1, Seller address line 3, Text -->
-          <ram:CityName>PARIS</ram:CityName> <!-- BT-37, 0..1, Seller city, Text -->
-          <ram:CountryID>FR</ram:CountryID> <!-- BT-40, 1..1, Seller country code, Code -->
+          <ram:PostcodeCode>75007</ram:PostcodeCode> <!-- %SELLER_POSTCODE% BT-38, 0..1, Seller post code, Text -->
+          <ram:LineOne>55 AVENUE BOSQUET</ram:LineOne> <!-- %SELLER_LINEONE% BT-35, 0..1, Seller address line 1, Text -->
+          <ram:LineTwo>LIGNE 2</ram:LineTwo> <!-- %SELLER_LINETWO% BT-36, 0..1, Seller address line 2, Text -->
+          <ram:LineThree>LIGNE 3</ram:LineThree> <!-- %SELLER_LINETHREE% BT-162, 0..1, Seller address line 3, Text -->
+          <ram:CityName>PARIS</ram:CityName> <!-- %SELLER_CITY% BT-37, 0..1, Seller city, Text -->
+          <ram:CountryID>FR</ram:CountryID> <!-- %SELLER_COUNTRY% BT-40, 1..1, Seller country code, Code -->
           <ram:CountrySubDivisionName>FR</ram:CountrySubDivisionName> <!-- BT-39, 0..1, Seller country subdivision, Text -->
         </ram:PostalTradeAddress>
         <ram:URIUniversalCommunication> <!-- BT-34, 0..1, Seller electronic address, Identifier -->
@@ -94,19 +94,19 @@
         </ram:SpecifiedTaxRegistration>
       </ram:SellerTradeParty>
       <ram:BuyerTradeParty> <!-- BG-7, 1..1, BUYER -->
-        <ram:ID schemeID="Scheme ID">ID ACHETEUR</ram:ID> <!-- BT-46, 0..1, Buyer identifier, Identifier -->
+        <ram:ID schemeID="Scheme ID">ID ACHETEUR</ram:ID> <!-- %BUYER_ID% BT-46, 0..1, Buyer identifier, Identifier -->
         <ram:GlobalID schemeID="GLN">GLOBAL ID</ram:GlobalID> <!-- BT-46-1, 0..1, -->
-        <ram:Name>RAISON SOCIALE ACHETEUR</ram:Name> <!-- BT-44, 1..1, Buyer name, Text -->
+        <ram:Name>RAISON SOCIALE ACHETEUR</ram:Name> <!-- %BUYER_NAME% BT-44, 1..1, Buyer name, Text -->
         <ram:SpecifiedLegalOrganization> <!-- BT-47, 0..1, Buyer legal registration identifier, Identifier -->
           <ram:ID schemeID="0002">98765432100014</ram:ID> <!-- BT-47, 0..1, Buyer legal registration identifier, Identifier -->
         </ram:SpecifiedLegalOrganization>
         <ram:PostalTradeAddress> <!-- BG-8, 1..1, BUYER POSTAL ADDRESS -->
-          <ram:PostcodeCode>75012</ram:PostcodeCode> <!-- BT-53, 0..1, Buyer post code, Text -->
-          <ram:LineOne>139 RUE DE BERCY</ram:LineOne> <!-- BT-50, 0..1, Buyer address line 1, Text -->
-          <ram:LineTwo>LIGNE 2</ram:LineTwo> <!-- BT-51, 0..1, Buyer address line 2, Text -->
-          <ram:LineThree>LIGNE 3</ram:LineThree> <!-- BT-163, 0..1, Buyer address line 3, Text -->
-          <ram:CityName>PARIS</ram:CityName> <!-- BT-52, 0..1, Buyer city, Text -->
-          <ram:CountryID>FR</ram:CountryID> <!-- BT-55, 1..1, Buyer country code, Code -->
+          <ram:PostcodeCode>75012</ram:PostcodeCode> <!-- %BUYER_POSTCODE% BT-53, 0..1, Buyer post code, Text -->
+          <ram:LineOne>139 RUE DE BERCY</ram:LineOne> <!-- %BUYER_LINEONE% BT-50, 0..1, Buyer address line 1, Text -->
+          <ram:LineTwo>LIGNE 2</ram:LineTwo> <!-- %BUYER_LINETWO% BT-51, 0..1, Buyer address line 2, Text -->
+          <ram:LineThree>LIGNE 3</ram:LineThree> <!-- %BUYER_LINETHREE% BT-163, 0..1, Buyer address line 3, Text -->
+          <ram:CityName>PARIS</ram:CityName> <!-- %BUYER_CITY% BT-52, 0..1, Buyer city, Text -->
+          <ram:CountryID>FR</ram:CountryID> <!-- %BUYER_COUNTRY% BT-55, 1..1, Buyer country code, Code -->
           <ram:CountrySubDivisionName>FR</ram:CountrySubDivisionName> <!-- BT-54, 0..1, Buyer country subdivision, Text -->
         </ram:PostalTradeAddress>
         <ram:URIUniversalCommunication> <!-- BT-49, 0..1, Buyer electronic address, Identifier -->
@@ -139,7 +139,7 @@
       </ram:ContractReferencedDocument>
     </ram:ApplicableHeaderTradeAgreement>
     <ram:ApplicableHeaderTradeDelivery> <!-- BG-13, 0..1, DELIVERY INFORMATION -->
-      <ram:ShipToTradeParty>
+      <ram:ShipToTradeParty> <!-- BG-13, 0..1, LIEFERINFORMATIONEN -->
         <ram:ID schemeID="Scheme ID">ID LIVRAISON</ram:ID> <!-- BT-71, 0..1, Deliver to location identifier, Identifier -->
         <ram:GlobalID schemeID="GLN">GLOBAL ID</ram:GlobalID> <!-- BT-71-1, 0..1, -->
         <ram:Name></ram:Name> <!-- BT-70, 0..1, Deliver to party name – SHIP TO PARTY -->
@@ -162,7 +162,7 @@
         <ram:IssuerAssignedID>AVIS EXP XXXX</ram:IssuerAssignedID> <!-- BT-16, 0..1, Despatch advice reference -->
       </ram:DespatchAdviceReferencedDocument>
     </ram:ApplicableHeaderTradeDelivery>
-    <ram:ApplicableHeaderTradeSettlement> 
+    <ram:ApplicableHeaderTradeSettlement> <!-- BG-19, 1..1, LASTSCHRIFTVERFAHREN -->
       <ram:CreditorReferenceID>ICS : IDENTIFIER MANDAT PREL</ram:CreditorReferenceID> <!-- BT-90, 0..1, Bank assigned creditor identifier -->
       <ram:PaymentReference>REF ENDTOEND PAIMENT</ram:PaymentReference> <!-- BT-83, 0..1 Remittance information, Text -->
       <ram:InvoiceCurrencyCode>EUR</ram:InvoiceCurrencyCode> <!-- BT-5, 1..1, Invoice currency code, Code -->
@@ -194,16 +194,15 @@
         <ram:DueDateTypeCode>5 (SUR DEBITS)</ram:DueDateTypeCode> <!-- BT-8, 0..1, Value added tax point date code, Code -->
         <ram:RateApplicablePercent>20</ram:RateApplicablePercent> <!-- BT-119, 0..1 VAT category rate, Percentage -->
       </ram:ApplicableTradeTax>
-      <ram:BillingSpecifiedPeriod>
-        <ram:StartDateTime>
+      <ram:BillingSpecifiedPeriod> <!-- BG-14, 0..1, RECHNUNGSZEITRAUM -->
+        <ram:StartDateTime> <!-- BT-73-00, 0..1, Beginn der Rechnungsperiode -->
           <udt:DateTimeString format="102">20180101</udt:DateTimeString> <!-- BT-73, 0..1, Invoicing period start date, Date -->
         </ram:StartDateTime>
-        <ram:EndDateTime>
+        <ram:EndDateTime> <!-- BT-73, 1..1, Anfangsdatum des Rechnungszeitraums -->
           <udt:DateTimeString format="102">20181231</udt:DateTimeString> <!--BT-74, 0..1, Invoicing period end date, Date -->
         </ram:EndDateTime>
       </ram:BillingSpecifiedPeriod>
-      <ram:SpecifiedTradeAllowanceCharge>
-        <!-- BG-20, 0..n, DOCUMENT LEVEL ALLOWANCES -->
+      <ram:SpecifiedTradeAllowanceCharge> <!-- BG-20, 0..n, DOCUMENT LEVEL ALLOWANCES -->
         <ram:ChargeIndicator> <!-- BG-20-0, 1..1, Charge indicator -->
           <udt:Indicator>false</udt:Indicator> <!-- BG-20-00, 1..1, Charge indicator Value -->
         </ram:ChargeIndicator>

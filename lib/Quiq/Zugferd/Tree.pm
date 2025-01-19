@@ -61,11 +61,52 @@ sub new {
 
 =head2 Objektmethoden
 
-=head3 reduce() - Reduziere den Baum
+=head3 getMultiElement() - Liefere Mehrfach-Element
 
 =head4 Synopsis
 
-  $ztr->reduce;
+  $ztr = $ztr->getMultiElement($keyPath,$placeholder)
+
+=head4 Arguments
+
+=over 4
+
+=item $keyPath
+
+Pfad zu Array
+
+=item $placeholder
+
+Name des Platzhalters
+
+=back
+
+=head4 Description
+
+Liefere die Struktur, die das erste Element des Arrays iat, das
+$keyPath referenziert, und ersetze die Referenz durch den Platzhalter
+$placeholder.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub getMultiElement {
+    my ($self,$keyPath,$placeholder) = @_;
+
+    my $h = $self->getDeep($keyPath)->[0];
+    $self->setDeep($keyPath,$placeholder);
+
+    return bless $h,'Quiq::Zugferd::Tree';
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 reduceTree() - Reduziere den Baum
+
+=head4 Synopsis
+
+  $ztr->reduceTree;
 
 =head4 Description
 
@@ -87,7 +128,7 @@ Entferne alle leeren Knoten
 
 # -----------------------------------------------------------------------------
 
-sub reduce {
+sub reduceTree {
     my $self = shift;
 
     # Entferne Knoten mit unersetzten Platzhaltern
@@ -108,11 +149,11 @@ sub reduce {
 
 # -----------------------------------------------------------------------------
 
-=head3 substitutePlaceholders() - Ersetze Platzhalter
+=head3 resolvePlaceholders() - Ersetze Platzhalter
 
 =head4 Synopsis
 
-  $ztr->substitutePlaceholders(@keyVal);
+  $ztr->resolvePlaceholders(@keyVal);
 
 =head4 Arguments
 
@@ -129,19 +170,40 @@ Liste der Platzhalter und ihrer Werte
 Durchlaufe den ZUGFeRD-Baum rekursiv und ersetze auf den Blattknoten
 die Platzhalter durch ihre Werte.
 
+Fehlt einer der Platzhalter (key) im Baum, wird eine Exception geworfen.
+
 =cut
 
 # -----------------------------------------------------------------------------
 
-sub substitutePlaceholders {
+sub resolvePlaceholders {
     my $self = shift;
     # @_: @keyVal
 
     my %map = @_;
+    my %seen; # gesehene Platzhalter
+    for my $key (keys %map) {
+        $seen{$key} = 0;
+    }
     Quiq::Tree->setLeafValue($self,sub {
         my $val = shift;
-        return defined $val? $map{$val} // $val: undef;
+        if (defined $val) {
+            if (exists $map{$val}) { # Platzhalter 
+                $seen{$val} = 1;
+                return $map{$val} // $val;
+            }
+        }
+        return undef;
     });
+
+    for my $key (keys %map) {
+        if (!$seen{$key}) {
+            $self->throw(
+                'TREE-00099: Placeholder does not exist',
+                Placeholder => $key,
+            );
+        }
+    }
 
     return;
 }

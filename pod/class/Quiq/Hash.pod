@@ -136,7 +136,7 @@ Alternative Formulierung:
   $val = $h->{$key};    # ein Schlüssel
   @vals = @{$h}{@keys}; # mehrere Schlüssel
 
-=head3 getDeep() - Werte mit "tiefem Zugriff" abfragen
+=head3 getDeep() - Werte per "tiefem Zugriff" abfragen
 
 =head4 Synopsis
 
@@ -169,6 +169,38 @@ sich ein "tiefer Zugriff" kompakt formulieren lässt. Beispiel:
 ist dasselbe wie
 
   $val = $h->{'invoice'}->{'header'}->{'invoiceNumber'};
+
+=head3 setDeep() - Wert per "tiefem Zugriff" setzen
+
+=head4 Synopsis
+
+  $h->setDeep($key,$val);
+
+=head4 Arguments
+
+=over 4
+
+=item $key
+
+Zugriffspfad der Form "key1.key2..."
+
+=item $val
+
+Wert, der gesetzt wird
+
+=back
+
+=head4 Description
+
+Setze den Wert zum angegebenen Schlüssel. Der Schlüssel ist eine
+mit Punkt (.) getrennte Kette von Einzelschlüsseln, so dass
+sich ein "tiefer Zugriff" kompakt formulieren lässt. Beispiel:
+
+  $h->setDeep('invoice.header.invoiceNumber',$val);
+
+ist dasselbe wie
+
+  $h->{'invoice'}->{'header'}->{'invoiceNumber'} = $val;
 
 =head3 getRef() - Referenz auf Wert
 
@@ -876,7 +908,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2024 Frank Seitz
+Copyright (C) 2025 Frank Seitz
 
 =head1 LICENSE
 
