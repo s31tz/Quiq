@@ -4,13 +4,18 @@
 
 =head1 NAME
 
-Quiq::Xml - Einfache XML-Operationen
+Quiq::Xml - Allgemeine XML-Operationen
+
+=head1 BASE CLASS
+
+L<Quiq::Object>
 
 =cut
 
 # -----------------------------------------------------------------------------
 
 package Quiq::Xml;
+use base qw/Quiq::Object/;
 
 use v5.10;
 use strict;
@@ -19,6 +24,10 @@ use warnings;
 our $VERSION = '1.223';
 
 use XML::Twig ();
+use Quiq::Path;
+use XML::Compile::Schema ();
+use XML::LibXML ();
+use XML::Compile::Util ();
 
 # -----------------------------------------------------------------------------
 
@@ -57,6 +66,107 @@ sub print {
 
 # -----------------------------------------------------------------------------
 
+=head2 xmlToTree() - Wandele XML in Baum
+
+=head3 Synopsis
+
+  $tree = $this->xmlToTree($xml,%opt);
+  $tree = $this->xmlToTree($file,%opt);
+
+=head3 Arguments
+
+=over 4
+
+=item $xml
+
+XML Code als Zeichenkette
+
+=item $file
+
+Datei mit XML Code
+
+=back
+
+=head3 Options
+
+=over 4
+
+=item -xsdDir => $xsdDir (Default: $ENV{'XSD_DIR'} // '.')
+
+]:
+Verzeichnis mit XML Schema Definitionsdateien (.xsd).
+
+=back
+
+=head3 Returns
+
+(Perl Datenstruktur) Baum
+
+=head3 Description
+
+Wandele den XML Code $xml in eine hierarchische Perl-Datenstruktur
+(Baum) und liefere eine Referenz auf diese Struktur zurück.
+
+=head3 Example
+
+  $ perl -MQuiq::Xml -E 'Quiq::Xml->xmlToTree("02-taxifahrt-orig.xml",-xsdDir=>"~/dat/zugferd")'
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub xmlToTree {
+    my ($class,$xml) = splice @_,0,2;
+    # @_: %opt
+
+    # Optionen
+
+    my $xsdDir = $ENV{'XSD_DIR'} // '.';
+
+    $class->parameters(\@_,
+        -xsdDir => \$xsdDir,
+    );
+
+    # Operation ausführen
+
+    if ($xml !~ /</) {
+        $xml = Quiq::Path->read($xml,-decode=>'utf-8');
+    }
+
+    # #-Kommentarzeilen entfernen
+    $xml =~ s/^\s*#.*$//gm;
+
+    # Ermittele die .xsd-Dateien
+    my @xsdFiles = Quiq::Path->find($xsdDir,-pattern=>'\.xsd$');
+
+    # Instantiiere das Schema-Objekt
+
+    my $sch = XML::Compile::Schema->new;
+    for my $file (@xsdFiles) {
+        $sch->importDefinitions($file);
+    }
+
+    my $doc = XML::LibXML->load_xml(
+        string => $xml,
+        no_blanks => 1,
+    );
+    my $top = $doc->documentElement;
+    my $rootType = XML::Compile::Util::type_of_node($top);
+
+    # Instantiiere XML-Reader
+    my $rdr = $sch->compile(READER=>$rootType,
+        sloppy_floats => 1, # Wir wollen keine BigFloat-Elemente
+        sloppy_integers => 1, # Wir wollen keine BigInt-Elemente
+    );
+
+    # Erzeuge Baum
+    my $tree = $rdr->($doc);
+
+    return $tree;
+}
+
+# -----------------------------------------------------------------------------
+
 =head1 VERSION
 
 1.223
@@ -67,7 +177,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2024 Frank Seitz
+Copyright (C) 2025 Frank Seitz
 
 =head1 LICENSE
 

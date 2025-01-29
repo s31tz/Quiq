@@ -478,6 +478,7 @@ sub treeToXml {
     # Instantiiere XML-Writer
 
     my $wrt = $sch->compile(WRITER=>$rootType,
+        # validation => 0,
         # Hiermit verhindern wir, dass x0 statt rsm als Präfix gesetzt wird
         prefixes => [rsm =>
             'urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100'],
@@ -555,17 +556,19 @@ sub xml {
             if (/%([A-Z1-9_]+)%/) {
                 $ph = "__${1}__";
             }
+
             # Attribut-Platzhalter ermitteln
             my %ph;
             while (/(\w+)=%([A-Z1-9_]+)%/g) {
                 $ph{$1} = "__${2}__";
             }
+
             # Kommentar entfernen
             s|\s*<!--.*?-->||g;
-            # Content-Platzhalter einsetzen (außer Specification Identifier)
-            if (!/:basic/) {
-                s|>.*?</|>$ph</|;
-            }
+
+            # Content-Platzhalter einsetzen
+            s|>.*?</|>$ph</|;
+
             # Attribut-Platzhalter einsetzen
             my @attr;
             while (/(\S+)=".*?"/g) {

@@ -110,7 +110,17 @@ Die aktuell geladenen Moduldateien auf STDOUT ausgeben:
 
 =head4 Synopsis
 
-  $str = $this->showDiff($file1,$file2);
+  $str = $this->showDiff($file1,$file2,@opt);
+
+=head4 Options
+
+=over 4
+
+=item -verbose => $bool (Default: 0)
+
+Liefere in der ersten Zeile das Diff-Kommando.
+
+=back
 
 =head4 Description
 
@@ -135,7 +145,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2024 Frank Seitz
+Copyright (C) 2025 Frank Seitz
 
 =head1 LICENSE
 

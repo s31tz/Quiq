@@ -973,7 +973,7 @@ L<Quiq::XTerm|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/XTerm.pod
 
 =item *
 
-L<Quiq::Xml|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Xml.pod> - Einfache XML-Operationen
+L<Quiq::Xml|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Xml.pod> - Allgemeine XML-Operationen
 
 =item *
 

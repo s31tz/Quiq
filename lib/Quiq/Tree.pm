@@ -32,6 +32,7 @@ use warnings;
 
 our $VERSION = '1.223';
 
+use Quiq::AnsiColor;
 use Scalar::Util ();
 
 # -----------------------------------------------------------------------------
@@ -71,6 +72,8 @@ zu ermitteln.
 
 # -----------------------------------------------------------------------------
 
+my $a = Quiq::AnsiColor->new(1);
+
 sub leafPaths {
     my ($class,$ref,$path) = @_;
 
@@ -79,7 +82,8 @@ sub leafPaths {
 
     my $type = Scalar::Util::reftype($ref);
     if (!defined $type) {
-        return $path;
+        $ref =~ s/\n/\\n/g;
+        return "$path ".$a->str('cyan',$ref); # Pfad und terminaler skalarer Wert
     }
     elsif ($type eq 'HASH') {
         for my $key (keys %$ref) {
@@ -89,7 +93,8 @@ sub leafPaths {
     elsif ($type eq 'ARRAY') {
         my $i = 0;
         for my $e (@$ref) {
-            push @paths,$class->leafPaths($ref->[$i],"$path.[$i]");
+            push @paths,$class->leafPaths($ref->[$i],$path? "$path.[$i]": "[$i]");
+            $i++;
         }
     }
     else {
