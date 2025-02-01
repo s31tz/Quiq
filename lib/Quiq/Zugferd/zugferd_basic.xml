@@ -35,7 +35,7 @@
       <ram:SpecifiedLineTradeAgreement> <!-- BG-29, 1..1, PRICE DETAILS -->
         <ram:NetPriceProductTradePrice> <!-- BT-146, 1..1, Item net price -->
           <ram:ChargeAmount>20.00</ram:ChargeAmount> <!-- ### %LINE_NET_PRICE% BT-146, 1..1, Item net price, exclusive of VAT, after subtracting item price discount -->
-          <ram:BasisQuantity unitCode="C62">1</ram:BasisQuantity> <!-- ### %LINE_BILLED_QUANTITY% unitCode=%LINE_UNIT_CODE% %BT-149, 0..1, Item price base quantity -->
+          <ram:BasisQuantity unitCode="C62">1</ram:BasisQuantity> <!-- ### %LINE_BASIS_QUANTITY% unitCode=%LINE_UNIT_CODE% %BT-149, 0..1, Item price base quantity -->
         </ram:NetPriceProductTradePrice>
       </ram:SpecifiedLineTradeAgreement>
       <ram:SpecifiedLineTradeDelivery> <!-- BT-129, 1..1, Invoiced quantity, Quantity -->
@@ -90,7 +90,7 @@
           <ram:URIID schemeID="SMTP">vendeur@vendeur.com</ram:URIID> <!-- BT-34, 0..1, Seller electronic address, Identifier -->
         </ram:URIUniversalCommunication>
         <ram:SpecifiedTaxRegistration> <!-- BT-31, 0..1, Seller VAT identifier, Identifier -->
-          <ram:ID schemeID="VA">FRXX123456789</ram:ID> <!-- ### BT-31, 0..1, Seller VAT identifier, Identifier -->
+          <ram:ID schemeID="VA">FRXX123456789</ram:ID> <!-- ### %SELLER_VAT_ID% schemeID=%SELLER_VAT_SCHEME_ID% BT-31, 0..1, Seller VAT identifier, Identifier -->
         </ram:SpecifiedTaxRegistration>
       </ram:SellerTradeParty>
       <ram:BuyerTradeParty> <!-- BG-7, 1..1, BUYER -->
@@ -155,7 +155,7 @@
       </ram:ShipToTradeParty>
       <ram:ActualDeliverySupplyChainEvent> <!-- BT-72, 0..1 Actual delivery date, Date -->
         <ram:OccurrenceDateTime> <!-- BT-72, 0..1, Actual delivery date, Date -->
-          <udt:DateTimeString format="102">AAAMMJJ</udt:DateTimeString> <!-- BT-72, 0..1, Actual delivery date, Date -->
+          <udt:DateTimeString format="102">AAAMMJJ</udt:DateTimeString> <!-- %DELIVERY_DATE% format=%DATE_FORMAT% BT-72, 0..1, Actual delivery date, Date -->
         </ram:OccurrenceDateTime>
       </ram:ActualDeliverySupplyChainEvent>
       <ram:DespatchAdviceReferencedDocument> <!-- BT-16, 0..1, Despatch advice reference -->
@@ -233,7 +233,7 @@
       </ram:SpecifiedTradeAllowanceCharge> 
       <ram:SpecifiedTradePaymentTerms> <!-- BT-9, 0..1, Payment due date, Date -->
         <ram:DueDateDateTime> <!-- BT-9, 0..1, Payment due date, Date -->
-          <udt:DateTimeString format="102">AAAMMJJ</udt:DateTimeString> <!-- BT-9, 0..1, Payment due date, Date -->
+          <udt:DateTimeString format="102">AAAMMJJ</udt:DateTimeString> <!-- %PAYMENT_TERMS_DUE_DATE% format=%DATE_FORMAT% BT-9, 0..1, Payment due date, Date -->
         </ram:DueDateDateTime>
         <ram:DirectDebitMandateID>ICS XXXX</ram:DirectDebitMandateID> <!-- BT-89, 0..1, Mandate reference identifier, Identifier -->
       </ram:SpecifiedTradePaymentTerms>

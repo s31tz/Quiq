@@ -186,11 +186,15 @@ sub resolvePlaceholders {
         $seen{$key} = 0;
     }
     Quiq::Tree->setLeafValue($self,sub {
-        my $val = shift;
-        if (defined $val) {
-            if (exists $map{$val}) { # Platzhalter 
+        my $val = shift; # akt. Knotenwert
+        if (defined $val) { # undef-Knoten belassen wir
+            if (exists $map{$val}) { # wir haben einen Platzhalter-Knoten
                 $seen{$val} = 1;
-                return $map{$val} // $val;
+                my $newVal = $map{$val}; # neuer Wert
+                if (defined($newVal) && $newVal ne '') {
+                    # Wir setzen den neuen Wert nur, wenn er nicht leer ist
+                    return $newVal;
+                }
             }
         }
         return undef;
