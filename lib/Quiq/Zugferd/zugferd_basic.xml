@@ -139,20 +139,20 @@
       </ram:ContractReferencedDocument>
     </ram:ApplicableHeaderTradeAgreement>
     <ram:ApplicableHeaderTradeDelivery> <!-- BG-13, 0..1, DELIVERY INFORMATION -->
-      <ram:ShipToTradeParty> <!-- BG-13, 0..1, LIEFERINFORMATIONEN -->
-        <ram:ID schemeID="Scheme ID">ID LIVRAISON</ram:ID> <!-- BT-71, 0..1, Deliver to location identifier, Identifier -->
-        <ram:GlobalID schemeID="GLN">GLOBAL ID</ram:GlobalID> <!-- BT-71-1, 0..1, -->
-        <ram:Name></ram:Name> <!-- %SHIP_TO_NAME% BT-70, 0..1, Deliver to party name – SHIP TO PARTY -->
-        <ram:PostalTradeAddress> <!-- BG-15, 1..1, DELIVERY ADDRESS -->
-          <ram:PostcodeCode>75012</ram:PostcodeCode> <!-- %SHIP_TO_POSTCODE% BT-78, 0..1, Deliver to post code, Text -->
-          <ram:LineOne>139 RUE DE BERCY</ram:LineOne> <!-- %SHIP_TO_LINEONE% BT-75, 0..1, Deliver to address line 1, Text -->
-          <ram:LineTwo>LIGNE 2</ram:LineTwo> <!-- %SHIP_TO_LINETWO% BT-76, 0..1, Deliver to address line 2, Text -->
-          <ram:LineThree>LIGNE 3</ram:LineThree> <!-- %SHIP_TO_LINETHREE% BT-165, 0..1, Deliver to address line 3, Text -->
-          <ram:CityName>PARIS</ram:CityName> <!-- %SHIP_TO_CITY% BT-77, 0..1, Deliver to city, Text -->
-          <ram:CountryID>FR</ram:CountryID> <!-- %SHIP_TO_COUNTRY% BT-80, 1..1, Deliver to country code, Code -->
-          <ram:CountrySubDivisionName>FR</ram:CountrySubDivisionName> <!-- BT-79, 0..1, Deliver to country subdivision, Text -->
-        </ram:PostalTradeAddress>
-      </ram:ShipToTradeParty>
+#       <ram:ShipToTradeParty> <!-- BG-13, 0..1, LIEFERINFORMATIONEN -->
+#         <ram:ID schemeID="Scheme ID">ID LIVRAISON</ram:ID> <!-- BT-71, 0..1, Deliver to location identifier, Identifier -->
+#         <ram:GlobalID schemeID="GLN">GLOBAL ID</ram:GlobalID> <!-- BT-71-1, 0..1, -->
+#         <ram:Name></ram:Name> <!-- %SHIP_TO_NAME% BT-70, 0..1, Deliver to party name – SHIP TO PARTY -->
+#         <ram:PostalTradeAddress> <!-- BG-15, 1..1, DELIVERY ADDRESS -->
+#           <ram:PostcodeCode>75012</ram:PostcodeCode> <!-- %SHIP_TO_POSTCODE% BT-78, 0..1, Deliver to post code, Text -->
+#           <ram:LineOne>139 RUE DE BERCY</ram:LineOne> <!-- %SHIP_TO_LINEONE% BT-75, 0..1, Deliver to address line 1, Text -->
+#           <ram:LineTwo>LIGNE 2</ram:LineTwo> <!-- %SHIP_TO_LINETWO% BT-76, 0..1, Deliver to address line 2, Text -->
+#           <ram:LineThree>LIGNE 3</ram:LineThree> <!-- %SHIP_TO_LINETHREE% BT-165, 0..1, Deliver to address line 3, Text -->
+#           <ram:CityName>PARIS</ram:CityName> <!-- %SHIP_TO_CITY% BT-77, 0..1, Deliver to city, Text -->
+#           <ram:CountryID>FR</ram:CountryID> <!-- %SHIP_TO_COUNTRY% BT-80, 1..1, Deliver to country code, Code -->
+#           <ram:CountrySubDivisionName>FR</ram:CountrySubDivisionName> <!-- BT-79, 0..1, Deliver to country subdivision, Text -->
+#         </ram:PostalTradeAddress>
+#       </ram:ShipToTradeParty>
       <ram:ActualDeliverySupplyChainEvent> <!-- BT-72, 0..1 Actual delivery date, Date -->
         <ram:OccurrenceDateTime> <!-- BT-72, 0..1, Actual delivery date, Date -->
           <udt:DateTimeString format="102">AAAMMJJ</udt:DateTimeString> <!-- %DELIVERY_DATE% format=%DATE_FORMAT% BT-72, 0..1, Actual delivery date, Date -->
