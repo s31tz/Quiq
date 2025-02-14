@@ -292,6 +292,9 @@ sub transferImages {
 
     # Operation ausführen
 
+    my $count = $p->count($srcDir);
+    say "$count Dateien";
+
     my $fileA = Quiq::Eog->pickImages($srcDir);
     for my $trashFile (@$fileA) {
         my @srcFiles = ($trashFile);
@@ -352,7 +355,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2024 Frank Seitz
+Copyright (C) 2025 Frank Seitz
 
 =head1 LICENSE
 
