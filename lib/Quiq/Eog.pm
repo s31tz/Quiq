@@ -292,7 +292,14 @@ sub transferImages {
 
     # Operation ausführen
 
-    my $count = $p->count($srcDir);
+    my $count = 0;
+    my $dh = Quiq::DirHandle->new($srcDir);
+    while (my $entry = $dh->next) {
+        if ($entry =~ /\.jpg$/) { # FIXME: Weitere Bildformate
+            $count++;
+        }
+    }
+    $dh->close;
     say "$count Dateien";
 
     my $fileA = Quiq::Eog->pickImages($srcDir);
