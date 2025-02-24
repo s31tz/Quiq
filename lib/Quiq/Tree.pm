@@ -82,6 +82,7 @@ sub leafPaths {
 
     my $type = Scalar::Util::reftype($ref);
     if (!defined $type) {
+        $ref //= '';
         $ref =~ s/\n/\\n/g;
         return "$path ".$a->str('cyan',$ref); # Pfad und terminaler skalarer Wert
     }

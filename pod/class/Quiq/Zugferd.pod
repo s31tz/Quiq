@@ -24,7 +24,7 @@ Der Wert dar Variable ist priorisiert gegenüber dem klasseninternen Pfad.
 B<Diese Klasse befindet sich in Entwicklung!>
 
 Die Klasse kapselt das ZUGFeRD 2.3(Factur-X Version 1.0.07) XML
-Schema BASIC sowie ein XML-Template zu diesem Schema, das alle
+Profile BASIC sowie ein XML-Template zu diesem Profile, das alle
 ELemente und Attribute umfasst. Das Template kann als XML (Text)
 oder als Datenstruktur (Baum) in verschiedenen Varianten
 (leer, mit Beispielwerten, mit Platzhaltern) genutzt werden.
@@ -51,13 +51,24 @@ Zeige das ZUGFeRD XML als Baum:
 
 =head1 METHODS
 
-=head2 Konstruktor
+=head2 Klassenmethoden
 
-=head3 new() - Instantiiere Objekt
+=head3 createTemplate() - Erzeuge Template zu ZUGFeRD-Profil
 
 =head4 Synopsis
 
-  $zug = $class->new(@opt);
+  $xml = $class->createTemplate($profile,%opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $profile
+
+Name des ZUGFeRD-Profils. Mögliche Namen: 'minimum', 'basicwl',
+'basic', 'en16931', 'extended'.
+
+=back
 
 =head4 Options
 
@@ -67,12 +78,56 @@ Zeige das ZUGFeRD XML als Baum:
 
 Verzeichnis mit den ZUGFeRD Schema-Dateien
 
-=item -xmlTemplateFile => FILE.xml (Default: "$ENV{'ZUGFERD_DIR'}\
-
-/zugferd_basic.xml")
-ZUGFeRD-Template
-
 =back
+
+=head4 Returns
+
+(String) XML-Template
+
+=head4 Description
+
+Erzeuge auf Basis der XSD-Dateien des ZUGFeRD-Profils $profile mit
+XML::Compile::Schema eine XML Template-Datei ohne Werte und liefere das
+Ergebnis zurück.
+
+B<ACHTUNG:> Die Templates sind nicht umfassend, es gibt Elemente, denen
+die Unterelemente felen. Suche nach Tags mit dem Muster "/>":
+
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->createTemplate("minimum")' | grep '/>'
+      <ram:GuidelineSpecifiedDocumentContextParameter/>
+        <ram:BuyerTradeParty/>
+      <ram:ApplicableHeaderTradeDelivery/>
+
+B<Tipp:> Unterschiede zwischen den Profilen lassen sich mit
+diff(1) ermitteln.
+
+=head4 Examples
+
+Profil MINIMUM:
+
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->createTemplate("minimum")'
+
+Profil BASICWL:
+
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->createTemplate("basicwl")'
+
+Profil BASIC:
+
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->createTemplate("basic")'
+
+Profil EN16931:
+
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->createTemplate("en16931")'
+
+Profil EXTENDED:
+
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->createTemplate("extended")'
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+  $zug = $class->new($profile);
 
 =head4 Returns
 
@@ -80,7 +135,8 @@ Object
 
 =head4 Description
 
-Instantiiere ein Objekt der Klasse und liefere dieses zurück.
+Instantiiere ein ZUGFeRD-Objekt auf Basis von Profil $profile der Klasse
+und liefere dieses zurück.
 
 =head2 Objektmethoden
 
@@ -127,7 +183,8 @@ ZUGFeRD Baum mit Beispielwerten
 
 =item 'parts'
 
-Liste der Elemente, mit n-fachen Unterelementen
+Liste der Elemente, mit n-fachen Unterelementen. Wenn keine
+Kardinalitäten vorhanden sind, ist die Liste leer.
 
 =item 'paths'
 
@@ -135,7 +192,9 @@ Liste der Zugriffspfade im Baum
 
 =item 'cardinality'
 
-Liste der Elemente und ihrer Kardinalitäten
+Liste der Elemente und ihrer Kardinalitäten. Wenn keine Kardinalitäten
+und/oder Kommentare vorhanden sind, fehlt die Information in der
+Ausgabe.
 
 =back
 
@@ -188,11 +247,13 @@ Ohne Werte
 
 =item 'placeholders'
 
-Mit Platzhaltern
+Mit Platzhaltern. Identisch zu "empty", wenn keine Platzhalter
+definiert sind.
 
 =item 'values'
 
-Mit Beispielwerten
+Mit Beispielwerten. Leerstrings statt undef, wenn keine Werte
+gesetzt sind.
 
 =back
 
@@ -211,7 +272,27 @@ auf den Wurzelknoten zurück.
 
 =head4 Synopsis
 
-  $xml = $zug->treeToXml($h);
+  $xml = $zug->treeToXml($tree,%opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $tree
+
+(Object) Baum, der nach XML gewandelt wird.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -validate => $bool (Default: 1)
+
+Erzeuge einen validierenden XML-Writer.
+
+=back
 
 =head4 Returns
 
@@ -223,7 +304,7 @@ Wandele den Baum nach XML und liefere dieses zurück.
 
 =head4 Example
 
-  $ perl -MQuiq::Zugferd -E '$zug = Quiq::Zugferd->new; $h = $zug->tree; print $zug->treeToXml($h)'
+  $ perl -MQuiq::Zugferd -E '$zug = Quiq::Zugferd->new("en16931"); $tree = $zug->tree; print $zug->treeToXml($tree)'
 
 =head3 xml() - Liefere ZUGFeRD XML Template als Zeichenkette
 

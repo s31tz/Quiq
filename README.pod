@@ -905,6 +905,10 @@ L<Quiq::Test::Class::Method|https://github.com/s31tz/Quiq/tree/master/pod/class/
 
 =item *
 
+L<Quiq::Text::Generator|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Text/Generator.pod> - Generiere Textfragmente
+
+=item *
+
 L<Quiq::Time|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Time.pod> - Klasse zur Repräsentation von Datum und Uhrzeit
 
 =item *

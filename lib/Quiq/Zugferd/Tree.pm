@@ -94,10 +94,10 @@ $placeholder.
 sub getMultiElement {
     my ($self,$keyPath,$placeholder) = @_;
 
-    my $h = $self->getDeep($keyPath)->[0];
+    my $tree = $self->getDeep($keyPath)->[0];
     $self->setDeep($keyPath,$placeholder);
 
-    return bless $h,'Quiq::Zugferd::Tree';
+    return bless $tree,'Quiq::Zugferd::Tree';
 }
 
 # -----------------------------------------------------------------------------

@@ -16,13 +16,30 @@ sub test_loadClass : Init(1) {
 
 # -----------------------------------------------------------------------------
 
-sub test_unitTest: Test(1) {
+sub test_unitTest: Test(6) {
     my $self = shift;
 
     if ($0 =~ /\.cotedo/) {
-        $ENV{'ZUGFERD_DIR'} = $ENV{'HOME'}.'/dvl/jaz/Blob/zugferd';
+        $ENV{'ZUGFERD_DIR'} = $ENV{'HOME'}.'/dvl/jaz/Blob/zugferd/profile/'.
+            'en16931';
     }
-    my $zug = Quiq::Zugferd->new;
+
+    my $xml = Quiq::Zugferd->createTemplate('minimum');
+    $self->like($xml,qr/<rsm:SupplyChainTradeTransaction>/);
+
+    $xml = Quiq::Zugferd->createTemplate('basicwl');
+    $self->like($xml,qr/<rsm:SupplyChainTradeTransaction>/);
+
+    $xml = Quiq::Zugferd->createTemplate('basic');
+    $self->like($xml,qr/<rsm:SupplyChainTradeTransaction>/);
+
+    $xml = Quiq::Zugferd->createTemplate('en16931');
+    $self->like($xml,qr/<rsm:SupplyChainTradeTransaction>/);
+
+    $xml = Quiq::Zugferd->createTemplate('extended');
+    $self->like($xml,qr/<rsm:SupplyChainTradeTransaction>/);
+
+    my $zug = Quiq::Zugferd->new('en16931');
     $self->is(ref($zug),'Quiq::Zugferd');
 
     # FIXME: Tests hinzufügen
@@ -30,14 +47,15 @@ sub test_unitTest: Test(1) {
     my $str = $zug->doc('xml');
     $str = $zug->doc('tree');
 
-    my $xml = $zug->xml('empty');
+    $xml = $zug->xml('empty');
     $xml = $zug->xml('placeholders');
     $xml = $zug->xml('values');
 
-    my $h = $zug->tree('empty'); # Kann nicht nach XML gewandelt werden
-    $h = $zug->tree('placeholders'); # Kann nicht nach XML gewandelt werden
-    $h = $zug->tree('values');
-    $xml = $zug->treeToXml($h);
+    my $tree = $zug->tree('empty'); # Kann nicht nach XML gewandelt werden
+    $tree = $zug->tree('placeholders'); # Kann nicht nach XML gewandelt werden
+    $tree = $zug->tree('values');
+
+    $xml = $zug->treeToXml($tree,-validate=>0);
 }
 
 # -----------------------------------------------------------------------------
