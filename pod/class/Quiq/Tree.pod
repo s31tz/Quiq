@@ -139,7 +139,7 @@ Ein Blattknoten des Baums ist dadurch gekennzeichner, dass er einen
 
 =head1 VERSION
 
-1.223
+1.224
 
 =head1 SOURCE
 

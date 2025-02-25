@@ -345,7 +345,7 @@ Mit Beispielwerten
 
 =head1 VERSION
 
-1.223
+1.224
 
 =head1 SOURCE
 

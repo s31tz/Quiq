@@ -30,7 +30,7 @@ use v5.10;
 use strict;
 use warnings;
 
-our $VERSION = '1.223';
+our $VERSION = '1.224';
 
 use Quiq::AnsiColor;
 use Scalar::Util ();
@@ -322,7 +322,7 @@ sub setLeafValue {
 
 =head1 VERSION
 
-1.223
+1.224
 
 =head1 AUTHOR
 

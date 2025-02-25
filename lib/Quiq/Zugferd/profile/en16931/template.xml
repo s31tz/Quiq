@@ -1,27 +1,35 @@
-<rsm:CrossIndustryInvoice xmlns:qdt="urn:un:unece:uncefact:data:standard:QualifiedDataType:100" xmlns:ram="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100" xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100" xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:100">
+<rsm:CrossIndustryInvoice
+    xmlns:qdt="urn:un:unece:uncefact:data:standard:QualifiedDataType:100"
+    xmlns:ram="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100"
+    xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100"
+    xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:100">
+
   <rsm:ExchangedDocumentContext>
     <ram:BusinessProcessSpecifiedDocumentContextParameter>
       <ram:ID schemeID=""></ram:ID>
     </ram:BusinessProcessSpecifiedDocumentContextParameter>
     <ram:GuidelineSpecifiedDocumentContextParameter>
-      <ram:ID schemeID=""></ram:ID>
+      <ram:ID schemeID="">BT-24</ram:ID>
     </ram:GuidelineSpecifiedDocumentContextParameter>
   </rsm:ExchangedDocumentContext>
+
   <rsm:ExchangedDocument>
-    <ram:ID schemeID=""></ram:ID>
-    <ram:TypeCode></ram:TypeCode>
+    <ram:ID schemeID="">BT-1</ram:ID>
+    <ram:TypeCode>BT-3</ram:TypeCode>
     <ram:IssueDateTime>
-      <udt:DateTimeString format=""></udt:DateTimeString>
+      <udt:DateTimeString format="BT-2-0">BT-2</udt:DateTimeString>
     </ram:IssueDateTime>
     <ram:IncludedNote>
       <ram:Content></ram:Content>
       <ram:SubjectCode listID="" listVersionID=""></ram:SubjectCode>
     </ram:IncludedNote>
   </rsm:ExchangedDocument>
+
   <rsm:SupplyChainTradeTransaction>
+
     <ram:IncludedSupplyChainTradeLineItem>
       <ram:AssociatedDocumentLineDocument>
-        <ram:LineID schemeID=""></ram:LineID>
+        <ram:LineID schemeID="">BT-126</ram:LineID>
         <ram:IncludedNote>
           <ram:Content></ram:Content>
           <ram:SubjectCode listID="" listVersionID=""></ram:SubjectCode>
@@ -29,9 +37,9 @@
       </ram:AssociatedDocumentLineDocument>
       <ram:SpecifiedTradeProduct>
         <ram:GlobalID schemeID=""></ram:GlobalID>
-        <ram:SellerAssignedID schemeID=""></ram:SellerAssignedID>
+        <ram:SellerAssignedID schemeID="">BT-155</ram:SellerAssignedID>
         <ram:BuyerAssignedID schemeID=""></ram:BuyerAssignedID>
-        <ram:Name></ram:Name>
+        <ram:Name>BT-153</ram:Name>
         <ram:Description></ram:Description>
         <ram:ApplicableProductCharacteristic>
           <ram:Description></ram:Description>
@@ -58,7 +66,7 @@
           </ram:FormattedIssueDateTime>
         </ram:BuyerOrderReferencedDocument>
         <ram:GrossPriceProductTradePrice>
-          <ram:ChargeAmount currencyID=""></ram:ChargeAmount>
+          <ram:ChargeAmount currencyID="">BT-148</ram:ChargeAmount>
           <ram:BasisQuantity unitCode=""></ram:BasisQuantity>
           <ram:AppliedTradeAllowanceCharge>
             <ram:ChargeIndicator>
@@ -85,7 +93,7 @@
           </ram:AppliedTradeAllowanceCharge>
         </ram:GrossPriceProductTradePrice>
         <ram:NetPriceProductTradePrice>
-          <ram:ChargeAmount currencyID=""></ram:ChargeAmount>
+          <ram:ChargeAmount currencyID="">BT-146</ram:ChargeAmount>
           <ram:BasisQuantity unitCode=""></ram:BasisQuantity>
           <ram:AppliedTradeAllowanceCharge>
             <ram:ChargeIndicator>
@@ -113,7 +121,7 @@
         </ram:NetPriceProductTradePrice>
       </ram:SpecifiedLineTradeAgreement>
       <ram:SpecifiedLineTradeDelivery>
-        <ram:BilledQuantity unitCode=""></ram:BilledQuantity>
+        <ram:BilledQuantity unitCode="BT-130">BT-129</ram:BilledQuantity>
       </ram:SpecifiedLineTradeDelivery>
       <ram:SpecifiedLineTradeSettlement>
         <ram:ApplicableTradeTax>
@@ -180,6 +188,7 @@
         </ram:ReceivableSpecifiedTradeAccountingAccount>
       </ram:SpecifiedLineTradeSettlement>
     </ram:IncludedSupplyChainTradeLineItem>
+
     <ram:ApplicableHeaderTradeAgreement>
       <ram:BuyerReference></ram:BuyerReference>
       <ram:SellerTradeParty>
@@ -349,6 +358,7 @@
         <ram:Name></ram:Name>
       </ram:SpecifiedProcuringProject>
     </ram:ApplicableHeaderTradeAgreement>
+
     <ram:ApplicableHeaderTradeDelivery>
       <ram:ShipToTradeParty>
         <ram:ID schemeID=""></ram:ID>
@@ -418,15 +428,16 @@
         </ram:FormattedIssueDateTime>
       </ram:ReceivingAdviceReferencedDocument>
     </ram:ApplicableHeaderTradeDelivery>
+
     <ram:ApplicableHeaderTradeSettlement>
       <ram:CreditorReferenceID schemeID=""></ram:CreditorReferenceID>
       <ram:PaymentReference></ram:PaymentReference>
       <ram:TaxCurrencyCode></ram:TaxCurrencyCode>
-      <ram:InvoiceCurrencyCode></ram:InvoiceCurrencyCode>
+      <ram:InvoiceCurrencyCode>BT-5</ram:InvoiceCurrencyCode>
       <ram:PayeeTradeParty>
         <ram:ID schemeID=""></ram:ID>
         <ram:GlobalID schemeID=""></ram:GlobalID>
-        <ram:Name></ram:Name>
+        <ram:Name>BT-59</ram:Name>
         <ram:Description></ram:Description>
         <ram:SpecifiedLegalOrganization>
           <ram:ID schemeID=""></ram:ID>
@@ -445,13 +456,13 @@
           </ram:EmailURIUniversalCommunication>
         </ram:DefinedTradeContact>
         <ram:PostalTradeAddress>
-          <ram:PostcodeCode listID="" listVersionID=""></ram:PostcodeCode>
-          <ram:LineOne></ram:LineOne>
-          <ram:LineTwo></ram:LineTwo>
-          <ram:LineThree></ram:LineThree>
-          <ram:CityName></ram:CityName>
-          <ram:CountryID></ram:CountryID>
-          <ram:CountrySubDivisionName></ram:CountrySubDivisionName>
+          <ram:PostcodeCode listID="" listVersionID="">BT-53</ram:PostcodeCode>
+          <ram:LineOne>BT-50</ram:LineOne>
+          <ram:LineTwo>BT-51</ram:LineTwo>
+          <ram:LineThree>BT-163</ram:LineThree>
+          <ram:CityName>BT-52</ram:CityName>
+          <ram:CountryID>BT-55</ram:CountryID>
+          <ram:CountrySubDivisionName>BT-54</ram:CountrySubDivisionName>
         </ram:PostalTradeAddress>
         <ram:URIUniversalCommunication>
           <ram:URIID schemeID=""></ram:URIID>
