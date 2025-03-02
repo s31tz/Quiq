@@ -33,21 +33,23 @@ use XML::Compile::Util ();
 
 =head1 METHODS
 
-=head2 print() - Formatiere XML
+=head2 Klassenmethoden
 
-=head3 Synopsis
+=head3 print() - Formatiere XML
+
+=head4 Synopsis
 
   $xmlFormatted = $this->print($xml);
 
-=head3 Returns
+=head4 Returns
 
 XML als formatierte Zeichenkette
 
-=head3 Description
+=head4 Description
 
 Liefere XML-Code $xml als formtierte Zeichenkette mit Einrückung.
 
-=head3 Example
+=head4 Example
 
   say Quiq::Xml->print($xml);
 
@@ -66,14 +68,14 @@ sub print {
 
 # -----------------------------------------------------------------------------
 
-=head2 xmlToTree() - Wandele XML in Baum
+=head3 xmlToTree() - Wandele XML in Baum
 
-=head3 Synopsis
+=head4 Synopsis
 
   $tree = $this->xmlToTree($xml,%opt);
   $tree = $this->xmlToTree($file,%opt);
 
-=head3 Arguments
+=head4 Arguments
 
 =over 4
 
@@ -87,7 +89,7 @@ Datei mit XML Code
 
 =back
 
-=head3 Options
+=head4 Options
 
 =over 4
 
@@ -98,16 +100,16 @@ Verzeichnis mit XML Schema Definitionsdateien (.xsd).
 
 =back
 
-=head3 Returns
+=head4 Returns
 
 (Perl Datenstruktur) Baum
 
-=head3 Description
+=head4 Description
 
 Wandele den XML Code $xml in eine hierarchische Perl-Datenstruktur
 (Baum) und liefere eine Referenz auf diese Struktur zurück.
 
-=head3 Example
+=head4 Example
 
   $ perl -MQuiq::Xml -E 'Quiq::Xml->xmlToTree("02-taxifahrt-orig.xml",-xsdDir=>"~/dat/zugferd")'
 
