@@ -300,7 +300,7 @@ our $VERSION = '1.224';
 
 use Quiq::Html::Table::List;
 use Quiq::Hash;
-use Quiq::Json;
+use Quiq::Json::Code;
 use Quiq::Unindent;
 
 # -----------------------------------------------------------------------------
@@ -539,7 +539,7 @@ sub instantiate {
         $self->get(qw/id dom emptyTableMsg fixedHeader footer info jsCode order
         orderClasses paging searchLabel zeroRecordsMsg/);
 
-    my $j = Quiq::Json->new;
+    my $j = Quiq::Json::Code->new;
 
     my @language;
     if ($emptyTableMsg) {

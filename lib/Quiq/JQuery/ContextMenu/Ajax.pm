@@ -121,7 +121,7 @@ use warnings;
 our $VERSION = '1.224';
 
 use Quiq::Assert;
-use Quiq::Json;
+use Quiq::Json::Code;
 
 # -----------------------------------------------------------------------------
 
@@ -221,7 +221,7 @@ sub js {
     $a->isNotNull($selector,-name=>'selector');
 
     # JSON-Generator
-    my $j = Quiq::Json->new;
+    my $j = Quiq::Json::Code->new;
 
     # Generiere JavaScript-Code
 

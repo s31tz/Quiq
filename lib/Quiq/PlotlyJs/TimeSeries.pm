@@ -238,7 +238,7 @@ use warnings;
 
 our $VERSION = '1.224';
 
-use Quiq::Json;
+use Quiq::Json::Code;
 use Quiq::Template;
 
 # -----------------------------------------------------------------------------
@@ -500,7 +500,7 @@ sub js {
     my $zeroLineColor = '#d0d0d0';
 
     # Instantiiere Objekt zum Erzeugen von JSON-Code
-    my $j = Quiq::Json->new;
+    my $j = Quiq::Json::Code->new;
 
     # Traces
 

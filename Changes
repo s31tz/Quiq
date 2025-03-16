@@ -1306,7 +1306,7 @@ commands() - PostgreSQL / END hinzugefügt
 [Quiq::JavaScript]
 * line() - Kommentare werden entfernt
 
-[Quiq::Json]
+[Quiq::Json::Code]
 * Objektattribute mit Wert undef werden weggelassen
 
 [Quiq::Ssh]
@@ -1394,7 +1394,7 @@ commands() - PostgreSQL / END hinzugefügt
 [Quiq::Assert]
 * Doku bearbeitet
 
-[Quiq::Json]
+[Quiq::Json::Code]
 * Doku bearbeitet
 * Array-Verarbeitung korrigiert
 

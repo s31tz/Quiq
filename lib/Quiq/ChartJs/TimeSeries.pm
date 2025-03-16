@@ -393,7 +393,7 @@ use warnings;
 
 our $VERSION = '1.224';
 
-use Quiq::Json;
+use Quiq::Json::Code;
 use Quiq::Array;
 use Quiq::Template;
 
@@ -649,7 +649,7 @@ sub js {
 
     # Konfiguration erzeugen
 
-    my $j = Quiq::Json->new;
+    my $j = Quiq::Json::Code->new;
 
     my @dataSets = $j->o(
         type => 'line',
