@@ -259,7 +259,7 @@
           <ram:CompleteNumber></ram:CompleteNumber>
         </ram:URIUniversalCommunication>
         <ram:SpecifiedTaxRegistration>
-          <ram:ID schemeID=""></ram:ID>
+          <ram:ID schemeID="BT-48-0">BT-48</ram:ID> <!-- 1..1 -->
         </ram:SpecifiedTaxRegistration>
       </ram:BuyerTradeParty>
       <ram:SellerTaxRepresentativeTradeParty>
@@ -381,7 +381,7 @@
           <ram:LineTwo></ram:LineTwo>
           <ram:LineThree></ram:LineThree>
           <ram:CityName></ram:CityName>
-          <ram:CountryID></ram:CountryID>
+          <ram:CountryID>BT-80</ram:CountryID> <!-- 1..1 -->
           <ram:CountrySubDivisionName></ram:CountrySubDivisionName>
         </ram:PostalTradeAddress>
         <ram:URIUniversalCommunication>
