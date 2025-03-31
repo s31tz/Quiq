@@ -104,7 +104,7 @@ Fehlt einer der Platzhalter (key) im Baum, wird eine Exception geworfen.
 
 =head1 VERSION
 
-1.224
+1.225
 
 =head1 SOURCE
 

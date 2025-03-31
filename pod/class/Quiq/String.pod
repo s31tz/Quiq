@@ -462,7 +462,7 @@ Maximale Zeilenlänge auf 12 Zeichen begrenzen:
 
 =head1 VERSION
 
-1.224
+1.225
 
 =head1 SOURCE
 

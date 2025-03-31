@@ -197,7 +197,7 @@ und liefere sie als Zeichnkette zurück.
 
 =head1 VERSION
 
-1.224
+1.225
 
 =head1 SOURCE
 

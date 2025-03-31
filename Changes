@@ -1,3 +1,15 @@
+1.225 2025-03-31
+================
+
+[Quiq::Json]
+* Klasse hinzugefügt
+
+[Quiq::Json::Code]
+* Umbenannt von Quiq::Json
+
+[Quiq::Zugferd]
+* Template für Profil EN16931 ergänzt
+
 1.224 2025-02-28
 ================
 
