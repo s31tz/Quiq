@@ -1445,6 +1445,12 @@ Verzeichnis, in dem das Datums-Subverzeichnis angelegt wird.
 
 Gib Information aus.
 
+=item -dirSuffix => $suffix
+
+Füge an das Datums-Subverzeichnis den Suffix $suffix an. Beispiel:
+
+  Quiq::Path->moveToDateSubDir($_,-dirSuffix=>'.tmp')
+
 =back
 
 =head4 Description
