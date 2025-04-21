@@ -1874,6 +1874,39 @@ perldoc -f stat
 
 =back
 
+=head3 swap() - Vertausche in einem Verzeichnis zwei Namen
+
+=head4 Synopsis
+
+  $this->%METHOD($dir,$glob1,$glob2);
+
+=head4 Arguments
+
+=over 4
+
+=item $dir
+
+Pfad des Verzeichnisses
+
+=item $glob1
+
+Datei oder Verzeichnisname
+
+=item $glob2
+
+Datei oder Verzeichnisname
+
+=back
+
+=head4 Description
+
+Vertausche in Verzeichnis $dir die beiden (Datei- oder Verzeichnis-)Namen
+$glob1 und $glob2.
+
+=head4 Example
+
+  $ perl -MQuiq::Path -E 'Quiq::Path->swap("06-album","0000940.*","0010200.*")'
+
 =head3 symlink() - Erzeuge Symlink
 
 =head4 Synopsis
