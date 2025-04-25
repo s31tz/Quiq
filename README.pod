@@ -665,6 +665,10 @@ L<Quiq::Mojolicious::Plugin::Log::Parameters|https://github.com/s31tz/Quiq/tree/
 
 =item *
 
+L<Quiq::Mustang|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Mustang.pod> - Frontend für Mustang Kommendozeilen-Werkzeug
+
+=item *
+
 L<Quiq::Net|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Net.pod> - Allgemeine Netzwerkfunktionalität
 
 =item *

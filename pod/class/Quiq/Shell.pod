@@ -139,6 +139,10 @@ Liefere Ausgabe auf stdout und stderr getrennt.
 
 Für Beispiele siehe Abschnitt ""exec/Examples"".
 
+=item -log => $bool (Default: 0)
+
+Logge das Kommando auf STDOUT.
+
 =item -outputTo => $name
 
 Schreibe jegliche Ausgabe von $cmd auf stdout und stderr nach

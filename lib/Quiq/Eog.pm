@@ -338,12 +338,12 @@ sub transferImages {
 
     if (my $ext = $addExtension) {
         my $answ = Quiq::Terminal->askUser(
-            "Add Extension .$ext?",
+            "Add Extension $ext?",
             -values => 'y/n',
             -default => 'y',
         );
         if ($answ eq 'y') {
-            $p->rename($srcDir,"$srcDir.$ext");
+            $p->rename($srcDir,"$srcDir$ext");
         }
     }
 

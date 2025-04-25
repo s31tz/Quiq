@@ -64,8 +64,9 @@ use warnings;
 
 our $VERSION = '1.225';
 
-use Quiq::PerlModule;
 use Quiq::Path;
+use Quiq::Shell;
+use Quiq::PerlModule;
 use XML::Compile::Schema ();
 use XML::LibXML ();
 use XML::Compile::Util ();
@@ -81,6 +82,39 @@ use Quiq::FileHandle;
 =head1 METHODS
 
 =head2 Klassenmethoden
+
+=head3 combine() - Füge ZUGFeRD XML zu PDF hinzu
+
+=head4 Synopsis
+
+  $class->combine($pdfFile,$xmlFile);
+
+=head4 Description
+
+Füge die ZUGFeRD XML-Datei $xmlFile zur PDF-Datei $pdfFile hinzu.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub combine {
+    my ($class,$pdfFile,$xmlFile) = @_;
+
+    my $p = Quiq::Path->new;
+    my $sh = Quiq::Shell->new(log=>1);
+
+    my $tmpDir = $p->tempDir;
+    $p->copy($xmlFile,"$tmpDir/factur-x.xml");
+    $pdfFile = $p->absolute($pdfFile);
+    $sh->cd($tmpDir);
+    $sh->exec("pdftk $pdfFile attach_files factur-x.xml output tmp.pdf");
+    $p->copy('tmp.pdf',$pdfFile);
+    $sh->back;
+
+    return;
+}
+
+# -----------------------------------------------------------------------------
 
 =head3 createTemplate() - Erzeuge Template zu ZUGFeRD-Profil
 

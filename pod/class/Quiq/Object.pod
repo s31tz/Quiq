@@ -181,6 +181,10 @@ Referenz auf diese Liste zurückgegeben. Beispiel:
 
 =over 4
 
+=item -error => $bool (Default: 0)
+
+Wirf keine Exception, sondern gib lediglich einen Fehler aus.
+
 =item -stdout => $bool (Default: 0)
 
 Erzeuge die Meldung auf STDOUT (statt STDERR), wenn -warning => 1

@@ -53,6 +53,16 @@ Zeige das ZUGFeRD XML als Baum:
 
 =head2 Klassenmethoden
 
+=head3 combine() - Füge ZUGFeRD XML zu PDF hinzu
+
+=head4 Synopsis
+
+  $class->combine($pdfFile,$xmlFile);
+
+=head4 Description
+
+Füge die ZUGFeRD XML-Datei $xmlFile zur PDF-Datei $pdfFile hinzu.
+
 =head3 createTemplate() - Erzeuge Template zu ZUGFeRD-Profil
 
 =head4 Synopsis

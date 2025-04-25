@@ -1,0 +1,190 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::Mustang - Frontend für Mustang Kommendozeilen-Werkzeug
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+B<Mustang> ist eine Java-Biblithek sowie ein Kommandzeilen-Werkzeug für den
+Umgang mit ZUGFeRD-Rechnungen. Die Klasse Quiq::Mustang stellt ein
+Perl-Frontend für die Nutzung des Kommandozeilen-Werkzeugs bereit.
+
+=head2 Links
+
+=over 2
+
+=item *
+
+L<Homepage Mustang-Projekt|https://www.mustangproject.org/>
+
+=item *
+
+L<Kommandozeilen-Werkzeug|https://www.mustangproject.org/commandline/>
+
+=item *
+
+L<Mustang-Projekt auf GitHub|https://github.com/ZUGFeRD/mustangproject>
+
+=back
+
+=head1 METHODS
+
+=head2 Klassenmethoden
+
+=head3 new() - Konstruktor
+
+=head4 Synopsis
+
+  $mus = $class->new($jarFile);
+
+=head4 Arguments
+
+=over 4
+
+=item $jarFile
+
+Pfad zur JAR-Datei C<Mustang-CLI-X.Y.Z.jar>, z.B.
+C<~/Mustang-CLI-2.16.2.jar>
+
+=back
+
+=head4 Returns
+
+Mustang-Objekt
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
+dieses Objekt zurück.
+
+=head2 Objektmethoden
+
+=head3 validate() - Validiere ZUGFeRD-Datei
+
+=head4 Synopsis
+
+  $status = $mus->validate($file);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+ZUGFeRD-Datei, wie B<Mustang> sie erwartet (als XML oder PDF).
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -force => $bool (Default: 0)
+
+Forciere die Validierung, auch wenn sie schon einmal erfolgt ist.
+
+=item -notice => $bool (Default: 0)
+
+Protokolliere nicht nur Validierungsfehler, sondern gib darüber
+hinaus Empfehlungen zu Verbesserungen am ZUGFeRD XML aus.
+
+=item -verbose => $bool (Default: 0)
+
+Gib Laufzeitinformation über die Verarbeitung auf STDOUT aus.
+
+=back
+
+=head4 Returns
+
+(Integer) Status der Validierung: 0 = ok, 1 = fehlgeschlagen,
+-1 = Datei wurde übergangen, da bereits validiert.
+
+=head4 Description
+
+Validiere die ZUGFeRD-Datei $file und liefere den Status der
+Validierung zurück.
+
+=head3 getResult() - Liefere Validierungsresultat
+
+=head4 Synopsis
+
+  ($status,$val) = $mus->getResult($pattern,$as);
+  
+  ($status,$text) = $mus->getResult($pattern,'text');
+  ($status,$ruleH) = $mus->getResult($pattern,'hash');
+
+=head4 Arguments
+
+=over 4
+
+=item $pattern
+
+Glob()-Pattern der Resultat-Datei des Mustang Validators.
+
+=item $as
+
+Typ des Returnwerts:
+
+=over 4
+
+=item 'text'
+
+=item 'hash'
+
+=back
+
+=back
+
+=head4 Description
+
+Liefere das Ergebnis der ZUGFeRD-Validierung.
+
+=head3 visualize() - Visualisiere ZUGFeRD-Datei
+
+=head4 Synopsis
+
+  $mus->visualize($xmlFile,$pdfFile);
+
+=head4 Arguments
+
+=over 4
+
+=item $xmlFile
+
+ZUGFeRD XML-Datei
+
+=item $pdfFile
+
+Erzeugte Visualisierungsdatei (als PDF)
+
+=back
+
+=head4 Description
+
+Visualisiere die ZUGFeRD-Datei $xmlFile als PDF-Datei $pdfFile.
+
+=head1 VERSION
+
+1.225
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Mustang.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2025 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
