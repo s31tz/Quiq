@@ -33,7 +33,7 @@ sub test_unitTest: Test(3) {
     # Antwort lesen
 
     my $data;
-    while (<$sock>) {^
+    while (<$sock>) {
         $data .= $_;
     }
     $self->like($data,qr/^Content-Type/im,'Header Content-Type empfangen');
