@@ -65,7 +65,7 @@ Prüfe den Status nach Anwendung des Backtick-Operators:
 
 =head1 VERSION
 
-1.225
+1.226
 
 =head1 SOURCE
 

@@ -898,11 +898,11 @@ Anwendungsfall: nur die Blatt-Verzeichnisse eines Verzeichnisbaums.
 
 Liefere nur Dateien, die vor mindestens $seconds zuletzt geändert
 wurden. Diese Option ist z.B. nützlich, um veraltete temporäre Dateien
-zu finden, um sie zu löschen.
+zu finden.
 
 =item -outHandle => $fh (Default: \*STDOUT)
 
-Filehandle, auf die Ausgabe im Falle von -verbose=>1 geschrieben
+Filehandle, auf die die Ausgabe im Falle von -verbose=>1 geschrieben
 werden.
 
 =item -pattern => $regex (Default: keiner)
@@ -931,7 +931,7 @@ Liefere nur den Subpfad, entferne also $path am Anfang.
 
 =item -testSub => sub {} (Default: undef)
 
-Subroutine, die den Pfad als Argument erthält und einen boolschen
+Subroutine, die den Pfad als Argument erhält und einen boolschen
 Wert liefert, der angibt, ob der Pfad zur Ergebnismenge gehört
 oder nicht.
 
@@ -1361,6 +1361,10 @@ Besitzt der Pfad keine Extension, liefere einen Leerstring ('').
 
   $filename = $class->filename($path);
 
+=head4 Alias
+
+lastName()
+
 =head4 Description
 
 Liefere die letzte Komponente des Pfads.
@@ -1557,6 +1561,32 @@ readLink()
 =head4 Description
 
 Liefere den Pfad, auf den der Symlink $symlinkPath zeigt.
+
+=head3 reduceToTilde() - Ersetze Pfandanfang durch Tilde
+
+=head4 Synopsis
+
+  $pathNew = $class->reduceToTilde($path);
+
+=head4 Arguments
+
+=over 4
+
+=item $path
+
+Ein Pfad
+
+=back
+
+=head4 Returns
+
+Pfad (String)
+
+=head4 Description
+
+Ersetze das Homedir am Pfadanfang durch eine Tilde und liefere den
+resultierenden Pfad zurück. Beginnt der Pfad nicht mit dem Homedir,
+bleibt er unverändert.
 
 =head3 removeExtension() - Entferne Extension
 
@@ -2004,7 +2034,7 @@ Ermittele die UID des Owners der Datei und liefere diese zurück.
 
 =head1 VERSION
 
-1.225
+1.226
 
 =head1 SOURCE
 

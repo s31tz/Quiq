@@ -1,0 +1,136 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::StreamServe::Stream - Inhalt einer StreamServe Stream-Datei
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert den Inhalt einer StreamServe
+Stream-Datei:
+
+=over 2
+
+=item *
+
+Feldwerte können abgfragt werden
+
+=item *
+
+Über den Blöcken kann iteriert werden
+
+=back
+
+=head1 METHODS
+
+=head2 Klassenmethoden
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+  $ssf = $class->new($file);
+
+=head4 Returns
+
+Objekt
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere dieses zurück.
+
+=head2 Objektmethoden
+
+=head3 get() - Liefere Wert
+
+=head4 Synopsis
+
+  $val = $ssf->get($name,$i);
+  $val = $ssf->get($name);
+
+=head4 Arguments
+
+=over 4
+
+=item $name
+
+Name des abzufragenden Feldes
+
+=item $i (Default: 0)
+
+Index im Falle mehrfachen Vorkommens des Feldes
+
+=back
+
+=head4 Returns
+
+(String) Wert
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere dieses zurück.
+
+=head3 prefixes() - Liste der Blockarten (Präfixe)
+
+=head4 Synopsis
+
+  @arr | $arrH = $ssf->prefixes;
+
+=head4 Returns
+
+(Array of Strings) Liste der Block-Präfixe
+
+=head4 Description
+
+Liefere die Liste der Blockarten. Eine Blockart ist durch die Liste
+der gemeinsamen Feldpräfixe charakterisiert.
+
+=head3 blocks() - Liste der Blöcke einer Blockart
+
+=head4 Synopsis
+
+  @arr | $arrH = $ssf->blocks($prefix);
+
+=head4 Arguments
+
+=over 4
+
+=item $prefix
+
+Die Blockart
+
+=back
+
+=head4 Returns
+
+(Array of Hashes) Liste von Blöcken
+
+=head4 Description
+
+Liefere die Liste der Blöcke einer Blockarten. Eine Blockart ist durch
+ihren Präfix charakterisiert.
+
+=head1 VERSION
+
+1.226
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/StreamServe/Stream.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2025 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

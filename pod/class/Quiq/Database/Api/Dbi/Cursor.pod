@@ -145,7 +145,7 @@ Methode eine Abbildung von undef auf '' vor.
 
 =head1 VERSION
 
-1.225
+1.226
 
 =head1 SOURCE
 

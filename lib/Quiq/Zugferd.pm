@@ -62,7 +62,7 @@ use v5.10;
 use strict;
 use warnings;
 
-our $VERSION = '1.225';
+our $VERSION = '1.226';
 
 use Quiq::Path;
 use Quiq::Shell;
@@ -452,7 +452,7 @@ sub doc {
     }
     elsif ($type eq 'paths') {
         my $h = $self->tree;
-        my @paths = sort Quiq::Tree->leafPaths($h);
+        my @paths = Quiq::Tree->leafPaths($h);
         return join("\n",@paths)."\n";
     }
     elsif ($type eq 'parts') {
@@ -692,15 +692,22 @@ Variante des XML:
 
 =item 'empty'
 
-Ohne Werte
+Ohne Werte, also mit ausschließlich leeren Attributen und Elementen
+und ohne KOmmentare.
 
 =item 'placeholders'
 
-Mit Platzhaltern
+Mit Platzhaltern, also mit Attributen und Elementen, die __NAME__
+als Wert haben und ohne Kommentare.
 
 =item 'values'
 
-Mit Beispielwerten
+Mit Beispielwerten, also dem Template, so wie es hinterlegt ist,
+jedoch ohne Kommentare.
+
+=item 'template'
+
+Das unveränderte Template, einschließlich Kommentaren.
 
 =back
 
@@ -709,6 +716,10 @@ Mit Beispielwerten
 =head4 Returns
 
 (String) XML
+
+=head4 Example
+
+  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new("en16931")->xml("values")'
 
 =cut
 
@@ -720,7 +731,10 @@ sub xml {
 
     my $xml = $self->get('template');
 
-    if ($variant eq 'empty') {
+    if ($variant eq 'template') {
+        # unverändert
+    }
+    elsif ($variant eq 'empty') {
         $xml =~ s|\s*<!--.*?-->||g; # Kommentare entfernen
         $xml =~ s|>((?!.*:basic).)*</|></|g; # Inhalte entfernen, außer
                                              # Specification Identifier
@@ -777,7 +791,7 @@ sub xml {
 
 =head1 VERSION
 
-1.225
+1.226
 
 =head1 AUTHOR
 

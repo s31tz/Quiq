@@ -861,6 +861,10 @@ L<Quiq::Storable|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Storab
 
 =item *
 
+L<Quiq::StreamServe::Stream|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/StreamServe/Stream.pod> - Inhalt einer StreamServe Stream-Datei
+
+=item *
+
 L<Quiq::String|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/String.pod> - Operationen auf Zeichenketten
 
 =item *
@@ -1007,7 +1011,7 @@ L<Quiq::Zugferd::Tree|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Z
 
 =head1 VERSION
 
-1.225
+1.226
 
 =head1 AUTHOR
 

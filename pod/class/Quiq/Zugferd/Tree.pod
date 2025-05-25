@@ -62,6 +62,25 @@ $placeholder.
 =head4 Synopsis
 
   $ztr->reduceTree;
+  $ztr->reduceTree($sub);
+
+=head4 Arguments
+
+=over 4
+
+=item $sub
+
+Referenz auf Subroutine, die unaufgelöste Werte entfernt. Default:
+
+  sub {
+      my $val = shift;
+      if (defined $val && $val =~ /^__\w+__$/) {
+          $val = undef;
+      }
+      return $val;
+  }
+
+=back
 
 =head4 Description
 
@@ -71,7 +90,7 @@ Reduziere den ZUGFeRD-Baum auf ein Minumum, d.h.
 
 =item *
 
-Entferne alle Knoten mit unersetzten Platzhaltern
+Entferne alle Knoten mit unaufgelösten Werten
 
 =item *
 
@@ -104,7 +123,7 @@ Fehlt einer der Platzhalter (key) im Baum, wird eine Exception geworfen.
 
 =head1 VERSION
 
-1.225
+1.226
 
 =head1 SOURCE
 

@@ -45,7 +45,7 @@ use v5.10;
 use strict;
 use warnings;
 
-our $VERSION = '1.225';
+our $VERSION = '1.226';
 
 use Quiq::Path;
 use Quiq::Shell;
@@ -285,7 +285,13 @@ sub getResult {
         # Es liegt ein Mustang Validierungsergebnis vor
 
         my $xml = Quiq::Path->read($resultFile,-decode=>'UTF-8');
+
         my ($failed) = $xml =~ m|<failed>(.+?)</failed>|;
+        # Wenn <failed> auf 0 gefaked ist
+        if (!$failed && $xml =~ m|<summary status="invalid"/>|) {
+            $failed = 1;
+        }
+           
         $status = $failed? 1: 0;
         while ($xml =~ m|(<error.*?</error>)|g) {
             my $error = $1;
@@ -301,9 +307,9 @@ sub getResult {
             if ($msg =~ /^\[(.*?)\]/) {
                 $rule{$1}++;
             }
-            else {
-                $rule{'XML_INV'}++;
-            }
+            # else {
+            #     $rule{'XML_INV'}++;
+            # }
         }
     }
 
@@ -361,7 +367,7 @@ sub visualize {
 
 =head1 VERSION
 
-1.225
+1.226
 
 =head1 AUTHOR
 

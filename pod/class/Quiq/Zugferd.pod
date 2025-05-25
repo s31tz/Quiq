@@ -335,15 +335,22 @@ Variante des XML:
 
 =item 'empty'
 
-Ohne Werte
+Ohne Werte, also mit ausschließlich leeren Attributen und Elementen
+und ohne KOmmentare.
 
 =item 'placeholders'
 
-Mit Platzhaltern
+Mit Platzhaltern, also mit Attributen und Elementen, die __NAME__
+als Wert haben und ohne Kommentare.
 
 =item 'values'
 
-Mit Beispielwerten
+Mit Beispielwerten, also dem Template, so wie es hinterlegt ist,
+jedoch ohne Kommentare.
+
+=item 'template'
+
+Das unveränderte Template, einschließlich Kommentaren.
 
 =back
 
@@ -353,9 +360,13 @@ Mit Beispielwerten
 
 (String) XML
 
+=head4 Example
+
+  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new("en16931")->xml("values")'
+
 =head1 VERSION
 
-1.225
+1.226
 
 =head1 SOURCE
 
