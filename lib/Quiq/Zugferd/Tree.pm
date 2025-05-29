@@ -172,7 +172,7 @@ sub reduceTree {
 
 =head4 Synopsis
 
-  $ztr->resolvePlaceholders(@keyVal);
+  $ztr->resolvePlaceholders(@keyVal,%options);
 
 =head4 Arguments
 
@@ -181,6 +181,16 @@ sub reduceTree {
 =item @keyVal
 
 Liste der Platzhalter und ihrer Werte
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -debug => $bool (Default: 0)
+
+Gib die Liste der Platzhalter und ihrer Werte auf STDOUT aus.
 
 =back
 
@@ -200,10 +210,40 @@ sub resolvePlaceholders {
     # @_: @keyVal
 
     my %map = @_;
+
+    # Operation ausführen
+
+    if (0) { # Debug
+        my @keys = map {$_->[0]}
+            sort {$a->[1] <=> $b->[1] or $a->[0] cmp $b->[0]}
+            map {[$_,/-(\d+)/]}
+            keys %map;
+        for my $key (@keys) {
+            say "$key => $map{$key}";
+        }
+    }
+
+    # * Prüfen, dass kein Schlüssel doppelt vorkommt
+
     my %seen; # gesehene Platzhalter
-    for my $key (keys %map) {
+    my @dup; # doppelte Platzhalter
+    for (my $i = 0; $i < @_; $i += 2) {
+        my $key = $_[$i];
+        if (exists $seen{$key}) {
+            push @dup,$key;
+        }
         $seen{$key} = 0;
     }
+
+    if (@dup) {
+        $self->throw(
+            'TREE-00099: Duplicate placeholders',
+            Placeholders => join(', ',@dup),
+        );
+    }
+
+    # Ersetze Platzhalter
+
     Quiq::Tree->setLeafValue($self,sub {
         my $val = shift; # akt. Knotenwert
         if (defined $val) { # undef-Knoten belassen wir
@@ -218,6 +258,8 @@ sub resolvePlaceholders {
         }
         return undef;
     });
+
+    # Prüfe, dass alle Platzhalter ersetzt wurden
 
     for my $key (keys %map) {
         if (!$seen{$key}) {

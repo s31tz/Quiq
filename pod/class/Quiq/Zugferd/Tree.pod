@@ -102,7 +102,7 @@ Entferne alle leeren Knoten
 
 =head4 Synopsis
 
-  $ztr->resolvePlaceholders(@keyVal);
+  $ztr->resolvePlaceholders(@keyVal,%options);
 
 =head4 Arguments
 
@@ -111,6 +111,16 @@ Entferne alle leeren Knoten
 =item @keyVal
 
 Liste der Platzhalter und ihrer Werte
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -debug => $bool (Default: 0)
+
+Gib die Liste der Platzhalter und ihrer Werte auf STDOUT aus.
 
 =back
 

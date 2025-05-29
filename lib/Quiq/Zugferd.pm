@@ -4,7 +4,7 @@
 
 =head1 NAME
 
-Quiq::Zugferd - Generiere/Akzeptiere XML einer ZUGFeRD-Rechnung
+Quiq::Zugferd - Generiere XML einer ZUGFeRD-Rechnung
 
 =head1 BASE CLASS
 

@@ -997,7 +997,7 @@ L<Quiq::Xml::LibXml|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Xml
 
 =item *
 
-L<Quiq::Zugferd|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd.pod> - Generiere/Akzeptiere XML einer ZUGFeRD-Rechnung
+L<Quiq::Zugferd|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd.pod> - Generiere XML einer ZUGFeRD-Rechnung
 
 =item *
 

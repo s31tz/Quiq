@@ -112,6 +112,60 @@ sub new {
 
 # -----------------------------------------------------------------------------
 
+=head3 split() - Zerlege (Multi-)Streamdatei in Einzelstreams
+
+=head4 Synopsis
+
+  @arr | $arrA = $class->split($file);
+
+=head4 Returns
+
+(Array of Strings) Liste der Einzelstreams
+
+=head4 Description
+
+Zerlege die (Multi-)Streamdatei in Einzelstreams und liefere die Liste
+der Einzelstreams zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub split {
+    my ($class,$file) = @_;
+
+    my @arr;
+    my $i = 0;
+    my $skip = 0;
+    my $fh = Quiq::FileHandle->new('<',$file);
+    while (<$fh>) {
+        if (/^BEGIN/) {
+            if (/A0$/) {
+                $skip = 1;
+            }
+            else {
+                $skip = 0;
+                $i++;
+            }
+        }
+        if ($skip) {
+            next;
+        }
+        $arr[$i] .= $_;
+    }
+    $fh->close;
+
+    $i = 0;
+    my $header = shift @arr;
+    for my $body (@arr) {
+        $arr[$i++] = $header.$body;
+    }
+
+    return wantarray? @arr: \@arr;
+}
+
+# -----------------------------------------------------------------------------
+
 =head2 Objektmethoden
 
 =head3 get() - Liefere Wert
