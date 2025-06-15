@@ -2,37 +2,72 @@
 
 =head1 NAME
 
-Quiq::Zugferd - Generiere das XML von ZUGFeRD-Rechnungen
+Quiq::Zugferd - Generiere XML einer ZUGFeRD-Rechnung
 
 =head1 BASE CLASS
 
 L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
+=head1 ENVIRONMENT
+
+=over 4
+
+=item $ZUGFERD_DIR
+
+Verzeichnis mit den ZUGFeRD XSD-Dateien und dem ZUGFeRD XML-Template.
+Der Wert dar Variable ist priorisiert gegenüber dem klasseninternen Pfad.
+
+=back
+
 =head1 DESCRIPTION
 
-Diese Klasse dient der Generung des XMLs von E-Rechnungen nach dem
-ZUGFeRD/Factur-X-Standard. Sie kapselt die Profile des Standards,
-sowohl die XSD-Dateien (XML-Schemadefinition) als auch fertige
-Templates.
+B<Diese Klasse befindet sich in Entwicklung!>
 
-Die Generierung eines Rechnungs-XMLs erfolgt durch Einsetzung der
-Rechnungswerte in das Template des jeweiligen Profils.
+Die Klasse kapselt das ZUGFeRD 2.3(Factur-X Version 1.0.07) XML
+Profile BASIC sowie ein XML-Template zu diesem Profile, das alle
+ELemente und Attribute umfasst. Das Template kann als XML (Text)
+oder als Datenstruktur (Baum) in verschiedenen Varianten
+(leer, mit Beispielwerten, mit Platzhaltern) genutzt werden.
 
 =head1 EXAMPLES
 
-Zeige das Template des Profils EN16931:
+Zeige ZUGFeRD XML und Datenstruktur als Zeichenkette:
 
-  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new("en16931")->template'
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->new->doc' # XML, kommentiert
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->new->doc("tree")'
+
+(Tipp: XML-Ausgabe in Datei speichern und mit Emacs oder vi
+mit "Syntax Highlighting" lesen)
+
+Zeige das ZUGFeRD XML:
+
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->new->xml' # ohne Werte
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->new->xml("placeholders")'
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->new->xml("values")'
+
+Zeige das ZUGFeRD XML als Baum:
+
+  $ perl -MQuiq::Zugferd -MQuiq::Dumper -E 'say Quiq::Dumper->dump(Quiq::Zugferd->new->tree)'
 
 =head1 METHODS
 
-=head2 Konstruktor
+=head2 Klassenmethoden
 
-=head3 new() - Instantiiere Objekt
+=head3 combine() - Füge ZUGFeRD XML zu PDF hinzu
 
 =head4 Synopsis
 
-  $zug = $class->new($profile,%options);
+  $class->combine($pdfFile,$xmlFile);
+
+=head4 Description
+
+Füge die ZUGFeRD XML-Datei $xmlFile zur PDF-Datei $pdfFile hinzu.
+
+=head3 createTemplate() - Erzeuge Template zu ZUGFeRD-Profil
+
+=head4 Synopsis
+
+  $xml = $class->createTemplate($profile,%opt);
 
 =head4 Arguments
 
@@ -40,8 +75,8 @@ Zeige das Template des Profils EN16931:
 
 =item $profile
 
-Name des ZUGFeRD-Profils. Es existieren die ZUGFeRD-Profile: C<minimum>,
-C<basicwl>, C<basic>, C<en16931>, C<extended>.
+Name des ZUGFeRD-Profils. Mögliche Namen: 'minimum', 'basicwl',
+'basic', 'en16931', 'extended'.
 
 =back
 
@@ -49,11 +84,60 @@ C<basicwl>, C<basic>, C<en16931>, C<extended>.
 
 =over 4
 
-=item -version => $version (Default: '2.3.2')
+=item -xsdDir => DIR (Default: $ENV{'ZUGFERD_DIR'} || I<ModuleDir>)
 
-Die ZUGFeRD-Version.
+Verzeichnis mit den ZUGFeRD Schema-Dateien
 
 =back
+
+=head4 Returns
+
+(String) XML-Template
+
+=head4 Description
+
+Erzeuge auf Basis der XSD-Dateien des ZUGFeRD-Profils $profile mit
+XML::Compile::Schema eine XML Template-Datei ohne Werte und liefere das
+Ergebnis zurück.
+
+B<ACHTUNG:> Die Templates sind nicht umfassend, es gibt Elemente, denen
+die Unterelemente felen. Suche nach Tags mit dem Muster "/>":
+
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->createTemplate("minimum")' | grep '/>'
+      <ram:GuidelineSpecifiedDocumentContextParameter/>
+        <ram:BuyerTradeParty/>
+      <ram:ApplicableHeaderTradeDelivery/>
+
+B<Tipp:> Unterschiede zwischen den Profilen lassen sich mit
+diff(1) ermitteln.
+
+=head4 Examples
+
+Profil MINIMUM:
+
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->createTemplate("minimum")'
+
+Profil BASICWL:
+
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->createTemplate("basicwl")'
+
+Profil BASIC:
+
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->createTemplate("basic")'
+
+Profil EN16931:
+
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->createTemplate("en16931")'
+
+Profil EXTENDED:
+
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->createTemplate("extended")'
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+  $zug = $class->new($profile);
 
 =head4 Returns
 
@@ -61,20 +145,224 @@ Object
 
 =head4 Description
 
-Instantiiere ein ZUGFeRD-Objekt des Profils $profile und der
-ZUGFeRD-Version $version und liefere dieses zurück.
+Instantiiere ein ZUGFeRD-Objekt auf Basis von Profil $profile der Klasse
+und liefere dieses zurück.
 
 =head2 Objektmethoden
 
-=head3 template() - Liefere das ZUGFeRD-Template
+=head3 parts() - Liefere Abschnitte mit mehreren gleichen Unterabschnitten
 
 =head4 Synopsis
 
-  $xml = $zug->template;
+  @parts | $partA = $zug->parts;
+
+=head4 Returns
+
+(Array) Liste von Abschnitten. Im Skalarkontext liefere eine Referenz auf
+die Liste.
+
+=head4 Description
+
+Liefere die Liste der Namen aller Abschnitte, die mehrere gleiche
+Unterabschnitte haben. Die Namen sind Tagnamen ohne Namespace-Präfix.
+
+=head3 doc() - Liefere ZUGFeRD Doku
+
+=head4 Synopsis
+
+  $str = $zug->doc;
+  $str = $zug->doc($type);
+
+=head4 Arguments
+
+=over 4
+
+=item $type (Default: 'xml')
+
+Art der Dokumentation:
+
+=over 4
+
+=item 'xml'
+
+ZUGFeRD XML mit Beispielwerten und Kommentaren
+
+=item 'tree'
+
+ZUGFeRD Baum mit Beispielwerten
+
+=item 'parts'
+
+Liste der Elemente, mit n-fachen Unterelementen. Wenn keine
+Kardinalitäten vorhanden sind, ist die Liste leer.
+
+=item 'paths'
+
+Liste der Zugriffspfade im Baum
+
+=item 'cardinality'
+
+Liste der Elemente und ihrer Kardinalitäten. Wenn keine Kardinalitäten
+und/oder Kommentare vorhanden sind, fehlt die Information in der
+Ausgabe.
+
+=back
+
+=back
+
+=head4 Returns
+
+(String) Doku
+
+=head4 Example
+
+ZUGFeRD XML mit Beispielwerten und Kommentaren:
+
+  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc("xml")'
+
+ZUGFeRD Baum mit Beispielwerten:
+
+  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc("tree")'
+
+Zugriffspfade im ZUGFeRD Baum:
+
+  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc("paths")'
+
+Elemente mit n-fachen Unterelementen:
+
+  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc("parts")'
+
+Elemente und ihre Kardinalitäten:
+
+  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new->doc("cardinality")'
+
+=head3 tree() - Liefere ZUGFeRD XML Template als Baum
+
+=head4 Synopsis
+
+  $h = $zug->tree;
+  $h = $zug->tree($variant);
+
+=head4 Arguments
+
+=over 4
+
+=item $variant (Default: 'placeholders')
+
+=over 4
+
+=item 'empty'
+
+Ohne Werte
+
+=item 'placeholders'
+
+Mit Platzhaltern. Identisch zu "empty", wenn keine Platzhalter
+definiert sind.
+
+=item 'values'
+
+Mit Beispielwerten. Leerstrings statt undef, wenn keine Werte
+gesetzt sind.
+
+=back
+
+=back
+
+=head4 Returns
+
+Baum-Referenz
+
+=head4 Description
+
+Wandele das ZUGFeRD XML Template in einen Baum und liefere eine Referenz
+auf den Wurzelknoten zurück.
+
+=head3 treeToXml() - Wandele (ZUGFeRD) Baum nach XML
+
+=head4 Synopsis
+
+  $xml = $zug->treeToXml($tree,%opt);
+
+=head4 Arguments
+
+=over 4
+
+=item $tree
+
+(Object) Baum, der nach XML gewandelt wird.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -validate => $bool (Default: 1)
+
+Erzeuge einen validierenden XML-Writer.
+
+=back
 
 =head4 Returns
 
 (String) XML
+
+=head4 Description
+
+Wandele den Baum nach XML und liefere dieses zurück.
+
+=head4 Example
+
+  $ perl -MQuiq::Zugferd -E '$zug = Quiq::Zugferd->new("en16931"); $tree = $zug->tree; print $zug->treeToXml($tree)'
+
+=head3 xml() - Liefere ZUGFeRD XML Template als Zeichenkette
+
+=head4 Synopsis
+
+  $xml = $zug->xml;
+  $xml = $zug->xml($variant);
+
+=head4 Arguments
+
+=over 4
+
+=item $variant (Default: 'empty')
+
+Variante des XML:
+
+=over 4
+
+=item 'empty'
+
+Ohne Werte, also mit ausschließlich leeren Attributen und Elementen
+und ohne KOmmentare.
+
+=item 'placeholders'
+
+Mit Platzhaltern, also mit Attributen und Elementen, die __NAME__
+als Wert haben und ohne Kommentare.
+
+=item 'values'
+
+Mit Beispielwerten, also dem Template, so wie es hinterlegt ist,
+jedoch ohne Kommentare.
+
+=item 'template'
+
+Das unveränderte Template, einschließlich Kommentaren.
+
+=back
+
+=back
+
+=head4 Returns
+
+(String) XML
+
+=head4 Example
+
+  $ perl -MQuiq::Zugferd -E 'print Quiq::Zugferd->new("en16931")->xml("values")'
 
 =head1 VERSION
 

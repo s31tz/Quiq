@@ -1369,6 +1369,28 @@ lastName()
 
 Liefere die letzte Komponente des Pfads.
 
+=head3 getFirst() - Liefere ersten existenten Pfad
+
+=head4 Synopsis
+
+  $path = $this->getFirst(@patterns);
+
+=head4 Arguments
+
+=over 4
+
+=item @patterns
+
+Liste an Shell-Patterns (wie sie glob() erwartet)
+
+=back
+
+=head4 Description
+
+Durchlaufe die Pfad-Pattern @patterns und liefere den ersten existenten
+Pfad zurück. Ist I<kein> Pattern erfüllt oder erfüllt ein Pattern
+I<mehrere> Pfade, wirf eine Exception.
+
 =head3 glob() - Liefere Pfade, die Shell-Pattern erfüllen
 
 =head4 Synopsis
@@ -1382,6 +1404,17 @@ Liefere die Pfad-Objekte, die Shell-Pattern $pat erfüllen.
 Im Skalarkontext liefere den ersten Pfad, der dann
 der einzig erfüllbare Pfad sein muss, sonst wird eine Exception
 geworfen.
+
+=head3 globExists() - Prüfe, ob Shell-Pattern erfüllt ist
+
+=head4 Synopsis
+
+  $bool = $this->globExists($pat);
+
+=head4 Description
+
+Prüfe, ob Pfad-Objekte existieren, die Shell-Pattern $pat erfüllen.
+Wenn ja, liefere I<wahr>, sonst I<falsch>.
 
 =head3 isEmpty() - Prüfe, ob Datei oder Verzeichnis leer ist
 

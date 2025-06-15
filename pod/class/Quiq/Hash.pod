@@ -181,7 +181,7 @@ B<Zugriff über Array-Element>
 
 ist dasselbe wie
 
-  $val = $h->{'sttlement'}->{'tradeTax'}->[0]->{'type'};
+  $val = $h->{'settlement'}->{'tradeTax'}->[0]->{'type'};
 
 =head3 setDeep() - Wert per "tiefem Zugriff" setzen
 
@@ -207,13 +207,25 @@ Wert, der gesetzt wird
 
 Setze den Wert zum angegebenen Schlüssel. Der Schlüssel ist eine
 mit Punkt (.) getrennte Kette von Einzelschlüsseln, so dass
-sich ein "tiefer Zugriff" kompakt formulieren lässt. Beispiel:
+sich ein "tiefer Zugriff" kompakt formulieren lässt.
+
+=head4 Example
+
+B<Folge von Hash-Zugriffen>
 
   $h->setDeep('invoice.header.invoiceNumber',$val);
 
 ist dasselbe wie
 
   $h->{'invoice'}->{'header'}->{'invoiceNumber'} = $val;
+
+B<Zugriff über Array-Element>
+
+  $h->setDeep('settlement.tradeTax.[0].type',$val);
+
+ist dasselbe wie
+
+  $h->{'settlement'}->{'tradeTax'}->[0]->{'type'} = $val;
 
 =head3 getRef() - Referenz auf Wert
 

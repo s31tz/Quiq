@@ -21,6 +21,38 @@ Klassenmethode ist eine Referenz auf den Wurzelknoten des Baums.
 
 =head2 Klassenmethoden
 
+=head3 blessNodes() - Blesse Knotentypen auf bestimmte Klassen
+
+=head4 Synopsis
+
+  $class->blessNodes($ref,{$type=>$class,...});
+
+=head4 Arguments
+
+=over 4
+
+=item $ref
+
+Referenz auf hierarchische Datenstruktur
+
+=item {$type=>$class,...}
+
+Abbildung von Typ $type auf Klasse $class
+
+=back
+
+=head4 Description
+
+Durchlaufe die Datenstruktur $ref rekursiv und blesse Knoten
+vom Typ $type auf Klasse $class.
+
+=head4 Example
+
+  $class->blessNodes($ref,{
+      HASH => 'Quiq::Hash',
+      ARRAY => 'Quiq::Array',
+  });
+
 =head3 leafPaths() - Liste der Pfade
 
 =head4 Synopsis
@@ -39,12 +71,12 @@ Referenz auf den Baum
 
 =head4 Returns
 
-(Array) Liste der Pfade. Im Skalarkontext wird eine Referenz auf die
+(Array of Pairs) Liste der Pfade. Im Skalarkontext wird eine Referenz auf die
 Liste geliefert.
 
 =head4 Description
 
-Liefere die Liste der Pfade zu den Blattknoten des Baums $ref.
+Liefere die Liste der Pfade [$path,$value] zu den Blattknoten des Baums $ref.
 Diese Liste ist nützlich, um die Zugriffspfade zu den Blattknoten
 zu ermitteln.
 

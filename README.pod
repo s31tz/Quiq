@@ -861,6 +861,10 @@ L<Quiq::Storable|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Storab
 
 =item *
 
+L<Quiq::StreamServe::Block|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/StreamServe/Block.pod> - Inhalt eines StreamServe Blocks
+
+=item *
+
 L<Quiq::StreamServe::Stream|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/StreamServe/Stream.pod> - Inhalt einer StreamServe Stream-Datei
 
 =item *
@@ -997,11 +1001,15 @@ L<Quiq::Xml::LibXml|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Xml
 
 =item *
 
-L<Quiq::Zugferd|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd.pod> - Generiere das XML von ZUGFeRD-Rechnungen
+L<Quiq::Zugferd|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd.pod> - Generiere XML einer ZUGFeRD-Rechnung
 
 =item *
 
 L<Quiq::Zugferd::Tree|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Tree.pod> - Operatonen auf ZUGFeRD-Baum
+
+=item *
+
+L<Quiq::Zugferd2|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd2.pod> - Generiere das XML von ZUGFeRD-Rechnungen
 
 =back
 

@@ -1,0 +1,89 @@
+=encoding utf8
+
+=head1 NAME
+
+Quiq::StreamServe::Block - Inhalt eines StreamServe Blocks
+
+=head1 BASE CLASS
+
+L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+
+=head1 DESCRIPTION
+
+Ein Objekt der Klasse repräsentiert den Inhalt eines StreamServe-Blocks,
+also eine Menge von Schlüssel/Wert-Paaren eines Typs (der durch den
+gemeinsamen Namenspräfix gegeben ist).
+
+=head1 METHODS
+
+=head2 Klassenmethoden
+
+=head3 new() - Instantiiere Objekt
+
+=head4 Synopsis
+
+  $ssb = $class->new($prefix);
+  $ssb = $class->new($prefix,$h);
+
+=head4 Arguments
+
+=over 4
+
+=item $prefix
+
+Block-Präfix
+
+=item $h (Default: {})
+
+Hash mit den Schlüssel/Wert-Paaren des Blocks
+
+=back
+
+=head4 Returns
+
+Objekt
+
+=head4 Description
+
+Instantiiere ein Objekt der Klasse und liefere dieses zurück.
+
+=head2 Objektnmethoden
+
+=head3 set() - Setze Schlüssel/Wert-Paar
+
+=head4 Synopsis
+
+  $ssb = $class->set($key,$val);
+
+=head3 get() - Liefere Wert eines Schlüssels
+
+=head4 Synopsis
+
+  $val = $ssb->get($key);
+
+=head3 prefix() - Liefere Präfix
+
+=head4 Synopsis
+
+  $prefix = $ssb->prefix;
+
+=head1 VERSION
+
+1.226
+
+=head1 SOURCE
+
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/StreamServe/Block.pm>
+
+=head1 AUTHOR
+
+Frank Seitz, L<http://fseitz.de/>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2025 Frank Seitz
+
+=head1 LICENSE
+
+This code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

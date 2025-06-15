@@ -31,11 +31,11 @@ Objekt zurück.
 
 =head2 Objektmethoden
 
-=head3 getMultiElement() - Liefere Mehrfach-Element
+=head3 getSubTree() - Liefere Mehrfach-Element
 
 =head4 Synopsis
 
-  $ztr = $ztr->getMultiElement($keyPath,$placeholder)
+  $ztr = $ztr->getSubTree($keyPath,$placeholder)
 
 =head4 Arguments
 
@@ -118,18 +118,26 @@ Liste der Platzhalter und ihrer Werte
 
 =over 4
 
-=item -debug => $bool (Default: 0)
+=item -label => $text (Default: '')
 
-Gib die Liste der Platzhalter und ihrer Werte auf STDOUT aus.
+Versieh den Abschnitt der Platzhalter (bei -showPlaceHolders=>1) mit
+der Beschriftung $label.
+
+=item -showPlaceholders => $bool (Default: 0)
+
+Gibt die Liste der Platzhalter auf STDOUT aus
 
 =back
 
 =head4 Description
 
 Durchlaufe den ZUGFeRD-Baum rekursiv und ersetze auf den Blattknoten
-die Platzhalter durch ihre Werte.
+die Keys durch ihre Werte. Blattknoten-Werte, die unter den Keys
+nicht vorkommen, werden auf C<undef> gesetzt (und ggf. später durch
+reduceTree() entfernt).
 
-Fehlt einer der Platzhalter (key) im Baum, wird eine Exception geworfen.
+Fehlt einer der Platzhalter (key) im Baum oder kommen Platzhalter
+mehrfach vor, wird eine Exception geworfen.
 
 =head1 VERSION
 

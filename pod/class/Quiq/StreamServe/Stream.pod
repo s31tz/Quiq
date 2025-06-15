@@ -85,9 +85,35 @@ Index im Falle mehrfachen Vorkommens des Feldes
 
 (String) Wert
 
+=head3 try() - Liefere Wert
+
+=head4 Synopsis
+
+  $val = $ssf->try($name,$i);
+  $val = $ssf->try($name);
+
+=head4 Arguments
+
+=over 4
+
+=item $name
+
+Name des abzufragenden Feldes
+
+=item $i (Default: 0)
+
+Index im Falle mehrfachen Vorkommens des Feldes
+
+=back
+
+=head4 Returns
+
+(String) Wert
+
 =head4 Description
 
-Instantiiere ein Objekt der Klasse und liefere dieses zurück.
+Wie get(), nur dass der Zugriff auf ein nicht-existentes Feld nicht
+zu einer Exception führt, sondern C<undef> geliefert wird.
 
 =head3 prefixes() - Liste der Blockarten (Präfixe)
 
@@ -109,6 +135,7 @@ der gemeinsamen Feldpräfixe charakterisiert.
 =head4 Synopsis
 
   @arr | $arrH = $ssf->blocks($prefix);
+  @arr | $arrH = $ssf->blocks($prefix,$sloppy);
 
 =head4 Arguments
 
@@ -120,6 +147,17 @@ Die Blockart
 
 =back
 
+=head4 Options
+
+=over 4
+
+=item $sloppy
+
+Wenn gesetzt, wirf keine Exception, wenn die Blockart nicht existiet,
+sondern liefere eine leere Liste.
+
+=back
+
 =head4 Returns
 
 (Array of Hashes) Liste von Blöcken
@@ -128,6 +166,20 @@ Die Blockart
 
 Liefere die Liste der Blöcke einer Blockarten. Eine Blockart ist durch
 ihren Präfix charakterisiert.
+
+=head3 allBlocks() - Liste aller Blöcke
+
+=head4 Synopsis
+
+  @arr | $arrH = $ssf->allBlocks;
+
+=head4 Returns
+
+(Array of Hashes) Liste von Blöcken
+
+=head4 Description
+
+Liefere die Liste aller Blöcke des Streams.
 
 =head1 VERSION
 
