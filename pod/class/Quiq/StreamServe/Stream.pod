@@ -183,7 +183,7 @@ Liefere die Liste aller Blöcke des Streams.
 
 =head1 VERSION
 
-1.226
+1.227
 
 =head1 SOURCE
 

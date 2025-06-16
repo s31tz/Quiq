@@ -135,7 +135,7 @@ die Dateien im Trash vorab gelöscht werden sollen.
 
 =head1 VERSION
 
-1.226
+1.227
 
 =head1 SOURCE
 

@@ -42,7 +42,7 @@ use strict;
 use warnings;
 use utf8;
 
-our $VERSION = '1.226';
+our $VERSION = '1.227';
 
 use Quiq::PerlModule;
 use Quiq::Path;
@@ -729,7 +729,7 @@ sub zugferdDir {
 
 =head1 VERSION
 
-1.226
+1.227
 
 =head1 AUTHOR
 

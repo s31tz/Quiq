@@ -170,7 +170,7 @@ Visualisiere die ZUGFeRD-Datei $xmlFile als PDF-Datei $pdfFile.
 
 =head1 VERSION
 
-1.226
+1.227
 
 =head1 SOURCE
 

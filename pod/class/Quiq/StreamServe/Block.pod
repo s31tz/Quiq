@@ -69,7 +69,7 @@ Instantiiere ein Objekt der Klasse und liefere dieses zurück.
 
 =head1 VERSION
 
-1.226
+1.227
 
 =head1 SOURCE
 
