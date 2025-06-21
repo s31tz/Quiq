@@ -136,6 +136,8 @@ Typ des Returnwerts:
 
 =item 'hash'
 
+=item 'html'
+
 =back
 
 =back
@@ -148,7 +150,7 @@ Liefere das Ergebnis der ZUGFeRD-Validierung.
 
 =head4 Synopsis
 
-  $mus->visualize($xmlFile,$pdfFile);
+  $mus->visualize($xmlFile,$outFile,%options);
 
 =head4 Arguments
 
@@ -158,15 +160,99 @@ Liefere das Ergebnis der ZUGFeRD-Validierung.
 
 ZUGFeRD XML-Datei
 
-=item $pdfFile
+=item $outFile
 
-Erzeugte Visualisierungsdatei (als PDF)
+Erzeugte Visualisierungsdatei. Hat der Dateiname die Endung .pdf,
+wird eine PDF-Datei erzeugt, sonst eine HTML-Datei.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -addBusinessTerms => $bool (Default: 0)
+
+Füge im Falle von HTML als Zielformat die Kürzel der Business-Terms
+("BT-NNN") zu den Feldinhelten hinzu.
 
 =back
 
 =head4 Description
 
-Visualisiere die ZUGFeRD-Datei $xmlFile als PDF-Datei $pdfFile.
+Visualisiere die ZUGFeRD-Datei $xmlFile als PDF- oder HTML-Datei $pdfFile.
+
+=head4 Example
+
+Erzeuge PDF-Visualisierung:
+
+  perl -MQuiq::Mustang -E '$mus = Quiq::Mustang->new("~/sys/opt/mustang/Mustang-CLI-2.17.0.jar"); $mus->visualize("174284711604.xml","174284711604.pdf")'
+
+Erzeuge HTML-Visualisierung:
+
+  perl -MQuiq::Mustang -E '$mus = Quiq::Mustang->new("~/sys/opt/mustang/Mustang-CLI-2.17.0.jar"); $mus->visualize("174284711604.xml","174284711604.html")'
+
+=head2 Information
+
+=head3 br() - Text Geschäftsregel (Business Rule)
+
+=head4 Synopsis
+
+  $text = $zug->br($br);
+
+=head4 Arguments
+
+=over 4
+
+=item $br
+
+Bezeichner der Geschäftsregel. Beispiel: C<BR-CO-17>
+(Umsatzsteueraufschlüsselung)
+
+=back
+
+=head4 Returns
+
+(String) Text der Geschäftsregel
+
+=head4 Description
+
+Liefere den Text der Geschäftsregel $br. Ist die Geschäftsregel nicht
+definiert, wird ein Leerstring ('') geliefert.
+
+=head4 Example
+
+  $ perl -MQuiq::Mustang -E 'say Quiq::Mustang->new($jarFile)->br("BR-CO-17")'
+  (Umsatzsteueraufschlüsselung) Der Inhalt des Elementes „VAT category tax
+  amount“ (BT-117) entspricht dem Inhalt des Elementes „VAT category taxable
+  amount“ (BT-116), multipliziert mit dem Inhalt des Elementes „VAT category
+  rate“ (BT-119) geteilt durch 100, gerundet auf zwei Dezimalstellen.
+
+=head3 mustangDir() - Pfad des Mustang-Verzeichnisses
+
+=head4 Synopsis
+
+  $path = $zug->mustangDir;
+  $path = $zug->mustangDir($subPath);
+
+=head4 Arguments
+
+=over 4
+
+=item $subPath
+
+Subpfad ins Verzeichnis
+
+=back
+
+=head4 Returns
+
+(String) Dateipfad
+
+=head4 Description
+
+Liefere den Dateipfad des Mustang-Verzeichnisses, optional ergänzt um
+Subpfad $subPath.
 
 =head1 VERSION
 

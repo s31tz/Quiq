@@ -235,6 +235,38 @@ sub loadPath {
 
 # -----------------------------------------------------------------------------
 
+=head3 moduleDir() - Liefere den Pfad zum Modulverzeichnis
+
+=head4 Synopsis
+
+  $dir = $mod->moduleDir;
+
+=head4 Description
+
+Das Modulverzeichnis ist der Ladepfad des Moduls (s. loadPath())
+ohne die Dateiendung C<.pm>.
+
+=head4 Example
+
+  use A::B::C;
+  print Quiq::PerlModule->new('A::B::C')->moduleDir;
+  # '/usr/lib/perl5/site_perl/5.10.0/A/B/C'
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub moduleDir {
+    my $self = shift;
+
+    my $dir = $self->loadPath;
+    $dir =~ s/\.pm$//;
+
+    return $dir;
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 nameToPath() - Liefere Modulpfad zum Modulnamen
 
 =head4 Synopsis
