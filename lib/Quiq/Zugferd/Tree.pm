@@ -29,6 +29,7 @@ use warnings;
 
 our $VERSION = '1.228';
 
+use Quiq::Storable;
 use Quiq::Tree;
 use Quiq::AnsiColor;
 
@@ -99,6 +100,72 @@ sub getSubTree {
     $self->setDeep($keyPath,$placeholder);
 
     return bless $tree,'Quiq::Zugferd::Tree';
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 processSubTree() - Verarbeite Subbaum
+
+=head4 Synopsis
+
+  $treeA = $ztr->processSubTree($path,$placeholder,\@arr,sub {
+      my ($ztr,$h,$i) = @_;
+      ...
+      $t->resolvePlaceholders(
+          @keyVal
+      );
+  
+      return $t;
+  });
+
+=head4 Arguments
+
+=over 4
+
+=item $path
+
+Pfad zum Subbaum
+
+=item $placeholder
+
+Platzhalter, der in den Baum $ztr unter dem Pfad $path eingesetzt wird.
+
+=item @arr
+
+Liste der Elemente, aus denen die Platzhalter im Subbaum
+ersetzt werden.
+
+=item sub {}
+
+Subroutine, die die Einsetzung in einen Subbaum vornimmt
+
+=back
+
+=head4 Returns
+
+(Object) (Sub-)Baum mit ersetzen Platzhaltern
+
+=head4 Description
+
+Ersetze im Subbaum $name die Platzhalter aus den Elementen von @arr.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub processSubTree {
+    my ($self,$path,$placeholder,$arr,$sub) = @_;
+
+    my $t0 = $self->getSubTree($path,$placeholder);
+
+    my $i = 0;
+    my @arr;
+    for my $e (@$arr) {
+        my $t = Quiq::Storable->clone($t0);
+        push @arr,$sub->($self,$t,$e,$i++);
+    }
+
+    return \@arr;
 }
 
 # -----------------------------------------------------------------------------
@@ -304,7 +371,7 @@ sub resolvePlaceholders {
     if (@arr) {
         $self->throw(
             'TREE-00099: Non-existent Placeholders',
-            Placeholders => join('. ',@arr),
+            Placeholders => join(', ',@arr),
         );
     }
 

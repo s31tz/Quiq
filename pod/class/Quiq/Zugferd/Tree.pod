@@ -57,6 +57,51 @@ Liefere die Struktur, die das erste Element des Arrays iat, das
 $keyPath referenziert, und ersetze die Referenz durch den Platzhalter
 $placeholder.
 
+=head3 processSubTree() - Verarbeite Subbaum
+
+=head4 Synopsis
+
+  $treeA = $ztr->processSubTree($path,$placeholder,\@arr,sub {
+      my ($ztr,$h,$i) = @_;
+      ...
+      $t->resolvePlaceholders(
+          @keyVal
+      );
+  
+      return $t;
+  });
+
+=head4 Arguments
+
+=over 4
+
+=item $path
+
+Pfad zum Subbaum
+
+=item $placeholder
+
+Platzhalter, der in den Baum $ztr unter dem Pfad $path eingesetzt wird.
+
+=item @arr
+
+Liste der Elemente, aus denen die Platzhalter im Subbaum
+ersetzt werden.
+
+=item sub {}
+
+Subroutine, die die Einsetzung in einen Subbaum vornimmt
+
+=back
+
+=head4 Returns
+
+(Object) (Sub-)Baum mit ersetzen Platzhaltern
+
+=head4 Description
+
+Ersetze im Subbaum $name die Platzhalter aus den Elementen von @arr.
+
 =head3 reduceTree() - Reduziere den Baum
 
 =head4 Synopsis

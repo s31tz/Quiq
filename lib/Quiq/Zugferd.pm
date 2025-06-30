@@ -40,6 +40,7 @@ use base qw/Quiq::Hash/;
 use v5.10;
 use strict;
 use warnings;
+use utf8;
 
 our $VERSION = '1.228';
 
@@ -240,11 +241,11 @@ sub createInvoice {
 
 # -----------------------------------------------------------------------------
 
-=head3 processSubTree() - Verarbeite einen Subbaum
+=head3 processSubTree() - Verarbeite Subbaum
 
 =head4 Synopsis
 
-  $xmlA = $zug->processSubTree($name,\@arr,sub {
+  $treeA = $zug->processSubTree($name,\@arr,sub {
       my ($zug,$t,$h,$i) = @_;
       ...
       $t->resolvePlaceholders(
@@ -268,18 +269,18 @@ Name des Subbaums
 
 =item @arr
 
-Liste der Elemente, aus denen die Platzhalter im Subbaum
-ersetzt werden.
+Liste der Elemente, über die iteriert wird, um Teilbäume (mit
+ersetzten Platzhaltern) zu erzeugen.
 
 =item sub {}
 
-Subroutine, die die Einsetzung in einen Subbaum vornimmt
+Subroutine, die die Einsetzung in jeweils einen Subbaum vornimmt
 
 =back
 
 =head4 Returns
 
-(Object) Subbaum mit ersetzen Platzhaltern
+(Object) (Sub-)Baum mit ersetzen Platzhaltern
 
 =head4 Description
 
@@ -291,6 +292,8 @@ Ersetze im Subbaum $name die Platzhalter aus den Elementen von @arr.
 
 sub processSubTree {
     my ($self,$name,$arr,$sub) = @_;
+
+    # FIXME: Methode auf $ztr->processSubTree() zurückführen
 
     my $path = $self->bg($name)->path;
     my $t0 = $self->tree->getSubTree($path,$name);
