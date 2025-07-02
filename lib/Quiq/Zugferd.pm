@@ -40,7 +40,6 @@ use base qw/Quiq::Hash/;
 use v5.10;
 use strict;
 use warnings;
-use utf8;
 
 our $VERSION = '1.228';
 
@@ -292,8 +291,6 @@ Ersetze im Subbaum $name die Platzhalter aus den Elementen von @arr.
 
 sub processSubTree {
     my ($self,$name,$arr,$sub) = @_;
-
-    # FIXME: Methode auf $ztr->processSubTree() zurückführen
 
     my $path = $self->bg($name)->path;
     my $t0 = $self->tree->getSubTree($path,$name);
