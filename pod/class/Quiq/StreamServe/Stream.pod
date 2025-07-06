@@ -43,11 +43,26 @@ Objekt
 
 Instantiiere ein Objekt der Klasse und liefere dieses zurück.
 
-=head3 split() - Zerlege (Multi-)Streamdatei in Einzelstreams
+=head3 split() - Zerlege (Multi-)Stream in Einzelstreams
 
 =head4 Synopsis
 
   @arr | $arrA = $class->split($file);
+  @arr | $arrA = $class->split(\$data);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Stream-Datei
+
+=item $data
+
+Stream-Daten
+
+=back
 
 =head4 Returns
 
@@ -55,8 +70,8 @@ Instantiiere ein Objekt der Klasse und liefere dieses zurück.
 
 =head4 Description
 
-Zerlege die (Multi-)Streamdatei in Einzelstreams und liefere die Liste
-der Einzelstreams zurück.
+Zerlege einen (Multi-)Stream (aus Datei oder In-Memory-Daten)
+in Einzelstreams und liefere die Liste der Einzelstreams zurück.
 
 =head2 Objektmethoden
 

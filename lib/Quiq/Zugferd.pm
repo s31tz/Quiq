@@ -438,9 +438,9 @@ sub resolvePlaceholders {
 
     # Wandele den Baum in XML
     my $xml = $wrt->($doc,$tree);
-    
 
     # Liefere das XML formatiert
+    $xml =~ s/\x2//g; # CTRL-B herausfiltern => Quiq Fix
     return Quiq::Xml->print($xml);
 }
 

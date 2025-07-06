@@ -117,6 +117,7 @@ Validierung zurück.
   
   ($status,$text) = $mus->getResult($pattern,'text');
   ($status,$ruleH) = $mus->getResult($pattern,'hash');
+  ($status,$html) = $mus->getResult($pattern,'hash');
 
 =head4 Arguments
 
@@ -137,6 +138,52 @@ Typ des Returnwerts:
 =item 'hash'
 
 =item 'html'
+
+=back
+
+=back
+
+=head4 Returns
+
+=over 4
+
+=item $status
+
+Status der Validierung. Mögliche Werte:
+
+=over 4
+
+=item Z<>0
+
+Validierung war erfolgreich.
+
+=item Z<>1
+
+Es sind bei der Validierung Fehler aufgetreten.
+
+=item Z<>2
+
+Es liegt kein Validierungsergebis vor.
+
+=back
+
+=item $val
+
+Detailinformation. Mögliche Werte:
+
+=over 4
+
+=item $text
+
+Textuelle Beschreibung.
+
+=item $ruleH
+
+Hash der verletzten Regeln.
+
+=item $html
+
+Beschreibung in HTML.
 
 =back
 

@@ -1122,3 +1122,7 @@ XML_INV
 Fehlermeldung, die keiner Geschäftsregel zugeordnet ist. Tritt im Falle von
 XML auf, das nicht dem ZUGFeRD XML Schema genügt. Siehe Validierungsbericht.
 
+NO_VALIDATION_RESULT
+Es liegt kein Validierungsergebnis vor.
+
+# eof
