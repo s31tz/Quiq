@@ -179,6 +179,38 @@ erzeugt
   |ein Test.\n
   |\n
 
+=head3 segment() - Segment
+
+=head4 Synopsis
+
+  $str = $gen->segment($name,
+      html => $htmlCode,
+      latex => $latexCode,
+      mediawiki => $mediawikiCode,
+  );
+
+=head4 Description
+
+Definiere ein Segment mit dem Bezeichner $name und den HTML-, LaTeX-,
+MediaWiki-Definitionen $htmlCode, $latexCode, $mediawikiCode und
+liefere den resultierenden Sdoc-Code zurück.
+
+=head4 Example
+
+  $gen->segment('red',
+      html => '<span style="color: red">%s</span>',
+      latex => '{\color{red}%s}',
+      mediawiki => '<span style="color: red">%s</span>',
+  );
+
+erzeugt
+
+  %Segment:
+    name=red
+    html='<span style="color: red">%s</span>'
+    latex='{\color{red}%s}'
+    mediawiki='<span style="color: red">%s</span>'
+
 =head3 table() - Tabelle
 
 =head4 Synopsis
@@ -347,7 +379,7 @@ erzeugt
 
 =head1 VERSION
 
-1.228
+1.229
 
 =head1 SOURCE
 

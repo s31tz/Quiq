@@ -27,7 +27,7 @@ use v5.10;
 use strict;
 use warnings;
 
-our $VERSION = '1.228';
+our $VERSION = '1.229';
 
 use Quiq::Storable;
 use Quiq::Tree;
@@ -314,16 +314,6 @@ sub resolvePlaceholders {
 
     # Operation ausführen
 
-    if (0) { # Debug
-        my @keys = map {$_->[0]}
-            sort {$a->[1] <=> $b->[1] or $a->[0] cmp $b->[0]}
-            map {[$_,/-(\d+)/]}
-            keys %map;
-        for my $key (@keys) {
-            say "$key => $map{$key}";
-        }
-    }
-
     # * Prüfe, dass kein Schlüssel doppelt vorkommen
 
     my %seen; # gesehene Platzhalter
@@ -382,7 +372,7 @@ sub resolvePlaceholders {
 
 =head1 VERSION
 
-1.228
+1.229
 
 =head1 AUTHOR
 
