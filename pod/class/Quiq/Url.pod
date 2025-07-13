@@ -27,7 +27,7 @@ nützlich sind.
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf
 dieses Objekt zurück. Da die Klasse ausschließlich Klassenmethoden
-enthält, hat das Objekt ausschließlich die Funktion, eine abkürzende
+enthält, hat das Objekt lediglich die Funktion, eine abkürzende
 Aufrufschreibweise zu ermöglichen.
 
 =head2 Klassenmethoden
@@ -49,6 +49,16 @@ Aufrufschreibweise zu ermöglichen.
 =item @keyVal
 
 Liste der Query-String Parameter
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -append => $queryString
+
+Hänge den Querystring $querystring (unverändert) an den URL an.
 
 =back
 
@@ -163,6 +173,10 @@ soll. Dies ist, wenn bentigt, typischweise ein Fragezeichen (?).
 =head4 Options
 
 =over 4
+
+=item -append => $queryString
+
+Hänge den Querystring $querystring (unverändert) an den URL an.
 
 =item -encoding => $encoding (Default: 'utf-8')
 
