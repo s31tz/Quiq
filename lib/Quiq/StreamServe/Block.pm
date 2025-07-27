@@ -76,19 +76,45 @@ sub new {
 
     return $class->SUPER::new(
         prefix => $prefix,
-        hash => Quiq::Hash->new($h)->unlockKeys,
+        # hash => Quiq::Hash->new($h)->unlockKeys,
+        hash => Quiq::Hash->new($h),
     );
 }
 
 # -----------------------------------------------------------------------------
 
-=head2 Objektnmethoden
+=head2 Objektmethoden
+
+=head3 add() - Setze Schlüssel/Wert-Paar ohne Exception
+
+=head4 Synopsis
+
+  $ssb->add($key,$val);
+
+=head4 Description
+
+Ist der Schlüssel vorhanden, wird sein Wert gesetzt. Ist er nicht
+vorhanden wird er mit dem angegebenen Wert hinzugefügt.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub add {
+    my ($self,$key,$val) = @_;
+
+    $self->hash->add($key,$val);
+
+    return;
+}
+
+# -----------------------------------------------------------------------------
 
 =head3 set() - Setze Schlüssel/Wert-Paar
 
 =head4 Synopsis
 
-  $ssb = $class->set($key,$val);
+  $ssb->set($key,$val);
 
 =cut
 
@@ -98,6 +124,7 @@ sub set {
     my ($self,$key,$val) = @_;
 
     $self->hash->set($key,$val);
+
     return;
 }
 
@@ -108,13 +135,39 @@ sub set {
 =head4 Synopsis
 
   $val = $ssb->get($key);
+  $val = $ssb->get($key,$sloppy);
+
+=head4 Arguments
+
+=over 4
+
+=item $key
+
+Schlüssel
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item $sloppy (Default: 0)
+
+Wirf bei Nichtexistenz von $key keine Exception, sondern liefere C<undef>.
+
+=back
 
 =cut
 
 # -----------------------------------------------------------------------------
 
 sub get {
-    my ($self,$key) = @_;
+    my ($self,$key,$sloppy) = @_;
+
+    if ($sloppy) {
+        local $@;
+        return eval {$self->hash->get($key)};
+    }
 
     return $self->hash->get($key);
 }

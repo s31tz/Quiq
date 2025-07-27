@@ -464,6 +464,56 @@ sub resolvePlaceholders {
 
 # -----------------------------------------------------------------------------
 
+=head3 toXml() - Liefere das Zugferd-XML einer Rechnung
+
+=head4 Synopsis
+
+  $xml = $zug->toXml($rch);
+
+=head4 Arguments
+
+=over 4
+
+=item $rch
+
+(object) Rechnung
+
+=back
+
+=head4 Returns
+
+(String) XML
+
+=head4 Description
+
+Erzeuge eine ZUGFeRD XML Repräsentation des Rechnungs-Objekts $rch
+und liefere diese zurück.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub toXml {
+    my ($self,$rch) = splice @_,0,2;
+
+    say Quiq::Dumper->dump($rch);
+
+    return $self->resolvePlaceholders(
+        -validate => 0,
+        -showPlaceholders => 1,
+        -label => 'Rechnung',
+        -showTree => 1,
+        '--',
+        'BT-24' => $rch->profilKennung,
+        'BT-3' => $rch->rechnungsart,
+        'BT-1' => $rch->rechnungsnummer,
+        'BT-2' => $rch->rechnungsdatum,
+        'BT-5' => $rch->waehrung,
+    );
+}
+
+# -----------------------------------------------------------------------------
+
 =head3 tree() - Liefere den ZUGFeRD-Baum
 
 =head4 Synopsis
@@ -723,6 +773,161 @@ sub zugferdDir {
 }
 
 # -----------------------------------------------------------------------------
+
+=head1 DETAILS
+
+=head2 Vorgehen bei der Generierung einer ZUGFeRD E-Rechnung
+
+Der Inhalt einer Rechnung setzt sich aus verschiedenen Bestandteilen
+zusammen:
+
+=over 2
+
+=item *
+
+Rechnungsdaten
+
+=over 2
+
+=item *
+
+Allgemeine Rechnungsdaten
+
+=item *
+
+Rechnungsreferenzen
+
+=back
+
+=item *
+
+Verkäufer
+
+=over 2
+
+=item *
+
+Informationen zum Verkäufer
+
+=item *
+
+Steuervertreter des Verkäufers
+
+=item *
+
+Postanschrift des Verkäufers
+
+=item *
+
+KOntaktdaten des Verkäufers
+
+=item *
+
+Vom Verkäufer abweichender Zahlungsempfänger
+
+=back
+
+=item *
+
+Käufer
+
+=over 2
+
+=item *
+
+Informationen zum Käufer
+
+=item *
+
+Postanschrift des Käufers
+
+=item *
+
+Kontaktdaten des Käufers
+
+=item *
+
+Lieferinformation
+
+=back
+
+=item *
+
+Rechnungspositionen
+
+=over 2
+
+=item *
+
+Rechnungsposition
+
+=item *
+
+Weitere Daten zur Position
+
+=item *
+
+Nachlässe auf Ebene der Rechnungsposition
+
+=item *
+
+Zuschläge auf Ebene der Rechnungsposition
+
+=back
+
+=item *
+
+Rechnungsbeträge
+
+=over 2
+
+=item *
+
+Nachlässe auf Ebene der Rechnung
+
+=item *
+
+Zuschläge auf Ebene der Rechnung
+
+=item *
+
+Aufschlüsselung der Umsatzsteuer auf Ebene der Rechnung
+
+=item *
+
+Rechnungsbeträge
+
+=back
+
+=item *
+
+Zahlungsdaten
+
+=over 2
+
+=item *
+
+Zahlungsdaten
+
+=item *
+
+Zahlungsmittel: Überweisung
+
+=item *
+
+Zahlungsmittel: Lastschrift
+
+=back
+
+=item *
+
+Anhänge
+
+=item *
+
+Verweise
+
+=back
 
 =head1 VERSION
 

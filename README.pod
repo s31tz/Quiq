@@ -1009,6 +1009,10 @@ L<Quiq::Zugferd|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd
 
 =item *
 
+L<Quiq::Zugferd::Entity::Rechnung|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Entity/Rechnung.pod> - Rechnung
+
+=item *
+
 L<Quiq::Zugferd::Tree|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Tree.pod> - Operatonen auf ZUGFeRD-Baum
 
 =back

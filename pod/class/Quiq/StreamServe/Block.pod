@@ -47,19 +47,51 @@ Objekt
 
 Instantiiere ein Objekt der Klasse und liefere dieses zurück.
 
-=head2 Objektnmethoden
+=head2 Objektmethoden
+
+=head3 add() - Setze Schlüssel/Wert-Paar ohne Exception
+
+=head4 Synopsis
+
+  $ssb->add($key,$val);
+
+=head4 Description
+
+Ist der Schlüssel vorhanden, wird sein Wert gesetzt. Ist er nicht
+vorhanden wird er mit dem angegebenen Wert hinzugefügt.
 
 =head3 set() - Setze Schlüssel/Wert-Paar
 
 =head4 Synopsis
 
-  $ssb = $class->set($key,$val);
+  $ssb->set($key,$val);
 
 =head3 get() - Liefere Wert eines Schlüssels
 
 =head4 Synopsis
 
   $val = $ssb->get($key);
+  $val = $ssb->get($key,$sloppy);
+
+=head4 Arguments
+
+=over 4
+
+=item $key
+
+Schlüssel
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item $sloppy (Default: 0)
+
+Wirf bei Nichtexistenz von $key keine Exception, sondern liefere C<undef>.
+
+=back
 
 =head3 prefix() - Liefere Präfix
 

@@ -97,7 +97,6 @@ sub new {
         }
         $val =~ s/^\s+|\s+$//; # Wert von umgebendem Whitespace befreien
         if (/^(..)INDCTR/) {
-            # $blk->lockKeys;
             # Nächsten (zunächst leeren) Block hinzufügen
             $prefix = $1;
             $blk = Quiq::StreamServe::Block->new($prefix);
@@ -106,11 +105,10 @@ sub new {
             push @$secBlkA,$blk;
         }
         else {
-            $blk->set($key=>$val); 
+            $blk->add($key=>$val); 
         }
     }
     $fh->close;
-    # $blk->lockKeys;
 
     return $class->SUPER::new(
         blockA => \@blocks,
