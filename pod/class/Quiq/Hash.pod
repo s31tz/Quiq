@@ -187,25 +187,22 @@ ist dasselbe wie
 
 =head4 Synopsis
 
-  $h->setDeep($key,$val);
+  $h->setDeep(@keyVal);
 
 =head4 Arguments
 
 =over 4
 
-=item $key
+=item @keyVal
 
-Zugriffspfad der Form "key1.key2..."
-
-=item $val
-
-Wert, der gesetzt wird
+Schlüssel ist ein Zugriffspfad der Form "key1.key2...", Wert ist ein
+beliebiger skalarer Wert.
 
 =back
 
 =head4 Description
 
-Setze den Wert zum angegebenen Schlüssel. Der Schlüssel ist eine
+Setze die Werte auf die angegebenen Schlüssel. Der Schlüssel ist eine
 mit Punkt (.) getrennte Kette von Einzelschlüsseln, so dass
 sich ein "tiefer Zugriff" kompakt formulieren lässt.
 
@@ -213,7 +210,7 @@ sich ein "tiefer Zugriff" kompakt formulieren lässt.
 
 B<Folge von Hash-Zugriffen>
 
-  $h->setDeep('invoice.header.invoiceNumber',$val);
+  $h->setDeep('invoice.header.invoiceNumber' => $val);
 
 ist dasselbe wie
 
@@ -221,7 +218,7 @@ ist dasselbe wie
 
 B<Zugriff über Array-Element>
 
-  $h->setDeep('settlement.tradeTax.[0].type',$val);
+  $h->setDeep('settlement.tradeTax.[0].type' => $val);
 
 ist dasselbe wie
 

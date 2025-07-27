@@ -499,7 +499,7 @@ sub toXml {
     say Quiq::Dumper->dump($rch);
 
     return $self->resolvePlaceholders(
-        -validate => 0,
+        -validate => 1,
         -showPlaceholders => 1,
         -label => 'Rechnung',
         -showTree => 1,
@@ -508,7 +508,10 @@ sub toXml {
         'BT-3' => $rch->rechnungsart,
         'BT-1' => $rch->rechnungsnummer,
         'BT-2' => $rch->rechnungsdatum,
+        'BT-2-0' => 102,
         'BT-5' => $rch->waehrung,
+        'BT-27' => $rch->kaeufer->name,
+        'BT-80' => $rch->kaeufer->lieferanschrift->land,
     );
 }
 

@@ -17,7 +17,7 @@ BT-99;0;Betrag des Zuschlags auf Dokumentenebene
 BT-20;0;Zahlungsbedingungen
 BT-21;0;Code zum Freitext der Rechnung
 BT-22;0;Freitext zur Rechnung
-BT-24;1;Spezifikationskennung
+BT-24;1;Spezifikationskennung (Kennung des Profils)
 BT-27;1;Name des Verkäufers
 BT-29;0;Kennung des Verkäufers
 BT-30-1;0;Kennung des Schemas

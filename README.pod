@@ -1009,6 +1009,14 @@ L<Quiq::Zugferd|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd
 
 =item *
 
+L<Quiq::Zugferd::Entity::Anschrift|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Entity/Anschrift.pod> - Anschrift
+
+=item *
+
+L<Quiq::Zugferd::Entity::Kaeufer|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Entity/Kaeufer.pod> - Käufer
+
+=item *
+
 L<Quiq::Zugferd::Entity::Rechnung|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Entity/Rechnung.pod> - Rechnung
 
 =item *

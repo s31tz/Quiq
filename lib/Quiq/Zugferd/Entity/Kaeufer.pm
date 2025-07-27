@@ -4,7 +4,7 @@
 
 =head1 NAME
 
-Quiq::Zugferd::Entity::Rechnung - Rechnung
+Quiq::Zugferd::Entity::Kaeufer - Käufer
 
 =head1 BASE CLASS
 
@@ -12,13 +12,13 @@ L<Quiq::Hash>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine Rechnung.
+Ein Objekt der Klasse repräsentiert den Käufer.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-package Quiq::Zugferd::Entity::Rechnung;
+package Quiq::Zugferd::Entity::Kaeufer;
 use base qw/Quiq::Hash/;
 
 use v5.10;
@@ -37,7 +37,7 @@ our $VERSION = '1.229';
 
 =head4 Synopsis
 
-  $rch = $class->new(@keyVal);
+  $kfr = $class->new(@keyVal);
 
 =head4 Description
 
@@ -53,12 +53,9 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-       profilKennung => 'urn:cen.eu:en16931:2017', # Profil EN16931
-       rechnungsart => undef,
-       rechnungsnummer => undef,
-       rechnungsdatum => undef,
-       waehrung => undef,
-       kaeufer => undef,
+       name => undef,
+       anschrift => undef,
+       lieferanschrift => undef,
     );
     $self->set(@_);
 
