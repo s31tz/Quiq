@@ -60,6 +60,17 @@ Instantiiere ein Objekt der Klasse und liefere dieses zurück.
 Ist der Schlüssel vorhanden, wird sein Wert gesetzt. Ist er nicht
 vorhanden wird er mit dem angegebenen Wert hinzugefügt.
 
+=head3 content() - Inhalt des Blocks
+
+=head4 Synopsis
+
+  $text =  $ssb->content;
+
+=head4 Description
+
+Liefere den Inhalt des Blocks als Text. Die Schlüssel sind alphanumerisch
+sortiert.
+
 =head3 set() - Setze Schlüssel/Wert-Paar
 
 =head4 Synopsis

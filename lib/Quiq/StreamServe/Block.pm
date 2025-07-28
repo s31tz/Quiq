@@ -76,7 +76,6 @@ sub new {
 
     return $class->SUPER::new(
         prefix => $prefix,
-        # hash => Quiq::Hash->new($h)->unlockKeys,
         hash => Quiq::Hash->new($h),
     );
 }
@@ -106,6 +105,36 @@ sub add {
     $self->hash->add($key,$val);
 
     return;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 content() - Inhalt des Blocks
+
+=head4 Synopsis
+
+  $text =  $ssb->content;
+
+=head4 Description
+
+Liefere den Inhalt des Blocks als Text. Die Schlüssel sind alphanumerisch
+sortiert.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub content {
+    my $self = shift;
+
+    my $h = $self->hash;
+
+    my $text = '';
+    for my $key (sort $h->keys) {
+        $text .= sprintf "%9s %s\n",$key,$h->{$key};
+    }
+
+    return $text;
 }
 
 # -----------------------------------------------------------------------------
