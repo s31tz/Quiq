@@ -504,13 +504,31 @@ sub toXml {
         -label => 'Rechnung',
         -showTree => 1,
         '--',
+        # Rechnung (allgemeine Angaben)
         'BT-24' => $rch->profilKennung,
         'BT-3' => $rch->rechnungsart,
         'BT-1' => $rch->rechnungsnummer,
         'BT-2' => $rch->rechnungsdatum,
         'BT-2-0' => 102,
         'BT-5' => $rch->waehrung,
+        # Verkäufer
+        'BT-27' => $rch->verkaeufer->name,
+        'BT-38' => $rch->verkaeufer->plz,
+        'BT-35' => $rch->verkaeufer->strasse,
+        'BT-37' => $rch->verkaeufer->ort,
+        'BT-40' => $rch->verkaeufer->land,
+        'BT-31' => $rch->verkaeufer->umsatzsteuerId,
+        'BT-31-0' => 'VA',
+        # Käufer (Zahler)
         'BT-44' => $rch->kaeufer->name,
+        'BT-46' => $rch->kaeufer->kundennummer,
+        'BT-50' => $rch->kaeufer->strasse,
+        'BT-53' => $rch->kaeufer->plz,
+        'BT-52' => $rch->kaeufer->ort,
+        'BT-55' => $rch->kaeufer->land,
+        'BT-51' => $rch->kaeufer->zeile2,
+        'BT-56' => $rch->kaeufer->ansprechpartner,
+        # Empfänger
         'BT-80' => $rch->empfaenger->land,
     );
 }

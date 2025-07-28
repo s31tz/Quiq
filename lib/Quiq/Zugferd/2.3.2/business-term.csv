@@ -34,7 +34,7 @@ BT-41-0;0;Abteilungsname
 BT-41;0;Kontaktstelle des Verkäufers
 BT-42;0;Telefonnummer der Kontaktstelle des Verkäufers
 BT-44;1;Name des Käufers
-BT-46;0;Kennung des Käufers
+BT-46;0;Kundennummer
 BT-48-0;0;Art der Steuernummer
 BT-48;0;Umsatzsteuer-Identifikationsnummer des Käufers
 BT-50;0;Zeile 1 der Käuferanschrift

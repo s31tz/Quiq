@@ -54,9 +54,10 @@ sub new {
 
     my $self = $class->SUPER::new(
         name => undef,
-        zeile1 => undef,
+        kundennummer => undef,
+        ansprechpartner => undef,
         zeile2 => undef,
-        zeile3 => undef,
+        strasse => undef,
         plz => undef,
         ort => undef,
         land => undef,

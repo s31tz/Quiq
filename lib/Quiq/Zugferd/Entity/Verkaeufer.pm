@@ -4,7 +4,7 @@
 
 =head1 NAME
 
-Quiq::Zugferd::Entity::Verkaeufer - Käufer (Zahler)
+Quiq::Zugferd::Entity::Verkaeufer - Verkäufer
 
 =head1 BASE CLASS
 
@@ -54,7 +54,7 @@ sub new {
 
     my $self = $class->SUPER::new(
         name => undef,
-        zeile1 => undef,
+        strasse => undef,
         zeile2 => undef,
         zeile3 => undef,
         plz => undef,

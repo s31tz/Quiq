@@ -1021,7 +1021,7 @@ L<Quiq::Zugferd::Entity::Rechnung|https://github.com/s31tz/Quiq/tree/master/pod/
 
 =item *
 
-L<Quiq::Zugferd::Entity::Verkaeufer|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Entity/Verkaeufer.pod> - Käufer (Zahler)
+L<Quiq::Zugferd::Entity::Verkaeufer|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Entity/Verkaeufer.pod> - Verkäufer
 
 =item *
 
