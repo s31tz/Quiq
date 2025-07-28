@@ -4,7 +4,7 @@
 
 =head1 NAME
 
-Quiq::Zugferd::Entity::Anschrift - Anschrift
+Quiq::Zugferd::Entity::Empfaenger - Empfänger
 
 =head1 BASE CLASS
 
@@ -12,13 +12,13 @@ L<Quiq::Hash>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine Anschrift.
+Ein Objekt der Klasse repräsentiert den Empfänger.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-package Quiq::Zugferd::Entity::Anschrift;
+package Quiq::Zugferd::Entity::Empfaenger;
 use base qw/Quiq::Hash/;
 
 use v5.10;
@@ -37,7 +37,7 @@ our $VERSION = '1.229';
 
 =head4 Synopsis
 
-  $ans = $class->new(@keyVal);
+  $kfr = $class->new(@keyVal);
 
 =head4 Description
 
@@ -53,6 +53,12 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
+        name => undef,
+        zeile1 => undef,
+        zeile2 => undef,
+        zeile3 => undef,
+        plz => undef,
+        ort => undef,
         land => undef,
     );
     $self->set(@_);

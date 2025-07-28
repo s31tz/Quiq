@@ -4,7 +4,7 @@
 
 =head1 NAME
 
-Quiq::Zugferd::Entity::Kaeufer - Käufer
+Quiq::Zugferd::Entity::Kaeufer - Käufer (Zahler)
 
 =head1 BASE CLASS
 
@@ -53,9 +53,13 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-       name => undef,
-       anschrift => undef,
-       lieferanschrift => undef,
+        name => undef,
+        zeile1 => undef,
+        zeile2 => undef,
+        zeile3 => undef,
+        plz => undef,
+        ort => undef,
+        land => undef,
     );
     $self->set(@_);
 

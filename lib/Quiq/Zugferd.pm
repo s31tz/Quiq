@@ -511,7 +511,7 @@ sub toXml {
         'BT-2-0' => 102,
         'BT-5' => $rch->waehrung,
         'BT-27' => $rch->kaeufer->name,
-        'BT-80' => $rch->kaeufer->lieferanschrift->land,
+        'BT-80' => $rch->empfaenger->land,
     );
 }
 

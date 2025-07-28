@@ -59,6 +59,7 @@ sub new {
        rechnungsdatum => undef,
        waehrung => undef,
        kaeufer => undef,
+       empfaenger => undef,
     );
     $self->set(@_);
 

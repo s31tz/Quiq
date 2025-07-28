@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Zugferd::Entity::Kaeufer - Käufer
+Quiq::Zugferd::Entity::Kaeufer - Käufer (Zahler)
 
 =head1 BASE CLASS
 

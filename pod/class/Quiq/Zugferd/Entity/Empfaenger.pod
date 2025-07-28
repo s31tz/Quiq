@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Zugferd::Entity::Anschrift - Anschrift
+Quiq::Zugferd::Entity::Empfaenger - Empfänger
 
 =head1 BASE CLASS
 
@@ -10,7 +10,7 @@ L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine Anschrift.
+Ein Objekt der Klasse repräsentiert den Empfänger.
 
 =head1 METHODS
 
@@ -20,7 +20,7 @@ Ein Objekt der Klasse repräsentiert eine Anschrift.
 
 =head4 Synopsis
 
-  $ans = $class->new(@keyVal);
+  $kfr = $class->new(@keyVal);
 
 =head4 Description
 
@@ -33,7 +33,7 @@ Objekt zurück.
 
 =head1 SOURCE
 
-L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Zugferd/Entity/Anschrift.pm>
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Zugferd/Entity/Empfaenger.pm>
 
 =head1 AUTHOR
 
