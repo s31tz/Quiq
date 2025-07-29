@@ -53,6 +53,7 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
+        lieferdatum => undef,
         name => undef,
         ansprechpartner => undef,
         zeile2 => undef,

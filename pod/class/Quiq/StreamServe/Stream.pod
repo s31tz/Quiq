@@ -33,7 +33,34 @@ Feldwerte können abgfragt werden
 
 =head4 Synopsis
 
-  $ssf = $class->new($file);
+  $ssf = $class->new($file,%options);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Pfad der Streamdatei.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -debug => $bool (Default: 0)
+
+Gib den Inhalt des Streams auf STDOUT aus (Blöcke in Lesereihenfolge,
+Felder alphanumerisch sortiert).
+
+=item -ignore => \@vals (Default: [])
+
+Feldwerte, die auf einen Leerstring reduziert werden. Beispiel:
+
+  -ignore => ['.','*','-']
+
+=back
 
 =head4 Returns
 

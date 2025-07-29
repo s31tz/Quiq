@@ -496,7 +496,7 @@ und liefere diese zurück.
 sub toXml {
     my ($self,$rch) = splice @_,0,2;
 
-    say Quiq::Dumper->dump($rch);
+    say "---\n",Quiq::Dumper->dump($rch),"---";
 
     return $self->resolvePlaceholders(
         -validate => 1,
@@ -527,9 +527,16 @@ sub toXml {
         'BT-52' => $rch->kaeufer->ort,
         'BT-55' => $rch->kaeufer->land,
         'BT-51' => $rch->kaeufer->zeile2,
-        'BT-56' => $rch->kaeufer->ansprechpartner,
         # Empfänger
+        'BT-70' => $rch->empfaenger->name,
+        'BT-76' => $rch->empfaenger->ansprechpartner,
+        'BT-75' => $rch->empfaenger->strasse,
+        'BT-78' => $rch->empfaenger->plz,
+        'BT-77' => $rch->empfaenger->ort,
+        'BT-165' => $rch->empfaenger->zeile2,
         'BT-80' => $rch->empfaenger->land,
+        'BT-72' => $rch->empfaenger->lieferdatum,
+        'BT-72-0' => 102,
     );
 }
 

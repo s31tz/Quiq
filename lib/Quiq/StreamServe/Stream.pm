@@ -54,7 +54,34 @@ use Quiq::Hash;
 
 =head4 Synopsis
 
-  $ssf = $class->new($file);
+  $ssf = $class->new($file,%options);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Pfad der Streamdatei.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -debug => $bool (Default: 0)
+
+Gib den Inhalt des Streams auf STDOUT aus (Blöcke in Lesereihenfolge,
+Felder alphanumerisch sortiert).
+
+=item -ignore => \@vals (Default: [])
+
+Feldwerte, die auf einen Leerstring reduziert werden. Beispiel:
+
+  -ignore => ['.','*','-']
+
+=back
 
 =head4 Returns
 
@@ -69,7 +96,19 @@ Instantiiere ein Objekt der Klasse und liefere dieses zurück.
 # -----------------------------------------------------------------------------
 
 sub new {
-    my ($class,$file) = @_;
+    my $class = shift;
+    # @_: $file,%options
+
+    # Optionen und Argumente
+
+    my $debug = 0;
+    my $ignoreA = [];
+
+    my $argA = $class->parameters(1,1,\@_,
+        -debug => \$debug,
+        -ignore => \$ignoreA,
+    );
+    my $file = shift @$argA;
 
     # Datenstrukturen mit erstem (zunächst leeren) Block
 
@@ -96,6 +135,11 @@ sub new {
             next;
         }
         $val =~ s/^\s+|\s+$//; # Wert von umgebendem Whitespace befreien
+        for my $ign (@$ignoreA) { # unerwünschte Werte wegfiltern
+            if ($val eq $ign) {
+                $val = '';
+            }
+        }
         if (/^(..)INDCTR/) {
             # Nächsten (zunächst leeren) Block hinzufügen
             $prefix = $1;
@@ -109,6 +153,15 @@ sub new {
         }
     }
     $fh->close;
+
+    if ($debug) {
+        for $blk (@blocks) {
+            say $blk->prefix;
+            my $content = $blk->content;
+            $content =~ s/^/  /mg;
+            print $content;
+        }
+    }
 
     return $class->SUPER::new(
         blockA => \@blocks,
