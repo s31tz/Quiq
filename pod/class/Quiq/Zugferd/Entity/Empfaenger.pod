@@ -6,7 +6,7 @@ Quiq::Zugferd::Entity::Empfaenger - Empfänger
 
 =head1 BASE CLASS
 
-L<Quiq::Hash|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Hash.pod>
+L<Quiq::Zugferd::Entity|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Entity.pod>
 
 =head1 DESCRIPTION
 
@@ -29,7 +29,7 @@ Objekt zurück.
 
 =head1 VERSION
 
-1.229
+1.230
 
 =head1 SOURCE
 

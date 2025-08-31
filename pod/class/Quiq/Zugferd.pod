@@ -70,6 +70,61 @@ ZUGFeRD-Version $version und liefere dieses zurück.
 
 =head2 Objektmethoden
 
+=head3 checkAttributes() - Prüfe die Attribute des Rechnungsobjekts
+
+=head4 Synopsis
+
+  $msg = $zug->checkAttributes($rch);
+
+=head4 Arguments
+
+=over 4
+
+=item $rch
+
+(Object) Das Rechnungsobjekt
+
+=back
+
+=head4 Returns
+
+(String) Prüfungsbericht
+
+=head4 Description
+
+Prüfe die Felder des Rechnungsobjekts auf mögliche Fehler und liefere
+einen Bericht über das Ergebnis. Falls keine Fehler festgestellt wurden,
+lieferet die Methode einen Leerstring ('').
+
+=head3 combine() - Erzeuge ZUGFeRD PDF
+
+=head4 Synopsis
+
+  $zug->combine($pdfFile,$xmlFile,$zugferdFile);
+
+=head4 Arguments
+
+=over 4
+
+=item $pdfFile
+
+(String) Der Pfad zum PDF der Rechnung
+
+=item $xmlFile
+
+(String) Der Pfad zum ZUGFeRD XML der Rechnung
+
+=item $zugferdFile
+
+(String) Der Pfad zur resultierenden ZUGFeRD Rechnung
+
+=back
+
+=head4 Description
+
+Füge das Rechnungs-PDF $pdfFile und das ZUGFeRD XML $xmlFile
+zusammen und schreibe das Ergebnis nach $zugferdFile.
+
 =head3 createInvoice() - Erzeuge das XML einer ZUGFeRD-Rechnung (abstrakt)
 
 =head4 Synopsis
@@ -202,7 +257,7 @@ das resultierende XML zurück.
 
 =head4 Synopsis
 
-  $xml = $zug->toXml($rch);
+  $xml = $zug->toXml($rch,%options);
 
 =head4 Arguments
 
@@ -211,6 +266,16 @@ das resultierende XML zurück.
 =item $rch
 
 (object) Rechnung
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -debug => $bool (Default: 0)
+
+Gib Detailinformation auf STDOUT aus.
 
 =back
 
@@ -287,10 +352,11 @@ Pfad zum Knoten im ZUGFeRD-Baum.
   $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->new("en16931")->bg("BG-25")->path'
   SupplyChainTradeTransaction.IncludedSupplyChainTradeLineItem
 
-=head3 bt() - Business Term
+=head3 bt() - Business Term(s)
 
 =head4 Synopsis
 
+  %bt | $btH = $zug->bt;
   $bt = $zug->bt($name);
 
 =head4 Arguments
@@ -320,9 +386,17 @@ Das Objekt hat die Attribute:
 
 Name des Business Terms.
 
+=item mandatory
+
+Pflichtfeldstatus. 0=optional, 1=XSD-Pflicht, 2=Mustang-Pflicht
+
 =item text
 
 Kurzbeschreibung des Business Terms.
+
+=item attribute
+
+Name des Objektattributs
 
 =item path
 
@@ -406,7 +480,7 @@ Postanschrift des Verkäufers
 
 =item *
 
-KOntaktdaten des Verkäufers
+Kontaktdaten des Verkäufers
 
 =item *
 
@@ -514,11 +588,19 @@ Anhänge
 
 Verweise
 
+=item *
+
+Empfänger
+
+=item *
+
+Texte auf Rechnungs- und Positionsebene
+
 =back
 
 =head1 VERSION
 
-1.229
+1.230
 
 =head1 SOURCE
 

@@ -8,7 +8,7 @@ Quiq::Zugferd::Entity::Kaeufer - Käufer (Zahler)
 
 =head1 BASE CLASS
 
-L<Quiq::Hash>
+L<Quiq::Zugferd::Entity>
 
 =head1 DESCRIPTION
 
@@ -19,13 +19,13 @@ Ein Objekt der Klasse repräsentiert den Käufer.
 # -----------------------------------------------------------------------------
 
 package Quiq::Zugferd::Entity::Kaeufer;
-use base qw/Quiq::Hash/;
+use base qw/Quiq::Zugferd::Entity/;
 
 use v5.10;
 use strict;
 use warnings;
 
-our $VERSION = '1.229';
+our $VERSION = '1.230';
 
 # -----------------------------------------------------------------------------
 
@@ -53,14 +53,13 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-        name => undef,
-        kundennummer => undef,
-        ansprechpartner => undef,
-        zeile2 => undef,
-        strasse => undef,
-        plz => undef,
-        ort => undef,
-        land => undef,
+        name => undef,            # BT-44
+        kundennummer => undef,    # BT-46
+        kontakt => undef,         # BT-56
+        strasse => undef,         # BT-50
+        plz => undef,             # BT-53
+        ort => undef,             # BT-52
+        land => undef,            # BT-55
     );
     $self->set(@_);
 
@@ -71,7 +70,7 @@ sub new {
 
 =head1 VERSION
 
-1.229
+1.230
 
 =head1 AUTHOR
 

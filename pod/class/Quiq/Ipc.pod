@@ -89,7 +89,7 @@ Pipe Daten $data an Kommando $cmd.
 
 =head1 VERSION
 
-1.229
+1.230
 
 =head1 SOURCE
 

@@ -8,7 +8,7 @@ Quiq::Zugferd::Entity::Rechnung - Rechnung
 
 =head1 BASE CLASS
 
-L<Quiq::Hash>
+L<Quiq::Zugferd::Entity>
 
 =head1 DESCRIPTION
 
@@ -19,13 +19,13 @@ Ein Objekt der Klasse repräsentiert eine Rechnung.
 # -----------------------------------------------------------------------------
 
 package Quiq::Zugferd::Entity::Rechnung;
-use base qw/Quiq::Hash/;
+use base qw/Quiq::Zugferd::Entity/;
 
 use v5.10;
 use strict;
 use warnings;
 
-our $VERSION = '1.229';
+our $VERSION = '1.230';
 
 # -----------------------------------------------------------------------------
 
@@ -53,18 +53,45 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-       profilKennung => 'urn:cen.eu:en16931:2017', # Profil EN16931
-       rechnungsart => undef,
-       rechnungsnummer => undef,
-       rechnungsdatum => undef,
-       waehrung => undef,
-       freitexte => [],
-       verkaeufer => undef,
-       kaeufer => undef,
-       empfaenger => undef,
-       positionen => [],
-       summen => [],
-       steuern => [],
+        # Profil EN16931
+        profilKennung => 'urn:cen.eu:en16931:2017', # BT-24
+        rechnungsart => undef,                      # BT-3
+        rechnungsnummer => undef,                   # BT-1
+        rechnungsdatum => undef,                    # BT-2
+        waehrung => undef,                          # BT-5
+        leitwegId => undef,                         # BT-10
+        bestellnummer => undef,                     # BT-13
+        faelligkeitsdatum => undef,                 # BT-9
+        abrechnungszeitraumVon => undef,            # BT-73
+        abrechnungszeitraumBis => undef,            # BT-74
+        projektnummer => undef,                     # BT-11
+        vertragsnummer => undef,                    # BT-12
+        auftragsnummer => undef,                    # BT-14
+        vergabenummer => undef,                     # BT-17
+        objektkennung => undef,                     # BT-18
+        zahlungsbedingungen => undef,               # BT-20
+        zahlungsmittel => undef,                    # BT-82
+        verwendungszweck => undef,                  # BT-83
+        zahlungsart => undef,                       # BT-81
+        iban => undef,                              # BT-84
+        bic => undef,                               # BT-86
+        # Beträge
+        summePositionenNetto => undef,              # BT-106
+        summeNachlaesseNetto => undef,              # BT-107
+        summeZuschlaegeNetto => undef,              # BT-108
+        gesamtsummeNetto => undef,                  # BT-109
+        summeUmsatzsteuer => undef,                 # BT-110
+        gesamtsummeBrutto => undef,                 # BT-112
+        gezahlterBetrag => undef,                   # BT-113
+        rundungsbetrag => undef,                    # BT-114
+        faelligerBetrag => undef,                   # BT-115
+        # Zugeordnete Objekte
+        verkaeufer => undef,
+        kaeufer => undef,
+        empfaenger => undef,
+        freitexte => [],
+        positionen => [],
+        umsatzsteuern => [],
     );
     $self->set(@_);
 
@@ -75,7 +102,7 @@ sub new {
 
 =head1 VERSION
 
-1.229
+1.230
 
 =head1 AUTHOR
 

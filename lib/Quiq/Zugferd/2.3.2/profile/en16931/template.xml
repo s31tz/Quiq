@@ -36,7 +36,7 @@
         <ram:SellerAssignedID schemeID="">BT-155</ram:SellerAssignedID>
         <ram:BuyerAssignedID schemeID=""></ram:BuyerAssignedID>
         <ram:Name>BT-153</ram:Name>
-        <ram:Description></ram:Description>
+        <ram:Description>BT-154</ram:Description>
         <ram:ApplicableProductCharacteristic>
           <ram:Description>BT-160</ram:Description>
           <ram:Value>BT-161</ram:Value>
@@ -185,7 +185,7 @@
       </ram:SpecifiedLineTradeSettlement>
     </ram:IncludedSupplyChainTradeLineItem>
     <ram:ApplicableHeaderTradeAgreement>
-      <ram:BuyerReference></ram:BuyerReference>
+      <ram:BuyerReference>BT-10</ram:BuyerReference>
       <ram:SellerTradeParty>
         <ram:ID schemeID="">BT-29</ram:ID>
         <ram:GlobalID schemeID=""></ram:GlobalID>

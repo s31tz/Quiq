@@ -6,7 +6,7 @@ Quiq - Class library for rapid development
 
 =head1 DESCRIPTION
 
-Diese Klassenbibliothek enthält 253 anwendungsunabhängige
+Diese Klassenbibliothek enthält 258 anwendungsunabhängige
 Klassen, die ich in Projekten nutze. Die Klassen
 sind nach einheitlichen Prinzipien konzipiert. Die Bibliothek
 befindet sich unter kontinuierlicher Weiterentwicklung.
@@ -1009,7 +1009,19 @@ L<Quiq::Zugferd|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd
 
 =item *
 
+L<Quiq::Zugferd::Entity|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Entity.pod> - Basisklasse der Entitätsklassen
+
+=item *
+
+L<Quiq::Zugferd::Entity::Attribut|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Entity/Attribut.pod> - Position
+
+=item *
+
 L<Quiq::Zugferd::Entity::Empfaenger|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Entity/Empfaenger.pod> - Empfänger
+
+=item *
+
+L<Quiq::Zugferd::Entity::Freitext|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Entity/Freitext.pod> - Position
 
 =item *
 
@@ -1017,7 +1029,15 @@ L<Quiq::Zugferd::Entity::Kaeufer|https://github.com/s31tz/Quiq/tree/master/pod/c
 
 =item *
 
+L<Quiq::Zugferd::Entity::Position|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Entity/Position.pod> - Position
+
+=item *
+
 L<Quiq::Zugferd::Entity::Rechnung|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Entity/Rechnung.pod> - Rechnung
+
+=item *
+
+L<Quiq::Zugferd::Entity::Umsatzsteuer|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Entity/Umsatzsteuer.pod> - Umsatzsteuer
 
 =item *
 
@@ -1035,7 +1055,7 @@ L<Quiq::Zugferd::Tree|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Z
 
 =head1 VERSION
 
-1.229
+1.230
 
 =head1 AUTHOR
 

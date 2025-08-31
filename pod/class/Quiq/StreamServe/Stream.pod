@@ -100,77 +100,24 @@ Stream-Daten
 Zerlege einen (Multi-)Stream (aus Datei oder In-Memory-Daten)
 in Einzelstreams und liefere die Liste der Einzelstreams zurück.
 
+Die gelieferte Liste ist leer, wenn der Stream lediglich einen A0- oder
+A1-Block enthält.
+
 =head2 Objektmethoden
 
-=head3 get() - Liefere Wert
+=head3 allBlocks() - Liste aller Blöcke
 
 =head4 Synopsis
 
-  $val = $ssf->get($name,$i);
-  $val = $ssf->get($name);
-
-=head4 Arguments
-
-=over 4
-
-=item $name
-
-Name des abzufragenden Feldes
-
-=item $i (Default: 0)
-
-Index im Falle mehrfachen Vorkommens des Feldes
-
-=back
+  @arr | $arrH = $ssf->allBlocks;
 
 =head4 Returns
 
-(String) Wert
-
-=head3 try() - Liefere Wert
-
-=head4 Synopsis
-
-  $val = $ssf->try($name,$i);
-  $val = $ssf->try($name);
-
-=head4 Arguments
-
-=over 4
-
-=item $name
-
-Name des abzufragenden Feldes
-
-=item $i (Default: 0)
-
-Index im Falle mehrfachen Vorkommens des Feldes
-
-=back
-
-=head4 Returns
-
-(String) Wert
+(Array of Hashes) Liste von Blöcken
 
 =head4 Description
 
-Wie get(), nur dass der Zugriff auf ein nicht-existentes Feld nicht
-zu einer Exception führt, sondern C<undef> geliefert wird.
-
-=head3 prefixes() - Liste der Blockarten (Präfixe)
-
-=head4 Synopsis
-
-  @arr | $arrH = $ssf->prefixes;
-
-=head4 Returns
-
-(Array of Strings) Liste der Block-Präfixe
-
-=head4 Description
-
-Liefere die Liste der Blockarten. Eine Blockart ist durch die Liste
-der gemeinsamen Feldpräfixe charakterisiert.
+Liefere die Liste aller Blöcke des Streams.
 
 =head3 blocks() - Liste der Blöcke einer Blockart
 
@@ -209,23 +156,134 @@ sondern liefere eine leere Liste.
 Liefere die Liste der Blöcke einer Blockarten. Eine Blockart ist durch
 ihren Präfix charakterisiert.
 
-=head3 allBlocks() - Liste aller Blöcke
+=head3 file() - Pfad der Streamdatei (Accessor-Methode)
 
 =head4 Synopsis
 
-  @arr | $arrH = $ssf->allBlocks;
+  $path = $ssf->file;
 
 =head4 Returns
 
-(Array of Hashes) Liste von Blöcken
+(String) Pfad der Streamdatei
 
 =head4 Description
 
-Liefere die Liste aller Blöcke des Streams.
+Liefere den Pfad der Streamdatei.
+
+=head3 get() - Liefere Wert
+
+=head4 Synopsis
+
+  $val = $ssf->get($name,$i);
+  $val = $ssf->get($name);
+
+=head4 Arguments
+
+=over 4
+
+=item $name
+
+Name des abzufragenden Feldes
+
+=item $i (Default: 0)
+
+Index im Falle mehrfachen Vorkommens des Feldes
+
+=back
+
+=head4 Returns
+
+(String) Wert
+
+=head3 prefixes() - Liste der Blockarten (Präfixe)
+
+=head4 Synopsis
+
+  @arr | $arrH = $ssf->prefixes;
+
+=head4 Returns
+
+(Array of Strings) Liste der Block-Präfixe
+
+=head4 Description
+
+Liefere die Liste der Blockarten. Eine Blockart ist durch die Liste
+der gemeinsamen Feldpräfixe charakterisiert.
+
+=head3 report() - Liefere Bericht über den Stream
+
+=head4 Synopsis
+
+  $text = $ssf->report;
+
+=head4 Returns
+
+(String) Text des Berichts
+
+=head4 Description
+
+Erzeuge einen Bericht über den Stream und liefere dessen Text zurück.
+
+=head3 try() - Liefere Wert
+
+=head4 Synopsis
+
+  $val = $ssf->try($name,$i);
+  $val = $ssf->try($name);
+
+=head4 Arguments
+
+=over 4
+
+=item $name
+
+Name des abzufragenden Feldes
+
+=item $i (Default: 0)
+
+Index im Falle mehrfachen Vorkommens des Feldes
+
+=back
+
+=head4 Returns
+
+(String) Wert
+
+=head4 Description
+
+Wie get(), nur dass der Zugriff auf ein nicht-existentes Feld nicht
+zu einer Exception führt, sondern C<undef> geliefert wird.
+
+=head3 type() - Typ des Stream
+
+=head4 Synopsis
+
+  $type = $ssf->type;
+  $type = $class->type($file);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Stream-Datei
+
+=back
+
+=head4 Returns
+
+(String) Typ des Stream, z.B. C<SOS1890H>
+
+=head4 Description
+
+Liefere den Typ der Streamdatei $ssf bzw. $file. Als Klassenmethode
+gerufen, wird der Typ effizient ermittelt, ohne den ganzen Stream
+einzulesen.
 
 =head1 VERSION
 
-1.229
+1.230
 
 =head1 SOURCE
 

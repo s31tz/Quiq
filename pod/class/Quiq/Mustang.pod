@@ -117,7 +117,7 @@ Validierung zurück.
   
   ($status,$text) = $mus->getResult($pattern,'text');
   ($status,$ruleH) = $mus->getResult($pattern,'hash');
-  ($status,$html) = $mus->getResult($pattern,'hash');
+  ($status,$html) = $mus->getResult($pattern,'html');
 
 =head4 Arguments
 
@@ -303,7 +303,7 @@ Subpfad $subPath.
 
 =head1 VERSION
 
-1.229
+1.230
 
 =head1 SOURCE
 

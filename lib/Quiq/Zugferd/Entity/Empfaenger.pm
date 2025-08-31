@@ -8,7 +8,7 @@ Quiq::Zugferd::Entity::Empfaenger - Empfänger
 
 =head1 BASE CLASS
 
-L<Quiq::Hash>
+L<Quiq::Zugferd::Entity>
 
 =head1 DESCRIPTION
 
@@ -19,13 +19,13 @@ Ein Objekt der Klasse repräsentiert den Empfänger.
 # -----------------------------------------------------------------------------
 
 package Quiq::Zugferd::Entity::Empfaenger;
-use base qw/Quiq::Hash/;
+use base qw/Quiq::Zugferd::Entity/;
 
 use v5.10;
 use strict;
 use warnings;
 
-our $VERSION = '1.229';
+our $VERSION = '1.230';
 
 # -----------------------------------------------------------------------------
 
@@ -53,14 +53,13 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-        lieferdatum => undef,
-        name => undef,
-        ansprechpartner => undef,
-        zeile2 => undef,
-        strasse => undef,
-        plz => undef,
-        ort => undef,
-        land => undef,
+        lieferdatum => undef, # BT-72
+        name => undef,        # BT-70
+        kontakt => undef,     # BT-76
+        strasse => undef,     # BT-75
+        plz => undef,         # BT-78
+        ort => undef,         # BT-77
+        land => undef,        # BT-80
     );
     $self->set(@_);
 
@@ -71,7 +70,7 @@ sub new {
 
 =head1 VERSION
 
-1.229
+1.230
 
 =head1 AUTHOR
 

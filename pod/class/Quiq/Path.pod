@@ -234,7 +234,7 @@ Kopiere Datei $srcPath nach $destPath.
 
 =head4 Synopsis
 
-  $class->duplicate($method,$srcPath,$destPath,@opt);
+  $this->duplicate($method,$srcPath,$destPath,@opt);
 
 =head4 Arguments
 
@@ -2067,7 +2067,7 @@ Ermittele die UID des Owners der Datei und liefere diese zurück.
 
 =head1 VERSION
 
-1.229
+1.230
 
 =head1 SOURCE
 
