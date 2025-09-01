@@ -12,6 +12,45 @@ L<Quiq::Object|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Object.p
 
 =head2 Klassenmethoden
 
+=head3 moveToEnd() - Verschiebe ausgewählte Bilder ans Ende des Verzeichnisses
+
+=head4 Synopsis
+
+  $class->moveToEnd($dir,@options);
+
+=head4 Arguments
+
+=over 4
+
+=item $dir
+
+Bildverzeichnis
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -step => $n (Default: 1)
+
+Schrittweite zwischen den Bildnummern
+
+=back
+
+=head4 Description
+
+Zeige die Bilddateien des Verzeichnisses $dir mit C<eog> an. Bilder, die
+in C<eog> mit C<DEL> gelöscht werden, landen im Trash. Nach Verlassen von
+C<eog> werden die Bilddateien aus dem Trash ans Ende des Verzeichnisses
+bewegt.
+
+Die Methode ist so konzipiert, dass auch Dateien mit dem gleichen
+Grundnamen wie die Bilddatei mitbewegt werden (z.B. .xfc-Dateien).
+
+Ist der Trash bei Aufruf der Methode nicht leer, wird gefragt, ob
+die Dateien im Trash vorab gelöscht werden sollen.
+
 =head3 pickImages() - Wähle Bilddateien mit eog aus
 
 =head4 Synopsis
