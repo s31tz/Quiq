@@ -130,17 +130,25 @@ say "step=$step width=$width";
             $maxNumber += $step;
             $number{$number} = sprintf '%0*d',$width,$maxNumber;
         }
+
+        # Datei aus dem Trash kopieren
+
+        (my $destFile = "$dir/$filename") =~ s|/$number|/$number{$number}|;
+
+        say "$trashFile => $destFile";
+        $p->rename($trashFile,$destFile);
+        $p->touch($destFile);
     }
 
-    for my $trashFile (@$fileA) {
-        my $destFile = $p->filename($trashFile);
-        my ($number) = $destFile =~ /^(\d+)/;
-        $destFile =~ s/$number/$number{$number}/;
-
-        say "$trashFile => $dir/$destFile";
-    }    
-
     for my $number (sort keys %number) {
+        my @srcFiles = $p->glob("$dir/$number*");
+        for my $srcFile (@srcFiles) {
+            (my $destFile = $srcFile) =~ s|/$number|/$number{$number}|;
+
+            say "$srcFile => $destFile";
+            $p->rename($srcFile,$destFile);
+            $p->touch($destFile);
+        }
     }
 
     return;
