@@ -69,6 +69,33 @@ Objekt
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere dieses zurück.
+Enthält die Streamdatei mehr als einen Stream, wird eine Exception
+geworfen.
+
+=head3 numberOfStreams() - Anzahl der (Einzel-)Streams
+
+=head4 Synopsis
+
+  $n = $class->numberOfStreams($file);
+
+=head4 Arguments
+
+=over 4
+
+=item $file
+
+Stream-Datei
+
+=back
+
+=head4 Returns
+
+(Integer) Anzahl der Einzelstreams
+
+=head4 Description
+
+Ermittele die Anzahl der Einzelstreams und liefere diese zurück.
+Ax-Streams zählen wir nicht mit.
 
 =head3 split() - Zerlege (Multi-)Stream in Einzelstreams
 
@@ -100,8 +127,8 @@ Stream-Daten
 Zerlege einen (Multi-)Stream (aus Datei oder In-Memory-Daten)
 in Einzelstreams und liefere die Liste der Einzelstreams zurück.
 
-Die gelieferte Liste ist leer, wenn der Stream lediglich einen A0- oder
-A1-Block enthält.
+Ax-Streams ignorieren wir. D.h. die gelieferte Liste ist leer, wenn der
+Stream lediglich einen A0- oder A1-Stream enthält.
 
 =head2 Objektmethoden
 

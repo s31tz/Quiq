@@ -510,7 +510,7 @@ sub visualize {
 
     # Operation ausführen
 
-    my $sh = Quiq::Shell->new(log=>1);
+    my $sh = Quiq::Shell->new;
 
     my $cmd;
     if ($outFile =~ /\.pdf$/) {

@@ -176,6 +176,12 @@ Die Wandelung findet "in place" statt.
 
 Erzeuge Zielverzeichnis, falls es nicht existiert.
 
+=item -log => $stream (Default: undef)
+
+Schreibe Meldung auf Dateihandle. Beispiel:
+
+  -log => \*STDOUT
+
 =item -move => $bool (Default: 0)
 
 Lösche Quelldatei $srcPath nach dem Kopieren.
@@ -210,6 +216,12 @@ wenn die Ziledatei existiert und identisch zur Quelldatei ist
 =item -createDir => $bool (Default: 0)
 
 Erzeuge Zielverzeichnis, falls es nicht existiert.
+
+=item -log => $stream (Default: undef)
+
+Schreibe Meldung auf Dateihandle. Beispiel:
+
+  -log => \*STDOUT
 
 =item -move => $bool (Default: 0)
 
@@ -1594,6 +1606,33 @@ readLink()
 =head4 Description
 
 Liefere den Pfad, auf den der Symlink $symlinkPath zeigt.
+
+=head3 reduceToEnvVar() - Ersetze Pfandanfang durch Name von Environment-Variable
+
+=head4 Synopsis
+
+  $pathNew = $class->reduceToEnvVar($envVar,$path);
+
+=head4 Arguments
+
+=over 4
+
+=item $path
+
+Ein Pfad
+
+=back
+
+=head4 Returns
+
+Pfad (String)
+
+=head4 Description
+
+Ersetze den Pfadanfang von $path durch den Namen der Environmen-Variable
+$envVar, wenn dieser dem Wert der Variable entspricht, und liefere
+resultierenden Pfad zurück. Beginnt der Pfad nicht mit dem Wert der
+Variable, bleibt er unverändert.
 
 =head3 reduceToTilde() - Ersetze Pfandanfang durch Tilde
 

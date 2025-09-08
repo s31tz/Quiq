@@ -456,12 +456,12 @@ Alternative Formulierung:
 
   $n = keys %$h;
 
-=head3 validate() - Überprüfe Hash-Schlüssel
+=head3 validateKeys() - Überprüfe Hash-Schlüssel
 
 =head4 Synopsis
 
-  $class->validate(\%hash,\@keys);
-  $class->validate(\%hash,\%keys);
+  $class->validateKeys(\%hash,\@keys);
+  $class->validateKeys(\%hash,\%keys);
 
 =head4 Description
 
