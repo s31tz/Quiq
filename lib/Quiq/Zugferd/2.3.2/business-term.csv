@@ -14,6 +14,7 @@ BT-9-0;2;;Datum, Format
 BT-10;0;;Leitweg-ID
 BT-12;0;;Vertragsreferenz
 BT-13;0;;Bestellreferenz
+BT-14;0;;Verkaufsauftragsreferenz
 BT-99;0;;Betrag des Zuschlags auf Dokumentenebene
 BT-20;0;;Zahlungsbedingungen
 BT-21;0;;Code zum Freitext der Rechnung

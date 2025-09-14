@@ -60,6 +60,17 @@ Instantiiere ein Objekt der Klasse und liefere dieses zurück.
 Ist der Schlüssel vorhanden, wird sein Wert gesetzt. Ist er nicht
 vorhanden wird er mit dem angegebenen Wert hinzugefügt.
 
+=head3 concat() - Konkateniere Attributwerte
+
+=head4 Synopsis
+
+  $val = $ssb->concat($sep,@keys);
+
+=head4 Description
+
+Konkateniere die Werte der Attribute @keys mit Trennzeichen $sep zu
+einem Wert und liefere diesen zurück. Leere Werte werden übergangen.
+
 =head3 content() - Inhalt des Blocks
 
 =head4 Synopsis
@@ -103,6 +114,16 @@ Schlüssel
 Wirf bei Nichtexistenz von $key keine Exception, sondern liefere C<undef>.
 
 =back
+
+=head3 getFirst() - Liefere ersten Attributwert
+
+=head4 Synopsis
+
+  $val = $ssb->getFirst(@keys);
+
+=head4 Description
+
+Liefere den ersten nichtleeren Wert der Attribute @keys.
 
 =head3 prefix() - Liefere Präfix
 

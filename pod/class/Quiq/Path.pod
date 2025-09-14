@@ -810,7 +810,7 @@ Anzahl Verzeichniseinträge (Integer)
 Ermittele die Anzahl Einträge des Verzeichnisses $dir und liefere diese
 zurück. Die Einträge C<.> und C<..> werden I<nicht> mitgezählt.
 
-=head3 deleteContent() - Lösche Inhalt des Verzeichnis
+=head3 deleteContent() - Lösche Inhalt des Verzeichnisses
 
 =head4 Synopsis
 

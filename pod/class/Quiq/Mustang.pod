@@ -84,10 +84,6 @@ ZUGFeRD-Datei, wie B<Mustang> sie erwartet (als XML oder PDF).
 
 =over 4
 
-=item -force => $bool (Default: 0)
-
-Forciere die Validierung, auch wenn sie schon einmal erfolgt ist.
-
 =item -notice => $bool (Default: 0)
 
 Protokolliere nicht nur Validierungsfehler, sondern gib darüber
@@ -101,23 +97,19 @@ Gib Laufzeitinformation über die Verarbeitung auf STDOUT aus.
 
 =head4 Returns
 
-(Integer) Status der Validierung: 0 = ok, 1 = fehlgeschlagen,
--1 = Datei wurde übergangen, da bereits validiert.
+(Integer) Status der Validierung: 0 = ok, 1 = fehlgeschlagen.
 
 =head4 Description
 
 Validiere die ZUGFeRD-Datei $file und liefere den Status der
-Validierung zurück.
+Validierung zurück. Ferner wird eine XML-Datei geschrieben(_result.xml),
+die das Validierungsergebnis enhält.
 
 =head3 getResult() - Liefere Validierungsresultat
 
 =head4 Synopsis
 
-  ($status,$val) = $mus->getResult($pattern,$as);
-  
-  ($status,$text) = $mus->getResult($pattern,'text');
-  ($status,$ruleH) = $mus->getResult($pattern,'hash');
-  ($status,$html) = $mus->getResult($pattern,'html');
+  ($status,$text,$html,$ruleH) = $mus->getResult($pattern);
 
 =head4 Arguments
 
@@ -126,20 +118,6 @@ Validierung zurück.
 =item $pattern
 
 Glob()-Pattern der Resultat-Datei des Mustang Validators.
-
-=item $as
-
-Typ des Returnwerts:
-
-=over 4
-
-=item 'text'
-
-=item 'hash'
-
-=item 'html'
-
-=back
 
 =back
 
@@ -167,25 +145,17 @@ Es liegt kein Validierungsergebis vor.
 
 =back
 
-=item $val
-
-Detailinformation. Mögliche Werte:
-
-=over 4
-
 =item $text
 
-Textuelle Beschreibung.
-
-=item $ruleH
-
-Hash der verletzten Regeln.
+Textuelle Beschreibung
 
 =item $html
 
-Beschreibung in HTML.
+Beschreibung in HTML
 
-=back
+=item $ruleH
+
+Hash der verletzten Regeln
 
 =back
 

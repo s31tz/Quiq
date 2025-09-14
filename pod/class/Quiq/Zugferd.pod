@@ -195,7 +195,7 @@ Ersetze im Subbaum $name die Platzhalter aus den Elementen von @arr.
 
 =head4 Synopsis
 
-  $xml = $zug->resolvePlaceholders(@keyVal,%options);
+  ($xml,$status,$debugText) = $zug->resolvePlaceholders(@keyVal,%options);
 
 =head4 Arguments
 
@@ -236,12 +236,12 @@ Aktiviere die Validierung durch XML::Compile
 
 =head4 Returns
 
-(String) XML nach Platzhalter-Ersetzung
+(Boolean,String,String) XML nach Platzhalter-Ersetzung und Debug-Text
 
 =head4 Description
 
 Ersetze die Platzhalter im Template des ZUGFeRD-Profils und liefere
-das resultierende XML zurück.
+das resultierende XML sowie etwaigen Debug-Text zurück.
 
 =head3 template() - Liefere das ZUGFeRD-Template
 

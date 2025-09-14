@@ -60,7 +60,6 @@ sub new {
         rechnungsdatum => undef,                    # BT-2
         waehrung => undef,                          # BT-5
         leitwegId => undef,                         # BT-10
-        bestellnummer => undef,                     # BT-13
         faelligkeitsdatum => undef,                 # BT-9
         abrechnungszeitraumVon => undef,            # BT-73
         abrechnungszeitraumBis => undef,            # BT-74

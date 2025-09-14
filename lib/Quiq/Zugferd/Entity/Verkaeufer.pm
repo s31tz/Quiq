@@ -53,12 +53,13 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-        name => undef,           # BT-27
-        strasse => undef,        # BT-35
-        plz => undef,            # BT-38
-        ort => undef,            # BT-37
-        land => undef,           # BT-40
-        umsatzsteuerId => undef, # BT-31
+        name => undef,             # BT-27
+        strasse => undef,          # BT-35
+        plz => undef,              # BT-38
+        ort => undef,              # BT-37
+        land => undef,             # BT-40
+        auftragsreferenz => undef, # BT-14
+        umsatzsteuerId => undef,   # BT-31
     );
     $self->set(@_);
 

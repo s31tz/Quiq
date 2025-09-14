@@ -460,6 +460,33 @@ Maximale Zeilenlänge auf 12 Zeichen begrenzen:
   einem kurzen
   Text.
 
+=head2 Zusammenfügen
+
+=head3 concat() - Konkateniere Werte mit Trennzeichen
+
+=head4 Synopsis
+
+  $val = $class->concat($sep,@values);
+
+=head4 Arguments
+
+=over 4
+
+=item @values
+
+Die Liste der Werte
+
+=back
+
+=head4 Returns
+
+(String) Konkatenation der Werte
+
+=head4 Description
+
+Konkateniere die werte @values mit Trennzeichen $sep. Ist ein Wert nicht
+vorhanden (undef oder Leerstring), wird er ausgelassen.
+
 =head1 VERSION
 
 1.230
