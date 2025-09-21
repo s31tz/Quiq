@@ -507,7 +507,7 @@
       </ram:BillingSpecifiedPeriod>
       <ram:SpecifiedTradeAllowanceCharge>
         <ram:ChargeIndicator>
-          <udt:Indicator>BG-21-1</udt:Indicator>
+          <udt:Indicator>BT-21-1</udt:Indicator> 
         </ram:ChargeIndicator>
         <ram:CalculationPercent></ram:CalculationPercent>
         <ram:BasisAmount currencyID=""></ram:BasisAmount>
