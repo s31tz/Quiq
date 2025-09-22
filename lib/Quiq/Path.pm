@@ -31,7 +31,7 @@ use strict;
 use warnings;
 use utf8;
 
-our $VERSION = '1.230';
+our $VERSION = '1.231';
 
 use Quiq::Option;
 use Quiq::FileHandle;
@@ -4565,7 +4565,7 @@ sub uid {
 
 =head1 VERSION
 
-1.230
+1.231
 
 =head1 AUTHOR
 

@@ -42,7 +42,7 @@ use strict;
 use warnings;
 use utf8;
 
-our $VERSION = '1.230';
+our $VERSION = '1.231';
 
 use Quiq::PerlModule;
 use Quiq::Path;
@@ -1269,7 +1269,7 @@ Texte auf Rechnungs- und Positionsebene
 
 =head1 VERSION
 
-1.230
+1.231
 
 =head1 AUTHOR
 

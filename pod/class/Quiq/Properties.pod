@@ -318,7 +318,7 @@ Ausrichtung der Werte der Wertemenge: l (left), r (right).
 
 =head1 VERSION
 
-1.230
+1.231
 
 =head1 SOURCE
 
