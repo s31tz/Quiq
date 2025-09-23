@@ -296,8 +296,8 @@ Werte für $method:
 
 =head4 Synopsis
 
-  $changed = $this->edit($file,@opt);
-  $changed = $this->edit(\$data,@opt);
+  $changed = $this->edit($file,%options);
+  $changed = $this->edit(\$data,%options);
 
 =head4 Arguments
 
@@ -310,6 +310,16 @@ Datei, die bearbeitet werden soll.
 =item $data
 
 Daten, die bearbeitet werden sollen.
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -create => $bool (Default: 0)
+
+Erzeuge die Datei, wenn sie nicht existiert.
 
 =back
 

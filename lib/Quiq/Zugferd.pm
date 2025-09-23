@@ -544,7 +544,7 @@ sub resolvePlaceholders {
 
     if ($showTree) {
         $text .= "-----\n";
-        $text .= Quiq::Dumper->dump($tree);
+        $text .= Quiq::Dumper->dump($tree)."\n";
         $text .= "-----\n";
     }
 
