@@ -74,7 +74,7 @@ Erzeuge eine unterstrichene Titelzeile und liefere das Resultat zurück.
 
 =head1 VERSION
 
-1.231
+1.232
 
 =head1 SOURCE
 
