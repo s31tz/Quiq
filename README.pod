@@ -6,7 +6,7 @@ Quiq - Class library for rapid development
 
 =head1 DESCRIPTION
 
-Diese Klassenbibliothek enthält 258 anwendungsunabhängige
+Diese Klassenbibliothek enthält 259 anwendungsunabhängige
 Klassen, die ich in Projekten nutze. Die Klassen
 sind nach einheitlichen Prinzipien konzipiert. Die Bibliothek
 befindet sich unter kontinuierlicher Weiterentwicklung.
@@ -1013,7 +1013,7 @@ L<Quiq::Zugferd::Entity|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq
 
 =item *
 
-L<Quiq::Zugferd::Entity::Attribut|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Entity/Attribut.pod> - Position
+L<Quiq::Zugferd::Entity::Attribut|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Entity/Attribut.pod> - Artikelattribut
 
 =item *
 
@@ -1042,6 +1042,10 @@ L<Quiq::Zugferd::Entity::Umsatzsteuer|https://github.com/s31tz/Quiq/tree/master/
 =item *
 
 L<Quiq::Zugferd::Entity::Verkaeufer|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Entity/Verkaeufer.pod> - Verkäufer
+
+=item *
+
+L<Quiq::Zugferd::Entity::ZuAbschlagPosition|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Zugferd/Entity/ZuAbschlagPosition.pod> - Zu- oder Abschlage auf Position
 
 =item *
 

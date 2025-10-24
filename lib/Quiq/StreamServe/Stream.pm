@@ -348,7 +348,7 @@ Die Blockart
 
 =item $sloppy
 
-Wenn gesetzt, wirf keine Exception, wenn die Blockart nicht existiet,
+Wenn gesetzt, wirf keine Exception, wenn die Blockart nicht existiert,
 sondern liefere eine leere Liste.
 
 =back

@@ -27,6 +27,8 @@ use warnings;
 
 our $VERSION = '1.232';
 
+use Quiq::Zugferd::Entity::Freitext;
+
 # -----------------------------------------------------------------------------
 
 =head1 METHODS
@@ -95,6 +97,37 @@ sub new {
     $self->set(@_);
 
     return $self;
+}
+
+# -----------------------------------------------------------------------------
+
+=head2 Objektmethoden
+
+=head3 addFreitext() - Füge Freitext hinzu
+
+=head4 Synopsis
+
+  $rch->addFreitext($code,$text);
+
+=head4 Description
+
+Füge Freitext $text mit dem Code $code zu den Freitexten hinzu. Ist $code
+C<undef> wird der Text ohne qualifizierenden Code hinzugefügt.
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub addFreitext {
+    my ($self,$code,$text) = @_;
+
+    my $frt = Quiq::Zugferd::Entity::Freitext->new(
+        code => $code,
+        text => $text,
+    );
+    $self->push('freitexte',$frt);
+
+    return;
 }
 
 # -----------------------------------------------------------------------------

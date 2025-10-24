@@ -4,7 +4,7 @@
 
 =head1 NAME
 
-Quiq::Zugferd::Entity::Verkaeufer - Verkäufer
+Quiq::Zugferd::Entity::ZuAbschlagPosition - Zu- oder Abschlage auf Position
 
 =head1 BASE CLASS
 
@@ -12,13 +12,14 @@ L<Quiq::Zugferd::Entity>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert den Verkäufer.
+Ein Objekt der Klasse repräsentiert einen Zu- oder Abschlag auf
+Positionsebene.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-package Quiq::Zugferd::Entity::Verkaeufer;
+package Quiq::Zugferd::Entity::ZuAbschlagPosition;
 use base qw/Quiq::Zugferd::Entity/;
 
 use v5.10;
@@ -37,7 +38,7 @@ our $VERSION = '1.232';
 
 =head4 Synopsis
 
-  $vrk = $class->new(@keyVal);
+  $atr = $class->new(@keyVal);
 
 =head4 Description
 
@@ -53,15 +54,12 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-        name => undef,             # BT-27
-        strasse => undef,          # BT-35
-        plz => undef,              # BT-38
-        ort => undef,              # BT-37
-        land => undef,             # BT-40
-        # auftragsreferenz => undef, # BT-14
-        umsatzsteuerId => undef,   # BT-31
-        kontakt => undef,          # BT-41
-        telefon => undef,          # BT-42
+        typ => undef,         # BG-27-1_BG-28-1 / Abschlag: false
+        prozent => undef,     # BT-138_BT-143
+        grundbetrag => undef, # BT-137_BT-142
+        differenz => undef,   # BT-136_BT-141
+        grundCode => undef,   # BT-140_BT-145
+        grund => undef,       # BT-139_BT-144
     );
     $self->set(@_);
 

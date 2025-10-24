@@ -140,6 +140,10 @@ ZUGFeRD-Datei, wie B<Mustang> sie erwartet (als XML oder PDF).
 
 =over 4
 
+=item -logger => $log (Default: undef)
+
+Gib Laufzeitinformation über die Verarbeitung via $log aus.
+
 =item -notice => $bool (Default: 0)
 
 Protokolliere nicht nur Validierungsfehler, sondern gib darüber
@@ -171,10 +175,12 @@ sub validate {
     # Optionen und Argumente
 
     my $force = 0;
+    my $log = undef,
     my $notice = 0;
     my $verbose = 0;
 
     my $argA = $self->parameters(1,1,\@_,
+        -logger => \$log,
         -notice => \$notice,
         -verbose => \$verbose,
     );
@@ -195,6 +201,9 @@ sub validate {
     my $cmd = "java -Xmx1G -Dfile.encoding=UTF-8".
         " -jar $self->{'jarFile'} --action validate".
         " --source $file --log-as-pdf$noticeOpt >$resultFile 2>$logFile";
+    if ($log) {
+        $log->info("Validiere XML: $cmd");
+    }
     my $exitCode = $sh->exec($cmd,-log=>$verbose);
     if ($exitCode == 130) {
         # Ausführung wurde mit ^C abgebrochen. Wir entfernen die

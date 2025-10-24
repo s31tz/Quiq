@@ -56,6 +56,7 @@ use Quiq::Storable;
 use Quiq::AnsiColor;
 use Quiq::FileHandle;
 use Quiq::Xml;
+use Quiq::Tree;
 use Quiq::Hash;
 
 # -----------------------------------------------------------------------------
@@ -175,9 +176,14 @@ sub new {
     my $tree = Quiq::Zugferd::Tree->new($h);
 
     # direkte Zuweisung, da XML::Compile diese Platzhalter überschreibt
+
     $tree->setDeep('SupplyChainTradeTransaction.'.
          'ApplicableHeaderTradeSettlement.SpecifiedTradeAllowanceCharge.[0].'.
          'ChargeIndicator.Indicator','BG-21-1');
+    $tree->setDeep('SupplyChainTradeTransaction.'.
+         'IncludedSupplyChainTradeLineItem.[0].SpecifiedLineTradeSettlement.'.
+         'SpecifiedTradeAllowanceCharge.[0].ChargeIndicator.Indicator',
+         'BG-27-1_BG-28-1');
 
     # say Quiq::Dumper->dump($tree);
 
@@ -485,7 +491,7 @@ das resultierende XML sowie etwaigen Debug-Text zurück.
 
 # -----------------------------------------------------------------------------
 
-my $a = Quiq::AnsiColor->new(1);
+my $ans = Quiq::AnsiColor->new(1);
 
 sub resolvePlaceholders {
     my $self = shift;
@@ -510,7 +516,7 @@ sub resolvePlaceholders {
 
     my $text = '';
     if ($showPlaceholders) {
-        $text .= sprintf "--%s--\n",$a->str('bold red',$label);
+        $text .= sprintf "--%s--\n",$ans->str('bold red',$label);
         for (my $i = 0; $i < @$argA; $i += 2) {
             my $key = $argA->[$i];
             my $val = $argA->[$i+1];
@@ -518,8 +524,8 @@ sub resolvePlaceholders {
             my $bt = $self->$method($key);
             $text .= sprintf "%s = %s - %s%s\n",$key,
                 defined($val)? "'$val'": 'undef',
-                $bt->mandatory? $a->str('bold dark green','*').' ': '',
-                $a->str('dark green',$bt->text);
+                $bt->mandatory? $ans->str('bold dark green','*').' ': '',
+                $ans->str('dark green',$bt->text);
         }
     }
 
@@ -581,6 +587,40 @@ sub resolvePlaceholders {
 
     $xml =~ s/\x2//g; # CTRL-B herausfiltern => Quiq Fix
     return (0,Quiq::Xml->print($xml),$text);
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 showPaths() - Zeige die Pfade aller Blattknoten
+
+=head4 Synopsis
+
+  $str = $zug->showPaths;
+
+=head4 Returns
+
+(String) Liste der Pfade des Baums
+
+=head4 Description
+
+Zeige die Liste der Pfade aller Blattkonten des ZUGFeRD-Baums
+(siehe auch die Beispiele Quiq::Tree->leafNodes()).
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+sub showPaths {
+    my $self = shift;
+
+    my $str = '';
+    my @arr = sort {$a->[0] cmp $b->[0]} Quiq::Tree->leafPaths($self->tree);
+    for (@arr) {
+        my ($path,$val) = @$_;
+        $str .= "$path $val\n";
+    }
+
+    return $str;
 }
 
 # -----------------------------------------------------------------------------
@@ -703,6 +743,26 @@ sub toXml {
             return $t;
         });
 
+        # Zu- und Abschläge
+
+        $path = 'SpecifiedLineTradeSettlement.SpecifiedTradeAllowanceCharge';
+        my $bg27_bg28 = $t->processSubTree($path,'BG-27_BG-28',$pos->zuAbschlaege,sub {
+            my ($ztr,$t,$zap,$i) = @_;
+
+            $t->resolvePlaceholders(
+                -showPlaceholders => 0,
+                '--',
+                'BG-27-1_BG-28-1' => $zap->typ,
+                'BT-138_BT-143' => $zap->prozent,
+                'BT-137_BT-142' => $zap->grundbetrag,
+                'BT-136_BT-141' => $zap->differenz,
+                'BT-140_BT-145' => $zap->grundCode,
+                'BT-139_BT-144' => $zap->grund,
+            );
+
+            return $t;
+        });;
+
         my $proz = $pos->umsatzsteuersatz // '';
 
         $zug->resolvePlaceholders(
@@ -722,8 +782,13 @@ sub toXml {
             'BT-152' => $proz,
             'BT-151' => $proz eq '0.00'? 'E': 'S',
             'BT-151-0' => 'VAT',
+            # # Zuschläge
+            # 'BT-141' => $pos->zuschlagNetto,
+            # 'BT-144' => $pos->zuschlagGrund,
             # Artikelattribute
             'BG-32' => $bg32,
+            # Zu- und Abschläge
+            'BG-27_BG-28' => $bg27_bg28,
         );
 
         return $t;
@@ -764,6 +829,7 @@ sub toXml {
         'BT-5' => $rch->waehrung,
         'BT-10' => $rch->leitwegId,
         'BT-12' => $rch->vertragsnummer,
+        'BT-14' => $rch->auftragsnummer,
         'BT-20' => $rch->zahlungsbedingungen,
         $rch->transferDate('faelligkeitsdatum','BT-9'),
         'BT-82' => $rch->zahlungsmittel,
@@ -777,7 +843,9 @@ sub toXml {
         'BT-35' => $rch->verkaeufer->strasse,
         'BT-37' => $rch->verkaeufer->ort,
         'BT-40' => $rch->verkaeufer->land,
-        'BT-14' => $rch->verkaeufer->auftragsreferenz,
+        'BT-41' => $rch->verkaeufer->kontakt,
+        'BT-42' => $rch->verkaeufer->telefon,
+        # 'BT-14' => $rch->verkaeufer->auftragsreferenz,
         'BT-31' => $rch->verkaeufer->umsatzsteuerId,
         'BT-31-0' => 'VA',
         # Käufer (Zahler)
@@ -814,15 +882,7 @@ sub toXml {
         'BG-23' => $bg23,
     );
     $debugText .= $text;
-    $debugText .= $self->checkAttributes($rch);
-
-    # Allgemeine Regeln, nach denen Rechnungen aussortiert werden
-
-    if ($rch->faelligerBetrag eq '0.00') {
-        # FIXME: temporär inaktiviert
-        # $status = 2;
-        # $debugText .= "AUSSORTIERT: faelligerBetrag = '0.00'\nXS";
-    }
+    # $debugText .= $self->checkAttributes($rch);
 
     return ($status,$xml,$debugText);
 }
@@ -1264,6 +1324,25 @@ Empfänger
 =item *
 
 Texte auf Rechnungs- und Positionsebene
+
+=back
+
+=head2 Abschläge und Zuschläge
+
+Abschläge und Zuschläge gibt es auf Positions- und Rechnungsebene.
+Diese haben jeweils eine Kardinalität 0..n, sind also als Listen
+unterhalb der Position bzw. der Rechnung repräsentiert.
+Der Attribute sind bei Ab- und Zuschlägen identisch.
+Auf Rechnungsebene haben die Ab- bzw. Zuschläge zusätzlich
+Angaben zur Umsatzsteuer.
+
+Klassen:
+
+=over 4
+
+=item ...::ZuAbschlaegeRechnung
+
+=item ...::ZuAbschlaegePosition
 
 =back
 

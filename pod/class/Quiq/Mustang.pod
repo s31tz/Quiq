@@ -84,6 +84,10 @@ ZUGFeRD-Datei, wie B<Mustang> sie erwartet (als XML oder PDF).
 
 =over 4
 
+=item -logger => $log (Default: undef)
+
+Gib Laufzeitinformation über die Verarbeitung via $log aus.
+
 =item -notice => $bool (Default: 0)
 
 Protokolliere nicht nur Validierungsfehler, sondern gib darüber

@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Quiq::Zugferd::Entity::Rechnung - Rechnung
+Quiq::Zugferd::Entity::ZuAbschlagPosition - Zu- oder Abschlage auf Position
 
 =head1 BASE CLASS
 
@@ -10,7 +10,8 @@ L<Quiq::Zugferd::Entity|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert eine Rechnung.
+Ein Objekt der Klasse repräsentiert einen Zu- oder Abschlag auf
+Positionsebene.
 
 =head1 METHODS
 
@@ -20,25 +21,12 @@ Ein Objekt der Klasse repräsentiert eine Rechnung.
 
 =head4 Synopsis
 
-  $rch = $class->new(@keyVal);
+  $atr = $class->new(@keyVal);
 
 =head4 Description
 
 Instantiiere ein Objekt der Klasse und liefere eine Referenz auf dieses
 Objekt zurück.
-
-=head2 Objektmethoden
-
-=head3 addFreitext() - Füge Freitext hinzu
-
-=head4 Synopsis
-
-  $rch->addFreitext($code,$text);
-
-=head4 Description
-
-Füge Freitext $text mit dem Code $code zu den Freitexten hinzu. Ist $code
-C<undef> wird der Text ohne qualifizierenden Code hinzugefügt.
 
 =head1 VERSION
 
@@ -46,7 +34,7 @@ C<undef> wird der Text ohne qualifizierenden Code hinzugefügt.
 
 =head1 SOURCE
 
-L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Zugferd/Entity/Rechnung.pm>
+L<https://github.com/s31tz/Quiq/tree/master/lib/Quiq/Zugferd/Entity/ZuAbschlagPosition.pm>
 
 =head1 AUTHOR
 

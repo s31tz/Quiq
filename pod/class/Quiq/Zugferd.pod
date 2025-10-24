@@ -243,6 +243,21 @@ Aktiviere die Validierung durch XML::Compile
 Ersetze die Platzhalter im Template des ZUGFeRD-Profils und liefere
 das resultierende XML sowie etwaigen Debug-Text zurück.
 
+=head3 showPaths() - Zeige die Pfade aller Blattknoten
+
+=head4 Synopsis
+
+  $str = $zug->showPaths;
+
+=head4 Returns
+
+(String) Liste der Pfade des Baums
+
+=head4 Description
+
+Zeige die Liste der Pfade aller Blattkonten des ZUGFeRD-Baums
+(siehe auch die Beispiele Quiq::Tree->leafNodes()).
+
 =head3 template() - Liefere das ZUGFeRD-Template
 
 =head4 Synopsis
@@ -595,6 +610,25 @@ Empfänger
 =item *
 
 Texte auf Rechnungs- und Positionsebene
+
+=back
+
+=head2 Abschläge und Zuschläge
+
+Abschläge und Zuschläge gibt es auf Positions- und Rechnungsebene.
+Diese haben jeweils eine Kardinalität 0..n, sind also als Listen
+unterhalb der Position bzw. der Rechnung repräsentiert.
+Der Attribute sind bei Ab- und Zuschlägen identisch.
+Auf Rechnungsebene haben die Ab- bzw. Zuschläge zusätzlich
+Angaben zur Umsatzsteuer.
+
+Klassen:
+
+=over 4
+
+=item ...::ZuAbschlaegeRechnung
+
+=item ...::ZuAbschlaegePosition
 
 =back
 

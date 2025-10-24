@@ -69,16 +69,7 @@ sub new {
         abrechnungszeitraumVon => undef,   # BT-134
         abrechnungszeitraumBis => undef,   # BT-135
         attribute => [],
-        # Nachlass
-        nachlassNetto => undef,            # BT-136
-        nachlassGrund => undef,            # BT-139
-        nachlassGrundbetragNetto => undef, # BT-137
-        nachlassProzentsatz => undef,      # BT-138
-        # Zuschlag
-        zuschlagNetto => undef,            # BT-141
-        zuschlagGrund => undef,            # BT-144
-        zuschlagGrundbetragNetto => undef, # BT-142
-        zuschlagProzentsatz => undef,      # BT-143
+        zuAbschlaege => [],
     );
     $self->set(@_);
 

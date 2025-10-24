@@ -4,7 +4,7 @@
 
 =head1 NAME
 
-Quiq::Zugferd::Entity::Attribut - Position
+Quiq::Zugferd::Entity::Attribut - Artikelattribut
 
 =head1 BASE CLASS
 

@@ -174,8 +174,8 @@ sub processSubTree {
 
 =head4 Synopsis
 
-  $ztr->reduceTree;
-  $ztr->reduceTree($sub);
+  $ztr = $ztr->reduceTree;
+  $ztr = $ztr->reduceTree($sub);
 
 =head4 Arguments
 
@@ -222,7 +222,8 @@ sub reduceTree {
 
     $sub //= Quiq::Tree->setLeafValue($self,sub {
         my $val = shift;
-        if (defined $val && $val =~ /^__\w+__$/) {
+        # if (defined $val && $val =~ /^__\w+__$/) {
+        if (defined $val && $val =~ /^B[GT]-.*$/) {
             $val = undef;
         }
         return $val;
@@ -231,7 +232,7 @@ sub reduceTree {
     # Entferne alle leeren Knoten
     Quiq::Tree->removeEmptyNodes($self);
 
-    return;
+    return $self;
 }
 
 # -----------------------------------------------------------------------------

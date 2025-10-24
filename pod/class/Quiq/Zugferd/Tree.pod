@@ -106,8 +106,8 @@ Ersetze im Subbaum $name die Platzhalter aus den Elementen von @arr.
 
 =head4 Synopsis
 
-  $ztr->reduceTree;
-  $ztr->reduceTree($sub);
+  $ztr = $ztr->reduceTree;
+  $ztr = $ztr->reduceTree($sub);
 
 =head4 Arguments
 

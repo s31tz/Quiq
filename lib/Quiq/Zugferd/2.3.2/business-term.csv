@@ -4,6 +4,7 @@
 # 2: Pflicht bei Validierung durch den Mustang-Validator
 # ---
 BG-21-1;0;;Indikator für Zuschlag, Wert
+BG-27-1_BG-28-1;0;;Indikator für Zuschlag/Abschlag, Wert
 BT-1;1;;rechnungsnummer;Rechnungsnummer
 BT-2;1;;rechnungsdatum;Rechnungsdatum
 BT-2-0;1;;Code des Datumsformats
@@ -92,6 +93,8 @@ BT-134-0;0;;Datum, Format
 BT-134;0;;Anfangsdatum des Rechnungspositionszeitraums
 BT-135-0;0;;Datum, Format
 BT-135;0;;Enddatum des Rechnungspositionszeitraums
+BT-141;0;;Betrag des Zuschlags auf Ebene der Rechnungsposition
+BT-144;0;;Grund für den Zuschlag auf Ebene der Rechnungsposition
 BT-146;1;;Nettopreis des Artikels
 BT-148;0;;Bruttopreis des Artikels
 BT-151-0;1;;Steuerart (Code) 
