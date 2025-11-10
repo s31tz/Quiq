@@ -1330,6 +1330,10 @@ einschließlich Inhalt. Es ist kein Fehler, wenn der Pfad nicht existiert.
 
   $dir = $class->dir($path);
 
+=head4 Alias
+
+parent()
+
 =head4 Returns
 
 String

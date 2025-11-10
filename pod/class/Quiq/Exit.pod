@@ -44,7 +44,8 @@ in den Exception-Text eingesetzt.
 =head4 Description
 
 Prüfe den Status eines terminierten Child-Prozesses und löse
-eine Execption aus, wenn dieser ungleich 0 ist.
+eine Execption aus, wenn dieser ungleich 0 ist. Ausnahme: Einen Abbruch
+via ^C tolerieren wir.
 
 =head4 Examples
 

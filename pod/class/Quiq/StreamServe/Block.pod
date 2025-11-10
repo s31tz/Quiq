@@ -123,7 +123,8 @@ Wirf bei Nichtexistenz von $key keine Exception, sondern liefere C<undef>.
 
 =head4 Description
 
-Liefere den ersten nichtleeren Wert der Attribute @keys.
+Liefere den ersten nichtleeren Wert der Attribute @keys. Attribute, die
+nicht existieren, werden übergangen.
 
 =head3 prefix() - Liefere Präfix
 

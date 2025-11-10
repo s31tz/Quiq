@@ -252,7 +252,8 @@ sub get {
 
 =head4 Description
 
-Liefere den ersten nichtleeren Wert der Attribute @keys.
+Liefere den ersten nichtleeren Wert der Attribute @keys. Attribute, die
+nicht existieren, werden übergangen.
 
 =cut
 
@@ -263,8 +264,8 @@ sub getFirst {
     # @_: @keys
 
     for my $key (@_) {
-        my $val = $self->get($key);
-        if ($val ne '') {
+        my $val = $self->get($key,1);
+        if (defined($val) && $val ne '') {
             return $val;
         }
     }
