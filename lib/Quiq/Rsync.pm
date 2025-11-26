@@ -218,10 +218,7 @@ sub exec {
             }
         }
         if (@arr) {
-            my $host = $dest;
-            $host =~ s/:.*//;
-            $host =~ s/.*\@//;
-            $output .= "==$host==\n";
+            $output .= "==$dest==\n";
         } 
         $output .= join '',@arr;
     }
