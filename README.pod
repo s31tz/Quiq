@@ -1059,7 +1059,7 @@ L<Quiq::Zugferd::Tree|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Z
 
 =head1 VERSION
 
-1.232
+1.233
 
 =head1 AUTHOR
 

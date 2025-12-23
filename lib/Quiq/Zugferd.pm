@@ -42,7 +42,7 @@ use strict;
 use warnings;
 use utf8;
 
-our $VERSION = '1.232';
+our $VERSION = '1.233';
 
 use Quiq::PerlModule;
 use Quiq::Path;
@@ -309,13 +309,13 @@ sub combine {
 
     my $p = Quiq::Path->new;
 
-    my $symlink = sprintf '%s/factur-x.xml',$p->dir($xmlFile);
-    $p->duplicate('symlink',$xmlFile,$symlink);
+    my $dir = $p->tempDir;
+    $p->copy($xmlFile,"$dir/factur-x.xml");
 
     my $sh = Quiq::Shell->new;
-    $sh->exec("pdftk $pdfFile attach_files $symlink output $zugferdFile");
-
-    $p->delete($symlink);
+    $sh->cd($dir);
+    $sh->exec("pdftk $pdfFile attach_files 'factur-x.xml' output $zugferdFile");
+    $sh->back;
 
     return;
 }
@@ -832,6 +832,8 @@ sub toXml {
         'BT-14' => $rch->auftragsnummer,
         'BT-20' => $rch->zahlungsbedingungen,
         $rch->transferDate('faelligkeitsdatum','BT-9'),
+        $rch->transferDate('abrechnungszeitraumVon','BT-73'),
+        $rch->transferDate('abrechnungszeitraumBis','BT-74'),
         'BT-82' => $rch->zahlungsmittel,
         'BT-83' => $rch->verwendungszweck,
         'BT-81' => $rch->zahlungsart,
@@ -1348,7 +1350,7 @@ Klassen:
 
 =head1 VERSION
 
-1.232
+1.233
 
 =head1 AUTHOR
 

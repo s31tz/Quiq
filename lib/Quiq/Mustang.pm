@@ -45,7 +45,7 @@ use v5.10;
 use strict;
 use warnings;
 
-our $VERSION = '1.232';
+our $VERSION = '1.233';
 
 use Quiq::Path;
 use Quiq::PerlModule;
@@ -64,7 +64,7 @@ use Quiq::Html::Page;
 
 =head4 Synopsis
 
-  $mus = $class->new($jarFile);
+  $mus = $class->new($jarFile,%options);
 
 =head4 Arguments
 
@@ -74,6 +74,16 @@ use Quiq::Html::Page;
 
 Pfad zur JAR-Datei C<Mustang-CLI-X.Y.Z.jar>, z.B.
 C<~/Mustang-CLI-2.16.2.jar>
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -javaDir => $javaDir (Default: undef)
+
+Verzeichns mit dem Programm C<java>. Beispiel: C</opt/jdk/bin>
 
 =back
 
@@ -91,7 +101,16 @@ dieses Objekt zurück.
 # -----------------------------------------------------------------------------
 
 sub new {
-    my ($class,$jarFile) = @_;
+    my $class = shift;
+
+    # Optionen und Argumente
+
+    my $javaDir = undef;
+
+    my $argA = $class->parameters(1,1,\@_,
+        -javaDir => \$javaDir,
+    );
+    my $jarFile = shift @$argA;
 
     if (!Quiq::Path->exists($jarFile)) {
         $class->throw(
@@ -109,8 +128,14 @@ sub new {
         $mustangDir = $mod->moduleDir;
     }
 
+    my $javaExe = 'java';
+    if ($javaDir) {
+        $javaExe = "$javaDir/$javaExe";
+    }
+
     return $class->SUPER::new(
         mustangDir => $mustangDir,
+        javaExe => $javaExe,
         jarFile => $jarFile,
         brH => undef, # wird bei Bedarf geladen
     );
@@ -198,7 +223,8 @@ sub validate {
     my $logFile = sprintf '%s_result.log',$basename;
 
     my $status;
-    my $cmd = "java -Xmx1G -Dfile.encoding=UTF-8".
+    my $javaExe = $self->javaExe;
+    my $cmd = "$javaExe -Xmx1G -Dfile.encoding=UTF-8".
         " -jar $self->{'jarFile'} --action validate".
         " --source $file --log-as-pdf$noticeOpt >$resultFile 2>$logFile";
     if ($log) {
@@ -467,13 +493,14 @@ sub visualize {
     my $sh = Quiq::Shell->new(log=>$verbose);
 
     my $cmd;
+    my $javaExe = $self->javaExe;
     if ($outFile =~ /\.pdf$/) {
-        $cmd = "java -Xmx1G -Dfile.encoding=UTF-8 -jar $self->{'jarFile'}".
+        $cmd = "$javaExe -Xmx1G -Dfile.encoding=UTF-8 -jar $self->{'jarFile'}".
             " --action pdf --source $xmlFile --out $outFile".
             " >$logFile 2>&1";
     }
     else {
-        $cmd = "java -Xmx1G -Dfile.encoding=UTF-8 -jar $self->{'jarFile'}".
+        $cmd = "$javaExe -Xmx1G -Dfile.encoding=UTF-8 -jar $self->{'jarFile'}".
             " --action visualize --language de --source $xmlFile".
             " --out $outFile >$logFile 2>&1";
     }
@@ -646,7 +673,7 @@ sub mustangDir {
 
 =head1 VERSION
 
-1.232
+1.233
 
 =head1 AUTHOR
 

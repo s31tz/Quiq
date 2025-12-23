@@ -40,7 +40,7 @@ L<Mustang-Projekt auf GitHub|https://github.com/ZUGFeRD/mustangproject>
 
 =head4 Synopsis
 
-  $mus = $class->new($jarFile);
+  $mus = $class->new($jarFile,%options);
 
 =head4 Arguments
 
@@ -50,6 +50,16 @@ L<Mustang-Projekt auf GitHub|https://github.com/ZUGFeRD/mustangproject>
 
 Pfad zur JAR-Datei C<Mustang-CLI-X.Y.Z.jar>, z.B.
 C<~/Mustang-CLI-2.16.2.jar>
+
+=back
+
+=head4 Options
+
+=over 4
+
+=item -javaDir => $javaDir (Default: undef)
+
+Verzeichns mit dem Programm C<java>. Beispiel: C</opt/jdk/bin>
 
 =back
 
@@ -277,7 +287,7 @@ Subpfad $subPath.
 
 =head1 VERSION
 
-1.232
+1.233
 
 =head1 SOURCE
 

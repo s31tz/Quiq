@@ -499,10 +499,10 @@
       </ram:ApplicableTradeTax>
       <ram:BillingSpecifiedPeriod>
         <ram:StartDateTime>
-          <udt:DateTimeString format=""></udt:DateTimeString>
+          <udt:DateTimeString format="BT-73-0">BT-73</udt:DateTimeString>
         </ram:StartDateTime>
         <ram:EndDateTime>
-          <udt:DateTimeString format=""></udt:DateTimeString>
+          <udt:DateTimeString format="BT-74-0">BT-74</udt:DateTimeString>
         </ram:EndDateTime>
       </ram:BillingSpecifiedPeriod>
       <ram:SpecifiedTradeAllowanceCharge>
