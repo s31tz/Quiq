@@ -116,7 +116,7 @@ Liefere das nächste SQL-Statement des Skripts. Leere Statements werden
 
 =head1 VERSION
 
-1.233
+1.234
 
 =head1 SOURCE
 
@@ -128,7 +128,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2025 Frank Seitz
+Copyright (C) 2026 Frank Seitz
 
 =head1 LICENSE
 

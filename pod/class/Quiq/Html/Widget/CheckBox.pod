@@ -86,7 +86,7 @@ Aktueller Wert. Stimmt dieser mit dem Wert des Attributs option
 
 =head1 VERSION
 
-1.233
+1.234
 
 =head1 SOURCE
 
@@ -98,7 +98,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2025 Frank Seitz
+Copyright (C) 2026 Frank Seitz
 
 =head1 LICENSE
 

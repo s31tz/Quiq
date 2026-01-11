@@ -68,6 +68,35 @@ Object
 Instantiiere ein ZUGFeRD-Objekt des Profils $profile und der
 ZUGFeRD-Version $version und liefere dieses zurück.
 
+=head3 createTemplate() - Erzeuge XML-Template zu Schemadefinition
+
+=head4 Synopsis
+
+  $xml = $class->createTemplate($xsdDir);
+
+=head4 Returns
+
+(String) XML-Template
+
+=head4 Description
+
+Erzeuge auf Basis der XSD-Dateien in $xsdDir mit %CL<lt>XML::Compile::Schema>%
+ein XML Template ohne Werte und liefere dieses zurück.
+
+B<ACHTUNG:> Mit der originalen Version von XML::Compile werden erneut
+auftauchende Elemente ELEMENT abgekürzt mit <ELEMENT/>. Das Ergebnis ist
+dann als Template nicht wirklich brauchbar.
+
+=head4 Examples
+
+Profil EN16931 der ZUGFeRD-Version 2.4:
+
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->createTemplate("ZF24_DE/Schema/3_Factur-X_1.08_EN16931")' # 562 Zeilen
+
+Profil EXTENDED der ZUGFeRD-Version 2.4:
+
+  $ perl -MQuiq::Zugferd -E 'say Quiq::Zugferd->createTemplate("ZF24_DE/Schema/4_Factur-X_1.08_EXTENDED")' # 1690 Zeilen
+
 =head2 Objektmethoden
 
 =head3 checkAttributes() - Prüfe die Attribute des Rechnungsobjekts
@@ -634,7 +663,7 @@ Klassen:
 
 =head1 VERSION
 
-1.233
+1.234
 
 =head1 SOURCE
 
@@ -646,7 +675,7 @@ Frank Seitz, L<http://fseitz.de/>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2025 Frank Seitz
+Copyright (C) 2026 Frank Seitz
 
 =head1 LICENSE
 

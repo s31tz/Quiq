@@ -1,4 +1,13 @@
-1.133.2025-12-22
+1.134 2026-01-10
+================
+
+[Quiq::Path]
+* partionizeDir(): Methode hinzugefügt
+
+[Quiq::Zugferd]
+* createTemplate(): Methode hinzugefügt
+
+1.133 2025-12-22
 ================
 
 [Quiq::Smb::Client]
