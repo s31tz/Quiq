@@ -6,7 +6,7 @@ Quiq - Class library for rapid development
 
 =head1 DESCRIPTION
 
-Diese Klassenbibliothek enthält 259 anwendungsunabhängige
+Diese Klassenbibliothek enthält 260 anwendungsunabhängige
 Klassen, die ich in Projekten nutze. Die Klassen
 sind nach einheitlichen Prinzipien konzipiert. Die Bibliothek
 befindet sich unter kontinuierlicher Weiterentwicklung.
@@ -594,6 +594,10 @@ L<Quiq::Json|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Json.pod> 
 =item *
 
 L<Quiq::Json::Code|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/Json/Code.pod> - Erzeuge JSON-Code in Perl
+
+=item *
+
+L<Quiq::KositValidator|https://github.com/s31tz/Quiq/tree/master/pod/class/Quiq/KositValidator.pod> - Validator für XRechnungen
 
 =item *
 

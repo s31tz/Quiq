@@ -132,7 +132,8 @@ sub concat {
 
     my $val;
     for my $key (@_) {
-        if (my $str = $self->get($key)) {
+        my $str = $self->get($key);
+        if ($str && $str ne '00.00.00') {
             if ($val) {
                 $val .= $sep;
             }

@@ -149,7 +149,7 @@ sub new {
 
 =head4 Synopsis
 
-  $status = $mus->validate($file);
+  $status = $mus->validate($file,%options);
 
 =head4 Arguments
 
@@ -228,7 +228,7 @@ sub validate {
         " -jar $self->{'jarFile'} --action validate".
         " --source $file --log-as-pdf$noticeOpt >$resultFile 2>$logFile";
     if ($log) {
-        $log->info("Validiere XML: $cmd");
+        $log->info("Validiere ZUGFeRD-XML: $cmd");
     }
     my $exitCode = $sh->exec($cmd,-log=>$verbose);
     if ($exitCode == 130) {

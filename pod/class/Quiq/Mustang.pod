@@ -78,7 +78,7 @@ dieses Objekt zurück.
 
 =head4 Synopsis
 
-  $status = $mus->validate($file);
+  $status = $mus->validate($file,%options);
 
 =head4 Arguments
 
