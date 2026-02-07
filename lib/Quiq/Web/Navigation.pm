@@ -123,6 +123,15 @@ Der Eintrag für die Rückkehrseite wird gelöscht.
 
 =back
 
+=item navFocus=fiels
+
+Übermittelt an die Folgeseite (die typischerweise eine
+Rückkehrseite ist) einen Feldnamen. Dieser Parameter wird wie alle
+nav*-Parameter automatisch aus dem URL, der in
+Navigationshistorie (call.db) gespeichert wird entfernt, so
+dass dieser bei der erneuten Rückkehr nicht noch einmal
+verwendet wird.
+
 =item navMsg=msg
 
 Übermittelt an die Folgeseite (die typischerweise eine
