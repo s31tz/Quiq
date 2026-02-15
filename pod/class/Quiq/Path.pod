@@ -395,6 +395,17 @@ Lösche die Datei $link, falls sie bereits existiert.
 Erzeuge einen Hardlink $link auf Pfad $path.
 Die Methode liefert keinen Wert zurück.
 
+=head3 mimeTypeByExtension() - Liefere MIME Type zur Extension
+
+=head4 Synopsis
+
+  $mineType = $this->mimeTypeByExtension($path);
+
+=head4 Description
+
+Ermittele den MIME Type der Datei auf Basis der Extension und liefere
+diesen zurück.
+
 =head3 newlineStr() - Ermittele Zeilentrenner
 
 =head4 Synopsis

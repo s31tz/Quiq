@@ -4,7 +4,7 @@
 
 =head1 NAME
 
-Quiq::Zugferd::Entity::Kaeufer - Käufer (Zahler)
+Quiq::Zugferd::Entity::Anhang - Rechnungsbegründender Anhang für den Käufer
 
 =head1 BASE CLASS
 
@@ -12,13 +12,13 @@ L<Quiq::Zugferd::Entity>
 
 =head1 DESCRIPTION
 
-Ein Objekt der Klasse repräsentiert den Käufer.
+Ein Objekt der Klasse repräsentiert einen rechnungsbegründenden Anhang.
 
 =cut
 
 # -----------------------------------------------------------------------------
 
-package Quiq::Zugferd::Entity::Kaeufer;
+package Quiq::Zugferd::Entity::Anhang;
 use base qw/Quiq::Zugferd::Entity/;
 
 use v5.10;
@@ -37,7 +37,7 @@ our $VERSION = '1.234';
 
 =head4 Synopsis
 
-  $kfr = $class->new(@keyVal);
+  $atr = $class->new(@keyVal);
 
 =head4 Description
 
@@ -53,17 +53,11 @@ sub new {
     # @_: @keyVal
 
     my $self = $class->SUPER::new(
-        name => undef,             # BT-44
-        kundennummer => undef,     # BT-46
-        kontakt => undef,          # BT-56
-        strasse => undef,          # BT-50
-        plz => undef,              # BT-53
-        ort => undef,              # BT-52
-        land => undef,             # BT-55
-        auftragsreferenz => undef, # BT-13 (Bestellnummer des Käufers)
-        umsatzsteuerId => undef,   # BT-48
-        # Zugeordnete Objekte
-        anhaenge => [],
+        id => undef,       # BT-122
+        name => undef,     # BT-123
+        mimeType => undef, # BT-125-1
+        filename => undef, # BT-125-2
+        data => undef,     # BT-125
     );
     $self->set(@_);
 
