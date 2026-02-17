@@ -65,7 +65,7 @@ use v5.10;
 use strict;
 use warnings;
 
-our $VERSION = '1.234';
+our $VERSION = '1.235';
 
 use Quiq::Path;
 use Quiq::Shell;
@@ -224,7 +224,10 @@ sub validate {
 
     my $cmd = "$javaExe -jar $jar -r $validatorDir -s $scenariosFile".
         qq| -o "$xmlFileDir" "$xmlFile"|;
-    if ($log) {
+    if ($verbose) {
+        say $cmd;
+    }
+    elsif ($log) {
         $log->info("Validiere XRechnungs-XML: $cmd");
     }
     my $stdout = $sh->exec($cmd,-sloppy=>1,-capture=>'stdout');
@@ -237,7 +240,7 @@ sub validate {
 
 =head1 VERSION
 
-1.234
+1.235
 
 =head1 AUTHOR
 
