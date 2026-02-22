@@ -242,6 +242,45 @@ Behalte den Zeitpunkt der letzten Änderung bei.
 
 Kopiere Datei $srcPath nach $destPath.
 
+=head3 copyN() - Kopiere N Dateien
+
+=head4 Synopsis
+
+  $this->copyN($n,$destDir,@globPaths,%options);
+
+=head4 Options
+
+=over 4
+
+=item -createDir => $bool (Default: 0)
+
+Erzeuge Zielverzeichnis, falls es nicht existiert.
+
+=item -log => $stream (Default: undef)
+
+Schreibe Meldung auf Dateihandle. Beispiel:
+
+  -log => \*STDOUT
+
+=item -move => $bool (Default: 0)
+
+Lösche Quelldatei $srcPath nach dem Kopieren.
+
+=item -overwrite => $bool (Default: 1)
+
+Wenn gesetzt, wird die Zieldatei $destPath überschrieben, falls sie
+existiert. Andernfalls wird eine Exception geworfen.
+
+=item -preserve => $bool (Default: 1)
+
+Behalte den Zeitpunkt der letzten Änderung bei.
+
+=back
+
+=head4 Description
+
+Kopiere N Dateien aus @globPaths nach $destPath.
+
 =head3 duplicate() - Kopiere, bewege, linke oder symlinke Datei
 
 =head4 Synopsis
