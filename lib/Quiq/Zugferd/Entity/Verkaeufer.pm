@@ -62,6 +62,8 @@ sub new {
         umsatzsteuerId => undef,   # BT-31
         kontakt => undef,          # BT-41
         telefon => undef,          # BT-42
+        email => undef,            # BT-34
+        contactEmail => undef,     # BT-43
     );
     $self->set(@_);
 

@@ -57,6 +57,7 @@ sub new {
     my $self = $class->SUPER::new(
         # Profil EN16931
         profilKennung => 'urn:cen.eu:en16931:2017', # BT-24
+        geschaeftsprozessTyp => undef,              # BT-23
         rechnungsart => undef,                      # BT-3
         rechnungsnummer => undef,                   # BT-1
         rechnungsdatum => undef,                    # BT-2

@@ -60,6 +60,7 @@ sub new {
         plz => undef,              # BT-53
         ort => undef,              # BT-52
         land => undef,             # BT-55
+        email => undef,            # BT-49
         auftragsreferenz => undef, # BT-13 (Bestellnummer des Käufers)
         umsatzsteuerId => undef,   # BT-48
         # Zugeordnete Objekte
