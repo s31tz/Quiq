@@ -332,7 +332,7 @@ Zeichenkette mit Whitespace und/oder Shell-Metazeichen:
 
 =head1 VERSION
 
-1.235
+1.236
 
 =head1 SOURCE
 

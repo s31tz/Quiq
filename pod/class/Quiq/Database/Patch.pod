@@ -143,7 +143,7 @@ Ermittele den aktuellen Patchlevel und liefere diesen zurück.
 
 =head1 VERSION
 
-1.235
+1.236
 
 =head1 SOURCE
 

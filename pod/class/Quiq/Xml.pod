@@ -76,7 +76,7 @@ Wandele den XML Code $xml in eine hierarchische Perl-Datenstruktur
 
 =head1 VERSION
 
-1.235
+1.236
 
 =head1 SOURCE
 

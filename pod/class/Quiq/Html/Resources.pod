@@ -83,7 +83,7 @@ Liefere die Liste der Ressourcen zu den Schlüsseln @keys.
 
 =head1 VERSION
 
-1.235
+1.236
 
 =head1 SOURCE
 
