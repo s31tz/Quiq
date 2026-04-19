@@ -293,7 +293,7 @@ Ausdruck als Defaultwert, wenn kein Wert
 
 =head1 VERSION
 
-1.236
+1.237
 
 =head1 SOURCE
 

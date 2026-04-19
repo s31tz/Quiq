@@ -178,7 +178,7 @@ Ermittele die Anzahl der Zeilen des Terminals und liefere diese zurück.
 
 =head1 VERSION
 
-1.236
+1.237
 
 =head1 SOURCE
 

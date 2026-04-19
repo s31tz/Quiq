@@ -131,7 +131,7 @@ diese zurück. Aufbau der Zeichenkette siehe Abschnitt DESCRIPTION.
 
 =head1 VERSION
 
-1.236
+1.237
 
 =head1 SOURCE
 
