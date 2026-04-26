@@ -60,10 +60,12 @@ sub new {
         land => undef,             # BT-40
         # auftragsreferenz => undef, # BT-14
         umsatzsteuerId => undef,   # BT-31
+        steuernummer => undef,     # BT-32
         kontakt => undef,          # BT-41
         telefon => undef,          # BT-42
         email => undef,            # BT-34
         contactEmail => undef,     # BT-43
+        information => undef,      # BT-33
     );
     $self->set(@_);
 
