@@ -62,7 +62,7 @@ sub new {
         land => undef,             # BT-55
         email => undef,            # BT-49
         auftragsreferenz => undef, # BT-13 (Bestellnummer des Käufers)
-        umsatzsteuerId => undef,   # BT-48
+        umsatzsteuernummer => undef, # BT-48
         # Zugeordnete Objekte
         anhaenge => [],
     );
