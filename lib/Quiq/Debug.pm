@@ -317,7 +317,7 @@ sub showRdiff {
 
     my $cmd = "ssh $login cat $root/$file | diff $lRoot/$file -";
     my $str = $sh->exec($cmd,-sloppy=>1,-capture=>'stdout+stderr');
-    # $str = Encode::decode('UTF-8',$str);
+    $str = Encode::decode('UTF-8',$str);
 
     return $str;
 }
