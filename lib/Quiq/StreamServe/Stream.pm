@@ -706,7 +706,7 @@ Index im Falle mehrfachen Vorkommens des Feldes
 =head4 Description
 
 Wie get(), nur dass der Zugriff auf ein nicht-existentes Feld nicht
-zu einer Exception führt, sondern C<undef> geliefert wird.
+zu einer Exception führt, sondern C<undef> liefert.
 
 =cut
 
