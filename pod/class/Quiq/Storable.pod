@@ -91,7 +91,7 @@ Cache Hash (hier mit zyklischer Struktur):
 
 =head1 VERSION
 
-1.237
+1.238
 
 =head1 SOURCE
 

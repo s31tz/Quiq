@@ -39,7 +39,7 @@ geöffnet ist. Falls ja, lefere I<wahr>, andernfalls I<falsch>.
 
 =head1 VERSION
 
-1.237
+1.238
 
 =head1 SOURCE
 
