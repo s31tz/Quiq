@@ -152,6 +152,8 @@ Colorcode 'reset' beendet. Ist die Erzeugung von Colorcodes
 abgeschaltet (siehe Konstruktor), wird die Zeichenkette unverändert
 geliefert.
 
+Ist $str C<undef>, wird ein Leerstring geliefert.
+
 =head3 strLn() - Formatiere Zeile mit Colorcodes
 
 =head4 Synopsis
