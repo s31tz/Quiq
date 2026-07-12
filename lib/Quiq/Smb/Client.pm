@@ -85,9 +85,9 @@ Die Eigenschaft C<configuration> gehört nicht zu C<Filesys::SmbClient>,
 sondern ist speziell hinzugefügt. Wenn gesetzt, wird die Datei
 C<~/.smb/smb.conf> mit dem angegebenen Text (SMB-Konfiguration)
 vor der Instantiierung geschrieben. Andernfalls wird eine leere
-Datei angelegt. Die Konfiguration scheint nicht (einmalig) während
-Konstruktoraufrufs gelesen zu werden, sondern bei späteren (der
-ersten?) Operation. Daher ist Vorsicht bei mehreren Objekten
+Datei angelegt. Die Konfiguration scheint nicht einmalig während
+Konstruktoraufrufs gelesen zu werden, sondern bei späteren
+Operationen. Daher ist Vorsicht bei mehreren Objekten
 geboten (TODO: dies genauer untersuchen).
 
 =head4 Example
