@@ -70,8 +70,6 @@ UTF-16/32 mit BOM
 und $otherEncoding. Ist $otherEncoding nicht angegeben, wird
 ISO-8859-1 angenommen.
 
-=head2 Einrückung
-
 =head3 indent() - Rücke Text ein
 
 =head4 Synopsis

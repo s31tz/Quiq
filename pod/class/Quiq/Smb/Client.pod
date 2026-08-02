@@ -30,6 +30,12 @@ eine Exception wirft
 
 =back
 
+B<ACHTUNG:> Die Klasse Filesys::SmbClient scheint unsauber programmiert
+zu sein: Kommen in einem Programm mehrere SMB-Objekte vor,
+können diese nicht ohne Neuinstantiierung verschränkt genutzt werden.
+D.h. ein SMB-Objekt muss vor einer Operationen neu instantiiert werden,
+wenn die Operation davor über einem anderen Objekt stattgefunden hat.
+
 =head1 METHODS
 
 =head2 Konstruktor
@@ -64,12 +70,11 @@ Die Eigenschaft C<configuration> gehört nicht zu C<Filesys::SmbClient>,
 sondern ist speziell hinzugefügt. Wenn gesetzt, wird die Datei
 C<~/.smb/smb.conf> mit dem angegebenen Text (SMB-Konfiguration)
 vor der Instantiierung geschrieben. Andernfalls wird eine leere
-Datei angelegt. Die Konfiguration scheint nicht einmalig während
-Konstruktoraufrufs gelesen zu werden, sondern bei späteren
-Operationen. Daher ist Vorsicht bei mehreren Objekten
-geboten (TODO: dies genauer untersuchen).
+Datei angelegt.
 
 =head4 Example
+
+Konfiguration SMB 1.0:
 
   my $smb = Quiq::Smb->new(
       username => 'elbrusfse',
