@@ -284,6 +284,17 @@ Index im Falle mehrfachen Vorkommens des Feldes
 
 (String) Wert
 
+=head3 getFirst() - Liefere ersten Attributwert
+
+=head4 Synopsis
+
+  $val = $ssf->getFirst(@keys);
+
+=head4 Description
+
+Liefere den ersten nichtleeren Wert der Attribute @keys. Attribute, die
+nicht existieren, werden übergangen.
+
 =head3 set() - Setze Wert
 
 =head4 Synopsis
@@ -397,7 +408,7 @@ einzulesen.
 
 =head1 VERSION
 
-1.238
+1.239
 
 =head1 SOURCE
 
