@@ -29,7 +29,7 @@ Objekt zurück.
 
 =head1 VERSION
 
-1.239
+1.240
 
 =head1 SOURCE
 

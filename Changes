@@ -1,8 +1,19 @@
+1.240 2026-09-27
+
+[Quiq::StreamServe::Stream]
+* getFirst(): hinzugefügt
+
+[Quiq::Debug]
+* showRdiff(): UTF-8 Decoding entfernt
+
+[Quiq::Zugferd]
+* toXml(): Base64 Encoding bei Anhängen entfernt
+
 1.239 2026-08-23
 ================
 
 [Quiq::Smb::Client]
-Doku bearbeitet
+* Doku bearbeitet
 
 [Quiq::AnsiColor]
 * str(): undef als Leerstring behandeln
