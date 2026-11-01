@@ -52,6 +52,7 @@ use XML::Compile::Schema ();
 use XML::LibXML ();
 use XML::Compile::Util ();
 use Quiq::Shell;
+use Image::ExifTool ();
 use Quiq::Storable;
 use Quiq::AnsiColor;
 use Quiq::FileHandle;
@@ -397,6 +398,96 @@ sub combine {
     $sh->back;
 
     return;
+}
+
+# -----------------------------------------------------------------------------
+
+=head3 addXmpMetadata() - Füge ZUGFeRD XMP Metadaten zu Rechnungs-PDF hinzu
+
+=head4 Synopsis
+
+  $bool = $zug->addXmpMetadata($pdfFile);
+
+=head4 Arguments
+
+=over 4
+
+=item $pdfFile
+
+(String) Der Pfad zum PDF der Rechnung
+
+=back
+
+=head4 Returns
+
+=over 4
+
+=item $bool
+
+1: Ok, XMP-Metadaten hinzugefügt, 0: Fehler, XMP-Metadaten konnten nicht
+hinzugefügt werden.
+
+=back
+
+=head4 Description
+
+Füge XMP Metadaten zum PDF $pdfFile hinzu
+
+=cut
+
+# -----------------------------------------------------------------------------
+
+# Die folgenden Yuweisungen d[rfen nur ein Mal ausgeführt werden,
+# sonst gibt es den Fehler:
+#     "Sorry, XMP-fx: doesn't exist or isn't writable"
+
+# 1. ZUGFeRD / Factur-X Namespace (fx) in ExifTool registrieren
+%Image::ExifTool::UserDefined = (
+    'Image::ExifTool::XMP::Main' => {
+        fx => {
+            SubDirectory => {
+                TagTable => 'Image::ExifTool::UserDefined::fx',
+            },
+        },
+    },
+);
+
+%Image::ExifTool::UserDefined::fx = (
+    GROUPS    => { 0 => 'XMP', 1 => 'XMP-fx', 2 => 'Document' },
+    NAMESPACE => { 'fx' => 'urn:factur-x:pdfa:CrossIndustryDocument:invoice:1p0#' },
+    WRITABLE  => 'string',
+    # Definition der benötigten Tags
+    DocumentType     => {},
+    DocumentFileName => {},
+    ConformanceLevel => {},
+    Version          => {},
+);
+
+sub addXmpMetadata {
+    my ($self,$pdfFile) = @_;
+
+    my $log = $self->get('log');
+
+    my $p = Quiq::Path->new;
+
+    my $dir = $p->tempDir;
+    my $tmpFile = sprintf '%s/%s',$dir,$p->filename($pdfFile);
+
+    # 2. ExifTool Objekt erstellen
+    my $exifTool = Image::ExifTool->new;
+
+    # 3. ZUGFeRD Werte setzen
+    $exifTool->SetNewValue('XMP-fx:DocumentType','INVOICE');
+    $exifTool->SetNewValue('XMP-fx:DocumentFileName','factur-x.xml');
+    $exifTool->SetNewValue('XMP-fx:Version','2.0');
+    $exifTool->SetNewValue('XMP-fx:ConformanceLevel','EN 16931');
+
+    # 4. Metadaten in das Ziel-PDF schreiben
+    my $success = $exifTool->WriteInfo($pdfFile,$tmpFile);
+
+    $p->copy($tmpFile,$pdfFile);
+
+    return $success == 1? 1: 0;
 }
 
 # -----------------------------------------------------------------------------

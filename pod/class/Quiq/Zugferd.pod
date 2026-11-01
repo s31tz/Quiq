@@ -154,6 +154,37 @@ lieferet die Methode einen Leerstring ('').
 Füge das Rechnungs-PDF $pdfFile und das ZUGFeRD XML $xmlFile
 zusammen und schreibe das Ergebnis nach $zugferdFile.
 
+=head3 addXmpMetadata() - Füge ZUGFeRD XMP Metadaten zu Rechnungs-PDF hinzu
+
+=head4 Synopsis
+
+  $bool = $zug->addXmpMetadata($pdfFile);
+
+=head4 Arguments
+
+=over 4
+
+=item $pdfFile
+
+(String) Der Pfad zum PDF der Rechnung
+
+=back
+
+=head4 Returns
+
+=over 4
+
+=item $bool
+
+1: Ok, XMP-Metadaten hinzugefügt, 0: Fehler, XMP-Metadaten konnten nicht
+hinzugefügt werden.
+
+=back
+
+=head4 Description
+
+Füge XMP Metadaten zum PDF $pdfFile hinzu
+
 =head3 createInvoice() - Erzeuge das XML einer ZUGFeRD-Rechnung (abstrakt)
 
 =head4 Synopsis

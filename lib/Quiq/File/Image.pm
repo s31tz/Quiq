@@ -460,7 +460,7 @@ Eigenschaften an die Attribute des Objektes zu.
 
 # -----------------------------------------------------------------------------
 
-our $xft = Image::ExifTool->new; # nur einmal instantiieren
+our $xft = Image::ExifTool->new;  # nur einmal instantiieren
 
 sub analyzeFile {
     my $self = shift;
