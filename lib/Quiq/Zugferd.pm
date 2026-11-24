@@ -479,7 +479,7 @@ sub addXmpMetadata {
     # 3. ZUGFeRD Werte setzen
     $exifTool->SetNewValue('XMP-fx:DocumentType','INVOICE');
     $exifTool->SetNewValue('XMP-fx:DocumentFileName','factur-x.xml');
-    $exifTool->SetNewValue('XMP-fx:Version','2.0');
+    $exifTool->SetNewValue('XMP-fx:Version','2.3.2');
     $exifTool->SetNewValue('XMP-fx:ConformanceLevel','EN 16931');
 
     # 4. Metadaten in das Ziel-PDF schreiben
