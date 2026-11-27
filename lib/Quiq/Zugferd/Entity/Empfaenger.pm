@@ -37,7 +37,7 @@ our $VERSION = '1.240';
 
 =head4 Synopsis
 
-  $kfr = $class->new(@keyVal);
+  $epf = $class->new(@keyVal);
 
 =head4 Description
 
@@ -56,6 +56,7 @@ sub new {
         lieferdatum => undef, # BT-72
         name => undef,        # BT-70
         kontakt => undef,     # BT-76
+        zusatz => undef,      # BT-165
         strasse => undef,     # BT-75
         plz => undef,         # BT-78
         ort => undef,         # BT-77

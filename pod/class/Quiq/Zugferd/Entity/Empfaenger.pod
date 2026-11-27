@@ -20,7 +20,7 @@ Ein Objekt der Klasse repräsentiert den Empfänger.
 
 =head4 Synopsis
 
-  $kfr = $class->new(@keyVal);
+  $epf = $class->new(@keyVal);
 
 =head4 Description
 

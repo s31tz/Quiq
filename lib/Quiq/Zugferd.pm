@@ -1038,6 +1038,7 @@ sub toXml {
         'BT-29' => $rch->verkaeufer->kennung,
         'BT-30' => $rch->verkaeufer->id,
         'BT-33' => $rch->verkaeufer->information,
+        'BT-162' => $rch->verkaeufer->zusatz,
         'BT-38' => $rch->verkaeufer->plz,
         'BT-35' => $rch->verkaeufer->strasse,
         'BT-37' => $rch->verkaeufer->ort,
@@ -1067,6 +1068,7 @@ sub toXml {
         # 'BT-49-1' => $rch->kaeufer->email? '0088': undef,
         'BT-49' => $rch->leitwegId,
         'BT-49-1' => $rch->leitwegId? '0204': undef,
+        'BT-163' => $rch->kaeufer->zusatz,
         'BT-50' => $rch->kaeufer->strasse,
         'BT-53' => $rch->kaeufer->plz,
         'BT-52' => $rch->kaeufer->ort,
@@ -1077,6 +1079,7 @@ sub toXml {
         # Empfänger
         'BT-70' => $rch->empfaenger->name,
         'BT-76' => $rch->empfaenger->kontakt,
+        'BT-165' => $rch->empfaenger->zusatz,
         'BT-75' => $rch->empfaenger->strasse,
         'BT-78' => $rch->empfaenger->plz,
         'BT-77' => $rch->empfaenger->ort,

@@ -56,6 +56,7 @@ sub new {
         name => undef,             # BT-27
         kennung => undef,          # BT-29
         id => undef,               # BT-30
+        zusatz => undef,           # BT-162
         strasse => undef,          # BT-35
         plz => undef,              # BT-38
         ort => undef,              # BT-37

@@ -56,6 +56,7 @@ sub new {
         name => undef,             # BT-44
         kundennummer => undef,     # BT-46
         kontakt => undef,          # BT-56
+        zusatz => undef,           # BT-163
         strasse => undef,          # BT-50
         plz => undef,              # BT-53
         ort => undef,              # BT-52
